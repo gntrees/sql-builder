@@ -1,0 +1,602 @@
+[
+  {
+    "key": "HANDLER",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "HAVING",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "HEADER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "HEX",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "HIERARCHY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "HOLD",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "HOUR",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ID",
+    "category": [
+      "Identitas & Role"
+    ]
+  },
+  {
+    "key": "IDENTITY",
+    "category": [
+      "Identitas & Role"
+    ]
+  },
+  {
+    "key": "IF",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "IGNORE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ILIKE",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "IMMEDIATE",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "IMMEDIATELY",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "IMMUTABLE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "IMPLEMENTATION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "IMPLICIT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "IMPORT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "IN",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "INCLUDE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INCLUDING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INCREMENT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INDENT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INDEX",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "INDEXES",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "INDICATOR",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INHERIT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INHERITS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INITIAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INITIALLY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INLINE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INNER",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "INOUT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INPUT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INSENSITIVE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INSERT",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "INSTANCE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INSTANTIABLE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INSTEAD",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INT",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "INTEGER",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "INTEGRITY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "INTERSECT",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "INTERSECTION",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "INTERVAL",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "INTO",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "INVOKER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "IS",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ISNULL",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "ISOLATION",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "JOIN",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "JSON",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "JSON_ARRAY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_ARRAYAGG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_EXISTS",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_OBJECT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_OBJECTAGG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_QUERY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_SCALAR",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_SERIALIZE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_TABLE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_TABLE_PRIMITIVE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "JSON_VALUE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "K",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "KEEP",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "KEY",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "KEYS",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "KEY_MEMBER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "KEY_TYPE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LABEL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LAG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LANGUAGE",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "LARGE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LAST",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LAST_VALUE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LATERAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LEAD",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LEADING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LEAKPROOF",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "LEAST",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LEFT",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LEVEL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LIBRARY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LIKE",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "LIKE_REGEX",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "LIMIT",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "LINK",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LISTAGG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LISTEN",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "LN",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LOAD",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "LOCAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LOCALTIME",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LOCALTIMESTAMP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LOCATION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LOCATOR",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "LOCK",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "LOCKED",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "LOG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  }
+]

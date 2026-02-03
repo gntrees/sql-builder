@@ -1,0 +1,65 @@
+{
+  "name": "@gntrees/sql-builder",
+  "version": "0.0.1",
+  "description": "PostgreSQL query builder with fluent TypeScript API",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CLAUDE.md",
+    "CONTRIBUTING.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "postgresql",
+    "query-builder",
+    "sql",
+    "typescript",
+    "bun",
+    "database"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gntrees/gntrees-sql-builder.git"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "private": false,
+  "dependencies": {
+    "@pgsql/enums": "^17.9.2",
+    "@pgsql/traverse": "^17.2.4",
+    "@types/pg": "^8.16.0",
+    "kysely-codegen": "^0.19.0",
+    "node-pg-format": "^1.3.5",
+    "pg": "^8.16.3",
+    "pgsql-parser": "^17.9.1",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "bun run prebuild && bun run build:cjs && bun run build:esm && bun run build:combine",
+    "build:cjs": "tsc -p tsconfig.cjs.json && mv dist/cjs/index.js dist/index.cjs",
+    "build:esm": "tsc -p tsconfig.esm.json && mv dist/esm/index.js dist/index.mjs",
+    "build:combine": "mkdir -p dist/src && cp -r dist/cjs/src/* dist/src/ && cp dist/cjs/index.d.ts dist/ && rm -rf dist/cjs dist/esm",
+    "generate": "bun run src/extract.ts",
+    "test": "bun test src/tests/*.test.ts",
+    "test:network": "bun test src/tests/network-functions.test.ts"
+  }
+}

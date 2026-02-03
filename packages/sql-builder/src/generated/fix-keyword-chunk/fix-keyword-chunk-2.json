@@ -1,0 +1,402 @@
+[
+  {
+    "key": "COLLATION_NAME",
+    "category": ["Atribut Metadata"]
+  },
+  {
+    "key": "COLLATION_SCHEMA",
+    "category": ["Atribut Metadata"]
+  },
+  {
+    "key": "COLLECT",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "COLUMN",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "COLUMNS",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "COLUMN_NAME",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "COMMAND_FUNCTION",
+    "category": ["Meta-Command"]
+  },
+  {
+    "key": "COMMAND_​FUNCTION_​CODE",
+    "category": ["Meta-Command"]
+  },
+  {
+    "key": "COMMENT",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "COMMENTS",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "COMMIT",
+    "category": ["TCL"]
+  },
+  {
+    "key": "COMMITTED",
+    "category": ["TCL"]
+  },
+  {
+    "key": "COMPRESSION",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CONCURRENTLY",
+    "category": ["DDL"]
+  },
+  {
+    "key": "CONDITION",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "CONDITIONAL",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "CONDITION_NUMBER",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "CONFIGURATION",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CONFLICT",
+    "category": ["DML"]
+  },
+  {
+    "key": "CONNECT",
+    "category": ["Konektivitas & Ekstensi"]
+  },
+  {
+    "key": "CONNECTION",
+    "category": ["Konektivitas & Ekstensi"]
+  },
+  {
+    "key": "CONNECTION_NAME",
+    "category": ["Konektivitas & Ekstensi"]
+  },
+  {
+    "key": "CONSTRAINT",
+    "category": ["DDL"]
+  },
+  {
+    "key": "CONSTRAINTS",
+    "category": ["DDL"]
+  },
+  {
+    "key": "CONSTRAINT_CATALOG",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CONSTRAINT_NAME",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CONSTRAINT_SCHEMA",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CONSTRUCTOR",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CONTAINS",
+    "category": ["Operator"]
+  },
+  {
+    "key": "CONTENT",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CONTINUE",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "CONTROL",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CONVERSION",
+    "category": ["DDL"]
+  },
+  {
+    "key": "CONVERT",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "COPARTITION",
+    "category": ["DDL"]
+  },
+  {
+    "key": "COPY",
+    "category": ["DML"]
+  },
+  {
+    "key": "CORR",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CORRESPONDING",
+    "category": ["Klausa"]
+  },
+  {
+    "key": "COS",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "COSH",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "COST",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "COUNT",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "COVAR_POP",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "COVAR_SAMP",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CREATE",
+    "category": ["DDL"]
+  },
+  {
+    "key": "CROSS",
+    "category": ["Klausa"]
+  },
+  {
+    "key": "CSV",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CUBE",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CUME_DIST",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CURRENT",
+    "category": ["Klausa"]
+  },
+  {
+    "key": "CURRENT_CATALOG",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CURRENT_DATE",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CURRENT_​DEFAULT_​TRANSFORM_​GROUP",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CURRENT_PATH",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CURRENT_ROLE",
+    "category": ["Identitas & Role"]
+  },
+  {
+    "key": "CURRENT_ROW",
+    "category": ["Klausa"]
+  },
+  {
+    "key": "CURRENT_SCHEMA",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CURRENT_TIME",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CURRENT_TIMESTAMP",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "CURRENT_​TRANSFORM_​GROUP_​FOR_​TYPE",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "CURRENT_USER",
+    "category": ["Identitas & Role"]
+  },
+  {
+    "key": "CURSOR",
+    "category": ["DML"]
+  },
+  {
+    "key": "CURSOR_NAME",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "CYCLE",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "DATA",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "DATABASE",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "DATALINK",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "DATE",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "DATETIME_​INTERVAL_​CODE",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "DATETIME_​INTERVAL_​PRECISION",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "DAY",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "DB",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "DEALLOCATE",
+    "category": ["DML"]
+  },
+  {
+    "key": "DEC",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "DECFLOAT",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "DECIMAL",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "DECLARE",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "DEFAULT",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "DEFAULTS",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "DEFERRABLE",
+    "category": ["DDL"]
+  },
+  {
+    "key": "DEFERRED",
+    "category": ["DDL"]
+  },
+  {
+    "key": "DEFINE",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "DEFINED",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "DEFINER",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "DEGREE",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "DELETE",
+    "category": ["DML"]
+  },
+  {
+    "key": "DELIMITER",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "DELIMITERS",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "DENSE_RANK",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "DEPENDS",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "DEPTH",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "DEREF",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "DERIVED",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "DESC",
+    "category": ["Klausa"]
+  },
+  {
+    "key": "DESCRIBE",
+    "category": ["Meta-Command"]
+  },
+  {
+    "key": "DESCRIPTOR",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "DETACH",
+    "category": ["DDL"]
+  },
+  {
+    "key": "DETERMINISTIC",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "DIAGNOSTICS",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "DICTIONARY",
+    "category": ["Sistem Katalog & Metadata"]
+  }
+]

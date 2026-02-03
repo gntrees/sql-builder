@@ -1,0 +1,277 @@
+[
+  {
+    "key": "VERSION",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "VERSIONING",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "VIEW",
+    "category": [
+      "DDL",
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "VIEWS",
+    "category": [
+      "DDL",
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "VIRTUAL",
+    "category": [
+      "Konfigurasi",
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VOLATILE",
+    "category": [
+      "Konfigurasi",
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "WHEN",
+    "category": [
+      "Klausa",
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "WHENEVER",
+    "category": [
+      "Klausa",
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "WHERE",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "WHITESPACE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "WIDTH_BUCKET",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "WINDOW",
+    "category": [
+      "Klausa",
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "WITH",
+    "category": [
+      "Klausa",
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "WITHIN",
+    "category": [
+      "Klausa",
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "WITHOUT",
+    "category": [
+      "Klausa",
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "WORK",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "WRAPPER",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "WRITE",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "XML",
+    "category": [
+      "Sistem Katalog & Metadata",
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLAGG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLATTRIBUTES",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLBINARY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLCAST",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLCOMMENT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLCONCAT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLDECLARATION",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLDOCUMENT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLELEMENT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLEXISTS",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLFOREST",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLITERATE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLNAMESPACES",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLPARSE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLPI",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLQUERY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLROOT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLSCHEMA",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLSERIALIZE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLTABLE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLTEXT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "XMLVALIDATE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "YEAR",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "YES",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ZONE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  }
+]

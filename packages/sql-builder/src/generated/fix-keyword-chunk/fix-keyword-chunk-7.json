@@ -1,0 +1,602 @@
+[
+  {
+    "key": "RETURNED_CARDINALITY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "RETURNED_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "RETURNED_​OCTET_​LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "RETURNED_SQLSTATE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "RETURNING",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "RETURNS",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "REVOKE",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "RIGHT",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ROLE",
+    "category": [
+      "Identitas & Role"
+    ]
+  },
+  {
+    "key": "ROLLBACK",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "ROLLUP",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ROUTINE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "ROUTINES",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "ROUTINE_CATALOG",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "ROUTINE_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "ROUTINE_SCHEMA",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "ROW",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ROWS",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ROW_COUNT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ROW_NUMBER",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "RPAD",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "RTRIM",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "RULE",
+    "category": [
+      "Keamanan & Kebijakan"
+    ]
+  },
+  {
+    "key": "RUNNING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SAVEPOINT",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "SCALAR",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "SCALE",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "SCHEMA",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "SCHEMAS",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "SCHEMA_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SCOPE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SCOPE_CATALOG",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SCOPE_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SCOPE_SCHEMA",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SCROLL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SEARCH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "SECOND",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SECTION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SECURITY",
+    "category": [
+      "Keamanan & Kebijakan"
+    ]
+  },
+  {
+    "key": "SEEK",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SELECT",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "SELECTIVE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SELF",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SEMANTICS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SENSITIVE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SEQUENCE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "SEQUENCES",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "SERIALIZABLE",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "SERVER",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "SERVER_NAME",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "SESSION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SESSION_USER",
+    "category": [
+      "Identitas & Role"
+    ]
+  },
+  {
+    "key": "SET",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "SETOF",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SETS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SHARE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SHOW",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "SIMILAR",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "SIMPLE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SIN",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "SINH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "SIZE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SKIP",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SMALLINT",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "SNAPSHOT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SOME",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SORT_DIRECTION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SOURCE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SPACE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SPECIFIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SPECIFICTYPE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SPECIFIC_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SQL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SQLCODE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SQLERROR",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SQLEXCEPTION",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SQLSTATE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SQLWARNING",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SQRT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "STABLE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STANDALONE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "START",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STATE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STATEMENT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STATIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STATISTICS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STDDEV_POP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "STDDEV_SAMP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "STDIN",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STDOUT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STORAGE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STORED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STRICT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STRING",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "STRIP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "STRUCTURE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "STYLE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SUBCLASS_ORIGIN",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SUBMULTISET",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SUBSCRIPTION",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  }
+]

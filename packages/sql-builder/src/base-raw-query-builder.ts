@@ -1,0 +1,100 @@
+// AUTO-GENERATED - DO NOT EDIT.
+import type { QueryBuilder } from '..';
+import { CoreQueryBuilder } from './core-query-builder';
+import type {
+    OperatorStatement,
+    ParameterDataType,
+    ParameterValueType,
+    QueryType,
+    StatementValue
+} from './types';
+export class ParameterType {
+    public value: ParameterValueType;
+    public type: ParameterDataType;
+    constructor({
+        value,
+        type,
+    }: {
+        value: ParameterValueType;
+        type: ParameterDataType;
+    }) {
+        this.value = value;
+        this.type = type;
+    }
+}
+
+
+export class BaseRawQueryBuilder extends CoreQueryBuilder {
+    raw(strings: TemplateStringsArray, ...values: StatementValue[]) {
+        const resolvedValues = this.resolveStatements(values);
+        const tokens: QueryType['sql'] = [];
+        for (let i = 0; i < strings.length; i += 1) {
+            const chunk = strings[i];
+            if (chunk) {
+                tokens.push(chunk);
+            }
+            const resolvedValue = resolvedValues[i];
+            if (resolvedValue) {
+                tokens.push(...resolvedValue);
+            }
+        }
+        this.query.sql.push(...tokens);
+        return this;
+    }
+    literal(value: string | number | boolean) {
+        this.query.sql.push(this.createLiteralParameter(value));
+        return this;
+    }
+    literalArray(values: Array<string | number | boolean>) {
+        this.query.sql.push(...values.map((value) => this.createLiteralParameter(value)));
+        return this;
+    }
+    identifier(value: string | number | boolean) {
+        this.query.sql.push(this.createIdentifierParameter(value));
+        return this;
+    }
+    identifierArray(values: Array<string | number | boolean>) {
+        this.query.sql.push(...values.map((value) => this.createIdentifierParameter(value)));
+        return this;
+    }
+    rawString(value: string) {
+        this.query.sql.push(this.createStringParameter(value));
+        return this;
+    }
+    percentCharacter() {
+        this.query.sql.push(this.createPercentParameter());
+        return this;
+    }
+    
+    r(strings: TemplateStringsArray, ...values: StatementValue[]) {
+        return this.raw(strings, ...values);
+    }
+    l(value: string | number | boolean) {
+        return this.literal(value);
+    }
+    v(value: StatementValue) {
+        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+            return this.l(value);
+        }
+        const resolved = this.resolveStatement(value, 0);
+        if (resolved.length > 0) {
+            this.query.sql.push(...resolved);
+        }
+        return this;
+    }
+    i(value: string | number | boolean) {
+        return this.identifier(value);
+    }
+    rs(value: string) {
+        return this.rawString(value);
+    }
+    
+    op(operator: OperatorStatement) {
+        const resolvedOperator = this.resolveOperatorStatement(operator, 0);
+        if (resolvedOperator.length > 0) {
+            this.query.sql.push(...resolvedOperator);
+        }
+        return this;
+    }
+}
+

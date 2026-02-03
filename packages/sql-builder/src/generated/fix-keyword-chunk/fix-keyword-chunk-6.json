@@ -1,0 +1,402 @@
+[
+  {
+    "key": "OVERLAY",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "OVERRIDING",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "OWNED",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "OWNER",
+    "category": ["Identitas & Role", "Administrasi"]
+  },
+  {
+    "key": "P",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PAD",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PARALLEL",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "PARAMETER",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PARAMETER_MODE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PARAMETER_NAME",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PARAMETER_​ORDINAL_​POSITION",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PARAMETER_​SPECIFIC_​CATALOG",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "PARAMETER_​SPECIFIC_​NAME",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "PARAMETER_​SPECIFIC_​SCHEMA",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "PARSER",
+    "category": ["Konektivitas & Ekstensi"]
+  },
+  {
+    "key": "PARTIAL",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PARTITION",
+    "category": ["DDL"]
+  },
+  {
+    "key": "PASCAL",
+    "category": ["Atribut Metadata"]
+  },
+  {
+    "key": "PASS",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PASSING",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PASSTHROUGH",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PASSWORD",
+    "category": ["Identitas & Role", "Keamanan & Kebijakan"]
+  },
+  {
+    "key": "PAST",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PATH",
+    "category": ["Sistem Katalog & Metadata"]
+  },
+  {
+    "key": "PATTERN",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PER",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PERCENT",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PERCENTILE_CONT",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "PERCENTILE_DISC",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "PERCENT_RANK",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "PERIOD",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PERMISSION",
+    "category": ["Keamanan & Kebijakan"]
+  },
+  {
+    "key": "PERMUTE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PIPE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PLACING",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PLAN",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PLANS",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PLI",
+    "category": ["Atribut Metadata"]
+  },
+  {
+    "key": "POLICY",
+    "category": ["Keamanan & Kebijakan"]
+  },
+  {
+    "key": "PORTION",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "POSITION",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "POSITION_REGEX",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "POWER",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "PRECEDES",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PRECEDING",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PRECISION",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "PREPARE",
+    "category": ["DML"]
+  },
+  {
+    "key": "PREPARED",
+    "category": ["DML"]
+  },
+  {
+    "key": "PRESERVE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PREV",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PRIMARY",
+    "category": ["DDL"]
+  },
+  {
+    "key": "PRIOR",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PRIVATE",
+    "category": ["Keamanan & Kebijakan"]
+  },
+  {
+    "key": "PRIVILEGES",
+    "category": ["Keamanan & Kebijakan"]
+  },
+  {
+    "key": "PROCEDURAL",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "PROCEDURE",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "PROCEDURES",
+    "category": ["Prosedural (PL/pgSQL)"]
+  },
+  {
+    "key": "PROGRAM",
+    "category": ["Konektivitas & Ekstensi"]
+  },
+  {
+    "key": "PRUNE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PTF",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "PUBLIC",
+    "category": ["Keamanan & Kebijakan"]
+  },
+  {
+    "key": "PUBLICATION",
+    "category": ["Konektivitas & Ekstensi"]
+  },
+  {
+    "key": "QUOTE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "QUOTES",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "RANGE",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "RANK",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "READ",
+    "category": ["DML"]
+  },
+  {
+    "key": "READS",
+    "category": ["DML"]
+  },
+  {
+    "key": "REAL",
+    "category": ["Tipe Data"]
+  },
+  {
+    "key": "REASSIGN",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "RECOVERY",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "RECURSIVE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "REF",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "REFERENCES",
+    "category": ["DDL"]
+  },
+  {
+    "key": "REFERENCING",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "REFRESH",
+    "category": ["DML"]
+  },
+  {
+    "key": "REGR_AVGX",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_AVGY",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_COUNT",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_INTERCEPT",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_R2",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_SLOPE",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_SXX",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_SXY",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REGR_SYY",
+    "category": ["Fungsi Bawaan"]
+  },
+  {
+    "key": "REINDEX",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "RELATIVE",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "RELEASE",
+    "category": ["TCL"]
+  },
+  {
+    "key": "RENAME",
+    "category": ["DDL"]
+  },
+  {
+    "key": "REPEATABLE",
+    "category": ["TCL"]
+  },
+  {
+    "key": "REPLACE",
+    "category": ["DML"]
+  },
+  {
+    "key": "REPLICA",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "REQUIRING",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "RESET",
+    "category": ["Konfigurasi"]
+  },
+  {
+    "key": "RESPECT",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "RESTART",
+    "category": ["TCL"]
+  },
+  {
+    "key": "RESTORE",
+    "category": ["Administrasi"]
+  },
+  {
+    "key": "RESTRICT",
+    "category": ["DDL"]
+  },
+  {
+    "key": "RESULT",
+    "category": ["Sub-Sintaks"]
+  },
+  {
+    "key": "RETURN",
+    "category": ["Prosedural (PL/pgSQL)"]
+  }
+]

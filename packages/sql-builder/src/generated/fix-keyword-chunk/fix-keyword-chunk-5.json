@@ -1,0 +1,605 @@
+[
+  {
+    "key": "LOG10",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LOGGED",
+    "category": [
+      "DDL",
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "LOWER",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LPAD",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "LTRIM",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "M",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "MAP",
+    "category": [
+      "Tipe Data",
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "MAPPING",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "MATCH",
+    "category": [
+      "Klausa",
+      "Operator"
+    ]
+  },
+  {
+    "key": "MATCHED",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "MATCHES",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "MATCH_NUMBER",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "MATCH_RECOGNIZE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "MATERIALIZED",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "MAX",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "MAXVALUE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "MEASURES",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "MEMBER",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "MERGE",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "MERGE_ACTION",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "MESSAGE_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "MESSAGE_OCTET_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "MESSAGE_TEXT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "METHOD",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "MIN",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "MINUTE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "MINVALUE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "MOD",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "MODE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "MODIFIES",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "MODULE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "MONTH",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "MORE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "MOVE",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "MULTISET",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "MUMPS",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NAMES",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NAMESPACE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NATIONAL",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NATURAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NCHAR",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NCLOB",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NESTED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NESTING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NEW",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NEXT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NFC",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NFD",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NFKC",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NFKD",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "NIL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NO",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NONE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NORMALIZE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "NORMALIZED",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "NOT",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "NOTHING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NOTIFY",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "NOTNULL",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NOWAIT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NTH_VALUE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "NTILE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "NULL",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NULLABLE",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NULLIF",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "NULLS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NULL_ORDERING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "NUMBER",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "NUMERIC",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "OBJECT",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "OBJECTS",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "OCCURRENCE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "OCCURRENCES_REGEX",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "OCTETS",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "OCTET_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "OF",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OFF",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OFFSET",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "OIDS",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "OLD",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OMIT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ON",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ONE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ONLY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OPEN",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "OPERATOR",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "OPTION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OPTIONS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OR",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "ORDER",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ORDERING",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ORDINALITY",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "OTHERS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OUT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OUTER",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "OUTPUT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OVER",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "OVERFLOW",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "OVERLAPS",
+    "category": [
+      "Operator"
+    ]
+  }
+]

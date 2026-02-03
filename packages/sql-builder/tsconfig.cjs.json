@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "CommonJS",
+        "outDir": "./dist/cjs",
+        "rootDir": ".",
+        "declaration": true,
+        "declarationDir": "./dist/cjs",
+        "allowImportingTsExtensions": false,
+        "verbatimModuleSyntax": false
+    },
+    "include": ["index.ts", "src/**/*.ts"],
+    "exclude": ["src/tests/**", "**/*.test.ts", "src/extract.ts"]
+}

@@ -1,0 +1,602 @@
+[
+  {
+    "key": "DISABLE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "DISCARD",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "DISCONNECT",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "DISPATCH",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "DISTINCT",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "DLNEWCOPY",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLPREVIOUSCOPY",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLCOMPLETE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLCOMPLETEONLY",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLCOMPLETEWRITE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLPATH",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLPATHONLY",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLPATHWRITE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLSCHEME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLURLSERVER",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DLVALUE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DO",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "DOCUMENT",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "DOMAIN",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "DOUBLE",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "DROP",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "DYNAMIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "DYNAMIC_FUNCTION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "DYNAMIC_​FUNCTION_​CODE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EACH",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ELEMENT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ELSE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EMPTY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ENABLE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "ENCODING",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "ENCRYPTED",
+    "category": [
+      "Keamanan & Kebijakan"
+    ]
+  },
+  {
+    "key": "END",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "END-EXEC",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "END_FRAME",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "END_PARTITION",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "ENFORCED",
+    "category": [
+      "Keamanan & Kebijakan"
+    ]
+  },
+  {
+    "key": "ENUM",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "EQUALS",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "ERROR",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "ESCAPE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EVENT",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "EVERY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EXCEPT",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "EXCEPTION",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "EXCLUDE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EXCLUDING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EXCLUSIVE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EXEC",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "EXECUTE",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "EXISTS",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "EXP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "EXPLAIN",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "EXPRESSION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EXTENSION",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "EXTERNAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "EXTRACT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "FALSE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FAMILY",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "FETCH",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "FILE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "FILTER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FINAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FINALIZE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FINISH",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FIRST",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FIRST_VALUE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "FLAG",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FLOAT",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "FLOOR",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "FOLLOWING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FOR",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "FORCE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FOREIGN",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "FORMAT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FORTRAN",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "FORWARD",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FOUND",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FRAME_ROW",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FREE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FREEZE",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "FROM",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "FS",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "FULFILL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "FULL",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "FUNCTION",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "FUNCTIONS",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "FUSION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "G",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "GENERAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "GENERATED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "GET",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "GLOBAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "GO",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "GOTO",
+    "category": [
+      "Prosedural (PL/pgSQL)"
+    ]
+  },
+  {
+    "key": "GRANT",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "GRANTED",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "GREATEST",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "GROUP",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "GROUPING",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "GROUPS",
+    "category": [
+      "Klausa"
+    ]
+  }
+]

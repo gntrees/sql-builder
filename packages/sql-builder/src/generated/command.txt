@@ -1,0 +1,28 @@
+kategori kan semua syntax di fix-keyword-chunk-1 dalam array dengan kategori berikut :
+
+    | 'DDL'                       // Struktur (CREATE, ALTER, DROP)
+    | 'DML'                       // Manipulasi Data (SELECT, INSERT, CURSOR)
+    | 'DCL'                       // Hak Akses (GRANT, REVOKE)
+    | 'TCL'                       // Transaksi (COMMIT, ROLLBACK, CHAIN)
+    | 'Klausa'                    // Komponen Query Utama (WHERE, FROM, HAVING)
+    | 'Sub-Sintaks'               // Kata Pendukung (BY, BOTH, BREADTH)
+    | 'Fungsi Bawaan'             // (COUNT, NOW, TRIM)
+    | 'Operator'                  // (+, -, LIKE, BETWEEN)
+    | 'Tipe Data'                 // (INT, JSONB, BOM)
+    | 'Sistem Katalog & Metadata' // (CLASS, COLLATION, COBOL)
+    | 'Administrasi'              // (VACUUM, REINDEX, CLUSTER)
+    | 'Konfigurasi'               // (SET, SHOW, RESET)
+    | 'Prosedural (PL/pgSQL)'     // (LOOP, RAISE, DECLARE)
+    | 'Identitas & Role'          // (ROLE, USER, PASSWORD)
+    | 'Keamanan & Kebijakan'      // (POLICY, RLS, SECURITY LABEL)
+    | 'Konektivitas & Ekstensi'   // (SERVER, WRAPPER, EXTENSION, LOAD)
+    | 'Meta-Command';
+    | 'Atribut Metadata'      // COBOL, COLLATION, CHARACTER_SET
+
+
+contoh : {
+    "key":"INSERT"
+    "category":["DML",.......]
+}
+jadilah kreatif. satu keyword boleh lebih dari 1 kategory 
+

@@ -1,0 +1,22 @@
+{
+  "name": "@gntrees/sql-builder-workspace",
+  "version": "1.0.0",
+  "description": "Bun workspace for @gntrees/sql-builder multi-language SQL query builder",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "install:all": "bun install",
+    "test": "bun run test:sql-builder",
+    "test:sql-builder": "cd packages/sql-builder && bun test",
+    "generate": "cd packages/sql-builder && bun run generate",
+    "clean": "rm -rf node_modules packages/*/node_modules",
+    "reinstall": "bun run clean && bun install"
+  }
+}

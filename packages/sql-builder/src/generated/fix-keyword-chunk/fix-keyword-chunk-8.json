@@ -1,0 +1,602 @@
+[
+  {
+    "key": "SUBSET",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SUBSTRING",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "SUBSTRING_REGEX",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "SUCCEEDS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SUM",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "SUPPORT",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "SYMMETRIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "SYSID",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SYSTEM",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SYSTEM_TIME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "SYSTEM_USER",
+    "category": [
+      "Identitas & Role"
+    ]
+  },
+  {
+    "key": "T",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TABLE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TABLES",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TABLESAMPLE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TABLESPACE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TABLE_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "TAN",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TANH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TARGET",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TEMP",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TEMPLATE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TEMPORARY",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TEXT",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "THEN",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "THROUGH",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TIES",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TIME",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "TIMESTAMP",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "TIMEZONE_HOUR",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TIMEZONE_MINUTE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TO",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "TOKEN",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TOP_LEVEL_COUNT",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TRAILING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TRANSACTION",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "TRANSACTIONS_​COMMITTED",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "TRANSACTIONS_​ROLLED_​BACK",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "TRANSACTION_ACTIVE",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "TRANSFORM",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TRANSFORMS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TRANSLATE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TRANSLATE_REGEX",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TRANSLATION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TREAT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TRIGGER",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TRIGGER_CATALOG",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "TRIGGER_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "TRIGGER_SCHEMA",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "TRIM",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TRIM_ARRAY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "TRUE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TRUNCATE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TRUSTED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "TYPE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "TYPES",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "UESCAPE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNBOUNDED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNCOMMITTED",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "UNCONDITIONAL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNDER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNENCRYPTED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNION",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "UNIQUE",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "UNKNOWN",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNLINK",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "UNLISTEN",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "UNLOGGED",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "UNMATCHED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNNAMED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNNEST",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "UNTIL",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UNTYPED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "UPDATE",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "UPPER",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "URI",
+    "category": [
+      "Konektivitas & Ekstensi"
+    ]
+  },
+  {
+    "key": "USAGE",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "USER",
+    "category": [
+      "Identitas & Role"
+    ]
+  },
+  {
+    "key": "USER_​DEFINED_​TYPE_​CATALOG",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "USER_​DEFINED_​TYPE_​CODE",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "USER_​DEFINED_​TYPE_​NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "USER_​DEFINED_​TYPE_​SCHEMA",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "USING",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "UTF16",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "UTF32",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "UTF8",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "VACUUM",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "VALID",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VALIDATE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VALIDATOR",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VALUE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VALUES",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "VALUE_OF",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VARBINARY",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "VARCHAR",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "VARIADIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VARYING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "VAR_POP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "VAR_SAMP",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "VERBOSE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  }
+]

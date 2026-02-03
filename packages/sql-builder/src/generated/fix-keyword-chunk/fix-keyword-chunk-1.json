@@ -1,0 +1,602 @@
+[
+  {
+    "key": "A",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ABORT",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "ABS",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ABSENT",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ABSOLUTE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ACCESS",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "ACCORDING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ACOS",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ACTION",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "ADA",
+    "category": [
+      "Meta-Command"
+    ]
+  },
+  {
+    "key": "ADD",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "ADMIN",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "AFTER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "AGGREGATE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ALL",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ALLOCATE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "ALSO",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ALTER",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "ALWAYS",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ANALYSE",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "ANALYZE",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "AND",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "ANY",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ANY_VALUE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ARE",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ARRAY",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "ARRAY_AGG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ARRAY_​MAX_​CARDINALITY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "AS",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "ASC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ASENSITIVE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ASIN",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ASSERTION",
+    "category": [
+      "Keamanan & Kebijakan"
+    ]
+  },
+  {
+    "key": "ASSIGNMENT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ASYMMETRIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "AT",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ATAN",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "ATOMIC",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "ATTACH",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "ATTRIBUTE",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "ATTRIBUTES",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "AUTHORIZATION",
+    "category": [
+      "DCL"
+    ]
+  },
+  {
+    "key": "AVG",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "BACKWARD",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BASE64",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BEFORE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BEGIN",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "BEGIN_FRAME",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BEGIN_PARTITION",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BERNOULLI",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BETWEEN",
+    "category": [
+      "Operator"
+    ]
+  },
+  {
+    "key": "BIGINT",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "BINARY",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "BIT",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "BIT_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "BLOB",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "BLOCKED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BOM",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "BOOLEAN",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "BOTH",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BREADTH",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "BTRIM",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "BY",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "C",
+    "category": [
+      "Meta-Command"
+    ]
+  },
+  {
+    "key": "CACHE",
+    "category": [
+      "Konfigurasi"
+    ]
+  },
+  {
+    "key": "CALL",
+    "category": [
+      "DML"
+    ]
+  },
+  {
+    "key": "CALLED",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "CARDINALITY",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "CASCADE",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "CASCADED",
+    "category": [
+      "DDL"
+    ]
+  },
+  {
+    "key": "CASE",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "CAST",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "CATALOG",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "CATALOG_NAME",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "CEIL",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "CEILING",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "CHAIN",
+    "category": [
+      "TCL"
+    ]
+  },
+  {
+    "key": "CHAINING",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "CHAR",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "CHARACTER",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "CHARACTERISTICS",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "CHARACTERS",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "CHARACTER_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "CHARACTER_​SET_​CATALOG",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "CHARACTER_SET_NAME",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "CHARACTER_SET_SCHEMA",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "CHAR_LENGTH",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "CHECK",
+    "category": [
+      "Klausa"
+    ]
+  },
+  {
+    "key": "CHECKPOINT",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "CLASS",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "CLASSIFIER",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "CLASS_ORIGIN",
+    "category": [
+      "Sistem Katalog & Metadata"
+    ]
+  },
+  {
+    "key": "CLOB",
+    "category": [
+      "Tipe Data"
+    ]
+  },
+  {
+    "key": "CLOSE",
+    "category": [
+      "Sub-Sintaks"
+    ]
+  },
+  {
+    "key": "CLUSTER",
+    "category": [
+      "Administrasi"
+    ]
+  },
+  {
+    "key": "COALESCE",
+    "category": [
+      "Fungsi Bawaan"
+    ]
+  },
+  {
+    "key": "COBOL",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "COLLATE",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "COLLATION",
+    "category": [
+      "Atribut Metadata"
+    ]
+  },
+  {
+    "key": "COLLATION_CATALOG",
+    "category": [
+      "Atribut Metadata"
+    ]
+  }
+]
