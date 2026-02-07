@@ -119,6 +119,7 @@ function getOverrideQueryBuilderFunctionName() {
         { file: 'override-json-functions.ts', class: 'JSONFunctionBuilder' },
         { file: 'override-textsearch-functions.ts', class: 'TextSearchFunctionBuilder' },
         { file: 'override-string-functions.ts', class: 'StringFunctionBuilder' },
+        { file: 'override-operator-functions.ts', class: 'OperatorFunctionBuilder' },
         { file: 'override-conditional-functions.ts', class: 'ConditionalFunctionBuilder' },
         { file: 'override-array-functions.ts', class: 'ArrayFunctionBuilder' },
         { file: 'override-network-functions.ts', class: 'NetworkFunctionBuilder' },

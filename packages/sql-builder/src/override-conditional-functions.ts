@@ -1,7 +1,7 @@
-import { StringFunctionBuilder } from "./override-string-functions";
+import { OperatorFunctionBuilder } from "./override-operator-functions";
 import type { Statement } from "./types";
 
-export class ConditionalFunctionBuilder extends StringFunctionBuilder {
+export class ConditionalFunctionBuilder extends OperatorFunctionBuilder {
     /**
      * COALESCE(value [, ...])
      * Returns the first of its arguments that is not null.

@@ -3,6 +3,7 @@ import type { QueryBuilder } from '..';
 import { CoreQueryBuilder } from './core-query-builder';
 import type {
     OperatorStatement,
+    OperatorType,
     ParameterDataType,
     ParameterValueType,
     QueryType,
@@ -69,7 +70,7 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
     r(strings: TemplateStringsArray, ...values: Statement[]) {
         return this.raw(strings, ...values);
     }
-    l(value: string | number | boolean) {
+    l(value: string | number | boolean | null) {
         return this.literal(value);
     }
     v(value: Statement) {
@@ -89,12 +90,30 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
         return this.rawString(value);
     }
     
-    op(operator: OperatorStatement) {
-        const resolvedOperator = this.resolveOperatorStatement(operator, 0);
-        if (resolvedOperator.length > 0) {
-            this.query.sql.push(...resolvedOperator);
+    op(...values: (Statement | OperatorType)[]) {
+        for (const value of values) {
+            if (typeof value === "string" && this.isOperatorType(value)) {
+                const resolvedOperator = this.resolveOperatorStatement(value, 0);
+                if (resolvedOperator.length > 0) {
+                    this.query.sql.push(...resolvedOperator);
+                }
+            } else {
+                this.v(value);
+            }
         }
         return this;
+    }
+
+    private isOperatorType(value: string): value is OperatorType {
+        const operators: OperatorType[] = [
+            "=", "<>", "!=", "<", ">", "<=", ">=", "!", "~", "~*", "!~", "!~*",
+            "&", "|", "^", "<<", "<<=", ">>", ">>=", "&&", "||", "@", "#",
+            "+", "-", "*", "/", "%", "OR", "AND", "IS", "IS NOT",
+            "LIKE", "NOT LIKE", "ILIKE", "NOT ILIKE", "SIMILAR TO", "NOT SIMILAR TO",
+            "^@", "@-@", "@@", "##", "<->", "@>", "<@", "&<", "&>", "<<|",
+            "|>>", "&<|", "|&>", "<^", ">^", "?#", "?-", "?|", "?-|", "?||", "~="
+        ];
+        return operators.includes(value as OperatorType);
     }
 }
 

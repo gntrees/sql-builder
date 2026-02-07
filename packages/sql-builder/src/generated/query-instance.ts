@@ -21,6 +21,9 @@ export class QueryInstance {
   abort() {
     return (new QueryBuilder(this)).abort();
   }
+  above(...args: Parameters<OverrideQueryBuilder["above"]>) {
+    return (new QueryBuilder(this)).above(...args);
+  }
   abs(...args: Parameters<OverrideQueryBuilder["abs"]>) {
     return (new QueryBuilder(this)).abs(...args);
   }
@@ -234,6 +237,9 @@ export class QueryInstance {
   atomic() {
     return (new QueryBuilder(this)).atomic();
   }
+  atSign(...args: Parameters<OverrideQueryBuilder["atSign"]>) {
+    return (new QueryBuilder(this)).atSign(...args);
+  }
   attach() {
     return (new QueryBuilder(this)).attach();
   }
@@ -276,6 +282,9 @@ export class QueryInstance {
   beginTransaction(...args: Parameters<OverrideQueryBuilder["beginTransaction"]>) {
     return (new QueryBuilder(this)).beginTransaction(...args);
   }
+  below(...args: Parameters<OverrideQueryBuilder["below"]>) {
+    return (new QueryBuilder(this)).below(...args);
+  }
   bernoulli() {
     return (new QueryBuilder(this)).bernoulli();
   }
@@ -302,6 +311,27 @@ export class QueryInstance {
   }
   bitOr(...args: Parameters<OverrideQueryBuilder["bitOr"]>) {
     return (new QueryBuilder(this)).bitOr(...args);
+  }
+  bitwiseAnd(...args: Parameters<OverrideQueryBuilder["bitwiseAnd"]>) {
+    return (new QueryBuilder(this)).bitwiseAnd(...args);
+  }
+  bitwiseLeftShift(...args: Parameters<OverrideQueryBuilder["bitwiseLeftShift"]>) {
+    return (new QueryBuilder(this)).bitwiseLeftShift(...args);
+  }
+  bitwiseLeftShiftAssign(...args: Parameters<OverrideQueryBuilder["bitwiseLeftShiftAssign"]>) {
+    return (new QueryBuilder(this)).bitwiseLeftShiftAssign(...args);
+  }
+  bitwiseOr(...args: Parameters<OverrideQueryBuilder["bitwiseOr"]>) {
+    return (new QueryBuilder(this)).bitwiseOr(...args);
+  }
+  bitwiseRightShift(...args: Parameters<OverrideQueryBuilder["bitwiseRightShift"]>) {
+    return (new QueryBuilder(this)).bitwiseRightShift(...args);
+  }
+  bitwiseRightShiftAssign(...args: Parameters<OverrideQueryBuilder["bitwiseRightShiftAssign"]>) {
+    return (new QueryBuilder(this)).bitwiseRightShiftAssign(...args);
+  }
+  bitwiseXor(...args: Parameters<OverrideQueryBuilder["bitwiseXor"]>) {
+    return (new QueryBuilder(this)).bitwiseXor(...args);
   }
   bitXor(...args: Parameters<OverrideQueryBuilder["bitXor"]>) {
     return (new QueryBuilder(this)).bitXor(...args);
@@ -371,6 +401,9 @@ export class QueryInstance {
   }
   cardinality(...args: Parameters<OverrideQueryBuilder["cardinality"]>) {
     return (new QueryBuilder(this)).cardinality(...args);
+  }
+  caretAt(...args: Parameters<OverrideQueryBuilder["caretAt"]>) {
+    return (new QueryBuilder(this)).caretAt(...args);
   }
   cascade() {
     return (new QueryBuilder(this)).cascade();
@@ -467,6 +500,9 @@ export class QueryInstance {
   }
   close() {
     return (new QueryBuilder(this)).close();
+  }
+  closestPoint(...args: Parameters<OverrideQueryBuilder["closestPoint"]>) {
+    return (new QueryBuilder(this)).closestPoint(...args);
   }
   cluster() {
     return (new QueryBuilder(this)).cluster();
@@ -585,6 +621,12 @@ export class QueryInstance {
   constructorKeyword() {
     return (new QueryBuilder(this)).constructorKeyword();
   }
+  containedBy(...args: Parameters<OverrideQueryBuilder["containedBy"]>) {
+    return (new QueryBuilder(this)).containedBy(...args);
+  }
+  containment(...args: Parameters<OverrideQueryBuilder["containment"]>) {
+    return (new QueryBuilder(this)).containment(...args);
+  }
   contains() {
     return (new QueryBuilder(this)).contains();
   }
@@ -659,6 +701,9 @@ export class QueryInstance {
   }
   cross() {
     return (new QueryBuilder(this)).cross();
+  }
+  crosses(...args: Parameters<OverrideQueryBuilder["crosses"]>) {
+    return (new QueryBuilder(this)).crosses(...args);
   }
   crossJoin(...args: Parameters<OverrideQueryBuilder["crossJoin"]>) {
     return (new QueryBuilder(this)).crossJoin(...args);
@@ -897,11 +942,17 @@ export class QueryInstance {
   dispatch() {
     return (new QueryBuilder(this)).dispatch();
   }
+  distance(...args: Parameters<OverrideQueryBuilder["distance"]>) {
+    return (new QueryBuilder(this)).distance(...args);
+  }
   distinct() {
     return (new QueryBuilder(this)).distinct();
   }
   div(...args: Parameters<OverrideQueryBuilder["div"]>) {
     return (new QueryBuilder(this)).div(...args);
+  }
+  divide(...args: Parameters<OverrideQueryBuilder["divide"]>) {
+    return (new QueryBuilder(this)).divide(...args);
   }
   dlnewcopy() {
     return (new QueryBuilder(this)).dlnewcopy();
@@ -1011,6 +1062,9 @@ export class QueryInstance {
   enumRange(...args: Parameters<OverrideQueryBuilder["enumRange"]>) {
     return (new QueryBuilder(this)).enumRange(...args);
   }
+  eq(...args: Parameters<OverrideQueryBuilder["eq"]>) {
+    return (new QueryBuilder(this)).eq(...args);
+  }
   equals() {
     return (new QueryBuilder(this)).equals();
   }
@@ -1040,6 +1094,9 @@ export class QueryInstance {
   }
   exception() {
     return (new QueryBuilder(this)).exception();
+  }
+  exclamation(...args: Parameters<OverrideQueryBuilder["exclamation"]>) {
+    return (new QueryBuilder(this)).exclamation(...args);
   }
   exclude() {
     return (new QueryBuilder(this)).exclude();
@@ -1248,6 +1305,12 @@ export class QueryInstance {
   groups() {
     return (new QueryBuilder(this)).groups();
   }
+  gt(...args: Parameters<OverrideQueryBuilder["gt"]>) {
+    return (new QueryBuilder(this)).gt(...args);
+  }
+  gte(...args: Parameters<OverrideQueryBuilder["gte"]>) {
+    return (new QueryBuilder(this)).gte(...args);
+  }
   handler() {
     return (new QueryBuilder(this)).handler();
   }
@@ -1262,6 +1325,9 @@ export class QueryInstance {
   }
   hasFunctionPrivilege(...args: Parameters<OverrideQueryBuilder["hasFunctionPrivilege"]>) {
     return (new QueryBuilder(this)).hasFunctionPrivilege(...args);
+  }
+  hash(...args: Parameters<OverrideQueryBuilder["hash"]>) {
+    return (new QueryBuilder(this)).hash(...args);
   }
   hasLanguagePrivilege(...args: Parameters<OverrideQueryBuilder["hasLanguagePrivilege"]>) {
     return (new QueryBuilder(this)).hasLanguagePrivilege(...args);
@@ -1308,6 +1374,9 @@ export class QueryInstance {
   hold() {
     return (new QueryBuilder(this)).hold();
   }
+  horizontal(...args: Parameters<OverrideQueryBuilder["horizontal"]>) {
+    return (new QueryBuilder(this)).horizontal(...args);
+  }
   host(...args: Parameters<OverrideQueryBuilder["host"]>) {
     return (new QueryBuilder(this)).host(...args);
   }
@@ -1341,8 +1410,8 @@ export class QueryInstance {
   ignore() {
     return (new QueryBuilder(this)).ignore();
   }
-  ilike() {
-    return (new QueryBuilder(this)).ilike();
+  ilike(...args: Parameters<OverrideQueryBuilder["ilike"]>) {
+    return (new QueryBuilder(this)).ilike(...args);
   }
   immediate() {
     return (new QueryBuilder(this)).immediate();
@@ -1482,8 +1551,8 @@ export class QueryInstance {
   invoker() {
     return (new QueryBuilder(this)).invoker();
   }
-  is() {
-    return (new QueryBuilder(this)).is();
+  is(...args: Parameters<OverrideQueryBuilder["is"]>) {
+    return (new QueryBuilder(this)).is(...args);
   }
   isclosed(...args: Parameters<OverrideQueryBuilder["isclosed"]>) {
     return (new QueryBuilder(this)).isclosed(...args);
@@ -1497,6 +1566,9 @@ export class QueryInstance {
   isfinite(...args: Parameters<OverrideQueryBuilder["isfinite"]>) {
     return (new QueryBuilder(this)).isfinite(...args);
   }
+  isNot(...args: Parameters<OverrideQueryBuilder["isNot"]>) {
+    return (new QueryBuilder(this)).isNot(...args);
+  }
   isnull() {
     return (new QueryBuilder(this)).isnull();
   }
@@ -1505,6 +1577,9 @@ export class QueryInstance {
   }
   isopen(...args: Parameters<OverrideQueryBuilder["isopen"]>) {
     return (new QueryBuilder(this)).isopen(...args);
+  }
+  isParallel(...args: Parameters<OverrideQueryBuilder["isParallel"]>) {
+    return (new QueryBuilder(this)).isParallel(...args);
   }
   join() {
     return (new QueryBuilder(this)).join();
@@ -1830,8 +1905,8 @@ export class QueryInstance {
   library() {
     return (new QueryBuilder(this)).library();
   }
-  like() {
-    return (new QueryBuilder(this)).like();
+  like(...args: Parameters<OverrideQueryBuilder["like"]>) {
+    return (new QueryBuilder(this)).like(...args);
   }
   likeRegex() {
     return (new QueryBuilder(this)).likeRegex();
@@ -1908,6 +1983,12 @@ export class QueryInstance {
   lseg(...args: Parameters<OverrideQueryBuilder["lseg"]>) {
     return (new QueryBuilder(this)).lseg(...args);
   }
+  lt(...args: Parameters<OverrideQueryBuilder["lt"]>) {
+    return (new QueryBuilder(this)).lt(...args);
+  }
+  lte(...args: Parameters<OverrideQueryBuilder["lte"]>) {
+    return (new QueryBuilder(this)).lte(...args);
+  }
   ltrim(...args: Parameters<OverrideQueryBuilder["ltrim"]>) {
     return (new QueryBuilder(this)).ltrim(...args);
   }
@@ -1965,6 +2046,12 @@ export class QueryInstance {
   matchRecognize() {
     return (new QueryBuilder(this)).matchRecognize();
   }
+  matchRegex(...args: Parameters<OverrideQueryBuilder["matchRegex"]>) {
+    return (new QueryBuilder(this)).matchRegex(...args);
+  }
+  matchRegexInsensitive(...args: Parameters<OverrideQueryBuilder["matchRegexInsensitive"]>) {
+    return (new QueryBuilder(this)).matchRegexInsensitive(...args);
+  }
   materialized() {
     return (new QueryBuilder(this)).materialized();
   }
@@ -2001,11 +2088,17 @@ export class QueryInstance {
   method() {
     return (new QueryBuilder(this)).method();
   }
+  middle(...args: Parameters<OverrideQueryBuilder["middle"]>) {
+    return (new QueryBuilder(this)).middle(...args);
+  }
   min(...args: Parameters<OverrideQueryBuilder["min"]>) {
     return (new QueryBuilder(this)).min(...args);
   }
   minScale(...args: Parameters<OverrideQueryBuilder["minScale"]>) {
     return (new QueryBuilder(this)).minScale(...args);
+  }
+  minus(...args: Parameters<OverrideQueryBuilder["minus"]>) {
+    return (new QueryBuilder(this)).minus(...args);
   }
   minute() {
     return (new QueryBuilder(this)).minute();
@@ -2025,6 +2118,9 @@ export class QueryInstance {
   module() {
     return (new QueryBuilder(this)).module();
   }
+  modulo(...args: Parameters<OverrideQueryBuilder["modulo"]>) {
+    return (new QueryBuilder(this)).modulo(...args);
+  }
   month() {
     return (new QueryBuilder(this)).month();
   }
@@ -2033,6 +2129,9 @@ export class QueryInstance {
   }
   move() {
     return (new QueryBuilder(this)).move();
+  }
+  multiply(...args: Parameters<OverrideQueryBuilder["multiply"]>) {
+    return (new QueryBuilder(this)).multiply(...args);
   }
   multirange(...args: Parameters<OverrideQueryBuilder["multirange"]>) {
     return (new QueryBuilder(this)).multirange(...args);
@@ -2091,6 +2190,9 @@ export class QueryInstance {
   nclob() {
     return (new QueryBuilder(this)).nclob();
   }
+  ne(...args: Parameters<OverrideQueryBuilder["ne"]>) {
+    return (new QueryBuilder(this)).ne(...args);
+  }
   nested() {
     return (new QueryBuilder(this)).nested();
   }
@@ -2142,8 +2244,23 @@ export class QueryInstance {
   not() {
     return (new QueryBuilder(this)).not();
   }
+  notEq(...args: Parameters<OverrideQueryBuilder["notEq"]>) {
+    return (new QueryBuilder(this)).notEq(...args);
+  }
   notExists(...args: Parameters<OverrideQueryBuilder["notExists"]>) {
     return (new QueryBuilder(this)).notExists(...args);
+  }
+  notExtendAbove(...args: Parameters<OverrideQueryBuilder["notExtendAbove"]>) {
+    return (new QueryBuilder(this)).notExtendAbove(...args);
+  }
+  notExtendBelow(...args: Parameters<OverrideQueryBuilder["notExtendBelow"]>) {
+    return (new QueryBuilder(this)).notExtendBelow(...args);
+  }
+  notExtendLeft(...args: Parameters<OverrideQueryBuilder["notExtendLeft"]>) {
+    return (new QueryBuilder(this)).notExtendLeft(...args);
+  }
+  notExtendRight(...args: Parameters<OverrideQueryBuilder["notExtendRight"]>) {
+    return (new QueryBuilder(this)).notExtendRight(...args);
   }
   nothing() {
     return (new QueryBuilder(this)).nothing();
@@ -2151,11 +2268,26 @@ export class QueryInstance {
   notify() {
     return (new QueryBuilder(this)).notify();
   }
+  notIlike(...args: Parameters<OverrideQueryBuilder["notIlike"]>) {
+    return (new QueryBuilder(this)).notIlike(...args);
+  }
   notIn(...args: Parameters<OverrideQueryBuilder["notIn"]>) {
     return (new QueryBuilder(this)).notIn(...args);
   }
+  notLike(...args: Parameters<OverrideQueryBuilder["notLike"]>) {
+    return (new QueryBuilder(this)).notLike(...args);
+  }
+  notMatchRegex(...args: Parameters<OverrideQueryBuilder["notMatchRegex"]>) {
+    return (new QueryBuilder(this)).notMatchRegex(...args);
+  }
+  notMatchRegexInsensitive(...args: Parameters<OverrideQueryBuilder["notMatchRegexInsensitive"]>) {
+    return (new QueryBuilder(this)).notMatchRegexInsensitive(...args);
+  }
   notnull() {
     return (new QueryBuilder(this)).notnull();
+  }
+  notSimilarTo(...args: Parameters<OverrideQueryBuilder["notSimilarTo"]>) {
+    return (new QueryBuilder(this)).notSimilarTo(...args);
   }
   now(...args: Parameters<OverrideQueryBuilder["now"]>) {
     return (new QueryBuilder(this)).now(...args);
@@ -2408,6 +2540,9 @@ export class QueryInstance {
   }
   permute() {
     return (new QueryBuilder(this)).permute();
+  }
+  perpendicular(...args: Parameters<OverrideQueryBuilder["perpendicular"]>) {
+    return (new QueryBuilder(this)).perpendicular(...args);
   }
   pgAdvisoryLock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryLock"]>) {
     return (new QueryBuilder(this)).pgAdvisoryLock(...args);
@@ -2988,6 +3123,9 @@ export class QueryInstance {
   pli() {
     return (new QueryBuilder(this)).pli();
   }
+  plus(...args: Parameters<OverrideQueryBuilder["plus"]>) {
+    return (new QueryBuilder(this)).plus(...args);
+  }
   point(...args: Parameters<OverrideQueryBuilder["point"]>) {
     return (new QueryBuilder(this)).point(...args);
   }
@@ -3360,6 +3498,9 @@ export class QueryInstance {
   running() {
     return (new QueryBuilder(this)).running();
   }
+  sameAs(...args: Parameters<OverrideQueryBuilder["sameAs"]>) {
+    return (new QueryBuilder(this)).sameAs(...args);
+  }
   savepoint() {
     return (new QueryBuilder(this)).savepoint();
   }
@@ -3525,6 +3666,9 @@ export class QueryInstance {
   similar() {
     return (new QueryBuilder(this)).similar();
   }
+  similarTo(...args: Parameters<OverrideQueryBuilder["similarTo"]>) {
+    return (new QueryBuilder(this)).similarTo(...args);
+  }
   simple() {
     return (new QueryBuilder(this)).simple();
   }
@@ -3647,6 +3791,12 @@ export class QueryInstance {
   }
   strict() {
     return (new QueryBuilder(this)).strict();
+  }
+  strictlyAbove(...args: Parameters<OverrideQueryBuilder["strictlyAbove"]>) {
+    return (new QueryBuilder(this)).strictlyAbove(...args);
+  }
+  strictlyBelow(...args: Parameters<OverrideQueryBuilder["strictlyBelow"]>) {
+    return (new QueryBuilder(this)).strictlyBelow(...args);
   }
   string() {
     return (new QueryBuilder(this)).string();
@@ -3774,6 +3924,9 @@ export class QueryInstance {
   text() {
     return (new QueryBuilder(this)).text();
   }
+  textCat(...args: Parameters<OverrideQueryBuilder["textCat"]>) {
+    return (new QueryBuilder(this)).textCat(...args);
+  }
   textInet(...args: Parameters<OverrideQueryBuilder["textInet"]>) {
     return (new QueryBuilder(this)).textInet(...args);
   }
@@ -3869,6 +4022,9 @@ export class QueryInstance {
   }
   toRegtypemod(...args: Parameters<OverrideQueryBuilder["toRegtypemod"]>) {
     return (new QueryBuilder(this)).toRegtypemod(...args);
+  }
+  totalLength(...args: Parameters<OverrideQueryBuilder["totalLength"]>) {
+    return (new QueryBuilder(this)).totalLength(...args);
   }
   toTimestamp(...args: Parameters<OverrideQueryBuilder["toTimestamp"]>) {
     return (new QueryBuilder(this)).toTimestamp(...args);
@@ -4199,6 +4355,9 @@ export class QueryInstance {
   }
   versioning() {
     return (new QueryBuilder(this)).versioning();
+  }
+  vertical(...args: Parameters<OverrideQueryBuilder["vertical"]>) {
+    return (new QueryBuilder(this)).vertical(...args);
   }
   view() {
     return (new QueryBuilder(this)).view();
