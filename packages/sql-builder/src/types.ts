@@ -124,21 +124,12 @@ export type OperatorStatement =
     | OperatorType
     | QueryBuilder
 
-// Literal values - data values in SQL (strings as data, numbers, booleans, null, QueryBuilder as subquery)
-export type StatementValueLiteral = QueryBuilder | string | number | boolean | null;
-
-// Identifier values - column names, table names, sequence names
-// Strings are treated as identifiers (quoted), not as data
-// This is primarily for type documentation - at runtime, strings can be either
-export type StatementValueIdentifier = QueryBuilder | string;
-
-// Flexible type - when unsure or both are acceptable
-// Keep as union for backward compatibility
-export type StatementValue = StatementValueLiteral | undefined;
-
-// QueryBuilder-only type - enforces explicit parameter passing
-// This type only accepts QueryBuilder instances, not primitives
-// Use this for functions where users must be explicit about their intent
-export type StatementValueQueryBuilder = QueryBuilder | undefined;
+// Unified Statement type for all SQL values
+// Interpretation rules:
+// - number | string | boolean | null -> treated as literal values (data)
+// - QueryBuilder -> used for identifiers (columns, tables) and subqueries
+// - ParameterType -> internal parameter type for resolved values
+// - undefined -> return base function OR omit parameter (for postgres functions)
+export type Statement = QueryBuilder | ParameterType | number | string | boolean | null | undefined;
 export type StatementArrayValue<T> = Array<T | StatementArrayValue<T>>;
-export type IdentifierInput = StatementValue | Record<string, StatementValue>;
+export type IdentifierInput = Statement | Record<string, Statement>;

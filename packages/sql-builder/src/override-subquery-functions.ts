@@ -1,6 +1,6 @@
 import { MergeFunctionBuilder } from "./override-merge-functions";
 import type { QueryBuilder } from "./query-builder";
-import type { StatementValue } from "./types";
+import type { Statement } from "./types";
 
 export class SubqueryFunctionBuilder extends MergeFunctionBuilder {
     /**

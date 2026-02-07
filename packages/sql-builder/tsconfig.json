@@ -7,12 +7,14 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
+    
 
     // Bundler mode
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "noEmit": false,
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions":true,
+    "verbatimModuleSyntax": true,
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "./",
@@ -27,6 +29,7 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "noPropertyAccessFromIndexSignature": false,
+    "resolveJsonModule": true
   }
 }

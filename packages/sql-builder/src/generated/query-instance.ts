@@ -507,6 +507,9 @@ export class QueryInstance {
   columns() {
     return (new QueryBuilder(this)).columns();
   }
+  comma(...args: Parameters<OverrideQueryBuilder["comma"]>) {
+    return (new QueryBuilder(this)).comma(...args);
+  }
   commandFunction() {
     return (new QueryBuilder(this)).commandFunction();
   }

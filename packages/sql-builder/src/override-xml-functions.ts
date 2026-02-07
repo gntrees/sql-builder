@@ -1,18 +1,18 @@
 import { UUIDFunctionBuilder } from "./override-uuid-functions";
-import type { StatementValueQueryBuilder, StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 import { ParameterType } from "./base-raw-query-builder";
 
 export class XMLFunctionBuilder extends UUIDFunctionBuilder {
-    override xmlcomment(text?: StatementValueQueryBuilder) {
+    override xmlcomment(text?: Statement) {
         return this.pushFunction("XMLCOMMENT", text);
     }
 
-    override xmlconcat(...xml: StatementValueQueryBuilder[]) {
+    override xmlconcat(...xml: Statement[]) {
         const filtered = xml.filter(x => x !== undefined);
         return this.pushFunction("XMLCONCAT", ...filtered);
     }
 
-    override xmlelement(name?: StatementValueQueryBuilder, attributes?: StatementValueQueryBuilder, ...content: StatementValueQueryBuilder[]) {
+    override xmlelement(name?: Statement, attributes?: Statement, ...content: Statement[]) {
         this.query.sql.push("XMLELEMENT(NAME");
         const resolvedName = this.resolveStatement(name, 0);
         if (resolvedName.length > 0) {
@@ -36,7 +36,7 @@ export class XMLFunctionBuilder extends UUIDFunctionBuilder {
         return this;
     }
 
-    override xmlattributes(...values: StatementValueQueryBuilder[]) {
+    override xmlattributes(...values: Statement[]) {
         this.query.sql.push("XMLATTRIBUTES(");
         let hasItems = false;
         values.forEach((value) => {
@@ -53,16 +53,16 @@ export class XMLFunctionBuilder extends UUIDFunctionBuilder {
         return this;
     }
 
-    override xmlforest(...content: StatementValueQueryBuilder[]) {
+    override xmlforest(...content: Statement[]) {
         const filtered = content.filter(c => c !== undefined);
         return this.pushFunction("XMLFOREST", ...filtered);
     }
 
-    override xmlpi(name?: StatementValueQueryBuilder, content?: StatementValueQueryBuilder) {
+    override xmlpi(name?: Statement, content?: Statement) {
         return this.pushFunction("XMLPI", name, content);
     }
 
-    override xmlroot(xml?: StatementValueQueryBuilder, version?: StatementValueLiteral, standalone?: StatementValueLiteral) {
+    override xmlroot(xml?: Statement, version?: Statement, standalone?: Statement) {
         this.query.sql.push("XMLROOT(");
         const resolvedXml = this.resolveStatement(xml, 0);
         if (resolvedXml.length > 0) {
@@ -86,11 +86,11 @@ export class XMLFunctionBuilder extends UUIDFunctionBuilder {
         return this;
     }
 
-    override xmlagg(xml?: StatementValueQueryBuilder) {
+    override xmlagg(xml?: Statement) {
         return this.pushFunction("XMLAGG", xml);
     }
 
-    override xmlparse(xml?: StatementValueQueryBuilder) {
+    override xmlparse(xml?: Statement) {
         this.query.sql.push("XMLPARSE(DOCUMENT");
         const resolvedXml = this.resolveStatement(xml, 1);
         if (resolvedXml.length > 0) {
@@ -102,7 +102,7 @@ export class XMLFunctionBuilder extends UUIDFunctionBuilder {
 
     // === XML PREDICATES (5 functions) ===
 
-    isDocument(xml?: StatementValueQueryBuilder) {
+    isDocument(xml?: Statement) {
         const resolvedXml = this.resolveStatement(xml, 0);
         if (resolvedXml.length > 0) {
             this.query.sql.push(...resolvedXml, "IS", "DOCUMENT");
@@ -110,7 +110,7 @@ export class XMLFunctionBuilder extends UUIDFunctionBuilder {
         return this;
     }
 
-    xmlExists(xpath?: StatementValueLiteral, xml?: StatementValueQueryBuilder) {
+    xmlExists(xpath?: Statement, xml?: Statement) {
         this.query.sql.push("XMLEXISTS(");
         const resolvedXpath = xpath === undefined ? [] : [this.createLiteralParameter(xpath as string | number | boolean | null)];
         if (resolvedXpath.length > 0) {
@@ -125,147 +125,147 @@ export class XMLFunctionBuilder extends UUIDFunctionBuilder {
         return this;
     }
 
-    xmlIsWellFormed(text?: StatementValueLiteral) {
+    xmlIsWellFormed(text?: Statement) {
         return this.pushFunction("XML_IS_WELL_FORMED",
-            text === undefined ? undefined : this.toLiteralValue(text));
+            text === undefined ? undefined : this.toLiteral(text));
     }
 
-    xmlIsWellFormedDocument(text?: StatementValueLiteral) {
+    xmlIsWellFormedDocument(text?: Statement) {
         return this.pushFunction("XML_IS_WELL_FORMED_DOCUMENT",
-            text === undefined ? undefined : this.toLiteralValue(text));
+            text === undefined ? undefined : this.toLiteral(text));
     }
 
-    xmlIsWellFormedContent(text?: StatementValueLiteral) {
+    xmlIsWellFormedContent(text?: Statement) {
         return this.pushFunction("XML_IS_WELL_FORMED_CONTENT",
-            text === undefined ? undefined : this.toLiteralValue(text));
+            text === undefined ? undefined : this.toLiteral(text));
     }
 
     // === PROCESSING XML (2 functions) ===
 
-    xpath(xpath?: StatementValueLiteral, xml?: StatementValueQueryBuilder, args?: StatementValueLiteral) {
+    xpath(xpath?: Statement, xml?: Statement, args?: Statement) {
         return this.pushFunction("XPATH",
-            xpath === undefined ? undefined : this.toLiteralValue(xpath),
+            xpath === undefined ? undefined : this.toLiteral(xpath),
             xml,
-            args === undefined ? undefined : this.toLiteralValue(args));
+            args === undefined ? undefined : this.toLiteral(args));
     }
 
-    xpathExists(xpath?: StatementValueLiteral, xml?: StatementValueQueryBuilder, args?: StatementValueLiteral) {
+    xpathExists(xpath?: Statement, xml?: Statement, args?: Statement) {
         return this.pushFunction("XPATH_EXISTS",
-            xpath === undefined ? undefined : this.toLiteralValue(xpath),
+            xpath === undefined ? undefined : this.toLiteral(xpath),
             xml,
-            args === undefined ? undefined : this.toLiteralValue(args));
+            args === undefined ? undefined : this.toLiteral(args));
     }
 
     // === MAPPING TABLES TO XML (16 functions) ===
-    // Boolean flags (nulls, tableforest) use StatementValueLiteral
+    // Boolean flags (nulls, tableforest) use Statement
 
-    tableToXml(tbl?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    tableToXml(tbl?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("TABLE_TO_XML",
-            tbl === undefined ? undefined : this.toLiteralValue(tbl),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            tbl === undefined ? undefined : this.toLiteral(tbl),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    queryToXml(query?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    queryToXml(query?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("QUERY_TO_XML",
-            query === undefined ? undefined : this.toLiteralValue(query),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            query === undefined ? undefined : this.toLiteral(query),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    cursorToXml(cursor?: StatementValueLiteral, count?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    cursorToXml(cursor?: Statement, count?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("CURSOR_TO_XML",
-            cursor === undefined ? undefined : this.toLiteralValue(cursor),
-            count === undefined ? undefined : this.toLiteralValue(count),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            cursor === undefined ? undefined : this.toLiteral(cursor),
+            count === undefined ? undefined : this.toLiteral(count),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    tableToXmlschema(tbl?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    tableToXmlschema(tbl?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("TABLE_TO_XMLSCHEMA",
-            tbl === undefined ? undefined : this.toLiteralValue(tbl),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            tbl === undefined ? undefined : this.toLiteral(tbl),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    queryToXmlschema(query?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    queryToXmlschema(query?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("QUERY_TO_XMLSCHEMA",
-            query === undefined ? undefined : this.toLiteralValue(query),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            query === undefined ? undefined : this.toLiteral(query),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    cursorToXmlschema(cursor?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    cursorToXmlschema(cursor?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("CURSOR_TO_XMLSCHEMA",
-            cursor === undefined ? undefined : this.toLiteralValue(cursor),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            cursor === undefined ? undefined : this.toLiteral(cursor),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    tableToXmlAndXmlschema(tbl?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    tableToXmlAndXmlschema(tbl?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("TABLE_TO_XML_AND_XMLSCHEMA",
-            tbl === undefined ? undefined : this.toLiteralValue(tbl),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            tbl === undefined ? undefined : this.toLiteral(tbl),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    queryToXmlAndXmlschema(query?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    queryToXmlAndXmlschema(query?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("QUERY_TO_XML_AND_XMLSCHEMA",
-            query === undefined ? undefined : this.toLiteralValue(query),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            query === undefined ? undefined : this.toLiteral(query),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    schemaToXml(schema?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    schemaToXml(schema?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("SCHEMA_TO_XML",
-            schema === undefined ? undefined : this.toLiteralValue(schema),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            schema === undefined ? undefined : this.toLiteral(schema),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    schemaToXmlschema(schema?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    schemaToXmlschema(schema?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("SCHEMA_TO_XMLSCHEMA",
-            schema === undefined ? undefined : this.toLiteralValue(schema),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            schema === undefined ? undefined : this.toLiteral(schema),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    schemaToXmlAndXmlschema(schema?: StatementValueLiteral, nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    schemaToXmlAndXmlschema(schema?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("SCHEMA_TO_XML_AND_XMLSCHEMA",
-            schema === undefined ? undefined : this.toLiteralValue(schema),
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            schema === undefined ? undefined : this.toLiteral(schema),
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    databaseToXml(nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    databaseToXml(nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("DATABASE_TO_XML",
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    databaseToXmlschema(nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    databaseToXmlschema(nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("DATABASE_TO_XMLSCHEMA",
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 
-    databaseToXmlAndXmlschema(nulls?: StatementValueLiteral, tableforest?: StatementValueLiteral, targetns?: StatementValueLiteral) {
+    databaseToXmlAndXmlschema(nulls?: Statement, tableforest?: Statement, targetns?: Statement) {
         return this.pushFunction("DATABASE_TO_XML_AND_XMLSCHEMA",
-            nulls === undefined ? undefined : this.toLiteralValue(nulls),
-            tableforest === undefined ? undefined : this.toLiteralValue(tableforest),
-            targetns === undefined ? undefined : this.toLiteralValue(targetns));
+            nulls === undefined ? undefined : this.toLiteral(nulls),
+            tableforest === undefined ? undefined : this.toLiteral(tableforest),
+            targetns === undefined ? undefined : this.toLiteral(targetns));
     }
 }

@@ -1,11 +1,11 @@
 import { CoreQueryBuilder } from "./core-query-builder";
 import { BaseQueryBuilder } from "./generated/base-query-builder";
 import { EnumFunctionBuilder } from "./override-enum-functions";
-import type { StatementValueQueryBuilder, StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 import { ParameterType } from "./base-raw-query-builder";
 
 export class DateTimeFunctionBuilder extends BaseQueryBuilder {
-    age(...args: StatementValueQueryBuilder[]) {
+    age(...args: Statement[]) {
         return this.pushFunction("AGE", ...args);
     }
 
@@ -29,31 +29,31 @@ export class DateTimeFunctionBuilder extends BaseQueryBuilder {
         return this.pushFunction("TIMEOFDAY");
     }
 
-    dateTrunc(unit?: StatementValueLiteral, source?: StatementValueQueryBuilder) {
+    dateTrunc(unit?: Statement, source?: Statement) {
         return this.pushFunction("DATE_TRUNC",
-            unit === undefined ? undefined : this.toLiteralValue(unit),
+            unit === undefined ? undefined : this.toLiteral(unit),
             source);
     }
 
-    datePart(field?: StatementValueLiteral, source?: StatementValueQueryBuilder) {
+    datePart(field?: Statement, source?: Statement) {
         return this.pushFunction("DATE_PART",
-            field === undefined ? undefined : this.toLiteralValue(field),
+            field === undefined ? undefined : this.toLiteral(field),
             source);
     }
 
-    dateBin(stride?: StatementValueQueryBuilder, source?: StatementValueQueryBuilder, origin?: StatementValueQueryBuilder) {
+    dateBin(stride?: Statement, source?: Statement, origin?: Statement) {
         return this.pushFunction("DATE_BIN", stride, source, origin);
     }
 
-    dateAdd(timestamp?: StatementValueQueryBuilder, interval?: StatementValueQueryBuilder, timezone?: StatementValueQueryBuilder) {
+    dateAdd(timestamp?: Statement, interval?: Statement, timezone?: Statement) {
         return this.pushFunction("DATE_ADD", timestamp, interval, timezone);
     }
 
-    dateSubtract(timestamp?: StatementValueQueryBuilder, interval?: StatementValueQueryBuilder, timezone?: StatementValueQueryBuilder) {
+    dateSubtract(timestamp?: Statement, interval?: Statement, timezone?: Statement) {
         return this.pushFunction("DATE_SUBTRACT", timestamp, interval, timezone);
     }
 
-    override extract(field?: StatementValueLiteral | string, source?: StatementValueQueryBuilder) {
+    override extract(field?: Statement | string, source?: Statement) {
         if (field === undefined && source === undefined) {
             return super.extract();
         }
@@ -75,37 +75,37 @@ export class DateTimeFunctionBuilder extends BaseQueryBuilder {
         return this;
     }
 
-    toChar(value?: StatementValueQueryBuilder, format?: StatementValueLiteral) {
+    toChar(value?: Statement, format?: Statement) {
         return this.pushFunction("TO_CHAR",
             value,
-            format === undefined ? undefined : this.toLiteralValue(format));
+            format === undefined ? undefined : this.toLiteral(format));
     }
 
-    toDate(value?: StatementValueQueryBuilder, format?: StatementValueLiteral) {
+    toDate(value?: Statement, format?: Statement) {
         return this.pushFunction("TO_DATE",
             value,
-            format === undefined ? undefined : this.toLiteralValue(format));
+            format === undefined ? undefined : this.toLiteral(format));
     }
 
-    toNumber(value?: StatementValueQueryBuilder, format?: StatementValueLiteral) {
+    toNumber(value?: Statement, format?: Statement) {
         return this.pushFunction("TO_NUMBER",
             value,
-            format === undefined ? undefined : this.toLiteralValue(format));
+            format === undefined ? undefined : this.toLiteral(format));
     }
 
-    toTimestamp(value?: StatementValueQueryBuilder, format?: StatementValueLiteral) {
+    toTimestamp(value?: Statement, format?: Statement) {
         return this.pushFunction("TO_TIMESTAMP",
             value,
-            format === undefined ? undefined : this.toLiteralValue(format));
+            format === undefined ? undefined : this.toLiteral(format));
     }
 
-    timezone(zone?: StatementValueLiteral, source?: StatementValueQueryBuilder) {
+    timezone(zone?: Statement, source?: Statement) {
         return this.pushFunction("TIMEZONE",
-            zone === undefined ? undefined : this.toLiteralValue(zone),
+            zone === undefined ? undefined : this.toLiteral(zone),
             source);
     }
 
-    atTimeZone(source: StatementValueQueryBuilder, zone: StatementValueLiteral) {
+    atTimeZone(source: Statement, zone: Statement) {
         const resolvedSource = this.resolveStatement(source, 0);
         const resolvedZone = zone === undefined ? [] : [this.createLiteralParameter(zone as string | number | boolean | null)];
         if (resolvedSource.length > 0) {
@@ -120,7 +120,7 @@ export class DateTimeFunctionBuilder extends BaseQueryBuilder {
         return this;
     }
 
-    atTimeZoneIdentifier(source: StatementValueQueryBuilder, zone: StatementValueLiteral) {
+    atTimeZoneIdentifier(source: Statement, zone: Statement) {
         const resolvedSource = this.resolveIdentifierStatement(source, 0);
         const resolvedZone = zone === undefined ? [] : [this.createLiteralParameter(zone as string | number | boolean | null)];
         if (resolvedSource.length > 0) {
@@ -135,7 +135,7 @@ export class DateTimeFunctionBuilder extends BaseQueryBuilder {
         return this;
     }
 
-    atLocal(source: StatementValueQueryBuilder) {
+    atLocal(source: Statement) {
         const resolvedSource = this.resolveStatement(source, 0);
         if (resolvedSource.length > 0) {
             this.query.sql.push(...resolvedSource, "AT", "LOCAL");
@@ -143,7 +143,7 @@ export class DateTimeFunctionBuilder extends BaseQueryBuilder {
         return this;
     }
 
-    atLocalIdentifier(source: StatementValueQueryBuilder) {
+    atLocalIdentifier(source: Statement) {
         const resolvedSource = this.resolveIdentifierStatement(source, 0);
         if (resolvedSource.length > 0) {
             this.query.sql.push(...resolvedSource, "AT", "LOCAL");
@@ -151,132 +151,132 @@ export class DateTimeFunctionBuilder extends BaseQueryBuilder {
         return this;
     }
 
-    makeDate(year?: StatementValueLiteral, month?: StatementValueLiteral, day?: StatementValueLiteral) {
+    makeDate(year?: Statement, month?: Statement, day?: Statement) {
         return this.pushFunction("MAKE_DATE",
-            year === undefined ? undefined : this.toLiteralValue(year),
-            month === undefined ? undefined : this.toLiteralValue(month),
-            day === undefined ? undefined : this.toLiteralValue(day));
+            year === undefined ? undefined : this.toLiteral(year),
+            month === undefined ? undefined : this.toLiteral(month),
+            day === undefined ? undefined : this.toLiteral(day));
     }
 
     makeInterval(
-        years?: StatementValueLiteral,
-        months?: StatementValueLiteral,
-        weeks?: StatementValueLiteral,
-        days?: StatementValueLiteral,
-        hours?: StatementValueLiteral,
-        mins?: StatementValueLiteral,
-        secs?: StatementValueLiteral,
+        years?: Statement,
+        months?: Statement,
+        weeks?: Statement,
+        days?: Statement,
+        hours?: Statement,
+        mins?: Statement,
+        secs?: Statement,
     ) {
         return this.pushFunction("MAKE_INTERVAL",
-            years === undefined ? undefined : this.toLiteralValue(years),
-            months === undefined ? undefined : this.toLiteralValue(months),
-            weeks === undefined ? undefined : this.toLiteralValue(weeks),
-            days === undefined ? undefined : this.toLiteralValue(days),
-            hours === undefined ? undefined : this.toLiteralValue(hours),
-            mins === undefined ? undefined : this.toLiteralValue(mins),
-            secs === undefined ? undefined : this.toLiteralValue(secs));
+            years === undefined ? undefined : this.toLiteral(years),
+            months === undefined ? undefined : this.toLiteral(months),
+            weeks === undefined ? undefined : this.toLiteral(weeks),
+            days === undefined ? undefined : this.toLiteral(days),
+            hours === undefined ? undefined : this.toLiteral(hours),
+            mins === undefined ? undefined : this.toLiteral(mins),
+            secs === undefined ? undefined : this.toLiteral(secs));
     }
 
-    makeTime(hours?: StatementValueLiteral, minutes?: StatementValueLiteral, seconds?: StatementValueLiteral) {
+    makeTime(hours?: Statement, minutes?: Statement, seconds?: Statement) {
         return this.pushFunction("MAKE_TIME",
-            hours === undefined ? undefined : this.toLiteralValue(hours),
-            minutes === undefined ? undefined : this.toLiteralValue(minutes),
-            seconds === undefined ? undefined : this.toLiteralValue(seconds));
+            hours === undefined ? undefined : this.toLiteral(hours),
+            minutes === undefined ? undefined : this.toLiteral(minutes),
+            seconds === undefined ? undefined : this.toLiteral(seconds));
     }
 
     makeTimestamp(
-        year?: StatementValueLiteral,
-        month?: StatementValueLiteral,
-        day?: StatementValueLiteral,
-        hours?: StatementValueLiteral,
-        minutes?: StatementValueLiteral,
-        seconds?: StatementValueLiteral,
+        year?: Statement,
+        month?: Statement,
+        day?: Statement,
+        hours?: Statement,
+        minutes?: Statement,
+        seconds?: Statement,
     ) {
         return this.pushFunction("MAKE_TIMESTAMP",
-            year === undefined ? undefined : this.toLiteralValue(year),
-            month === undefined ? undefined : this.toLiteralValue(month),
-            day === undefined ? undefined : this.toLiteralValue(day),
-            hours === undefined ? undefined : this.toLiteralValue(hours),
-            minutes === undefined ? undefined : this.toLiteralValue(minutes),
-            seconds === undefined ? undefined : this.toLiteralValue(seconds));
+            year === undefined ? undefined : this.toLiteral(year),
+            month === undefined ? undefined : this.toLiteral(month),
+            day === undefined ? undefined : this.toLiteral(day),
+            hours === undefined ? undefined : this.toLiteral(hours),
+            minutes === undefined ? undefined : this.toLiteral(minutes),
+            seconds === undefined ? undefined : this.toLiteral(seconds));
     }
 
     makeTimestamptz(
-        year?: StatementValueLiteral,
-        month?: StatementValueLiteral,
-        day?: StatementValueLiteral,
-        hours?: StatementValueLiteral,
-        minutes?: StatementValueLiteral,
-        seconds?: StatementValueLiteral,
+        year?: Statement,
+        month?: Statement,
+        day?: Statement,
+        hours?: Statement,
+        minutes?: Statement,
+        seconds?: Statement,
     ) {
         return this.pushFunction("MAKE_TIMESTAMPTZ",
-            year === undefined ? undefined : this.toLiteralValue(year),
-            month === undefined ? undefined : this.toLiteralValue(month),
-            day === undefined ? undefined : this.toLiteralValue(day),
-            hours === undefined ? undefined : this.toLiteralValue(hours),
-            minutes === undefined ? undefined : this.toLiteralValue(minutes),
-            seconds === undefined ? undefined : this.toLiteralValue(seconds));
+            year === undefined ? undefined : this.toLiteral(year),
+            month === undefined ? undefined : this.toLiteral(month),
+            day === undefined ? undefined : this.toLiteral(day),
+            hours === undefined ? undefined : this.toLiteral(hours),
+            minutes === undefined ? undefined : this.toLiteral(minutes),
+            seconds === undefined ? undefined : this.toLiteral(seconds));
     }
 
-    pgSleep(seconds?: StatementValueLiteral) {
+    pgSleep(seconds?: Statement) {
         return this.pushFunction("PG_SLEEP",
-            seconds === undefined ? undefined : this.toLiteralValue(seconds));
+            seconds === undefined ? undefined : this.toLiteral(seconds));
     }
 
-    pgSleepFor(interval?: StatementValueLiteral) {
+    pgSleepFor(interval?: Statement) {
         return this.pushFunction("PG_SLEEP_FOR",
-            interval === undefined ? undefined : this.toLiteralValue(interval));
+            interval === undefined ? undefined : this.toLiteral(interval));
     }
 
-    pgSleepUntil(timestamp?: StatementValueQueryBuilder) {
+    pgSleepUntil(timestamp?: Statement) {
         return this.pushFunction("PG_SLEEP_UNTIL", timestamp);
     }
 
-    override currentTime(precision?: StatementValueLiteral) {
+    override currentTime(precision?: Statement) {
         if (precision === undefined || precision === null) {
             return super.currentTime();
         }
         return this.pushFunction("CURRENT_TIME",
-            precision === undefined ? undefined : this.toLiteralValue(precision));
+            precision === undefined ? undefined : this.toLiteral(precision));
     }
 
-    override currentTimestamp(precision?: StatementValueLiteral) {
+    override currentTimestamp(precision?: Statement) {
         if (precision === undefined || precision === null) {
             return super.currentTimestamp();
         }
         return this.pushFunction("CURRENT_TIMESTAMP",
-            precision === undefined ? undefined : this.toLiteralValue(precision));
+            precision === undefined ? undefined : this.toLiteral(precision));
     }
 
-    override localtime(precision?: StatementValueLiteral) {
+    override localtime(precision?: Statement) {
         if (precision === undefined || precision === null) {
             return super.localtime();
         }
         return this.pushFunction("LOCALTIME",
-            precision === undefined ? undefined : this.toLiteralValue(precision));
+            precision === undefined ? undefined : this.toLiteral(precision));
     }
 
-    override localtimestamp(precision?: StatementValueLiteral) {
+    override localtimestamp(precision?: Statement) {
         if (precision === undefined || precision === null) {
             return super.localtimestamp();
         }
         return this.pushFunction("LOCALTIMESTAMP",
-            precision === undefined ? undefined : this.toLiteralValue(precision));
+            precision === undefined ? undefined : this.toLiteral(precision));
     }
 
-    isfinite(value?: StatementValueQueryBuilder) {
+    isfinite(value?: Statement) {
         return this.pushFunction("ISFINITE", value);
     }
 
-    justifyDays(value?: StatementValueQueryBuilder) {
+    justifyDays(value?: Statement) {
         return this.pushFunction("JUSTIFY_DAYS", value);
     }
 
-    justifyHours(value?: StatementValueQueryBuilder) {
+    justifyHours(value?: Statement) {
         return this.pushFunction("JUSTIFY_HOURS", value);
     }
 
-    justifyInterval(value?: StatementValueQueryBuilder) {
+    justifyInterval(value?: Statement) {
         return this.pushFunction("JUSTIFY_INTERVAL", value);
     }
 }

@@ -1,5 +1,5 @@
 import { DateTimeFunctionBuilder } from "./override-date-time-function";
-import type { StatementValueQueryBuilder } from "./types";
+import type { Statement } from "./types";
 
 export class SetReturningFunctionBuilder extends DateTimeFunctionBuilder {
     /**
@@ -10,10 +10,10 @@ export class SetReturningFunctionBuilder extends DateTimeFunctionBuilder {
      * @param timezone - Timezone name (only for timestamptz variant)
      */
     generateSeries(
-        start?: StatementValueQueryBuilder,
-        stop?: StatementValueQueryBuilder,
-        step?: StatementValueQueryBuilder,
-        timezone?: StatementValueQueryBuilder
+        start?: Statement,
+        stop?: Statement,
+        step?: Statement,
+        timezone?: Statement
     ) {
         return this.pushFunction("GENERATE_SERIES", start, stop, step, timezone);
     }
@@ -25,9 +25,9 @@ export class SetReturningFunctionBuilder extends DateTimeFunctionBuilder {
      * @param reverse - Optional: true to generate in reverse order
      */
     generateSubscripts(
-        array?: StatementValueQueryBuilder,
-        dim?: StatementValueQueryBuilder,
-        reverse?: StatementValueQueryBuilder
+        array?: Statement,
+        dim?: Statement,
+        reverse?: Statement
     ) {
         return this.pushFunction("GENERATE_SUBSCRIPTS", array, dim, reverse);
     }

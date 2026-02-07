@@ -1,9 +1,9 @@
 import { StatisticsFunctionBuilder } from "./override-statistics-functions";
 import type { QueryBuilder } from "./query-builder";
-import type { StatementValue, StatementValueLiteral, StatementValueIdentifier } from "./types";
+import type { Statement } from "./types";
 
 export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
-    override escape(value?: StatementValue) {
+    override escape(value?: Statement) {
         if (value === undefined) {
             return super.escape();
         }
@@ -37,7 +37,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
     }
 
     savepointTransaction(name?: string | QueryBuilder) {
-        this.savepoint();
+        super.savepoint();
         if (name !== undefined && name !== null) {
             const resolvedName = typeof name === "string"
                 ? super.resolveIdentifierStatement(name, 0)
@@ -135,7 +135,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override values(...values: Array<StatementValue | Array<StatementValue>>) {
+    override values(...values: Array<Statement | Array<Statement>>) {
         if (values.length === 0) {
             super.values();
             return this;
@@ -920,6 +920,15 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
+    comma(...queries: QueryBuilder[]) {
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
+        if (resolvedQueries.length === 0) {
+            return this;
+        }
+        super.pushSeparatedTokens(resolvedQueries, ",");
+        return this;
+    }
+
     orderBy(...cols: (QueryBuilder | string)[]) {
         super.order();
         super.by();
@@ -994,13 +1003,13 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
 
     override t(table?: string | QueryBuilder) {
         if (!table) {
-            this.t();
+            super.t();
             return this;
         }
         if (typeof table === "string") {
             return this.i(table);
         }
-        const resolved = this.resolveIdentifierStatement(table, 0);
+        const resolved = super.resolveIdentifierStatement(table, 0);
         if (resolved.length > 0) {
             this.query.sql.push(...resolved);
         }
@@ -1008,13 +1017,13 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
     }
     override column(column?: string | QueryBuilder) {
         if (!column) {
-            this.column();
+            super.column();
             return this;
         }
         if (typeof column === "string") {
             return this.i(column);
         }
-        const resolved = this.resolveIdentifierStatement(column, 0);
+        const resolved = super.resolveIdentifierStatement(column, 0);
         if (resolved.length > 0) {
             this.query.sql.push(...resolved);
         }
@@ -1022,7 +1031,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
     }
     override c(column?: string | QueryBuilder) {
         if (!column) {
-            this.c();
+            super.c();
             return this;
         } else {
             this.column(column);

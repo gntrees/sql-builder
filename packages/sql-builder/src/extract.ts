@@ -1,9 +1,6 @@
 import { parse } from 'pgsql-parser';
 import * as ts from 'typescript';
 import keywords from "../keywords.json" assert { type: "json" };
-import { BaseQueryBuilder } from './generated/base-query-builder';
-import type { BaseRawQueryBuilder } from "./base-raw-query-builder";
-import type { OverrideQueryBuilder } from "./override-query-builder";
 
 
 
@@ -13,7 +10,7 @@ const keywordsExtracted = keywords['keywords'].map(keywords => ({
 
 // Function to write keywords to file
 
-function extractMethodNamesFromFile(filePath: string, className: string): string[] {
+export function extractMethodNamesFromFile(filePath: string, className: string): string[] {
     const fs = require('fs');
     const path = require('path');
     const sourceCode = fs.readFileSync(filePath, 'utf-8');

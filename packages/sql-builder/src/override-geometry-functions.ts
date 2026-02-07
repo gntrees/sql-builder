@@ -1,98 +1,98 @@
 import { EnumFunctionBuilder } from "./override-enum-functions";
-import type { StatementValueQueryBuilder, StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 
 export class GeometryFunctionBuilder extends EnumFunctionBuilder {
     // Functions (Table 9.37)
-    area(value?: StatementValueQueryBuilder) {
+    area(value?: Statement) {
         return this.pushFunction("AREA", value);
     }
 
-    center(value?: StatementValueQueryBuilder) {
+    center(value?: Statement) {
         return this.pushFunction("CENTER", value);
     }
 
-    diagonal(box?: StatementValueQueryBuilder) {
+    diagonal(box?: Statement) {
         return this.pushFunction("DIAGONAL", box);
     }
 
-    diameter(circle?: StatementValueQueryBuilder) {
+    diameter(circle?: Statement) {
         return this.pushFunction("DIAMETER", circle);
     }
 
-    height(box?: StatementValueQueryBuilder) {
+    height(box?: Statement) {
         return this.pushFunction("HEIGHT", box);
     }
 
-    isclosed(path?: StatementValueQueryBuilder) {
+    isclosed(path?: Statement) {
         return this.pushFunction("ISCLOSED", path);
     }
 
-    isopen(path?: StatementValueQueryBuilder) {
+    isopen(path?: Statement) {
         return this.pushFunction("ISOPEN", path);
     }
 
-    override length(value?: StatementValueQueryBuilder) {
+    override length(value?: Statement) {
         return this.pushFunction("LENGTH", value);
     }
 
-    npoints(value?: StatementValueQueryBuilder) {
+    npoints(value?: Statement) {
         return this.pushFunction("NPOINTS", value);
     }
 
-    pclose(value?: StatementValueQueryBuilder) {
+    pclose(value?: Statement) {
         return this.pushFunction("PCLOSE", value);
     }
 
-    popen(value?: StatementValueQueryBuilder) {
+    popen(value?: Statement) {
         return this.pushFunction("POPEN", value);
     }
 
-    radius(circle?: StatementValueQueryBuilder) {
+    radius(circle?: Statement) {
         return this.pushFunction("RADIUS", circle);
     }
 
-    slope(p1?: StatementValueQueryBuilder, p2?: StatementValueQueryBuilder) {
+    slope(p1?: Statement, p2?: Statement) {
         return this.pushFunction("SLOPE", p1, p2);
     }
 
-    width(box?: StatementValueQueryBuilder) {
+    width(box?: Statement) {
         return this.pushFunction("WIDTH", box);
     }
 
     // Geometric type conversion functions (Table 9.38)
-    box(v1?: StatementValueQueryBuilder, v2?: StatementValueQueryBuilder) {
+    box(v1?: Statement, v2?: Statement) {
         return this.pushFunction("BOX", v1, v2);
     }
 
-    boundBox(b1?: StatementValueQueryBuilder, b2?: StatementValueQueryBuilder) {
+    boundBox(b1?: Statement, b2?: Statement) {
         return this.pushFunction("BOUND_BOX", b1, b2);
     }
 
-    circle(v1?: StatementValueQueryBuilder, v2?: StatementValueQueryBuilder) {
+    circle(v1?: Statement, v2?: Statement) {
         return this.pushFunction("CIRCLE", v1, v2);
     }
 
-    line(p1?: StatementValueQueryBuilder, p2?: StatementValueQueryBuilder) {
+    line(p1?: Statement, p2?: Statement) {
         return this.pushFunction("LINE", p1, p2);
     }
 
-    lseg(v1?: StatementValueQueryBuilder, v2?: StatementValueQueryBuilder) {
+    lseg(v1?: Statement, v2?: Statement) {
         return this.pushFunction("LSEG", v1, v2);
     }
 
-    override path(value?: StatementValueQueryBuilder) {
+    override path(value?: Statement) {
         return this.pushFunction("PATH", value);
     }
 
-    point(x?: StatementValueLiteral, y?: StatementValueLiteral) {
+    point(x?: Statement, y?: Statement) {
         return this.pushFunction("POINT",
-            x === undefined ? undefined : this.toLiteralValue(x),
-            y === undefined ? undefined : this.toLiteralValue(y));
+            x === undefined ? undefined : this.toLiteral(x),
+            y === undefined ? undefined : this.toLiteral(y));
     }
 
-    polygon(countOrValue?: StatementValueLiteral, circle?: StatementValueQueryBuilder) {
+    polygon(countOrValue?: Statement, circle?: Statement) {
         return this.pushFunction("POLYGON",
-            countOrValue === undefined ? undefined : this.toLiteralValue(countOrValue),
+            countOrValue === undefined ? undefined : this.toLiteral(countOrValue),
             circle);
     }
 }

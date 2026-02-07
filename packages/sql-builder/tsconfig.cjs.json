@@ -6,6 +6,7 @@
         "rootDir": ".",
         "declaration": true,
         "declarationDir": "./dist/cjs",
+        "emitDeclarationOnly": false,
         "allowImportingTsExtensions": false,
         "verbatimModuleSyntax": false
     },

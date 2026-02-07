@@ -1,5 +1,5 @@
 import { NetworkFunctionBuilder } from "./override-network-functions";
-import type { StatementValueQueryBuilder, StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 
 export class JSONFunctionBuilder extends NetworkFunctionBuilder {
     // ============================================================
@@ -10,11 +10,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Converts any SQL value to json or jsonb
      * PostgreSQL: to_json(anyelement) -> json
      */
-    toJson(value?: StatementValueQueryBuilder) {
+    toJson(value?: Statement) {
         return this.pushFunction("TO_JSON", value);
     }
 
-    toJsonb(value?: StatementValueQueryBuilder) {
+    toJsonb(value?: Statement) {
         return this.pushFunction("TO_JSONB", value);
     }
 
@@ -22,63 +22,63 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Converts an SQL array to a JSON array
      * PostgreSQL: array_to_json(anyarray [, boolean]) -> json
      */
-    arrayToJson(array?: StatementValueQueryBuilder, prettyPrint?: StatementValueLiteral) {
+    arrayToJson(array?: Statement, prettyPrint?: Statement) {
         return this.pushFunction("ARRAY_TO_JSON",
             array,
-            prettyPrint === undefined ? undefined : this.toLiteralValue(prettyPrint));
+            prettyPrint === undefined ? undefined : this.toLiteral(prettyPrint));
     }
 
     /**
      * Converts an SQL composite value to a JSON object
      * PostgreSQL: row_to_json(record [, boolean]) -> json
      */
-    rowToJson(row?: StatementValueQueryBuilder, prettyPrint?: StatementValueLiteral) {
+    rowToJson(row?: Statement, prettyPrint?: Statement) {
         return this.pushFunction("ROW_TO_JSON",
             row,
-            prettyPrint === undefined ? undefined : this.toLiteralValue(prettyPrint));
+            prettyPrint === undefined ? undefined : this.toLiteral(prettyPrint));
     }
 
     /**
      * Builds a JSON array from variadic arguments
      * PostgreSQL: json_build_array(VARIADIC "any") -> json
      */
-    jsonBuildArray(...values: StatementValueLiteral[]) {
+    jsonBuildArray(...values: Statement[]) {
         const filtered = values.filter(v => v !== undefined && v !== null);
         return this.pushFunction("JSON_BUILD_ARRAY",
-            ...filtered.map(v => this.toLiteralValue(v)));
+            ...filtered.map(v => this.toLiteral(v)));
     }
 
-    jsonbBuildArray(...values: StatementValueLiteral[]) {
+    jsonbBuildArray(...values: Statement[]) {
         const filtered = values.filter(v => v !== undefined && v !== null);
         return this.pushFunction("JSONB_BUILD_ARRAY",
-            ...filtered.map(v => this.toLiteralValue(v)));
+            ...filtered.map(v => this.toLiteral(v)));
     }
 
     /**
      * Builds a JSON object from variadic arguments (alternating key/value pairs)
      * PostgreSQL: json_build_object(VARIADIC "any") -> json
      */
-    jsonBuildObject(...keyValuePairs: StatementValueLiteral[]) {
+    jsonBuildObject(...keyValuePairs: Statement[]) {
         const filtered = keyValuePairs.filter(v => v !== undefined && v !== null);
         return this.pushFunction("JSON_BUILD_OBJECT",
-            ...filtered.map(v => this.toLiteralValue(v)));
+            ...filtered.map(v => this.toLiteral(v)));
     }
 
-    jsonbBuildObject(...keyValuePairs: StatementValueLiteral[]) {
+    jsonbBuildObject(...keyValuePairs: Statement[]) {
         const filtered = keyValuePairs.filter(v => v !== undefined && v !== null);
         return this.pushFunction("JSONB_BUILD_OBJECT",
-            ...filtered.map(v => this.toLiteralValue(v)));
+            ...filtered.map(v => this.toLiteral(v)));
     }
 
     /**
      * Builds a JSON object from a text array
      * PostgreSQL: json_object(text[]) -> json
      */
-    jsonObjectFromArray(array?: StatementValueQueryBuilder) {
+    jsonObjectFromArray(array?: Statement) {
         return this.pushFunction("JSON_OBJECT", array);
     }
 
-    jsonbObjectFromArray(array?: StatementValueQueryBuilder) {
+    jsonbObjectFromArray(array?: Statement) {
         return this.pushFunction("JSONB_OBJECT", array);
     }
 
@@ -86,11 +86,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Builds a JSON object from separate key and value arrays
      * PostgreSQL: json_object(keys[], values[]) -> json
      */
-    jsonObjectFromPairs(keys?: StatementValueQueryBuilder, values?: StatementValueQueryBuilder) {
+    jsonObjectFromPairs(keys?: Statement, values?: Statement) {
         return this.pushFunction("JSON_OBJECT", keys, values);
     }
 
-    jsonbObjectFromPairs(keys?: StatementValueQueryBuilder, values?: StatementValueQueryBuilder) {
+    jsonbObjectFromPairs(keys?: Statement, values?: Statement) {
         return this.pushFunction("JSONB_OBJECT", keys, values);
     }
 
@@ -102,11 +102,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON array to set of json values
      * PostgreSQL: json_array_elements(json) -> setof json
      */
-    jsonArrayElements(json?: StatementValueQueryBuilder) {
+    jsonArrayElements(json?: Statement) {
         return this.pushFunction("JSON_ARRAY_ELEMENTS", json);
     }
 
-    jsonbArrayElements(jsonb?: StatementValueQueryBuilder) {
+    jsonbArrayElements(jsonb?: Statement) {
         return this.pushFunction("JSONB_ARRAY_ELEMENTS", jsonb);
     }
 
@@ -114,11 +114,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON array to set of text values
      * PostgreSQL: json_array_elements_text(json) -> setof text
      */
-    jsonArrayElementsText(json?: StatementValueQueryBuilder) {
+    jsonArrayElementsText(json?: Statement) {
         return this.pushFunction("JSON_ARRAY_ELEMENTS_TEXT", json);
     }
 
-    jsonbArrayElementsText(jsonb?: StatementValueQueryBuilder) {
+    jsonbArrayElementsText(jsonb?: Statement) {
         return this.pushFunction("JSONB_ARRAY_ELEMENTS_TEXT", jsonb);
     }
 
@@ -126,11 +126,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Returns number of elements in JSON array
      * PostgreSQL: json_array_length(json) -> integer
      */
-    jsonArrayLength(json?: StatementValueQueryBuilder) {
+    jsonArrayLength(json?: Statement) {
         return this.pushFunction("JSON_ARRAY_LENGTH", json);
     }
 
-    jsonbArrayLength(jsonb?: StatementValueQueryBuilder) {
+    jsonbArrayLength(jsonb?: Statement) {
         return this.pushFunction("JSONB_ARRAY_LENGTH", jsonb);
     }
 
@@ -138,11 +138,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON object to set of key/value pairs
      * PostgreSQL: json_each(json) -> setof record(key text, value json)
      */
-    jsonEach(json?: StatementValueQueryBuilder) {
+    jsonEach(json?: Statement) {
         return this.pushFunction("JSON_EACH", json);
     }
 
-    jsonbEach(jsonb?: StatementValueQueryBuilder) {
+    jsonbEach(jsonb?: Statement) {
         return this.pushFunction("JSONB_EACH", jsonb);
     }
 
@@ -150,11 +150,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON object to set of key/value pairs (as text)
      * PostgreSQL: json_each_text(json) -> setof record(key text, value text)
      */
-    jsonEachText(json?: StatementValueQueryBuilder) {
+    jsonEachText(json?: Statement) {
         return this.pushFunction("JSON_EACH_TEXT", json);
     }
 
-    jsonbEachText(jsonb?: StatementValueQueryBuilder) {
+    jsonbEachText(jsonb?: Statement) {
         return this.pushFunction("JSONB_EACH_TEXT", jsonb);
     }
 
@@ -162,47 +162,47 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Extracts JSON sub-object at specified path
      * PostgreSQL: json_extract_path(from_json, VARIADIC path_elems) -> json
      */
-    jsonExtractPath(fromJson?: StatementValueQueryBuilder, ...pathElems: StatementValueLiteral[]) {
+    jsonExtractPath(fromJson?: Statement, ...pathElems: Statement[]) {
         const filtered = pathElems.filter(p => p !== undefined && p !== null);
         return this.pushFunction("JSON_EXTRACT_PATH",
             fromJson,
-            ...filtered.map(p => this.toLiteralValue(p)));
+            ...filtered.map(p => this.toLiteral(p)));
     }
 
-    jsonbExtractPath(fromJsonb?: StatementValueQueryBuilder, ...pathElems: StatementValueLiteral[]) {
+    jsonbExtractPath(fromJsonb?: Statement, ...pathElems: Statement[]) {
         const filtered = pathElems.filter(p => p !== undefined && p !== null);
         return this.pushFunction("JSONB_EXTRACT_PATH",
             fromJsonb,
-            ...filtered.map(p => this.toLiteralValue(p)));
+            ...filtered.map(p => this.toLiteral(p)));
     }
 
     /**
      * Extracts JSON sub-object at specified path as text
      * PostgreSQL: json_extract_path_text(from_json, VARIADIC path_elems) -> text
      */
-    jsonExtractPathText(fromJson?: StatementValueQueryBuilder, ...pathElems: StatementValueLiteral[]) {
+    jsonExtractPathText(fromJson?: Statement, ...pathElems: Statement[]) {
         const filtered = pathElems.filter(p => p !== undefined && p !== null);
         return this.pushFunction("JSON_EXTRACT_PATH_TEXT",
             fromJson,
-            ...filtered.map(p => this.toLiteralValue(p)));
+            ...filtered.map(p => this.toLiteral(p)));
     }
 
-    jsonbExtractPathText(fromJsonb?: StatementValueQueryBuilder, ...pathElems: StatementValueLiteral[]) {
+    jsonbExtractPathText(fromJsonb?: Statement, ...pathElems: Statement[]) {
         const filtered = pathElems.filter(p => p !== undefined && p !== null);
         return this.pushFunction("JSONB_EXTRACT_PATH_TEXT",
             fromJsonb,
-            ...filtered.map(p => this.toLiteralValue(p)));
+            ...filtered.map(p => this.toLiteral(p)));
     }
 
     /**
      * Returns set of keys in JSON object
      * PostgreSQL: json_object_keys(json) -> setof text
      */
-    jsonObjectKeys(json?: StatementValueQueryBuilder) {
+    jsonObjectKeys(json?: Statement) {
         return this.pushFunction("JSON_OBJECT_KEYS", json);
     }
 
-    jsonbObjectKeys(jsonb?: StatementValueQueryBuilder) {
+    jsonbObjectKeys(jsonb?: Statement) {
         return this.pushFunction("JSONB_OBJECT_KEYS", jsonb);
     }
 
@@ -210,11 +210,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON object to row (composite type)
      * PostgreSQL: json_populate_record(base, from_json) -> anyelement
      */
-    jsonPopulateRecord(base?: StatementValueQueryBuilder, fromJson?: StatementValueQueryBuilder) {
+    jsonPopulateRecord(base?: Statement, fromJson?: Statement) {
         return this.pushFunction("JSON_POPULATE_RECORD", base, fromJson);
     }
 
-    jsonbPopulateRecord(base?: StatementValueQueryBuilder, fromJsonb?: StatementValueQueryBuilder) {
+    jsonbPopulateRecord(base?: Statement, fromJsonb?: Statement) {
         return this.pushFunction("JSONB_POPULATE_RECORD", base, fromJsonb);
     }
 
@@ -222,7 +222,7 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Tests if jsonb_populate_record would succeed
      * PostgreSQL: jsonb_populate_record_valid(base, from_jsonb) -> boolean
      */
-    jsonbPopulateRecordValid(base?: StatementValueQueryBuilder, fromJsonb?: StatementValueQueryBuilder) {
+    jsonbPopulateRecordValid(base?: Statement, fromJsonb?: Statement) {
         return this.pushFunction("JSONB_POPULATE_RECORD_VALID", base, fromJsonb);
     }
 
@@ -230,11 +230,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON array of objects to set of rows
      * PostgreSQL: json_populate_recordset(base, from_json) -> setof anyelement
      */
-    jsonPopulateRecordset(base?: StatementValueQueryBuilder, fromJson?: StatementValueQueryBuilder) {
+    jsonPopulateRecordset(base?: Statement, fromJson?: Statement) {
         return this.pushFunction("JSON_POPULATE_RECORDSET", base, fromJson);
     }
 
-    jsonbPopulateRecordset(base?: StatementValueQueryBuilder, fromJsonb?: StatementValueQueryBuilder) {
+    jsonbPopulateRecordset(base?: Statement, fromJsonb?: Statement) {
         return this.pushFunction("JSONB_POPULATE_RECORDSET", base, fromJsonb);
     }
 
@@ -242,11 +242,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON to record with AS clause
      * PostgreSQL: json_to_record(json) -> record
      */
-    jsonToRecord(json?: StatementValueQueryBuilder) {
+    jsonToRecord(json?: Statement) {
         return this.pushFunction("JSON_TO_RECORD", json);
     }
 
-    jsonbToRecord(jsonb?: StatementValueQueryBuilder) {
+    jsonbToRecord(jsonb?: Statement) {
         return this.pushFunction("JSONB_TO_RECORD", jsonb);
     }
 
@@ -254,11 +254,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Expands JSON array to recordset
      * PostgreSQL: json_to_recordset(json) -> setof record
      */
-    jsonToRecordset(json?: StatementValueQueryBuilder) {
+    jsonToRecordset(json?: Statement) {
         return this.pushFunction("JSON_TO_RECORDSET", json);
     }
 
-    jsonbToRecordset(jsonb?: StatementValueQueryBuilder) {
+    jsonbToRecordset(jsonb?: Statement) {
         return this.pushFunction("JSONB_TO_RECORDSET", jsonb);
     }
 
@@ -266,12 +266,12 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Sets item in JSONB at path
      * PostgreSQL: jsonb_set(target, path, new_value[, create_if_missing]) -> jsonb
      */
-    jsonbSet(target?: StatementValueQueryBuilder, path?: StatementValueQueryBuilder, newValue?: StatementValueQueryBuilder, createIfMissing?: StatementValueLiteral) {
+    jsonbSet(target?: Statement, path?: Statement, newValue?: Statement, createIfMissing?: Statement) {
         return this.pushFunction("JSONB_SET",
             target,
             path,
             newValue,
-            createIfMissing === undefined ? undefined : this.toLiteralValue(createIfMissing));
+            createIfMissing === undefined ? undefined : this.toLiteral(createIfMissing));
     }
 
     /**
@@ -279,153 +279,153 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * PostgreSQL: jsonb_set_lax(target, path, new_value[, create_if_missing][, null_value_treatment]) -> jsonb
      */
     jsonbSetLax(
-        target?: StatementValueQueryBuilder,
-        path?: StatementValueQueryBuilder,
-        newValue?: StatementValueQueryBuilder,
-        createIfMissing?: StatementValueLiteral,
-        nullValueTreatment?: StatementValueLiteral
+        target?: Statement,
+        path?: Statement,
+        newValue?: Statement,
+        createIfMissing?: Statement,
+        nullValueTreatment?: Statement
     ) {
         return this.pushFunction("JSONB_SET_LAX",
             target,
             path,
             newValue,
-            createIfMissing === undefined ? undefined : this.toLiteralValue(createIfMissing),
-            nullValueTreatment === undefined ? undefined : this.toLiteralValue(nullValueTreatment));
+            createIfMissing === undefined ? undefined : this.toLiteral(createIfMissing),
+            nullValueTreatment === undefined ? undefined : this.toLiteral(nullValueTreatment));
     }
 
     /**
      * Inserts into JSONB at path
      * PostgreSQL: jsonb_insert(target, path, new_value[, insert_after]) -> jsonb
      */
-    jsonbInsert(target?: StatementValueQueryBuilder, path?: StatementValueQueryBuilder, newValue?: StatementValueQueryBuilder, insertAfter?: StatementValueLiteral) {
+    jsonbInsert(target?: Statement, path?: Statement, newValue?: Statement, insertAfter?: Statement) {
         return this.pushFunction("JSONB_INSERT",
             target,
             path,
             newValue,
-            insertAfter === undefined ? undefined : this.toLiteralValue(insertAfter));
+            insertAfter === undefined ? undefined : this.toLiteral(insertAfter));
     }
 
     /**
      * Deletes null fields from JSON
      * PostgreSQL: json_strip_nulls(target[, strip_in_arrays]) -> json
      */
-    jsonStripNulls(target?: StatementValueQueryBuilder, stripInArrays?: StatementValueLiteral) {
+    jsonStripNulls(target?: Statement, stripInArrays?: Statement) {
         return this.pushFunction("JSON_STRIP_NULLS",
             target,
-            stripInArrays === undefined ? undefined : this.toLiteralValue(stripInArrays));
+            stripInArrays === undefined ? undefined : this.toLiteral(stripInArrays));
     }
 
-    jsonbStripNulls(target?: StatementValueQueryBuilder, stripInArrays?: StatementValueLiteral) {
+    jsonbStripNulls(target?: Statement, stripInArrays?: Statement) {
         return this.pushFunction("JSONB_STRIP_NULLS",
             target,
-            stripInArrays === undefined ? undefined : this.toLiteralValue(stripInArrays));
+            stripInArrays === undefined ? undefined : this.toLiteral(stripInArrays));
     }
 
     /**
      * Checks if JSON path returns any items
      * PostgreSQL: jsonb_path_exists(target, path[, vars][, silent]) -> boolean
      */
-    jsonbPathExists(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathExists(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_EXISTS",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
-    jsonbPathExistsTz(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathExistsTz(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_EXISTS_TZ",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
     /**
      * Returns boolean predicate result
      * PostgreSQL: jsonb_path_match(target, path[, vars][, silent]) -> boolean
      */
-    jsonbPathMatch(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathMatch(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_MATCH",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
-    jsonbPathMatchTz(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathMatchTz(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_MATCH_TZ",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
     /**
      * Returns all JSON items from path
      * PostgreSQL: jsonb_path_query(target, path[, vars][, silent]) -> setof jsonb
      */
-    jsonbPathQuery(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathQuery(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_QUERY",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
-    jsonbPathQueryTz(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathQueryTz(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_QUERY_TZ",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
     /**
      * Returns all JSON items as JSON array
      * PostgreSQL: jsonb_path_query_array(target, path[, vars][, silent]) -> jsonb
      */
-    jsonbPathQueryArray(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathQueryArray(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_QUERY_ARRAY",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
-    jsonbPathQueryArrayTz(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathQueryArrayTz(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_QUERY_ARRAY_TZ",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
     /**
      * Returns first JSON item from path
      * PostgreSQL: jsonb_path_query_first(target, path[, vars][, silent]) -> jsonb
      */
-    jsonbPathQueryFirst(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathQueryFirst(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_QUERY_FIRST",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
-    jsonbPathQueryFirstTz(target?: StatementValueQueryBuilder, path?: StatementValueLiteral, vars?: StatementValueLiteral, silent?: StatementValueLiteral) {
+    jsonbPathQueryFirstTz(target?: Statement, path?: Statement, vars?: Statement, silent?: Statement) {
         return this.pushFunction("JSONB_PATH_QUERY_FIRST_TZ",
             target,
-            path === undefined ? undefined : this.toLiteralValue(path),
-            vars === undefined ? undefined : this.toLiteralValue(vars),
-            silent === undefined ? undefined : this.toLiteralValue(silent));
+            path === undefined ? undefined : this.toLiteral(path),
+            vars === undefined ? undefined : this.toLiteral(vars),
+            silent === undefined ? undefined : this.toLiteral(silent));
     }
 
     /**
      * Pretty-prints JSON as text
      * PostgreSQL: jsonb_pretty(jsonb) -> text
      */
-    jsonbPretty(jsonb?: StatementValueQueryBuilder) {
+    jsonbPretty(jsonb?: Statement) {
         return this.pushFunction("JSONB_PRETTY", jsonb);
     }
 
@@ -433,11 +433,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Returns type of JSON value
      * PostgreSQL: json_typeof(json) -> text
      */
-    jsonTypeof(json?: StatementValueQueryBuilder) {
+    jsonTypeof(json?: Statement) {
         return this.pushFunction("JSON_TYPEOF", json);
     }
 
-    jsonbTypeof(jsonb?: StatementValueQueryBuilder) {
+    jsonbTypeof(jsonb?: Statement) {
         return this.pushFunction("JSONB_TYPEOF", jsonb);
     }
 
@@ -449,11 +449,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Aggregates values as JSON array
      * PostgreSQL: json_agg(expression) -> json
      */
-    jsonAgg(expression?: StatementValueQueryBuilder) {
+    jsonAgg(expression?: Statement) {
         return this.pushFunction("JSON_AGG", expression);
     }
 
-    jsonbAgg(expression?: StatementValueQueryBuilder) {
+    jsonbAgg(expression?: Statement) {
         return this.pushFunction("JSONB_AGG", expression);
     }
 
@@ -461,11 +461,11 @@ export class JSONFunctionBuilder extends NetworkFunctionBuilder {
      * Aggregates name/value pairs as JSON object
      * PostgreSQL: json_object_agg(name, value) -> json
      */
-    jsonObjectAgg(name?: StatementValueQueryBuilder, value?: StatementValueQueryBuilder) {
+    jsonObjectAgg(name?: Statement, value?: Statement) {
         return this.pushFunction("JSON_OBJECTAGG", name, value);
     }
 
-    jsonbObjectAgg(name?: StatementValueQueryBuilder, value?: StatementValueQueryBuilder) {
+    jsonbObjectAgg(name?: Statement, value?: Statement) {
         return this.pushFunction("JSONB_OBJECTAGG", name, value);
     }
 }

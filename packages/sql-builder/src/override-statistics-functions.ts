@@ -1,13 +1,13 @@
 import { EventTriggerFunctionBuilder } from "./override-event-trigger-functions";
-import type { StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 
 export class StatisticsFunctionBuilder extends EventTriggerFunctionBuilder {
     /**
      * pg_mcv_list_items(pg_mcv_list) → setof record
      * Returns a set of records describing all items stored in a multi-column MCV list.
      */
-    pgMcvListItems(mcvList?: StatementValueLiteral) {
+    pgMcvListItems(mcvList?: Statement) {
         return this.pushFunction("PG_MCV_LIST_ITEMS",
-            mcvList === undefined ? undefined : this.toLiteralValue(mcvList));
+            mcvList === undefined ? undefined : this.toLiteral(mcvList));
     }
 }

@@ -6,7 +6,7 @@ import type {
     ParameterDataType,
     ParameterValueType,
     QueryType,
-    StatementValue
+    Statement
 } from './types';
 export class ParameterType {
     public value: ParameterValueType;
@@ -25,7 +25,7 @@ export class ParameterType {
 
 
 export class BaseRawQueryBuilder extends CoreQueryBuilder {
-    raw(strings: TemplateStringsArray, ...values: StatementValue[]) {
+    raw(strings: TemplateStringsArray, ...values: Statement[]) {
         const resolvedValues = this.resolveStatements(values);
         const tokens: QueryType['sql'] = [];
         for (let i = 0; i < strings.length; i += 1) {
@@ -41,11 +41,11 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
         this.query.sql.push(...tokens);
         return this;
     }
-    literal(value: string | number | boolean) {
+    literal(value: string | number | boolean | null) {
         this.query.sql.push(this.createLiteralParameter(value));
         return this;
     }
-    literalArray(values: Array<string | number | boolean>) {
+    literalArray(values: Array<string | number | boolean | null>) {
         this.query.sql.push(...values.map((value) => this.createLiteralParameter(value)));
         return this;
     }
@@ -66,13 +66,13 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
         return this;
     }
     
-    r(strings: TemplateStringsArray, ...values: StatementValue[]) {
+    r(strings: TemplateStringsArray, ...values: Statement[]) {
         return this.raw(strings, ...values);
     }
     l(value: string | number | boolean) {
         return this.literal(value);
     }
-    v(value: StatementValue) {
+    v(value: Statement) {
         if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
             return this.l(value);
         }

@@ -1,4 +1,4 @@
-import type { StatementValue } from "./types";
+import type { Statement } from "./types";
 import { TriggerFunctionBuilder } from "./override-trigger-functions";
 
 export class EventTriggerFunctionBuilder extends TriggerFunctionBuilder {

@@ -2,7 +2,7 @@ import { format, quoteIdent } from "node-pg-format";
 import { ParameterType } from "./base-raw-query-builder";
 import type { QueryInstance } from "./generated/query-instance";
 import { QueryBuilder } from "./query-builder";
-import type { IdentifierInput, OperatorStatement, ParameterValueType, QueryType, RequiredDBInstance, StatementArrayValue, StatementValue, StatementValueLiteral, StatementValueIdentifier } from "./types";
+import type { IdentifierInput, OperatorStatement, ParameterValueType, QueryType, RequiredDBInstance, StatementArrayValue, Statement } from "./types";
 
 export class CoreQueryBuilder {
     protected query: QueryType = { sql: [] };
@@ -126,7 +126,7 @@ export class CoreQueryBuilder {
         });
     }
 
-    protected resolveStatement(item: StatementValue | null | undefined, index: number): QueryType['sql'] {
+    protected resolveStatement(item: Statement | null, index: number): QueryType['sql'] {
         if (item === undefined || item === null || item === "") {
             return [];
         }
@@ -141,7 +141,7 @@ export class CoreQueryBuilder {
         throw new Error(`Unsupported statement type at index ${index}: ${typeof item}`);
     }
 
-    protected resolveStatements(values: StatementValue[]): QueryType['sql'][] {
+    protected resolveStatements(values: Statement[]): QueryType['sql'][] {
         return values.map((item, index) => this.resolveStatement(item, index));
     }
 
@@ -181,7 +181,7 @@ export class CoreQueryBuilder {
         throw new Error(`Unsupported statement type at index ${index}: ${typeof item}`);
     }
 
-    protected resolveAliasIdentifier(value: Record<string, StatementValue>, index: number): QueryType['sql'] {
+    protected resolveAliasIdentifier(value: Record<string, Statement>, index: number): QueryType['sql'] {
         const entries = Object.entries(value);
         if (entries.length === 0) {
             return [];
@@ -236,7 +236,7 @@ export class CoreQueryBuilder {
         return statements.map((item, index) => this.resolveIdentifierStatement(item, index));
     }
 
-    protected resolveLiteralStatementArray(entries: StatementArrayValue<StatementValue>): QueryType['sql'][] {
+    protected resolveLiteralStatementArray(entries: StatementArrayValue<Statement>): QueryType['sql'][] {
         const statements = this.normalizeStatementArray(entries);
         return statements.map((item, index) => this.resolveStatement(item, index));
     }
@@ -275,11 +275,11 @@ export class CoreQueryBuilder {
 
     protected pushFunction(
         name: string,
-        ...args: (ParameterType | QueryBuilder | string | undefined)[]
+        ...args: Statement[]
     ) {
         this.query.sql.push(`${name}(`);
         const resolvedArgs = args
-            .filter((arg): arg is ParameterType | QueryBuilder | string =>
+            .filter((arg): arg is Exclude<Statement, undefined | null> =>
                 arg !== undefined && arg !== null && arg !== "")
             .map((arg, index) => {
                 // If ParameterType, clone and use as-is
@@ -292,8 +292,11 @@ export class CoreQueryBuilder {
                         token instanceof ParameterType ? this.cloneParameter(token) : token,
                     );
                 }
-                // If plain string, treat as literal (default behavior)
-                return [this.createLiteralParameter(arg)];
+                // If plain string, number, or boolean, treat as literal (default behavior)
+                if (typeof arg === "string" || typeof arg === "number" || typeof arg === "boolean") {
+                    return [this.createLiteralParameter(arg)];
+                }
+                return [];
             })
             .filter((tokens) => tokens.length > 0);
         this.pushSeparatedTokens(resolvedArgs, ",");
@@ -301,8 +304,10 @@ export class CoreQueryBuilder {
         return this;
     }
 
-    // Helper to create identifier ParameterType from StatementValue
-    protected toIdentifier(value: StatementValue): ParameterType | QueryBuilder | string {
+    // Helper to create identifier ParameterType from Statement
+    // For identifiers, only QueryBuilder should be used
+    // String/number/boolean will be quoted as identifiers
+    protected toIdentifier(value: Statement): ParameterType | QueryBuilder | string {
         if (value instanceof ParameterType) {
             return value;
         }
@@ -318,8 +323,9 @@ export class CoreQueryBuilder {
         return this.createLiteralParameter(value);
     }
 
-    // Helper to create literal ParameterType from StatementValue
-    protected toLiteral(value: StatementValue): ParameterType | QueryBuilder | string {
+    // Helper to create literal ParameterType from Statement
+    // Handles: QueryBuilder, string, number, boolean, null, undefined
+    protected toLiteral(value: Statement): ParameterType | QueryBuilder | string {
         if (value instanceof ParameterType) {
             return value;
         }
@@ -329,40 +335,13 @@ export class CoreQueryBuilder {
         if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
             return this.createLiteralParameter(value);
         }
-        if (value === null || value === undefined) {
+        if (value === null) {
+            return this.createLiteralParameter(null);
+        }
+        if (value === undefined) {
             return "";
         }
         return this.createLiteralParameter(value);
-    }
-
-    // Handle StatementValueLiteral - always create literal parameter
-    // Used for data values (numbers, booleans, null, strings as data, QueryBuilder as subquery)
-    protected toLiteralValue(value: StatementValueLiteral): ParameterType | QueryBuilder | string {
-        if (value instanceof ParameterType) {
-            return value;
-        }
-        if (value instanceof QueryBuilder) {
-            return value;
-        }
-        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || value === null) {
-            return this.createLiteralParameter(value);
-        }
-        return "";
-    }
-
-    // Handle StatementValueIdentifier - create identifier parameter
-    // Used for database object names (columns, tables, sequences)
-    protected toIdentifierValue(value: StatementValueIdentifier): ParameterType | QueryBuilder | string {
-        if (value instanceof ParameterType) {
-            return value;
-        }
-        if (value instanceof QueryBuilder) {
-            return value;
-        }
-        if (typeof value === "string") {
-            return this.createIdentifierParameter(value);
-        }
-        return "";
     }
 
     protected isIdentifier(value: any): boolean {

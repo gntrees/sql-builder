@@ -1,5 +1,5 @@
 import { TextSearchFunctionBuilder } from "./override-textsearch-functions";
-import type { StatementValueQueryBuilder, StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 
 export class UUIDFunctionBuilder extends TextSearchFunctionBuilder {
     genRandomUuid() {
@@ -10,16 +10,16 @@ export class UUIDFunctionBuilder extends TextSearchFunctionBuilder {
         return this.pushFunction("UUIDV4");
     }
 
-    uuidv7(shift?: StatementValueLiteral) {
+    uuidv7(shift?: Statement) {
         return this.pushFunction("UUIDV7",
-            shift === undefined ? undefined : this.toLiteralValue(shift));
+            shift === undefined ? undefined : this.toLiteral(shift));
     }
 
-    uuidExtractTimestamp(uuid?: StatementValueQueryBuilder) {
+    uuidExtractTimestamp(uuid?: Statement) {
         return this.pushFunction("UUID_EXTRACT_TIMESTAMP", uuid);
     }
 
-    uuidExtractVersion(uuid?: StatementValueQueryBuilder) {
+    uuidExtractVersion(uuid?: Statement) {
         return this.pushFunction("UUID_EXTRACT_VERSION", uuid);
     }
 }

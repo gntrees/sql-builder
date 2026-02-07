@@ -6,6 +6,7 @@
         "rootDir": ".",
         "declaration": true,
         "declarationDir": "./dist/esm",
+        "emitDeclarationOnly": false,
         "allowImportingTsExtensions": false,
         "verbatimModuleSyntax": false
     },

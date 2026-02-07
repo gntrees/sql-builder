@@ -1,123 +1,123 @@
 import { ArrayFunctionBuilder } from "./override-array-functions";
-import type { StatementValueQueryBuilder, StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 
 export class TextSearchFunctionBuilder extends ArrayFunctionBuilder {
-    arrayToTsvector(array?: StatementValueQueryBuilder) {
+    arrayToTsvector(array?: Statement) {
         return this.pushFunction("ARRAY_TO_TSVECTOR", array);
     }
 
-    toTsvector(config?: StatementValueLiteral, document?: StatementValueQueryBuilder) {
+    toTsvector(config?: Statement, document?: Statement) {
         return this.pushFunction("TO_TSVECTOR",
-            config === undefined ? undefined : this.toLiteralValue(config),
+            config === undefined ? undefined : this.toLiteral(config),
             document);
     }
 
-    toTsquery(config?: StatementValueLiteral, query?: StatementValueLiteral) {
+    toTsquery(config?: Statement, query?: Statement) {
         return this.pushFunction("TO_TSQUERY",
-            config === undefined ? undefined : this.toLiteralValue(config),
-            query === undefined ? undefined : this.toLiteralValue(query));
+            config === undefined ? undefined : this.toLiteral(config),
+            query === undefined ? undefined : this.toLiteral(query));
     }
 
-    jsonToTsvector(config?: StatementValueLiteral, document?: StatementValueQueryBuilder, filter?: StatementValueLiteral) {
+    jsonToTsvector(config?: Statement, document?: Statement, filter?: Statement) {
         return this.pushFunction("JSON_TO_TSVECTOR",
-            config === undefined ? undefined : this.toLiteralValue(config),
+            config === undefined ? undefined : this.toLiteral(config),
             document,
-            filter === undefined ? undefined : this.toLiteralValue(filter));
+            filter === undefined ? undefined : this.toLiteral(filter));
     }
 
-    jsonbToTsvector(config?: StatementValueLiteral, document?: StatementValueQueryBuilder, filter?: StatementValueLiteral) {
+    jsonbToTsvector(config?: Statement, document?: Statement, filter?: Statement) {
         return this.pushFunction("JSONB_TO_TSVECTOR",
-            config === undefined ? undefined : this.toLiteralValue(config),
+            config === undefined ? undefined : this.toLiteral(config),
             document,
-            filter === undefined ? undefined : this.toLiteralValue(filter));
+            filter === undefined ? undefined : this.toLiteral(filter));
     }
 
-    tsvectorToArray(tsvector?: StatementValueQueryBuilder) {
+    tsvectorToArray(tsvector?: Statement) {
         return this.pushFunction("TSVECTOR_TO_ARRAY", tsvector);
     }
 
-    plaintoTsquery(config?: StatementValueLiteral, query?: StatementValueLiteral) {
+    plaintoTsquery(config?: Statement, query?: Statement) {
         return this.pushFunction("PLAINTO_TSQUERY",
-            config === undefined ? undefined : this.toLiteralValue(config),
-            query === undefined ? undefined : this.toLiteralValue(query));
+            config === undefined ? undefined : this.toLiteral(config),
+            query === undefined ? undefined : this.toLiteral(query));
     }
 
-    phrasetoTsquery(config?: StatementValueLiteral, query?: StatementValueLiteral) {
+    phrasetoTsquery(config?: Statement, query?: Statement) {
         return this.pushFunction("PHRASETO_TSQUERY",
-            config === undefined ? undefined : this.toLiteralValue(config),
-            query === undefined ? undefined : this.toLiteralValue(query));
+            config === undefined ? undefined : this.toLiteral(config),
+            query === undefined ? undefined : this.toLiteral(query));
     }
 
-    websearchToTsquery(config?: StatementValueLiteral, query?: StatementValueLiteral) {
+    websearchToTsquery(config?: Statement, query?: Statement) {
         return this.pushFunction("WEBSEARCH_TO_TSQUERY",
-            config === undefined ? undefined : this.toLiteralValue(config),
-            query === undefined ? undefined : this.toLiteralValue(query));
+            config === undefined ? undefined : this.toLiteral(config),
+            query === undefined ? undefined : this.toLiteral(query));
     }
 
-    tsqueryPhrase(query1?: StatementValueQueryBuilder, query2?: StatementValueQueryBuilder, distance?: StatementValueLiteral) {
+    tsqueryPhrase(query1?: Statement, query2?: Statement, distance?: Statement) {
         return this.pushFunction("TSQUERY_PHRASE",
             query1,
             query2,
-            distance === undefined ? undefined : this.toLiteralValue(distance));
+            distance === undefined ? undefined : this.toLiteral(distance));
     }
 
-    setweight(vector?: StatementValueQueryBuilder, weight?: StatementValueLiteral, lexemes?: StatementValueQueryBuilder) {
+    setweight(vector?: Statement, weight?: Statement, lexemes?: Statement) {
         return this.pushFunction("SETWEIGHT",
             vector,
-            weight === undefined ? undefined : this.toLiteralValue(weight),
+            weight === undefined ? undefined : this.toLiteral(weight),
             lexemes);
     }
 
-    override strip(tsvector?: StatementValueQueryBuilder) {
+    override strip(tsvector?: Statement) {
         if (tsvector === undefined) {
             return super.strip();
         }
         return this.pushFunction("STRIP", tsvector);
     }
 
-    tsDelete(vector?: StatementValueQueryBuilder, lexemeOrArray?: StatementValueQueryBuilder) {
+    tsDelete(vector?: Statement, lexemeOrArray?: Statement) {
         return this.pushFunction("TS_DELETE", vector, lexemeOrArray);
     }
 
-    tsFilter(vector?: StatementValueQueryBuilder, weights?: StatementValueLiteral) {
+    tsFilter(vector?: Statement, weights?: Statement) {
         return this.pushFunction("TS_FILTER",
             vector,
-            weights === undefined ? undefined : this.toLiteralValue(weights));
+            weights === undefined ? undefined : this.toLiteral(weights));
     }
 
-    tsRank(weights?: StatementValueLiteral, vector?: StatementValueQueryBuilder, query?: StatementValueQueryBuilder, normalization?: StatementValueLiteral) {
+    tsRank(weights?: Statement, vector?: Statement, query?: Statement, normalization?: Statement) {
         return this.pushFunction("TS_RANK",
-            weights === undefined ? undefined : this.toLiteralValue(weights),
+            weights === undefined ? undefined : this.toLiteral(weights),
             vector,
             query,
-            normalization === undefined ? undefined : this.toLiteralValue(normalization));
+            normalization === undefined ? undefined : this.toLiteral(normalization));
     }
 
-    tsRankCd(weights?: StatementValueLiteral, vector?: StatementValueQueryBuilder, query?: StatementValueQueryBuilder, normalization?: StatementValueLiteral) {
+    tsRankCd(weights?: Statement, vector?: Statement, query?: Statement, normalization?: Statement) {
         return this.pushFunction("TS_RANK_CD",
-            weights === undefined ? undefined : this.toLiteralValue(weights),
+            weights === undefined ? undefined : this.toLiteral(weights),
             vector,
             query,
-            normalization === undefined ? undefined : this.toLiteralValue(normalization));
+            normalization === undefined ? undefined : this.toLiteral(normalization));
     }
 
-    tsHeadline(config?: StatementValueLiteral, document?: StatementValueQueryBuilder, query?: StatementValueQueryBuilder, options?: StatementValueLiteral) {
+    tsHeadline(config?: Statement, document?: Statement, query?: Statement, options?: Statement) {
         return this.pushFunction("TS_HEADLINE",
-            config === undefined ? undefined : this.toLiteralValue(config),
+            config === undefined ? undefined : this.toLiteral(config),
             document,
             query,
-            options === undefined ? undefined : this.toLiteralValue(options));
+            options === undefined ? undefined : this.toLiteral(options));
     }
 
-    querytree(tsquery?: StatementValueQueryBuilder) {
+    querytree(tsquery?: Statement) {
         return this.pushFunction("QUERYTREE", tsquery);
     }
 
-    numnode(tsquery?: StatementValueQueryBuilder) {
+    numnode(tsquery?: Statement) {
         return this.pushFunction("NUMNODE", tsquery);
     }
 
-    override length(tsvector?: StatementValueQueryBuilder) {
+    override length(tsvector?: Statement) {
         if (tsvector === undefined) {
             return super.length();
         }
@@ -128,36 +128,36 @@ export class TextSearchFunctionBuilder extends ArrayFunctionBuilder {
         return this.pushFunction("GET_CURRENT_TS_CONFIG");
     }
 
-    tsRewrite(query?: StatementValueQueryBuilder, targetOrSelect?: StatementValueQueryBuilder, substitute?: StatementValueQueryBuilder) {
+    tsRewrite(query?: Statement, targetOrSelect?: Statement, substitute?: Statement) {
         return this.pushFunction("TS_REWRITE", query, targetOrSelect, substitute);
     }
 
-    tsDebug(config?: StatementValueLiteral, document?: StatementValueLiteral) {
+    tsDebug(config?: Statement, document?: Statement) {
         return this.pushFunction("TS_DEBUG",
-            config === undefined ? undefined : this.toLiteralValue(config),
-            document === undefined ? undefined : this.toLiteralValue(document));
+            config === undefined ? undefined : this.toLiteral(config),
+            document === undefined ? undefined : this.toLiteral(document));
     }
 
-    tsLexize(dict?: StatementValueLiteral, token?: StatementValueLiteral) {
+    tsLexize(dict?: Statement, token?: Statement) {
         return this.pushFunction("TS_LEXIZE",
-            dict === undefined ? undefined : this.toLiteralValue(dict),
-            token === undefined ? undefined : this.toLiteralValue(token));
+            dict === undefined ? undefined : this.toLiteral(dict),
+            token === undefined ? undefined : this.toLiteral(token));
     }
 
-    tsParse(parser?: StatementValueLiteral, document?: StatementValueLiteral) {
+    tsParse(parser?: Statement, document?: Statement) {
         return this.pushFunction("TS_PARSE",
-            parser === undefined ? undefined : this.toLiteralValue(parser),
-            document === undefined ? undefined : this.toLiteralValue(document));
+            parser === undefined ? undefined : this.toLiteral(parser),
+            document === undefined ? undefined : this.toLiteral(document));
     }
 
-    tsTokenType(parser?: StatementValueLiteral) {
+    tsTokenType(parser?: Statement) {
         return this.pushFunction("TS_TOKEN_TYPE",
-            parser === undefined ? undefined : this.toLiteralValue(parser));
+            parser === undefined ? undefined : this.toLiteral(parser));
     }
 
-    tsStat(sqlquery?: StatementValueLiteral, weights?: StatementValueLiteral) {
+    tsStat(sqlquery?: Statement, weights?: Statement) {
         return this.pushFunction("TS_STAT",
-            sqlquery === undefined ? undefined : this.toLiteralValue(sqlquery),
-            weights === undefined ? undefined : this.toLiteralValue(weights));
+            sqlquery === undefined ? undefined : this.toLiteral(sqlquery),
+            weights === undefined ? undefined : this.toLiteral(weights));
     }
 }

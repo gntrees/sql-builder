@@ -1,21 +1,21 @@
 import { SetReturningFunctionBuilder } from "./override-set-returning-functions";
-import type { StatementValueLiteral } from "./types";
+import type { Statement } from "./types";
 
 export class EnumFunctionBuilder extends SetReturningFunctionBuilder {
     // Enum functions take enum values as data (literals), not type names (identifiers)
-    enumFirst(value?: StatementValueLiteral) {
+    enumFirst(value?: Statement) {
         return this.pushFunction("ENUM_FIRST",
-            value === undefined ? undefined : this.toLiteralValue(value));
+            value === undefined ? undefined : this.toLiteral(value));
     }
 
-    enumLast(value?: StatementValueLiteral) {
+    enumLast(value?: Statement) {
         return this.pushFunction("ENUM_LAST",
-            value === undefined ? undefined : this.toLiteralValue(value));
+            value === undefined ? undefined : this.toLiteral(value));
     }
 
-    enumRange(start?: StatementValueLiteral, end?: StatementValueLiteral) {
+    enumRange(start?: Statement, end?: Statement) {
         return this.pushFunction("ENUM_RANGE",
-            start === undefined ? undefined : this.toLiteralValue(start),
-            end === undefined ? undefined : this.toLiteralValue(end));
+            start === undefined ? undefined : this.toLiteral(start),
+            end === undefined ? undefined : this.toLiteral(end));
     }
 }
