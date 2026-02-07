@@ -1,4 +1,6 @@
 {
+  "author": "gntrees",
+  "license": "MIT",
   "name": "@gntrees/sql-builder-workspace",
   "version": "1.0.0",
   "description": "Bun workspace for @gntrees/sql-builder multi-language SQL query builder",
@@ -13,6 +15,7 @@
   },
   "scripts": {
     "install:all": "bun install",
+    "build": "cd packages/sql-builder && bun run build",
     "test": "bun run test:sql-builder",
     "test:sql-builder": "cd packages/sql-builder && bun test",
     "generate": "cd packages/sql-builder && bun run generate",
