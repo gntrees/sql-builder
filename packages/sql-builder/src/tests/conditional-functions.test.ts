@@ -7,15 +7,15 @@ describe("Conditional Functions", () => {
         formatParamHandler: "pg" as const,
     };
 
-    test("coalesce with multiple values", () => {
+    test("coalesce with null literal", () => {
         const q = sqlBuilder(db);
-        const { sql } = q
+        const { sql, parameters } = q
             .select()
             .coalesce(q.l(null), q.l("default"), q.l("value"))
             .getSqlAndParameters();
-            console.log("-------------",sql);
 
-        expect(sql).toContain("COALESCE");
+        expect(sql).toContain("COALESCE($1, $2, $3)");
+        expect(parameters).toEqual([null, "default", "value"]);
     });
 
     test("nullif with equal values", () => {

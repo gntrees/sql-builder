@@ -127,8 +127,11 @@ export class CoreQueryBuilder {
     }
 
     protected resolveStatement(item: Statement | null, index: number): QueryType['sql'] {
-        if (item === undefined || item === null || item === "") {
+        if (item === undefined || item === "") {
             return [];
+        }
+        if (item === null) {
+            return [this.createLiteralParameter(null)];
         }
         if (item instanceof QueryBuilder) {
             return item.getTokens().map((token) =>
@@ -279,9 +282,13 @@ export class CoreQueryBuilder {
     ) {
         this.query.sql.push(`${name}(`);
         const resolvedArgs = args
-            .filter((arg): arg is Exclude<Statement, undefined | null> =>
-                arg !== undefined && arg !== null && arg !== "")
+            .filter((arg): arg is Exclude<Statement, undefined> =>
+                arg !== undefined && arg !== "")
             .map((arg, index) => {
+                // If null, create literal parameter
+                if (arg === null) {
+                    return [this.createLiteralParameter(null)];
+                }
                 // If ParameterType, clone and use as-is
                 if (arg instanceof ParameterType) {
                     return [this.cloneParameter(arg)];
