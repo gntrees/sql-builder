@@ -1,0 +1,1 @@
+SELECT service, sub_service, sla, COUNT($1) AS jumlah_keluhan, ROUND(AVG(spend_hours)) AS rata_rata_jam, ROUND(((count(1) FILTER (WHERE NOT (is_late)))::numeric / (count(1))::numeric) * 100, $2) AS close_sesuai_target, ROUND(((count(1) FILTER (WHERE is_late))::numeric / (count(1))::numeric) * 100, $3) AS close_tidak_sesuai_target GROUP BY service, sub_service, sla ORDER BY "1"

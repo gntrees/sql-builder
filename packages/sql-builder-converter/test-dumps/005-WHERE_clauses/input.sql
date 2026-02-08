@@ -1,0 +1,1 @@
+SELECT * FROM orders WHERE total > 100

@@ -1,0 +1,1 @@
+SELECT CONCAT(first_name, $1, last_name) AS full_name FROM users

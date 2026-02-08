@@ -1,0 +1,1 @@
+SELECT SUBSTRING(description, $1, $2) FROM products

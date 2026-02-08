@@ -1,0 +1,1 @@
+SELECT category, AVG(price) as avg_price, COUNT(*) as product_count FROM products WHERE price > 0 GROUP BY category HAVING AVG(price) < 100 ORDER BY avg_price ASC

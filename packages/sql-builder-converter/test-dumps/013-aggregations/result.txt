@@ -1,0 +1,3 @@
+Match: PASS
+Input SQL: SELECT COUNT(*), AVG(price) FROM products
+Output SQL: SELECT COUNT(*), AVG(price) FROM products

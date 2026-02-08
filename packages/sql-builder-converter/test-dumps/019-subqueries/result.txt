@@ -1,0 +1,4 @@
+Match: PASS
+Input SQL: SELECT (SELECT COUNT(*) FROM orders) AS total_orders
+Output SQL: SELECT (SELECT count(*)
+        FROM orders) AS total_orders

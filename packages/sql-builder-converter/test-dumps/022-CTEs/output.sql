@@ -1,0 +1,1 @@
+SELECT * FROM user_counts WHERE order_count > 5

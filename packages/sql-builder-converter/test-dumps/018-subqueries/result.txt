@@ -1,0 +1,4 @@
+Match: PASS
+Input SQL: SELECT * FROM users WHERE id IN (SELECT user_id FROM orders)
+Output SQL: SELECT * FROM users WHERE id IN (SELECT user_id
+    FROM orders)

@@ -1,0 +1,3 @@
+Match: FAIL
+Input SQL: SELECT COALESCE(NULLIF(price, 0), 100) FROM products
+Output SQL: SELECT COALESCE(NULLIF (price, 0), 100) FROM products

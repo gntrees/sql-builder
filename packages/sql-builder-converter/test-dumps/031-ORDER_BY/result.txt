@@ -1,0 +1,3 @@
+Match: PASS
+Input SQL: SELECT * FROM orders ORDER BY created_at
+Output SQL: SELECT * FROM orders ORDER BY created_at

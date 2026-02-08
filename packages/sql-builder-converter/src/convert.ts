@@ -1,5 +1,5 @@
 import type { Walker } from '@pgsql/traverse';
-import type { A_Const, A_Expr, ColumnRef, FuncCall, Node, ResTarget, SelectStmt, String } from '@pgsql/types';
+import type { A_Const, A_Expr, BoolExpr, ColumnRef, FuncCall, JoinExpr, Node, RangeVar, ResTarget, SelectStmt, SortBy, String } from '@pgsql/types';
 import * as prettier from "prettier";
 
 import { NodePath, walk } from '@pgsql/traverse';
@@ -47,24 +47,130 @@ const normalizeNode = <T, K extends string>(node: any, key: K): { [P in K]: T } 
 const specialNode = {
     SelectStmt: (node: Node): FunctionListType[] => {
         const currentNode = normalizeNode<SelectStmt, "SelectStmt">(node, 'SelectStmt');
-        const params: FunctionListType['arguments'] = [];
+        const results: FunctionListType[] = [];
+
+        const selectMethodName = currentNode.SelectStmt.distinctClause ? 'selectDistinct' : 'select';
+
+        const selectParams: FunctionListType['arguments'] = [];
         if (currentNode.SelectStmt.targetList && currentNode.SelectStmt.targetList.length > 0) {
-            params.push(...currentNode.SelectStmt.targetList.map(t => {
+            for (const t of currentNode.SelectStmt.targetList) {
                 const resolved = resolveNode(t, specialNode);
-                return resolved;
-            }).flat());
+                selectParams.push(...resolved);
+            }
         }
-        return [{
-            name: 'select',
-            arguments: params,
+
+        results.push({
+            name: selectMethodName,
+            arguments: selectParams,
             paramType: 'function'
-        }];
+        });
+
+        if (currentNode.SelectStmt.fromClause && currentNode.SelectStmt.fromClause.length > 0) {
+            for (const fromItem of currentNode.SelectStmt.fromClause) {
+                const fromKey = Object.keys(fromItem)[0];
+
+                if (fromKey === 'RangeVar') {
+                    results.push(...resolveNode(fromItem, specialNode));
+                } else if (fromKey === 'JoinExpr') {
+                    results.push(...resolveNode(fromItem, specialNode));
+                } else if (fromKey === 'FromExpr') {
+                    const fromExpr = (fromItem as any)[fromKey];
+                    if (fromExpr.fromlist) {
+                        for (const item of fromExpr.fromlist) {
+                            results.push(...resolveNode(item, specialNode));
+                        }
+                    }
+                }
+            }
+        }
+
+        if (currentNode.SelectStmt.whereClause) {
+            const where = resolveNode(currentNode.SelectStmt.whereClause, specialNode);
+            results.push({
+                name: 'where',
+                arguments: where,
+                paramType: 'function'
+            });
+        }
+
+        if (currentNode.SelectStmt.groupClause && currentNode.SelectStmt.groupClause.length > 0) {
+            const groupByParams: FunctionListType['arguments'] = [];
+            for (const groupItem of currentNode.SelectStmt.groupClause) {
+                const resolved = resolveNode(groupItem, specialNode);
+                groupByParams.push(...resolved);
+            }
+            results.push({
+                name: 'groupBy',
+                arguments: groupByParams,
+                paramType: 'function'
+            });
+        }
+
+        if (currentNode.SelectStmt.havingClause) {
+            const having = resolveNode(currentNode.SelectStmt.havingClause, specialNode);
+            results.push({
+                name: 'having',
+                arguments: having,
+                paramType: 'function'
+            });
+        }
+
+        if (currentNode.SelectStmt.sortClause && currentNode.SelectStmt.sortClause.length > 0) {
+            const orderByParams: FunctionListType['arguments'] = [];
+            for (const sortItem of currentNode.SelectStmt.sortClause) {
+                const resolved = resolveNode(sortItem, specialNode);
+                orderByParams.push(...resolved);
+            }
+            results.push({
+                name: 'orderBy',
+                arguments: orderByParams,
+                paramType: 'function'
+            });
+        }
+
+        if (currentNode.SelectStmt.limitCount) {
+            // Use raw expression for LIMIT to avoid parameterization
+            const limitRaw = resolveRaw(currentNode.SelectStmt.limitCount);
+            results.push({
+                name: 'limit',
+                arguments: limitRaw,
+                paramType: 'function'
+            });
+        }
+
+        if (currentNode.SelectStmt.limitOffset) {
+            // Use raw expression for OFFSET to avoid parameterization
+            const offsetRaw = resolveRaw(currentNode.SelectStmt.limitOffset);
+            results.push({
+                name: 'offset',
+                arguments: offsetRaw,
+                paramType: 'function'
+            });
+        }
+
+        return results;
     },
     ResTarget: (node: Node): FunctionListType[] => {
         const currentNode = normalizeNode<ResTarget, "ResTarget">(node, 'ResTarget');
 
         if (currentNode.ResTarget.val) {
-            return resolveNode(currentNode.ResTarget.val, specialNode);
+            const resolved = resolveNode(currentNode.ResTarget.val, specialNode);
+
+            // Add alias if present
+            if (currentNode.ResTarget.name && resolved.length > 0) {
+                const baseExpr = resolved[0];
+                if (baseExpr && typeof baseExpr === 'object' && 'name' in baseExpr) {
+                    // For aliases, we need to use a special paramType that generates .as() chaining
+                    // We'll use 'as' paramType to indicate this should be chained with .as()
+                    return [{
+                        name: 'as_wrapper',
+                        arguments: [baseExpr, currentNode.ResTarget.name],
+                        paramType: 'as-chaining'
+                    }];
+                }
+            }
+
+            return resolved;
         }
         return [];
     },
@@ -76,11 +182,23 @@ const specialNode = {
                 const resolved = resolveNode(f, specialNode);
                 return resolved
             }).flat();
-            fields.push({
-                name: "c",
-                arguments: resolved,
-                paramType: "function"
-            });
+
+            // Use 'i' for qualified column names (table.column), 'c' for simple columns
+            if (resolved.length > 1) {
+                // Join the field names with dots for qualified references
+                const qualifiedName = resolved.map(r => typeof r === 'string' ? r : r.name).join('.');
+                fields.push({
+                    name: 'i',
+                    arguments: [qualifiedName],
+                    paramType: 'function'
+                });
+            } else {
+                fields.push({
+                    name: 'c',
+                    arguments: resolved,
+                    paramType: 'function'
+                });
+            }
         }
         return fields;
     },
@@ -98,7 +216,14 @@ const specialNode = {
         if (!currentNode.FuncCall.funcname || currentNode.FuncCall.funcname.length === 0) {
             return [];
         }
-        if (currentNode.FuncCall.args && currentNode.FuncCall.args.length > 0) {
+        // Handle COUNT(*) - agg_star indicates the function takes * as argument
+        if (currentNode.FuncCall.agg_star) {
+            params.push({
+                name: 'r',
+                arguments: ['*'],
+                paramType: 'template-literal'
+            });
+        } else if (currentNode.FuncCall.args && currentNode.FuncCall.args.length > 0) {
             currentNode.FuncCall.args.forEach(arg => {
                 const resolved = resolveNode(arg, specialNode);
                 params.push(...resolved);
@@ -165,6 +290,158 @@ const specialNode = {
         const currentNode = normalizeNode<A_Expr, "A_Expr">(node, 'A_Expr');
         const value = resolveRaw(node, true);
         return value
+    },
+    RangeVar: (node: Node): FunctionListType[] => {
+        const currentNode = normalizeNode<RangeVar, "RangeVar">(node, 'RangeVar');
+        const tableName = currentNode.RangeVar.relname || '';
+        const alias = currentNode.RangeVar.alias?.aliasname;
+
+        // Use from with raw expression if there's an alias
+        if (alias) {
+            return [{
+                name: 'from',
+                arguments: [{
+                    name: 'r',
+                    arguments: [`${tableName} AS ${alias}`],
+                    paramType: 'template-literal'
+                }],
+                paramType: 'function'
+            }];
+        }
+
+        return [{
+            name: 'from',
+            arguments: [tableName],
+            paramType: 'function'
+        }];
+    },
+    JoinExpr: (node: Node): FunctionListType[] => {
+        const currentNode = normalizeNode<JoinExpr, "JoinExpr">(node, 'JoinExpr');
+        const jointype = currentNode.JoinExpr.jointype || 'JOIN_INNER';
+
+        // Detect CROSS JOIN: JOIN_INNER without quals is actually CROSS JOIN
+        const isCrossJoin = jointype === 'JOIN_INNER' && !currentNode.JoinExpr.quals;
+
+        const joinMethodMap: Record<string, string> = {
+            'JOIN_INNER': 'innerJoin',
+            'JOIN_LEFT': 'leftJoin',
+            'JOIN_RIGHT': 'rightJoin',
+            'JOIN_FULL': 'fullJoin',
+            'JOIN_CROSS': 'crossJoin',
+        };
+
+        const methodName = isCrossJoin ? 'crossJoin' : (joinMethodMap[jointype] || 'innerJoin');
+
+        const results: FunctionListType[] = [];
+
+        // Handle larg (left argument) which should be a FROM clause
+        if (currentNode.JoinExpr.larg) {
+            const largKey = Object.keys(currentNode.JoinExpr.larg)[0];
+            if (largKey === 'RangeVar') {
+                results.push(...resolveNode(currentNode.JoinExpr.larg, specialNode));
+            } else if (largKey === 'JoinExpr') {
+                results.push(...resolveNode(currentNode.JoinExpr.larg, specialNode));
+            }
+        }
+
+        const tableNode = currentNode.JoinExpr.rarg;
+        if (!tableNode) return results;
+
+        const tableKey = Object.keys(tableNode)[0];
+
+        // Handle rarg (right argument) - extract table name and alias
+        if (tableKey === 'RangeVar') {
+            const rangeVar = (tableNode as any).RangeVar;
+            const tableName = rangeVar?.relname || '';
+            const alias = rangeVar?.alias?.aliasname;
+
+            const args: FunctionListType['arguments'] = [];
+
+            // Use raw expression for aliased tables
+            if (alias) {
+                args.push({
+                    name: 'r',
+                    arguments: [`${tableName} AS ${alias}`],
+                    paramType: 'template-literal'
+                });
+            } else {
+                args.push(tableName);
+            }
+
+            if (currentNode.JoinExpr.quals) {
+                const quals = resolveNode(currentNode.JoinExpr.quals, specialNode);
+                args.push(...quals);
+            }
+
+            results.push({
+                name: methodName,
+                arguments: args,
+                paramType: 'function'
+            });
+        } else if (tableKey === 'Alias') {
+            const aliasNode = (tableNode as any).Alias;
+            if (aliasNode && aliasNode.aliascolnames && aliasNode.aliascolnames.length > 0) {
+                const resolved = resolveNode(aliasNode.aliascolnames[0], specialNode);
+                const tableName = resolved[0]?.name?.toString() || '';
+
+                const args: FunctionListType['arguments'] = [tableName];
+
+                if (currentNode.JoinExpr.quals) {
+                    const quals = resolveNode(currentNode.JoinExpr.quals, specialNode);
+                    args.push(...quals);
+                }
+
+                results.push({
+                    name: methodName,
+                    arguments: args,
+                    paramType: 'function'
+                });
+            }
+        }
+
+        return results;
+    },
+    BoolExpr: (node: Node): FunctionListType[] => {
+        const currentNode = normalizeNode<BoolExpr, "BoolExpr">(node, 'BoolExpr');
+        const boolop = currentNode.BoolExpr.boolop || 'AND_EXPR';
+
+        const methodName = boolop === 'AND_EXPR' ? 'and' : 'or';
+
+        const args = currentNode.BoolExpr.args?.map(arg => resolveNode(arg, specialNode)).flat() || [];
+
+        return [{
+            name: methodName,
+            arguments: args,
+            paramType: 'function'
+        }];
+    },
+    SortBy: (node: Node): FunctionListType[] => {
+        const currentNode = normalizeNode<SortBy, "SortBy">(node, 'SortBy');
+        const sortDir = currentNode.SortBy.sortby_dir || 'SORTBY_DEFAULT';
+
+        const expr = currentNode.SortBy.node;
+        if (!expr) return [];
+
+        const resolved = resolveNode(expr, specialNode);
+        const baseExpr = resolved[0];
+
+        if (!baseExpr) return [];
+
+        if (sortDir === 'SORTBY_DESC') {
+            return [{
+                name: 'desc',
+                arguments: [baseExpr],
+                paramType: 'function'
+            }];
+        } else if (sortDir === 'SORTBY_ASC') {
+            return [{
+                name: 'asc',
+                arguments: [baseExpr],
+                paramType: 'function'
+            }];
+        }
+
+        return resolved;
     }
 };
 
@@ -202,6 +479,13 @@ const functionListToString = (fnList: FunctionListType[], baseQueryBuilder: stri
                             : stringifyArg(raw)
                         : JSON.stringify(raw);
             return asExpression ? `${emitPrefix}.${fn.name}\`${content}\`` : `.${fn.name}\`${content}\``;
+        } else if (fn.paramType === "as-chaining") {
+            // Generate .as() chaining: expression.as('alias')
+            const baseExpr = fn.arguments[0];
+            const alias = fn.arguments[1];
+            const baseStr = stringifyArg(baseExpr);
+            const aliasStr = typeof alias === 'string' ? `\`${alias}\`` : stringifyArg(alias);
+            return `${baseStr}.as(${aliasStr})`;
         } else if (fn.paramType === "string") {
             const content = (fn.name || "").toString().replace(/`/g, "\\`").replace(/\\/g, "\\\\");
             return `\`${content}\``;

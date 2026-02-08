@@ -1,0 +1,3 @@
+Match: PASS
+Input SQL: SELECT * FROM orders RIGHT JOIN products ON orders.product_id = products.id
+Output SQL: SELECT * FROM orders RIGHT JOIN products ON orders.product_id = products.id

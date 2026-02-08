@@ -1,0 +1,3 @@
+Match: FAIL
+Input SQL: SELECT COUNT(1), ROUND(AVG(spend_hours)) FROM services
+Output SQL: SELECT COUNT($1), ROUND(AVG(spend_hours)) FROM services

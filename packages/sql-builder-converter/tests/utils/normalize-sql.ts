@@ -27,6 +27,9 @@ export function normalizeSql(sql: string): string {
 
     normalized = normalized.trim();
 
+    // Normalize optional AS keywords in table aliases (FROM table AS alias -> FROM table alias)
+    normalized = normalized.replace(/\sAS\s+/gi, " ");
+
     normalized = normalized.replace(/\s+/g, " ");
 
     const words = normalized.split(/(\s+|[(),])/);

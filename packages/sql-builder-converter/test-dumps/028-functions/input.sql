@@ -1,0 +1,1 @@
+SELECT COALESCE(NULLIF(price, 0), 100) FROM products

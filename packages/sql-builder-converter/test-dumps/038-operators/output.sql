@@ -1,0 +1,1 @@
+SELECT * FROM products WHERE price BETWEEN 10 AND 100

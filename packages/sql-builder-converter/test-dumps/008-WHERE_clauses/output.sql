@@ -1,0 +1,1 @@
+SELECT * FROM orders WHERE status = 'completed' AND paid = true

@@ -1,0 +1,1 @@
+SELECT u.name, COUNT(o.id) AS order_count FROM users AS u LEFT JOIN orders AS o ON u.id = o.user_id WHERE u.active = true GROUP BY u.name HAVING count(o.id) > 0 ORDER BY order_count DESC

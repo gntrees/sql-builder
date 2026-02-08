@@ -1,0 +1,1 @@
+SELECT COUNT($1), ROUND(AVG(spend_hours)) FROM services

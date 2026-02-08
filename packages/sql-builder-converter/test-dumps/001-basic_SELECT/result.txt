@@ -1,0 +1,3 @@
+Match: PASS
+Input SQL: SELECT id, name FROM users
+Output SQL: SELECT id, name FROM users

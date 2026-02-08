@@ -1,0 +1,1 @@
+SELECT department, SUM(salary) FROM employees GROUP BY department HAVING sum(salary) > 100000

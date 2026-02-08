@@ -1,0 +1,1 @@
+const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.select(q.upper(q.c(`name`))).from(`products`);return query;

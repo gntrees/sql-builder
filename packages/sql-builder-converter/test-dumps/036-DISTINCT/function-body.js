@@ -1,0 +1,1 @@
+const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.selectDistinct(q.c(`status`)).from(`orders`);return query;

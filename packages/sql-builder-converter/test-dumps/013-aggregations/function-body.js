@@ -1,0 +1,1 @@
+const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.select(q.count(q.r`*`), q.avg(q.c(`price`))).from(`products`);return query;

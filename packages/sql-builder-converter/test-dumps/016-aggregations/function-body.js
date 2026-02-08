@@ -1,0 +1,1 @@
+const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.select(q.count(q.r`*`)).from(`orders`);return query;
