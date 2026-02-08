@@ -132,4 +132,5 @@ export type OperatorStatement =
 // - undefined -> return base function OR omit parameter (for postgres functions)
 export type Statement = QueryBuilder | ParameterType | number | string | boolean | null | undefined;
 export type StatementArrayValue<T> = Array<T | StatementArrayValue<T>>;
+
 export type IdentifierInput = Statement | Record<string, Statement>;
