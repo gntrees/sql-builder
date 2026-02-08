@@ -1,0 +1,39 @@
+{
+  "name": "@gntrees/sql-builder-converter",
+  "version": "0.0.1",
+  "description": "SQL to query builder converter for gntrees-sql-builder",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "bun run prebuild && bun run build:cjs && bun run build:esm && bun run build:combine",
+    "build:cjs": "tsc -p tsconfig.cjs.json && mv dist/cjs/index.js dist/index.cjs",
+    "build:esm": "tsc -p tsconfig.esm.json && mv dist/esm/index.js dist/index.mjs",
+    "build:combine": "mkdir -p dist/src && cp -r dist/cjs/src/* dist/src/ && cp dist/cjs/index.d.ts dist/ && rm -rf dist/cjs dist/esm",
+    "test": "bun test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@pgsql/enums": "^17.6.2",
+    "@pgsql/traverse": "^17.2.4",
+    "@pgsql/types": "^17.6.2",
+    "@pgsql/utils": "^17.8.12",
+    "pgsql-parser": "^17.6.2",
+    "prettier": "^3.8.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

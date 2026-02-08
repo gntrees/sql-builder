@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "outDir": "./dist/esm",
+        "rootDir": ".",
+        "declaration": true,
+        "declarationDir": "./dist/esm",
+        "emitDeclarationOnly": false,
+        "allowImportingTsExtensions": false,
+        "verbatimModuleSyntax": false
+    },
+    "include": ["index.ts", "src/**/*.ts"],
+    "exclude": ["tests/**", "**/*.test.ts"]
+}
