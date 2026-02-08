@@ -66,9 +66,9 @@ QueryBuilder
 
 **Adding New Functions:**
 1. Create a new function builder file: `src/override-{category}-functions.ts`
-2. Extend from appropriate parent class (usually the last function builder)
+2. Extend from appropriate parent class (usually the last function builder in chain)
 3. Add methods using `this.pushFunction("FUNCTION_NAME", [args])`
-4. Update `src/extract.ts` to include your new file in `parentFiles` array
+4. Update `src/extract.ts` to include your new file in `parentFiles` array (line ~115-141)
 5. Run `bun run generate` to update `QueryInstance`
 6. Create tests in `src/tests/{category}-functions.test.ts`
 
@@ -91,7 +91,7 @@ Important Locations
 - `src/base-raw-query-builder.ts` — low-level parameter primitives and helper methods.
 - `src/query-builder.ts` — main `QueryBuilder` class with public methods (getSql, getParameters, execute).
 - `src/override-query-builder.ts` — comprehensive override extension with custom query methods.
-- Function-specific modules:
+- Function-specific modules (26 categories):
   - `src/override-uuid-functions.ts` — UUID functions
   - `src/override-textsearch-functions.ts` — Full-text search functions
   - `src/override-string-functions.ts` — String manipulation functions
@@ -107,6 +107,16 @@ Important Locations
   - `src/override-xml-functions.ts` — XML functions
   - `src/override-trigger-functions.ts` — Trigger functions (pg_trigger_depth, etc.)
   - `src/override-event-trigger-functions.ts` — Event trigger functions (pg_event_trigger_ddl_commands, etc.)
+  - `src/override-operator-functions.ts` — SQL operators (=, !=, <>, >, <, >=, <=, AND, OR, NOT, etc.)
+  - `src/override-aggregate-functions.ts` — Aggregate functions (count, sum, avg, min, max, etc.)
+  - `src/override-window-functions.ts` — Window functions (row_number, rank, dense_rank, etc.)
+  - `src/override-set-returning-functions.ts` — Set-returning functions (generate_series, unnest, etc.)
+  - `src/override-range-functions.ts` — Range functions (lower, upper, isempty, etc.)
+  - `src/override-merge-functions.ts` — Merge functions
+  - `src/override-subquery-functions.ts` — Subquery functions (exists, in, any, all, etc.)
+  - `src/override-info-functions.ts` — Information functions (current_database, current_user, etc.)
+  - `src/override-admin-functions.ts` — Administrative functions
+  - `src/override-statistics-functions.ts` — Statistical functions
 - Generator:
   - `src/extract.ts` — main generator script using `pgsql-parser`.
   - `keywords.json` — SQL keywords source for generation.
@@ -262,3 +272,9 @@ Use conventional commit format:
 - [ ] Generated files regenerated if needed (`bun run generate`)
 - [ ] Commit messages follow conventions
 - [ ] PR description explains the "why"
+
+Related Documentation
+---------------------
+- [Workspace CLAUDE.md](../../CLAUDE.md) - Workspace-level documentation
+- [Converter CLAUDE.md](../sql-builder-converter/CLAUDE.md) - Converter package documentation
+- SQL_BUILDER_GUIDE.md - Comprehensive guide for the query builder API

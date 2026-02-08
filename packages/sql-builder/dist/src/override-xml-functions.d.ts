@@ -1,0 +1,34 @@
+import { UUIDFunctionBuilder } from "./override-uuid-functions";
+import type { Statement } from "./types";
+export declare class XMLFunctionBuilder extends UUIDFunctionBuilder {
+    xmlcomment(text?: Statement): this;
+    xmlconcat(...xml: Statement[]): this;
+    xmlelement(name?: Statement, attributes?: Statement, ...content: Statement[]): this;
+    xmlattributes(...values: Statement[]): this;
+    xmlforest(...content: Statement[]): this;
+    xmlpi(name?: Statement, content?: Statement): this;
+    xmlroot(xml?: Statement, version?: Statement, standalone?: Statement): this;
+    xmlagg(xml?: Statement): this;
+    xmlparse(xml?: Statement): this;
+    isDocument(xml?: Statement): this;
+    xmlExists(xpath?: Statement, xml?: Statement): this;
+    xmlIsWellFormed(text?: Statement): this;
+    xmlIsWellFormedDocument(text?: Statement): this;
+    xmlIsWellFormedContent(text?: Statement): this;
+    xpath(xpath?: Statement, xml?: Statement, args?: Statement): this;
+    xpathExists(xpath?: Statement, xml?: Statement, args?: Statement): this;
+    tableToXml(tbl?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    queryToXml(query?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    cursorToXml(cursor?: Statement, count?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    tableToXmlschema(tbl?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    queryToXmlschema(query?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    cursorToXmlschema(cursor?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    tableToXmlAndXmlschema(tbl?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    queryToXmlAndXmlschema(query?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    schemaToXml(schema?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    schemaToXmlschema(schema?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    schemaToXmlAndXmlschema(schema?: Statement, nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    databaseToXml(nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    databaseToXmlschema(nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+    databaseToXmlAndXmlschema(nulls?: Statement, tableforest?: Statement, targetns?: Statement): this;
+}

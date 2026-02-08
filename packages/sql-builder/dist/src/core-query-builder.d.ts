@@ -1,0 +1,33 @@
+import { ParameterType } from "./base-raw-query-builder";
+import type { QueryInstance } from "./generated/query-instance";
+import { QueryBuilder } from "./query-builder";
+import type { IdentifierInput, OperatorStatement, ParameterValueType, QueryType, StatementArrayValue, Statement } from "./types";
+export declare class CoreQueryBuilder {
+    protected query: QueryType;
+    protected queryInstance?: QueryInstance;
+    constructor(queryInstance?: QueryInstance);
+    getTokens(): QueryType['sql'];
+    protected requireQueryInstance(): QueryInstance;
+    protected getSqlWithInstance(): string;
+    protected getParametersWithInstance(): ParameterValueType[];
+    protected getSqlWithParametersWithInstance(): string;
+    protected createLiteralParameter(value: ParameterValueType): ParameterType;
+    protected createIdentifierParameter(value: string | number | boolean): ParameterType;
+    protected createStringParameter(value: string): ParameterType;
+    protected createPercentParameter(): ParameterType;
+    protected cloneParameter(parameter: ParameterType): ParameterType;
+    protected resolveStatement(item: Statement | null, index: number): QueryType['sql'];
+    protected resolveStatements(values: Statement[]): QueryType['sql'][];
+    protected normalizeStatementArray<T>(entries: StatementArrayValue<T>): T[];
+    protected resolveIdentifierStatement(item: IdentifierInput | null | undefined, index: number): QueryType['sql'];
+    protected resolveAliasIdentifier(value: Record<string, Statement>, index: number): QueryType['sql'];
+    protected resolveIdentifierString(value: string, index: number): QueryType['sql'];
+    protected resolveIdentifierStatementArray(entries: StatementArrayValue<IdentifierInput>): QueryType['sql'][];
+    protected resolveLiteralStatementArray(entries: StatementArrayValue<Statement>): QueryType['sql'][];
+    protected resolveOperatorStatement(item: OperatorStatement | null | undefined, index: number): QueryType['sql'];
+    protected pushSeparatedTokens(tokensList: QueryType['sql'][], separator: string): void;
+    protected pushFunction(name: string, ...args: Statement[]): this;
+    protected toIdentifier(value: Statement): ParameterType | QueryBuilder | string;
+    protected toLiteral(value: Statement): ParameterType | QueryBuilder | string;
+    protected isIdentifier(value: any): boolean;
+}
