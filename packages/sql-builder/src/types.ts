@@ -2,42 +2,8 @@ import type { BaseRawQueryBuilder } from "./base-raw-query-builder";
 import type { ParameterType } from "./base-raw-query-builder";
 import type { QueryBuilder } from "./query-builder";
 
-// export type OnCommitAction = "ONCOMMIT_NOOP" | "ONCOMMIT_PRESERVE_ROWS" | "ONCOMMIT_DELETE_ROWS" | "ONCOMMIT_DROP";
-
-// export interface SetOperation {
-//     op?: "SETOP_NONE" | "SETOP_UNION" | "SETOP_INTERSECT" | "SETOP_EXCEPT";
-//     all?: boolean;
-// }
-
-// export type SetOperationStmt = SetOperation | undefined;
-
-// export interface IntoClause {
-//     rel?: RangeVar;
-//     colNames?: Statement[];
-//     accessMethod?: string;
-//     options?: Statement[];
-//     onCommit?: OnCommitAction;
-//     tableSpaceName?: string;
-//     viewQuery?: Statement;
-//     skipData?: boolean;
-// }
-// export interface RangeVar {
-//     catalogname?: string;
-//     schemaname?: string;
-//     relname?: string;
-//     inh?: boolean;
-//     relpersistence?: string;
-//     alias?: Alias;
-//     location?: number;
-// }
-// export interface Alias {
-//     aliasname?: string;
-//     colnames?: Statement[];
-// }
-
 export interface QueryType {
     sql: (string|ParameterType)[];
-    // parameters: ParameterType[];
 }
 export interface DBInstance<ReturnType = any> {
     execHandler: ({sql,parameters,meta}:{sql:string, parameters:(string|boolean|number|null)[], queryBuilder:QueryBuilder,meta: any },) => Promise<ReturnType>;
@@ -130,7 +96,9 @@ export type OperatorStatement =
 // - QueryBuilder -> used for identifiers (columns, tables) and subqueries
 // - ParameterType -> internal parameter type for resolved values
 // - undefined -> return base function OR omit parameter (for postgres functions)
-export type Statement = QueryBuilder | ParameterType | number | string | boolean | null | undefined;
+export type Statement = QueryBuilder | 
+// ParameterType | 
+number | string | boolean | null | undefined;
 export type StatementArrayValue<T> = Array<T | StatementArrayValue<T>>;
 
 export type IdentifierInput = Statement | Record<string, Statement>;

@@ -1,7 +1,8 @@
-import { StringFunctionBuilder } from "./override-string-functions";
+import { AllFunctionBuilder } from "./generated/override-all-functions";
+import { StringFunctionBuilder } from "./tests-not-implemented/ovverider/override-string-functions";
 import type { Statement } from "./types";
 
-export class OperatorFunctionBuilder extends StringFunctionBuilder {
+export class OperatorFunctionBuilder extends AllFunctionBuilder {
     // Comparison operators
     eq(val1?: Statement, val2?: Statement) {
         if (val1 !== undefined && val2 !== undefined) {

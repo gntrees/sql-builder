@@ -17,7 +17,8 @@ export class QueryBuilder extends OverrideQueryBuilder {
         return this.getSqlWithParametersWithInstance();
     }
     execute(meta?: any) {
-        const queryInstance = this.requireQueryInstance();
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        const queryInstance = this.queryInstance;
         const data = this.getSqlAndParameters();
         queryInstance.getDbInstance().execHandler({
             sql: data.sql,

@@ -3,6 +3,7 @@ import { ParameterType } from "./base-raw-query-builder";
 import type { QueryInstance } from "./generated/query-instance";
 import { QueryBuilder } from "./query-builder";
 import type { IdentifierInput, OperatorStatement, ParameterValueType, QueryType, RequiredDBInstance, StatementArrayValue, Statement } from "./types";
+import type { PGFunction } from "./postgres-functions-list";
 
 export class CoreQueryBuilder {
     protected query: QueryType = { sql: [] };
@@ -10,18 +11,12 @@ export class CoreQueryBuilder {
     constructor(queryInstance?: QueryInstance) {
         this.queryInstance = queryInstance;
     }
-    
     getTokens(): QueryType['sql'] {
         return this.query.sql;
     }
-    protected requireQueryInstance(): QueryInstance {
-        if (!this.queryInstance) {
-            throw new Error("QueryInstance is required for this operation");
-        }
-        return this.queryInstance;
-    }
     protected getSqlWithInstance() {
-        const queryInstance = this.requireQueryInstance();
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         if (formatParamHandler === "pg") {
             let literalIndex = 0;
@@ -43,7 +38,7 @@ export class CoreQueryBuilder {
                         }
                         return "";
                     }
-                    return item;
+                    return item.trim();
                 }),
             );
         }
@@ -59,7 +54,8 @@ export class CoreQueryBuilder {
         );
     }
     protected getParametersWithInstance() {
-        const queryInstance = this.requireQueryInstance();
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         if (formatParamHandler === "pg") {
             return this.query.sql
@@ -76,7 +72,8 @@ export class CoreQueryBuilder {
             .map((i) => (i as ParameterType).value);
     }
     protected getSqlWithParametersWithInstance() {
-        const queryInstance = this.requireQueryInstance();
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         let paramIndex = 0;
         return joinSqlTokens(
@@ -89,44 +86,34 @@ export class CoreQueryBuilder {
             }),
         );
     }
-    
-
     protected createLiteralParameter(value: ParameterValueType): ParameterType {
         return new ParameterType({
             value,
             type: "literal",
         });
     }
-
     protected createIdentifierParameter(value: string | number | boolean): ParameterType {
         return new ParameterType({
             value,
             type: "identifier",
         });
     }
-
     protected createStringParameter(value: string): ParameterType {
         return new ParameterType({
             value,
             type: "string",
         });
     }
-
     protected createPercentParameter(): ParameterType {
         return new ParameterType({
             value: '%',
             type: "percent",
         });
     }
-
-    protected cloneParameter(parameter: ParameterType): ParameterType {
-        return new ParameterType({
-            value: parameter.value,
-            type: parameter.type,
-        });
-    }
-
-    protected resolveStatement(item: Statement | null, index: number): QueryType['sql'] {
+    protected resolveStatement(item: Statement): QueryType['sql'] {
+        if (item == "*") {
+            return ["*"];
+        }
         if (item === undefined || item === "") {
             return [];
         }
@@ -134,132 +121,47 @@ export class CoreQueryBuilder {
             return [this.createLiteralParameter(null)];
         }
         if (item instanceof QueryBuilder) {
-            return item.getTokens().map((token) =>
-                token instanceof ParameterType ? this.cloneParameter(token) : token,
-            );
+            return item.getTokens();
         }
         if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
             return [this.createLiteralParameter(item)];
         }
-        throw new Error(`Unsupported statement type at index ${index}: ${typeof item}`);
+        return [this.createLiteralParameter(item)];
     }
 
     protected resolveStatements(values: Statement[]): QueryType['sql'][] {
-        return values.map((item, index) => this.resolveStatement(item, index));
+        return values.map((item) => this.resolveStatement(item));
     }
 
-    protected normalizeStatementArray<T>(entries: StatementArrayValue<T>): T[] {
-        const statements: T[] = [];
-        for (const entry of entries) {
-            if (Array.isArray(entry)) {
-                statements.push(...this.normalizeStatementArray(entry));
-                continue;
-            }
-            statements.push(entry);
-        }
-        return statements;
-    }
-
-    protected resolveIdentifierStatement(item: IdentifierInput | null | undefined, index: number): QueryType['sql'] {
+    protected resolveIdentifierStatement(item: Statement): QueryType['sql'] {
         if (item === undefined || item === null || item === "") {
             return [];
         }
-        if (typeof item === "object" && !(item instanceof QueryBuilder) && !(item instanceof ParameterType)) {
-            return this.resolveAliasIdentifier(item, index);
-        }
         if (item instanceof QueryBuilder) {
-            return item.getTokens().map((token) =>
-                token instanceof ParameterType ? this.cloneParameter(token) : token,
-            );
+            return item.getTokens();
         }
-        if (item instanceof ParameterType) {
-            return [this.cloneParameter(item)];
-        }
-        if (typeof item === "string") {
-            return this.resolveIdentifierString(item, index);
-        }
-        if (typeof item === "number" || typeof item === "boolean") {
+        if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
+            if (item === "*") {
+                return ["*"];
+            }
+            if (item === "") {
+                return [];
+            }
             return [this.createIdentifierParameter(item)];
         }
-        throw new Error(`Unsupported statement type at index ${index}: ${typeof item}`);
+        return [this.createIdentifierParameter(item)]
     }
-
-    protected resolveAliasIdentifier(value: Record<string, Statement>, index: number): QueryType['sql'] {
-        const entries = Object.entries(value);
-        if (entries.length === 0) {
-            return [];
-        }
-        const tokens: QueryType['sql'] = [];
-        entries.forEach(([alias, statement], entryIndex) => {
-            if (!alias || alias === "") {
-                throw new Error(`Invalid alias at index ${index}: ${alias}`);
-            }
-            const resolvedStatement = this.resolveIdentifierStatement(statement, index);
-            if (resolvedStatement.length === 0) {
-                return;
-            }
-            if (entryIndex > 0) {
-                tokens.push(",");
-            }
-            tokens.push(...resolvedStatement, "AS", this.createIdentifierParameter(alias));
-        });
-        return tokens;
-    }
-
-    protected resolveIdentifierString(value: string, index: number): QueryType['sql'] {
-        if (value === "*") {
-            return ["*"];
-        }
-        if (value === "") {
-            return [];
-        }
-        if (!value.includes(".")) {
-            return [this.createIdentifierParameter(value)];
-        }
-        const parts = value.split(".");
-        const tokens: QueryType['sql'] = [];
-        parts.forEach((part, partIndex) => {
-            if (!part) {
-                throw new Error(`Invalid identifier at index ${index}: ${value}`);
-            }
-            if (partIndex > 0) {
-                tokens.push(".");
-            }
-            if (part === "*") {
-                tokens.push("*");
-            } else {
-                tokens.push(this.createIdentifierParameter(part));
-            }
-        });
-        return tokens;
-    }
-
-    protected resolveIdentifierStatementArray(entries: StatementArrayValue<IdentifierInput>): QueryType['sql'][] {
-        const statements = this.normalizeStatementArray(entries);
-        return statements.map((item, index) => this.resolveIdentifierStatement(item, index));
-    }
-
-    protected resolveLiteralStatementArray(entries: StatementArrayValue<Statement>): QueryType['sql'][] {
-        const statements = this.normalizeStatementArray(entries);
-        return statements.map((item, index) => this.resolveStatement(item, index));
-    }
-
-    protected resolveOperatorStatement(item: OperatorStatement | null | undefined, index: number): QueryType['sql'] {
-        if (item === undefined || item === null) {
-            return [];
-        }
-        if (typeof item === "string" && (item as string) === "") {
+    protected resolveStringStatement(item: Statement): QueryType['sql'] {
+        if (item === undefined || item === null || item === "") {
             return [];
         }
         if (item instanceof QueryBuilder) {
-            return item.getTokens().map((token) =>
-                token instanceof ParameterType ? this.cloneParameter(token) : token,
-            );
+            return item.getTokens();
         }
-        if (typeof item === "string") {
-            return [item];
+        if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
+            return [String(item)];
         }
-        throw new Error(`Unsupported operator type at index ${index}: ${typeof item}`);
+        throw new Error(`Unsupported string statement type: ${typeof item}`);
     }
 
     protected pushSeparatedTokens(tokensList: QueryType['sql'][], separator: string) {
@@ -277,93 +179,32 @@ export class CoreQueryBuilder {
     }
 
     protected pushFunction(
-        name: string,
-        ...args: Statement[]
-    ) {
-        this.query.sql.push(`${name}(`);
-        const resolvedArgs = args
-            .filter((arg): arg is Exclude<Statement, undefined> =>
-                arg !== undefined && arg !== "")
-            .map((arg, index) => {
-                // If null, create literal parameter
-                if (arg === null) {
-                    return [this.createLiteralParameter(null)];
-                }
-                // If ParameterType, clone and use as-is
-                if (arg instanceof ParameterType) {
-                    return [this.cloneParameter(arg)];
-                }
-                // If QueryBuilder, resolve recursively
-                if (arg instanceof QueryBuilder) {
-                    return arg.getTokens().map((token) =>
-                        token instanceof ParameterType ? this.cloneParameter(token) : token,
-                    );
-                }
-                // If plain string, number, or boolean, treat as literal (default behavior)
-                if (typeof arg === "string" || typeof arg === "number" || typeof arg === "boolean") {
-                    return [this.createLiteralParameter(arg)];
-                }
-                return [];
-            })
-            .filter((tokens) => tokens.length > 0);
-        this.pushSeparatedTokens(resolvedArgs, ",");
-        this.query.sql.push(")");
+        func: PGFunction,
+        ...runtimeArgs: Statement[]
+    ): this {
+        if (func.format === "COERCE_EXPLICIT_CAST") {
+            const arg = runtimeArgs[0];
+            if (arg === undefined || arg === null || arg === "") {
+                return this;
+            }
+            const resolvedArg = this.resolveStatement(arg);
+            if (resolvedArg.length === 0) {
+                return this;
+            }
+            this.query.sql.push("CAST(");
+            this.query.sql.push(...resolvedArg);
+            this.query.sql.push(" AS ");
+            this.query.sql.push(func.name);
+            this.query.sql.push(")");
+        } else {
+            this.query.sql.push(func.name + "(");
+            const filteredArgs = runtimeArgs.filter(arg => arg !== undefined && arg !== "");
+            const resolvedArgs = filteredArgs.map(arg => this.resolveStatement(arg));
+            this.pushSeparatedTokens(resolvedArgs, ",");
+            this.query.sql.push(")");
+        }
         return this;
     }
-
-    // Helper to create identifier ParameterType from Statement
-    // For identifiers, only QueryBuilder should be used
-    // String/number/boolean will be quoted as identifiers
-    protected toIdentifier(value: Statement): ParameterType | QueryBuilder | string {
-        if (value instanceof ParameterType) {
-            return value;
-        }
-        if (value instanceof QueryBuilder) {
-            return value;
-        }
-        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-            return this.createIdentifierParameter(value);
-        }
-        if (value === null || value === undefined) {
-            return "";
-        }
-        return this.createLiteralParameter(value);
-    }
-
-    // Helper to create literal ParameterType from Statement
-    // Handles: QueryBuilder, string, number, boolean, null, undefined
-    protected toLiteral(value: Statement): ParameterType | QueryBuilder | string {
-        if (value instanceof ParameterType) {
-            return value;
-        }
-        if (value instanceof QueryBuilder) {
-            return value;
-        }
-        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-            return this.createLiteralParameter(value);
-        }
-        if (value === null) {
-            return this.createLiteralParameter(null);
-        }
-        if (value === undefined) {
-            return "";
-        }
-        return this.createLiteralParameter(value);
-    }
-
-    protected isIdentifier(value: any): boolean {
-        if (typeof value !== "string") {
-            return false;
-        }
-        try {
-            const quoted = quoteIdent(value);
-
-            return quoted === value;
-        } catch {
-            return false;
-        }
-    }
-
 }
 
 
@@ -435,8 +276,9 @@ function toSql(
             }
         }
         return "";
+    } else {
+        return item.trim();
     }
-    return item;
 }
 
 function toSqlWithParameters(

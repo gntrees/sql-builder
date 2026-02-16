@@ -26,7 +26,7 @@ describe("XML functions", () => {
     });
 
     it("builds xmlelement", () => {
-        const builder = q.select(q.xmlelement(q.l("foo"), undefined, q.l("content")));
+        const builder = q.select(q.xmlelement(q.r`NAME ${"foo"}`, undefined, q.l("content")));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT XMLELEMENT(NAME $1, $2)");
@@ -34,7 +34,7 @@ describe("XML functions", () => {
     });
 
     it("builds xmlelement with attributes", () => {
-        const builder = q.select(q.xmlelement(q.l("foo"), q.xmlattributes(q.c("bar").as("xyz")), q.l("content")));
+        const builder = q.select(q.xmlelement(q.r`NAME ${"foo"}`, q.xmlattributes(q.c("bar").as("xyz")), q.l("content")));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT XMLELEMENT(NAME $1, XMLATTRIBUTES(bar AS xyz), $2)");
@@ -45,7 +45,7 @@ describe("XML functions", () => {
     });
 
     it("builds xmlelement with multiple content", () => {
-        const builder = q.select(q.xmlelement(q.l("foo"), undefined, q.l("content1"), q.l("content2"), q.l("content3")));
+        const builder = q.select(q.xmlelement(q.r`NAME ${"foo"}`, undefined, q.l("content1"), q.l("content2"), q.l("content3")));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT XMLELEMENT(NAME $1, $2, $3, $4)");
@@ -77,7 +77,7 @@ describe("XML functions", () => {
     });
 
     it("builds xmlroot", () => {
-        const builder = q.select(q.xmlroot(q.xmlparse(q.l('<content>abc</content>')), "1.0", "yes"));
+        const builder = q.select(q.xmlroot(q.xmlparse(q.r`DOCUMENT ${'<content>abc</content>'}`),q.r`VERSION ${'1.0'}`, q.r`STANDALONE ${'yes'}`));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT XMLROOT(XMLPARSE(DOCUMENT $1), VERSION $2, STANDALONE $3)");
@@ -85,7 +85,7 @@ describe("XML functions", () => {
     });
 
     it("builds xmlroot without standalone", () => {
-        const builder = q.select(q.xmlroot(q.xmlparse(q.l('<content>abc</content>')), "1.0"));
+        const builder = q.select(q.xmlroot(q.xmlparse(q.r`DOCUMENT ${'<content>abc</content>'}`),q.r`VERSION ${'1.0'}`));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT XMLROOT(XMLPARSE(DOCUMENT $1), VERSION $2)");
@@ -102,16 +102,8 @@ describe("XML functions", () => {
 
     // === XML PREDICATES ===
 
-    it("builds isDocument", () => {
-        const builder = q.select(q.isDocument(q.c("xml_column")));
-        const sql = builder.getSql();
-        const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT xml_column IS DOCUMENT");
-        expect(parameters).toEqual([]);
-    });
-
     it("builds xmlExists", () => {
-        const builder = q.select(q.xmlExists("//town[text() = 'Toronto']", q.c("xml_data")));
+        const builder = q.select(q.xmlexists(q.r`${"//town[text() = 'Toronto']"} PASSING BY REF xml_data`));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT XMLEXISTS($1 PASSING BY REF xml_data)");

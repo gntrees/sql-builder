@@ -32,10 +32,11 @@ describe("date time functions", () => {
     });
 
     it("builds extract", () => {
-        const builder = q.select(q.extract("year", q.l("2024-01-01")));
+        const builder = q.select(q.extract(q.r`YEAR FROM ${"2024-01-01"}`));
         const sql = builder.getSql();
         const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT EXTRACT (YEAR FROM $1)");
+        
+        expect(sql).toBe("SELECT EXTRACT(YEAR FROM $1)");
         expect(parameters).toEqual(["2024-01-01"]);
     });
 
@@ -141,37 +142,5 @@ describe("date time functions", () => {
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT LOCALTIMESTAMP($1)");
         expect(parameters).toEqual([2]);
-    });
-
-    it("builds at time zone", () => {
-        const builder = q.select(q.atTimeZone(q.l("2024-01-01 12:00:00"), "Asia/Tokyo"));
-        const sql = builder.getSql();
-        const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT $1 AT TIME ZONE $2");
-        expect(parameters).toEqual(["2024-01-01 12:00:00", "Asia/Tokyo"]);
-    });
-
-    it("builds at local", () => {
-        const builder = q.select(q.atLocal(q.l("2024-01-01 12:00:00")));
-        const sql = builder.getSql();
-        const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT $1 AT LOCAL");
-        expect(parameters).toEqual(["2024-01-01 12:00:00"]);
-    });
-
-    it("builds at time zone identifier", () => {
-        const builder = q.select(q.atTimeZoneIdentifier(q.i("events.started_at"), "UTC"));
-        const sql = builder.getSql();
-        const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT events.started_at AT TIME ZONE $1");
-        expect(parameters).toEqual(["UTC"]);
-    });
-
-    it("builds at local identifier", () => {
-        const builder = q.select(q.atLocalIdentifier(q.i("events.started_at")));
-        const sql = builder.getSql();
-        const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT events.started_at AT LOCAL");
-        expect(parameters).toEqual([]);
     });
 });

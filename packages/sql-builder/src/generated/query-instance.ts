@@ -39,12 +39,6 @@ export class QueryInstance {
   according() {
     return (new QueryBuilder(this)).according();
   }
-  acldefault(...args: Parameters<OverrideQueryBuilder["acldefault"]>) {
-    return (new QueryBuilder(this)).acldefault(...args);
-  }
-  aclexplode(...args: Parameters<OverrideQueryBuilder["aclexplode"]>) {
-    return (new QueryBuilder(this)).aclexplode(...args);
-  }
   acos(...args: Parameters<OverrideQueryBuilder["acos"]>) {
     return (new QueryBuilder(this)).acos(...args);
   }
@@ -75,8 +69,8 @@ export class QueryInstance {
   aggregate() {
     return (new QueryBuilder(this)).aggregate();
   }
-  all(...args: Parameters<OverrideQueryBuilder["all"]>) {
-    return (new QueryBuilder(this)).all(...args);
+  all() {
+    return (new QueryBuilder(this)).all();
   }
   allocate() {
     return (new QueryBuilder(this)).allocate();
@@ -99,11 +93,11 @@ export class QueryInstance {
   and(...args: Parameters<OverrideQueryBuilder["and"]>) {
     return (new QueryBuilder(this)).and(...args);
   }
-  any(...args: Parameters<OverrideQueryBuilder["any"]>) {
-    return (new QueryBuilder(this)).any(...args);
+  any() {
+    return (new QueryBuilder(this)).any();
   }
-  anyValue(...args: Parameters<OverrideQueryBuilder["anyValue"]>) {
-    return (new QueryBuilder(this)).anyValue(...args);
+  anyValue() {
+    return (new QueryBuilder(this)).anyValue();
   }
   are() {
     return (new QueryBuilder(this)).are();
@@ -114,71 +108,14 @@ export class QueryInstance {
   array() {
     return (new QueryBuilder(this)).array();
   }
-  arrayAgg(...args: Parameters<OverrideQueryBuilder["arrayAgg"]>) {
-    return (new QueryBuilder(this)).arrayAgg(...args);
-  }
-  arrayAppend(...args: Parameters<OverrideQueryBuilder["arrayAppend"]>) {
-    return (new QueryBuilder(this)).arrayAppend(...args);
-  }
-  arrayCat(...args: Parameters<OverrideQueryBuilder["arrayCat"]>) {
-    return (new QueryBuilder(this)).arrayCat(...args);
-  }
-  arrayDims(...args: Parameters<OverrideQueryBuilder["arrayDims"]>) {
-    return (new QueryBuilder(this)).arrayDims(...args);
-  }
-  arrayFill(...args: Parameters<OverrideQueryBuilder["arrayFill"]>) {
-    return (new QueryBuilder(this)).arrayFill(...args);
-  }
-  arrayLength(...args: Parameters<OverrideQueryBuilder["arrayLength"]>) {
-    return (new QueryBuilder(this)).arrayLength(...args);
-  }
-  arrayLower(...args: Parameters<OverrideQueryBuilder["arrayLower"]>) {
-    return (new QueryBuilder(this)).arrayLower(...args);
+  arrayAgg() {
+    return (new QueryBuilder(this)).arrayAgg();
   }
   arraymaxcardinality() {
     return (new QueryBuilder(this)).arraymaxcardinality();
   }
-  arrayNdims(...args: Parameters<OverrideQueryBuilder["arrayNdims"]>) {
-    return (new QueryBuilder(this)).arrayNdims(...args);
-  }
-  arrayPosition(...args: Parameters<OverrideQueryBuilder["arrayPosition"]>) {
-    return (new QueryBuilder(this)).arrayPosition(...args);
-  }
-  arrayPositions(...args: Parameters<OverrideQueryBuilder["arrayPositions"]>) {
-    return (new QueryBuilder(this)).arrayPositions(...args);
-  }
-  arrayPrepend(...args: Parameters<OverrideQueryBuilder["arrayPrepend"]>) {
-    return (new QueryBuilder(this)).arrayPrepend(...args);
-  }
-  arrayRemove(...args: Parameters<OverrideQueryBuilder["arrayRemove"]>) {
-    return (new QueryBuilder(this)).arrayRemove(...args);
-  }
-  arrayReplace(...args: Parameters<OverrideQueryBuilder["arrayReplace"]>) {
-    return (new QueryBuilder(this)).arrayReplace(...args);
-  }
-  arrayReverse(...args: Parameters<OverrideQueryBuilder["arrayReverse"]>) {
-    return (new QueryBuilder(this)).arrayReverse(...args);
-  }
-  arraySample(...args: Parameters<OverrideQueryBuilder["arraySample"]>) {
-    return (new QueryBuilder(this)).arraySample(...args);
-  }
-  arrayShuffle(...args: Parameters<OverrideQueryBuilder["arrayShuffle"]>) {
-    return (new QueryBuilder(this)).arrayShuffle(...args);
-  }
-  arraySort(...args: Parameters<OverrideQueryBuilder["arraySort"]>) {
-    return (new QueryBuilder(this)).arraySort(...args);
-  }
-  arrayToJson(...args: Parameters<OverrideQueryBuilder["arrayToJson"]>) {
-    return (new QueryBuilder(this)).arrayToJson(...args);
-  }
-  arrayToString(...args: Parameters<OverrideQueryBuilder["arrayToString"]>) {
-    return (new QueryBuilder(this)).arrayToString(...args);
-  }
   arrayToTsvector(...args: Parameters<OverrideQueryBuilder["arrayToTsvector"]>) {
     return (new QueryBuilder(this)).arrayToTsvector(...args);
-  }
-  arrayUpper(...args: Parameters<OverrideQueryBuilder["arrayUpper"]>) {
-    return (new QueryBuilder(this)).arrayUpper(...args);
   }
   as(...args: Parameters<OverrideQueryBuilder["as"]>) {
     return (new QueryBuilder(this)).as(...args);
@@ -228,12 +165,6 @@ export class QueryInstance {
   atanh(...args: Parameters<OverrideQueryBuilder["atanh"]>) {
     return (new QueryBuilder(this)).atanh(...args);
   }
-  atLocal(...args: Parameters<OverrideQueryBuilder["atLocal"]>) {
-    return (new QueryBuilder(this)).atLocal(...args);
-  }
-  atLocalIdentifier(...args: Parameters<OverrideQueryBuilder["atLocalIdentifier"]>) {
-    return (new QueryBuilder(this)).atLocalIdentifier(...args);
-  }
   atomic() {
     return (new QueryBuilder(this)).atomic();
   }
@@ -242,12 +173,6 @@ export class QueryInstance {
   }
   attach() {
     return (new QueryBuilder(this)).attach();
-  }
-  atTimeZone(...args: Parameters<OverrideQueryBuilder["atTimeZone"]>) {
-    return (new QueryBuilder(this)).atTimeZone(...args);
-  }
-  atTimeZoneIdentifier(...args: Parameters<OverrideQueryBuilder["atTimeZoneIdentifier"]>) {
-    return (new QueryBuilder(this)).atTimeZoneIdentifier(...args);
   }
   attribute() {
     return (new QueryBuilder(this)).attribute();
@@ -258,8 +183,8 @@ export class QueryInstance {
   authorization() {
     return (new QueryBuilder(this)).authorization();
   }
-  avg(...args: Parameters<OverrideQueryBuilder["avg"]>) {
-    return (new QueryBuilder(this)).avg(...args);
+  avg() {
+    return (new QueryBuilder(this)).avg();
   }
   backward() {
     return (new QueryBuilder(this)).backward();
@@ -300,17 +225,11 @@ export class QueryInstance {
   bit() {
     return (new QueryBuilder(this)).bit();
   }
-  bitAnd(...args: Parameters<OverrideQueryBuilder["bitAnd"]>) {
-    return (new QueryBuilder(this)).bitAnd(...args);
-  }
   bitCount(...args: Parameters<OverrideQueryBuilder["bitCount"]>) {
     return (new QueryBuilder(this)).bitCount(...args);
   }
   bitLength(...args: Parameters<OverrideQueryBuilder["bitLength"]>) {
     return (new QueryBuilder(this)).bitLength(...args);
-  }
-  bitOr(...args: Parameters<OverrideQueryBuilder["bitOr"]>) {
-    return (new QueryBuilder(this)).bitOr(...args);
   }
   bitwiseAnd(...args: Parameters<OverrideQueryBuilder["bitwiseAnd"]>) {
     return (new QueryBuilder(this)).bitwiseAnd(...args);
@@ -333,9 +252,6 @@ export class QueryInstance {
   bitwiseXor(...args: Parameters<OverrideQueryBuilder["bitwiseXor"]>) {
     return (new QueryBuilder(this)).bitwiseXor(...args);
   }
-  bitXor(...args: Parameters<OverrideQueryBuilder["bitXor"]>) {
-    return (new QueryBuilder(this)).bitXor(...args);
-  }
   blob() {
     return (new QueryBuilder(this)).blob();
   }
@@ -345,14 +261,8 @@ export class QueryInstance {
   bom() {
     return (new QueryBuilder(this)).bom();
   }
-  boolAnd(...args: Parameters<OverrideQueryBuilder["boolAnd"]>) {
-    return (new QueryBuilder(this)).boolAnd(...args);
-  }
   boolean() {
     return (new QueryBuilder(this)).boolean();
-  }
-  boolOr(...args: Parameters<OverrideQueryBuilder["boolOr"]>) {
-    return (new QueryBuilder(this)).boolOr(...args);
   }
   both() {
     return (new QueryBuilder(this)).both();
@@ -366,15 +276,6 @@ export class QueryInstance {
   breadth() {
     return (new QueryBuilder(this)).breadth();
   }
-  brinDesummarizeRange(...args: Parameters<OverrideQueryBuilder["brinDesummarizeRange"]>) {
-    return (new QueryBuilder(this)).brinDesummarizeRange(...args);
-  }
-  brinSummarizeNewValues(...args: Parameters<OverrideQueryBuilder["brinSummarizeNewValues"]>) {
-    return (new QueryBuilder(this)).brinSummarizeNewValues(...args);
-  }
-  brinSummarizeRange(...args: Parameters<OverrideQueryBuilder["brinSummarizeRange"]>) {
-    return (new QueryBuilder(this)).brinSummarizeRange(...args);
-  }
   broadcast(...args: Parameters<OverrideQueryBuilder["broadcast"]>) {
     return (new QueryBuilder(this)).broadcast(...args);
   }
@@ -383,9 +284,6 @@ export class QueryInstance {
   }
   by() {
     return (new QueryBuilder(this)).by();
-  }
-  byteaConcat(...args: Parameters<OverrideQueryBuilder["byteaConcat"]>) {
-    return (new QueryBuilder(this)).byteaConcat(...args);
   }
   c(...args: Parameters<OverrideQueryBuilder["c"]>) {
     return (new QueryBuilder(this)).c(...args);
@@ -399,8 +297,8 @@ export class QueryInstance {
   called() {
     return (new QueryBuilder(this)).called();
   }
-  cardinality(...args: Parameters<OverrideQueryBuilder["cardinality"]>) {
-    return (new QueryBuilder(this)).cardinality(...args);
+  cardinality() {
+    return (new QueryBuilder(this)).cardinality();
   }
   caretAt(...args: Parameters<OverrideQueryBuilder["caretAt"]>) {
     return (new QueryBuilder(this)).caretAt(...args);
@@ -507,14 +405,11 @@ export class QueryInstance {
   cluster() {
     return (new QueryBuilder(this)).cluster();
   }
-  coalesce(...args: Parameters<OverrideQueryBuilder["coalesce"]>) {
-    return (new QueryBuilder(this)).coalesce(...args);
+  coalesce() {
+    return (new QueryBuilder(this)).coalesce();
   }
   cobol() {
     return (new QueryBuilder(this)).cobol();
-  }
-  colDescription(...args: Parameters<OverrideQueryBuilder["colDescription"]>) {
-    return (new QueryBuilder(this)).colDescription(...args);
   }
   collate() {
     return (new QueryBuilder(this)).collate();
@@ -657,8 +552,8 @@ export class QueryInstance {
   copy() {
     return (new QueryBuilder(this)).copy();
   }
-  corr(...args: Parameters<OverrideQueryBuilder["corr"]>) {
-    return (new QueryBuilder(this)).corr(...args);
+  corr() {
+    return (new QueryBuilder(this)).corr();
   }
   corresponding() {
     return (new QueryBuilder(this)).corresponding();
@@ -681,14 +576,14 @@ export class QueryInstance {
   cotd(...args: Parameters<OverrideQueryBuilder["cotd"]>) {
     return (new QueryBuilder(this)).cotd(...args);
   }
-  count(...args: Parameters<OverrideQueryBuilder["count"]>) {
-    return (new QueryBuilder(this)).count(...args);
+  count() {
+    return (new QueryBuilder(this)).count();
   }
-  covarPop(...args: Parameters<OverrideQueryBuilder["covarPop"]>) {
-    return (new QueryBuilder(this)).covarPop(...args);
+  covarPop() {
+    return (new QueryBuilder(this)).covarPop();
   }
-  covarSamp(...args: Parameters<OverrideQueryBuilder["covarSamp"]>) {
-    return (new QueryBuilder(this)).covarSamp(...args);
+  covarSamp() {
+    return (new QueryBuilder(this)).covarSamp();
   }
   crc32(...args: Parameters<OverrideQueryBuilder["crc32"]>) {
     return (new QueryBuilder(this)).crc32(...args);
@@ -717,8 +612,8 @@ export class QueryInstance {
   cube() {
     return (new QueryBuilder(this)).cube();
   }
-  cumeDist(...args: Parameters<OverrideQueryBuilder["cumeDist"]>) {
-    return (new QueryBuilder(this)).cumeDist(...args);
+  cumeDist() {
+    return (new QueryBuilder(this)).cumeDist();
   }
   current() {
     return (new QueryBuilder(this)).current();
@@ -726,20 +621,14 @@ export class QueryInstance {
   currentCatalog() {
     return (new QueryBuilder(this)).currentCatalog();
   }
-  currentDatabase(...args: Parameters<OverrideQueryBuilder["currentDatabase"]>) {
-    return (new QueryBuilder(this)).currentDatabase(...args);
-  }
-  currentDate() {
-    return (new QueryBuilder(this)).currentDate();
+  currentDate(...args: Parameters<OverrideQueryBuilder["currentDate"]>) {
+    return (new QueryBuilder(this)).currentDate(...args);
   }
   currentdefaulttransformgroup() {
     return (new QueryBuilder(this)).currentdefaulttransformgroup();
   }
   currentPath() {
     return (new QueryBuilder(this)).currentPath();
-  }
-  currentQuery(...args: Parameters<OverrideQueryBuilder["currentQuery"]>) {
-    return (new QueryBuilder(this)).currentQuery(...args);
   }
   currentRole() {
     return (new QueryBuilder(this)).currentRole();
@@ -749,12 +638,6 @@ export class QueryInstance {
   }
   currentSchema() {
     return (new QueryBuilder(this)).currentSchema();
-  }
-  currentSchemas(...args: Parameters<OverrideQueryBuilder["currentSchemas"]>) {
-    return (new QueryBuilder(this)).currentSchemas(...args);
-  }
-  currentSetting(...args: Parameters<OverrideQueryBuilder["currentSetting"]>) {
-    return (new QueryBuilder(this)).currentSetting(...args);
   }
   currentTime(...args: Parameters<OverrideQueryBuilder["currentTime"]>) {
     return (new QueryBuilder(this)).currentTime(...args);
@@ -767,9 +650,6 @@ export class QueryInstance {
   }
   currentUser() {
     return (new QueryBuilder(this)).currentUser();
-  }
-  currval(...args: Parameters<OverrideQueryBuilder["currval"]>) {
-    return (new QueryBuilder(this)).currval(...args);
   }
   cursor() {
     return (new QueryBuilder(this)).cursor();
@@ -888,8 +768,8 @@ export class QueryInstance {
   delimiters() {
     return (new QueryBuilder(this)).delimiters();
   }
-  denseRank(...args: Parameters<OverrideQueryBuilder["denseRank"]>) {
-    return (new QueryBuilder(this)).denseRank(...args);
+  denseRank() {
+    return (new QueryBuilder(this)).denseRank();
   }
   depends() {
     return (new QueryBuilder(this)).depends();
@@ -1083,8 +963,8 @@ export class QueryInstance {
   event() {
     return (new QueryBuilder(this)).event();
   }
-  every(...args: Parameters<OverrideQueryBuilder["every"]>) {
-    return (new QueryBuilder(this)).every(...args);
+  every() {
+    return (new QueryBuilder(this)).every();
   }
   except(...args: Parameters<OverrideQueryBuilder["except"]>) {
     return (new QueryBuilder(this)).except(...args);
@@ -1113,8 +993,8 @@ export class QueryInstance {
   executeKeyword() {
     return (new QueryBuilder(this)).executeKeyword();
   }
-  exists(...args: Parameters<OverrideQueryBuilder["exists"]>) {
-    return (new QueryBuilder(this)).exists(...args);
+  exists() {
+    return (new QueryBuilder(this)).exists();
   }
   exp(...args: Parameters<OverrideQueryBuilder["exp"]>) {
     return (new QueryBuilder(this)).exp(...args);
@@ -1140,8 +1020,8 @@ export class QueryInstance {
   false() {
     return (new QueryBuilder(this)).false();
   }
-  family() {
-    return (new QueryBuilder(this)).family();
+  family(...args: Parameters<OverrideQueryBuilder["family"]>) {
+    return (new QueryBuilder(this)).family(...args);
   }
   fetch(...args: Parameters<OverrideQueryBuilder["fetch"]>) {
     return (new QueryBuilder(this)).fetch(...args);
@@ -1164,8 +1044,8 @@ export class QueryInstance {
   first() {
     return (new QueryBuilder(this)).first();
   }
-  firstValue(...args: Parameters<OverrideQueryBuilder["firstValue"]>) {
-    return (new QueryBuilder(this)).firstValue(...args);
+  firstValue() {
+    return (new QueryBuilder(this)).firstValue();
   }
   flag() {
     return (new QueryBuilder(this)).flag();
@@ -1188,14 +1068,23 @@ export class QueryInstance {
   foreign() {
     return (new QueryBuilder(this)).foreign();
   }
+  forKeyShare(...args: Parameters<OverrideQueryBuilder["forKeyShare"]>) {
+    return (new QueryBuilder(this)).forKeyShare(...args);
+  }
   format(...args: Parameters<OverrideQueryBuilder["format"]>) {
     return (new QueryBuilder(this)).format(...args);
   }
-  formatType(...args: Parameters<OverrideQueryBuilder["formatType"]>) {
-    return (new QueryBuilder(this)).formatType(...args);
+  forNoKeyUpdate(...args: Parameters<OverrideQueryBuilder["forNoKeyUpdate"]>) {
+    return (new QueryBuilder(this)).forNoKeyUpdate(...args);
+  }
+  forShare(...args: Parameters<OverrideQueryBuilder["forShare"]>) {
+    return (new QueryBuilder(this)).forShare(...args);
   }
   fortran() {
     return (new QueryBuilder(this)).fortran();
+  }
+  forUpdate(...args: Parameters<OverrideQueryBuilder["forUpdate"]>) {
+    return (new QueryBuilder(this)).forUpdate(...args);
   }
   forward() {
     return (new QueryBuilder(this)).forward();
@@ -1251,12 +1140,6 @@ export class QueryInstance {
   generated() {
     return (new QueryBuilder(this)).generated();
   }
-  generateSeries(...args: Parameters<OverrideQueryBuilder["generateSeries"]>) {
-    return (new QueryBuilder(this)).generateSeries(...args);
-  }
-  generateSubscripts(...args: Parameters<OverrideQueryBuilder["generateSubscripts"]>) {
-    return (new QueryBuilder(this)).generateSubscripts(...args);
-  }
   genRandomUuid(...args: Parameters<OverrideQueryBuilder["genRandomUuid"]>) {
     return (new QueryBuilder(this)).genRandomUuid(...args);
   }
@@ -1271,9 +1154,6 @@ export class QueryInstance {
   }
   getCurrentTsConfig(...args: Parameters<OverrideQueryBuilder["getCurrentTsConfig"]>) {
     return (new QueryBuilder(this)).getCurrentTsConfig(...args);
-  }
-  ginCleanPendingList(...args: Parameters<OverrideQueryBuilder["ginCleanPendingList"]>) {
-    return (new QueryBuilder(this)).ginCleanPendingList(...args);
   }
   global() {
     return (new QueryBuilder(this)).global();
@@ -1290,8 +1170,8 @@ export class QueryInstance {
   granted() {
     return (new QueryBuilder(this)).granted();
   }
-  greatest(...args: Parameters<OverrideQueryBuilder["greatest"]>) {
-    return (new QueryBuilder(this)).greatest(...args);
+  greatest() {
+    return (new QueryBuilder(this)).greatest();
   }
   group() {
     return (new QueryBuilder(this)).group();
@@ -1299,8 +1179,11 @@ export class QueryInstance {
   groupBy(...args: Parameters<OverrideQueryBuilder["groupBy"]>) {
     return (new QueryBuilder(this)).groupBy(...args);
   }
-  grouping(...args: Parameters<OverrideQueryBuilder["grouping"]>) {
-    return (new QueryBuilder(this)).grouping(...args);
+  groupByDistinct(...args: Parameters<OverrideQueryBuilder["groupByDistinct"]>) {
+    return (new QueryBuilder(this)).groupByDistinct(...args);
+  }
+  grouping() {
+    return (new QueryBuilder(this)).grouping();
   }
   groups() {
     return (new QueryBuilder(this)).groups();
@@ -1314,47 +1197,8 @@ export class QueryInstance {
   handler() {
     return (new QueryBuilder(this)).handler();
   }
-  hasAnyColumnPrivilege(...args: Parameters<OverrideQueryBuilder["hasAnyColumnPrivilege"]>) {
-    return (new QueryBuilder(this)).hasAnyColumnPrivilege(...args);
-  }
-  hasColumnPrivilege(...args: Parameters<OverrideQueryBuilder["hasColumnPrivilege"]>) {
-    return (new QueryBuilder(this)).hasColumnPrivilege(...args);
-  }
-  hasDatabasePrivilege(...args: Parameters<OverrideQueryBuilder["hasDatabasePrivilege"]>) {
-    return (new QueryBuilder(this)).hasDatabasePrivilege(...args);
-  }
-  hasFunctionPrivilege(...args: Parameters<OverrideQueryBuilder["hasFunctionPrivilege"]>) {
-    return (new QueryBuilder(this)).hasFunctionPrivilege(...args);
-  }
   hash(...args: Parameters<OverrideQueryBuilder["hash"]>) {
     return (new QueryBuilder(this)).hash(...args);
-  }
-  hasLanguagePrivilege(...args: Parameters<OverrideQueryBuilder["hasLanguagePrivilege"]>) {
-    return (new QueryBuilder(this)).hasLanguagePrivilege(...args);
-  }
-  hasLargeobjectPrivilege(...args: Parameters<OverrideQueryBuilder["hasLargeobjectPrivilege"]>) {
-    return (new QueryBuilder(this)).hasLargeobjectPrivilege(...args);
-  }
-  hasParameterPrivilege(...args: Parameters<OverrideQueryBuilder["hasParameterPrivilege"]>) {
-    return (new QueryBuilder(this)).hasParameterPrivilege(...args);
-  }
-  hasSchemaPrivilege(...args: Parameters<OverrideQueryBuilder["hasSchemaPrivilege"]>) {
-    return (new QueryBuilder(this)).hasSchemaPrivilege(...args);
-  }
-  hasSequencePrivilege(...args: Parameters<OverrideQueryBuilder["hasSequencePrivilege"]>) {
-    return (new QueryBuilder(this)).hasSequencePrivilege(...args);
-  }
-  hasServerPrivilege(...args: Parameters<OverrideQueryBuilder["hasServerPrivilege"]>) {
-    return (new QueryBuilder(this)).hasServerPrivilege(...args);
-  }
-  hasTablePrivilege(...args: Parameters<OverrideQueryBuilder["hasTablePrivilege"]>) {
-    return (new QueryBuilder(this)).hasTablePrivilege(...args);
-  }
-  hasTablespacePrivilege(...args: Parameters<OverrideQueryBuilder["hasTablespacePrivilege"]>) {
-    return (new QueryBuilder(this)).hasTablespacePrivilege(...args);
-  }
-  hasTypePrivilege(...args: Parameters<OverrideQueryBuilder["hasTypePrivilege"]>) {
-    return (new QueryBuilder(this)).hasTypePrivilege(...args);
   }
   having(...args: Parameters<OverrideQueryBuilder["having"]>) {
     return (new QueryBuilder(this)).having(...args);
@@ -1388,9 +1232,6 @@ export class QueryInstance {
   }
   i(...args: Parameters<BaseRawQueryBuilder["i"]>) {
     return (new QueryBuilder(this)).i(...args);
-  }
-  icuUnicodeVersion(...args: Parameters<OverrideQueryBuilder["icuUnicodeVersion"]>) {
-    return (new QueryBuilder(this)).icuUnicodeVersion(...args);
   }
   id() {
     return (new QueryBuilder(this)).id();
@@ -1431,8 +1272,8 @@ export class QueryInstance {
   import() {
     return (new QueryBuilder(this)).import();
   }
-  in(...args: Parameters<OverrideQueryBuilder["in"]>) {
-    return (new QueryBuilder(this)).in(...args);
+  in() {
+    return (new QueryBuilder(this)).in();
   }
   include() {
     return (new QueryBuilder(this)).include();
@@ -1455,23 +1296,11 @@ export class QueryInstance {
   indicator() {
     return (new QueryBuilder(this)).indicator();
   }
-  inetClientAddr(...args: Parameters<OverrideQueryBuilder["inetClientAddr"]>) {
-    return (new QueryBuilder(this)).inetClientAddr(...args);
-  }
-  inetClientPort(...args: Parameters<OverrideQueryBuilder["inetClientPort"]>) {
-    return (new QueryBuilder(this)).inetClientPort(...args);
-  }
   inetMerge(...args: Parameters<OverrideQueryBuilder["inetMerge"]>) {
     return (new QueryBuilder(this)).inetMerge(...args);
   }
   inetSameFamily(...args: Parameters<OverrideQueryBuilder["inetSameFamily"]>) {
     return (new QueryBuilder(this)).inetSameFamily(...args);
-  }
-  inetServerAddr(...args: Parameters<OverrideQueryBuilder["inetServerAddr"]>) {
-    return (new QueryBuilder(this)).inetServerAddr(...args);
-  }
-  inetServerPort(...args: Parameters<OverrideQueryBuilder["inetServerPort"]>) {
-    return (new QueryBuilder(this)).inetServerPort(...args);
   }
   inherit() {
     return (new QueryBuilder(this)).inherit();
@@ -1545,8 +1374,8 @@ export class QueryInstance {
   interval() {
     return (new QueryBuilder(this)).interval();
   }
-  into() {
-    return (new QueryBuilder(this)).into();
+  into(...args: Parameters<OverrideQueryBuilder["into"]>) {
+    return (new QueryBuilder(this)).into(...args);
   }
   invoker() {
     return (new QueryBuilder(this)).invoker();
@@ -1556,12 +1385,6 @@ export class QueryInstance {
   }
   isclosed(...args: Parameters<OverrideQueryBuilder["isclosed"]>) {
     return (new QueryBuilder(this)).isclosed(...args);
-  }
-  isDocument(...args: Parameters<OverrideQueryBuilder["isDocument"]>) {
-    return (new QueryBuilder(this)).isDocument(...args);
-  }
-  isempty(...args: Parameters<OverrideQueryBuilder["isempty"]>) {
-    return (new QueryBuilder(this)).isempty(...args);
   }
   isfinite(...args: Parameters<OverrideQueryBuilder["isfinite"]>) {
     return (new QueryBuilder(this)).isfinite(...args);
@@ -1587,200 +1410,23 @@ export class QueryInstance {
   json() {
     return (new QueryBuilder(this)).json();
   }
-  jsonAgg(...args: Parameters<OverrideQueryBuilder["jsonAgg"]>) {
-    return (new QueryBuilder(this)).jsonAgg(...args);
-  }
-  jsonAggStrict(...args: Parameters<OverrideQueryBuilder["jsonAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonAggStrict(...args);
-  }
   jsonArray() {
     return (new QueryBuilder(this)).jsonArray();
   }
-  jsonArrayagg(...args: Parameters<OverrideQueryBuilder["jsonArrayagg"]>) {
-    return (new QueryBuilder(this)).jsonArrayagg(...args);
-  }
-  jsonArrayElements(...args: Parameters<OverrideQueryBuilder["jsonArrayElements"]>) {
-    return (new QueryBuilder(this)).jsonArrayElements(...args);
-  }
-  jsonArrayElementsText(...args: Parameters<OverrideQueryBuilder["jsonArrayElementsText"]>) {
-    return (new QueryBuilder(this)).jsonArrayElementsText(...args);
-  }
-  jsonArrayLength(...args: Parameters<OverrideQueryBuilder["jsonArrayLength"]>) {
-    return (new QueryBuilder(this)).jsonArrayLength(...args);
-  }
-  jsonbAgg(...args: Parameters<OverrideQueryBuilder["jsonbAgg"]>) {
-    return (new QueryBuilder(this)).jsonbAgg(...args);
-  }
-  jsonbAggStrict(...args: Parameters<OverrideQueryBuilder["jsonbAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonbAggStrict(...args);
-  }
-  jsonbArrayElements(...args: Parameters<OverrideQueryBuilder["jsonbArrayElements"]>) {
-    return (new QueryBuilder(this)).jsonbArrayElements(...args);
-  }
-  jsonbArrayElementsText(...args: Parameters<OverrideQueryBuilder["jsonbArrayElementsText"]>) {
-    return (new QueryBuilder(this)).jsonbArrayElementsText(...args);
-  }
-  jsonbArrayLength(...args: Parameters<OverrideQueryBuilder["jsonbArrayLength"]>) {
-    return (new QueryBuilder(this)).jsonbArrayLength(...args);
-  }
-  jsonbBuildArray(...args: Parameters<OverrideQueryBuilder["jsonbBuildArray"]>) {
-    return (new QueryBuilder(this)).jsonbBuildArray(...args);
-  }
-  jsonbBuildObject(...args: Parameters<OverrideQueryBuilder["jsonbBuildObject"]>) {
-    return (new QueryBuilder(this)).jsonbBuildObject(...args);
-  }
-  jsonbEach(...args: Parameters<OverrideQueryBuilder["jsonbEach"]>) {
-    return (new QueryBuilder(this)).jsonbEach(...args);
-  }
-  jsonbEachText(...args: Parameters<OverrideQueryBuilder["jsonbEachText"]>) {
-    return (new QueryBuilder(this)).jsonbEachText(...args);
-  }
-  jsonbExtractPath(...args: Parameters<OverrideQueryBuilder["jsonbExtractPath"]>) {
-    return (new QueryBuilder(this)).jsonbExtractPath(...args);
-  }
-  jsonbExtractPathText(...args: Parameters<OverrideQueryBuilder["jsonbExtractPathText"]>) {
-    return (new QueryBuilder(this)).jsonbExtractPathText(...args);
-  }
-  jsonbInsert(...args: Parameters<OverrideQueryBuilder["jsonbInsert"]>) {
-    return (new QueryBuilder(this)).jsonbInsert(...args);
-  }
-  jsonbObjectAgg(...args: Parameters<OverrideQueryBuilder["jsonbObjectAgg"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAgg(...args);
-  }
-  jsonbObjectAggStrict(...args: Parameters<OverrideQueryBuilder["jsonbObjectAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAggStrict(...args);
-  }
-  jsonbObjectAggUnique(...args: Parameters<OverrideQueryBuilder["jsonbObjectAggUnique"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAggUnique(...args);
-  }
-  jsonbObjectAggUniqueStrict(...args: Parameters<OverrideQueryBuilder["jsonbObjectAggUniqueStrict"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAggUniqueStrict(...args);
-  }
-  jsonbObjectFromArray(...args: Parameters<OverrideQueryBuilder["jsonbObjectFromArray"]>) {
-    return (new QueryBuilder(this)).jsonbObjectFromArray(...args);
-  }
-  jsonbObjectFromPairs(...args: Parameters<OverrideQueryBuilder["jsonbObjectFromPairs"]>) {
-    return (new QueryBuilder(this)).jsonbObjectFromPairs(...args);
-  }
-  jsonbObjectKeys(...args: Parameters<OverrideQueryBuilder["jsonbObjectKeys"]>) {
-    return (new QueryBuilder(this)).jsonbObjectKeys(...args);
-  }
-  jsonbPathExists(...args: Parameters<OverrideQueryBuilder["jsonbPathExists"]>) {
-    return (new QueryBuilder(this)).jsonbPathExists(...args);
-  }
-  jsonbPathExistsTz(...args: Parameters<OverrideQueryBuilder["jsonbPathExistsTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathExistsTz(...args);
-  }
-  jsonbPathMatch(...args: Parameters<OverrideQueryBuilder["jsonbPathMatch"]>) {
-    return (new QueryBuilder(this)).jsonbPathMatch(...args);
-  }
-  jsonbPathMatchTz(...args: Parameters<OverrideQueryBuilder["jsonbPathMatchTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathMatchTz(...args);
-  }
-  jsonbPathQuery(...args: Parameters<OverrideQueryBuilder["jsonbPathQuery"]>) {
-    return (new QueryBuilder(this)).jsonbPathQuery(...args);
-  }
-  jsonbPathQueryArray(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryArray"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryArray(...args);
-  }
-  jsonbPathQueryArrayTz(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryArrayTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryArrayTz(...args);
-  }
-  jsonbPathQueryFirst(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryFirst"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryFirst(...args);
-  }
-  jsonbPathQueryFirstTz(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryFirstTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryFirstTz(...args);
-  }
-  jsonbPathQueryTz(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryTz(...args);
-  }
-  jsonbPopulateRecord(...args: Parameters<OverrideQueryBuilder["jsonbPopulateRecord"]>) {
-    return (new QueryBuilder(this)).jsonbPopulateRecord(...args);
-  }
-  jsonbPopulateRecordset(...args: Parameters<OverrideQueryBuilder["jsonbPopulateRecordset"]>) {
-    return (new QueryBuilder(this)).jsonbPopulateRecordset(...args);
-  }
-  jsonbPopulateRecordValid(...args: Parameters<OverrideQueryBuilder["jsonbPopulateRecordValid"]>) {
-    return (new QueryBuilder(this)).jsonbPopulateRecordValid(...args);
-  }
-  jsonbPretty(...args: Parameters<OverrideQueryBuilder["jsonbPretty"]>) {
-    return (new QueryBuilder(this)).jsonbPretty(...args);
-  }
-  jsonbSet(...args: Parameters<OverrideQueryBuilder["jsonbSet"]>) {
-    return (new QueryBuilder(this)).jsonbSet(...args);
-  }
-  jsonbSetLax(...args: Parameters<OverrideQueryBuilder["jsonbSetLax"]>) {
-    return (new QueryBuilder(this)).jsonbSetLax(...args);
-  }
-  jsonbStripNulls(...args: Parameters<OverrideQueryBuilder["jsonbStripNulls"]>) {
-    return (new QueryBuilder(this)).jsonbStripNulls(...args);
-  }
-  jsonbToRecord(...args: Parameters<OverrideQueryBuilder["jsonbToRecord"]>) {
-    return (new QueryBuilder(this)).jsonbToRecord(...args);
-  }
-  jsonbToRecordset(...args: Parameters<OverrideQueryBuilder["jsonbToRecordset"]>) {
-    return (new QueryBuilder(this)).jsonbToRecordset(...args);
+  jsonArrayagg() {
+    return (new QueryBuilder(this)).jsonArrayagg();
   }
   jsonbToTsvector(...args: Parameters<OverrideQueryBuilder["jsonbToTsvector"]>) {
     return (new QueryBuilder(this)).jsonbToTsvector(...args);
   }
-  jsonbTypeof(...args: Parameters<OverrideQueryBuilder["jsonbTypeof"]>) {
-    return (new QueryBuilder(this)).jsonbTypeof(...args);
-  }
-  jsonBuildArray(...args: Parameters<OverrideQueryBuilder["jsonBuildArray"]>) {
-    return (new QueryBuilder(this)).jsonBuildArray(...args);
-  }
-  jsonBuildObject(...args: Parameters<OverrideQueryBuilder["jsonBuildObject"]>) {
-    return (new QueryBuilder(this)).jsonBuildObject(...args);
-  }
-  jsonEach(...args: Parameters<OverrideQueryBuilder["jsonEach"]>) {
-    return (new QueryBuilder(this)).jsonEach(...args);
-  }
-  jsonEachText(...args: Parameters<OverrideQueryBuilder["jsonEachText"]>) {
-    return (new QueryBuilder(this)).jsonEachText(...args);
-  }
   jsonExists() {
     return (new QueryBuilder(this)).jsonExists();
-  }
-  jsonExtractPath(...args: Parameters<OverrideQueryBuilder["jsonExtractPath"]>) {
-    return (new QueryBuilder(this)).jsonExtractPath(...args);
-  }
-  jsonExtractPathText(...args: Parameters<OverrideQueryBuilder["jsonExtractPathText"]>) {
-    return (new QueryBuilder(this)).jsonExtractPathText(...args);
   }
   jsonObject() {
     return (new QueryBuilder(this)).jsonObject();
   }
-  jsonObjectagg(...args: Parameters<OverrideQueryBuilder["jsonObjectagg"]>) {
-    return (new QueryBuilder(this)).jsonObjectagg(...args);
-  }
-  jsonObjectAgg(...args: Parameters<OverrideQueryBuilder["jsonObjectAgg"]>) {
-    return (new QueryBuilder(this)).jsonObjectAgg(...args);
-  }
-  jsonObjectAggStrict(...args: Parameters<OverrideQueryBuilder["jsonObjectAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonObjectAggStrict(...args);
-  }
-  jsonObjectAggUnique(...args: Parameters<OverrideQueryBuilder["jsonObjectAggUnique"]>) {
-    return (new QueryBuilder(this)).jsonObjectAggUnique(...args);
-  }
-  jsonObjectAggUniqueStrict(...args: Parameters<OverrideQueryBuilder["jsonObjectAggUniqueStrict"]>) {
-    return (new QueryBuilder(this)).jsonObjectAggUniqueStrict(...args);
-  }
-  jsonObjectFromArray(...args: Parameters<OverrideQueryBuilder["jsonObjectFromArray"]>) {
-    return (new QueryBuilder(this)).jsonObjectFromArray(...args);
-  }
-  jsonObjectFromPairs(...args: Parameters<OverrideQueryBuilder["jsonObjectFromPairs"]>) {
-    return (new QueryBuilder(this)).jsonObjectFromPairs(...args);
-  }
-  jsonObjectKeys(...args: Parameters<OverrideQueryBuilder["jsonObjectKeys"]>) {
-    return (new QueryBuilder(this)).jsonObjectKeys(...args);
-  }
-  jsonPopulateRecord(...args: Parameters<OverrideQueryBuilder["jsonPopulateRecord"]>) {
-    return (new QueryBuilder(this)).jsonPopulateRecord(...args);
-  }
-  jsonPopulateRecordset(...args: Parameters<OverrideQueryBuilder["jsonPopulateRecordset"]>) {
-    return (new QueryBuilder(this)).jsonPopulateRecordset(...args);
+  jsonObjectagg() {
+    return (new QueryBuilder(this)).jsonObjectagg();
   }
   jsonQuery() {
     return (new QueryBuilder(this)).jsonQuery();
@@ -1791,26 +1437,14 @@ export class QueryInstance {
   jsonSerialize() {
     return (new QueryBuilder(this)).jsonSerialize();
   }
-  jsonStripNulls(...args: Parameters<OverrideQueryBuilder["jsonStripNulls"]>) {
-    return (new QueryBuilder(this)).jsonStripNulls(...args);
-  }
   jsonTable() {
     return (new QueryBuilder(this)).jsonTable();
   }
   jsonTablePrimitive() {
     return (new QueryBuilder(this)).jsonTablePrimitive();
   }
-  jsonToRecord(...args: Parameters<OverrideQueryBuilder["jsonToRecord"]>) {
-    return (new QueryBuilder(this)).jsonToRecord(...args);
-  }
-  jsonToRecordset(...args: Parameters<OverrideQueryBuilder["jsonToRecordset"]>) {
-    return (new QueryBuilder(this)).jsonToRecordset(...args);
-  }
   jsonToTsvector(...args: Parameters<OverrideQueryBuilder["jsonToTsvector"]>) {
     return (new QueryBuilder(this)).jsonToTsvector(...args);
-  }
-  jsonTypeof(...args: Parameters<OverrideQueryBuilder["jsonTypeof"]>) {
-    return (new QueryBuilder(this)).jsonTypeof(...args);
   }
   jsonValue() {
     return (new QueryBuilder(this)).jsonValue();
@@ -1848,8 +1482,8 @@ export class QueryInstance {
   label() {
     return (new QueryBuilder(this)).label();
   }
-  lag(...args: Parameters<OverrideQueryBuilder["lag"]>) {
-    return (new QueryBuilder(this)).lag(...args);
+  lag() {
+    return (new QueryBuilder(this)).lag();
   }
   language() {
     return (new QueryBuilder(this)).language();
@@ -1860,11 +1494,8 @@ export class QueryInstance {
   last() {
     return (new QueryBuilder(this)).last();
   }
-  lastval(...args: Parameters<OverrideQueryBuilder["lastval"]>) {
-    return (new QueryBuilder(this)).lastval(...args);
-  }
-  lastValue(...args: Parameters<OverrideQueryBuilder["lastValue"]>) {
-    return (new QueryBuilder(this)).lastValue(...args);
+  lastValue() {
+    return (new QueryBuilder(this)).lastValue();
   }
   lateral() {
     return (new QueryBuilder(this)).lateral();
@@ -1872,8 +1503,8 @@ export class QueryInstance {
   lcm(...args: Parameters<OverrideQueryBuilder["lcm"]>) {
     return (new QueryBuilder(this)).lcm(...args);
   }
-  lead(...args: Parameters<OverrideQueryBuilder["lead"]>) {
-    return (new QueryBuilder(this)).lead(...args);
+  lead() {
+    return (new QueryBuilder(this)).lead();
   }
   leading() {
     return (new QueryBuilder(this)).leading();
@@ -1881,8 +1512,8 @@ export class QueryInstance {
   leakproof() {
     return (new QueryBuilder(this)).leakproof();
   }
-  least(...args: Parameters<OverrideQueryBuilder["least"]>) {
-    return (new QueryBuilder(this)).least(...args);
+  least() {
+    return (new QueryBuilder(this)).least();
   }
   left(...args: Parameters<OverrideQueryBuilder["left"]>) {
     return (new QueryBuilder(this)).left(...args);
@@ -1971,12 +1602,6 @@ export class QueryInstance {
   lower(...args: Parameters<OverrideQueryBuilder["lower"]>) {
     return (new QueryBuilder(this)).lower(...args);
   }
-  lowerInc(...args: Parameters<OverrideQueryBuilder["lowerInc"]>) {
-    return (new QueryBuilder(this)).lowerInc(...args);
-  }
-  lowerInf(...args: Parameters<OverrideQueryBuilder["lowerInf"]>) {
-    return (new QueryBuilder(this)).lowerInf(...args);
-  }
   lpad(...args: Parameters<OverrideQueryBuilder["lpad"]>) {
     return (new QueryBuilder(this)).lpad(...args);
   }
@@ -1997,15 +1622,6 @@ export class QueryInstance {
   }
   macaddr8Set7bit(...args: Parameters<OverrideQueryBuilder["macaddr8Set7bit"]>) {
     return (new QueryBuilder(this)).macaddr8Set7bit(...args);
-  }
-  macaddr8Trunc(...args: Parameters<OverrideQueryBuilder["macaddr8Trunc"]>) {
-    return (new QueryBuilder(this)).macaddr8Trunc(...args);
-  }
-  macaddrTrunc(...args: Parameters<OverrideQueryBuilder["macaddrTrunc"]>) {
-    return (new QueryBuilder(this)).macaddrTrunc(...args);
-  }
-  makeaclitem(...args: Parameters<OverrideQueryBuilder["makeaclitem"]>) {
-    return (new QueryBuilder(this)).makeaclitem(...args);
   }
   makeDate(...args: Parameters<OverrideQueryBuilder["makeDate"]>) {
     return (new QueryBuilder(this)).makeDate(...args);
@@ -2055,8 +1671,8 @@ export class QueryInstance {
   materialized() {
     return (new QueryBuilder(this)).materialized();
   }
-  max(...args: Parameters<OverrideQueryBuilder["max"]>) {
-    return (new QueryBuilder(this)).max(...args);
+  max() {
+    return (new QueryBuilder(this)).max();
   }
   maxvalue() {
     return (new QueryBuilder(this)).maxvalue();
@@ -2073,8 +1689,8 @@ export class QueryInstance {
   merge() {
     return (new QueryBuilder(this)).merge();
   }
-  mergeAction(...args: Parameters<OverrideQueryBuilder["mergeAction"]>) {
-    return (new QueryBuilder(this)).mergeAction(...args);
+  mergeAction() {
+    return (new QueryBuilder(this)).mergeAction();
   }
   messageLength() {
     return (new QueryBuilder(this)).messageLength();
@@ -2091,8 +1707,8 @@ export class QueryInstance {
   middle(...args: Parameters<OverrideQueryBuilder["middle"]>) {
     return (new QueryBuilder(this)).middle(...args);
   }
-  min(...args: Parameters<OverrideQueryBuilder["min"]>) {
-    return (new QueryBuilder(this)).min(...args);
+  min() {
+    return (new QueryBuilder(this)).min();
   }
   minScale(...args: Parameters<OverrideQueryBuilder["minScale"]>) {
     return (new QueryBuilder(this)).minScale(...args);
@@ -2109,8 +1725,8 @@ export class QueryInstance {
   mod(...args: Parameters<OverrideQueryBuilder["mod"]>) {
     return (new QueryBuilder(this)).mod(...args);
   }
-  mode(...args: Parameters<OverrideQueryBuilder["mode"]>) {
-    return (new QueryBuilder(this)).mode(...args);
+  mode() {
+    return (new QueryBuilder(this)).mode();
   }
   modifies() {
     return (new QueryBuilder(this)).modifies();
@@ -2133,41 +1749,11 @@ export class QueryInstance {
   multiply(...args: Parameters<OverrideQueryBuilder["multiply"]>) {
     return (new QueryBuilder(this)).multiply(...args);
   }
-  multirange(...args: Parameters<OverrideQueryBuilder["multirange"]>) {
-    return (new QueryBuilder(this)).multirange(...args);
-  }
-  multirangeIsempty(...args: Parameters<OverrideQueryBuilder["multirangeIsempty"]>) {
-    return (new QueryBuilder(this)).multirangeIsempty(...args);
-  }
-  multirangeLower(...args: Parameters<OverrideQueryBuilder["multirangeLower"]>) {
-    return (new QueryBuilder(this)).multirangeLower(...args);
-  }
-  multirangeLowerInc(...args: Parameters<OverrideQueryBuilder["multirangeLowerInc"]>) {
-    return (new QueryBuilder(this)).multirangeLowerInc(...args);
-  }
-  multirangeLowerInf(...args: Parameters<OverrideQueryBuilder["multirangeLowerInf"]>) {
-    return (new QueryBuilder(this)).multirangeLowerInf(...args);
-  }
-  multirangeRangeMerge(...args: Parameters<OverrideQueryBuilder["multirangeRangeMerge"]>) {
-    return (new QueryBuilder(this)).multirangeRangeMerge(...args);
-  }
-  multirangeUpper(...args: Parameters<OverrideQueryBuilder["multirangeUpper"]>) {
-    return (new QueryBuilder(this)).multirangeUpper(...args);
-  }
-  multirangeUpperInc(...args: Parameters<OverrideQueryBuilder["multirangeUpperInc"]>) {
-    return (new QueryBuilder(this)).multirangeUpperInc(...args);
-  }
-  multirangeUpperInf(...args: Parameters<OverrideQueryBuilder["multirangeUpperInf"]>) {
-    return (new QueryBuilder(this)).multirangeUpperInf(...args);
-  }
   multiset() {
     return (new QueryBuilder(this)).multiset();
   }
   mumps() {
     return (new QueryBuilder(this)).mumps();
-  }
-  mxidAge(...args: Parameters<OverrideQueryBuilder["mxidAge"]>) {
-    return (new QueryBuilder(this)).mxidAge(...args);
   }
   name() {
     return (new QueryBuilder(this)).name();
@@ -2211,9 +1797,6 @@ export class QueryInstance {
   next() {
     return (new QueryBuilder(this)).next();
   }
-  nextval(...args: Parameters<OverrideQueryBuilder["nextval"]>) {
-    return (new QueryBuilder(this)).nextval(...args);
-  }
   nfc() {
     return (new QueryBuilder(this)).nfc();
   }
@@ -2247,9 +1830,6 @@ export class QueryInstance {
   notEq(...args: Parameters<OverrideQueryBuilder["notEq"]>) {
     return (new QueryBuilder(this)).notEq(...args);
   }
-  notExists(...args: Parameters<OverrideQueryBuilder["notExists"]>) {
-    return (new QueryBuilder(this)).notExists(...args);
-  }
   notExtendAbove(...args: Parameters<OverrideQueryBuilder["notExtendAbove"]>) {
     return (new QueryBuilder(this)).notExtendAbove(...args);
   }
@@ -2270,9 +1850,6 @@ export class QueryInstance {
   }
   notIlike(...args: Parameters<OverrideQueryBuilder["notIlike"]>) {
     return (new QueryBuilder(this)).notIlike(...args);
-  }
-  notIn(...args: Parameters<OverrideQueryBuilder["notIn"]>) {
-    return (new QueryBuilder(this)).notIn(...args);
   }
   notLike(...args: Parameters<OverrideQueryBuilder["notLike"]>) {
     return (new QueryBuilder(this)).notLike(...args);
@@ -2298,11 +1875,11 @@ export class QueryInstance {
   npoints(...args: Parameters<OverrideQueryBuilder["npoints"]>) {
     return (new QueryBuilder(this)).npoints(...args);
   }
-  nthValue(...args: Parameters<OverrideQueryBuilder["nthValue"]>) {
-    return (new QueryBuilder(this)).nthValue(...args);
+  nthValue() {
+    return (new QueryBuilder(this)).nthValue();
   }
-  ntile(...args: Parameters<OverrideQueryBuilder["ntile"]>) {
-    return (new QueryBuilder(this)).ntile(...args);
+  ntile() {
+    return (new QueryBuilder(this)).ntile();
   }
   null() {
     return (new QueryBuilder(this)).null();
@@ -2310,14 +1887,20 @@ export class QueryInstance {
   nullable() {
     return (new QueryBuilder(this)).nullable();
   }
-  nullif(...args: Parameters<OverrideQueryBuilder["nullif"]>) {
-    return (new QueryBuilder(this)).nullif(...args);
+  nullif() {
+    return (new QueryBuilder(this)).nullif();
   }
   nullOrdering() {
     return (new QueryBuilder(this)).nullOrdering();
   }
   nulls() {
     return (new QueryBuilder(this)).nulls();
+  }
+  nullsFirst(...args: Parameters<OverrideQueryBuilder["nullsFirst"]>) {
+    return (new QueryBuilder(this)).nullsFirst(...args);
+  }
+  nullsLast(...args: Parameters<OverrideQueryBuilder["nullsLast"]>) {
+    return (new QueryBuilder(this)).nullsLast(...args);
   }
   number() {
     return (new QueryBuilder(this)).number();
@@ -2327,9 +1910,6 @@ export class QueryInstance {
   }
   numnode(...args: Parameters<OverrideQueryBuilder["numnode"]>) {
     return (new QueryBuilder(this)).numnode(...args);
-  }
-  objDescription(...args: Parameters<OverrideQueryBuilder["objDescription"]>) {
-    return (new QueryBuilder(this)).objDescription(...args);
   }
   object() {
     return (new QueryBuilder(this)).object();
@@ -2523,14 +2103,14 @@ export class QueryInstance {
   percentCharacter(...args: Parameters<BaseRawQueryBuilder["percentCharacter"]>) {
     return (new QueryBuilder(this)).percentCharacter(...args);
   }
-  percentileCont(...args: Parameters<OverrideQueryBuilder["percentileCont"]>) {
-    return (new QueryBuilder(this)).percentileCont(...args);
+  percentileCont() {
+    return (new QueryBuilder(this)).percentileCont();
   }
-  percentileDisc(...args: Parameters<OverrideQueryBuilder["percentileDisc"]>) {
-    return (new QueryBuilder(this)).percentileDisc(...args);
+  percentileDisc() {
+    return (new QueryBuilder(this)).percentileDisc();
   }
-  percentRank(...args: Parameters<OverrideQueryBuilder["percentRank"]>) {
-    return (new QueryBuilder(this)).percentRank(...args);
+  percentRank() {
+    return (new QueryBuilder(this)).percentRank();
   }
   period() {
     return (new QueryBuilder(this)).period();
@@ -2544,443 +2124,8 @@ export class QueryInstance {
   perpendicular(...args: Parameters<OverrideQueryBuilder["perpendicular"]>) {
     return (new QueryBuilder(this)).perpendicular(...args);
   }
-  pgAdvisoryLock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryLock"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryLock(...args);
-  }
-  pgAdvisoryLockShared(...args: Parameters<OverrideQueryBuilder["pgAdvisoryLockShared"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryLockShared(...args);
-  }
-  pgAdvisoryUnlock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryUnlock"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryUnlock(...args);
-  }
-  pgAdvisoryUnlockAll(...args: Parameters<OverrideQueryBuilder["pgAdvisoryUnlockAll"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryUnlockAll(...args);
-  }
-  pgAdvisoryUnlockShared(...args: Parameters<OverrideQueryBuilder["pgAdvisoryUnlockShared"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryUnlockShared(...args);
-  }
-  pgAdvisoryXactLock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryXactLock"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryXactLock(...args);
-  }
-  pgAdvisoryXactLockShared(...args: Parameters<OverrideQueryBuilder["pgAdvisoryXactLockShared"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryXactLockShared(...args);
-  }
-  pgAvailableWalSummaries(...args: Parameters<OverrideQueryBuilder["pgAvailableWalSummaries"]>) {
-    return (new QueryBuilder(this)).pgAvailableWalSummaries(...args);
-  }
-  pgBackendPid(...args: Parameters<OverrideQueryBuilder["pgBackendPid"]>) {
-    return (new QueryBuilder(this)).pgBackendPid(...args);
-  }
-  pgBackupStart(...args: Parameters<OverrideQueryBuilder["pgBackupStart"]>) {
-    return (new QueryBuilder(this)).pgBackupStart(...args);
-  }
-  pgBackupStop(...args: Parameters<OverrideQueryBuilder["pgBackupStop"]>) {
-    return (new QueryBuilder(this)).pgBackupStop(...args);
-  }
-  pgBasetype(...args: Parameters<OverrideQueryBuilder["pgBasetype"]>) {
-    return (new QueryBuilder(this)).pgBasetype(...args);
-  }
-  pgBlockingPids(...args: Parameters<OverrideQueryBuilder["pgBlockingPids"]>) {
-    return (new QueryBuilder(this)).pgBlockingPids(...args);
-  }
-  pgCancelBackend(...args: Parameters<OverrideQueryBuilder["pgCancelBackend"]>) {
-    return (new QueryBuilder(this)).pgCancelBackend(...args);
-  }
-  pgCharToEncoding(...args: Parameters<OverrideQueryBuilder["pgCharToEncoding"]>) {
-    return (new QueryBuilder(this)).pgCharToEncoding(...args);
-  }
   pgClientEncoding(...args: Parameters<OverrideQueryBuilder["pgClientEncoding"]>) {
     return (new QueryBuilder(this)).pgClientEncoding(...args);
-  }
-  pgCollationActualVersion(...args: Parameters<OverrideQueryBuilder["pgCollationActualVersion"]>) {
-    return (new QueryBuilder(this)).pgCollationActualVersion(...args);
-  }
-  pgCollationIsVisible(...args: Parameters<OverrideQueryBuilder["pgCollationIsVisible"]>) {
-    return (new QueryBuilder(this)).pgCollationIsVisible(...args);
-  }
-  pgColumnCompression(...args: Parameters<OverrideQueryBuilder["pgColumnCompression"]>) {
-    return (new QueryBuilder(this)).pgColumnCompression(...args);
-  }
-  pgColumnSize(...args: Parameters<OverrideQueryBuilder["pgColumnSize"]>) {
-    return (new QueryBuilder(this)).pgColumnSize(...args);
-  }
-  pgColumnToastChunkId(...args: Parameters<OverrideQueryBuilder["pgColumnToastChunkId"]>) {
-    return (new QueryBuilder(this)).pgColumnToastChunkId(...args);
-  }
-  pgConfLoadTime(...args: Parameters<OverrideQueryBuilder["pgConfLoadTime"]>) {
-    return (new QueryBuilder(this)).pgConfLoadTime(...args);
-  }
-  pgControlCheckpoint(...args: Parameters<OverrideQueryBuilder["pgControlCheckpoint"]>) {
-    return (new QueryBuilder(this)).pgControlCheckpoint(...args);
-  }
-  pgControlInit(...args: Parameters<OverrideQueryBuilder["pgControlInit"]>) {
-    return (new QueryBuilder(this)).pgControlInit(...args);
-  }
-  pgControlRecovery(...args: Parameters<OverrideQueryBuilder["pgControlRecovery"]>) {
-    return (new QueryBuilder(this)).pgControlRecovery(...args);
-  }
-  pgControlSystem(...args: Parameters<OverrideQueryBuilder["pgControlSystem"]>) {
-    return (new QueryBuilder(this)).pgControlSystem(...args);
-  }
-  pgConversionIsVisible(...args: Parameters<OverrideQueryBuilder["pgConversionIsVisible"]>) {
-    return (new QueryBuilder(this)).pgConversionIsVisible(...args);
-  }
-  pgCopyLogicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCopyLogicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCopyLogicalReplicationSlot(...args);
-  }
-  pgCopyPhysicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCopyPhysicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCopyPhysicalReplicationSlot(...args);
-  }
-  pgCreateLogicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCreateLogicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCreateLogicalReplicationSlot(...args);
-  }
-  pgCreatePhysicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCreatePhysicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCreatePhysicalReplicationSlot(...args);
-  }
-  pgCreateRestorePoint(...args: Parameters<OverrideQueryBuilder["pgCreateRestorePoint"]>) {
-    return (new QueryBuilder(this)).pgCreateRestorePoint(...args);
-  }
-  pgCurrentLogfile(...args: Parameters<OverrideQueryBuilder["pgCurrentLogfile"]>) {
-    return (new QueryBuilder(this)).pgCurrentLogfile(...args);
-  }
-  pgCurrentSnapshot(...args: Parameters<OverrideQueryBuilder["pgCurrentSnapshot"]>) {
-    return (new QueryBuilder(this)).pgCurrentSnapshot(...args);
-  }
-  pgCurrentWalFlushLsn(...args: Parameters<OverrideQueryBuilder["pgCurrentWalFlushLsn"]>) {
-    return (new QueryBuilder(this)).pgCurrentWalFlushLsn(...args);
-  }
-  pgCurrentWalInsertLsn(...args: Parameters<OverrideQueryBuilder["pgCurrentWalInsertLsn"]>) {
-    return (new QueryBuilder(this)).pgCurrentWalInsertLsn(...args);
-  }
-  pgCurrentWalLsn(...args: Parameters<OverrideQueryBuilder["pgCurrentWalLsn"]>) {
-    return (new QueryBuilder(this)).pgCurrentWalLsn(...args);
-  }
-  pgCurrentXactId(...args: Parameters<OverrideQueryBuilder["pgCurrentXactId"]>) {
-    return (new QueryBuilder(this)).pgCurrentXactId(...args);
-  }
-  pgCurrentXactIdIfAssigned(...args: Parameters<OverrideQueryBuilder["pgCurrentXactIdIfAssigned"]>) {
-    return (new QueryBuilder(this)).pgCurrentXactIdIfAssigned(...args);
-  }
-  pgDatabaseCollationActualVersion(...args: Parameters<OverrideQueryBuilder["pgDatabaseCollationActualVersion"]>) {
-    return (new QueryBuilder(this)).pgDatabaseCollationActualVersion(...args);
-  }
-  pgDatabaseSize(...args: Parameters<OverrideQueryBuilder["pgDatabaseSize"]>) {
-    return (new QueryBuilder(this)).pgDatabaseSize(...args);
-  }
-  pgDescribeObject(...args: Parameters<OverrideQueryBuilder["pgDescribeObject"]>) {
-    return (new QueryBuilder(this)).pgDescribeObject(...args);
-  }
-  pgDropReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgDropReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgDropReplicationSlot(...args);
-  }
-  pgEncodingToChar(...args: Parameters<OverrideQueryBuilder["pgEncodingToChar"]>) {
-    return (new QueryBuilder(this)).pgEncodingToChar(...args);
-  }
-  pgEventTriggerDdlCommands(...args: Parameters<OverrideQueryBuilder["pgEventTriggerDdlCommands"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerDdlCommands(...args);
-  }
-  pgEventTriggerDroppedObjects(...args: Parameters<OverrideQueryBuilder["pgEventTriggerDroppedObjects"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerDroppedObjects(...args);
-  }
-  pgEventTriggerTableRewriteOid(...args: Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteOid"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerTableRewriteOid(...args);
-  }
-  pgEventTriggerTableRewriteReason(...args: Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteReason"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerTableRewriteReason(...args);
-  }
-  pgExportSnapshot(...args: Parameters<OverrideQueryBuilder["pgExportSnapshot"]>) {
-    return (new QueryBuilder(this)).pgExportSnapshot(...args);
-  }
-  pgFilenodeRelation(...args: Parameters<OverrideQueryBuilder["pgFilenodeRelation"]>) {
-    return (new QueryBuilder(this)).pgFilenodeRelation(...args);
-  }
-  pgFunctionIsVisible(...args: Parameters<OverrideQueryBuilder["pgFunctionIsVisible"]>) {
-    return (new QueryBuilder(this)).pgFunctionIsVisible(...args);
-  }
-  pgGetAcl(...args: Parameters<OverrideQueryBuilder["pgGetAcl"]>) {
-    return (new QueryBuilder(this)).pgGetAcl(...args);
-  }
-  pgGetCatalogForeignKeys(...args: Parameters<OverrideQueryBuilder["pgGetCatalogForeignKeys"]>) {
-    return (new QueryBuilder(this)).pgGetCatalogForeignKeys(...args);
-  }
-  pgGetConstraintdef(...args: Parameters<OverrideQueryBuilder["pgGetConstraintdef"]>) {
-    return (new QueryBuilder(this)).pgGetConstraintdef(...args);
-  }
-  pgGetExpr(...args: Parameters<OverrideQueryBuilder["pgGetExpr"]>) {
-    return (new QueryBuilder(this)).pgGetExpr(...args);
-  }
-  pgGetFunctionArguments(...args: Parameters<OverrideQueryBuilder["pgGetFunctionArguments"]>) {
-    return (new QueryBuilder(this)).pgGetFunctionArguments(...args);
-  }
-  pgGetFunctiondef(...args: Parameters<OverrideQueryBuilder["pgGetFunctiondef"]>) {
-    return (new QueryBuilder(this)).pgGetFunctiondef(...args);
-  }
-  pgGetFunctionIdentityArguments(...args: Parameters<OverrideQueryBuilder["pgGetFunctionIdentityArguments"]>) {
-    return (new QueryBuilder(this)).pgGetFunctionIdentityArguments(...args);
-  }
-  pgGetFunctionResult(...args: Parameters<OverrideQueryBuilder["pgGetFunctionResult"]>) {
-    return (new QueryBuilder(this)).pgGetFunctionResult(...args);
-  }
-  pgGetIndexdef(...args: Parameters<OverrideQueryBuilder["pgGetIndexdef"]>) {
-    return (new QueryBuilder(this)).pgGetIndexdef(...args);
-  }
-  pgGetKeywords(...args: Parameters<OverrideQueryBuilder["pgGetKeywords"]>) {
-    return (new QueryBuilder(this)).pgGetKeywords(...args);
-  }
-  pgGetLoadedModules(...args: Parameters<OverrideQueryBuilder["pgGetLoadedModules"]>) {
-    return (new QueryBuilder(this)).pgGetLoadedModules(...args);
-  }
-  pgGetMultixactMembers(...args: Parameters<OverrideQueryBuilder["pgGetMultixactMembers"]>) {
-    return (new QueryBuilder(this)).pgGetMultixactMembers(...args);
-  }
-  pgGetObjectAddress(...args: Parameters<OverrideQueryBuilder["pgGetObjectAddress"]>) {
-    return (new QueryBuilder(this)).pgGetObjectAddress(...args);
-  }
-  pgGetPartkeydef(...args: Parameters<OverrideQueryBuilder["pgGetPartkeydef"]>) {
-    return (new QueryBuilder(this)).pgGetPartkeydef(...args);
-  }
-  pgGetRuledef(...args: Parameters<OverrideQueryBuilder["pgGetRuledef"]>) {
-    return (new QueryBuilder(this)).pgGetRuledef(...args);
-  }
-  pgGetSerialSequence(...args: Parameters<OverrideQueryBuilder["pgGetSerialSequence"]>) {
-    return (new QueryBuilder(this)).pgGetSerialSequence(...args);
-  }
-  pgGetStatisticsobjdef(...args: Parameters<OverrideQueryBuilder["pgGetStatisticsobjdef"]>) {
-    return (new QueryBuilder(this)).pgGetStatisticsobjdef(...args);
-  }
-  pgGetTriggerdef(...args: Parameters<OverrideQueryBuilder["pgGetTriggerdef"]>) {
-    return (new QueryBuilder(this)).pgGetTriggerdef(...args);
-  }
-  pgGetUserbyid(...args: Parameters<OverrideQueryBuilder["pgGetUserbyid"]>) {
-    return (new QueryBuilder(this)).pgGetUserbyid(...args);
-  }
-  pgGetViewdef(...args: Parameters<OverrideQueryBuilder["pgGetViewdef"]>) {
-    return (new QueryBuilder(this)).pgGetViewdef(...args);
-  }
-  pgGetViewdefWrap(...args: Parameters<OverrideQueryBuilder["pgGetViewdefWrap"]>) {
-    return (new QueryBuilder(this)).pgGetViewdefWrap(...args);
-  }
-  pgGetWalReplayPauseState(...args: Parameters<OverrideQueryBuilder["pgGetWalReplayPauseState"]>) {
-    return (new QueryBuilder(this)).pgGetWalReplayPauseState(...args);
-  }
-  pgGetWalResourceManagers(...args: Parameters<OverrideQueryBuilder["pgGetWalResourceManagers"]>) {
-    return (new QueryBuilder(this)).pgGetWalResourceManagers(...args);
-  }
-  pgGetWalSummarizerState(...args: Parameters<OverrideQueryBuilder["pgGetWalSummarizerState"]>) {
-    return (new QueryBuilder(this)).pgGetWalSummarizerState(...args);
-  }
-  pgHasRole(...args: Parameters<OverrideQueryBuilder["pgHasRole"]>) {
-    return (new QueryBuilder(this)).pgHasRole(...args);
-  }
-  pgIdentifyObject(...args: Parameters<OverrideQueryBuilder["pgIdentifyObject"]>) {
-    return (new QueryBuilder(this)).pgIdentifyObject(...args);
-  }
-  pgIdentifyObjectAsAddress(...args: Parameters<OverrideQueryBuilder["pgIdentifyObjectAsAddress"]>) {
-    return (new QueryBuilder(this)).pgIdentifyObjectAsAddress(...args);
-  }
-  pgImportSystemCollations(...args: Parameters<OverrideQueryBuilder["pgImportSystemCollations"]>) {
-    return (new QueryBuilder(this)).pgImportSystemCollations(...args);
-  }
-  pgIndexamHasProperty(...args: Parameters<OverrideQueryBuilder["pgIndexamHasProperty"]>) {
-    return (new QueryBuilder(this)).pgIndexamHasProperty(...args);
-  }
-  pgIndexColumnHasProperty(...args: Parameters<OverrideQueryBuilder["pgIndexColumnHasProperty"]>) {
-    return (new QueryBuilder(this)).pgIndexColumnHasProperty(...args);
-  }
-  pgIndexesSize(...args: Parameters<OverrideQueryBuilder["pgIndexesSize"]>) {
-    return (new QueryBuilder(this)).pgIndexesSize(...args);
-  }
-  pgIndexHasProperty(...args: Parameters<OverrideQueryBuilder["pgIndexHasProperty"]>) {
-    return (new QueryBuilder(this)).pgIndexHasProperty(...args);
-  }
-  pgInputErrorInfo(...args: Parameters<OverrideQueryBuilder["pgInputErrorInfo"]>) {
-    return (new QueryBuilder(this)).pgInputErrorInfo(...args);
-  }
-  pgInputIsValid(...args: Parameters<OverrideQueryBuilder["pgInputIsValid"]>) {
-    return (new QueryBuilder(this)).pgInputIsValid(...args);
-  }
-  pgIsInRecovery(...args: Parameters<OverrideQueryBuilder["pgIsInRecovery"]>) {
-    return (new QueryBuilder(this)).pgIsInRecovery(...args);
-  }
-  pgIsOtherTempSchema(...args: Parameters<OverrideQueryBuilder["pgIsOtherTempSchema"]>) {
-    return (new QueryBuilder(this)).pgIsOtherTempSchema(...args);
-  }
-  pgIsWalReplayPaused(...args: Parameters<OverrideQueryBuilder["pgIsWalReplayPaused"]>) {
-    return (new QueryBuilder(this)).pgIsWalReplayPaused(...args);
-  }
-  pgJitAvailable(...args: Parameters<OverrideQueryBuilder["pgJitAvailable"]>) {
-    return (new QueryBuilder(this)).pgJitAvailable(...args);
-  }
-  pgLastCommittedXact(...args: Parameters<OverrideQueryBuilder["pgLastCommittedXact"]>) {
-    return (new QueryBuilder(this)).pgLastCommittedXact(...args);
-  }
-  pgLastWalReceiveLsn(...args: Parameters<OverrideQueryBuilder["pgLastWalReceiveLsn"]>) {
-    return (new QueryBuilder(this)).pgLastWalReceiveLsn(...args);
-  }
-  pgLastWalReplayLsn(...args: Parameters<OverrideQueryBuilder["pgLastWalReplayLsn"]>) {
-    return (new QueryBuilder(this)).pgLastWalReplayLsn(...args);
-  }
-  pgLastXactReplayTimestamp(...args: Parameters<OverrideQueryBuilder["pgLastXactReplayTimestamp"]>) {
-    return (new QueryBuilder(this)).pgLastXactReplayTimestamp(...args);
-  }
-  pgListeningChannels(...args: Parameters<OverrideQueryBuilder["pgListeningChannels"]>) {
-    return (new QueryBuilder(this)).pgListeningChannels(...args);
-  }
-  pgLogBackendMemoryContexts(...args: Parameters<OverrideQueryBuilder["pgLogBackendMemoryContexts"]>) {
-    return (new QueryBuilder(this)).pgLogBackendMemoryContexts(...args);
-  }
-  pgLogicalEmitMessage(...args: Parameters<OverrideQueryBuilder["pgLogicalEmitMessage"]>) {
-    return (new QueryBuilder(this)).pgLogicalEmitMessage(...args);
-  }
-  pgLogicalSlotGetBinaryChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotGetBinaryChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotGetBinaryChanges(...args);
-  }
-  pgLogicalSlotGetChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotGetChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotGetChanges(...args);
-  }
-  pgLogicalSlotPeekBinaryChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotPeekBinaryChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotPeekBinaryChanges(...args);
-  }
-  pgLogicalSlotPeekChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotPeekChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotPeekChanges(...args);
-  }
-  pgLogStandbySnapshot(...args: Parameters<OverrideQueryBuilder["pgLogStandbySnapshot"]>) {
-    return (new QueryBuilder(this)).pgLogStandbySnapshot(...args);
-  }
-  pgLsArchiveStatusdir(...args: Parameters<OverrideQueryBuilder["pgLsArchiveStatusdir"]>) {
-    return (new QueryBuilder(this)).pgLsArchiveStatusdir(...args);
-  }
-  pgLsDir(...args: Parameters<OverrideQueryBuilder["pgLsDir"]>) {
-    return (new QueryBuilder(this)).pgLsDir(...args);
-  }
-  pgLsLogdir(...args: Parameters<OverrideQueryBuilder["pgLsLogdir"]>) {
-    return (new QueryBuilder(this)).pgLsLogdir(...args);
-  }
-  pgLsLogicalmapdir(...args: Parameters<OverrideQueryBuilder["pgLsLogicalmapdir"]>) {
-    return (new QueryBuilder(this)).pgLsLogicalmapdir(...args);
-  }
-  pgLsLogicalsnapdir(...args: Parameters<OverrideQueryBuilder["pgLsLogicalsnapdir"]>) {
-    return (new QueryBuilder(this)).pgLsLogicalsnapdir(...args);
-  }
-  pgLsReplslotdir(...args: Parameters<OverrideQueryBuilder["pgLsReplslotdir"]>) {
-    return (new QueryBuilder(this)).pgLsReplslotdir(...args);
-  }
-  pgLsSummariesdir(...args: Parameters<OverrideQueryBuilder["pgLsSummariesdir"]>) {
-    return (new QueryBuilder(this)).pgLsSummariesdir(...args);
-  }
-  pgLsTmpdir(...args: Parameters<OverrideQueryBuilder["pgLsTmpdir"]>) {
-    return (new QueryBuilder(this)).pgLsTmpdir(...args);
-  }
-  pgLsWaldir(...args: Parameters<OverrideQueryBuilder["pgLsWaldir"]>) {
-    return (new QueryBuilder(this)).pgLsWaldir(...args);
-  }
-  pgMcvListItems(...args: Parameters<OverrideQueryBuilder["pgMcvListItems"]>) {
-    return (new QueryBuilder(this)).pgMcvListItems(...args);
-  }
-  pgMyTempSchema(...args: Parameters<OverrideQueryBuilder["pgMyTempSchema"]>) {
-    return (new QueryBuilder(this)).pgMyTempSchema(...args);
-  }
-  pgNotificationQueueUsage(...args: Parameters<OverrideQueryBuilder["pgNotificationQueueUsage"]>) {
-    return (new QueryBuilder(this)).pgNotificationQueueUsage(...args);
-  }
-  pgNumaAvailable(...args: Parameters<OverrideQueryBuilder["pgNumaAvailable"]>) {
-    return (new QueryBuilder(this)).pgNumaAvailable(...args);
-  }
-  pgOpclassIsVisible(...args: Parameters<OverrideQueryBuilder["pgOpclassIsVisible"]>) {
-    return (new QueryBuilder(this)).pgOpclassIsVisible(...args);
-  }
-  pgOperatorIsVisible(...args: Parameters<OverrideQueryBuilder["pgOperatorIsVisible"]>) {
-    return (new QueryBuilder(this)).pgOperatorIsVisible(...args);
-  }
-  pgOpfamilyIsVisible(...args: Parameters<OverrideQueryBuilder["pgOpfamilyIsVisible"]>) {
-    return (new QueryBuilder(this)).pgOpfamilyIsVisible(...args);
-  }
-  pgOptionsToTable(...args: Parameters<OverrideQueryBuilder["pgOptionsToTable"]>) {
-    return (new QueryBuilder(this)).pgOptionsToTable(...args);
-  }
-  pgPartitionAncestors(...args: Parameters<OverrideQueryBuilder["pgPartitionAncestors"]>) {
-    return (new QueryBuilder(this)).pgPartitionAncestors(...args);
-  }
-  pgPartitionRoot(...args: Parameters<OverrideQueryBuilder["pgPartitionRoot"]>) {
-    return (new QueryBuilder(this)).pgPartitionRoot(...args);
-  }
-  pgPartitionTree(...args: Parameters<OverrideQueryBuilder["pgPartitionTree"]>) {
-    return (new QueryBuilder(this)).pgPartitionTree(...args);
-  }
-  pgPostmasterStartTime(...args: Parameters<OverrideQueryBuilder["pgPostmasterStartTime"]>) {
-    return (new QueryBuilder(this)).pgPostmasterStartTime(...args);
-  }
-  pgPromote(...args: Parameters<OverrideQueryBuilder["pgPromote"]>) {
-    return (new QueryBuilder(this)).pgPromote(...args);
-  }
-  pgReadBinaryFile(...args: Parameters<OverrideQueryBuilder["pgReadBinaryFile"]>) {
-    return (new QueryBuilder(this)).pgReadBinaryFile(...args);
-  }
-  pgReadFile(...args: Parameters<OverrideQueryBuilder["pgReadFile"]>) {
-    return (new QueryBuilder(this)).pgReadFile(...args);
-  }
-  pgRelationFilenode(...args: Parameters<OverrideQueryBuilder["pgRelationFilenode"]>) {
-    return (new QueryBuilder(this)).pgRelationFilenode(...args);
-  }
-  pgRelationFilepath(...args: Parameters<OverrideQueryBuilder["pgRelationFilepath"]>) {
-    return (new QueryBuilder(this)).pgRelationFilepath(...args);
-  }
-  pgRelationSize(...args: Parameters<OverrideQueryBuilder["pgRelationSize"]>) {
-    return (new QueryBuilder(this)).pgRelationSize(...args);
-  }
-  pgReloadConf(...args: Parameters<OverrideQueryBuilder["pgReloadConf"]>) {
-    return (new QueryBuilder(this)).pgReloadConf(...args);
-  }
-  pgReplicationOriginAdvance(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginAdvance"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginAdvance(...args);
-  }
-  pgReplicationOriginCreate(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginCreate"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginCreate(...args);
-  }
-  pgReplicationOriginDrop(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginDrop"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginDrop(...args);
-  }
-  pgReplicationOriginOid(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginOid"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginOid(...args);
-  }
-  pgReplicationOriginProgress(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginProgress"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginProgress(...args);
-  }
-  pgReplicationOriginSessionIsSetup(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionIsSetup"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionIsSetup(...args);
-  }
-  pgReplicationOriginSessionProgress(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionProgress"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionProgress(...args);
-  }
-  pgReplicationOriginSessionReset(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionReset"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionReset(...args);
-  }
-  pgReplicationOriginSessionSetup(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionSetup"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionSetup(...args);
-  }
-  pgReplicationOriginXactReset(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginXactReset"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginXactReset(...args);
-  }
-  pgReplicationOriginXactSetup(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginXactSetup"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginXactSetup(...args);
-  }
-  pgReplicationSlotAdvance(...args: Parameters<OverrideQueryBuilder["pgReplicationSlotAdvance"]>) {
-    return (new QueryBuilder(this)).pgReplicationSlotAdvance(...args);
-  }
-  pgRotateLogfile(...args: Parameters<OverrideQueryBuilder["pgRotateLogfile"]>) {
-    return (new QueryBuilder(this)).pgRotateLogfile(...args);
-  }
-  pgSafeSnapshotBlockingPids(...args: Parameters<OverrideQueryBuilder["pgSafeSnapshotBlockingPids"]>) {
-    return (new QueryBuilder(this)).pgSafeSnapshotBlockingPids(...args);
-  }
-  pgSettingsGetFlags(...args: Parameters<OverrideQueryBuilder["pgSettingsGetFlags"]>) {
-    return (new QueryBuilder(this)).pgSettingsGetFlags(...args);
-  }
-  pgSizeBytes(...args: Parameters<OverrideQueryBuilder["pgSizeBytes"]>) {
-    return (new QueryBuilder(this)).pgSizeBytes(...args);
-  }
-  pgSizePretty(...args: Parameters<OverrideQueryBuilder["pgSizePretty"]>) {
-    return (new QueryBuilder(this)).pgSizePretty(...args);
   }
   pgSleep(...args: Parameters<OverrideQueryBuilder["pgSleep"]>) {
     return (new QueryBuilder(this)).pgSleep(...args);
@@ -2990,114 +2135,6 @@ export class QueryInstance {
   }
   pgSleepUntil(...args: Parameters<OverrideQueryBuilder["pgSleepUntil"]>) {
     return (new QueryBuilder(this)).pgSleepUntil(...args);
-  }
-  pgSnapshotXip(...args: Parameters<OverrideQueryBuilder["pgSnapshotXip"]>) {
-    return (new QueryBuilder(this)).pgSnapshotXip(...args);
-  }
-  pgSnapshotXmax(...args: Parameters<OverrideQueryBuilder["pgSnapshotXmax"]>) {
-    return (new QueryBuilder(this)).pgSnapshotXmax(...args);
-  }
-  pgSnapshotXmin(...args: Parameters<OverrideQueryBuilder["pgSnapshotXmin"]>) {
-    return (new QueryBuilder(this)).pgSnapshotXmin(...args);
-  }
-  pgSplitWalfileName(...args: Parameters<OverrideQueryBuilder["pgSplitWalfileName"]>) {
-    return (new QueryBuilder(this)).pgSplitWalfileName(...args);
-  }
-  pgStatFile(...args: Parameters<OverrideQueryBuilder["pgStatFile"]>) {
-    return (new QueryBuilder(this)).pgStatFile(...args);
-  }
-  pgStatisticsObjIsVisible(...args: Parameters<OverrideQueryBuilder["pgStatisticsObjIsVisible"]>) {
-    return (new QueryBuilder(this)).pgStatisticsObjIsVisible(...args);
-  }
-  pgSwitchWal(...args: Parameters<OverrideQueryBuilder["pgSwitchWal"]>) {
-    return (new QueryBuilder(this)).pgSwitchWal(...args);
-  }
-  pgSyncReplicationSlots(...args: Parameters<OverrideQueryBuilder["pgSyncReplicationSlots"]>) {
-    return (new QueryBuilder(this)).pgSyncReplicationSlots(...args);
-  }
-  pgTableIsVisible(...args: Parameters<OverrideQueryBuilder["pgTableIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTableIsVisible(...args);
-  }
-  pgTableSize(...args: Parameters<OverrideQueryBuilder["pgTableSize"]>) {
-    return (new QueryBuilder(this)).pgTableSize(...args);
-  }
-  pgTablespaceDatabases(...args: Parameters<OverrideQueryBuilder["pgTablespaceDatabases"]>) {
-    return (new QueryBuilder(this)).pgTablespaceDatabases(...args);
-  }
-  pgTablespaceLocation(...args: Parameters<OverrideQueryBuilder["pgTablespaceLocation"]>) {
-    return (new QueryBuilder(this)).pgTablespaceLocation(...args);
-  }
-  pgTablespaceSize(...args: Parameters<OverrideQueryBuilder["pgTablespaceSize"]>) {
-    return (new QueryBuilder(this)).pgTablespaceSize(...args);
-  }
-  pgTerminateBackend(...args: Parameters<OverrideQueryBuilder["pgTerminateBackend"]>) {
-    return (new QueryBuilder(this)).pgTerminateBackend(...args);
-  }
-  pgTotalRelationSize(...args: Parameters<OverrideQueryBuilder["pgTotalRelationSize"]>) {
-    return (new QueryBuilder(this)).pgTotalRelationSize(...args);
-  }
-  pgTriggerDepth(...args: Parameters<OverrideQueryBuilder["pgTriggerDepth"]>) {
-    return (new QueryBuilder(this)).pgTriggerDepth(...args);
-  }
-  pgTryAdvisoryLock(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryLock"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryLock(...args);
-  }
-  pgTryAdvisoryLockShared(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryLockShared"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryLockShared(...args);
-  }
-  pgTryAdvisoryXactLock(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLock"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryXactLock(...args);
-  }
-  pgTryAdvisoryXactLockShared(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLockShared"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryXactLockShared(...args);
-  }
-  pgTsConfigIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsConfigIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsConfigIsVisible(...args);
-  }
-  pgTsDictIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsDictIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsDictIsVisible(...args);
-  }
-  pgTsParserIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsParserIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsParserIsVisible(...args);
-  }
-  pgTsTemplateIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsTemplateIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsTemplateIsVisible(...args);
-  }
-  pgTypeIsVisible(...args: Parameters<OverrideQueryBuilder["pgTypeIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTypeIsVisible(...args);
-  }
-  pgTypeof(...args: Parameters<OverrideQueryBuilder["pgTypeof"]>) {
-    return (new QueryBuilder(this)).pgTypeof(...args);
-  }
-  pgVisibleInSnapshot(...args: Parameters<OverrideQueryBuilder["pgVisibleInSnapshot"]>) {
-    return (new QueryBuilder(this)).pgVisibleInSnapshot(...args);
-  }
-  pgWalfileName(...args: Parameters<OverrideQueryBuilder["pgWalfileName"]>) {
-    return (new QueryBuilder(this)).pgWalfileName(...args);
-  }
-  pgWalfileNameOffset(...args: Parameters<OverrideQueryBuilder["pgWalfileNameOffset"]>) {
-    return (new QueryBuilder(this)).pgWalfileNameOffset(...args);
-  }
-  pgWalLsnDiff(...args: Parameters<OverrideQueryBuilder["pgWalLsnDiff"]>) {
-    return (new QueryBuilder(this)).pgWalLsnDiff(...args);
-  }
-  pgWalReplayPause(...args: Parameters<OverrideQueryBuilder["pgWalReplayPause"]>) {
-    return (new QueryBuilder(this)).pgWalReplayPause(...args);
-  }
-  pgWalReplayResume(...args: Parameters<OverrideQueryBuilder["pgWalReplayResume"]>) {
-    return (new QueryBuilder(this)).pgWalReplayResume(...args);
-  }
-  pgWalSummaryContents(...args: Parameters<OverrideQueryBuilder["pgWalSummaryContents"]>) {
-    return (new QueryBuilder(this)).pgWalSummaryContents(...args);
-  }
-  pgXactCommitTimestamp(...args: Parameters<OverrideQueryBuilder["pgXactCommitTimestamp"]>) {
-    return (new QueryBuilder(this)).pgXactCommitTimestamp(...args);
-  }
-  pgXactCommitTimestampOrigin(...args: Parameters<OverrideQueryBuilder["pgXactCommitTimestampOrigin"]>) {
-    return (new QueryBuilder(this)).pgXactCommitTimestampOrigin(...args);
-  }
-  pgXactStatus(...args: Parameters<OverrideQueryBuilder["pgXactStatus"]>) {
-    return (new QueryBuilder(this)).pgXactStatus(...args);
   }
   phrasetoTsquery(...args: Parameters<OverrideQueryBuilder["phrasetoTsquery"]>) {
     return (new QueryBuilder(this)).phrasetoTsquery(...args);
@@ -3252,17 +2289,8 @@ export class QueryInstance {
   range() {
     return (new QueryBuilder(this)).range();
   }
-  rangeAgg(...args: Parameters<OverrideQueryBuilder["rangeAgg"]>) {
-    return (new QueryBuilder(this)).rangeAgg(...args);
-  }
-  rangeIntersectAgg(...args: Parameters<OverrideQueryBuilder["rangeIntersectAgg"]>) {
-    return (new QueryBuilder(this)).rangeIntersectAgg(...args);
-  }
-  rangeMerge(...args: Parameters<OverrideQueryBuilder["rangeMerge"]>) {
-    return (new QueryBuilder(this)).rangeMerge(...args);
-  }
-  rank(...args: Parameters<OverrideQueryBuilder["rank"]>) {
-    return (new QueryBuilder(this)).rank(...args);
+  rank() {
+    return (new QueryBuilder(this)).rank();
   }
   raw(...args: Parameters<BaseRawQueryBuilder["raw"]>) {
     return (new QueryBuilder(this)).raw(...args);
@@ -3327,32 +2355,32 @@ export class QueryInstance {
   regexpSubstr(...args: Parameters<OverrideQueryBuilder["regexpSubstr"]>) {
     return (new QueryBuilder(this)).regexpSubstr(...args);
   }
-  regrAvgx(...args: Parameters<OverrideQueryBuilder["regrAvgx"]>) {
-    return (new QueryBuilder(this)).regrAvgx(...args);
+  regrAvgx() {
+    return (new QueryBuilder(this)).regrAvgx();
   }
-  regrAvgy(...args: Parameters<OverrideQueryBuilder["regrAvgy"]>) {
-    return (new QueryBuilder(this)).regrAvgy(...args);
+  regrAvgy() {
+    return (new QueryBuilder(this)).regrAvgy();
   }
-  regrCount(...args: Parameters<OverrideQueryBuilder["regrCount"]>) {
-    return (new QueryBuilder(this)).regrCount(...args);
+  regrCount() {
+    return (new QueryBuilder(this)).regrCount();
   }
-  regrIntercept(...args: Parameters<OverrideQueryBuilder["regrIntercept"]>) {
-    return (new QueryBuilder(this)).regrIntercept(...args);
+  regrIntercept() {
+    return (new QueryBuilder(this)).regrIntercept();
   }
-  regrR2(...args: Parameters<OverrideQueryBuilder["regrR2"]>) {
-    return (new QueryBuilder(this)).regrR2(...args);
+  regrR2() {
+    return (new QueryBuilder(this)).regrR2();
   }
-  regrSlope(...args: Parameters<OverrideQueryBuilder["regrSlope"]>) {
-    return (new QueryBuilder(this)).regrSlope(...args);
+  regrSlope() {
+    return (new QueryBuilder(this)).regrSlope();
   }
-  regrSxx(...args: Parameters<OverrideQueryBuilder["regrSxx"]>) {
-    return (new QueryBuilder(this)).regrSxx(...args);
+  regrSxx() {
+    return (new QueryBuilder(this)).regrSxx();
   }
-  regrSxy(...args: Parameters<OverrideQueryBuilder["regrSxy"]>) {
-    return (new QueryBuilder(this)).regrSxy(...args);
+  regrSxy() {
+    return (new QueryBuilder(this)).regrSxy();
   }
-  regrSyy(...args: Parameters<OverrideQueryBuilder["regrSyy"]>) {
-    return (new QueryBuilder(this)).regrSyy(...args);
+  regrSyy() {
+    return (new QueryBuilder(this)).regrSyy();
   }
   reindex() {
     return (new QueryBuilder(this)).reindex();
@@ -3471,17 +2499,11 @@ export class QueryInstance {
   rowCount() {
     return (new QueryBuilder(this)).rowCount();
   }
-  rowNumber(...args: Parameters<OverrideQueryBuilder["rowNumber"]>) {
-    return (new QueryBuilder(this)).rowNumber(...args);
+  rowNumber() {
+    return (new QueryBuilder(this)).rowNumber();
   }
   rows() {
     return (new QueryBuilder(this)).rows();
-  }
-  rowSecurityActive(...args: Parameters<OverrideQueryBuilder["rowSecurityActive"]>) {
-    return (new QueryBuilder(this)).rowSecurityActive(...args);
-  }
-  rowToJson(...args: Parameters<OverrideQueryBuilder["rowToJson"]>) {
-    return (new QueryBuilder(this)).rowToJson(...args);
   }
   rpad(...args: Parameters<OverrideQueryBuilder["rpad"]>) {
     return (new QueryBuilder(this)).rpad(...args);
@@ -3618,9 +2640,6 @@ export class QueryInstance {
   setByte(...args: Parameters<OverrideQueryBuilder["setByte"]>) {
     return (new QueryBuilder(this)).setByte(...args);
   }
-  setConfig(...args: Parameters<OverrideQueryBuilder["setConfig"]>) {
-    return (new QueryBuilder(this)).setConfig(...args);
-  }
   setMasklen(...args: Parameters<OverrideQueryBuilder["setMasklen"]>) {
     return (new QueryBuilder(this)).setMasklen(...args);
   }
@@ -3632,9 +2651,6 @@ export class QueryInstance {
   }
   setseed(...args: Parameters<OverrideQueryBuilder["setseed"]>) {
     return (new QueryBuilder(this)).setseed(...args);
-  }
-  setval(...args: Parameters<OverrideQueryBuilder["setval"]>) {
-    return (new QueryBuilder(this)).setval(...args);
   }
   setweight(...args: Parameters<OverrideQueryBuilder["setweight"]>) {
     return (new QueryBuilder(this)).setweight(...args);
@@ -3653,9 +2669,6 @@ export class QueryInstance {
   }
   share() {
     return (new QueryBuilder(this)).share();
-  }
-  shobjDescription(...args: Parameters<OverrideQueryBuilder["shobjDescription"]>) {
-    return (new QueryBuilder(this)).shobjDescription(...args);
   }
   show() {
     return (new QueryBuilder(this)).show();
@@ -3696,8 +2709,8 @@ export class QueryInstance {
   snapshot() {
     return (new QueryBuilder(this)).snapshot();
   }
-  some(...args: Parameters<OverrideQueryBuilder["some"]>) {
-    return (new QueryBuilder(this)).some(...args);
+  some() {
+    return (new QueryBuilder(this)).some();
   }
   sortDirection() {
     return (new QueryBuilder(this)).sortDirection();
@@ -3768,14 +2781,11 @@ export class QueryInstance {
   statistics() {
     return (new QueryBuilder(this)).statistics();
   }
-  stddev(...args: Parameters<OverrideQueryBuilder["stddev"]>) {
-    return (new QueryBuilder(this)).stddev(...args);
+  stddevPop() {
+    return (new QueryBuilder(this)).stddevPop();
   }
-  stddevPop(...args: Parameters<OverrideQueryBuilder["stddevPop"]>) {
-    return (new QueryBuilder(this)).stddevPop(...args);
-  }
-  stddevSamp(...args: Parameters<OverrideQueryBuilder["stddevSamp"]>) {
-    return (new QueryBuilder(this)).stddevSamp(...args);
+  stddevSamp() {
+    return (new QueryBuilder(this)).stddevSamp();
   }
   stdin() {
     return (new QueryBuilder(this)).stdin();
@@ -3800,9 +2810,6 @@ export class QueryInstance {
   }
   string() {
     return (new QueryBuilder(this)).string();
-  }
-  stringAgg(...args: Parameters<OverrideQueryBuilder["stringAgg"]>) {
-    return (new QueryBuilder(this)).stringAgg(...args);
   }
   stringToArray(...args: Parameters<OverrideQueryBuilder["stringToArray"]>) {
     return (new QueryBuilder(this)).stringToArray(...args);
@@ -3849,14 +2856,11 @@ export class QueryInstance {
   succeeds() {
     return (new QueryBuilder(this)).succeeds();
   }
-  sum(...args: Parameters<OverrideQueryBuilder["sum"]>) {
-    return (new QueryBuilder(this)).sum(...args);
+  sum() {
+    return (new QueryBuilder(this)).sum();
   }
   support() {
     return (new QueryBuilder(this)).support();
-  }
-  suppressRedundantUpdatesTrigger(...args: Parameters<OverrideQueryBuilder["suppressRedundantUpdatesTrigger"]>) {
-    return (new QueryBuilder(this)).suppressRedundantUpdatesTrigger(...args);
   }
   symmetric() {
     return (new QueryBuilder(this)).symmetric();
@@ -3927,9 +2931,6 @@ export class QueryInstance {
   textCat(...args: Parameters<OverrideQueryBuilder["textCat"]>) {
     return (new QueryBuilder(this)).textCat(...args);
   }
-  textInet(...args: Parameters<OverrideQueryBuilder["textInet"]>) {
-    return (new QueryBuilder(this)).textInet(...args);
-  }
   then(...args: Parameters<OverrideQueryBuilder["then"]>) {
     return (new QueryBuilder(this)).then(...args);
   }
@@ -3947,9 +2948,6 @@ export class QueryInstance {
   }
   timestamp() {
     return (new QueryBuilder(this)).timestamp();
-  }
-  timezone(...args: Parameters<OverrideQueryBuilder["timezone"]>) {
-    return (new QueryBuilder(this)).timezone(...args);
   }
   timezoneHour() {
     return (new QueryBuilder(this)).timezoneHour();
@@ -3975,12 +2973,6 @@ export class QueryInstance {
   toHex(...args: Parameters<OverrideQueryBuilder["toHex"]>) {
     return (new QueryBuilder(this)).toHex(...args);
   }
-  toJson(...args: Parameters<OverrideQueryBuilder["toJson"]>) {
-    return (new QueryBuilder(this)).toJson(...args);
-  }
-  toJsonb(...args: Parameters<OverrideQueryBuilder["toJsonb"]>) {
-    return (new QueryBuilder(this)).toJsonb(...args);
-  }
   token() {
     return (new QueryBuilder(this)).token();
   }
@@ -3993,38 +2985,11 @@ export class QueryInstance {
   topLevelCount() {
     return (new QueryBuilder(this)).topLevelCount();
   }
-  toRegclass(...args: Parameters<OverrideQueryBuilder["toRegclass"]>) {
-    return (new QueryBuilder(this)).toRegclass(...args);
-  }
-  toRegcollation(...args: Parameters<OverrideQueryBuilder["toRegcollation"]>) {
-    return (new QueryBuilder(this)).toRegcollation(...args);
-  }
-  toRegnamespace(...args: Parameters<OverrideQueryBuilder["toRegnamespace"]>) {
-    return (new QueryBuilder(this)).toRegnamespace(...args);
-  }
-  toRegoper(...args: Parameters<OverrideQueryBuilder["toRegoper"]>) {
-    return (new QueryBuilder(this)).toRegoper(...args);
-  }
-  toRegoperator(...args: Parameters<OverrideQueryBuilder["toRegoperator"]>) {
-    return (new QueryBuilder(this)).toRegoperator(...args);
-  }
-  toRegproc(...args: Parameters<OverrideQueryBuilder["toRegproc"]>) {
-    return (new QueryBuilder(this)).toRegproc(...args);
-  }
-  toRegprocedure(...args: Parameters<OverrideQueryBuilder["toRegprocedure"]>) {
-    return (new QueryBuilder(this)).toRegprocedure(...args);
-  }
-  toRegrole(...args: Parameters<OverrideQueryBuilder["toRegrole"]>) {
-    return (new QueryBuilder(this)).toRegrole(...args);
-  }
-  toRegtype(...args: Parameters<OverrideQueryBuilder["toRegtype"]>) {
-    return (new QueryBuilder(this)).toRegtype(...args);
-  }
-  toRegtypemod(...args: Parameters<OverrideQueryBuilder["toRegtypemod"]>) {
-    return (new QueryBuilder(this)).toRegtypemod(...args);
-  }
   totalLength(...args: Parameters<OverrideQueryBuilder["totalLength"]>) {
     return (new QueryBuilder(this)).totalLength(...args);
+  }
+  toText(...args: Parameters<OverrideQueryBuilder["toText"]>) {
+    return (new QueryBuilder(this)).toText(...args);
   }
   toTimestamp(...args: Parameters<OverrideQueryBuilder["toTimestamp"]>) {
     return (new QueryBuilder(this)).toTimestamp(...args);
@@ -4086,8 +3051,8 @@ export class QueryInstance {
   trim(...args: Parameters<OverrideQueryBuilder["trim"]>) {
     return (new QueryBuilder(this)).trim(...args);
   }
-  trimArray(...args: Parameters<OverrideQueryBuilder["trimArray"]>) {
-    return (new QueryBuilder(this)).trimArray(...args);
+  trimArray() {
+    return (new QueryBuilder(this)).trimArray();
   }
   trimScale(...args: Parameters<OverrideQueryBuilder["trimScale"]>) {
     return (new QueryBuilder(this)).trimScale(...args);
@@ -4143,36 +3108,6 @@ export class QueryInstance {
   tsvectorToArray(...args: Parameters<OverrideQueryBuilder["tsvectorToArray"]>) {
     return (new QueryBuilder(this)).tsvectorToArray(...args);
   }
-  tsvectorUpdateTrigger(...args: Parameters<OverrideQueryBuilder["tsvectorUpdateTrigger"]>) {
-    return (new QueryBuilder(this)).tsvectorUpdateTrigger(...args);
-  }
-  tsvectorUpdateTriggerColumn(...args: Parameters<OverrideQueryBuilder["tsvectorUpdateTriggerColumn"]>) {
-    return (new QueryBuilder(this)).tsvectorUpdateTriggerColumn(...args);
-  }
-  txidCurrent(...args: Parameters<OverrideQueryBuilder["txidCurrent"]>) {
-    return (new QueryBuilder(this)).txidCurrent(...args);
-  }
-  txidCurrentIfAssigned(...args: Parameters<OverrideQueryBuilder["txidCurrentIfAssigned"]>) {
-    return (new QueryBuilder(this)).txidCurrentIfAssigned(...args);
-  }
-  txidCurrentSnapshot(...args: Parameters<OverrideQueryBuilder["txidCurrentSnapshot"]>) {
-    return (new QueryBuilder(this)).txidCurrentSnapshot(...args);
-  }
-  txidSnapshotXip(...args: Parameters<OverrideQueryBuilder["txidSnapshotXip"]>) {
-    return (new QueryBuilder(this)).txidSnapshotXip(...args);
-  }
-  txidSnapshotXmax(...args: Parameters<OverrideQueryBuilder["txidSnapshotXmax"]>) {
-    return (new QueryBuilder(this)).txidSnapshotXmax(...args);
-  }
-  txidSnapshotXmin(...args: Parameters<OverrideQueryBuilder["txidSnapshotXmin"]>) {
-    return (new QueryBuilder(this)).txidSnapshotXmin(...args);
-  }
-  txidStatus(...args: Parameters<OverrideQueryBuilder["txidStatus"]>) {
-    return (new QueryBuilder(this)).txidStatus(...args);
-  }
-  txidVisibleInSnapshot(...args: Parameters<OverrideQueryBuilder["txidVisibleInSnapshot"]>) {
-    return (new QueryBuilder(this)).txidVisibleInSnapshot(...args);
-  }
   type() {
     return (new QueryBuilder(this)).type();
   }
@@ -4199,9 +3134,6 @@ export class QueryInstance {
   }
   unicodeAssigned(...args: Parameters<OverrideQueryBuilder["unicodeAssigned"]>) {
     return (new QueryBuilder(this)).unicodeAssigned(...args);
-  }
-  unicodeVersion(...args: Parameters<OverrideQueryBuilder["unicodeVersion"]>) {
-    return (new QueryBuilder(this)).unicodeVersion(...args);
   }
   union(...args: Parameters<OverrideQueryBuilder["union"]>) {
     return (new QueryBuilder(this)).union(...args);
@@ -4233,11 +3165,8 @@ export class QueryInstance {
   unnamed() {
     return (new QueryBuilder(this)).unnamed();
   }
-  unnest(...args: Parameters<OverrideQueryBuilder["unnest"]>) {
-    return (new QueryBuilder(this)).unnest(...args);
-  }
-  unnestMultirange(...args: Parameters<OverrideQueryBuilder["unnestMultirange"]>) {
-    return (new QueryBuilder(this)).unnestMultirange(...args);
+  unnest() {
+    return (new QueryBuilder(this)).unnest();
   }
   until() {
     return (new QueryBuilder(this)).until();
@@ -4250,12 +3179,6 @@ export class QueryInstance {
   }
   upper(...args: Parameters<OverrideQueryBuilder["upper"]>) {
     return (new QueryBuilder(this)).upper(...args);
-  }
-  upperInc(...args: Parameters<OverrideQueryBuilder["upperInc"]>) {
-    return (new QueryBuilder(this)).upperInc(...args);
-  }
-  upperInf(...args: Parameters<OverrideQueryBuilder["upperInf"]>) {
-    return (new QueryBuilder(this)).upperInf(...args);
   }
   uri() {
     return (new QueryBuilder(this)).uri();
@@ -4335,14 +3258,11 @@ export class QueryInstance {
   variadic() {
     return (new QueryBuilder(this)).variadic();
   }
-  variance(...args: Parameters<OverrideQueryBuilder["variance"]>) {
-    return (new QueryBuilder(this)).variance(...args);
+  varPop() {
+    return (new QueryBuilder(this)).varPop();
   }
-  varPop(...args: Parameters<OverrideQueryBuilder["varPop"]>) {
-    return (new QueryBuilder(this)).varPop(...args);
-  }
-  varSamp(...args: Parameters<OverrideQueryBuilder["varSamp"]>) {
-    return (new QueryBuilder(this)).varSamp(...args);
+  varSamp() {
+    return (new QueryBuilder(this)).varSamp();
   }
   varying() {
     return (new QueryBuilder(this)).varying();
@@ -4395,6 +3315,9 @@ export class QueryInstance {
   window() {
     return (new QueryBuilder(this)).window();
   }
+  windowClause(...args: Parameters<OverrideQueryBuilder["windowClause"]>) {
+    return (new QueryBuilder(this)).windowClause(...args);
+  }
   with(...args: Parameters<OverrideQueryBuilder["with"]>) {
     return (new QueryBuilder(this)).with(...args);
   }
@@ -4443,11 +3366,8 @@ export class QueryInstance {
   xmlelement(...args: Parameters<OverrideQueryBuilder["xmlelement"]>) {
     return (new QueryBuilder(this)).xmlelement(...args);
   }
-  xmlexists() {
-    return (new QueryBuilder(this)).xmlexists();
-  }
-  xmlExists(...args: Parameters<OverrideQueryBuilder["xmlExists"]>) {
-    return (new QueryBuilder(this)).xmlExists(...args);
+  xmlexists(...args: Parameters<OverrideQueryBuilder["xmlexists"]>) {
+    return (new QueryBuilder(this)).xmlexists(...args);
   }
   xmlforest(...args: Parameters<OverrideQueryBuilder["xmlforest"]>) {
     return (new QueryBuilder(this)).xmlforest(...args);
@@ -4482,14 +3402,14 @@ export class QueryInstance {
   xmlschema() {
     return (new QueryBuilder(this)).xmlschema();
   }
-  xmlserialize() {
-    return (new QueryBuilder(this)).xmlserialize();
+  xmlserialize(...args: Parameters<OverrideQueryBuilder["xmlserialize"]>) {
+    return (new QueryBuilder(this)).xmlserialize(...args);
   }
   xmltable() {
     return (new QueryBuilder(this)).xmltable();
   }
-  xmltext() {
-    return (new QueryBuilder(this)).xmltext();
+  xmltext(...args: Parameters<OverrideQueryBuilder["xmltext"]>) {
+    return (new QueryBuilder(this)).xmltext(...args);
   }
   xmlvalidate() {
     return (new QueryBuilder(this)).xmlvalidate();

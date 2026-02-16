@@ -89,10 +89,10 @@ describe("network functions", () => {
         });
 
         it("builds text for inet", () => {
-            const builder = q.select(q.textInet(q.l("192.168.1.5")));
+            const builder = q.select(q.toText(q.l("192.168.1.5")));
             const sql = builder.getSql();
             const parameters = builder.getParameters();
-            expect(sql).toBe("SELECT TEXT($1)");
+            expect(sql).toBe("SELECT CAST($1 AS TEXT)");
             expect(parameters).toEqual(["192.168.1.5"]);
         });
     });
@@ -189,7 +189,7 @@ describe("network functions", () => {
 
     describe("MAC address functions", () => {
         it("builds trunc for macaddr", () => {
-            const builder = q.select(q.macaddrTrunc(q.l("12:34:56:78:90:ab")));
+            const builder = q.select(q.trunc("12:34:56:78:90:ab"));
             const sql = builder.getSql();
             const parameters = builder.getParameters();
             expect(sql).toBe("SELECT TRUNC($1)");
@@ -197,7 +197,7 @@ describe("network functions", () => {
         });
 
         it("builds trunc for macaddr8", () => {
-            const builder = q.select(q.macaddr8Trunc(q.l("12:34:56:78:90:ab:cd:ef")));
+            const builder = q.select(q.trunc("12:34:56:78:90:ab:cd:ef"));
             const sql = builder.getSql();
             const parameters = builder.getParameters();
             expect(sql).toBe("SELECT TRUNC($1)");

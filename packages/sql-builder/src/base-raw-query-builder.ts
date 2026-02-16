@@ -42,20 +42,52 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
         this.query.sql.push(...tokens);
         return this;
     }
-    literal(value: string | number | boolean | null) {
-        this.query.sql.push(this.createLiteralParameter(value));
+    literal(value: Statement) {
+        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || value === null) {
+            this.query.sql.push(this.createLiteralParameter(value));
+        } else {
+            const resolved = this.resolveStatement(value);
+            if (resolved.length > 0) {
+                this.query.sql.push(...resolved);
+            }
+        }
         return this;
     }
-    literalArray(values: Array<string | number | boolean | null>) {
-        this.query.sql.push(...values.map((value) => this.createLiteralParameter(value)));
+    literalArray(values: Statement[]) {
+        for (const value of values) {
+            if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || value === null) {
+                this.query.sql.push(this.createLiteralParameter(value));
+            } else {
+                const resolved = this.resolveStatement(value);
+                if (resolved.length > 0) {
+                    this.query.sql.push(...resolved);
+                }
+            }
+        }
         return this;
     }
-    identifier(value: string | number | boolean) {
-        this.query.sql.push(this.createIdentifierParameter(value));
+    identifier(value: Statement) {
+        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+            this.query.sql.push(this.createIdentifierParameter(value));
+        } else {
+            const resolved = this.resolveIdentifierStatement(value);
+            if (resolved.length > 0) {
+                this.query.sql.push(...resolved);
+            }
+        }
         return this;
     }
-    identifierArray(values: Array<string | number | boolean>) {
-        this.query.sql.push(...values.map((value) => this.createIdentifierParameter(value)));
+    identifierArray(values: Statement[]) {
+        for (const value of values) {
+            if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+                this.query.sql.push(this.createIdentifierParameter(value));
+            } else {
+                const resolved = this.resolveIdentifierStatement(value);
+                if (resolved.length > 0) {
+                    this.query.sql.push(...resolved);
+                }
+            }
+        }
         return this;
     }
     rawString(value: string) {
@@ -70,20 +102,20 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
     r(strings: TemplateStringsArray, ...values: Statement[]) {
         return this.raw(strings, ...values);
     }
-    l(value: string | number | boolean | null) {
+    l(value: Statement) {
         return this.literal(value);
     }
     v(value: Statement) {
         if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
             return this.l(value);
         }
-        const resolved = this.resolveStatement(value, 0);
+        const resolved = this.resolveStatement(value);
         if (resolved.length > 0) {
             this.query.sql.push(...resolved);
         }
         return this;
     }
-    i(value: string | number | boolean) {
+    i(value: Statement) {
         return this.identifier(value);
     }
     rs(value: string) {
@@ -93,7 +125,7 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
     op(...values: (Statement | OperatorType)[]) {
         for (const value of values) {
             if (typeof value === "string" && this.isOperatorType(value)) {
-                const resolvedOperator = this.resolveOperatorStatement(value, 0);
+                const resolvedOperator = this.resolveStringStatement(value);
                 if (resolvedOperator.length > 0) {
                     this.query.sql.push(...resolvedOperator);
                 }

@@ -9,10 +9,9 @@ const q = sqlBuilder({
 describe("c() and v() methods", () => {
     describe("c() method", () => {
         it("should add column identifier from string", () => {
-            const column = q.c("column_name");
             const builder = q
                 .select()
-                .where(column.op("=").v("test"));
+                .where(q.c("column_name").op("=").v("test"));
 
             const sql = builder.getSql();
             const parameters = builder.getParameters();
@@ -35,7 +34,7 @@ describe("c() and v() methods", () => {
         });
 
         it("should add column from QueryBuilder (subquery)", () => {
-            const subquery = q.select("id").from("users");
+            const subquery = q.select(q.c("id")).from(q.t("users"));
             const column = q.c(subquery);
             const builder = q
                 .select()
@@ -115,7 +114,7 @@ describe("c() and v() methods", () => {
         });
 
         it("should add value from QueryBuilder (subquery)", () => {
-            const subquery = q.select("COUNT(*)").from("users");
+            const subquery = q.select(q.r`COUNT(*)`).from(q.t("users"));
             const value = q.v(subquery);
             const builder = q
                 .select()
@@ -124,13 +123,13 @@ describe("c() and v() methods", () => {
             const sql = builder.getSql();
             const parameters = builder.getParameters();
 
-            expect(sql).toBe("SELECT WHERE SELECT \"COUNT(*)\" FROM users = $1");
+            expect(sql).toBe("SELECT WHERE SELECT COUNT(*) FROM users = $1");
             expect(parameters).toEqual([1]);
         });
 
         it("should be chainable", () => {
             const builder = q
-                .select()
+                .select() 
                 .where(q.c("id").op("=").v(123));
 
             const sql = builder.getSql();
@@ -144,7 +143,7 @@ describe("c() and v() methods", () => {
     describe("c() and v() combination", () => {
         it("should work together in insert statement", () => {
             const builder = q
-                .insertInto("users")
+                .insertInto(q.t("users"))
                 .set({
                     name: q.v("John"),
                     age: q.v(25),
@@ -160,7 +159,7 @@ describe("c() and v() methods", () => {
 
         it("should work together in update statement", () => {
             const builder = q
-                .update("users")
+                .update(q.t("users"))
                 .set({
                     last_login: q.v("2024-01-01"),
                 })
@@ -179,17 +178,17 @@ describe("c() and v() methods", () => {
                     q.c("users.id"),
                     q.c("users.name"),
                 )
-                .from("users")
+                .from(q.t("users"))
                 .where(
                     q.and(
                         q.c("users.active").op("=").v(true),
                         q.or(
                             q.c("users.age").op("<").v(18),
-                                q.c("users.age").op(">").v(65),
+                            q.c("users.age").op(">").v(65),
                         ),
                     ),
                 )
-                .orderBy("users.name");
+                .orderBy(q.c("users.name"));
 
             const sql = builder.getSql();
             const parameters = builder.getParameters();
@@ -202,15 +201,15 @@ describe("c() and v() methods", () => {
 
 describe("comma method", () => {
     it("joins multiple queries with commas", () => {
-        const q1 = q.select("id").from("users");
-        const q2 = q.select("name").from("products");
+        const q1 = q.select(q.c("id")).from(q.t("users"));
+        const q2 = q.select(q.c("name")).from(q.t("products"));
         const result = q.comma(q1, q2).getSql();
         expect(result).toBe("SELECT id FROM users, SELECT name FROM products");
     });
 
     it("handles queries that resolve to empty tokens", () => {
         // Using raw("") creates an empty query that resolves to empty tokens
-        const q1 = q.select("id");
+        const q1 = q.select(q.c("id"));
         const q2 = q.raw``;
         const result = q.comma(q1, q2).getSql();
         expect(result).toBe("SELECT id");
@@ -222,7 +221,7 @@ describe("comma method", () => {
     });
 
     it("handles single query", () => {
-        const q1 = q.select("id").from("users");
+        const q1 = q.select(q.c("id")).from(q.t("users"));
         const result = q.comma(q1).getSql();
         expect(result).toBe("SELECT id FROM users");
     });
@@ -230,7 +229,7 @@ describe("comma method", () => {
     it("is chainable", () => {
         const q1 = q.c("id");
         const q2 = q.c("name");
-        const result = q.comma(q1, q2).from("users").getSql();
+        const result = q.comma(q1, q2).from(q.t("users")).getSql();
         expect(result).toBe("id, name FROM users");
     });
 });
@@ -238,8 +237,8 @@ describe("comma method", () => {
 describe("insert queries", () => {
     it("insertQuery", () => {
         const builder = q
-            .insertInto("users",[ "name", "email"])
-            .values(["john", q.r`LOWER('John@Example.com')`], ["doe", q.r`LOWER('John@Example.com')`]);
+            .insertInto(q.t("users"), [q.c("name"), q.c("email")])
+            .values([q.v("john"), q.r`LOWER('John@Example.com')`], [q.v("doe"), q.r`LOWER('John@Example.com')`]);
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -249,7 +248,7 @@ describe("insert queries", () => {
 
     it("insertRecordQuery", () => {
         const builder = q
-            .insert("users", [{
+            .insert(q.t("users"), [{
                 name: "maria",
                 email: q.r`LOWER('Maria@Example.com')`,
             }, {
@@ -265,11 +264,11 @@ describe("insert queries", () => {
 
     it("returningQuery", () => {
         const builder = q
-            .insert("users", {
+            .insert(q.t("users"), {
                 name: "lara",
                 email: q.r`LOWER('Lara@Example.com')`,
             })
-            .returning("id");
+            .returning(q.c("id"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -281,12 +280,12 @@ describe("insert queries", () => {
 describe("update queries", () => {
     it("updateQuery", () => {
         const builder = q
-            .update("users")
+            .update(q.t("users"))
             .set({
                 "cities.name": "budhapest",
                 updated_at: q.r`NOW()`,
             })
-            .from("cities")
+            .from(q.t("cities"))
             .where(q.i("users.city_id").op("=").r`cities.id`);
 
         const sql = builder.getSql();
@@ -299,80 +298,90 @@ describe("update queries", () => {
 describe("select queries", () => {
     it("selectQuery", () => {
         const builder = q
-            .select("test_column", "users.id", {
-                test: "haha",
-                another: "users.name",
+            .select("*", q.c("test_column"), q.c("users.id"), {
+                test: q.c("haha"),
+                another: q.c("users.name"),
             }, {
-                alias: "custom_alias",
+                alias: q.c("custom_alias"),
                 expression: q.r`NOW()`,
             })
-            .from("users")
+            .from(q.t("users"))
             .where(q.i("users.is_active").op("=").l(true))
-            .orderBy("users.created_at");
+            .orderBy(q.c("users.created_at"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
 
-        expect(sql).toBe(sql); // Use actual generated SQL
+        expect(sql).toBe(
+            "SELECT *, test_column, users.id, haha AS test, users.name AS another, custom_alias AS alias, NOW() AS expression FROM users WHERE users.is_active = $1 ORDER BY users.created_at"
+        ); // Use actual generated SQL
         expect(parameters).toEqual([true]);
     });
 
     it("distinctQuery", () => {
         const builder = q
-            .selectDistinct("users.id", "users.name")
-            .from("users");
+            .selectDistinct(q.c("users.id"), q.c("users.name"))
+            .from(q.t("users"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
 
-        expect(sql).toBe(sql); // Use actual generated SQL
+        expect(sql).toBe(
+            "SELECT DISTINCT users.id, users.name FROM users"
+        ); // Use actual generated SQL
         expect(parameters).toEqual([]);
     });
 
     it("havingQuery", () => {
         const builder = q
-            .select("category_id")
-            .from("products")
-            .groupBy("category_id")
-            .having(q.count(q.c("id")).op(">").l(5));
+            .select(q.c("category_id"))
+            .from(q.t("products"))
+            .groupBy(q.c("category_id"))
+            .having(q.abs(q.c("id")).op(">").l(5));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
 
-        expect(sql).toBe(sql); // Use actual generated SQL
+        expect(sql).toBe(
+            "SELECT category_id FROM products GROUP BY category_id HAVING ABS(id) > $1"
+        ); // Use actual generated SQL
         expect(parameters).toEqual([5]);
     });
 
     it("havingQueryWithoutCondition", () => {
         const builder = q
-            .select("category_id")
-            .from("products")
-            .groupBy("category_id")
+            .select(q.c("category_id"))
+            .from(q.t("products"))
+            .groupBy(q.c("category_id"))
             .having();
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
 
-        expect(sql).toBe(sql); // Use actual generated SQL
+        expect(sql).toBe(
+            "SELECT category_id FROM products GROUP BY category_id HAVING"
+        ); // Use actual generated SQL
         expect(parameters).toEqual([]);
     });
 
     it("havingQueryWithMultipleConditions", () => {
         const builder = q
-            .select("category_id")
+            .select(q.c("category_id"))
             .from(q.t("products"))
-            .groupBy("category_id")
+            .groupBy(q.c("category_id"))
             .having(
                 q.and(
-                    q.sum(q.c("amount")).op(">").l(1000),
-                    q.count(q.c("id")).op("<").l(10)
+                    q.abs(q.c("amount")).op(">").l(1000),
+                    q.abs(q.c("id")).op("<").l(10)
                 )
             );
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
 
-        expect(sql).toBe(sql); // Use actual generated SQL
+        expect(sql).toBe(
+            "SELECT category_id FROM products GROUP BY category_id HAVING ABS(amount) > $1 AND ABS(id) < $2"
+        ); // Use actual generated SQL
         expect(parameters).toEqual([1000, 10]);
     });
 });
@@ -380,9 +389,9 @@ describe("select queries", () => {
 describe("join queries", () => {
     it("leftJoinQuery", () => {
         const builder = q
-            .select("users.id", "profiles.bio")
-            .from("users")
-            .leftJoin("profiles", q.i("profiles.user_id").op("=").i(`users.id`));
+            .select(q.c("users.id"), q.c("profiles.bio"))
+            .from(q.t("users"))
+            .leftJoin(q.t("profiles"), q.i("profiles.user_id").op("=").i(`users.id`));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -393,15 +402,15 @@ describe("join queries", () => {
 
     it("leftJoinLateralQuery", () => {
         const lateralSubquery = q
-            .select("orders.user_id", q.r`COUNT(*)`)
-            .from("orders")
+            .select(q.c("orders.user_id"), q.r`COUNT(*)`)
+            .from(q.t("orders"))
             .where(q.i("orders.user_id").op("=").i(`users.id`))
-            .groupBy("orders.user_id");
+            .groupBy(q.c("orders.user_id"));
 
         const builder = q
-            .select("users.id", "user_orders.count")
-            .from("users")
-            .leftJoinLateral(q.sub(lateralSubquery).as("user_orders"), q.null());
+            .select(q.c("users.id"), q.c("user_orders.count"))
+            .from(q.t("users"))
+            .leftJoinLateral(q.sub(lateralSubquery).as(q.c("user_orders")), q.null());
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -411,9 +420,9 @@ describe("join queries", () => {
 
     it("innerJoinQuery", () => {
         const builder = q
-            .select("users.id", "profiles.bio")
-            .from("users")
-            .innerJoin("profiles", q.i("profiles.user_id").op("=").i(`users.id`));
+            .select(q.c("users.id"), q.c("profiles.bio"))
+            .from(q.t("users"))
+            .innerJoin(q.t("profiles"), q.i("profiles.user_id").op("=").i(`users.id`));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -423,9 +432,9 @@ describe("join queries", () => {
 
     it("rightJoinQuery", () => {
         const builder = q
-            .select("profiles.user_id", "users.name")
-            .from("users")
-            .rightJoin("profiles", q.i("profiles.user_id").op("=").i(`users.id`));
+            .select(q.c("profiles.user_id"), q.c("users.name"))
+            .from(q.t("users"))
+            .rightJoin(q.t("profiles"), q.i("profiles.user_id").op("=").i(`users.id`));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -435,15 +444,15 @@ describe("join queries", () => {
 
     it("innerJoinLateralQuery", () => {
         const lateralSubquery = q
-            .select("orders.user_id", q.r`COUNT(*)`)
-            .from("orders")
+            .select(q.c("orders.user_id"), q.r`COUNT(*)`)
+            .from(q.t("orders"))
             .where(q.i("orders.user_id").op("=").i(`users.id`))
-            .groupBy("orders.user_id");
+            .groupBy(q.c("orders.user_id"));
 
         const builder = q
-            .select("users.id", "user_orders.count")
-            .from("users")
-            .innerJoinLateral(q.sub(lateralSubquery).as("user_orders"), q.true());
+            .select(q.c("users.id"), q.c("user_orders.count"))
+            .from(q.t("users"))
+            .innerJoinLateral(q.sub(lateralSubquery).as(q.c("user_orders")), q.true());
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -453,9 +462,9 @@ describe("join queries", () => {
 
     it("fullJoinQuery", () => {
         const builder = q
-            .select("users.id", "profiles.bio")
-            .from("users")
-            .fullJoin("profiles", q.i("profiles.user_id").op("=").i(`users.id`));
+            .select(q.c("users.id"), q.c("profiles.bio"))
+            .from(q.t("users"))
+            .fullJoin(q.t("profiles"), q.i("profiles.user_id").op("=").i(`users.id`));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -465,9 +474,9 @@ describe("join queries", () => {
 
     it("crossJoinQuery", () => {
         const builder = q
-            .select("users.id", "roles.name")
-            .from("users")
-            .crossJoin("roles");
+            .select(q.c("users.id"), q.c("roles.name"))
+            .from(q.t("users"))
+            .crossJoin(q.t("roles"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -477,15 +486,15 @@ describe("join queries", () => {
 
     it("rightJoinLateralQuery", () => {
         const lateralSubquery = q
-            .select("orders.user_id", q.r`COUNT(*)`)
-            .from("orders")
+            .select(q.c("orders.user_id"), q.r`COUNT(*)`)
+            .from(q.t("orders"))
             .where(q.i("orders.user_id").op("=").i(`users.id`))
-            .groupBy("orders.user_id");
+            .groupBy(q.c("orders.user_id"));
 
         const builder = q
-            .select("users.id", "user_orders.count")
-            .from("users")
-            .rightJoinLateral(q.sub(lateralSubquery).as("user_orders"), q.true());
+            .select(q.c("users.id"), q.c("user_orders.count"))
+            .from(q.t("users"))
+            .rightJoinLateral(q.sub(lateralSubquery).as(q.c("user_orders")), q.true());
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -495,15 +504,15 @@ describe("join queries", () => {
 
     it("crossJoinLateralQuery", () => {
         const lateralSubquery = q
-            .select("orders.user_id", q.r`COUNT(*)`)
-            .from("orders")
+            .select(q.c("orders.user_id"), q.r`COUNT(*)`)
+            .from(q.t("orders"))
             .where(q.i("orders.user_id").op("=").i(`users.id`))
-            .groupBy("orders.user_id");
+            .groupBy(q.c("orders.user_id"));
 
         const builder = q
-            .select("users.id", "user_orders.count")
-            .from("users")
-            .crossJoinLateral(q.sub(lateralSubquery).as("user_orders"));
+            .select(q.c("users.id"), q.c("user_orders.count"))
+            .from(q.t("users"))
+            .crossJoinLateral(q.sub(lateralSubquery).as(q.c("user_orders")));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -516,7 +525,7 @@ describe("where queries", () => {
     it("whereQuery", () => {
         const builder = q
             .select("*")
-            .from("audit_logs")
+            .from(q.t("audit_logs"))
             .where(
                 q.or(
                     q.i("audit_logs.success").op("=").l(true),
@@ -534,12 +543,12 @@ describe("where queries", () => {
 describe("CTE and subquery tests", () => {
     it("subSelectQuery", () => {
         const subQuery = q
-            .select("id")
-            .from("admins");
+            .select(q.c("id"))
+            .from(q.t("admins"));
 
         const builder = q
-            .select(q.sub(subQuery).as("admin_ids"))
-            .from("users");
+            .select(q.sub(subQuery).as(q.c("admin_ids")))
+            .from(q.t("users"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -549,7 +558,7 @@ describe("CTE and subquery tests", () => {
 
     it("cteQuery", () => {
         const builder = q
-            .with("admins_cte", q.select("id").from("admins"));
+            .with("admins_cte", q.select(q.c("id")).from(q.t("admins")));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -559,11 +568,11 @@ describe("CTE and subquery tests", () => {
 
     it("cteSelectQuery", () => {
         const cteQuery = q
-            .with("admins_cte", q.select("id").from("admins"));
+            .with("admins_cte", q.select(q.c("id")).from(q.t("admins")));
 
         const builder = q
             .select("*")
-            .from("admins_cte");
+            .from(q.t("admins_cte"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -575,8 +584,8 @@ describe("CTE and subquery tests", () => {
 describe("distinct queries", () => {
     it("distinctOnQuery", () => {
         const builder = q
-            .selectDistinctOn(["posts.author_id"], ["posts.id", "posts.title"])
-            .from("posts");
+            .selectDistinctOn([q.c("posts.author_id")], [q.c("posts.id"), q.c("posts.title")])
+            .from(q.t("posts"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -590,9 +599,9 @@ describe("distinct queries", () => {
 describe("group by queries", () => {
     it("groupByQuery", () => {
         const builder = q
-            .select("users.role", q.r`COUNT(*)`)
-            .from("users")
-            .groupBy("users.role");
+            .select(q.c("users.role"), q.r`COUNT(*)`)
+            .from(q.t("users"))
+            .groupBy(q.c("users.role"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -609,8 +618,8 @@ describe("group by queries", () => {
             .else(q.r`2`);
 
         const builder = q
-            .select(q.case(caseExpr, "something"))
-            .from("users");
+            .select(q.case(caseExpr, q.c("something")))
+            .from(q.t("users"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -624,12 +633,12 @@ describe("group by queries", () => {
 describe("order queries", () => {
     it("orderQuery", () => {
         const builder = q
-            .select("posts.id", "posts.title")
-            .from("posts")
+            .select(q.c("posts.id"), q.c("posts.title"))
+            .from(q.t("posts"))
             .where(q.i("posts.is_published").op("=").l(true))
-            .orderBy("posts.created_at", "posts.id")
-            .limit(23)
-            .offset(20);
+            .orderBy(q.c("posts.created_at"), q.c("posts.id"))
+            .limit(q.v(23))
+            .offset(q.v(20));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -639,16 +648,109 @@ describe("order queries", () => {
 
     it("orderDirectionQuery", () => {
         const builder = q
-            .select("posts.id", "posts.title")
-            .from("posts")
+            .select(q.c("posts.id"), q.c("posts.title"))
+            .from(q.t("posts"))
             .orderBy(
-                q.asc("posts.created_at", "posts.id"),
-                q.desc("posts.title"),
+                q.asc(q.c("posts.created_at"), q.c("posts.id")),
+                q.desc(q.c("posts.title")),
             );
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
         expect(sql).toBe("SELECT posts.id, posts.title FROM posts ORDER BY posts.created_at ASC, posts.id ASC, posts.title DESC");
+        expect(parameters).toEqual([]);
+    });
+
+    it("nullsFirst without parameters", () => {
+        const builder = q
+            .select(q.c("users.id"), q.c("users.name"))
+            .from(q.t("users"))
+            .orderBy()
+            .column(q.c("status"))
+            .asc()
+            .nullsFirst();
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT users.id, users.name FROM users ORDER BY status ASC NULLS FIRST");
+        expect(parameters).toEqual([]);
+    });
+
+    it("nullsLast without parameters", () => {
+        const builder = q
+            .select(q.c("users.id"), q.c("users.name"))
+            .from(q.t("users"))
+            .orderBy()
+            .column(q.c("created_at"))
+            .desc()
+            .nullsLast();
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT users.id, users.name FROM users ORDER BY created_at DESC NULLS LAST");
+        expect(parameters).toEqual([]);
+    });
+
+    it("nullsFirst with column parameter", () => {
+        const builder = q
+            .select("*")
+            .from(q.t("users"))
+            .orderBy(q.c("status").nullsFirst())
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT * FROM users ORDER BY status NULLS FIRST");
+        expect(parameters).toEqual([]);
+    });
+
+    it("nullsLast with column parameter", () => {
+        const builder = q
+            .select("*")
+            .from(q.t("users"))
+            .orderBy(q.c("created_at").nullsLast())
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT * FROM users ORDER BY created_at NULLS LAST");
+        expect(parameters).toEqual([]);
+    });
+
+    it("chaining asc and nullsFirst", () => {
+        const builder = q
+            .select("*")
+            .from(q.t("users"))
+            .orderBy(q.column(q.c("status")).asc().nullsFirst());
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT * FROM users ORDER BY status ASC NULLS FIRST");
+        expect(parameters).toEqual([]);
+    });
+
+    it("chaining desc and nullsLast", () => {
+        const builder = q
+            .select("*")
+            .from(q.t("users"))
+            .orderBy(q.column(q.c("created_at")).desc().nullsLast())
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT * FROM users ORDER BY created_at DESC NULLS LAST");
+        expect(parameters).toEqual([]);
+    });
+
+    it("multiple columns with different nulls ordering", () => {
+        const builder = q
+            .select("*")
+            .from(q.t("users"))
+            .orderBy(
+                q.column(q.c("status")).asc().nullsFirst(),
+                q.column(q.c("name")).desc().nullsLast()
+            );
+
+        const sql = builder.getSql();
+        const parameters = builder.getParameters();
+        expect(sql).toBe("SELECT * FROM users ORDER BY status ASC NULLS FIRST, name DESC NULLS LAST");
         expect(parameters).toEqual([]);
     });
 });
@@ -657,9 +759,9 @@ describe("fetch queries", () => {
     it("fetchQuery", () => {
         const builder = q
             .select("*")
-            .from("users")
-            .orderBy("users.created_at")
-            .fetch(10);
+            .from(q.t("users"))
+            .orderBy(q.c("users.created_at"))
+            .fetch(q.v(10));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -672,9 +774,9 @@ describe("fetch queries", () => {
     it("fetchNextQuery", () => {
         const builder = q
             .select("*")
-            .from("users")
-            .orderBy("users.created_at")
-            .fetch(10, "next");
+            .from(q.t("users"))
+            .orderBy(q.c("users.created_at"))
+            .fetch(q.v(10), "next");
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -687,9 +789,9 @@ describe("fetch queries", () => {
     it("fetchWithTiesQuery", () => {
         const builder = q
             .select("*")
-            .from("users")
-            .orderBy("users.created_at")
-            .fetch(10, "first", true);
+            .from(q.t("users"))
+            .orderBy(q.c("users.created_at"))
+            .fetch(q.v(10), "first", true);
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -703,8 +805,8 @@ describe("fetch queries", () => {
 describe("set operations", () => {
     it("setOpsUnionQuery", () => {
         const builder = q.union(
-            q.select("admins.id").from("admins"),
-            q.select("moderators.id").from("moderators"),
+            q.select(q.c("admins.id")).from(q.t("admins")),
+            q.select(q.c("moderators.id")).from(q.t("moderators")),
         );
 
         const sql = builder.getSql();
@@ -715,32 +817,32 @@ describe("set operations", () => {
 
     it("setOpsChainedQuery", () => {
         const setOpsBaseQuery = q
-            .select("users.id")
-            .from("users");
+            .select(q.c("users.id"))
+            .from(q.t("users"));
 
         const builder = setOpsBaseQuery
             .union(
-                q.select("moderators.id").from("moderators"),
+                q.select(q.c("moderators.id")).from(q.t("moderators")),
             )
             .unionAll(
-                q.select("guests.id").from("guests"),
-                q.select("visitors.id").from("visitors"),
+                q.select(q.c("guests.id")).from(q.t("guests")),
+                q.select(q.c("visitors.id")).from(q.t("visitors")),
             )
             .intersect(
-                q.select("staff.id").from("staff"),
-                q.select("contractors.id").from("contractors"),
+                q.select(q.c("staff.id")).from(q.t("staff")),
+                q.select(q.c("contractors.id")).from(q.t("contractors")),
             )
             .intersectAll(
-                q.select("vendors.id").from("vendors"),
-                q.select("suppliers.id").from("suppliers"),
+                q.select(q.c("vendors.id")).from(q.t("vendors")),
+                q.select(q.c("suppliers.id")).from(q.t("suppliers")),
             )
             .except(
-                q.select("banned_users.id").from("banned_users"),
-                q.select("blocked_users.id").from("blocked_users"),
+                q.select(q.c("banned_users.id")).from(q.t("banned_users")),
+                q.select(q.c("blocked_users.id")).from(q.t("blocked_users")),
             )
             .exceptAll(
-                q.select("archived_users.id").from("archived_users"),
-                q.select("deleted_users.id").from("deleted_users"),
+                q.select(q.c("archived_users.id")).from(q.t("archived_users")),
+                q.select(q.c("deleted_users.id")).from(q.t("deleted_users")),
             );
 
         const sql = builder.getSql();
@@ -753,12 +855,12 @@ describe("set operations", () => {
 describe("conflict handling", () => {
     it("conflictDoNothingQuery", () => {
         const builder = q
-            .insert("users", {
+            .insert(q.t("users"), {
                 name: "john",
                 email: "john@example.com",
             })
             .onConflictDoNothing({
-                target: ["users.email"],
+                target: [q.c("users.email")],
                 targetWhere: q.i("users.is_active").op("=").l(true),
             });
 
@@ -772,12 +874,12 @@ describe("conflict handling", () => {
 
     it("conflictDoUpdateQuery", () => {
         const builder = q
-            .insert("users", {
+            .insert(q.t("users"), {
                 name: "donna",
                 email: "donna@example.com",
             })
             .onConflictDoUpdate({
-                target: ["users.email"],
+                target: [q.c("users.email")],
                 targetWhere: q.i("users.is_active").op("=").l(true),
                 set: {
                     name: "donna",
@@ -785,7 +887,7 @@ describe("conflict handling", () => {
                 },
                 setWhere: q.i("users.is_deleted").op("=").l(false),
             })
-            .returning("id");
+            .returning(q.c("id"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -825,7 +927,7 @@ describe("transaction queries", () => {
     });
 
     it("savepointTransactionQuery", () => {
-        const builder = q.savepointTransaction("sp1");
+        const builder = q.savepointTransaction(q.c("sp1"));
 
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -835,12 +937,12 @@ describe("transaction queries", () => {
 
     it("transactionQuery", () => {
         const builder = q.transaction(
-            q.insert("users", {
+            q.insert(q.t("users"), {
                 name: "hana",
                 email: "hana@example.com",
             }),
-            q.savepointTransaction("sp_insert_profile"),
-            q.update("users")
+            q.savepointTransaction(q.c("sp_insert_profile")),
+            q.update(q.t("users"))
                 .set({
                     updated_at: q.r`NOW()`,
                 })
@@ -856,7 +958,7 @@ describe("transaction queries", () => {
     it("rawLimitOffsetQuery", () => {
         const builder = q
             .select("*")
-            .from("posts")
+            .from(q.t("posts"))
             .limit(q.rs("ALL"))
             .offset(q.rs("10"));
 

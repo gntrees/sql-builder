@@ -1,14 +1,15 @@
-import { StatisticsFunctionBuilder } from "./override-statistics-functions";
-import type { QueryBuilder } from "./query-builder";
+import type { ParameterType } from "./base-raw-query-builder";
+import { OperatorFunctionBuilder } from "./override-operator-functions";
+import { QueryBuilder } from "./query-builder";
 import type { Statement } from "./types";
 
-export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
+export class OverrideQueryBuilder extends OperatorFunctionBuilder {
     override escape(value?: Statement) {
         if (value === undefined) {
             return super.escape();
         }
         this.query.sql.push("ESCAPE");
-        const resolvedEscape = super.resolveStatement(value, 0);
+        const resolvedEscape = super.resolveStatement(value);
         if (resolvedEscape.length > 0) {
             this.query.sql.push(...resolvedEscape);
         }
@@ -36,12 +37,12 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this.rollback().semicolon();
     }
 
-    savepointTransaction(name?: string | QueryBuilder) {
+    savepointTransaction(name?: Statement) {
         super.savepoint();
         if (name !== undefined && name !== null) {
             const resolvedName = typeof name === "string"
-                ? super.resolveIdentifierStatement(name, 0)
-                : super.resolveStatement(name, 0);
+                ? super.resolveIdentifierStatement(name)
+                : super.resolveStatement(name);
             if (resolvedName.length > 0) {
                 this.query.sql.push(...resolvedName);
             }
@@ -49,7 +50,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this.semicolon();
     }
 
-    override transaction(...transaction: QueryBuilder[]) {
+    override transaction(...transaction: Statement[]) {
         if (transaction.length === 0) {
             return super.transaction();
         }
@@ -67,66 +68,130 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this.commitTransaction();
     }
     // Queries
-    override select(...cols: (QueryBuilder | string | {
-        [alias: string]: QueryBuilder | string;
+    override select(...cols: (Statement | {
+        [key: string]: Statement;
     })[]) {
         super.select();
         if (cols.length === 0) {
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
-        super.pushSeparatedTokens(resolvedColumns, ",");
+        const columns: (string | ParameterType)[][] = [] 
+        cols.forEach((item) => {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+                const entries = Object.entries(item);
+                entries.forEach(([alias, column]) => {
+                    const tokens: QueryBuilder["query"]["sql"] = [];
+                    const resolvedColumn = super.resolveStatement(column);
+                    const resolvedAlias = super.resolveIdentifierStatement(alias);
+                    if (resolvedColumn.length === 0) {
+                        return;
+                    }
+                    tokens.push(...resolvedColumn);
+                    if (resolvedAlias.length > 0) {
+                        tokens.push("AS", ...resolvedAlias);
+                    }
+                    columns.push(tokens);
+                });
+            } else {
+                const resolved = super.resolveStatement(item);
+                columns.push(resolved);
+            }
+        });        
+        super.pushSeparatedTokens(columns, ",");
         return this;
     }
 
-    selectDistinct(...cols: (QueryBuilder | string | {
-        [alias: string]: QueryBuilder | string;
+    selectDistinct(...cols: (Statement | {
+        [key: string]: Statement;
     })[]) {
         super.select();
         super.distinct();
         if (cols.length === 0) {
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
-        super.pushSeparatedTokens(resolvedColumns, ",");
+        const columns: (string | ParameterType)[][] = [] 
+        cols.forEach((item) => {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+                const entries = Object.entries(item);
+                entries.forEach(([alias, column]) => {
+                    const tokens: QueryBuilder["query"]["sql"] = [];
+                    const resolvedColumn = super.resolveStatement(column);
+                    const resolvedAlias = super.resolveIdentifierStatement(alias);
+                    if (resolvedColumn.length === 0) {
+                        return;
+                    }
+                    tokens.push(...resolvedColumn);
+                    if (resolvedAlias.length > 0) {
+                        tokens.push("AS", ...resolvedAlias);
+                    }
+                    columns.push(tokens);
+                });
+            } else {
+                const resolved = super.resolveStatement(item);
+                columns.push(resolved);
+            }
+        });        
+        super.pushSeparatedTokens(columns, ",");
         return this;
     }
 
     selectDistinctOn(
-        on?: (QueryBuilder | string)[],
-        cols: (QueryBuilder | string | { [alias: string]: QueryBuilder | string })[] = []
+        on?: Statement[],
+        cols?: (Statement | {
+            [key: string]: Statement;
+        })[]
     ) {
         super.select();
         super.distinct();
-        if (!on) {
+        if (on !== undefined && on.length > 0) {
+            super.on();
+            this.query.sql.push("(");
+            const resolvedOn = on.map((item) => super.resolveIdentifierStatement(item));
+            super.pushSeparatedTokens(resolvedOn, ",");
+            this.query.sql.push(")");
+        }
+        if (cols == undefined || cols.length === 0) {
             return this;
         }
-        super.on();
-        this.query.sql.push("(");
-        const resolvedOn = super.resolveIdentifierStatementArray(on);
-        super.pushSeparatedTokens(resolvedOn, ",");
-        this.query.sql.push(")");
-        if (cols.length === 0) {
-            return this;
-        }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
-        super.pushSeparatedTokens(resolvedColumns, ",");
+        const columns: (string | ParameterType)[][] = [] 
+        cols.forEach((item) => {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+                const entries = Object.entries(item);
+                entries.forEach(([alias, column]) => {
+                    const tokens: QueryBuilder["query"]["sql"] = [];
+                    const resolvedColumn = super.resolveStatement(column);
+                    const resolvedAlias = super.resolveIdentifierStatement(alias);
+                    if (resolvedColumn.length === 0) {
+                        return;
+                    }
+                    tokens.push(...resolvedColumn);
+                    if (resolvedAlias.length > 0) {
+                        tokens.push("AS", ...resolvedAlias);
+                    }
+                    columns.push(tokens);
+                });
+            } else {
+                const resolved = super.resolveStatement(item);
+                columns.push(resolved);
+            }
+        });        
+        super.pushSeparatedTokens(columns, ",");
         return this;
     }
 
-    insertInto(table?: string | QueryBuilder, cols: (QueryBuilder | string)[] = []) {
+    insertInto(table?: Statement, cols?: Statement[]) {
         super.insert();
         super.into();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
-        if (cols.length === 0) {
+        if (!cols || cols.length === 0) {
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
+        const resolvedColumns = cols.map((item) => super.resolveIdentifierStatement(item));
         if (resolvedColumns.length > 0) {
             this.query.sql.push("(");
             super.pushSeparatedTokens(resolvedColumns, ",");
@@ -149,7 +214,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
             if (rowIndex > 0) {
                 this.query.sql.push(",");
             }
-            const resolvedRow = super.resolveLiteralStatementArray(row);
+            const resolvedRow = row.map((item) => super.resolveStatement(item));
             this.query.sql.push("(");
             super.pushSeparatedTokens(resolvedRow, ",");
             this.query.sql.push(")");
@@ -157,8 +222,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override insert<T extends Record<string, string | QueryBuilder>>(
-        table?: string | QueryBuilder,
+    override insert<T extends Record<string, Statement>>(
+        table?: Statement,
         values?: T | T[],
     ) {
         super.insert();
@@ -166,7 +231,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
             return this;
         }
         super.into();
-        const resolvedTable = super.resolveIdentifierStatement(table, 0);
+        const resolvedTable = super.resolveIdentifierStatement(table);
         if (resolvedTable.length > 0) {
             this.query.sql.push(...resolvedTable);
         }
@@ -188,7 +253,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
             });
         });
         if (columnNames.length > 0) {
-            const resolvedColumns = super.resolveIdentifierStatementArray(columnNames);
+            const resolvedColumns = columnNames.map((item) => super.resolveIdentifierStatement(item));
             this.query.sql.push("(");
             super.pushSeparatedTokens(resolvedColumns, ",");
             this.query.sql.push(")");
@@ -198,9 +263,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
             if (rowIndex > 0) {
                 this.query.sql.push(",");
             }
-            const resolvedRow = super.resolveLiteralStatementArray(
-                columnNames.map((column) => row[column] as string | QueryBuilder),
-            );
+            const resolvedRow = columnNames.map((column) => row[column] as Statement)
+                .map((item) => super.resolveStatement(item));
             this.query.sql.push("(");
             super.pushSeparatedTokens(resolvedRow, ",");
             this.query.sql.push(")");
@@ -208,32 +272,32 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override update(table?: string | QueryBuilder) {
+    override update(table?: Statement) {
         super.update();
         if (table === undefined || table === null) {
             return this;
         }
-        const resolvedTable = super.resolveIdentifierStatement(table, 0);
+        const resolvedTable = super.resolveIdentifierStatement(table);
         if (resolvedTable.length > 0) {
             this.query.sql.push(...resolvedTable);
         }
         return this;
     }
 
-    override delete(table?: string | QueryBuilder) {
+    override delete(table?: Statement) {
         super.delete();
         if (table === undefined || table === null) {
             return this;
         }
         super.from();
-        const resolvedTable = super.resolveIdentifierStatement(table, 0);
+        const resolvedTable = super.resolveIdentifierStatement(table);
         if (resolvedTable.length > 0) {
             this.query.sql.push(...resolvedTable);
         }
         return this;
     }
 
-    override set(set?: Record<string, string | QueryBuilder>) {
+    override set(set?: Record<string, Statement>) {
         super.set();
         if (set === undefined) {
             return this;
@@ -244,8 +308,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         }
         let hasAssignments = false;
         entries.forEach(([column, value]) => {
-            const resolvedColumn = super.resolveIdentifierStatement(column, 0);
-            const resolvedValue = super.resolveStatement(value, 0);
+            const resolvedColumn = super.resolveIdentifierStatement(column);
+            const resolvedValue = super.resolveStatement(value);
             if (resolvedColumn.length === 0 || resolvedValue.length === 0) {
                 return;
             }
@@ -259,14 +323,14 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
     }
 
     onConflictDoNothing(options?: {
-        target?: QueryBuilder | string | Array<QueryBuilder | string>;
-        targetWhere?: QueryBuilder;
+        target?: Statement | Statement[];
+        targetWhere?: Statement;
     }) {
         super.on();
         super.conflict();
         if (options?.target !== undefined && options?.target !== null) {
             if (Array.isArray(options.target)) {
-                const resolvedTarget = super.resolveIdentifierStatementArray(options.target);
+                const resolvedTarget = options.target.map((item) => super.resolveIdentifierStatement(item));
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
                     super.pushSeparatedTokens(resolvedTarget, ",");
@@ -274,8 +338,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
                 }
             } else {
                 const resolvedTarget = typeof options.target === "string"
-                    ? super.resolveIdentifierStatement(options.target, 0)
-                    : super.resolveStatement(options.target, 0);
+                    ? super.resolveIdentifierStatement(options.target)
+                    : super.resolveStatement(options.target as QueryBuilder);
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push(...resolvedTarget);
                 }
@@ -283,7 +347,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         }
         if (options?.targetWhere) {
             super.where();
-            const resolvedTargetWhere = super.resolveStatement(options.targetWhere, 0);
+            const resolvedTargetWhere = super.resolveStatement(options.targetWhere);
             if (resolvedTargetWhere.length > 0) {
                 this.query.sql.push(...resolvedTargetWhere);
             }
@@ -294,16 +358,16 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
     }
 
     onConflictDoUpdate(options?: {
-        target?: QueryBuilder | string | Array<QueryBuilder | string>;
-        targetWhere?: QueryBuilder;
-        set?: Record<string, string | QueryBuilder> | Array<Record<string, string | QueryBuilder>>;
-        setWhere?: QueryBuilder;
+        target?: Statement | Statement[];
+        targetWhere?: Statement;
+        set?: Record<string, Statement> | Record<string, Statement>[];
+        setWhere?: Statement;
     }) {
         super.on();
         super.conflict();
         if (options?.target !== undefined && options?.target !== null) {
             if (Array.isArray(options.target)) {
-                const resolvedTarget = super.resolveIdentifierStatementArray(options.target);
+                const resolvedTarget = options.target.map((item) => super.resolveIdentifierStatement(item));
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
                     super.pushSeparatedTokens(resolvedTarget, ",");
@@ -311,8 +375,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
                 }
             } else {
                 const resolvedTarget = typeof options.target === "string"
-                    ? super.resolveIdentifierStatement(options.target, 0)
-                    : super.resolveStatement(options.target, 0);
+                    ? super.resolveIdentifierStatement(options.target)
+                    : super.resolveStatement(options.target as QueryBuilder);
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push(...resolvedTarget);
                 }
@@ -320,7 +384,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         }
         if (options?.targetWhere) {
             super.where();
-            const resolvedTargetWhere = super.resolveStatement(options.targetWhere, 0);
+            const resolvedTargetWhere = super.resolveStatement(options.targetWhere);
             if (resolvedTargetWhere.length > 0) {
                 this.query.sql.push(...resolvedTargetWhere);
             }
@@ -336,8 +400,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         let hasAssignments = false;
         setEntries.forEach((entry) => {
             Object.entries(entry).forEach(([column, value]) => {
-                const resolvedColumn = super.resolveIdentifierStatement(column, 0);
-                const resolvedValue = super.resolveStatement(value, 0);
+                const resolvedColumn = super.resolveIdentifierStatement(column);
+                const resolvedValue = super.resolveStatement(value);
                 if (resolvedColumn.length === 0 || resolvedValue.length === 0) {
                     return;
                 }
@@ -350,7 +414,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         });
         if (options?.setWhere) {
             super.where();
-            const resolvedSetWhere = super.resolveStatement(options.setWhere, 0);
+            const resolvedSetWhere = super.resolveStatement(options.setWhere);
             if (resolvedSetWhere.length > 0) {
                 this.query.sql.push(...resolvedSetWhere);
             }
@@ -358,10 +422,10 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override case(caseExpr?: QueryBuilder, asAlias?: string | QueryBuilder) {
+    override case(caseExpr?: Statement, asAlias?: Statement) {
         super.case();
         if (caseExpr) {
-            const resolvedExpr = super.resolveStatement(caseExpr, 0);
+            const resolvedExpr = super.resolveStatement(caseExpr);
             if (resolvedExpr.length > 0) {
                 this.query.sql.push(...resolvedExpr);
             }
@@ -373,8 +437,8 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         if (asAlias !== undefined && asAlias !== null) {
             super.as();
             const resolvedAlias = typeof asAlias === "string"
-                ? super.resolveIdentifierStatement(asAlias, 0)
-                : super.resolveStatement(asAlias, 0);
+                ? super.resolveIdentifierStatement(asAlias)
+                : super.resolveStatement(asAlias as QueryBuilder);
             if (resolvedAlias.length > 0) {
                 this.query.sql.push(...resolvedAlias);
             }
@@ -382,10 +446,10 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override when(condition?: QueryBuilder) {
+    override when(condition?: Statement) {
         super.when();
         if (condition) {
-            const resolvedCondition = super.resolveStatement(condition, 0);
+            const resolvedCondition = super.resolveStatement(condition);
             if (resolvedCondition.length > 0) {
                 this.query.sql.push(...resolvedCondition);
             }
@@ -393,10 +457,10 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override then(value?: QueryBuilder) {
+    override then(value?: Statement) {
         super.then();
         if (value) {
-            const resolvedValue = super.resolveStatement(value, 0);
+            const resolvedValue = super.resolveStatement(value);
             if (resolvedValue.length > 0) {
                 this.query.sql.push(...resolvedValue);
             }
@@ -404,10 +468,10 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override else(value?: QueryBuilder) {
+    override else(value?: Statement) {
         super.else();
         if (value) {
-            const resolvedValue = super.resolveStatement(value, 0);
+            const resolvedValue = super.resolveStatement(value);
             if (resolvedValue.length > 0) {
                 this.query.sql.push(...resolvedValue);
             }
@@ -415,12 +479,12 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override asc(...cols: (QueryBuilder | string)[]) {
+    override asc(...cols: Statement[]) {
         if (cols.length === 0) {
             super.asc();
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
+        const resolvedColumns = cols.map((item) => super.resolveIdentifierStatement(item));
         let hasTokens = false;
         resolvedColumns.forEach((tokens) => {
             if (tokens.length === 0) {
@@ -435,12 +499,12 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override desc(...cols: (QueryBuilder | string)[]) {
+    override desc(...cols: Statement[]) {
         if (cols.length === 0) {
             super.desc();
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
+        const resolvedColumns = cols.map((item) => super.resolveIdentifierStatement(item));
         let hasTokens = false;
         resolvedColumns.forEach((tokens) => {
             if (tokens.length === 0) {
@@ -455,12 +519,22 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override as(alias?: string | QueryBuilder) {
+    nullsFirst() {
+        this.query.sql.push("NULLS", "FIRST");
+        return this;
+    }
+
+    nullsLast() {
+        this.query.sql.push("NULLS", "LAST");
+        return this;
+    }
+
+    override as(alias?: Statement) {
         super.as();
         if (alias !== undefined && alias !== null) {
             const resolvedAlias = typeof alias === "string"
-                ? super.resolveIdentifierStatement(alias, 0)
-                : super.resolveStatement(alias, 0);
+                ? super.resolveIdentifierStatement(alias)
+                : super.resolveStatement(alias as QueryBuilder);
             if (resolvedAlias.length > 0) {
                 this.query.sql.push(...resolvedAlias);
             }
@@ -468,10 +542,10 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    sub(query?: QueryBuilder) {
+    sub(query?: Statement) {
         this.query.sql.push("(");
         if (query) {
-            const resolvedQuery = super.resolveStatement(query, 0);
+            const resolvedQuery = super.resolveStatement(query);
             if (resolvedQuery.length > 0) {
                 this.query.sql.push(...resolvedQuery);
             }
@@ -480,28 +554,28 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override from(...tables: (QueryBuilder | string)[]) {
+    override from(...tables: Statement[]) {
         super.from();
         if (tables.length === 0) {
             return this;
         }
-        const resolvedTables = super.resolveIdentifierStatementArray(tables);
+        const resolvedTables = tables.map((item) => super.resolveIdentifierStatement(item));
         super.pushSeparatedTokens(resolvedTables, ",");
         return this;
     }
 
-    leftJoin(table?: QueryBuilder | string, on?: QueryBuilder) {
+    leftJoin(table?: Statement, on?: Statement) {
         super.left();
         super.join();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -509,19 +583,19 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    leftJoinLateral(table?: QueryBuilder | string, on?: QueryBuilder) {
+    leftJoinLateral(table?: Statement, on?: Statement) {
         super.left();
         super.join();
         super.lateral();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -529,18 +603,18 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    innerJoin(table?: QueryBuilder | string, on?: QueryBuilder) {
+    innerJoin(table?: Statement, on?: Statement) {
         super.inner();
         super.join();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -548,18 +622,18 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    rightJoin(table?: QueryBuilder | string, on?: QueryBuilder) {
+    rightJoin(table?: Statement, on?: Statement) {
         super.right();
         super.join();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -567,19 +641,19 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    innerJoinLateral(table?: QueryBuilder | string, on?: QueryBuilder) {
+    innerJoinLateral(table?: Statement, on?: Statement) {
         super.inner();
         super.join();
         super.lateral();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -587,18 +661,18 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    fullJoin(table?: QueryBuilder | string, on?: QueryBuilder) {
+    fullJoin(table?: Statement, on?: Statement) {
         super.full();
         super.join();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -606,19 +680,19 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    rightJoinLateral(table?: QueryBuilder | string, on?: QueryBuilder) {
+    rightJoinLateral(table?: Statement, on?: Statement) {
         super.right();
         super.join();
         super.lateral();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on, 0);
+            const resolvedOn = super.resolveStatement(on as QueryBuilder);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -626,11 +700,11 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    crossJoin(table?: QueryBuilder | string) {
+    crossJoin(table?: Statement) {
         super.cross();
         super.join();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
@@ -638,12 +712,12 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    crossJoinLateral(table?: QueryBuilder | string) {
+    crossJoinLateral(table?: Statement) {
         super.cross();
         super.join();
         super.lateral();
         if (table !== undefined && table !== null) {
-            const resolvedTable = super.resolveIdentifierStatement(table, 0);
+            const resolvedTable = super.resolveIdentifierStatement(table);
             if (resolvedTable.length > 0) {
                 this.query.sql.push(...resolvedTable);
             }
@@ -651,23 +725,23 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    groupBy(...cols: (QueryBuilder | string)[]) {
+    groupBy(...cols: Statement[]) {
         super.group();
         super.by();
         if (cols.length === 0) {
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
+        const resolvedColumns = cols.map((item) => super.resolveIdentifierStatement(item));
         super.pushSeparatedTokens(resolvedColumns, ",");
         return this;
     }
 
-    override having(condition?: QueryBuilder) {
+    override having(condition?: Statement) {
         super.having();
         if (condition === undefined || condition === null) {
             return this;
         }
-        const resolvedCondition = super.resolveStatement(condition, 0);
+        const resolvedCondition = super.resolveStatement(condition);
         if (resolvedCondition.length === 0) {
             return this;
         }
@@ -675,7 +749,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override union(...queries: QueryBuilder[]) {
+    override union(...queries: Statement[]) {
         if (queries.length === 0) {
             super.union();
             return this;
@@ -702,7 +776,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    unionAll(...queries: QueryBuilder[]) {
+    unionAll(...queries: Statement[]) {
         if (queries.length === 0) {
             super.union();
             super.all();
@@ -732,7 +806,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override intersect(...queries: QueryBuilder[]) {
+    override intersect(...queries: Statement[]) {
         if (queries.length === 0) {
             super.intersect();
             return this;
@@ -759,7 +833,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    intersectAll(...queries: QueryBuilder[]) {
+    intersectAll(...queries: Statement[]) {
         if (queries.length === 0) {
             super.intersect();
             super.all();
@@ -789,7 +863,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override except(...queries: QueryBuilder[]) {
+    override except(...queries: Statement[]) {
         if (queries.length === 0) {
             super.except();
             return this;
@@ -816,7 +890,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    exceptAll(...queries: QueryBuilder[]) {
+    exceptAll(...queries: Statement[]) {
         if (queries.length === 0) {
             super.except();
             super.all();
@@ -846,18 +920,18 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override with(cteName?: string | QueryBuilder, subQuery?: QueryBuilder) {
+    override with(cteName?: Statement, subQuery?: Statement) {
         super.with();
         if (cteName !== undefined && cteName !== null) {
             const resolvedCteName = typeof cteName === "string"
-                ? super.resolveIdentifierStatement(cteName, 0)
-                : super.resolveStatement(cteName, 0);
+                ? super.resolveIdentifierStatement(cteName)
+                : super.resolveStatement(cteName as QueryBuilder);
             if (resolvedCteName.length > 0) {
                 this.query.sql.push(...resolvedCteName);
             }
         }
         if (subQuery) {
-            const resolvedSubQuery = super.resolveStatement(subQuery, 0);
+            const resolvedSubQuery = super.resolveStatement(subQuery as QueryBuilder);
             if (resolvedSubQuery.length > 0) {
                 this.query.sql.push("AS", "(", ...resolvedSubQuery, ")");
             }
@@ -865,12 +939,12 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override where(condition?: QueryBuilder) {
+    override where(condition?: Statement) {
         super.where();
         if (condition === undefined || condition === null) {
             return this;
         }
-        const resolvedCondition = super.resolveStatement(condition, 0);
+        const resolvedCondition = super.resolveStatement(condition);
         if (resolvedCondition.length === 0) {
             return this;
         }
@@ -878,7 +952,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override and(...values: QueryBuilder[]) {
+    override and(...values: Statement[]) {
         if (values.length === 0) {
             super.and();
             return this;
@@ -899,7 +973,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override or(...values: QueryBuilder[]) {
+    override or(...values: Statement[]) {
         if (values.length === 0) {
             super.or();
             return this;
@@ -920,7 +994,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    comma(...queries: QueryBuilder[]) {
+    comma(...queries: Statement[]) {
         const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this;
@@ -929,37 +1003,37 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    orderBy(...cols: (QueryBuilder | string)[]) {
+    orderBy(...cols: Statement[]) {
         super.order();
         super.by();
         if (cols.length === 0) {
             return this;
         }
-        const resolvedColumns = super.resolveIdentifierStatementArray(cols);
+        const resolvedColumns = cols.map((item) => super.resolveIdentifierStatement(item));
         super.pushSeparatedTokens(resolvedColumns, ",");
         return this;
     }
 
-    override returning(col?: string | QueryBuilder) {
+    override returning(col?: Statement) {
         super.returning();
         if (col === undefined || col === null) {
             return this;
         }
         const resolvedColumn = typeof col === "string"
-            ? super.resolveIdentifierStatement(col, 0)
-            : super.resolveStatement(col, 0);
+            ? super.resolveIdentifierStatement(col)
+            : super.resolveStatement(col as QueryBuilder);
         if (resolvedColumn.length > 0) {
             this.query.sql.push(...resolvedColumn);
         }
         return this;
     }
 
-    override limit(value?: QueryBuilder | number) {
+    override limit(value?: Statement) {
         super.limit();
         if (value === undefined || value === null) {
             return this;
         }
-        const resolvedLimit = super.resolveStatement(value, 0);
+        const resolvedLimit = super.resolveStatement(value);
         if (resolvedLimit.length === 0) {
             return this;
         }
@@ -967,12 +1041,12 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override offset(value?: QueryBuilder | number) {
+    override offset(value?: Statement) {
         super.offset();
         if (value === undefined || value === null) {
             return this;
         }
-        const resolvedOffset = super.resolveStatement(value, 0);
+        const resolvedOffset = super.resolveStatement(value);
         if (resolvedOffset.length === 0) {
             return this;
         }
@@ -981,14 +1055,14 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
     }
 
     override fetch(
-        count?: number | QueryBuilder,
+        count?: Statement,
         mode: "first" | "next" = "first",
         withTies: boolean = false,
     ) {
         super.fetch();
         if (count !== undefined && count !== null) {
             this.query.sql.push(mode.toUpperCase());
-            const resolvedCount = super.resolveStatement(count, 0);
+            const resolvedCount = super.resolveStatement(count);
             if (resolvedCount.length > 0) {
                 this.query.sql.push(...resolvedCount);
             }
@@ -1001,7 +1075,7 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         return this;
     }
 
-    override t(table?: string | QueryBuilder) {
+    override t(table?: Statement) {
         if (!table) {
             super.t();
             return this;
@@ -1009,13 +1083,13 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         if (typeof table === "string") {
             return this.i(table);
         }
-        const resolved = super.resolveIdentifierStatement(table, 0);
+        const resolved = super.resolveIdentifierStatement(table);
         if (resolved.length > 0) {
             this.query.sql.push(...resolved);
         }
         return this;
     }
-    override column(column?: string | QueryBuilder) {
+    override column(column?: Statement) {
         if (!column) {
             super.column();
             return this;
@@ -1023,13 +1097,13 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
         if (typeof column === "string") {
             return this.i(column);
         }
-        const resolved = super.resolveIdentifierStatement(column, 0);
+        const resolved = super.resolveIdentifierStatement(column);
         if (resolved.length > 0) {
             this.query.sql.push(...resolved);
         }
         return this;
     }
-    override c(column?: string | QueryBuilder) {
+    override c(column?: Statement) {
         if (!column) {
             super.c();
             return this;
@@ -1037,5 +1111,122 @@ export class OverrideQueryBuilder extends StatisticsFunctionBuilder {
             this.column(column);
             return this;
         }
+    }
+
+    override into(tableName?: Statement, columns?: Statement[]) {
+        this.query.sql.push("INTO");
+        if (tableName !== undefined && tableName !== null) {
+            const resolvedTable = typeof tableName === "string"
+                ? super.resolveIdentifierStatement(tableName)
+                : super.resolveStatement(tableName);
+            if (resolvedTable.length > 0) {
+                this.query.sql.push(...resolvedTable);
+            }
+        }
+        if (columns && columns.length > 0) {
+            const resolvedColumns = columns.map((item) => super.resolveIdentifierStatement(item));
+            this.query.sql.push("(");
+            super.pushSeparatedTokens(resolvedColumns, ",");
+            this.query.sql.push(")");
+        }
+        return this;
+    }
+
+    groupByDistinct(...cols: Statement[]) {
+        super.group();
+        super.by();
+        this.query.sql.push("DISTINCT");
+        if (cols.length === 0) {
+            return this;
+        }
+        const resolvedColumns = cols.map((item) => super.resolveIdentifierStatement(item));
+        super.pushSeparatedTokens(resolvedColumns, ",");
+        return this;
+    }
+
+    windowClause(name: string, definition?: { partitionBy?: Statement[]; orderBy?: Statement[]; frame?: string }) {
+        this.query.sql.push("WINDOW", name);
+        if (definition) {
+            this.query.sql.push("AS");
+            this.query.sql.push("(");
+            if (definition.partitionBy && definition.partitionBy.length > 0) {
+                this.query.sql.push("PARTITION", "BY");
+                const resolvedColumns = definition.partitionBy.map((item) => super.resolveIdentifierStatement(item));
+                super.pushSeparatedTokens(resolvedColumns, ",");
+            }
+            if (definition.orderBy && definition.orderBy.length > 0) {
+                if (definition.partitionBy && definition.partitionBy.length > 0) {
+                    this.query.sql.push(" ");
+                }
+                this.query.sql.push("ORDER", "BY");
+                const resolvedColumns = definition.orderBy.map((item) => super.resolveIdentifierStatement(item));
+                super.pushSeparatedTokens(resolvedColumns, ",");
+            }
+            if (definition.frame) {
+                this.query.sql.push(definition.frame);
+            }
+            this.query.sql.push(")");
+        }
+        return this;
+    }
+
+    forUpdate(options?: { of?: Statement[]; nowait?: boolean; skipLocked?: boolean }) {
+        this.query.sql.push("FOR", "UPDATE");
+        if (options?.of && options.of.length > 0) {
+            this.query.sql.push("OF");
+            const resolvedTables = options.of.map((item) => super.resolveIdentifierStatement(item));
+            super.pushSeparatedTokens(resolvedTables, ",");
+        }
+        if (options?.nowait) {
+            this.query.sql.push("NOWAIT");
+        } else if (options?.skipLocked) {
+            this.query.sql.push("SKIP", "LOCKED");
+        }
+        return this;
+    }
+
+    forShare(options?: { of?: Statement[]; nowait?: boolean; skipLocked?: boolean }) {
+        this.query.sql.push("FOR", "SHARE");
+        if (options?.of && options.of.length > 0) {
+            this.query.sql.push("OF");
+            const resolvedTables = options.of.map((item) => super.resolveIdentifierStatement(item));
+            super.pushSeparatedTokens(resolvedTables, ",");
+        }
+        if (options?.nowait) {
+            this.query.sql.push("NOWAIT");
+        } else if (options?.skipLocked) {
+            this.query.sql.push("SKIP", "LOCKED");
+        }
+        return this;
+    }
+
+    forKeyShare(options?: { of?: Statement[]; nowait?: boolean; skipLocked?: boolean }) {
+        this.query.sql.push("FOR", "KEY", "SHARE");
+        if (options?.of && options.of.length > 0) {
+            this.query.sql.push("OF");
+            const resolvedTables = options.of.map((item) => super.resolveIdentifierStatement(item));
+            super.pushSeparatedTokens(resolvedTables, ",");
+        }
+        if (options?.nowait) {
+            this.query.sql.push("NOWAIT");
+        } else if (options?.skipLocked) {
+            this.query.sql.push("SKIP", "LOCKED");
+        }
+        return this;
+    }
+
+    forNoKeyUpdate(options?: { of?: Statement[]; nowait?: boolean; skipLocked?: boolean }) {
+        this.query.sql.push("FOR", "NO", "KEY", "UPDATE");
+        if (options?.of && options.of.length > 0) {
+            this.query.sql.push("OF");
+            const resolvedTables = options.of.map((item) => super.resolveIdentifierStatement(item));
+            super.pushSeparatedTokens(resolvedTables, ",");
+        }
+        if (options?.nowait) {
+            this.query.sql.push("NOWAIT");
+        } else if (options?.skipLocked) {
+            this.query.sql.push("SKIP", "LOCKED");
+        }
+        return this;
     }
 }

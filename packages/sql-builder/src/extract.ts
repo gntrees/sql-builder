@@ -1,6 +1,7 @@
 import { parse } from 'pgsql-parser';
 import * as ts from 'typescript';
 import keywords from "../keywords.json" assert { type: "json" };
+import pgFunctionList from "./postgres-functions-list.js";
 
 
 
@@ -10,7 +11,7 @@ const keywordsExtracted = keywords['keywords'].map(keywords => ({
 
 // Function to write keywords to file
 
-export function extractMethodNamesFromFile(filePath: string, className: string): string[] {
+function extractMethodNamesFromFile(filePath: string, className: string): string[] {
     const fs = require('fs');
     const path = require('path');
     const sourceCode = fs.readFileSync(filePath, 'utf-8');
@@ -44,7 +45,7 @@ function hasVisibilityModifier(node: ts.MethodDeclaration): boolean {
 }
 
 // function untuk write keywords to file
-export function writeKeywordsToFile(data: string, fileName: string = 'base-query-builder.ts') {
+function writeKeywordsToFile(data: string, fileName: string = 'base-query-builder.ts') {
   const fs = require('fs');
   const path = require('path');
 
@@ -54,9 +55,7 @@ export function writeKeywordsToFile(data: string, fileName: string = 'base-query
 }
 
 function toCamelCase(str: string): string {
-  // Split the string by hyphens or underscores 
-  // console.log(str.split(/[_-]+/));
-
+  // Split the string by hyphens or underscores
   return str.split(/[_-]+/)
     .map((word, index) => {
       // If it is the first word, make sure it is all lowercase
@@ -73,12 +72,10 @@ const keywordsFix = keywordsExtracted.map(async (i) => {
     const resultParser = await parse(i.key);
     return {
       key: i.key,
-      // ast: resultParser
     }
   } catch (error) {
     return {
       key: i.key,
-      // ast: error
     }
   }
 })
@@ -105,6 +102,14 @@ function getBaseRawQueryBuilderFunctionName() {
     );
 }
 
+function getBaseQueryBuilderFunctionName(){
+    const path = require('path');
+    return extractMethodNamesFromFile(
+        path.join(__dirname, './generated/base-query-builder.ts'),
+        'BaseQueryBuilder'
+    );
+}
+
 function getOverrideQueryBuilderFunctionName() {
     const path = require('path');
     const overrideMethods = extractMethodNamesFromFile(
@@ -113,31 +118,31 @@ function getOverrideQueryBuilderFunctionName() {
     );
     
     const parentFiles = [
-        { file: 'override-uuid-functions.ts', class: 'UUIDFunctionBuilder' },
-        { file: 'override-xml-functions.ts', class: 'XMLFunctionBuilder' },
-        { file: 'override-sequence-functions.ts', class: 'SequenceFunctionBuilder' },
-        { file: 'override-json-functions.ts', class: 'JSONFunctionBuilder' },
-        { file: 'override-textsearch-functions.ts', class: 'TextSearchFunctionBuilder' },
-        { file: 'override-string-functions.ts', class: 'StringFunctionBuilder' },
+        { file: './generated/override-all-functions.ts', class: 'AllFunctionBuilder' },
         { file: 'override-operator-functions.ts', class: 'OperatorFunctionBuilder' },
-        { file: 'override-conditional-functions.ts', class: 'ConditionalFunctionBuilder' },
-        { file: 'override-array-functions.ts', class: 'ArrayFunctionBuilder' },
-        { file: 'override-network-functions.ts', class: 'NetworkFunctionBuilder' },
-        { file: 'override-math-functions.ts', class: 'MathFunctionBuilder' },
-        { file: 'override-geometry-functions.ts', class: 'GeometryFunctionBuilder' },
-        { file: 'override-enum-functions.ts', class: 'EnumFunctionBuilder' },
-        { file: 'override-date-time-function.ts', class: 'DateTimeFunctionBuilder' },
-        { file: 'override-set-returning-functions.ts', class: 'SetReturningFunctionBuilder' },
-        { file: 'override-range-functions.ts', class: 'RangeFunctionBuilder' },
-        { file: 'override-aggregate-functions.ts', class: 'AggregateFunctionBuilder' },
-        { file: 'override-window-functions.ts', class: 'WindowFunctionBuilder' },
-        { file: 'override-merge-functions.ts', class: 'MergeFunctionBuilder' },
-        { file: 'override-subquery-functions.ts', class: 'SubqueryFunctionBuilder' },
-        { file: 'override-info-functions.ts', class: 'InfoFunctionBuilder' },
-        { file: 'override-admin-functions.ts', class: 'AdminFunctionBuilder' },
-        { file: 'override-trigger-functions.ts', class: 'TriggerFunctionBuilder' },
-        { file: 'override-event-trigger-functions.ts', class: 'EventTriggerFunctionBuilder' },
-        { file: 'override-statistics-functions.ts', class: 'StatisticsFunctionBuilder' },
+        // { file: 'override-xml-functions.ts', class: 'XMLFunctionBuilder' },
+        // { file: 'override-sequence-functions.ts', class: 'SequenceFunctionBuilder' },
+        // { file: 'override-json-functions.ts', class: 'JSONFunctionBuilder' },
+        // { file: 'override-textsearch-functions.ts', class: 'TextSearchFunctionBuilder' },
+        // { file: 'override-string-functions.ts', class: 'StringFunctionBuilder' },
+        // { file: 'override-conditional-functions.ts', class: 'ConditionalFunctionBuilder' },
+        // { file: 'override-array-functions.ts', class: 'ArrayFunctionBuilder' },
+        // { file: 'override-network-functions.ts', class: 'NetworkFunctionBuilder' },
+        // { file: 'override-math-functions.ts', class: 'MathFunctionBuilder' },
+        // { file: 'override-geometry-functions.ts', class: 'GeometryFunctionBuilder' },
+        // { file: 'override-enum-functions.ts', class: 'EnumFunctionBuilder' },
+        // { file: 'override-date-time-function.ts', class: 'DateTimeFunctionBuilder' },
+        // { file: 'override-set-returning-functions.ts', class: 'SetReturningFunctionBuilder' },
+        // { file: 'override-range-functions.ts', class: 'RangeFunctionBuilder' },
+        // { file: 'override-aggregate-functions.ts', class: 'AggregateFunctionBuilder' },
+        // { file: 'override-window-functions.ts', class: 'WindowFunctionBuilder' },
+        // { file: 'override-merge-functions.ts', class: 'MergeFunctionBuilder' },
+        // { file: 'override-subquery-functions.ts', class: 'SubqueryFunctionBuilder' },
+        // { file: 'override-info-functions.ts', class: 'InfoFunctionBuilder' },
+        // { file: 'override-admin-functions.ts', class: 'AdminFunctionBuilder' },
+        // { file: 'override-trigger-functions.ts', class: 'TriggerFunctionBuilder' },
+        // { file: 'override-event-trigger-functions.ts', class: 'EventTriggerFunctionBuilder' },
+        // { file: 'override-statistics-functions.ts', class: 'StatisticsFunctionBuilder' },
     ];
     
     const parentMethods = parentFiles.flatMap(({ file, class: className }) => 
@@ -175,31 +180,94 @@ const queryInstance = (() => {
   return `// AUTO-GENERATED - DO NOT EDIT.\nimport type { RequiredDBInstance } from "../types";\nimport { QueryBuilder } from "../query-builder";\nimport { BaseRawQueryBuilder } from "../base-raw-query-builder";\nimport { OverrideQueryBuilder } from "../override-query-builder";\n\nexport class QueryInstance {\n  protected dbInstance: RequiredDBInstance;\n  constructor(dbInstance: RequiredDBInstance) {\n    this.dbInstance = dbInstance;\n  }\n  getDbInstance() {\n    return this.dbInstance;\n  }${methods}\n}\n`;
 })();
 
-const main = async () => {
-  // console.log(fixKeywords.filter((i) => i.category.includes("Fungsi Bawaan")).length);
+function generateOverrideAllFunctions() {
+    const path = require('path');
+    // const existingMethods = getOverrideQueryBuilderFunctionName();
+    const baseQueryBuilderMethods = getBaseQueryBuilderFunctionName();
+    const allExistingMethods = new Set([...baseQueryBuilderMethods]);
 
-  // merge keywords by dynamic import fix-keyword-chunk-i.json to fix-keyword-with-category.json
-  // const mergedKeywords: any[] = [];
-  // for (let i = 1; i <= 9; i++) {
-  //   const chunk = await import(`./fix-keyword-chunk-${i}.json`);
-  //   mergedKeywords.push(...chunk.default);
-  // }
-  // writeKeywordsToFile(JSON.stringify(mergedKeywords.filter((i) => i.ast !== null), null, 2)
-  //   , 'fix-keyword-with-category.json');
+    const generatedMethods: string[] = [];
+    const processedFunctions = new Map<string, typeof pgFunctionList[0]>();
+
+    for (const func of pgFunctionList) {
+        const methodName = toCamelCase(func.name.toLowerCase());
+
+        if (processedFunctions.has(methodName)) {
+            const existing = processedFunctions.get(methodName);
+            if (existing && func.args.length > existing.args.length) {
+                processedFunctions.set(methodName, func);
+            }
+        } else {
+            processedFunctions.set(methodName, func);
+        }
+    }
+
+    for (let [methodName, func] of processedFunctions) {
+        func.name = func.name.toUpperCase();
+        methodName = func.format == "COERCE_EXPLICIT_CAST" ? toCamelCase("to_" + methodName) : methodName;
+        const needsOverride = allExistingMethods.has(methodName);
+
+        const params = func.args.map(arg => {
+            if (arg.variadic) {
+                return `...${arg.name}: Statement[]`;
+            }
+            return `${arg.name}?: Statement`;
+        }).join(', ');
+
+        const paramsAnd = func.args.map(arg => {
+            return arg.variadic ? `${arg.name}.length === 0` : `${arg.name} === undefined`;
+        }).join(' && ');
+
+        const paramNames = func.args.map(arg => {
+            if (arg.variadic) {
+                return `...${arg.name}`;
+            }
+            return arg.name;
+        }).join(', ');
+
+        const overrideKeyword = needsOverride ? 'override ' : '';
+
+        const argsString = func.args.map(arg => {
+            if (arg.variadic) {
+                return `{ name: "${arg.name}", variadic: true }`;
+            }
+            return `{ name: "${arg.name}" }`;
+        }).join(', ');
+
+    //     if (func.args.length === 0) {
+    //         generatedMethods.push(`    ${overrideKeyword}${methodName}() {
+    //     return super.pushFunction({ name: "${func.name}", args: [], format: "${func.format}" });
+    // }`);
+    //     } else {
+    //         generatedMethods.push(`    ${overrideKeyword}${methodName}(${params}) {${needsOverride ? 
+    //           "\n        if (" + paramsAnd + ") {\n            return super."+methodName+"();\n        }"
+    //           : ""}
+    //     return super.pushFunction({ name: "${func.name}", args: [${argsString}], format: "${func.format}" }, ${paramNames});
+    // }`);
+    // }
+              generatedMethods.push(`    ${overrideKeyword}${methodName}(...params: Statement[]) {${needsOverride ? 
+                "\n        if (params.length == 0) {\n            return super."+methodName+"();\n        }"
+                : ""}
+          return super.pushFunction({ name: "${func.name}", args: [{ name: "params", variadic: true }], format: "${func.format}" }, ...params);
+          }`);
+    }
+
+    return `// AUTO-GENERATED - DO NOT EDIT.
+import { BaseQueryBuilder } from "./base-query-builder";
+import type { Statement } from "../types";
+
+export class AllFunctionBuilder extends BaseQueryBuilder {
+${generatedMethods.sort((a, b) => {
+    const nameA = a.match(/(\w+)\(/)?.[1] || '';
+    const nameB = b.match(/(\w+)\(/)?.[1] || '';
+    return nameA.localeCompare(nameB);
+}).join('\n\n')}
+}`;
+}
+
+const main = async () => {
   writeKeywordsToFile(baseQueryBuilder, './generated/base-query-builder.ts');
   writeKeywordsToFile(queryInstance, './generated/query-instance.ts');
-  // Promise.all(keywordsFix).then((data) => {
-
-  //   const chunkSize = 100;
-  //   for (let i = 0; i < data.length; i += chunkSize) {
-  //     const chunk = data.slice(i, i + chunkSize);
-  //     writeKeywordsToFile(
-  //     JSON.stringify(chunk, null, 2),
-  //     `fix-keyword-chunk-${i / chunkSize + 1}.json`
-  //     );
-  //   }
-  //   // writeKeywordsToFile(JSON.stringify(data.filter((i)=>i.ast !== null),null,2)
-  //   // , 'fix-keyword-not-null.json');
-  // })
+  writeKeywordsToFile(generateOverrideAllFunctions(), './generated/override-all-functions.ts');
 }
 main()

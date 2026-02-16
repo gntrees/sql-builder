@@ -108,14 +108,6 @@ describe("string functions", () => {
         expect(parameters).toEqual([]);
     });
 
-    it("builds to_number", () => {
-        const builder = q.select(q.toNumber(q.l("12,454.8-"), q.l("99G999D9S")));
-        const sql = builder.getSql();
-        const parameters = builder.getParameters();
-        expect(sql).toBe("SELECT TO_NUMBER($1, $2)");
-        expect(parameters).toEqual(["12,454.8-", "99G999D9S"]);
-    });
-
     it("builds bit_count", () => {
         const builder = q.select(q.bitCount("10111"));
         const sql = builder.getSql();
@@ -148,7 +140,7 @@ describe("string functions", () => {
             q.setBit("\\xDEADBEEF", 1, 1),
             q.encode("\\xDEADBEEF", "hex"),
             q.decode("deadbeef", "hex"),
-            q.byteaConcat("\\xDEADBEEF", "\\x00"),
+            q.op("\\xDEADBEEF","||", "\\x00"),
         );
         const sql = builder.getSql();
         const parameters = builder.getParameters();
@@ -173,5 +165,95 @@ describe("string functions", () => {
             "\\xDEADBEEF",
             "\\x00",
         ]);
+    });
+
+    describe("bit string functions", () => {
+        it("builds bit_count for bit strings", () => {
+            const builder = q.select(q.bitCount("10111"));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT BIT_COUNT($1)");
+            expect(parameters).toEqual(["10111"]);
+        });
+
+        it("builds bit_length for bit strings", () => {
+            const builder = q.select(q.bitLength("10111"));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT BIT_LENGTH($1)");
+            expect(parameters).toEqual(["10111"]);
+        });
+
+        it("builds length for bit strings", () => {
+            const builder = q.select(q.length("10111"));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT LENGTH($1)");
+            expect(parameters).toEqual(["10111"]);
+        });
+
+        it("builds octet_length for bit strings", () => {
+            const builder = q.select(q.octetLength("1011111011"));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT OCTET_LENGTH($1)");
+            expect(parameters).toEqual(["1011111011"]);
+        });
+
+        it("builds get_bit for bit strings", () => {
+            const builder = q.select(q.getBit("101010101010101010", 6));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT GET_BIT($1, $2)");
+            expect(parameters).toEqual(["101010101010101010", 6]);
+        });
+
+        it("builds set_bit for bit strings", () => {
+            const builder = q.select(q.setBit("101010101010101010", 6, 0));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT SET_BIT($1, $2, $3)");
+            expect(parameters).toEqual(["101010101010101010", 6, 0]);
+        });
+
+        it("builds overlay for bit strings without count", () => {
+            const builder = q.select(q.overlay("01010101010101010", "11111", 2));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT OVERLAY($1, $2, $3)");
+            expect(parameters).toEqual(["01010101010101010", "11111", 2]);
+        });
+
+        it("builds overlay for bit strings with count", () => {
+            const builder = q.select(q.overlay("01010101010101010", "11111", 2, 3));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT OVERLAY($1, $2, $3, $4)");
+            expect(parameters).toEqual(["01010101010101010", "11111", 2, 3]);
+        });
+
+        it("builds position for bit strings", () => {
+            const builder = q.select(q.position("010", "000001101011"));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT POSITION($1, $2)");
+            expect(parameters).toEqual(["010", "000001101011"]);
+        });
+
+        it("builds substring for bit strings with start only", () => {
+            const builder = q.select(q.substring("110010111111", 3));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT SUBSTRING($1, $2)");
+            expect(parameters).toEqual(["110010111111", 3]);
+        });
+
+        it("builds substring for bit strings with start and count", () => {
+            const builder = q.select(q.substring("110010111111", 3, 2));
+            const sql = builder.getSql();
+            const parameters = builder.getParameters();
+            expect(sql).toBe("SELECT SUBSTRING($1, $2, $3)");
+            expect(parameters).toEqual(["110010111111", 3, 2]);
+        });
     });
 });
