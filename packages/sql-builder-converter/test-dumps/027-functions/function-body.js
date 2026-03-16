@@ -1,1 +1,0 @@
-const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.select(q.substring(q.c(`description`), 1, 50)).from(`products`);return query;

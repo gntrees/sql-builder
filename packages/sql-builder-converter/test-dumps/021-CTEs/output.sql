@@ -1,1 +1,0 @@
-SELECT * FROM ranked_users

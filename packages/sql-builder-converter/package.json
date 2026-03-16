@@ -19,10 +19,11 @@
     "build": "bun run prebuild && bun run build:cjs && bun run build:esm && bun run build:combine",
     "build:cjs": "tsc -p tsconfig.cjs.json && mv dist/cjs/index.js dist/index.cjs",
     "build:esm": "tsc -p tsconfig.esm.json && mv dist/esm/index.js dist/index.mjs",
-    "build:combine": "mkdir -p dist/src && cp -r dist/cjs/src/* dist/src/ && cp dist/cjs/index.d.ts dist/ && rm -rf dist/cjs dist/esm",
-    "test": "bun test tests/*.test.ts"
+    "build:combine": "mkdir -p dist/src && cp -r dist/esm/src/* dist/src/ 2>/dev/null || true; cp dist/esm/index.d.ts dist/; rm -rf dist/cjs dist/esm 2>/dev/null || true",
+    "test": "rm -rf test-dumps/* && bun run tests/run-tests.ts"
   },
   "dependencies": {
+    "@gntrees/sql-builder": "^0.0.3",
     "@pgsql/enums": "^17.6.2",
     "@pgsql/traverse": "^17.2.4",
     "@pgsql/types": "^17.6.2",

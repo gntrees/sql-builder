@@ -1,1 +1,0 @@
-SELECT * FROM orders WHERE created_at > '2024-01-01'

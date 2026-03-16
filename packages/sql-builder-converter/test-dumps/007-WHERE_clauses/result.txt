@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM users WHERE email = 'test@example.com'
-Output SQL: SELECT * FROM users WHERE email = 'test@example.com'

@@ -1,1 +1,0 @@
-SELECT * FROM users AS u CROSS JOIN products AS p

@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT DISTINCT status FROM orders
-Output SQL: SELECT DISTINCT status FROM orders

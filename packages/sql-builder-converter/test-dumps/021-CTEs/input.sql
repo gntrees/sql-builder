@@ -1,1 +1,0 @@
-WITH ranked_users AS (SELECT *, ROW_NUMBER() OVER (ORDER BY created_at) AS rn FROM users) SELECT * FROM ranked_users

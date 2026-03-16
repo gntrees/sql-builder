@@ -1,1 +1,0 @@
-SELECT SUBSTRING(description, 1, 50) FROM products

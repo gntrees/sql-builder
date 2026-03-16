@@ -1,11 +1,10 @@
-import { sqlBuilder } from "@gntrees/sql-builder";
+import { sqlBuilder } from "@gntrees/sql-builder/pg";
 
-const q = sqlBuilder({
-  formatParamHandler: "pg",
-  execHandler: async ({ sql, parameters, meta }): Promise<any> => {
+const q = sqlBuilder()
+  .setFormatParamHandler("pg")
+  .setExecutionHandler(async ({ sql, parameters, meta }): Promise<any> => {
     return "Executed";
-  },
-});
+  });
 
 const query = q.select(
   q.c(`service`),

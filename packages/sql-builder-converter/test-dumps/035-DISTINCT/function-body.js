@@ -1,1 +1,0 @@
-const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.selectDistinct(q.c(`category`)).from(`products`);return query;

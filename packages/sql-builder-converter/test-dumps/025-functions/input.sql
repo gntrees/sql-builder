@@ -1,1 +1,0 @@
-SELECT UPPER(name) FROM products

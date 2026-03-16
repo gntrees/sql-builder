@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM users LIMIT 10
-Output SQL: SELECT * FROM users LIMIT 10

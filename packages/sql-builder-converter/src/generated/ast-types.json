@@ -1,0 +1,6905 @@
+{
+  "types": [
+    {
+      "name": "QuerySource",
+      "values": [
+        "QSRC_ORIGINAL",
+        "QSRC_PARSER",
+        "QSRC_INSTEAD_RULE",
+        "QSRC_QUAL_INSTEAD_RULE",
+        "QSRC_NON_INSTEAD_RULE"
+      ]
+    },
+    {
+      "name": "SortByDir",
+      "values": [
+        "SORTBY_DEFAULT",
+        "SORTBY_ASC",
+        "SORTBY_DESC",
+        "SORTBY_USING"
+      ]
+    },
+    {
+      "name": "SortByNulls",
+      "values": [
+        "SORTBY_NULLS_DEFAULT",
+        "SORTBY_NULLS_FIRST",
+        "SORTBY_NULLS_LAST"
+      ]
+    },
+    {
+      "name": "SetQuantifier",
+      "values": [
+        "SET_QUANTIFIER_DEFAULT",
+        "SET_QUANTIFIER_ALL",
+        "SET_QUANTIFIER_DISTINCT"
+      ]
+    },
+    {
+      "name": "A_Expr_Kind",
+      "values": [
+        "AEXPR_OP",
+        "AEXPR_OP_ANY",
+        "AEXPR_OP_ALL",
+        "AEXPR_DISTINCT",
+        "AEXPR_NOT_DISTINCT",
+        "AEXPR_NULLIF",
+        "AEXPR_IN",
+        "AEXPR_LIKE",
+        "AEXPR_ILIKE",
+        "AEXPR_SIMILAR",
+        "AEXPR_BETWEEN",
+        "AEXPR_NOT_BETWEEN",
+        "AEXPR_BETWEEN_SYM",
+        "AEXPR_NOT_BETWEEN_SYM"
+      ]
+    },
+    {
+      "name": "RoleSpecType",
+      "values": [
+        "ROLESPEC_CSTRING",
+        "ROLESPEC_CURRENT_ROLE",
+        "ROLESPEC_CURRENT_USER",
+        "ROLESPEC_SESSION_USER",
+        "ROLESPEC_PUBLIC"
+      ]
+    },
+    {
+      "name": "TableLikeOption",
+      "values": [
+        "CREATE_TABLE_LIKE_COMMENTS",
+        "CREATE_TABLE_LIKE_COMPRESSION",
+        "CREATE_TABLE_LIKE_CONSTRAINTS",
+        "CREATE_TABLE_LIKE_DEFAULTS",
+        "CREATE_TABLE_LIKE_GENERATED",
+        "CREATE_TABLE_LIKE_IDENTITY",
+        "CREATE_TABLE_LIKE_INDEXES",
+        "CREATE_TABLE_LIKE_STATISTICS",
+        "CREATE_TABLE_LIKE_STORAGE",
+        "CREATE_TABLE_LIKE_ALL"
+      ]
+    },
+    {
+      "name": "DefElemAction",
+      "values": [
+        "DEFELEM_UNSPEC",
+        "DEFELEM_SET",
+        "DEFELEM_ADD",
+        "DEFELEM_DROP"
+      ]
+    },
+    {
+      "name": "PartitionStrategy",
+      "values": [
+        "PARTITION_STRATEGY_LIST",
+        "PARTITION_STRATEGY_RANGE",
+        "PARTITION_STRATEGY_HASH"
+      ]
+    },
+    {
+      "name": "PartitionRangeDatumKind",
+      "values": [
+        "PARTITION_RANGE_DATUM_MINVALUE",
+        "PARTITION_RANGE_DATUM_VALUE",
+        "PARTITION_RANGE_DATUM_MAXVALUE"
+      ]
+    },
+    {
+      "name": "RTEKind",
+      "values": [
+        "RTE_RELATION",
+        "RTE_SUBQUERY",
+        "RTE_JOIN",
+        "RTE_FUNCTION",
+        "RTE_TABLEFUNC",
+        "RTE_VALUES",
+        "RTE_CTE",
+        "RTE_NAMEDTUPLESTORE",
+        "RTE_RESULT"
+      ]
+    },
+    {
+      "name": "WCOKind",
+      "values": [
+        "WCO_VIEW_CHECK",
+        "WCO_RLS_INSERT_CHECK",
+        "WCO_RLS_UPDATE_CHECK",
+        "WCO_RLS_CONFLICT_CHECK",
+        "WCO_RLS_MERGE_UPDATE_CHECK",
+        "WCO_RLS_MERGE_DELETE_CHECK"
+      ]
+    },
+    {
+      "name": "GroupingSetKind",
+      "values": [
+        "GROUPING_SET_EMPTY",
+        "GROUPING_SET_SIMPLE",
+        "GROUPING_SET_ROLLUP",
+        "GROUPING_SET_CUBE",
+        "GROUPING_SET_SETS"
+      ]
+    },
+    {
+      "name": "CTEMaterialize",
+      "values": [
+        "CTEMaterializeDefault",
+        "CTEMaterializeAlways",
+        "CTEMaterializeNever"
+      ]
+    },
+    {
+      "name": "JsonQuotes",
+      "values": [
+        "JS_QUOTES_UNSPEC",
+        "JS_QUOTES_KEEP",
+        "JS_QUOTES_OMIT"
+      ]
+    },
+    {
+      "name": "JsonTableColumnType",
+      "values": [
+        "JTC_FOR_ORDINALITY",
+        "JTC_REGULAR",
+        "JTC_EXISTS",
+        "JTC_FORMATTED",
+        "JTC_NESTED"
+      ]
+    },
+    {
+      "name": "SetOperation",
+      "values": [
+        "SETOP_NONE",
+        "SETOP_UNION",
+        "SETOP_INTERSECT",
+        "SETOP_EXCEPT"
+      ]
+    },
+    {
+      "name": "ObjectType",
+      "values": [
+        "OBJECT_ACCESS_METHOD",
+        "OBJECT_AGGREGATE",
+        "OBJECT_AMOP",
+        "OBJECT_AMPROC",
+        "OBJECT_ATTRIBUTE",
+        "OBJECT_CAST",
+        "OBJECT_COLUMN",
+        "OBJECT_COLLATION",
+        "OBJECT_CONVERSION",
+        "OBJECT_DATABASE",
+        "OBJECT_DEFAULT",
+        "OBJECT_DEFACL",
+        "OBJECT_DOMAIN",
+        "OBJECT_DOMCONSTRAINT",
+        "OBJECT_EVENT_TRIGGER",
+        "OBJECT_EXTENSION",
+        "OBJECT_FDW",
+        "OBJECT_FOREIGN_SERVER",
+        "OBJECT_FOREIGN_TABLE",
+        "OBJECT_FUNCTION",
+        "OBJECT_INDEX",
+        "OBJECT_LANGUAGE",
+        "OBJECT_LARGEOBJECT",
+        "OBJECT_MATVIEW",
+        "OBJECT_OPCLASS",
+        "OBJECT_OPERATOR",
+        "OBJECT_OPFAMILY",
+        "OBJECT_PARAMETER_ACL",
+        "OBJECT_POLICY",
+        "OBJECT_PROCEDURE",
+        "OBJECT_PUBLICATION",
+        "OBJECT_PUBLICATION_NAMESPACE",
+        "OBJECT_PUBLICATION_REL",
+        "OBJECT_ROLE",
+        "OBJECT_ROUTINE",
+        "OBJECT_RULE",
+        "OBJECT_SCHEMA",
+        "OBJECT_SEQUENCE",
+        "OBJECT_SUBSCRIPTION",
+        "OBJECT_STATISTIC_EXT",
+        "OBJECT_TABCONSTRAINT",
+        "OBJECT_TABLE",
+        "OBJECT_TABLESPACE",
+        "OBJECT_TRANSFORM",
+        "OBJECT_TRIGGER",
+        "OBJECT_TSCONFIGURATION",
+        "OBJECT_TSDICTIONARY",
+        "OBJECT_TSPARSER",
+        "OBJECT_TSTEMPLATE",
+        "OBJECT_TYPE",
+        "OBJECT_USER_MAPPING",
+        "OBJECT_VIEW"
+      ]
+    },
+    {
+      "name": "DropBehavior",
+      "values": [
+        "DROP_RESTRICT",
+        "DROP_CASCADE"
+      ]
+    },
+    {
+      "name": "AlterTableType",
+      "values": [
+        "AT_AddColumn",
+        "AT_AddColumnToView",
+        "AT_ColumnDefault",
+        "AT_CookedColumnDefault",
+        "AT_DropNotNull",
+        "AT_SetNotNull",
+        "AT_SetExpression",
+        "AT_DropExpression",
+        "AT_CheckNotNull",
+        "AT_SetStatistics",
+        "AT_SetOptions",
+        "AT_ResetOptions",
+        "AT_SetStorage",
+        "AT_SetCompression",
+        "AT_DropColumn",
+        "AT_AddIndex",
+        "AT_ReAddIndex",
+        "AT_AddConstraint",
+        "AT_ReAddConstraint",
+        "AT_ReAddDomainConstraint",
+        "AT_AlterConstraint",
+        "AT_ValidateConstraint",
+        "AT_AddIndexConstraint",
+        "AT_DropConstraint",
+        "AT_ReAddComment",
+        "AT_AlterColumnType",
+        "AT_AlterColumnGenericOptions",
+        "AT_ChangeOwner",
+        "AT_ClusterOn",
+        "AT_DropCluster",
+        "AT_SetLogged",
+        "AT_SetUnLogged",
+        "AT_DropOids",
+        "AT_SetAccessMethod",
+        "AT_SetTableSpace",
+        "AT_SetRelOptions",
+        "AT_ResetRelOptions",
+        "AT_ReplaceRelOptions",
+        "AT_EnableTrig",
+        "AT_EnableAlwaysTrig",
+        "AT_EnableReplicaTrig",
+        "AT_DisableTrig",
+        "AT_EnableTrigAll",
+        "AT_DisableTrigAll",
+        "AT_EnableTrigUser",
+        "AT_DisableTrigUser",
+        "AT_EnableRule",
+        "AT_EnableAlwaysRule",
+        "AT_EnableReplicaRule",
+        "AT_DisableRule",
+        "AT_AddInherit",
+        "AT_DropInherit",
+        "AT_AddOf",
+        "AT_DropOf",
+        "AT_ReplicaIdentity",
+        "AT_EnableRowSecurity",
+        "AT_DisableRowSecurity",
+        "AT_ForceRowSecurity",
+        "AT_NoForceRowSecurity",
+        "AT_GenericOptions",
+        "AT_AttachPartition",
+        "AT_DetachPartition",
+        "AT_DetachPartitionFinalize",
+        "AT_AddIdentity",
+        "AT_SetIdentity",
+        "AT_DropIdentity",
+        "AT_ReAddStatistics"
+      ]
+    },
+    {
+      "name": "GrantTargetType",
+      "values": [
+        "ACL_TARGET_OBJECT",
+        "ACL_TARGET_ALL_IN_SCHEMA",
+        "ACL_TARGET_DEFAULTS"
+      ]
+    },
+    {
+      "name": "VariableSetKind",
+      "values": [
+        "VAR_SET_VALUE",
+        "VAR_SET_DEFAULT",
+        "VAR_SET_CURRENT",
+        "VAR_SET_MULTI",
+        "VAR_RESET",
+        "VAR_RESET_ALL"
+      ]
+    },
+    {
+      "name": "ConstrType",
+      "values": [
+        "CONSTR_NULL",
+        "CONSTR_NOTNULL",
+        "CONSTR_DEFAULT",
+        "CONSTR_IDENTITY",
+        "CONSTR_GENERATED",
+        "CONSTR_CHECK",
+        "CONSTR_PRIMARY",
+        "CONSTR_UNIQUE",
+        "CONSTR_EXCLUSION",
+        "CONSTR_FOREIGN",
+        "CONSTR_ATTR_DEFERRABLE",
+        "CONSTR_ATTR_NOT_DEFERRABLE",
+        "CONSTR_ATTR_DEFERRED",
+        "CONSTR_ATTR_IMMEDIATE"
+      ]
+    },
+    {
+      "name": "ImportForeignSchemaType",
+      "values": [
+        "FDW_IMPORT_SCHEMA_ALL",
+        "FDW_IMPORT_SCHEMA_LIMIT_TO",
+        "FDW_IMPORT_SCHEMA_EXCEPT"
+      ]
+    },
+    {
+      "name": "RoleStmtType",
+      "values": [
+        "ROLESTMT_ROLE",
+        "ROLESTMT_USER",
+        "ROLESTMT_GROUP"
+      ]
+    },
+    {
+      "name": "FetchDirection",
+      "values": [
+        "FETCH_FORWARD",
+        "FETCH_BACKWARD",
+        "FETCH_ABSOLUTE",
+        "FETCH_RELATIVE"
+      ]
+    },
+    {
+      "name": "FunctionParameterMode",
+      "values": [
+        "FUNC_PARAM_IN",
+        "FUNC_PARAM_OUT",
+        "FUNC_PARAM_INOUT",
+        "FUNC_PARAM_VARIADIC",
+        "FUNC_PARAM_TABLE",
+        "FUNC_PARAM_DEFAULT"
+      ]
+    },
+    {
+      "name": "TransactionStmtKind",
+      "values": [
+        "TRANS_STMT_BEGIN",
+        "TRANS_STMT_START",
+        "TRANS_STMT_COMMIT",
+        "TRANS_STMT_ROLLBACK",
+        "TRANS_STMT_SAVEPOINT",
+        "TRANS_STMT_RELEASE",
+        "TRANS_STMT_ROLLBACK_TO",
+        "TRANS_STMT_PREPARE",
+        "TRANS_STMT_COMMIT_PREPARED",
+        "TRANS_STMT_ROLLBACK_PREPARED"
+      ]
+    },
+    {
+      "name": "ViewCheckOption",
+      "values": [
+        "NO_CHECK_OPTION",
+        "LOCAL_CHECK_OPTION",
+        "CASCADED_CHECK_OPTION"
+      ]
+    },
+    {
+      "name": "DiscardMode",
+      "values": [
+        "DISCARD_ALL",
+        "DISCARD_PLANS",
+        "DISCARD_SEQUENCES",
+        "DISCARD_TEMP"
+      ]
+    },
+    {
+      "name": "ReindexObjectType",
+      "values": [
+        "REINDEX_OBJECT_INDEX",
+        "REINDEX_OBJECT_TABLE",
+        "REINDEX_OBJECT_SCHEMA",
+        "REINDEX_OBJECT_SYSTEM",
+        "REINDEX_OBJECT_DATABASE"
+      ]
+    },
+    {
+      "name": "AlterTSConfigType",
+      "values": [
+        "ALTER_TSCONFIG_ADD_MAPPING",
+        "ALTER_TSCONFIG_ALTER_MAPPING_FOR_TOKEN",
+        "ALTER_TSCONFIG_REPLACE_DICT",
+        "ALTER_TSCONFIG_REPLACE_DICT_FOR_TOKEN",
+        "ALTER_TSCONFIG_DROP_MAPPING"
+      ]
+    },
+    {
+      "name": "PublicationObjSpecType",
+      "values": [
+        "PUBLICATIONOBJ_TABLE",
+        "PUBLICATIONOBJ_TABLES_IN_SCHEMA",
+        "PUBLICATIONOBJ_TABLES_IN_CUR_SCHEMA",
+        "PUBLICATIONOBJ_CONTINUATION"
+      ]
+    },
+    {
+      "name": "AlterPublicationAction",
+      "values": [
+        "AP_AddObjects",
+        "AP_DropObjects",
+        "AP_SetObjects"
+      ]
+    },
+    {
+      "name": "AlterSubscriptionType",
+      "values": [
+        "ALTER_SUBSCRIPTION_OPTIONS",
+        "ALTER_SUBSCRIPTION_CONNECTION",
+        "ALTER_SUBSCRIPTION_SET_PUBLICATION",
+        "ALTER_SUBSCRIPTION_ADD_PUBLICATION",
+        "ALTER_SUBSCRIPTION_DROP_PUBLICATION",
+        "ALTER_SUBSCRIPTION_REFRESH",
+        "ALTER_SUBSCRIPTION_ENABLED",
+        "ALTER_SUBSCRIPTION_SKIP"
+      ]
+    },
+    {
+      "name": "OverridingKind",
+      "values": [
+        "OVERRIDING_NOT_SET",
+        "OVERRIDING_USER_VALUE",
+        "OVERRIDING_SYSTEM_VALUE"
+      ]
+    },
+    {
+      "name": "OnCommitAction",
+      "values": [
+        "ONCOMMIT_NOOP",
+        "ONCOMMIT_PRESERVE_ROWS",
+        "ONCOMMIT_DELETE_ROWS",
+        "ONCOMMIT_DROP"
+      ]
+    },
+    {
+      "name": "TableFuncType",
+      "values": [
+        "TFT_XMLTABLE",
+        "TFT_JSON_TABLE"
+      ]
+    },
+    {
+      "name": "ParamKind",
+      "values": [
+        "PARAM_EXTERN",
+        "PARAM_EXEC",
+        "PARAM_SUBLINK",
+        "PARAM_MULTIEXPR"
+      ]
+    },
+    {
+      "name": "CoercionContext",
+      "values": [
+        "COERCION_IMPLICIT",
+        "COERCION_ASSIGNMENT",
+        "COERCION_PLPGSQL",
+        "COERCION_EXPLICIT"
+      ]
+    },
+    {
+      "name": "CoercionForm",
+      "values": [
+        "COERCE_EXPLICIT_CALL",
+        "COERCE_EXPLICIT_CAST",
+        "COERCE_IMPLICIT_CAST",
+        "COERCE_SQL_SYNTAX"
+      ]
+    },
+    {
+      "name": "BoolExprType",
+      "values": [
+        "AND_EXPR",
+        "OR_EXPR",
+        "NOT_EXPR"
+      ]
+    },
+    {
+      "name": "SubLinkType",
+      "values": [
+        "EXISTS_SUBLINK",
+        "ALL_SUBLINK",
+        "ANY_SUBLINK",
+        "ROWCOMPARE_SUBLINK",
+        "EXPR_SUBLINK",
+        "MULTIEXPR_SUBLINK",
+        "ARRAY_SUBLINK",
+        "CTE_SUBLINK"
+      ]
+    },
+    {
+      "name": "RowCompareType",
+      "values": [
+        "ROWCOMPARE_LT",
+        "ROWCOMPARE_LE",
+        "ROWCOMPARE_EQ",
+        "ROWCOMPARE_GE",
+        "ROWCOMPARE_GT",
+        "ROWCOMPARE_NE"
+      ]
+    },
+    {
+      "name": "MinMaxOp",
+      "values": [
+        "IS_GREATEST",
+        "IS_LEAST"
+      ]
+    },
+    {
+      "name": "SQLValueFunctionOp",
+      "values": [
+        "SVFOP_CURRENT_DATE",
+        "SVFOP_CURRENT_TIME",
+        "SVFOP_CURRENT_TIME_N",
+        "SVFOP_CURRENT_TIMESTAMP",
+        "SVFOP_CURRENT_TIMESTAMP_N",
+        "SVFOP_LOCALTIME",
+        "SVFOP_LOCALTIME_N",
+        "SVFOP_LOCALTIMESTAMP",
+        "SVFOP_LOCALTIMESTAMP_N",
+        "SVFOP_CURRENT_ROLE",
+        "SVFOP_CURRENT_USER",
+        "SVFOP_USER",
+        "SVFOP_SESSION_USER",
+        "SVFOP_CURRENT_CATALOG",
+        "SVFOP_CURRENT_SCHEMA"
+      ]
+    },
+    {
+      "name": "XmlExprOp",
+      "values": [
+        "IS_XMLCONCAT",
+        "IS_XMLELEMENT",
+        "IS_XMLFOREST",
+        "IS_XMLPARSE",
+        "IS_XMLPI",
+        "IS_XMLROOT",
+        "IS_XMLSERIALIZE",
+        "IS_DOCUMENT"
+      ]
+    },
+    {
+      "name": "XmlOptionType",
+      "values": [
+        "XMLOPTION_DOCUMENT",
+        "XMLOPTION_CONTENT"
+      ]
+    },
+    {
+      "name": "JsonEncoding",
+      "values": [
+        "JS_ENC_DEFAULT",
+        "JS_ENC_UTF8",
+        "JS_ENC_UTF16",
+        "JS_ENC_UTF32"
+      ]
+    },
+    {
+      "name": "JsonFormatType",
+      "values": [
+        "JS_FORMAT_DEFAULT",
+        "JS_FORMAT_JSON",
+        "JS_FORMAT_JSONB"
+      ]
+    },
+    {
+      "name": "JsonConstructorType",
+      "values": [
+        "JSCTOR_JSON_OBJECT",
+        "JSCTOR_JSON_ARRAY",
+        "JSCTOR_JSON_OBJECTAGG",
+        "JSCTOR_JSON_ARRAYAGG",
+        "JSCTOR_JSON_PARSE",
+        "JSCTOR_JSON_SCALAR",
+        "JSCTOR_JSON_SERIALIZE"
+      ]
+    },
+    {
+      "name": "JsonValueType",
+      "values": [
+        "JS_TYPE_ANY",
+        "JS_TYPE_OBJECT",
+        "JS_TYPE_ARRAY",
+        "JS_TYPE_SCALAR"
+      ]
+    },
+    {
+      "name": "JsonWrapper",
+      "values": [
+        "JSW_UNSPEC",
+        "JSW_NONE",
+        "JSW_CONDITIONAL",
+        "JSW_UNCONDITIONAL"
+      ]
+    },
+    {
+      "name": "JsonBehaviorType",
+      "values": [
+        "JSON_BEHAVIOR_NULL",
+        "JSON_BEHAVIOR_ERROR",
+        "JSON_BEHAVIOR_EMPTY",
+        "JSON_BEHAVIOR_TRUE",
+        "JSON_BEHAVIOR_FALSE",
+        "JSON_BEHAVIOR_UNKNOWN",
+        "JSON_BEHAVIOR_EMPTY_ARRAY",
+        "JSON_BEHAVIOR_EMPTY_OBJECT",
+        "JSON_BEHAVIOR_DEFAULT"
+      ]
+    },
+    {
+      "name": "JsonExprOp",
+      "values": [
+        "JSON_EXISTS_OP",
+        "JSON_QUERY_OP",
+        "JSON_VALUE_OP",
+        "JSON_TABLE_OP"
+      ]
+    },
+    {
+      "name": "NullTestType",
+      "values": [
+        "IS_NULL",
+        "IS_NOT_NULL"
+      ]
+    },
+    {
+      "name": "BoolTestType",
+      "values": [
+        "IS_TRUE",
+        "IS_NOT_TRUE",
+        "IS_FALSE",
+        "IS_NOT_FALSE",
+        "IS_UNKNOWN",
+        "IS_NOT_UNKNOWN"
+      ]
+    },
+    {
+      "name": "MergeMatchKind",
+      "values": [
+        "MERGE_WHEN_MATCHED",
+        "MERGE_WHEN_NOT_MATCHED_BY_SOURCE",
+        "MERGE_WHEN_NOT_MATCHED_BY_TARGET"
+      ]
+    },
+    {
+      "name": "CmdType",
+      "values": [
+        "CMD_UNKNOWN",
+        "CMD_SELECT",
+        "CMD_UPDATE",
+        "CMD_INSERT",
+        "CMD_DELETE",
+        "CMD_MERGE",
+        "CMD_UTILITY",
+        "CMD_NOTHING"
+      ]
+    },
+    {
+      "name": "JoinType",
+      "values": [
+        "JOIN_INNER",
+        "JOIN_LEFT",
+        "JOIN_FULL",
+        "JOIN_RIGHT",
+        "JOIN_SEMI",
+        "JOIN_ANTI",
+        "JOIN_RIGHT_ANTI",
+        "JOIN_UNIQUE_OUTER",
+        "JOIN_UNIQUE_INNER"
+      ]
+    },
+    {
+      "name": "AggStrategy",
+      "values": [
+        "AGG_PLAIN",
+        "AGG_SORTED",
+        "AGG_HASHED",
+        "AGG_MIXED"
+      ]
+    },
+    {
+      "name": "AggSplit",
+      "values": [
+        "AGGSPLIT_SIMPLE",
+        "AGGSPLIT_INITIAL_SERIAL",
+        "AGGSPLIT_FINAL_DESERIAL"
+      ]
+    },
+    {
+      "name": "SetOpCmd",
+      "values": [
+        "SETOPCMD_INTERSECT",
+        "SETOPCMD_INTERSECT_ALL",
+        "SETOPCMD_EXCEPT",
+        "SETOPCMD_EXCEPT_ALL"
+      ]
+    },
+    {
+      "name": "SetOpStrategy",
+      "values": [
+        "SETOP_SORTED",
+        "SETOP_HASHED"
+      ]
+    },
+    {
+      "name": "OnConflictAction",
+      "values": [
+        "ONCONFLICT_NONE",
+        "ONCONFLICT_NOTHING",
+        "ONCONFLICT_UPDATE"
+      ]
+    },
+    {
+      "name": "LimitOption",
+      "values": [
+        "LIMIT_OPTION_DEFAULT",
+        "LIMIT_OPTION_COUNT",
+        "LIMIT_OPTION_WITH_TIES"
+      ]
+    },
+    {
+      "name": "LockClauseStrength",
+      "values": [
+        "LCS_NONE",
+        "LCS_FORKEYSHARE",
+        "LCS_FORSHARE",
+        "LCS_FORNOKEYUPDATE",
+        "LCS_FORUPDATE"
+      ]
+    },
+    {
+      "name": "LockWaitPolicy",
+      "values": [
+        "LockWaitBlock",
+        "LockWaitSkip",
+        "LockWaitError"
+      ]
+    },
+    {
+      "name": "LockTupleMode",
+      "values": [
+        "LockTupleKeyShare",
+        "LockTupleShare",
+        "LockTupleNoKeyExclusive",
+        "LockTupleExclusive"
+      ]
+    },
+    {
+      "name": "KeywordKind",
+      "values": [
+        "NO_KEYWORD",
+        "UNRESERVED_KEYWORD",
+        "COL_NAME_KEYWORD",
+        "TYPE_FUNC_NAME_KEYWORD",
+        "RESERVED_KEYWORD"
+      ]
+    },
+    {
+      "name": "Token",
+      "values": [
+        "NUL",
+        "ASCII_36",
+        "ASCII_37",
+        "ASCII_40",
+        "ASCII_41",
+        "ASCII_42",
+        "ASCII_43",
+        "ASCII_44",
+        "ASCII_45",
+        "ASCII_46",
+        "ASCII_47",
+        "ASCII_58",
+        "ASCII_59",
+        "ASCII_60",
+        "ASCII_61",
+        "ASCII_62",
+        "ASCII_63",
+        "ASCII_91",
+        "ASCII_92",
+        "ASCII_93",
+        "ASCII_94",
+        "IDENT",
+        "UIDENT",
+        "FCONST",
+        "SCONST",
+        "USCONST",
+        "BCONST",
+        "XCONST",
+        "Op",
+        "ICONST",
+        "PARAM",
+        "TYPECAST",
+        "DOT_DOT",
+        "COLON_EQUALS",
+        "EQUALS_GREATER",
+        "LESS_EQUALS",
+        "GREATER_EQUALS",
+        "NOT_EQUALS",
+        "SQL_COMMENT",
+        "C_COMMENT",
+        "ABORT_P",
+        "ABSENT",
+        "ABSOLUTE_P",
+        "ACCESS",
+        "ACTION",
+        "ADD_P",
+        "ADMIN",
+        "AFTER",
+        "AGGREGATE",
+        "ALL",
+        "ALSO",
+        "ALTER",
+        "ALWAYS",
+        "ANALYSE",
+        "ANALYZE",
+        "AND",
+        "ANY",
+        "ARRAY",
+        "AS",
+        "ASC",
+        "ASENSITIVE",
+        "ASSERTION",
+        "ASSIGNMENT",
+        "ASYMMETRIC",
+        "ATOMIC",
+        "AT",
+        "ATTACH",
+        "ATTRIBUTE",
+        "AUTHORIZATION",
+        "BACKWARD",
+        "BEFORE",
+        "BEGIN_P",
+        "BETWEEN",
+        "BIGINT",
+        "BINARY",
+        "BIT",
+        "BOOLEAN_P",
+        "BOTH",
+        "BREADTH",
+        "BY",
+        "CACHE",
+        "CALL",
+        "CALLED",
+        "CASCADE",
+        "CASCADED",
+        "CASE",
+        "CAST",
+        "CATALOG_P",
+        "CHAIN",
+        "CHAR_P",
+        "CHARACTER",
+        "CHARACTERISTICS",
+        "CHECK",
+        "CHECKPOINT",
+        "CLASS",
+        "CLOSE",
+        "CLUSTER",
+        "COALESCE",
+        "COLLATE",
+        "COLLATION",
+        "COLUMN",
+        "COLUMNS",
+        "COMMENT",
+        "COMMENTS",
+        "COMMIT",
+        "COMMITTED",
+        "COMPRESSION",
+        "CONCURRENTLY",
+        "CONDITIONAL",
+        "CONFIGURATION",
+        "CONFLICT",
+        "CONNECTION",
+        "CONSTRAINT",
+        "CONSTRAINTS",
+        "CONTENT_P",
+        "CONTINUE_P",
+        "CONVERSION_P",
+        "COPY",
+        "COST",
+        "CREATE",
+        "CROSS",
+        "CSV",
+        "CUBE",
+        "CURRENT_P",
+        "CURRENT_CATALOG",
+        "CURRENT_DATE",
+        "CURRENT_ROLE",
+        "CURRENT_SCHEMA",
+        "CURRENT_TIME",
+        "CURRENT_TIMESTAMP",
+        "CURRENT_USER",
+        "CURSOR",
+        "CYCLE",
+        "DATA_P",
+        "DATABASE",
+        "DAY_P",
+        "DEALLOCATE",
+        "DEC",
+        "DECIMAL_P",
+        "DECLARE",
+        "DEFAULT",
+        "DEFAULTS",
+        "DEFERRABLE",
+        "DEFERRED",
+        "DEFINER",
+        "DELETE_P",
+        "DELIMITER",
+        "DELIMITERS",
+        "DEPENDS",
+        "DEPTH",
+        "DESC",
+        "DETACH",
+        "DICTIONARY",
+        "DISABLE_P",
+        "DISCARD",
+        "DISTINCT",
+        "DO",
+        "DOCUMENT_P",
+        "DOMAIN_P",
+        "DOUBLE_P",
+        "DROP",
+        "EACH",
+        "ELSE",
+        "EMPTY_P",
+        "ENABLE_P",
+        "ENCODING",
+        "ENCRYPTED",
+        "END_P",
+        "ENUM_P",
+        "ERROR_P",
+        "ESCAPE",
+        "EVENT",
+        "EXCEPT",
+        "EXCLUDE",
+        "EXCLUDING",
+        "EXCLUSIVE",
+        "EXECUTE",
+        "EXISTS",
+        "EXPLAIN",
+        "EXPRESSION",
+        "EXTENSION",
+        "EXTERNAL",
+        "EXTRACT",
+        "FALSE_P",
+        "FAMILY",
+        "FETCH",
+        "FILTER",
+        "FINALIZE",
+        "FIRST_P",
+        "FLOAT_P",
+        "FOLLOWING",
+        "FOR",
+        "FORCE",
+        "FOREIGN",
+        "FORMAT",
+        "FORWARD",
+        "FREEZE",
+        "FROM",
+        "FULL",
+        "FUNCTION",
+        "FUNCTIONS",
+        "GENERATED",
+        "GLOBAL",
+        "GRANT",
+        "GRANTED",
+        "GREATEST",
+        "GROUP_P",
+        "GROUPING",
+        "GROUPS",
+        "HANDLER",
+        "HAVING",
+        "HEADER_P",
+        "HOLD",
+        "HOUR_P",
+        "IDENTITY_P",
+        "IF_P",
+        "ILIKE",
+        "IMMEDIATE",
+        "IMMUTABLE",
+        "IMPLICIT_P",
+        "IMPORT_P",
+        "IN_P",
+        "INCLUDE",
+        "INCLUDING",
+        "INCREMENT",
+        "INDENT",
+        "INDEX",
+        "INDEXES",
+        "INHERIT",
+        "INHERITS",
+        "INITIALLY",
+        "INLINE_P",
+        "INNER_P",
+        "INOUT",
+        "INPUT_P",
+        "INSENSITIVE",
+        "INSERT",
+        "INSTEAD",
+        "INT_P",
+        "INTEGER",
+        "INTERSECT",
+        "INTERVAL",
+        "INTO",
+        "INVOKER",
+        "IS",
+        "ISNULL",
+        "ISOLATION",
+        "JOIN",
+        "JSON",
+        "JSON_ARRAY",
+        "JSON_ARRAYAGG",
+        "JSON_EXISTS",
+        "JSON_OBJECT",
+        "JSON_OBJECTAGG",
+        "JSON_QUERY",
+        "JSON_SCALAR",
+        "JSON_SERIALIZE",
+        "JSON_TABLE",
+        "JSON_VALUE",
+        "KEEP",
+        "KEY",
+        "KEYS",
+        "LABEL",
+        "LANGUAGE",
+        "LARGE_P",
+        "LAST_P",
+        "LATERAL_P",
+        "LEADING",
+        "LEAKPROOF",
+        "LEAST",
+        "LEFT",
+        "LEVEL",
+        "LIKE",
+        "LIMIT",
+        "LISTEN",
+        "LOAD",
+        "LOCAL",
+        "LOCALTIME",
+        "LOCALTIMESTAMP",
+        "LOCATION",
+        "LOCK_P",
+        "LOCKED",
+        "LOGGED",
+        "MAPPING",
+        "MATCH",
+        "MATCHED",
+        "MATERIALIZED",
+        "MAXVALUE",
+        "MERGE",
+        "MERGE_ACTION",
+        "METHOD",
+        "MINUTE_P",
+        "MINVALUE",
+        "MODE",
+        "MONTH_P",
+        "MOVE",
+        "NAME_P",
+        "NAMES",
+        "NATIONAL",
+        "NATURAL",
+        "NCHAR",
+        "NESTED",
+        "NEW",
+        "NEXT",
+        "NFC",
+        "NFD",
+        "NFKC",
+        "NFKD",
+        "NO",
+        "NONE",
+        "NORMALIZE",
+        "NORMALIZED",
+        "NOT",
+        "NOTHING",
+        "NOTIFY",
+        "NOTNULL",
+        "NOWAIT",
+        "NULL_P",
+        "NULLIF",
+        "NULLS_P",
+        "NUMERIC",
+        "OBJECT_P",
+        "OF",
+        "OFF",
+        "OFFSET",
+        "OIDS",
+        "OLD",
+        "OMIT",
+        "ON",
+        "ONLY",
+        "OPERATOR",
+        "OPTION",
+        "OPTIONS",
+        "OR",
+        "ORDER",
+        "ORDINALITY",
+        "OTHERS",
+        "OUT_P",
+        "OUTER_P",
+        "OVER",
+        "OVERLAPS",
+        "OVERLAY",
+        "OVERRIDING",
+        "OWNED",
+        "OWNER",
+        "PARALLEL",
+        "PARAMETER",
+        "PARSER",
+        "PARTIAL",
+        "PARTITION",
+        "PASSING",
+        "PASSWORD",
+        "PATH",
+        "PLACING",
+        "PLAN",
+        "PLANS",
+        "POLICY",
+        "POSITION",
+        "PRECEDING",
+        "PRECISION",
+        "PRESERVE",
+        "PREPARE",
+        "PREPARED",
+        "PRIMARY",
+        "PRIOR",
+        "PRIVILEGES",
+        "PROCEDURAL",
+        "PROCEDURE",
+        "PROCEDURES",
+        "PROGRAM",
+        "PUBLICATION",
+        "QUOTE",
+        "QUOTES",
+        "RANGE",
+        "READ",
+        "REAL",
+        "REASSIGN",
+        "RECHECK",
+        "RECURSIVE",
+        "REF_P",
+        "REFERENCES",
+        "REFERENCING",
+        "REFRESH",
+        "REINDEX",
+        "RELATIVE_P",
+        "RELEASE",
+        "RENAME",
+        "REPEATABLE",
+        "REPLACE",
+        "REPLICA",
+        "RESET",
+        "RESTART",
+        "RESTRICT",
+        "RETURN",
+        "RETURNING",
+        "RETURNS",
+        "REVOKE",
+        "RIGHT",
+        "ROLE",
+        "ROLLBACK",
+        "ROLLUP",
+        "ROUTINE",
+        "ROUTINES",
+        "ROW",
+        "ROWS",
+        "RULE",
+        "SAVEPOINT",
+        "SCALAR",
+        "SCHEMA",
+        "SCHEMAS",
+        "SCROLL",
+        "SEARCH",
+        "SECOND_P",
+        "SECURITY",
+        "SELECT",
+        "SEQUENCE",
+        "SEQUENCES",
+        "SERIALIZABLE",
+        "SERVER",
+        "SESSION",
+        "SESSION_USER",
+        "SET",
+        "SETS",
+        "SETOF",
+        "SHARE",
+        "SHOW",
+        "SIMILAR",
+        "SIMPLE",
+        "SKIP",
+        "SMALLINT",
+        "SNAPSHOT",
+        "SOME",
+        "SOURCE",
+        "SQL_P",
+        "STABLE",
+        "STANDALONE_P",
+        "START",
+        "STATEMENT",
+        "STATISTICS",
+        "STDIN",
+        "STDOUT",
+        "STORAGE",
+        "STORED",
+        "STRICT_P",
+        "STRING_P",
+        "STRIP_P",
+        "SUBSCRIPTION",
+        "SUBSTRING",
+        "SUPPORT",
+        "SYMMETRIC",
+        "SYSID",
+        "SYSTEM_P",
+        "SYSTEM_USER",
+        "TABLE",
+        "TABLES",
+        "TABLESAMPLE",
+        "TABLESPACE",
+        "TARGET",
+        "TEMP",
+        "TEMPLATE",
+        "TEMPORARY",
+        "TEXT_P",
+        "THEN",
+        "TIES",
+        "TIME",
+        "TIMESTAMP",
+        "TO",
+        "TRAILING",
+        "TRANSACTION",
+        "TRANSFORM",
+        "TREAT",
+        "TRIGGER",
+        "TRIM",
+        "TRUE_P",
+        "TRUNCATE",
+        "TRUSTED",
+        "TYPE_P",
+        "TYPES_P",
+        "UESCAPE",
+        "UNBOUNDED",
+        "UNCONDITIONAL",
+        "UNCOMMITTED",
+        "UNENCRYPTED",
+        "UNION",
+        "UNIQUE",
+        "UNKNOWN",
+        "UNLISTEN",
+        "UNLOGGED",
+        "UNTIL",
+        "UPDATE",
+        "USER",
+        "USING",
+        "VACUUM",
+        "VALID",
+        "VALIDATE",
+        "VALIDATOR",
+        "VALUE_P",
+        "VALUES",
+        "VARCHAR",
+        "VARIADIC",
+        "VARYING",
+        "VERBOSE",
+        "VERSION_P",
+        "VIEW",
+        "VIEWS",
+        "VOLATILE",
+        "WHEN",
+        "WHERE",
+        "WHITESPACE_P",
+        "WINDOW",
+        "WITH",
+        "WITHIN",
+        "WITHOUT",
+        "WORK",
+        "WRAPPER",
+        "WRITE",
+        "XML_P",
+        "XMLATTRIBUTES",
+        "XMLCONCAT",
+        "XMLELEMENT",
+        "XMLEXISTS",
+        "XMLFOREST",
+        "XMLNAMESPACES",
+        "XMLPARSE",
+        "XMLPI",
+        "XMLROOT",
+        "XMLSERIALIZE",
+        "XMLTABLE",
+        "YEAR_P",
+        "YES_P",
+        "ZONE",
+        "FORMAT_LA",
+        "NOT_LA",
+        "NULLS_LA",
+        "WITH_LA",
+        "WITHOUT_LA",
+        "MODE_TYPE_NAME",
+        "MODE_PLPGSQL_EXPR",
+        "MODE_PLPGSQL_ASSIGN1",
+        "MODE_PLPGSQL_ASSIGN2",
+        "MODE_PLPGSQL_ASSIGN3",
+        "UMINUS"
+      ]
+    },
+    {
+      "name": "Node",
+      "values": []
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "ParseResult",
+      "properties": {
+        "version": [
+          "number"
+        ],
+        "stmts": [
+          "RawStmt[]"
+        ]
+      }
+    },
+    {
+      "name": "ScanResult",
+      "properties": {
+        "version": [
+          "number"
+        ],
+        "tokens": [
+          "ScanToken[]"
+        ]
+      }
+    },
+    {
+      "name": "Integer",
+      "properties": {
+        "ival": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "Float",
+      "properties": {
+        "fval": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "Boolean",
+      "properties": {
+        "boolval": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "String",
+      "properties": {
+        "sval": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "BitString",
+      "properties": {
+        "bsval": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "List",
+      "properties": {
+        "items": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "OidList",
+      "properties": {
+        "items": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "IntList",
+      "properties": {
+        "items": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "A_Const",
+      "properties": {
+        "ival": [
+          "Integer"
+        ],
+        "fval": [
+          "Float"
+        ],
+        "boolval": [
+          "Boolean"
+        ],
+        "sval": [
+          "String"
+        ],
+        "bsval": [
+          "BitString"
+        ],
+        "isnull": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "Alias",
+      "properties": {
+        "aliasname": [
+          "string"
+        ],
+        "colnames": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "RangeVar",
+      "properties": {
+        "catalogname": [
+          "string"
+        ],
+        "schemaname": [
+          "string"
+        ],
+        "relname": [
+          "string"
+        ],
+        "inh": [
+          "boolean"
+        ],
+        "relpersistence": [
+          "string"
+        ],
+        "alias": [
+          "Alias"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "TableFunc",
+      "properties": {
+        "functype": [
+          "TableFuncType"
+        ],
+        "ns_uris": [
+          "Node[]"
+        ],
+        "ns_names": [
+          "Node[]"
+        ],
+        "docexpr": [
+          "Node"
+        ],
+        "rowexpr": [
+          "Node"
+        ],
+        "colnames": [
+          "Node[]"
+        ],
+        "coltypes": [
+          "Node[]"
+        ],
+        "coltypmods": [
+          "Node[]"
+        ],
+        "colcollations": [
+          "Node[]"
+        ],
+        "colexprs": [
+          "Node[]"
+        ],
+        "coldefexprs": [
+          "Node[]"
+        ],
+        "colvalexprs": [
+          "Node[]"
+        ],
+        "passingvalexprs": [
+          "Node[]"
+        ],
+        "notnulls": [
+          "bigint[]"
+        ],
+        "plan": [
+          "Node"
+        ],
+        "ordinalitycol": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "IntoClause",
+      "properties": {
+        "rel": [
+          "RangeVar"
+        ],
+        "colNames": [
+          "Node[]"
+        ],
+        "accessMethod": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "onCommit": [
+          "OnCommitAction"
+        ],
+        "tableSpaceName": [
+          "string"
+        ],
+        "viewQuery": [
+          "Node"
+        ],
+        "skipData": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "Var",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "varno": [
+          "number"
+        ],
+        "varattno": [
+          "number"
+        ],
+        "vartype": [
+          "number"
+        ],
+        "vartypmod": [
+          "number"
+        ],
+        "varcollid": [
+          "number"
+        ],
+        "varnullingrels": [
+          "bigint[]"
+        ],
+        "varlevelsup": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "Param",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "paramkind": [
+          "ParamKind"
+        ],
+        "paramid": [
+          "number"
+        ],
+        "paramtype": [
+          "number"
+        ],
+        "paramtypmod": [
+          "number"
+        ],
+        "paramcollid": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "Aggref",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "aggfnoid": [
+          "number"
+        ],
+        "aggtype": [
+          "number"
+        ],
+        "aggcollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "aggargtypes": [
+          "Node[]"
+        ],
+        "aggdirectargs": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "aggorder": [
+          "Node[]"
+        ],
+        "aggdistinct": [
+          "Node[]"
+        ],
+        "aggfilter": [
+          "Node"
+        ],
+        "aggstar": [
+          "boolean"
+        ],
+        "aggvariadic": [
+          "boolean"
+        ],
+        "aggkind": [
+          "string"
+        ],
+        "agglevelsup": [
+          "number"
+        ],
+        "aggsplit": [
+          "AggSplit"
+        ],
+        "aggno": [
+          "number"
+        ],
+        "aggtransno": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "GroupingFunc",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "refs": [
+          "Node[]"
+        ],
+        "agglevelsup": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "WindowFunc",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "winfnoid": [
+          "number"
+        ],
+        "wintype": [
+          "number"
+        ],
+        "wincollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "aggfilter": [
+          "Node"
+        ],
+        "runCondition": [
+          "Node[]"
+        ],
+        "winref": [
+          "number"
+        ],
+        "winstar": [
+          "boolean"
+        ],
+        "winagg": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "WindowFuncRunCondition",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "opno": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "wfunc_left": [
+          "boolean"
+        ],
+        "arg": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "MergeSupportFunc",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "msftype": [
+          "number"
+        ],
+        "msfcollid": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SubscriptingRef",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "refcontainertype": [
+          "number"
+        ],
+        "refelemtype": [
+          "number"
+        ],
+        "refrestype": [
+          "number"
+        ],
+        "reftypmod": [
+          "number"
+        ],
+        "refcollid": [
+          "number"
+        ],
+        "refupperindexpr": [
+          "Node[]"
+        ],
+        "reflowerindexpr": [
+          "Node[]"
+        ],
+        "refexpr": [
+          "Node"
+        ],
+        "refassgnexpr": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "FuncExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "funcid": [
+          "number"
+        ],
+        "funcresulttype": [
+          "number"
+        ],
+        "funcretset": [
+          "boolean"
+        ],
+        "funcvariadic": [
+          "boolean"
+        ],
+        "funcformat": [
+          "CoercionForm"
+        ],
+        "funccollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "NamedArgExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "name": [
+          "string"
+        ],
+        "argnumber": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "OpExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "opno": [
+          "number"
+        ],
+        "opresulttype": [
+          "number"
+        ],
+        "opretset": [
+          "boolean"
+        ],
+        "opcollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "DistinctExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "opno": [
+          "number"
+        ],
+        "opresulttype": [
+          "number"
+        ],
+        "opretset": [
+          "boolean"
+        ],
+        "opcollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "NullIfExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "opno": [
+          "number"
+        ],
+        "opresulttype": [
+          "number"
+        ],
+        "opretset": [
+          "boolean"
+        ],
+        "opcollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ScalarArrayOpExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "opno": [
+          "number"
+        ],
+        "useOr": [
+          "boolean"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "BoolExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "boolop": [
+          "BoolExprType"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SubLink",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "subLinkType": [
+          "SubLinkType"
+        ],
+        "subLinkId": [
+          "number"
+        ],
+        "testexpr": [
+          "Node"
+        ],
+        "operName": [
+          "Node[]"
+        ],
+        "subselect": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SubPlan",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "subLinkType": [
+          "SubLinkType"
+        ],
+        "testexpr": [
+          "Node"
+        ],
+        "paramIds": [
+          "Node[]"
+        ],
+        "plan_id": [
+          "number"
+        ],
+        "plan_name": [
+          "string"
+        ],
+        "firstColType": [
+          "number"
+        ],
+        "firstColTypmod": [
+          "number"
+        ],
+        "firstColCollation": [
+          "number"
+        ],
+        "useHashTable": [
+          "boolean"
+        ],
+        "unknownEqFalse": [
+          "boolean"
+        ],
+        "parallel_safe": [
+          "boolean"
+        ],
+        "setParam": [
+          "Node[]"
+        ],
+        "parParam": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "startup_cost": [
+          "number"
+        ],
+        "per_call_cost": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "AlternativeSubPlan",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "subplans": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "FieldSelect",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "fieldnum": [
+          "number"
+        ],
+        "resulttype": [
+          "number"
+        ],
+        "resulttypmod": [
+          "number"
+        ],
+        "resultcollid": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "FieldStore",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "newvals": [
+          "Node[]"
+        ],
+        "fieldnums": [
+          "Node[]"
+        ],
+        "resulttype": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RelabelType",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "resulttype": [
+          "number"
+        ],
+        "resulttypmod": [
+          "number"
+        ],
+        "resultcollid": [
+          "number"
+        ],
+        "relabelformat": [
+          "CoercionForm"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CoerceViaIO",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "resulttype": [
+          "number"
+        ],
+        "resultcollid": [
+          "number"
+        ],
+        "coerceformat": [
+          "CoercionForm"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ArrayCoerceExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "elemexpr": [
+          "Node"
+        ],
+        "resulttype": [
+          "number"
+        ],
+        "resulttypmod": [
+          "number"
+        ],
+        "resultcollid": [
+          "number"
+        ],
+        "coerceformat": [
+          "CoercionForm"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ConvertRowtypeExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "resulttype": [
+          "number"
+        ],
+        "convertformat": [
+          "CoercionForm"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CollateExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "collOid": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CaseExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "casetype": [
+          "number"
+        ],
+        "casecollid": [
+          "number"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "defresult": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CaseWhen",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "result": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CaseTestExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "typeId": [
+          "number"
+        ],
+        "typeMod": [
+          "number"
+        ],
+        "collation": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ArrayExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "array_typeid": [
+          "number"
+        ],
+        "array_collid": [
+          "number"
+        ],
+        "element_typeid": [
+          "number"
+        ],
+        "elements": [
+          "Node[]"
+        ],
+        "multidims": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RowExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "row_typeid": [
+          "number"
+        ],
+        "row_format": [
+          "CoercionForm"
+        ],
+        "colnames": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RowCompareExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "rctype": [
+          "RowCompareType"
+        ],
+        "opnos": [
+          "Node[]"
+        ],
+        "opfamilies": [
+          "Node[]"
+        ],
+        "inputcollids": [
+          "Node[]"
+        ],
+        "largs": [
+          "Node[]"
+        ],
+        "rargs": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CoalesceExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "coalescetype": [
+          "number"
+        ],
+        "coalescecollid": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "MinMaxExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "minmaxtype": [
+          "number"
+        ],
+        "minmaxcollid": [
+          "number"
+        ],
+        "inputcollid": [
+          "number"
+        ],
+        "op": [
+          "MinMaxOp"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SQLValueFunction",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "op": [
+          "SQLValueFunctionOp"
+        ],
+        "type": [
+          "number"
+        ],
+        "typmod": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "XmlExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "op": [
+          "XmlExprOp"
+        ],
+        "name": [
+          "string"
+        ],
+        "named_args": [
+          "Node[]"
+        ],
+        "arg_names": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "xmloption": [
+          "XmlOptionType"
+        ],
+        "indent": [
+          "boolean"
+        ],
+        "type": [
+          "number"
+        ],
+        "typmod": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonFormat",
+      "properties": {
+        "format_type": [
+          "JsonFormatType"
+        ],
+        "encoding": [
+          "JsonEncoding"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonReturning",
+      "properties": {
+        "format": [
+          "JsonFormat"
+        ],
+        "typid": [
+          "number"
+        ],
+        "typmod": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonValueExpr",
+      "properties": {
+        "raw_expr": [
+          "Node"
+        ],
+        "formatted_expr": [
+          "Node"
+        ],
+        "format": [
+          "JsonFormat"
+        ]
+      }
+    },
+    {
+      "name": "JsonConstructorExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "type": [
+          "JsonConstructorType"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "func": [
+          "Node"
+        ],
+        "coercion": [
+          "Node"
+        ],
+        "returning": [
+          "JsonReturning"
+        ],
+        "absent_on_null": [
+          "boolean"
+        ],
+        "unique": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonIsPredicate",
+      "properties": {
+        "expr": [
+          "Node"
+        ],
+        "format": [
+          "JsonFormat"
+        ],
+        "item_type": [
+          "JsonValueType"
+        ],
+        "unique_keys": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonBehavior",
+      "properties": {
+        "btype": [
+          "JsonBehaviorType"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "coerce": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "op": [
+          "JsonExprOp"
+        ],
+        "column_name": [
+          "string"
+        ],
+        "formatted_expr": [
+          "Node"
+        ],
+        "format": [
+          "JsonFormat"
+        ],
+        "path_spec": [
+          "Node"
+        ],
+        "returning": [
+          "JsonReturning"
+        ],
+        "passing_names": [
+          "Node[]"
+        ],
+        "passing_values": [
+          "Node[]"
+        ],
+        "on_empty": [
+          "JsonBehavior"
+        ],
+        "on_error": [
+          "JsonBehavior"
+        ],
+        "use_io_coercion": [
+          "boolean"
+        ],
+        "use_json_coercion": [
+          "boolean"
+        ],
+        "wrapper": [
+          "JsonWrapper"
+        ],
+        "omit_quotes": [
+          "boolean"
+        ],
+        "collation": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonTablePath",
+      "properties": {
+        "name": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "JsonTablePathScan",
+      "properties": {
+        "plan": [
+          "Node"
+        ],
+        "path": [
+          "JsonTablePath"
+        ],
+        "errorOnError": [
+          "boolean"
+        ],
+        "child": [
+          "Node"
+        ],
+        "colMin": [
+          "number"
+        ],
+        "colMax": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonTableSiblingJoin",
+      "properties": {
+        "plan": [
+          "Node"
+        ],
+        "lplan": [
+          "Node"
+        ],
+        "rplan": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "NullTest",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "nulltesttype": [
+          "NullTestType"
+        ],
+        "argisrow": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "BooleanTest",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "booltesttype": [
+          "BoolTestType"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "MergeAction",
+      "properties": {
+        "matchKind": [
+          "MergeMatchKind"
+        ],
+        "commandType": [
+          "CmdType"
+        ],
+        "override": [
+          "OverridingKind"
+        ],
+        "qual": [
+          "Node"
+        ],
+        "targetList": [
+          "Node[]"
+        ],
+        "updateColnos": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CoerceToDomain",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "resulttype": [
+          "number"
+        ],
+        "resulttypmod": [
+          "number"
+        ],
+        "resultcollid": [
+          "number"
+        ],
+        "coercionformat": [
+          "CoercionForm"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CoerceToDomainValue",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "typeId": [
+          "number"
+        ],
+        "typeMod": [
+          "number"
+        ],
+        "collation": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SetToDefault",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "typeId": [
+          "number"
+        ],
+        "typeMod": [
+          "number"
+        ],
+        "collation": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CurrentOfExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "cvarno": [
+          "number"
+        ],
+        "cursor_name": [
+          "string"
+        ],
+        "cursor_param": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "NextValueExpr",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "seqid": [
+          "number"
+        ],
+        "typeId": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "InferenceElem",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "infercollid": [
+          "number"
+        ],
+        "inferopclass": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "TargetEntry",
+      "properties": {
+        "xpr": [
+          "Node"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "resno": [
+          "number"
+        ],
+        "resname": [
+          "string"
+        ],
+        "ressortgroupref": [
+          "number"
+        ],
+        "resorigtbl": [
+          "number"
+        ],
+        "resorigcol": [
+          "number"
+        ],
+        "resjunk": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "RangeTblRef",
+      "properties": {
+        "rtindex": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JoinExpr",
+      "properties": {
+        "jointype": [
+          "JoinType"
+        ],
+        "isNatural": [
+          "boolean"
+        ],
+        "larg": [
+          "Node"
+        ],
+        "rarg": [
+          "Node"
+        ],
+        "usingClause": [
+          "Node[]"
+        ],
+        "join_using_alias": [
+          "Alias"
+        ],
+        "quals": [
+          "Node"
+        ],
+        "alias": [
+          "Alias"
+        ],
+        "rtindex": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "FromExpr",
+      "properties": {
+        "fromlist": [
+          "Node[]"
+        ],
+        "quals": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "OnConflictExpr",
+      "properties": {
+        "action": [
+          "OnConflictAction"
+        ],
+        "arbiterElems": [
+          "Node[]"
+        ],
+        "arbiterWhere": [
+          "Node"
+        ],
+        "constraint": [
+          "number"
+        ],
+        "onConflictSet": [
+          "Node[]"
+        ],
+        "onConflictWhere": [
+          "Node"
+        ],
+        "exclRelIndex": [
+          "number"
+        ],
+        "exclRelTlist": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "Query",
+      "properties": {
+        "commandType": [
+          "CmdType"
+        ],
+        "querySource": [
+          "QuerySource"
+        ],
+        "canSetTag": [
+          "boolean"
+        ],
+        "utilityStmt": [
+          "Node"
+        ],
+        "resultRelation": [
+          "number"
+        ],
+        "hasAggs": [
+          "boolean"
+        ],
+        "hasWindowFuncs": [
+          "boolean"
+        ],
+        "hasTargetSRFs": [
+          "boolean"
+        ],
+        "hasSubLinks": [
+          "boolean"
+        ],
+        "hasDistinctOn": [
+          "boolean"
+        ],
+        "hasRecursive": [
+          "boolean"
+        ],
+        "hasModifyingCTE": [
+          "boolean"
+        ],
+        "hasForUpdate": [
+          "boolean"
+        ],
+        "hasRowSecurity": [
+          "boolean"
+        ],
+        "isReturn": [
+          "boolean"
+        ],
+        "cteList": [
+          "Node[]"
+        ],
+        "rtable": [
+          "Node[]"
+        ],
+        "rteperminfos": [
+          "Node[]"
+        ],
+        "jointree": [
+          "FromExpr"
+        ],
+        "mergeActionList": [
+          "Node[]"
+        ],
+        "mergeTargetRelation": [
+          "number"
+        ],
+        "mergeJoinCondition": [
+          "Node"
+        ],
+        "targetList": [
+          "Node[]"
+        ],
+        "override": [
+          "OverridingKind"
+        ],
+        "onConflict": [
+          "OnConflictExpr"
+        ],
+        "returningList": [
+          "Node[]"
+        ],
+        "groupClause": [
+          "Node[]"
+        ],
+        "groupDistinct": [
+          "boolean"
+        ],
+        "groupingSets": [
+          "Node[]"
+        ],
+        "havingQual": [
+          "Node"
+        ],
+        "windowClause": [
+          "Node[]"
+        ],
+        "distinctClause": [
+          "Node[]"
+        ],
+        "sortClause": [
+          "Node[]"
+        ],
+        "limitOffset": [
+          "Node"
+        ],
+        "limitCount": [
+          "Node"
+        ],
+        "limitOption": [
+          "LimitOption"
+        ],
+        "rowMarks": [
+          "Node[]"
+        ],
+        "setOperations": [
+          "Node"
+        ],
+        "constraintDeps": [
+          "Node[]"
+        ],
+        "withCheckOptions": [
+          "Node[]"
+        ],
+        "stmt_location": [
+          "number"
+        ],
+        "stmt_len": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "TypeName",
+      "properties": {
+        "names": [
+          "Node[]"
+        ],
+        "typeOid": [
+          "number"
+        ],
+        "setof": [
+          "boolean"
+        ],
+        "pct_type": [
+          "boolean"
+        ],
+        "typmods": [
+          "Node[]"
+        ],
+        "typemod": [
+          "number"
+        ],
+        "arrayBounds": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ColumnRef",
+      "properties": {
+        "fields": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ParamRef",
+      "properties": {
+        "number": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "A_Expr",
+      "properties": {
+        "kind": [
+          "A_Expr_Kind"
+        ],
+        "name": [
+          "Node[]"
+        ],
+        "lexpr": [
+          "Node"
+        ],
+        "rexpr": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "TypeCast",
+      "properties": {
+        "arg": [
+          "Node"
+        ],
+        "typeName": [
+          "TypeName"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CollateClause",
+      "properties": {
+        "arg": [
+          "Node"
+        ],
+        "collname": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RoleSpec",
+      "properties": {
+        "roletype": [
+          "RoleSpecType"
+        ],
+        "rolename": [
+          "string"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "FuncCall",
+      "properties": {
+        "funcname": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "agg_order": [
+          "Node[]"
+        ],
+        "agg_filter": [
+          "Node"
+        ],
+        "over": [
+          "WindowDef"
+        ],
+        "agg_within_group": [
+          "boolean"
+        ],
+        "agg_star": [
+          "boolean"
+        ],
+        "agg_distinct": [
+          "boolean"
+        ],
+        "func_variadic": [
+          "boolean"
+        ],
+        "funcformat": [
+          "CoercionForm"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "A_Star",
+      "properties": {}
+    },
+    {
+      "name": "A_Indices",
+      "properties": {
+        "is_slice": [
+          "boolean"
+        ],
+        "lidx": [
+          "Node"
+        ],
+        "uidx": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "A_Indirection",
+      "properties": {
+        "arg": [
+          "Node"
+        ],
+        "indirection": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "A_ArrayExpr",
+      "properties": {
+        "elements": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ResTarget",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "indirection": [
+          "Node[]"
+        ],
+        "val": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "MultiAssignRef",
+      "properties": {
+        "source": [
+          "Node"
+        ],
+        "colno": [
+          "number"
+        ],
+        "ncolumns": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SortBy",
+      "properties": {
+        "node": [
+          "Node"
+        ],
+        "sortby_dir": [
+          "SortByDir"
+        ],
+        "sortby_nulls": [
+          "SortByNulls"
+        ],
+        "useOp": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "WindowDef",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "refname": [
+          "string"
+        ],
+        "partitionClause": [
+          "Node[]"
+        ],
+        "orderClause": [
+          "Node[]"
+        ],
+        "frameOptions": [
+          "number"
+        ],
+        "startOffset": [
+          "Node"
+        ],
+        "endOffset": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RangeSubselect",
+      "properties": {
+        "lateral": [
+          "boolean"
+        ],
+        "subquery": [
+          "Node"
+        ],
+        "alias": [
+          "Alias"
+        ]
+      }
+    },
+    {
+      "name": "RangeFunction",
+      "properties": {
+        "lateral": [
+          "boolean"
+        ],
+        "ordinality": [
+          "boolean"
+        ],
+        "is_rowsfrom": [
+          "boolean"
+        ],
+        "functions": [
+          "Node[]"
+        ],
+        "alias": [
+          "Alias"
+        ],
+        "coldeflist": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "RangeTableFunc",
+      "properties": {
+        "lateral": [
+          "boolean"
+        ],
+        "docexpr": [
+          "Node"
+        ],
+        "rowexpr": [
+          "Node"
+        ],
+        "namespaces": [
+          "Node[]"
+        ],
+        "columns": [
+          "Node[]"
+        ],
+        "alias": [
+          "Alias"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RangeTableFuncCol",
+      "properties": {
+        "colname": [
+          "string"
+        ],
+        "typeName": [
+          "TypeName"
+        ],
+        "for_ordinality": [
+          "boolean"
+        ],
+        "is_not_null": [
+          "boolean"
+        ],
+        "colexpr": [
+          "Node"
+        ],
+        "coldefexpr": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "RangeTableSample",
+      "properties": {
+        "relation": [
+          "Node"
+        ],
+        "method": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "repeatable": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "ColumnDef",
+      "properties": {
+        "colname": [
+          "string"
+        ],
+        "typeName": [
+          "TypeName"
+        ],
+        "compression": [
+          "string"
+        ],
+        "inhcount": [
+          "number"
+        ],
+        "is_local": [
+          "boolean"
+        ],
+        "is_not_null": [
+          "boolean"
+        ],
+        "is_from_type": [
+          "boolean"
+        ],
+        "storage": [
+          "string"
+        ],
+        "storage_name": [
+          "string"
+        ],
+        "raw_default": [
+          "Node"
+        ],
+        "cooked_default": [
+          "Node"
+        ],
+        "identity": [
+          "string"
+        ],
+        "identitySequence": [
+          "RangeVar"
+        ],
+        "generated": [
+          "string"
+        ],
+        "collClause": [
+          "CollateClause"
+        ],
+        "collOid": [
+          "number"
+        ],
+        "constraints": [
+          "Node[]"
+        ],
+        "fdwoptions": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "TableLikeClause",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "options": [
+          "number"
+        ],
+        "relationOid": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "IndexElem",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "indexcolname": [
+          "string"
+        ],
+        "collation": [
+          "Node[]"
+        ],
+        "opclass": [
+          "Node[]"
+        ],
+        "opclassopts": [
+          "Node[]"
+        ],
+        "ordering": [
+          "SortByDir"
+        ],
+        "nulls_ordering": [
+          "SortByNulls"
+        ]
+      }
+    },
+    {
+      "name": "DefElem",
+      "properties": {
+        "defnamespace": [
+          "string"
+        ],
+        "defname": [
+          "string"
+        ],
+        "arg": [
+          "Node"
+        ],
+        "defaction": [
+          "DefElemAction"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "LockingClause",
+      "properties": {
+        "lockedRels": [
+          "Node[]"
+        ],
+        "strength": [
+          "LockClauseStrength"
+        ],
+        "waitPolicy": [
+          "LockWaitPolicy"
+        ]
+      }
+    },
+    {
+      "name": "XmlSerialize",
+      "properties": {
+        "xmloption": [
+          "XmlOptionType"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "typeName": [
+          "TypeName"
+        ],
+        "indent": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "PartitionElem",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "expr": [
+          "Node"
+        ],
+        "collation": [
+          "Node[]"
+        ],
+        "opclass": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "PartitionSpec",
+      "properties": {
+        "strategy": [
+          "PartitionStrategy"
+        ],
+        "partParams": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "PartitionBoundSpec",
+      "properties": {
+        "strategy": [
+          "string"
+        ],
+        "is_default": [
+          "boolean"
+        ],
+        "modulus": [
+          "number"
+        ],
+        "remainder": [
+          "number"
+        ],
+        "listdatums": [
+          "Node[]"
+        ],
+        "lowerdatums": [
+          "Node[]"
+        ],
+        "upperdatums": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "PartitionRangeDatum",
+      "properties": {
+        "kind": [
+          "PartitionRangeDatumKind"
+        ],
+        "value": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "SinglePartitionSpec",
+      "properties": {}
+    },
+    {
+      "name": "PartitionCmd",
+      "properties": {
+        "name": [
+          "RangeVar"
+        ],
+        "bound": [
+          "PartitionBoundSpec"
+        ],
+        "concurrent": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "RangeTblEntry",
+      "properties": {
+        "alias": [
+          "Alias"
+        ],
+        "eref": [
+          "Alias"
+        ],
+        "rtekind": [
+          "RTEKind"
+        ],
+        "relid": [
+          "number"
+        ],
+        "inh": [
+          "boolean"
+        ],
+        "relkind": [
+          "string"
+        ],
+        "rellockmode": [
+          "number"
+        ],
+        "perminfoindex": [
+          "number"
+        ],
+        "tablesample": [
+          "TableSampleClause"
+        ],
+        "subquery": [
+          "Query"
+        ],
+        "security_barrier": [
+          "boolean"
+        ],
+        "jointype": [
+          "JoinType"
+        ],
+        "joinmergedcols": [
+          "number"
+        ],
+        "joinaliasvars": [
+          "Node[]"
+        ],
+        "joinleftcols": [
+          "Node[]"
+        ],
+        "joinrightcols": [
+          "Node[]"
+        ],
+        "join_using_alias": [
+          "Alias"
+        ],
+        "functions": [
+          "Node[]"
+        ],
+        "funcordinality": [
+          "boolean"
+        ],
+        "tablefunc": [
+          "TableFunc"
+        ],
+        "values_lists": [
+          "Node[]"
+        ],
+        "ctename": [
+          "string"
+        ],
+        "ctelevelsup": [
+          "number"
+        ],
+        "self_reference": [
+          "boolean"
+        ],
+        "coltypes": [
+          "Node[]"
+        ],
+        "coltypmods": [
+          "Node[]"
+        ],
+        "colcollations": [
+          "Node[]"
+        ],
+        "enrname": [
+          "string"
+        ],
+        "enrtuples": [
+          "number"
+        ],
+        "lateral": [
+          "boolean"
+        ],
+        "inFromCl": [
+          "boolean"
+        ],
+        "securityQuals": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "RTEPermissionInfo",
+      "properties": {
+        "relid": [
+          "number"
+        ],
+        "inh": [
+          "boolean"
+        ],
+        "requiredPerms": [
+          "bigint"
+        ],
+        "checkAsUser": [
+          "number"
+        ],
+        "selectedCols": [
+          "bigint[]"
+        ],
+        "insertedCols": [
+          "bigint[]"
+        ],
+        "updatedCols": [
+          "bigint[]"
+        ]
+      }
+    },
+    {
+      "name": "RangeTblFunction",
+      "properties": {
+        "funcexpr": [
+          "Node"
+        ],
+        "funccolcount": [
+          "number"
+        ],
+        "funccolnames": [
+          "Node[]"
+        ],
+        "funccoltypes": [
+          "Node[]"
+        ],
+        "funccoltypmods": [
+          "Node[]"
+        ],
+        "funccolcollations": [
+          "Node[]"
+        ],
+        "funcparams": [
+          "bigint[]"
+        ]
+      }
+    },
+    {
+      "name": "TableSampleClause",
+      "properties": {
+        "tsmhandler": [
+          "number"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "repeatable": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "WithCheckOption",
+      "properties": {
+        "kind": [
+          "WCOKind"
+        ],
+        "relname": [
+          "string"
+        ],
+        "polname": [
+          "string"
+        ],
+        "qual": [
+          "Node"
+        ],
+        "cascaded": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "SortGroupClause",
+      "properties": {
+        "tleSortGroupRef": [
+          "number"
+        ],
+        "eqop": [
+          "number"
+        ],
+        "sortop": [
+          "number"
+        ],
+        "nulls_first": [
+          "boolean"
+        ],
+        "hashable": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "GroupingSet",
+      "properties": {
+        "kind": [
+          "GroupingSetKind"
+        ],
+        "content": [
+          "Node[]"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "WindowClause",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "refname": [
+          "string"
+        ],
+        "partitionClause": [
+          "Node[]"
+        ],
+        "orderClause": [
+          "Node[]"
+        ],
+        "frameOptions": [
+          "number"
+        ],
+        "startOffset": [
+          "Node"
+        ],
+        "endOffset": [
+          "Node"
+        ],
+        "startInRangeFunc": [
+          "number"
+        ],
+        "endInRangeFunc": [
+          "number"
+        ],
+        "inRangeColl": [
+          "number"
+        ],
+        "inRangeAsc": [
+          "boolean"
+        ],
+        "inRangeNullsFirst": [
+          "boolean"
+        ],
+        "winref": [
+          "number"
+        ],
+        "copiedOrder": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "RowMarkClause",
+      "properties": {
+        "rti": [
+          "number"
+        ],
+        "strength": [
+          "LockClauseStrength"
+        ],
+        "waitPolicy": [
+          "LockWaitPolicy"
+        ],
+        "pushedDown": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "WithClause",
+      "properties": {
+        "ctes": [
+          "Node[]"
+        ],
+        "recursive": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "InferClause",
+      "properties": {
+        "indexElems": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "conname": [
+          "string"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "OnConflictClause",
+      "properties": {
+        "action": [
+          "OnConflictAction"
+        ],
+        "infer": [
+          "InferClause"
+        ],
+        "targetList": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CTESearchClause",
+      "properties": {
+        "search_col_list": [
+          "Node[]"
+        ],
+        "search_breadth_first": [
+          "boolean"
+        ],
+        "search_seq_column": [
+          "string"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CTECycleClause",
+      "properties": {
+        "cycle_col_list": [
+          "Node[]"
+        ],
+        "cycle_mark_column": [
+          "string"
+        ],
+        "cycle_mark_value": [
+          "Node"
+        ],
+        "cycle_mark_default": [
+          "Node"
+        ],
+        "cycle_path_column": [
+          "string"
+        ],
+        "location": [
+          "number"
+        ],
+        "cycle_mark_type": [
+          "number"
+        ],
+        "cycle_mark_typmod": [
+          "number"
+        ],
+        "cycle_mark_collation": [
+          "number"
+        ],
+        "cycle_mark_neop": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CommonTableExpr",
+      "properties": {
+        "ctename": [
+          "string"
+        ],
+        "aliascolnames": [
+          "Node[]"
+        ],
+        "ctematerialized": [
+          "CTEMaterialize"
+        ],
+        "ctequery": [
+          "Node"
+        ],
+        "search_clause": [
+          "CTESearchClause"
+        ],
+        "cycle_clause": [
+          "CTECycleClause"
+        ],
+        "location": [
+          "number"
+        ],
+        "cterecursive": [
+          "boolean"
+        ],
+        "cterefcount": [
+          "number"
+        ],
+        "ctecolnames": [
+          "Node[]"
+        ],
+        "ctecoltypes": [
+          "Node[]"
+        ],
+        "ctecoltypmods": [
+          "Node[]"
+        ],
+        "ctecolcollations": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "MergeWhenClause",
+      "properties": {
+        "matchKind": [
+          "MergeMatchKind"
+        ],
+        "commandType": [
+          "CmdType"
+        ],
+        "override": [
+          "OverridingKind"
+        ],
+        "condition": [
+          "Node"
+        ],
+        "targetList": [
+          "Node[]"
+        ],
+        "values": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "TriggerTransition",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "isNew": [
+          "boolean"
+        ],
+        "isTable": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "JsonOutput",
+      "properties": {
+        "typeName": [
+          "TypeName"
+        ],
+        "returning": [
+          "JsonReturning"
+        ]
+      }
+    },
+    {
+      "name": "JsonArgument",
+      "properties": {
+        "val": [
+          "JsonValueExpr"
+        ],
+        "name": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "JsonFuncExpr",
+      "properties": {
+        "op": [
+          "JsonExprOp"
+        ],
+        "column_name": [
+          "string"
+        ],
+        "context_item": [
+          "JsonValueExpr"
+        ],
+        "pathspec": [
+          "Node"
+        ],
+        "passing": [
+          "Node[]"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "on_empty": [
+          "JsonBehavior"
+        ],
+        "on_error": [
+          "JsonBehavior"
+        ],
+        "wrapper": [
+          "JsonWrapper"
+        ],
+        "quotes": [
+          "JsonQuotes"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonTablePathSpec",
+      "properties": {
+        "string": [
+          "Node"
+        ],
+        "name": [
+          "string"
+        ],
+        "name_location": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonTable",
+      "properties": {
+        "context_item": [
+          "JsonValueExpr"
+        ],
+        "pathspec": [
+          "JsonTablePathSpec"
+        ],
+        "passing": [
+          "Node[]"
+        ],
+        "columns": [
+          "Node[]"
+        ],
+        "on_error": [
+          "JsonBehavior"
+        ],
+        "alias": [
+          "Alias"
+        ],
+        "lateral": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonTableColumn",
+      "properties": {
+        "coltype": [
+          "JsonTableColumnType"
+        ],
+        "name": [
+          "string"
+        ],
+        "typeName": [
+          "TypeName"
+        ],
+        "pathspec": [
+          "JsonTablePathSpec"
+        ],
+        "format": [
+          "JsonFormat"
+        ],
+        "wrapper": [
+          "JsonWrapper"
+        ],
+        "quotes": [
+          "JsonQuotes"
+        ],
+        "columns": [
+          "Node[]"
+        ],
+        "on_empty": [
+          "JsonBehavior"
+        ],
+        "on_error": [
+          "JsonBehavior"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonKeyValue",
+      "properties": {
+        "key": [
+          "Node"
+        ],
+        "value": [
+          "JsonValueExpr"
+        ]
+      }
+    },
+    {
+      "name": "JsonParseExpr",
+      "properties": {
+        "expr": [
+          "JsonValueExpr"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "unique_keys": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonScalarExpr",
+      "properties": {
+        "expr": [
+          "Node"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonSerializeExpr",
+      "properties": {
+        "expr": [
+          "JsonValueExpr"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonObjectConstructor",
+      "properties": {
+        "exprs": [
+          "Node[]"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "absent_on_null": [
+          "boolean"
+        ],
+        "unique": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonArrayConstructor",
+      "properties": {
+        "exprs": [
+          "Node[]"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "absent_on_null": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonArrayQueryConstructor",
+      "properties": {
+        "query": [
+          "Node"
+        ],
+        "output": [
+          "JsonOutput"
+        ],
+        "format": [
+          "JsonFormat"
+        ],
+        "absent_on_null": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonAggConstructor",
+      "properties": {
+        "output": [
+          "JsonOutput"
+        ],
+        "agg_filter": [
+          "Node"
+        ],
+        "agg_order": [
+          "Node[]"
+        ],
+        "over": [
+          "WindowDef"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "JsonObjectAgg",
+      "properties": {
+        "constructor": [
+          "JsonAggConstructor"
+        ],
+        "arg": [
+          "JsonKeyValue"
+        ],
+        "absent_on_null": [
+          "boolean"
+        ],
+        "unique": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "JsonArrayAgg",
+      "properties": {
+        "constructor": [
+          "JsonAggConstructor"
+        ],
+        "arg": [
+          "JsonValueExpr"
+        ],
+        "absent_on_null": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "RawStmt",
+      "properties": {
+        "stmt": [
+          "Node"
+        ],
+        "stmt_location": [
+          "number"
+        ],
+        "stmt_len": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "InsertStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "cols": [
+          "Node[]"
+        ],
+        "selectStmt": [
+          "Node"
+        ],
+        "onConflictClause": [
+          "OnConflictClause"
+        ],
+        "returningList": [
+          "Node[]"
+        ],
+        "withClause": [
+          "WithClause"
+        ],
+        "override": [
+          "OverridingKind"
+        ]
+      }
+    },
+    {
+      "name": "DeleteStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "usingClause": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "returningList": [
+          "Node[]"
+        ],
+        "withClause": [
+          "WithClause"
+        ]
+      }
+    },
+    {
+      "name": "UpdateStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "targetList": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "fromClause": [
+          "Node[]"
+        ],
+        "returningList": [
+          "Node[]"
+        ],
+        "withClause": [
+          "WithClause"
+        ]
+      }
+    },
+    {
+      "name": "MergeStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "sourceRelation": [
+          "Node"
+        ],
+        "joinCondition": [
+          "Node"
+        ],
+        "mergeWhenClauses": [
+          "Node[]"
+        ],
+        "returningList": [
+          "Node[]"
+        ],
+        "withClause": [
+          "WithClause"
+        ]
+      }
+    },
+    {
+      "name": "SelectStmt",
+      "properties": {
+        "distinctClause": [
+          "Node[]"
+        ],
+        "intoClause": [
+          "IntoClause"
+        ],
+        "targetList": [
+          "Node[]"
+        ],
+        "fromClause": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "groupClause": [
+          "Node[]"
+        ],
+        "groupDistinct": [
+          "boolean"
+        ],
+        "havingClause": [
+          "Node"
+        ],
+        "windowClause": [
+          "Node[]"
+        ],
+        "valuesLists": [
+          "Node[]"
+        ],
+        "sortClause": [
+          "Node[]"
+        ],
+        "limitOffset": [
+          "Node"
+        ],
+        "limitCount": [
+          "Node"
+        ],
+        "limitOption": [
+          "LimitOption"
+        ],
+        "lockingClause": [
+          "Node[]"
+        ],
+        "withClause": [
+          "WithClause"
+        ],
+        "op": [
+          "SetOperation"
+        ],
+        "all": [
+          "boolean"
+        ],
+        "larg": [
+          "SelectStmt"
+        ],
+        "rarg": [
+          "SelectStmt"
+        ]
+      }
+    },
+    {
+      "name": "SetOperationStmt",
+      "properties": {
+        "op": [
+          "SetOperation"
+        ],
+        "all": [
+          "boolean"
+        ],
+        "larg": [
+          "Node"
+        ],
+        "rarg": [
+          "Node"
+        ],
+        "colTypes": [
+          "Node[]"
+        ],
+        "colTypmods": [
+          "Node[]"
+        ],
+        "colCollations": [
+          "Node[]"
+        ],
+        "groupClauses": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "ReturnStmt",
+      "properties": {
+        "returnval": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "PLAssignStmt",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "indirection": [
+          "Node[]"
+        ],
+        "nnames": [
+          "number"
+        ],
+        "val": [
+          "SelectStmt"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CreateSchemaStmt",
+      "properties": {
+        "schemaname": [
+          "string"
+        ],
+        "authrole": [
+          "RoleSpec"
+        ],
+        "schemaElts": [
+          "Node[]"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterTableStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "cmds": [
+          "Node[]"
+        ],
+        "objtype": [
+          "ObjectType"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "ReplicaIdentityStmt",
+      "properties": {
+        "identity_type": [
+          "string"
+        ],
+        "name": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "AlterTableCmd",
+      "properties": {
+        "subtype": [
+          "AlterTableType"
+        ],
+        "name": [
+          "string"
+        ],
+        "num": [
+          "number"
+        ],
+        "newowner": [
+          "RoleSpec"
+        ],
+        "def": [
+          "Node"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ],
+        "missing_ok": [
+          "boolean"
+        ],
+        "recurse": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterCollationStmt",
+      "properties": {
+        "collname": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterDomainStmt",
+      "properties": {
+        "subtype": [
+          "string"
+        ],
+        "typeName": [
+          "Node[]"
+        ],
+        "name": [
+          "string"
+        ],
+        "def": [
+          "Node"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "GrantStmt",
+      "properties": {
+        "is_grant": [
+          "boolean"
+        ],
+        "targtype": [
+          "GrantTargetType"
+        ],
+        "objtype": [
+          "ObjectType"
+        ],
+        "objects": [
+          "Node[]"
+        ],
+        "privileges": [
+          "Node[]"
+        ],
+        "grantees": [
+          "Node[]"
+        ],
+        "grant_option": [
+          "boolean"
+        ],
+        "grantor": [
+          "RoleSpec"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ]
+      }
+    },
+    {
+      "name": "ObjectWithArgs",
+      "properties": {
+        "objname": [
+          "Node[]"
+        ],
+        "objargs": [
+          "Node[]"
+        ],
+        "objfuncargs": [
+          "Node[]"
+        ],
+        "args_unspecified": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AccessPriv",
+      "properties": {
+        "priv_name": [
+          "string"
+        ],
+        "cols": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "GrantRoleStmt",
+      "properties": {
+        "granted_roles": [
+          "Node[]"
+        ],
+        "grantee_roles": [
+          "Node[]"
+        ],
+        "is_grant": [
+          "boolean"
+        ],
+        "opt": [
+          "Node[]"
+        ],
+        "grantor": [
+          "RoleSpec"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ]
+      }
+    },
+    {
+      "name": "AlterDefaultPrivilegesStmt",
+      "properties": {
+        "options": [
+          "Node[]"
+        ],
+        "action": [
+          "GrantStmt"
+        ]
+      }
+    },
+    {
+      "name": "CopyStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "query": [
+          "Node"
+        ],
+        "attlist": [
+          "Node[]"
+        ],
+        "is_from": [
+          "boolean"
+        ],
+        "is_program": [
+          "boolean"
+        ],
+        "filename": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "VariableSetStmt",
+      "properties": {
+        "kind": [
+          "VariableSetKind"
+        ],
+        "name": [
+          "string"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "is_local": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "VariableShowStmt",
+      "properties": {
+        "name": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "CreateStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "tableElts": [
+          "Node[]"
+        ],
+        "inhRelations": [
+          "Node[]"
+        ],
+        "partbound": [
+          "PartitionBoundSpec"
+        ],
+        "partspec": [
+          "PartitionSpec"
+        ],
+        "ofTypename": [
+          "TypeName"
+        ],
+        "constraints": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "oncommit": [
+          "OnCommitAction"
+        ],
+        "tablespacename": [
+          "string"
+        ],
+        "accessMethod": [
+          "string"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "Constraint",
+      "properties": {
+        "contype": [
+          "ConstrType"
+        ],
+        "conname": [
+          "string"
+        ],
+        "deferrable": [
+          "boolean"
+        ],
+        "initdeferred": [
+          "boolean"
+        ],
+        "skip_validation": [
+          "boolean"
+        ],
+        "initially_valid": [
+          "boolean"
+        ],
+        "is_no_inherit": [
+          "boolean"
+        ],
+        "raw_expr": [
+          "Node"
+        ],
+        "cooked_expr": [
+          "string"
+        ],
+        "generated_when": [
+          "string"
+        ],
+        "inhcount": [
+          "number"
+        ],
+        "nulls_not_distinct": [
+          "boolean"
+        ],
+        "keys": [
+          "Node[]"
+        ],
+        "including": [
+          "Node[]"
+        ],
+        "exclusions": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "indexname": [
+          "string"
+        ],
+        "indexspace": [
+          "string"
+        ],
+        "reset_default_tblspc": [
+          "boolean"
+        ],
+        "access_method": [
+          "string"
+        ],
+        "where_clause": [
+          "Node"
+        ],
+        "pktable": [
+          "RangeVar"
+        ],
+        "fk_attrs": [
+          "Node[]"
+        ],
+        "pk_attrs": [
+          "Node[]"
+        ],
+        "fk_matchtype": [
+          "string"
+        ],
+        "fk_upd_action": [
+          "string"
+        ],
+        "fk_del_action": [
+          "string"
+        ],
+        "fk_del_set_cols": [
+          "Node[]"
+        ],
+        "old_conpfeqop": [
+          "Node[]"
+        ],
+        "old_pktable_oid": [
+          "number"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CreateTableSpaceStmt",
+      "properties": {
+        "tablespacename": [
+          "string"
+        ],
+        "owner": [
+          "RoleSpec"
+        ],
+        "location": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "DropTableSpaceStmt",
+      "properties": {
+        "tablespacename": [
+          "string"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterTableSpaceOptionsStmt",
+      "properties": {
+        "tablespacename": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "isReset": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterTableMoveAllStmt",
+      "properties": {
+        "orig_tablespacename": [
+          "string"
+        ],
+        "objtype": [
+          "ObjectType"
+        ],
+        "roles": [
+          "Node[]"
+        ],
+        "new_tablespacename": [
+          "string"
+        ],
+        "nowait": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateExtensionStmt",
+      "properties": {
+        "extname": [
+          "string"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterExtensionStmt",
+      "properties": {
+        "extname": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterExtensionContentsStmt",
+      "properties": {
+        "extname": [
+          "string"
+        ],
+        "action": [
+          "number"
+        ],
+        "objtype": [
+          "ObjectType"
+        ],
+        "object": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "CreateFdwStmt",
+      "properties": {
+        "fdwname": [
+          "string"
+        ],
+        "func_options": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterFdwStmt",
+      "properties": {
+        "fdwname": [
+          "string"
+        ],
+        "func_options": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateForeignServerStmt",
+      "properties": {
+        "servername": [
+          "string"
+        ],
+        "servertype": [
+          "string"
+        ],
+        "version": [
+          "string"
+        ],
+        "fdwname": [
+          "string"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterForeignServerStmt",
+      "properties": {
+        "servername": [
+          "string"
+        ],
+        "version": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "has_version": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateForeignTableStmt",
+      "properties": {
+        "base": [
+          "CreateStmt"
+        ],
+        "servername": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateUserMappingStmt",
+      "properties": {
+        "user": [
+          "RoleSpec"
+        ],
+        "servername": [
+          "string"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterUserMappingStmt",
+      "properties": {
+        "user": [
+          "RoleSpec"
+        ],
+        "servername": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "DropUserMappingStmt",
+      "properties": {
+        "user": [
+          "RoleSpec"
+        ],
+        "servername": [
+          "string"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "ImportForeignSchemaStmt",
+      "properties": {
+        "server_name": [
+          "string"
+        ],
+        "remote_schema": [
+          "string"
+        ],
+        "local_schema": [
+          "string"
+        ],
+        "list_type": [
+          "ImportForeignSchemaType"
+        ],
+        "table_list": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreatePolicyStmt",
+      "properties": {
+        "policy_name": [
+          "string"
+        ],
+        "table": [
+          "RangeVar"
+        ],
+        "cmd_name": [
+          "string"
+        ],
+        "permissive": [
+          "boolean"
+        ],
+        "roles": [
+          "Node[]"
+        ],
+        "qual": [
+          "Node"
+        ],
+        "with_check": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "AlterPolicyStmt",
+      "properties": {
+        "policy_name": [
+          "string"
+        ],
+        "table": [
+          "RangeVar"
+        ],
+        "roles": [
+          "Node[]"
+        ],
+        "qual": [
+          "Node"
+        ],
+        "with_check": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "CreateAmStmt",
+      "properties": {
+        "amname": [
+          "string"
+        ],
+        "handler_name": [
+          "Node[]"
+        ],
+        "amtype": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "CreateTrigStmt",
+      "properties": {
+        "replace": [
+          "boolean"
+        ],
+        "isconstraint": [
+          "boolean"
+        ],
+        "trigname": [
+          "string"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "funcname": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "row": [
+          "boolean"
+        ],
+        "timing": [
+          "number"
+        ],
+        "events": [
+          "number"
+        ],
+        "columns": [
+          "Node[]"
+        ],
+        "whenClause": [
+          "Node"
+        ],
+        "transitionRels": [
+          "Node[]"
+        ],
+        "deferrable": [
+          "boolean"
+        ],
+        "initdeferred": [
+          "boolean"
+        ],
+        "constrrel": [
+          "RangeVar"
+        ]
+      }
+    },
+    {
+      "name": "CreateEventTrigStmt",
+      "properties": {
+        "trigname": [
+          "string"
+        ],
+        "eventname": [
+          "string"
+        ],
+        "whenclause": [
+          "Node[]"
+        ],
+        "funcname": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterEventTrigStmt",
+      "properties": {
+        "trigname": [
+          "string"
+        ],
+        "tgenabled": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "CreatePLangStmt",
+      "properties": {
+        "replace": [
+          "boolean"
+        ],
+        "plname": [
+          "string"
+        ],
+        "plhandler": [
+          "Node[]"
+        ],
+        "plinline": [
+          "Node[]"
+        ],
+        "plvalidator": [
+          "Node[]"
+        ],
+        "pltrusted": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateRoleStmt",
+      "properties": {
+        "stmt_type": [
+          "RoleStmtType"
+        ],
+        "role": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterRoleStmt",
+      "properties": {
+        "role": [
+          "RoleSpec"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "action": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "AlterRoleSetStmt",
+      "properties": {
+        "role": [
+          "RoleSpec"
+        ],
+        "database": [
+          "string"
+        ],
+        "setstmt": [
+          "VariableSetStmt"
+        ]
+      }
+    },
+    {
+      "name": "DropRoleStmt",
+      "properties": {
+        "roles": [
+          "Node[]"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateSeqStmt",
+      "properties": {
+        "sequence": [
+          "RangeVar"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "ownerId": [
+          "number"
+        ],
+        "for_identity": [
+          "boolean"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterSeqStmt",
+      "properties": {
+        "sequence": [
+          "RangeVar"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "for_identity": [
+          "boolean"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "DefineStmt",
+      "properties": {
+        "kind": [
+          "ObjectType"
+        ],
+        "oldstyle": [
+          "boolean"
+        ],
+        "defnames": [
+          "Node[]"
+        ],
+        "args": [
+          "Node[]"
+        ],
+        "definition": [
+          "Node[]"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ],
+        "replace": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateDomainStmt",
+      "properties": {
+        "domainname": [
+          "Node[]"
+        ],
+        "typeName": [
+          "TypeName"
+        ],
+        "collClause": [
+          "CollateClause"
+        ],
+        "constraints": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateOpClassStmt",
+      "properties": {
+        "opclassname": [
+          "Node[]"
+        ],
+        "opfamilyname": [
+          "Node[]"
+        ],
+        "amname": [
+          "string"
+        ],
+        "datatype": [
+          "TypeName"
+        ],
+        "items": [
+          "Node[]"
+        ],
+        "isDefault": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateOpClassItem",
+      "properties": {
+        "itemtype": [
+          "number"
+        ],
+        "name": [
+          "ObjectWithArgs"
+        ],
+        "number": [
+          "number"
+        ],
+        "order_family": [
+          "Node[]"
+        ],
+        "class_args": [
+          "Node[]"
+        ],
+        "storedtype": [
+          "TypeName"
+        ]
+      }
+    },
+    {
+      "name": "CreateOpFamilyStmt",
+      "properties": {
+        "opfamilyname": [
+          "Node[]"
+        ],
+        "amname": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "AlterOpFamilyStmt",
+      "properties": {
+        "opfamilyname": [
+          "Node[]"
+        ],
+        "amname": [
+          "string"
+        ],
+        "isDrop": [
+          "boolean"
+        ],
+        "items": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "DropStmt",
+      "properties": {
+        "objects": [
+          "Node[]"
+        ],
+        "removeType": [
+          "ObjectType"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ],
+        "missing_ok": [
+          "boolean"
+        ],
+        "concurrent": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "TruncateStmt",
+      "properties": {
+        "relations": [
+          "Node[]"
+        ],
+        "restart_seqs": [
+          "boolean"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ]
+      }
+    },
+    {
+      "name": "CommentStmt",
+      "properties": {
+        "objtype": [
+          "ObjectType"
+        ],
+        "object": [
+          "Node"
+        ],
+        "comment": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "SecLabelStmt",
+      "properties": {
+        "objtype": [
+          "ObjectType"
+        ],
+        "object": [
+          "Node"
+        ],
+        "provider": [
+          "string"
+        ],
+        "label": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "DeclareCursorStmt",
+      "properties": {
+        "portalname": [
+          "string"
+        ],
+        "options": [
+          "number"
+        ],
+        "query": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "ClosePortalStmt",
+      "properties": {
+        "portalname": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "FetchStmt",
+      "properties": {
+        "direction": [
+          "FetchDirection"
+        ],
+        "howMany": [
+          "bigint"
+        ],
+        "portalname": [
+          "string"
+        ],
+        "ismove": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "IndexStmt",
+      "properties": {
+        "idxname": [
+          "string"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "accessMethod": [
+          "string"
+        ],
+        "tableSpace": [
+          "string"
+        ],
+        "indexParams": [
+          "Node[]"
+        ],
+        "indexIncludingParams": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "excludeOpNames": [
+          "Node[]"
+        ],
+        "idxcomment": [
+          "string"
+        ],
+        "indexOid": [
+          "number"
+        ],
+        "oldNumber": [
+          "number"
+        ],
+        "oldCreateSubid": [
+          "number"
+        ],
+        "oldFirstRelfilelocatorSubid": [
+          "number"
+        ],
+        "unique": [
+          "boolean"
+        ],
+        "nulls_not_distinct": [
+          "boolean"
+        ],
+        "primary": [
+          "boolean"
+        ],
+        "isconstraint": [
+          "boolean"
+        ],
+        "deferrable": [
+          "boolean"
+        ],
+        "initdeferred": [
+          "boolean"
+        ],
+        "transformed": [
+          "boolean"
+        ],
+        "concurrent": [
+          "boolean"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ],
+        "reset_default_tblspc": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateStatsStmt",
+      "properties": {
+        "defnames": [
+          "Node[]"
+        ],
+        "stat_types": [
+          "Node[]"
+        ],
+        "exprs": [
+          "Node[]"
+        ],
+        "relations": [
+          "Node[]"
+        ],
+        "stxcomment": [
+          "string"
+        ],
+        "transformed": [
+          "boolean"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "StatsElem",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "expr": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "AlterStatsStmt",
+      "properties": {
+        "defnames": [
+          "Node[]"
+        ],
+        "stxstattarget": [
+          "Node"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateFunctionStmt",
+      "properties": {
+        "is_procedure": [
+          "boolean"
+        ],
+        "replace": [
+          "boolean"
+        ],
+        "funcname": [
+          "Node[]"
+        ],
+        "parameters": [
+          "Node[]"
+        ],
+        "returnType": [
+          "TypeName"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "sql_body": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "FunctionParameter",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "argType": [
+          "TypeName"
+        ],
+        "mode": [
+          "FunctionParameterMode"
+        ],
+        "defexpr": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "AlterFunctionStmt",
+      "properties": {
+        "objtype": [
+          "ObjectType"
+        ],
+        "func": [
+          "ObjectWithArgs"
+        ],
+        "actions": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "DoStmt",
+      "properties": {
+        "args": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "InlineCodeBlock",
+      "properties": {
+        "source_text": [
+          "string"
+        ],
+        "langOid": [
+          "number"
+        ],
+        "langIsTrusted": [
+          "boolean"
+        ],
+        "atomic": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CallStmt",
+      "properties": {
+        "funccall": [
+          "FuncCall"
+        ],
+        "funcexpr": [
+          "FuncExpr"
+        ],
+        "outargs": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CallContext",
+      "properties": {
+        "atomic": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "RenameStmt",
+      "properties": {
+        "renameType": [
+          "ObjectType"
+        ],
+        "relationType": [
+          "ObjectType"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "object": [
+          "Node"
+        ],
+        "subname": [
+          "string"
+        ],
+        "newname": [
+          "string"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterObjectDependsStmt",
+      "properties": {
+        "objectType": [
+          "ObjectType"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "object": [
+          "Node"
+        ],
+        "extname": [
+          "String"
+        ],
+        "remove": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterObjectSchemaStmt",
+      "properties": {
+        "objectType": [
+          "ObjectType"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "object": [
+          "Node"
+        ],
+        "newschema": [
+          "string"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterOwnerStmt",
+      "properties": {
+        "objectType": [
+          "ObjectType"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "object": [
+          "Node"
+        ],
+        "newowner": [
+          "RoleSpec"
+        ]
+      }
+    },
+    {
+      "name": "AlterOperatorStmt",
+      "properties": {
+        "opername": [
+          "ObjectWithArgs"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterTypeStmt",
+      "properties": {
+        "typeName": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "RuleStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "rulename": [
+          "string"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "event": [
+          "CmdType"
+        ],
+        "instead": [
+          "boolean"
+        ],
+        "actions": [
+          "Node[]"
+        ],
+        "replace": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "NotifyStmt",
+      "properties": {
+        "conditionname": [
+          "string"
+        ],
+        "payload": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "ListenStmt",
+      "properties": {
+        "conditionname": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "UnlistenStmt",
+      "properties": {
+        "conditionname": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "TransactionStmt",
+      "properties": {
+        "kind": [
+          "TransactionStmtKind"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "savepoint_name": [
+          "string"
+        ],
+        "gid": [
+          "string"
+        ],
+        "chain": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CompositeTypeStmt",
+      "properties": {
+        "typevar": [
+          "RangeVar"
+        ],
+        "coldeflist": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateEnumStmt",
+      "properties": {
+        "typeName": [
+          "Node[]"
+        ],
+        "vals": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateRangeStmt",
+      "properties": {
+        "typeName": [
+          "Node[]"
+        ],
+        "params": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterEnumStmt",
+      "properties": {
+        "typeName": [
+          "Node[]"
+        ],
+        "oldVal": [
+          "string"
+        ],
+        "newVal": [
+          "string"
+        ],
+        "newValNeighbor": [
+          "string"
+        ],
+        "newValIsAfter": [
+          "boolean"
+        ],
+        "skipIfNewValExists": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "ViewStmt",
+      "properties": {
+        "view": [
+          "RangeVar"
+        ],
+        "aliases": [
+          "Node[]"
+        ],
+        "query": [
+          "Node"
+        ],
+        "replace": [
+          "boolean"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "withCheckOption": [
+          "ViewCheckOption"
+        ]
+      }
+    },
+    {
+      "name": "LoadStmt",
+      "properties": {
+        "filename": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "CreatedbStmt",
+      "properties": {
+        "dbname": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterDatabaseStmt",
+      "properties": {
+        "dbname": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterDatabaseRefreshCollStmt",
+      "properties": {
+        "dbname": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "AlterDatabaseSetStmt",
+      "properties": {
+        "dbname": [
+          "string"
+        ],
+        "setstmt": [
+          "VariableSetStmt"
+        ]
+      }
+    },
+    {
+      "name": "DropdbStmt",
+      "properties": {
+        "dbname": [
+          "string"
+        ],
+        "missing_ok": [
+          "boolean"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterSystemStmt",
+      "properties": {
+        "setstmt": [
+          "VariableSetStmt"
+        ]
+      }
+    },
+    {
+      "name": "ClusterStmt",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "indexname": [
+          "string"
+        ],
+        "params": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "VacuumStmt",
+      "properties": {
+        "options": [
+          "Node[]"
+        ],
+        "rels": [
+          "Node[]"
+        ],
+        "is_vacuumcmd": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "VacuumRelation",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "oid": [
+          "number"
+        ],
+        "va_cols": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "ExplainStmt",
+      "properties": {
+        "query": [
+          "Node"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateTableAsStmt",
+      "properties": {
+        "query": [
+          "Node"
+        ],
+        "into": [
+          "IntoClause"
+        ],
+        "objtype": [
+          "ObjectType"
+        ],
+        "is_select_into": [
+          "boolean"
+        ],
+        "if_not_exists": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "RefreshMatViewStmt",
+      "properties": {
+        "concurrent": [
+          "boolean"
+        ],
+        "skipData": [
+          "boolean"
+        ],
+        "relation": [
+          "RangeVar"
+        ]
+      }
+    },
+    {
+      "name": "CheckPointStmt",
+      "properties": {}
+    },
+    {
+      "name": "DiscardStmt",
+      "properties": {
+        "target": [
+          "DiscardMode"
+        ]
+      }
+    },
+    {
+      "name": "LockStmt",
+      "properties": {
+        "relations": [
+          "Node[]"
+        ],
+        "mode": [
+          "number"
+        ],
+        "nowait": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "ConstraintsSetStmt",
+      "properties": {
+        "constraints": [
+          "Node[]"
+        ],
+        "deferred": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "ReindexStmt",
+      "properties": {
+        "kind": [
+          "ReindexObjectType"
+        ],
+        "relation": [
+          "RangeVar"
+        ],
+        "name": [
+          "string"
+        ],
+        "params": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "CreateConversionStmt",
+      "properties": {
+        "conversion_name": [
+          "Node[]"
+        ],
+        "for_encoding_name": [
+          "string"
+        ],
+        "to_encoding_name": [
+          "string"
+        ],
+        "func_name": [
+          "Node[]"
+        ],
+        "def": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateCastStmt",
+      "properties": {
+        "sourcetype": [
+          "TypeName"
+        ],
+        "targettype": [
+          "TypeName"
+        ],
+        "func": [
+          "ObjectWithArgs"
+        ],
+        "context": [
+          "CoercionContext"
+        ],
+        "inout": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "CreateTransformStmt",
+      "properties": {
+        "replace": [
+          "boolean"
+        ],
+        "type_name": [
+          "TypeName"
+        ],
+        "lang": [
+          "string"
+        ],
+        "fromsql": [
+          "ObjectWithArgs"
+        ],
+        "tosql": [
+          "ObjectWithArgs"
+        ]
+      }
+    },
+    {
+      "name": "PrepareStmt",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "argtypes": [
+          "Node[]"
+        ],
+        "query": [
+          "Node"
+        ]
+      }
+    },
+    {
+      "name": "ExecuteStmt",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "params": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "DeallocateStmt",
+      "properties": {
+        "name": [
+          "string"
+        ],
+        "isall": [
+          "boolean"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "DropOwnedStmt",
+      "properties": {
+        "roles": [
+          "Node[]"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ]
+      }
+    },
+    {
+      "name": "ReassignOwnedStmt",
+      "properties": {
+        "roles": [
+          "Node[]"
+        ],
+        "newrole": [
+          "RoleSpec"
+        ]
+      }
+    },
+    {
+      "name": "AlterTSDictionaryStmt",
+      "properties": {
+        "dictname": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterTSConfigurationStmt",
+      "properties": {
+        "kind": [
+          "AlterTSConfigType"
+        ],
+        "cfgname": [
+          "Node[]"
+        ],
+        "tokentype": [
+          "Node[]"
+        ],
+        "dicts": [
+          "Node[]"
+        ],
+        "override": [
+          "boolean"
+        ],
+        "replace": [
+          "boolean"
+        ],
+        "missing_ok": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "PublicationTable",
+      "properties": {
+        "relation": [
+          "RangeVar"
+        ],
+        "whereClause": [
+          "Node"
+        ],
+        "columns": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "PublicationObjSpec",
+      "properties": {
+        "pubobjtype": [
+          "PublicationObjSpecType"
+        ],
+        "name": [
+          "string"
+        ],
+        "pubtable": [
+          "PublicationTable"
+        ],
+        "location": [
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "CreatePublicationStmt",
+      "properties": {
+        "pubname": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "pubobjects": [
+          "Node[]"
+        ],
+        "for_all_tables": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "AlterPublicationStmt",
+      "properties": {
+        "pubname": [
+          "string"
+        ],
+        "options": [
+          "Node[]"
+        ],
+        "pubobjects": [
+          "Node[]"
+        ],
+        "for_all_tables": [
+          "boolean"
+        ],
+        "action": [
+          "AlterPublicationAction"
+        ]
+      }
+    },
+    {
+      "name": "CreateSubscriptionStmt",
+      "properties": {
+        "subname": [
+          "string"
+        ],
+        "conninfo": [
+          "string"
+        ],
+        "publication": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "AlterSubscriptionStmt",
+      "properties": {
+        "kind": [
+          "AlterSubscriptionType"
+        ],
+        "subname": [
+          "string"
+        ],
+        "conninfo": [
+          "string"
+        ],
+        "publication": [
+          "Node[]"
+        ],
+        "options": [
+          "Node[]"
+        ]
+      }
+    },
+    {
+      "name": "DropSubscriptionStmt",
+      "properties": {
+        "subname": [
+          "string"
+        ],
+        "missing_ok": [
+          "boolean"
+        ],
+        "behavior": [
+          "DropBehavior"
+        ]
+      }
+    },
+    {
+      "name": "ScanToken",
+      "properties": {
+        "start": [
+          "number"
+        ],
+        "end": [
+          "number"
+        ],
+        "token": [
+          "Token"
+        ],
+        "keywordKind": [
+          "KeywordKind"
+        ]
+      }
+    }
+  ]
+}

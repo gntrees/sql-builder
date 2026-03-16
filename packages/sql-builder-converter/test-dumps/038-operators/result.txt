@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM products WHERE price BETWEEN 10 AND 100
-Output SQL: SELECT * FROM products WHERE price BETWEEN 10 AND 100

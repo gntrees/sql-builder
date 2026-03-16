@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM users WHERE age >= 18
-Output SQL: SELECT * FROM users WHERE age >= 18

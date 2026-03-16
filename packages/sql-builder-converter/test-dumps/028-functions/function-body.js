@@ -1,1 +1,0 @@
-const q = sqlBuilder({formatParamHandler: "pg",execHandler: async ({ sql, parameters, meta }) => { return { sql, parameters }; }});const query = q.select(q.r`COALESCE(NULLIF (price, 0), 100)`).from(`products`);return query;

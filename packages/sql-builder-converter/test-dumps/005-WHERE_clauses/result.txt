@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM orders WHERE total > 100
-Output SQL: SELECT * FROM orders WHERE total > 100

@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM orders WHERE status = 'completed' AND paid = true
-Output SQL: SELECT * FROM orders WHERE status = 'completed' AND paid = true

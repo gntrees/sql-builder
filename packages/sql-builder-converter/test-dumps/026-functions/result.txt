@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT LOWER(email) FROM users
-Output SQL: SELECT LOWER(email) FROM users

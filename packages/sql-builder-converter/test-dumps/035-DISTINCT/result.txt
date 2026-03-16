@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT DISTINCT category FROM products
-Output SQL: SELECT DISTINCT category FROM products

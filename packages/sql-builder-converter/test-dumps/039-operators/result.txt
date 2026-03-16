@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM users WHERE name LIKE 'John%'
-Output SQL: SELECT * FROM users WHERE name LIKE 'John%'

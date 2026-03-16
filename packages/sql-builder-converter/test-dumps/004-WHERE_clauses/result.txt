@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT id FROM users WHERE active = true
-Output SQL: SELECT id FROM users WHERE active = true

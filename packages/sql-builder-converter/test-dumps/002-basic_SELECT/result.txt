@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT * FROM products
-Output SQL: SELECT * FROM products

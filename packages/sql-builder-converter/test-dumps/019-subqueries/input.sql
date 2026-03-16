@@ -1,1 +1,0 @@
-SELECT (SELECT COUNT(*) FROM orders) AS total_orders

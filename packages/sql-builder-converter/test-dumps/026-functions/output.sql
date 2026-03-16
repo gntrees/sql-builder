@@ -1,1 +1,0 @@
-SELECT LOWER(email) FROM users

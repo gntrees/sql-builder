@@ -1,1 +1,0 @@
-SELECT * FROM orders RIGHT JOIN products ON orders.product_id = products.id

@@ -1,0 +1,272 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "TransactionStmt": {
+          "kind": "TRANS_STMT_BEGIN",
+          "location": -1,
+          "location_start": 0,
+          "location_end": 5,
+          "sql": "BEGIN"
+        }
+      },
+      "stmt_len": 5,
+      "location_start": 0,
+      "location_end": 5,
+      "sql": "BEGIN"
+    },
+    {
+      "stmt": {
+        "InsertStmt": {
+          "relation": {
+            "relname": "users",
+            "inh": true,
+            "relpersistence": "p",
+            "location": 19,
+            "location_start": 19,
+            "location_end": 26,
+            "sql": "users ("
+          },
+          "cols": [
+            {
+              "ResTarget": {
+                "name": "name",
+                "location": 26,
+                "location_start": 26,
+                "location_end": 32,
+                "sql": "name, "
+              }
+            },
+            {
+              "ResTarget": {
+                "name": "email",
+                "location": 32,
+                "location_start": 32,
+                "location_end": 47,
+                "sql": "email) VALUES ("
+              }
+            }
+          ],
+          "selectStmt": {
+            "SelectStmt": {
+              "valuesLists": [
+                {
+                  "List": {
+                    "items": [
+                      {
+                        "A_Const": {
+                          "sval": {
+                            "sval": "John",
+                            "location_start": 47,
+                            "location_end": 55,
+                            "sql": "'John', "
+                          },
+                          "location": 47,
+                          "location_start": 47,
+                          "location_end": 55,
+                          "sql": "'John', "
+                        }
+                      },
+                      {
+                        "A_Const": {
+                          "sval": {
+                            "sval": "john@example.com",
+                            "location_start": 55,
+                            "location_end": 26,
+                            "sql": "name, email) VALUES ('John', "
+                          },
+                          "location": 55,
+                          "location_start": 55,
+                          "location_end": 26,
+                          "sql": "name, email) VALUES ('John', "
+                        }
+                      }
+                    ],
+                    "location_start": 6,
+                    "location_end": 26,
+                    "sql": " INSERT INTO users ("
+                  }
+                }
+              ],
+              "limitOption": "LIMIT_OPTION_DEFAULT",
+              "op": "SETOP_NONE",
+              "location_start": 6,
+              "location_end": 26,
+              "sql": " INSERT INTO users ("
+            },
+            "location_start": 6,
+            "location_end": 26,
+            "sql": " INSERT INTO users ("
+          },
+          "override": "OVERRIDING_NOT_SET",
+          "location_start": 6,
+          "location_end": 74,
+          "sql": " INSERT INTO users (name, email) VALUES ('John', 'john@example.com')"
+        }
+      },
+      "stmt_location": 6,
+      "stmt_len": 68,
+      "location_start": 6,
+      "location_end": 74,
+      "sql": " INSERT INTO users (name, email) VALUES ('John', 'john@example.com')"
+    },
+    {
+      "stmt": {
+        "TransactionStmt": {
+          "kind": "TRANS_STMT_SAVEPOINT",
+          "savepoint_name": "sp_insert_profile",
+          "location": 86,
+          "location_start": 86,
+          "location_end": 103,
+          "sql": "sp_insert_profile"
+        }
+      },
+      "stmt_location": 75,
+      "stmt_len": 28,
+      "location_start": 75,
+      "location_end": 103,
+      "sql": " SAVEPOINT sp_insert_profile"
+    },
+    {
+      "stmt": {
+        "UpdateStmt": {
+          "relation": {
+            "relname": "users",
+            "inh": true,
+            "relpersistence": "p",
+            "location": 112,
+            "location_start": 112,
+            "location_end": 122,
+            "sql": "users SET "
+          },
+          "targetList": [
+            {
+              "ResTarget": {
+                "name": "updated_at",
+                "val": {
+                  "FuncCall": {
+                    "funcname": [
+                      {
+                        "String": {
+                          "sval": "now",
+                          "location_start": 135,
+                          "location_end": 135,
+                          "sql": ""
+                        }
+                      }
+                    ],
+                    "funcformat": "COERCE_EXPLICIT_CALL",
+                    "location": 135,
+                    "location_start": 135,
+                    "location_end": 135,
+                    "sql": ""
+                  },
+                  "location_start": 122,
+                  "location_end": 135,
+                  "sql": "updated_at = "
+                },
+                "location": 122,
+                "location_start": 122,
+                "location_end": 135,
+                "sql": "updated_at = "
+              }
+            }
+          ],
+          "whereClause": {
+            "A_Expr": {
+              "kind": "AEXPR_OP",
+              "name": [
+                {
+                  "String": {
+                    "sval": "=",
+                    "location_start": 159,
+                    "location_end": 122,
+                    "sql": "updated_at = NOW() WHERE users.email "
+                  }
+                }
+              ],
+              "lexpr": {
+                "ColumnRef": {
+                  "fields": [
+                    {
+                      "String": {
+                        "sval": "users",
+                        "location_start": 147,
+                        "location_end": 147,
+                        "sql": ""
+                      }
+                    },
+                    {
+                      "String": {
+                        "sval": "email",
+                        "location_start": 147,
+                        "location_end": 122,
+                        "sql": "updated_at = NOW() WHERE "
+                      }
+                    }
+                  ],
+                  "location": 147,
+                  "location_start": 147,
+                  "location_end": 122,
+                  "sql": "updated_at = NOW() WHERE "
+                },
+                "location_start": 159,
+                "location_end": 122,
+                "sql": "updated_at = NOW() WHERE users.email "
+              },
+              "rexpr": {
+                "A_Const": {
+                  "sval": {
+                    "sval": "john@example.com",
+                    "location_start": 161,
+                    "location_end": 122,
+                    "sql": "updated_at = NOW() WHERE users.email = "
+                  },
+                  "location": 161,
+                  "location_start": 161,
+                  "location_end": 122,
+                  "sql": "updated_at = NOW() WHERE users.email = "
+                },
+                "location_start": 159,
+                "location_end": 122,
+                "sql": "updated_at = NOW() WHERE users.email "
+              },
+              "location": 159,
+              "location_start": 159,
+              "location_end": 122,
+              "sql": "updated_at = NOW() WHERE users.email "
+            },
+            "location_start": 104,
+            "location_end": 122,
+            "sql": " UPDATE users SET "
+          },
+          "location_start": 104,
+          "location_end": 179,
+          "sql": " UPDATE users SET updated_at = NOW() WHERE users.email = 'john@example.com'"
+        }
+      },
+      "stmt_location": 104,
+      "stmt_len": 75,
+      "location_start": 104,
+      "location_end": 179,
+      "sql": " UPDATE users SET updated_at = NOW() WHERE users.email = 'john@example.com'"
+    },
+    {
+      "stmt": {
+        "TransactionStmt": {
+          "kind": "TRANS_STMT_COMMIT",
+          "location": -1,
+          "location_start": 180,
+          "location_end": 187,
+          "sql": " COMMIT"
+        }
+      },
+      "stmt_location": 180,
+      "stmt_len": 7,
+      "location_start": 180,
+      "location_end": 187,
+      "sql": " COMMIT"
+    }
+  ]
+}

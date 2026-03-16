@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT id, name, email, created_at FROM users
-Output SQL: SELECT id, name, email, created_at FROM users

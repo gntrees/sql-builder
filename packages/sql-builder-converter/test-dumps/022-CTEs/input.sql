@@ -1,1 +1,0 @@
-WITH user_counts AS (SELECT user_id, COUNT(*) as order_count FROM orders GROUP BY user_id) SELECT * FROM user_counts WHERE order_count > 5

@@ -1,0 +1,1249 @@
+export type PGFunction = {
+    name: string;
+    args: {
+        name: string;
+        variadic?: boolean;
+    }[];
+    format: "COERCE_EXPLICIT_CALL" | "COERCE_EXPLICIT_CAST"
+}
+const pgFunctionList:PGFunction[] = [
+    // ==================== Mathematical Functions ====================
+    { name: "ABS", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CBRT", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CEIL", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CEILING", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DEGREES", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DIV", args: [{ name: "y" }, { name: "x" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ERF", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ERFC", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "EXP", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "FACTORIAL", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "FLOOR", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GAMMA", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GCD", args: [{ name: "y" }, { name: "x" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LCM", args: [{ name: "y" }, { name: "x" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LGAMMA", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOG", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOG", args: [{ name: "base" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOG10", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MIN_SCALE", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MOD", args: [{ name: "y" }, { name: "x" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PI", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "POWER", args: [{ name: "a" }, { name: "b" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RADIANS", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ROUND", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ROUND", args: [{ name: "value" }, { name: "decimals" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SCALE", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SIGN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SQRT", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRIM_SCALE", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRUNC", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRUNC", args: [{ name: "value" }, { name: "decimals" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "WIDTH_BUCKET", args: [{ name: "operand" }, { name: "low" }, { name: "high" }, { name: "count" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "WIDTH_BUCKET", args: [{ name: "operand" }, { name: "thresholds", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Trigonometric Functions ====================
+    { name: "ACOS", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ACOSD", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ASIN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ASIND", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ATAN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ATAND", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ATAN2", args: [{ name: "y" }, { name: "x" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ATAN2D", args: [{ name: "y" }, { name: "x" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COS", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COSD", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COT", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COTD", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SIN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SIND", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TAN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TAND", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Hyperbolic Functions ====================
+    { name: "SINH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COSH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TANH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ASINH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ACOSH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ATANH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Random Functions ====================
+    { name: "RANDOM", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANDOM", args: [{ name: "min" }, { name: "max" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANDOM", args: [{ name: "min" }, { name: "max" }, { name: "numeric" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANDOM_NORMAL", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANDOM_NORMAL", args: [{ name: "mean" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANDOM_NORMAL", args: [{ name: "mean" }, { name: "stddev" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SETSEED", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== String Functions ====================
+    
+    // String Length & Encoding Functions
+    { name: "BIT_LENGTH", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CHAR_LENGTH", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CHARACTER_LENGTH", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LENGTH", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OCTET_LENGTH", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CLIENT_ENCODING", args: [], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Case Functions
+    { name: "UPPER", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOWER", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INITCAP", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CASEFOLD", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Padding & Trimming Functions
+    { name: "LPAD", args: [{ name: "string" }, { name: "length" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LPAD", args: [{ name: "string" }, { name: "length" }, { name: "fill" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RPAD", args: [{ name: "string" }, { name: "length" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RPAD", args: [{ name: "string" }, { name: "length" }, { name: "fill" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LTRIM", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LTRIM", args: [{ name: "string" }, { name: "characters" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RTRIM", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RTRIM", args: [{ name: "string" }, { name: "characters" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BTRIM", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BTRIM", args: [{ name: "string" }, { name: "characters" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRIM", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRIM", args: [{ name: "characters" }, { name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Search & Position Functions
+    { name: "POSITION", args: [{ name: "substring" }, { name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRPOS", args: [{ name: "string" }, { name: "substring" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STARTS_WITH", args: [{ name: "string" }, { name: "prefix" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Substring & Extraction Functions
+    { name: "SUBSTRING", args: [{ name: "string" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTRING", args: [{ name: "string" }, { name: "start" }, { name: "count" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTRING", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTRING", args: [{ name: "string" }, { name: "pattern" }, { name: "escape" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTR", args: [{ name: "string" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTR", args: [{ name: "string" }, { name: "start" }, { name: "count" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LEFT", args: [{ name: "string" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RIGHT", args: [{ name: "string" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Transformation Functions
+    { name: "REVERSE", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REPLACE", args: [{ name: "string" }, { name: "from" }, { name: "to" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REPEAT", args: [{ name: "string" }, { name: "number" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRANSLATE", args: [{ name: "string" }, { name: "from" }, { name: "to" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OVERLAY", args: [{ name: "string" }, { name: "newsubstring" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OVERLAY", args: [{ name: "string" }, { name: "newsubstring" }, { name: "start" }, { name: "count" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Concatenation Functions
+    { name: "CONCAT", args: [{ name: "val1", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CONCAT_WS", args: [{ name: "sep" }, { name: "val1", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "FORMAT", args: [{ name: "formatstr" }, { name: "formatarg", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Regular Expression Functions
+    { name: "REGEXP_COUNT", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_COUNT", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_COUNT", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_INSTR", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_INSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_INSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_INSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }, { name: "endoption" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_INSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }, { name: "endoption" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_INSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }, { name: "endoption" }, { name: "flags" }, { name: "subexpr" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_LIKE", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_LIKE", args: [{ name: "string" }, { name: "pattern" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_MATCH", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_MATCH", args: [{ name: "string" }, { name: "pattern" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_MATCHES", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_MATCHES", args: [{ name: "string" }, { name: "pattern" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_REPLACE", args: [{ name: "string" }, { name: "pattern" }, { name: "replacement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_REPLACE", args: [{ name: "string" }, { name: "pattern" }, { name: "replacement" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_REPLACE", args: [{ name: "string" }, { name: "pattern" }, { name: "replacement" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_REPLACE", args: [{ name: "string" }, { name: "pattern" }, { name: "replacement" }, { name: "start" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_REPLACE", args: [{ name: "string" }, { name: "pattern" }, { name: "replacement" }, { name: "start" }, { name: "n" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SPLIT_TO_ARRAY", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SPLIT_TO_ARRAY", args: [{ name: "string" }, { name: "pattern" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SPLIT_TO_TABLE", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SPLIT_TO_TABLE", args: [{ name: "string" }, { name: "pattern" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SUBSTR", args: [{ name: "string" }, { name: "pattern" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SUBSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SUBSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SUBSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }, { name: "flags" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGEXP_SUBSTR", args: [{ name: "string" }, { name: "pattern" }, { name: "start" }, { name: "n" }, { name: "flags" }, { name: "subexpr" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Splitting Functions
+    { name: "SPLIT_PART", args: [{ name: "string" }, { name: "delimiter" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRING_TO_ARRAY", args: [{ name: "string" }, { name: "delimiter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRING_TO_ARRAY", args: [{ name: "string" }, { name: "delimiter" }, { name: "null_string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRING_TO_TABLE", args: [{ name: "string" }, { name: "delimiter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRING_TO_TABLE", args: [{ name: "string" }, { name: "delimiter" }, { name: "null_string" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // String Conversion Functions
+    { name: "ASCII", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CHR", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_ASCII", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_ASCII", args: [{ name: "string" }, { name: "encoding" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_HEX", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_BIN", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_OCT", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ENCODE", args: [{ name: "data" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DECODE", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Other String Functions
+    { name: "MD5", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PARSE_IDENT", args: [{ name: "qualified_identifier" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PARSE_IDENT", args: [{ name: "qualified_identifier" }, { name: "strict_mode" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "QUOTE_IDENT", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "QUOTE_LITERAL", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "QUOTE_NULLABLE", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UNISTR", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NORMALIZE", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NORMALIZE", args: [{ name: "string" }, { name: "form" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UNICODE_ASSIGNED", args: [{ name: "string" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Binary String Functions ====================
+    
+    // Binary String Length Functions
+    { name: "BIT_COUNT", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LENGTH", args: [{ name: "bytes" }, { name: "encoding" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Binary String Get/Set Functions
+    { name: "GET_BIT", args: [{ name: "bytes" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GET_BYTE", args: [{ name: "bytes" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SET_BIT", args: [{ name: "bytes" }, { name: "n" }, { name: "newvalue" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SET_BYTE", args: [{ name: "bytes" }, { name: "n" }, { name: "newvalue" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Binary String Hash Functions
+    { name: "CRC32", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CRC32C", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SHA224", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SHA256", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SHA384", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SHA512", args: [{ name: "bytes" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Binary String Conversion Functions
+    { name: "CONVERT", args: [{ name: "bytes" }, { name: "src_encoding" }, { name: "dest_encoding" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CONVERT_FROM", args: [{ name: "bytes" }, { name: "src_encoding" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CONVERT_TO", args: [{ name: "string" }, { name: "dest_encoding" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Bit String Functions ====================
+    
+    // Bit String Length Functions
+    { name: "BIT_COUNT", args: [{ name: "bits" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_LENGTH", args: [{ name: "bits" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LENGTH", args: [{ name: "bits" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OCTET_LENGTH", args: [{ name: "bits" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Bit String Get/Set Functions
+    { name: "GET_BIT", args: [{ name: "bits" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SET_BIT", args: [{ name: "bits" }, { name: "n" }, { name: "newvalue" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Bit String Manipulation Functions
+    { name: "OVERLAY", args: [{ name: "bits" }, { name: "newsubstring" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OVERLAY", args: [{ name: "bits" }, { name: "newsubstring" }, { name: "start" }, { name: "count" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "POSITION", args: [{ name: "substring" }, { name: "bits" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTRING", args: [{ name: "bits" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUBSTRING", args: [{ name: "bits" }, { name: "start" }, { name: "count" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Data Type Formatting Functions ====================
+    
+    // TO_CHAR - Type to String Formatting
+    { name: "TO_char", args: [{ name: "timestamp" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "to_char", args: [{ name: "timestamp" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_CHAR", args: [{ name: "timestamp" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_CHAR", args: [{ name: "interval" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_CHAR", args: [{ name: "interval" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_CHAR", args: [{ name: "numeric" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_CHAR", args: [{ name: "numeric" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // TO_DATE - String to Date Formatting
+    { name: "TO_DATE", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "to_date", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // TO_NUMBER - String to Numeric Formatting
+    { name: "TO_NUMBER", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "to_number", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // TO_TIMESTAMP - String to Timestamp Formatting
+    { name: "TO_TIMESTAMP", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "to_timestamp", args: [{ name: "string" }, { name: "format" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Date/Time Functions ====================
+    
+    // Age Functions
+    { name: "AGE", args: [{ name: "timestamp1" }, { name: "timestamp2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "age", args: [{ name: "timestamp" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Current Date/Time Functions
+    { name: "CLOCK_TIMESTAMP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_DATE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_TIME", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_TIME", args: [{ name: "precision" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_TIMESTAMP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_TIMESTAMP", args: [{ name: "precision" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOCALTIME", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOCALTIME", args: [{ name: "precision" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOCALTIMESTAMP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOCALTIMESTAMP", args: [{ name: "precision" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NOW", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "now", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STATEMENT_TIMESTAMP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "statement_timestamp", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TIMEOFDAY", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "timeofday", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRANSACTION_TIMESTAMP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "transaction_timestamp", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_TIMESTAMP", args: [{ name: "double" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "to_timestamp", args: [{ name: "double" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Date Arithmetic Functions
+    { name: "DATE_ADD", args: [{ name: "timestamp" }, { name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_ADD", args: [{ name: "timestamp" }, { name: "interval" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_add", args: [{ name: "timestamp" }, { name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_add", args: [{ name: "timestamp" }, { name: "interval" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_BIN", args: [{ name: "interval" }, { name: "source" }, { name: "origin" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_bin", args: [{ name: "interval" }, { name: "source" }, { name: "origin" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_PART", args: [{ name: "field" }, { name: "source" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_part", args: [{ name: "field" }, { name: "source" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_SUBTRACT", args: [{ name: "timestamp" }, { name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_SUBTRACT", args: [{ name: "timestamp" }, { name: "interval" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_subtract", args: [{ name: "timestamp" }, { name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_subtract", args: [{ name: "timestamp" }, { name: "interval" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_TRUNC", args: [{ name: "field" }, { name: "source" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATE_TRUNC", args: [{ name: "field" }, { name: "source" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_trunc", args: [{ name: "field" }, { name: "source" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "date_trunc", args: [{ name: "field" }, { name: "source" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // EXTRACT Function
+    { name: "EXTRACT", args: [{ name: "field" }, { name: "from" }, { name: "source" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "extract", args: [{ name: "field" }, { name: "from" }, { name: "source" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Finite Test Functions
+    { name: "ISFINITE", args: [{ name: "date" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "isfinite", args: [{ name: "date" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ISFINITE", args: [{ name: "timestamp" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "isfinite", args: [{ name: "timestamp" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ISFINITE", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "isfinite", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Interval Adjustment Functions
+    { name: "JUSTIFY_DAYS", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JUSTIFY_DAYS", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JUSTIFY_HOURS", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JUSTIFY_HOURS", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JUSTIFY_INTERVAL", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JUSTIFY_INTERVAL", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    
+    // Date/Time Construction Functions
+    { name: "MAKE_DATE", args: [{ name: "year" }, { name: "month" }, { name: "day" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_DATE", args: [{ name: "year" }, { name: "month" }, { name: "day" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }, { name: "hours" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }, { name: "hours" }, { name: "mins" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }, { name: "hours" }, { name: "mins" }, { name: "secs" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }, { name: "hours" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }, { name: "hours" }, { name: "mins" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_INTERVAL", args: [{ name: "years" }, { name: "months" }, { name: "weeks" }, { name: "days" }, { name: "hours" }, { name: "mins" }, { name: "secs" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_TIME", args: [{ name: "hour" }, { name: "min" }, { name: "sec" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "make_time", args: [{ name: "hour" }, { name: "min" }, { name: "sec" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_TIMESTAMP", args: [{ name: "year" }, { name: "month" }, { name: "day" }, { name: "hour" }, { name: "min" }, { name: "sec" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "make_timestamp", args: [{ name: "year" }, { name: "month" }, { name: "day" }, { name: "hour" }, { name: "min" }, { name: "sec" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_TIMESTAMPTZ", args: [{ name: "year" }, { name: "month" }, { name: "day" }, { name: "hour" }, { name: "min" }, { name: "sec" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKE_TIMESTAMPTZ", args: [{ name: "year" }, { name: "month" }, { name: "day" }, { name: "hour" }, { name: "min" }, { name: "sec" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "make_timestamptz", args: [{ name: "year" }, { name: "month" }, { name: "day" }, { name: "hour" }, { name: "min" }, { name: "sec" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "make_timestamptz", args: [{ name: "year" }, { name: "month" }, { name: "day" }, { name: "hour" }, { name: "min" }, { name: "sec" }, { name: "timezone" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Delaying Execution Functions
+    { name: "PG_SLEEP", args: [{ name: "seconds" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SLEEP_FOR", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SLEEP_UNTIL", args: [{ name: "timestamp" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Enum Functions ====================
+    { name: "ENUM_FIRST", args: [{ name: "enum" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ENUM_LAST", args: [{ name: "enum" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ENUM_RANGE", args: [{ name: "enum" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ENUM_RANGE", args: [{ name: "start" }, { name: "end" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Geometric Functions ====================
+    // Geometric Functions (Table 9.37)
+    { name: "AREA", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CENTER", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DIAGONAL", args: [{ name: "box" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DIAMETER", args: [{ name: "circle" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HEIGHT", args: [{ name: "box" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ISCLOSED", args: [{ name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ISOPEN", args: [{ name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NPOINTS", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PCLOSE", args: [{ name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "POPEN", args: [{ name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RADIUS", args: [{ name: "circle" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SLOPE", args: [{ name: "p1" }, { name: "p2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "WIDTH", args: [{ name: "box" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Geometric Type Conversion Functions (Table 9.38)
+    { name: "BOX", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BOX", args: [{ name: "v1" }, { name: "v2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BOUND_BOX", args: [{ name: "b1" }, { name: "b2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CIRCLE", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CIRCLE", args: [{ name: "v1" }, { name: "v2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LINE", args: [{ name: "p1" }, { name: "p2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LSEG", args: [{ name: "v1" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LSEG", args: [{ name: "v1" }, { name: "v2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PATH", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "POINT", args: [{ name: "x" }, { name: "y" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "POLYGON", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "POLYGON", args: [{ name: "count" }, { name: "circle" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Network Address Functions ====================
+    // IP Address Functions (Table 9.40)
+    { name: "ABBREV", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ABBREV", args: [{ name: "cidr" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BROADCAST", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "FAMILY", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HOST", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HOSTMASK", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INET_MERGE", args: [{ name: "inet1" }, { name: "inet2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INET_SAME_FAMILY", args: [{ name: "inet1" }, { name: "inet2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MASKLEN", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NETMASK", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NETWORK", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SET_MASKLEN", args: [{ name: "inet" }, { name: "length" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SET_MASKLEN", args: [{ name: "cidr" }, { name: "length" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TEXT", args: [{ name: "inet" }], format: "COERCE_EXPLICIT_CAST" },
+
+    // MAC Address Functions (Table 9.41)
+    { name: "TRUNC", args: [{ name: "macaddr" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRUNC", args: [{ name: "macaddr8" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MACADDR8_SET7BIT", args: [{ name: "macaddr8" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Text Search Functions ====================
+    // Vector/Query Conversion
+    { name: "ARRAY_TO_TSVECTOR", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GET_CURRENT_TS_CONFIG", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Vector Length
+    { name: "LENGTH", args: [{ name: "tsvector" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_TSVECTOR", args: [{ name: "config" }, { name: "document" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_TSVECTOR", args: [{ name: "document" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_TSQUERY", args: [{ name: "config" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_TSQUERY", args: [{ name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PLAINTO_TSQUERY", args: [{ name: "config" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PLAINTO_TSQUERY", args: [{ name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PHRASETO_TSQUERY", args: [{ name: "config" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PHRASETO_TSQUERY", args: [{ name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "WEBSEARCH_TO_TSQUERY", args: [{ name: "config" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "WEBSEARCH_TO_TSQUERY", args: [{ name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Vector Manipulation
+    { name: "SETWEIGHT", args: [{ name: "vector" }, { name: "weight" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SETWEIGHT", args: [{ name: "vector" }, { name: "weight" }, { name: "lexemes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRIP", args: [{ name: "tsvector" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_DELETE", args: [{ name: "vector" }, { name: "lexeme" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_DELETE", args: [{ name: "vector" }, { name: "lexemes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_FILTER", args: [{ name: "vector" }, { name: "weights" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Search & Ranking
+    { name: "TS_HEADLINE", args: [{ name: "config" }, { name: "document" }, { name: "query" }, { name: "options" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_HEADLINE", args: [{ name: "document" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_RANK", args: [{ name: "weights" }, { name: "vector" }, { name: "query" }, { name: "normalization" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_RANK", args: [{ name: "vector" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_RANK_CD", args: [{ name: "weights" }, { name: "vector" }, { name: "query" }, { name: "normalization" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_RANK_CD", args: [{ name: "vector" }, { name: "query" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_REWRITE", args: [{ name: "query" }, { name: "target" }, { name: "substitute" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_REWRITE", args: [{ name: "query" }, { name: "select" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Query Analysis
+    { name: "QUERYTREE", args: [{ name: "tsquery" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NUMNODE", args: [{ name: "tsquery" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TSQUERY_PHRASE", args: [{ name: "query1" }, { name: "query2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TSQUERY_PHRASE", args: [{ name: "query1" }, { name: "query2" }, { name: "distance" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // JSON Integration
+    { name: "JSON_TO_TSVECTOR", args: [{ name: "config" }, { name: "document" }, { name: "filter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_TO_TSVECTOR", args: [{ name: "document" }, { name: "filter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_TO_TSVECTOR", args: [{ name: "config" }, { name: "document" }, { name: "filter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_TO_TSVECTOR", args: [{ name: "document" }, { name: "filter" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Other
+    { name: "TSVECTOR_TO_ARRAY", args: [{ name: "tsvector" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Text Search Debugging Functions ====================
+    // Configuration Debugging
+    { name: "TS_DEBUG", args: [{ name: "config" }, { name: "document" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_DEBUG", args: [{ name: "document" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Lexeme Testing
+    { name: "TS_LEXIZE", args: [{ name: "config" }, { name: "token" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Parser Testing
+    { name: "TS_PARSE", args: [{ name: "parser_name" }, { name: "document" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_PARSE", args: [{ name: "parser_oid" }, { name: "document" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Token Type Information
+    { name: "TS_TOKEN_TYPE", args: [{ name: "parser_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_TOKEN_TYPE", args: [{ name: "parser_oid" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Statistics
+    { name: "TS_STAT", args: [{ name: "sqlquery" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TS_STAT", args: [{ name: "sqlquery" }, { name: "weights" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== UUID Functions ====================
+    { name: "GEN_RANDOM_UUID", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UUIDV4", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UUIDV7", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UUIDV7", args: [{ name: "shift" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UUID_EXTRACT_TIMESTAMP", args: [{ name: "uuid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UUID_EXTRACT_VERSION", args: [{ name: "uuid" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== XML Functions ====================
+    // XML Parsing and Serialization
+    { name: "XMLPARSE", args: [{ name: "document" }, { name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLPARSE", args: [{ name: "content" }, { name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLSERIALIZE", args: [{ name: "xml" }, { name: "type" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // XML Content Creation
+    { name: "XMLTEXT", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLCOMMENT", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLCONCAT", args: [{ name: "xml", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLELEMENT", args: [{ name: "name" }, { name: "attributes" }, { name: "content", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLATTRIBUTES", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLFOREST", args: [{ name: "content", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLPI", args: [{ name: "name" }, { name: "content" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLROOT", args: [{ name: "xml" }, { name: "version" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLROOT", args: [{ name: "xml" }, { name: "version" }, { name: "standalone" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XMLAGG", args: [{ name: "xml" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // XML Predicates
+    { name: "XMLEXISTS", args: [{ name: "xpath" }, { name: "xml" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XML_IS_WELL_FORMED", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XML_IS_WELL_FORMED_DOCUMENT", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XML_IS_WELL_FORMED_CONTENT", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // XML Processing
+    { name: "XPATH", args: [{ name: "xpath" }, { name: "xml" }, { name: "nsarray" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XPATH", args: [{ name: "xpath" }, { name: "xml" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XPATH_EXISTS", args: [{ name: "xpath" }, { name: "xml" }, { name: "nsarray" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "XPATH_EXISTS", args: [{ name: "xpath" }, { name: "xml" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // XML Mapping Functions
+    { name: "TABLE_TO_XML", args: [{ name: "table" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "QUERY_TO_XML", args: [{ name: "query" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURSOR_TO_XML", args: [{ name: "cursor" }, { name: "count" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TABLE_TO_XMLSCHEMA", args: [{ name: "table" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "QUERY_TO_XMLSCHEMA", args: [{ name: "query" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURSOR_TO_XMLSCHEMA", args: [{ name: "cursor" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TABLE_TO_XML_AND_XMLSCHEMA", args: [{ name: "table" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "QUERY_TO_XML_AND_XMLSCHEMA", args: [{ name: "query" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SCHEMA_TO_XML", args: [{ name: "schema" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SCHEMA_TO_XMLSCHEMA", args: [{ name: "schema" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SCHEMA_TO_XML_AND_XMLSCHEMA", args: [{ name: "schema" }, { name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATABASE_TO_XML", args: [{ name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATABASE_TO_XMLSCHEMA", args: [{ name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DATABASE_TO_XML_AND_XMLSCHEMA", args: [{ name: "nulls" }, { name: "tableforest" }, { name: "targetns" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Sequence Functions ====================
+    { name: "NEXTVAL", args: [{ name: "sequence" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SETVAL", args: [{ name: "sequence" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SETVAL", args: [{ name: "sequence" }, { name: "value" }, { name: "is_called" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRVAL", args: [{ name: "sequence" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LASTVAL", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Conditional Functions ====================
+    { name: "COALESCE", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NULLIF", args: [{ name: "value1" }, { name: "value2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GREATEST", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LEAST", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Array Functions ====================
+    { name: "ARRAY_APPEND", args: [{ name: "array" }, { name: "element" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_CAT", args: [{ name: "array1" }, { name: "array2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_DIMS", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_FILL", args: [{ name: "value" }, { name: "dimensions" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_FILL", args: [{ name: "value" }, { name: "dimensions" }, { name: "lowerBounds" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_LENGTH", args: [{ name: "array" }, { name: "dimension" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_LOWER", args: [{ name: "array" }, { name: "dimension" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_NDIMS", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_POSITION", args: [{ name: "array" }, { name: "element" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_POSITION", args: [{ name: "array" }, { name: "element" }, { name: "start" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_POSITIONS", args: [{ name: "array" }, { name: "element" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_PREPEND", args: [{ name: "element" }, { name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_REMOVE", args: [{ name: "array" }, { name: "element" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_REPLACE", args: [{ name: "array" }, { name: "oldElement" }, { name: "newElement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_REVERSE", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_SAMPLE", args: [{ name: "array" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_SHUFFLE", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_SORT", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_SORT", args: [{ name: "array" }, { name: "descending" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_SORT", args: [{ name: "array" }, { name: "descending" }, { name: "nullsFirst" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_TO_STRING", args: [{ name: "array" }, { name: "delimiter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_TO_STRING", args: [{ name: "array" }, { name: "delimiter" }, { name: "nullString" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_UPPER", args: [{ name: "array" }, { name: "dimension" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CARDINALITY", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TRIM_ARRAY", args: [{ name: "array" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UNNEST", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UNNEST", args: [{ name: "array" }, { name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UNNEST", args: [{ name: "array1" }, { name: "array2" }, { name: "arrays", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Set-Returning Functions (Table 9.69, 9.70) ====================
+    // Series Generating Functions
+    { name: "GENERATE_SERIES", args: [{ name: "start" }, { name: "stop" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GENERATE_SERIES", args: [{ name: "start" }, { name: "stop" }, { name: "step" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GENERATE_SERIES", args: [{ name: "start" }, { name: "stop" }, { name: "step" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GENERATE_SERIES", args: [{ name: "start" }, { name: "stop" }, { name: "step" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GENERATE_SERIES", args: [{ name: "start" }, { name: "stop" }, { name: "step" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Subscript Generating Functions
+    { name: "GENERATE_SUBSCRIPTS", args: [{ name: "array" }, { name: "dim" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GENERATE_SUBSCRIPTS", args: [{ name: "array" }, { name: "dim" }, { name: "reverse" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Range Functions ====================
+    { name: "ISEMPTY", args: [{ name: "range" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOWER_INC", args: [{ name: "range" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UPPER_INC", args: [{ name: "range" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LOWER_INF", args: [{ name: "range" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UPPER_INF", args: [{ name: "range" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANGE_MERGE", args: [{ name: "range1" }, { name: "range2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MULTIRANGE", args: [{ name: "range" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Window Functions (Table 9.67) ====================
+    { name: "ROW_NUMBER", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANK", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DENSE_RANK", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PERCENT_RANK", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CUME_DIST", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NTILE", args: [{ name: "num_buckets" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LAG", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LAG", args: [{ name: "value" }, { name: "offset" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LAG", args: [{ name: "value" }, { name: "offset" }, { name: "default" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LEAD", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LEAD", args: [{ name: "value" }, { name: "offset" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LEAD", args: [{ name: "value" }, { name: "offset" }, { name: "default" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "FIRST_VALUE", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "LAST_VALUE", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "NTH_VALUE", args: [{ name: "value" }, { name: "n" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Merge Support Functions (Table 9.68) ====================
+    { name: "MERGE_ACTION", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Subquery Expressions (Table 9.24) ====================
+    // Note: EXISTS, IN, NOT IN, ANY/SOME, ALL are operators/expressions, not traditional functions
+    // They are handled in the query builder syntax
+
+    // ==================== Comparison Operators (Table 9.25) ====================
+    // Row and Array Comparison operators
+    // IS DISTINCT FROM, IS NOT DISTINCT FROM are operators handled in query builder
+
+    // ==================== JSON Functions ====================
+
+    // JSON Creation Functions (Table 9.49)
+    { name: "TO_JSON", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_JSONB", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_TO_JSON", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_TO_JSON", args: [{ name: "array" }, { name: "prettyPrint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ROW_TO_JSON", args: [{ name: "record" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ROW_TO_JSON", args: [{ name: "record" }, { name: "prettyPrint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_BUILD_ARRAY", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_BUILD_ARRAY", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_BUILD_OBJECT", args: [{ name: "keyValue", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_BUILD_OBJECT", args: [{ name: "keyValue", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT", args: [{ name: "array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT", args: [{ name: "keys" }, { name: "values" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT", args: [{ name: "keys" }, { name: "values" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_ARRAY", args: [{ name: "value", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_SERIALIZE", args: [{ name: "expression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_SERIALIZE", args: [{ name: "expression" }, { name: "returnType" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_SCALAR", args: [{ name: "expression" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // JSON Processing Functions (Table 9.51)
+    { name: "JSON_ARRAY_ELEMENTS", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_ARRAY_ELEMENTS", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_ARRAY_ELEMENTS_TEXT", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_ARRAY_ELEMENTS_TEXT", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_ARRAY_LENGTH", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_ARRAY_LENGTH", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EACH", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_EACH", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EACH_TEXT", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_EACH_TEXT", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EXTRACT_PATH", args: [{ name: "fromJson" }, { name: "pathElem", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_EXTRACT_PATH", args: [{ name: "fromJsonb" }, { name: "pathElem", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EXTRACT_PATH_TEXT", args: [{ name: "fromJson" }, { name: "pathElem", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_EXTRACT_PATH_TEXT", args: [{ name: "fromJsonb" }, { name: "pathElem", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT_KEYS", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT_KEYS", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_POPULATE_RECORD", args: [{ name: "base" }, { name: "fromJson" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_POPULATE_RECORD", args: [{ name: "base" }, { name: "fromJsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_POPULATE_RECORD_VALID", args: [{ name: "base" }, { name: "fromJsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_POPULATE_RECORDSET", args: [{ name: "base" }, { name: "fromJson" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_POPULATE_RECORDSET", args: [{ name: "base" }, { name: "fromJsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_TO_RECORD", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_TO_RECORD", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_TO_RECORDSET", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_TO_RECORDSET", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_SET", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_SET", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }, { name: "createIfMissing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_SET_LAX", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_SET_LAX", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }, { name: "createIfMissing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_SET_LAX", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }, { name: "createIfMissing" }, { name: "nullValueTreatment" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_INSERT", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_INSERT", args: [{ name: "target" }, { name: "path" }, { name: "newValue" }, { name: "insertAfter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_STRIP_NULLS", args: [{ name: "target" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_STRIP_NULLS", args: [{ name: "target" }, { name: "stripInArrays" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_STRIP_NULLS", args: [{ name: "target" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_STRIP_NULLS", args: [{ name: "target" }, { name: "stripInArrays" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_EXISTS", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_EXISTS", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_EXISTS", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_EXISTS_TZ", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_EXISTS_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_EXISTS_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_MATCH", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_MATCH", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_MATCH", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_MATCH_TZ", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_MATCH_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_MATCH_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_TZ", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_ARRAY", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_ARRAY", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_ARRAY", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_ARRAY_TZ", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_ARRAY_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_ARRAY_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_FIRST", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_FIRST", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_FIRST", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_FIRST_TZ", args: [{ name: "target" }, { name: "path" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_FIRST_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PATH_QUERY_FIRST_TZ", args: [{ name: "target" }, { name: "path" }, { name: "vars" }, { name: "silent" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_PRETTY", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_TYPEOF", args: [{ name: "json" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_TYPEOF", args: [{ name: "jsonb" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Aggregate Functions ====================
+
+    // General-Purpose Aggregate Functions (Table 9.62)
+    { name: "ANY_VALUE", args: [{ name: "anyelement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_AGG", args: [{ name: "anynonarray", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ARRAY_AGG", args: [{ name: "anyarray", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "smallint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "numeric" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "real" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "double precision" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "AVG", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_AND", args: [{ name: "smallint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_AND", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_AND", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_AND", args: [{ name: "bit" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_OR", args: [{ name: "smallint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_OR", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_OR", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_OR", args: [{ name: "bit" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_XOR", args: [{ name: "smallint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_XOR", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_XOR", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BIT_XOR", args: [{ name: "bit" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BOOL_AND", args: [{ name: "boolean" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BOOL_OR", args: [{ name: "boolean" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COUNT", args: [{ name: "*" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COUNT", args: [{ name: "any" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "EVERY", args: [{ name: "boolean" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAX", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MIN", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANGE_AGG", args: [{ name: "anyrange" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANGE_AGG", args: [{ name: "anymultirange" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANGE_INTERSECT_AGG", args: [{ name: "anyrange" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "RANGE_INTERSECT_AGG", args: [{ name: "anymultirange" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRING_AGG", args: [{ name: "text" }, { name: "delimiter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STRING_AGG", args: [{ name: "bytea" }, { name: "delimiter" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "smallint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "numeric" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "real" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "double precision" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "interval" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SUM", args: [{ name: "money" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Statistical Aggregate Functions (Table 9.63)
+    { name: "CORR", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COVAR_POP", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COVAR_SAMP", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_AVGX", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_AVGY", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_COUNT", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_INTERCEPT", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_R2", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_SLOPE", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_SXX", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_SXY", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "REGR_SYY", args: [{ name: "Y" }, { name: "X" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STDDEV", args: [{ name: "numeric_type" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STDDEV_POP", args: [{ name: "numeric_type" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "STDDEV_SAMP", args: [{ name: "numeric_type" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "VARIANCE", args: [{ name: "numeric_type" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "VAR_POP", args: [{ name: "numeric_type" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "VAR_SAMP", args: [{ name: "numeric_type" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Ordered-Set Aggregate Functions (Table 9.64)
+    { name: "MODE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PERCENTILE_CONT", args: [{ name: "fraction" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PERCENTILE_CONT", args: [{ name: "fractions" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PERCENTILE_DISC", args: [{ name: "fraction" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PERCENTILE_DISC", args: [{ name: "fractions" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Hypothetical-Set Aggregate Functions (Table 9.65)
+    { name: "RANK", args: [{ name: "args" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "DENSE_RANK", args: [{ name: "args" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PERCENT_RANK", args: [{ name: "args" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CUME_DIST", args: [{ name: "args" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Grouping Operations (Table 9.66)
+    { name: "GROUPING", args: [{ name: "group_by_expression" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // JSON Aggregate Functions (from JSON section, but also aggregates)
+    { name: "JSON_AGG", args: [{ name: "anyelement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_AGG", args: [{ name: "anyelement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_AGG_STRICT", args: [{ name: "anyelement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_AGG_STRICT", args: [{ name: "anyelement" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_ARRAYAGG", args: [{ name: "value_expression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECTAGG", args: [{ name: "key_expression" }, { name: "value_expression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT_AGG", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT_AGG", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT_AGG_STRICT", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT_AGG_STRICT", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT_AGG_UNIQUE", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT_AGG_UNIQUE", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_OBJECT_AGG_UNIQUE_STRICT", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSONB_OBJECT_AGG_UNIQUE_STRICT", args: [{ name: "key" }, { name: "value" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // SQL/JSON Query Functions (Table 9.54)
+    { name: "JSON_EXISTS", args: [{ name: "contextItem" }, { name: "pathExpression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EXISTS", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EXISTS", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "onError" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }, { name: "quotes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }, { name: "quotes" }, { name: "onEmpty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }, { name: "quotes" }, { name: "onEmpty" }, { name: "onError" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "onEmpty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "onEmpty" }, { name: "onError" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Information Functions (Table 9.71-9.94) ====================
+
+    // Session Information Functions (Table 9.71)
+    { name: "CURRENT_DATABASE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_QUERY", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_SCHEMA", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_SCHEMAS", args: [{ name: "include_implicit" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INET_CLIENT_ADDR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INET_CLIENT_PORT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INET_SERVER_ADDR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "INET_SERVER_PORT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BACKEND_PID", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BLOCKING_PIDS", args: [{ name: "pid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CONF_LOAD_TIME", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_LOGFILE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_LOGFILE", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_LOADED_MODULES", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_MY_TEMP_SCHEMA", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_IS_OTHER_TEMP_SCHEMA", args: [{ name: "oid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_JIT_AVAILABLE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_NUMA_AVAILABLE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LISTENING_CHANNELS", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_NOTIFICATION_QUEUE_USAGE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_POSTMASTER_START_TIME", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SAFE_SNAPSHOT_BLOCKING_PIDS", args: [{ name: "integer" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRIGGER_DEPTH", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Access Privilege Inquiry Functions (Table 9.72)
+    { name: "HAS_ANY_COLUMN_PRIVILEGE", args: [{ name: "table" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_ANY_COLUMN_PRIVILEGE", args: [{ name: "user" }, { name: "table" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_COLUMN_PRIVILEGE", args: [{ name: "table" }, { name: "column" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_COLUMN_PRIVILEGE", args: [{ name: "user" }, { name: "table" }, { name: "column" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_DATABASE_PRIVILEGE", args: [{ name: "database" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_DATABASE_PRIVILEGE", args: [{ name: "user" }, { name: "database" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_FOREIGN_DATA_WRAPPER_PRIVILEGE", args: [{ name: "fdw" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_FOREIGN_DATA_WRAPPER_PRIVILEGE", args: [{ name: "user" }, { name: "fdw" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_FUNCTION_PRIVILEGE", args: [{ name: "function" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_FUNCTION_PRIVILEGE", args: [{ name: "user" }, { name: "function" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_LANGUAGE_PRIVILEGE", args: [{ name: "language" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_LANGUAGE_PRIVILEGE", args: [{ name: "user" }, { name: "language" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_LARGEOBJECT_PRIVILEGE", args: [{ name: "largeobject" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_LARGEOBJECT_PRIVILEGE", args: [{ name: "user" }, { name: "largeobject" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_PARAMETER_PRIVILEGE", args: [{ name: "parameter" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_PARAMETER_PRIVILEGE", args: [{ name: "user" }, { name: "parameter" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_SCHEMA_PRIVILEGE", args: [{ name: "schema" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_SCHEMA_PRIVILEGE", args: [{ name: "user" }, { name: "schema" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_SEQUENCE_PRIVILEGE", args: [{ name: "sequence" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_SEQUENCE_PRIVILEGE", args: [{ name: "user" }, { name: "sequence" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_SERVER_PRIVILEGE", args: [{ name: "server" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_SERVER_PRIVILEGE", args: [{ name: "user" }, { name: "server" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_TABLE_PRIVILEGE", args: [{ name: "table" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_TABLE_PRIVILEGE", args: [{ name: "user" }, { name: "table" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_TABLESPACE_PRIVILEGE", args: [{ name: "tablespace" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_TABLESPACE_PRIVILEGE", args: [{ name: "user" }, { name: "tablespace" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_TYPE_PRIVILEGE", args: [{ name: "type" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "HAS_TYPE_PRIVILEGE", args: [{ name: "user" }, { name: "type" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_HAS_ROLE", args: [{ name: "role" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_HAS_ROLE", args: [{ name: "user" }, { name: "role" }, { name: "privilege" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ROW_SECURITY_ACTIVE", args: [{ name: "table" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // aclitem Functions (Table 9.74)
+    { name: "ACLDEFAULT", args: [{ name: "type" }, { name: "ownerId" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ACLEXPLODE", args: [{ name: "aclitem" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MAKEACLITEM", args: [{ name: "grantee" }, { name: "grantor" }, { name: "privileges" }, { name: "is_grantable" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Schema Visibility Inquiry Functions (Table 9.75)
+    { name: "PG_COLLATION_IS_VISIBLE", args: [{ name: "collation" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CONVERSION_IS_VISIBLE", args: [{ name: "conversion" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_FUNCTION_IS_VISIBLE", args: [{ name: "function" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_OPCLASS_IS_VISIBLE", args: [{ name: "opclass" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_OPERATOR_IS_VISIBLE", args: [{ name: "operator" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_OPFAMILY_IS_VISIBLE", args: [{ name: "opclass" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_STATISTICS_OBJ_IS_VISIBLE", args: [{ name: "stat" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TABLE_IS_VISIBLE", args: [{ name: "table" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TS_CONFIG_IS_VISIBLE", args: [{ name: "config" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TS_DICT_IS_VISIBLE", args: [{ name: "dict" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TS_PARSER_IS_VISIBLE", args: [{ name: "parser" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TS_TEMPLATE_IS_VISIBLE", args: [{ name: "template" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TYPE_IS_VISIBLE", args: [{ name: "type" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // System Catalog Information Functions (Table 9.76)
+    { name: "FORMAT_TYPE", args: [{ name: "type" }, { name: "typemod" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BASETYPE", args: [{ name: "regtype" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CHAR_TO_ENCODING", args: [{ name: "encoding" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ENCODING_TO_CHAR", args: [{ name: "encoding" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_CATALOG_FOREIGN_KEYS", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_CONSTRAINTDEF", args: [{ name: "constraint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_CONSTRAINTDEF", args: [{ name: "constraint" }, { name: "pretty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_EXPR", args: [{ name: "expr" }, { name: "relation" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_EXPR", args: [{ name: "expr" }, { name: "relation" }, { name: "pretty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_FUNCTIONDEF", args: [{ name: "func" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_FUNCTION_ARGUMENTS", args: [{ name: "func" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_FUNCTION_IDENTITY_ARGUMENTS", args: [{ name: "func" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_FUNCTION_RESULT", args: [{ name: "func" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_INDEXDEF", args: [{ name: "index" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_INDEXDEF", args: [{ name: "index" }, { name: "column" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_INDEXDEF", args: [{ name: "index" }, { name: "column" }, { name: "pretty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_KEYWORDS", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_PARTITION_CONSTRAINTDEF", args: [{ name: "table" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_PARTKEYDEF", args: [{ name: "table" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_RULEDEF", args: [{ name: "rule" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_RULEDEF", args: [{ name: "rule" }, { name: "pretty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_SERIAL_SEQUENCE", args: [{ name: "table" }, { name: "column" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_STATISTICSOBJDEF", args: [{ name: "statobj" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_TRIGGERDEF", args: [{ name: "trigger" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_TRIGGERDEF", args: [{ name: "trigger" }, { name: "pretty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_USERBYID", args: [{ name: "role" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_VIEWDEF", args: [{ name: "view" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_VIEWDEF", args: [{ name: "view" }, { name: "pretty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_VIEWDEF", args: [{ name: "view" }, { name: "wrap_column" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_INDEX_COLUMN_HAS_PROPERTY", args: [{ name: "index" }, { name: "column" }, { name: "property" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_INDEX_HAS_PROPERTY", args: [{ name: "index" }, { name: "property" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_INDEXAM_HAS_PROPERTY", args: [{ name: "am" }, { name: "property" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_OPTIONS_TO_TABLE", args: [{ name: "options_array" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SETTINGS_GET_FLAGS", args: [{ name: "guc" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TABLESPACE_DATABASES", args: [{ name: "tablespace" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TABLESPACE_LOCATION", args: [{ name: "tablespace" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TYPEOF", args: [{ name: "any" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "COLLATION_FOR", args: [{ name: "any" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGCLASS", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGCOLLATION", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGNAMESPACE", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGOPER", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGOPERATOR", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGPROC", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGPROCEDURE", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGROLE", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGTYPE", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TO_REGTYPEMOD", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Object Information and Addressing Functions (Table 9.81)
+    { name: "PG_GET_ACL", args: [{ name: "classid" }, { name: "objid" }, { name: "objsubid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_DESCRIBE_OBJECT", args: [{ name: "classid" }, { name: "objid" }, { name: "objsubid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_IDENTIFY_OBJECT", args: [{ name: "classid" }, { name: "objid" }, { name: "objsubid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_IDENTIFY_OBJECT_AS_ADDRESS", args: [{ name: "classid" }, { name: "objid" }, { name: "objsubid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_OBJECT_ADDRESS", args: [{ name: "type" }, { name: "object_names" }, { name: "object_args" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Comment Information Functions (Table 9.82)
+    { name: "COL_DESCRIPTION", args: [{ name: "table" }, { name: "column" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OBJ_DESCRIPTION", args: [{ name: "object" }, { name: "catalog" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "OBJ_DESCRIPTION", args: [{ name: "object" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SHOBJ_DESCRIPTION", args: [{ name: "object" }, { name: "catalog" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Data Validity Checking Functions (Table 9.83)
+    { name: "PG_INPUT_IS_VALID", args: [{ name: "string" }, { name: "type" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_INPUT_ERROR_INFO", args: [{ name: "string" }, { name: "type" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Transaction ID and Snapshot Information Functions (Table 9.84, 9.85)
+    { name: "AGE", args: [{ name: "xid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "MXID_AGE", args: [{ name: "xid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_XACT_ID", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_XACT_ID_IF_ASSIGNED", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_XACT_STATUS", args: [{ name: "xid8" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_SNAPSHOT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SNAPSHOT_XIP", args: [{ name: "pg_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SNAPSHOT_XMAX", args: [{ name: "pg_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SNAPSHOT_XMIN", args: [{ name: "pg_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_VISIBLE_IN_SNAPSHOT", args: [{ name: "xid8" }, { name: "pg_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_MULTIXACT_MEMBERS", args: [{ name: "multixid" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Deprecated Transaction ID Functions (Table 9.86)
+    { name: "TXID_CURRENT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_CURRENT_IF_ASSIGNED", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_CURRENT_SNAPSHOT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_SNAPSHOT_XIP", args: [{ name: "txid_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_SNAPSHOT_XMAX", args: [{ name: "txid_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_SNAPSHOT_XMIN", args: [{ name: "txid_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_VISIBLE_IN_SNAPSHOT", args: [{ name: "bigint" }, { name: "txid_snapshot" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TXID_STATUS", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Committed Transaction Information Functions (Table 9.87)
+    { name: "PG_XACT_COMMIT_TIMESTAMP", args: [{ name: "xid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_XACT_COMMIT_TIMESTAMP_ORIGIN", args: [{ name: "xid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LAST_COMMITTED_XACT", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Control Data Functions (Table 9.88-9.92)
+    { name: "PG_CONTROL_CHECKPOINT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CONTROL_SYSTEM", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CONTROL_INIT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CONTROL_RECOVERY", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Version Information Functions (Table 9.93)
+    { name: "VERSION", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "UNICODE_VERSION", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "ICU_UNICODE_VERSION", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // WAL Summarization Information Functions (Table 9.94)
+    { name: "PG_AVAILABLE_WAL_SUMMARIES", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_WAL_SUMMARY_CONTENTS", args: [{ name: "tli" }, { name: "start_lsn" }, { name: "end_lsn" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_WAL_SUMMARIZER_STATE", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Administrative Functions (Table 9.95-9.109) ====================
+
+    // Configuration Settings Functions (Table 9.95)
+    { name: "CURRENT_SETTING", args: [{ name: "setting_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "CURRENT_SETTING", args: [{ name: "setting_name" }, { name: "missing_ok" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "SET_CONFIG", args: [{ name: "setting_name" }, { name: "new_value" }, { name: "is_local" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Server Signaling Functions (Table 9.96)
+    { name: "PG_CANCEL_BACKEND", args: [{ name: "pid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOG_BACKEND_MEMORY_CONTEXTS", args: [{ name: "pid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_RELOAD_CONF", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ROTATE_LOGFILE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TERMINATE_BACKEND", args: [{ name: "pid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TERMINATE_BACKEND", args: [{ name: "pid" }, { name: "timeout" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Backup Control Functions (Table 9.97)
+    { name: "PG_CREATE_RESTORE_POINT", args: [{ name: "name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_WAL_FLUSH_LSN", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_WAL_INSERT_LSN", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CURRENT_WAL_LSN", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BACKUP_START", args: [{ name: "label" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BACKUP_START", args: [{ name: "label" }, { name: "fast" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BACKUP_STOP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_BACKUP_STOP", args: [{ name: "wait_for_archive" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SWITCH_WAL", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_WALFILE_NAME", args: [{ name: "lsn" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_WALFILE_NAME_OFFSET", args: [{ name: "lsn" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SPLIT_WALFILE_NAME", args: [{ name: "file_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_WAL_LSN_DIFF", args: [{ name: "lsn1" }, { name: "lsn2" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Recovery Information Functions (Table 9.98)
+    { name: "PG_IS_IN_RECOVERY", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LAST_WAL_RECEIVE_LSN", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LAST_WAL_REPLAY_LSN", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LAST_XACT_REPLAY_TIMESTAMP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_WAL_RESOURCE_MANAGERS", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Recovery Control Functions (Table 9.99)
+    { name: "PG_IS_WAL_REPLAY_PAUSED", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_GET_WAL_REPLAY_PAUSE_STATE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_PROMOTE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_PROMOTE", args: [{ name: "wait" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_PROMOTE", args: [{ name: "wait" }, { name: "wait_seconds" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_WAL_REPLAY_PAUSE", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_WAL_REPLAY_RESUME", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Snapshot Synchronization Functions (Table 9.100)
+    { name: "PG_EXPORT_SNAPSHOT", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOG_STANDBY_SNAPSHOT", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Replication Management Functions (Table 9.101)
+    { name: "PG_CREATE_PHYSICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CREATE_PHYSICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }, { name: "immediately_reserve" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CREATE_PHYSICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }, { name: "immediately_reserve" }, { name: "temporary" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_DROP_REPLICATION_SLOT", args: [{ name: "slot_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CREATE_LOGICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }, { name: "plugin" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CREATE_LOGICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }, { name: "plugin" }, { name: "temporary" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CREATE_LOGICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }, { name: "plugin" }, { name: "temporary" }, { name: "twophase" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CREATE_LOGICAL_REPLICATION_SLOT", args: [{ name: "slot_name" }, { name: "plugin" }, { name: "temporary" }, { name: "twophase" }, { name: "failover" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COPY_PHYSICAL_REPLICATION_SLOT", args: [{ name: "src_slot_name" }, { name: "dst_slot_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COPY_PHYSICAL_REPLICATION_SLOT", args: [{ name: "src_slot_name" }, { name: "dst_slot_name" }, { name: "temporary" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COPY_LOGICAL_REPLICATION_SLOT", args: [{ name: "src_slot_name" }, { name: "dst_slot_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COPY_LOGICAL_REPLICATION_SLOT", args: [{ name: "src_slot_name" }, { name: "dst_slot_name" }, { name: "temporary" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COPY_LOGICAL_REPLICATION_SLOT", args: [{ name: "src_slot_name" }, { name: "dst_slot_name" }, { name: "temporary" }, { name: "plugin" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_GET_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_GET_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }, { name: "options", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_PEEK_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_PEEK_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }, { name: "options", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_GET_BINARY_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_GET_BINARY_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }, { name: "options", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_PEEK_BINARY_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_SLOT_PEEK_BINARY_CHANGES", args: [{ name: "slot_name" }, { name: "upto_lsn" }, { name: "upto_nchanges" }, { name: "options", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_SLOT_ADVANCE", args: [{ name: "slot_name" }, { name: "upto_lsn" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_CREATE", args: [{ name: "node_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_DROP", args: [{ name: "node_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_OID", args: [{ name: "node_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_SESSION_SETUP", args: [{ name: "node_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_SESSION_RESET", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_SESSION_IS_SETUP", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_SESSION_PROGRESS", args: [{ name: "flush" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_XACT_SETUP", args: [{ name: "origin_lsn" }, { name: "origin_timestamp" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_XACT_RESET", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_ADVANCE", args: [{ name: "node_name" }, { name: "lsn" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_REPLICATION_ORIGIN_PROGRESS", args: [{ name: "node_name" }, { name: "flush" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_EMIT_MESSAGE", args: [{ name: "transactional" }, { name: "prefix" }, { name: "content" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LOGICAL_EMIT_MESSAGE", args: [{ name: "transactional" }, { name: "prefix" }, { name: "content" }, { name: "flush" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SYNC_REPLICATION_SLOTS", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // Database Object Size Functions (Table 9.102)
+    { name: "PG_COLUMN_SIZE", args: [{ name: "any" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COLUMN_COMPRESSION", args: [{ name: "any" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_COLUMN_TOAST_CHUNK_ID", args: [{ name: "any" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_DATABASE_SIZE", args: [{ name: "name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_DATABASE_SIZE", args: [{ name: "oid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_INDEXES_SIZE", args: [{ name: "regclass" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_RELATION_SIZE", args: [{ name: "relation" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_RELATION_SIZE", args: [{ name: "relation" }, { name: "fork" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SIZE_BYTES", args: [{ name: "text" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SIZE_PRETTY", args: [{ name: "bigint" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_SIZE_PRETTY", args: [{ name: "numeric" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TABLE_SIZE", args: [{ name: "regclass" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TABLESPACE_SIZE", args: [{ name: "name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TABLESPACE_SIZE", args: [{ name: "oid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TOTAL_RELATION_SIZE", args: [{ name: "regclass" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Database Object Location Functions (Table 9.103)
+    { name: "PG_RELATION_FILENODE", args: [{ name: "relation" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_RELATION_FILEPATH", args: [{ name: "relation" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_FILENODE_RELATION", args: [{ name: "tablespace" }, { name: "filenode" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Collation Management Functions (Table 9.104)
+    { name: "PG_COLLATION_ACTUAL_VERSION", args: [{ name: "oid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_DATABASE_COLLATION_ACTUAL_VERSION", args: [{ name: "oid" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_IMPORT_SYSTEM_COLLATIONS", args: [{ name: "schema" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Database Object Statistics Manipulation Functions (Table 9.105)
+    { name: "PG_RESTORE_RELATION_STATS", args: [{ name: "kwargs", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CLEAR_RELATION_STATS", args: [{ name: "schemaname" }, { name: "relname" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_RESTORE_ATTRIBUTE_STATS", args: [{ name: "kwargs", variadic: true }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_CLEAR_ATTRIBUTE_STATS", args: [{ name: "schemaname" }, { name: "relname" }, { name: "attname" }, { name: "inherited" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Partitioning Information Functions (Table 9.106)
+    { name: "PG_PARTITION_TREE", args: [{ name: "regclass" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_PARTITION_ANCESTORS", args: [{ name: "regclass" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_PARTITION_ROOT", args: [{ name: "regclass" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Index Maintenance Functions (Table 9.107)
+    { name: "BRIN_SUMMARIZE_NEW_VALUES", args: [{ name: "index" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BRIN_SUMMARIZE_RANGE", args: [{ name: "index" }, { name: "blockNumber" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "BRIN_DESUMMARIZE_RANGE", args: [{ name: "index" }, { name: "blockNumber" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "GIN_CLEAN_PENDING_LIST", args: [{ name: "index" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Generic File Access Functions (Table 9.108)
+    { name: "PG_LS_DIR", args: [{ name: "dirname" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_DIR", args: [{ name: "dirname" }, { name: "missing_ok" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_DIR", args: [{ name: "dirname" }, { name: "missing_ok" }, { name: "include_dot_dirs" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_LOGDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_WALDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_LOGICALMAPDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_LOGICALSNAPDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_REPLSLOTDIR", args: [{ name: "slot_name" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_SUMMARIESDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_ARCHIVE_STATUSDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_TMPDIR", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_LS_TMPDIR", args: [{ name: "tablespace" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_FILE", args: [{ name: "filename" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_FILE", args: [{ name: "filename" }, { name: "offset" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_FILE", args: [{ name: "filename" }, { name: "offset" }, { name: "length" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_FILE", args: [{ name: "filename" }, { name: "offset" }, { name: "length" }, { name: "missing_ok" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_BINARY_FILE", args: [{ name: "filename" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_BINARY_FILE", args: [{ name: "filename" }, { name: "offset" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_BINARY_FILE", args: [{ name: "filename" }, { name: "offset" }, { name: "length" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_READ_BINARY_FILE", args: [{ name: "filename" }, { name: "offset" }, { name: "length" }, { name: "missing_ok" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_STAT_FILE", args: [{ name: "filename" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_STAT_FILE", args: [{ name: "filename" }, { name: "missing_ok" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // Advisory Lock Functions (Table 9.109)
+    { name: "PG_ADVISORY_LOCK", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_LOCK", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_LOCK_SHARED", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_LOCK_SHARED", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_UNLOCK", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_UNLOCK", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_UNLOCK_ALL", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_UNLOCK_SHARED", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_UNLOCK_SHARED", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_XACT_LOCK", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_XACT_LOCK", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_LOCK", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_LOCK", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_LOCK_SHARED", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_LOCK_SHARED", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_XACT_LOCK", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_XACT_LOCK", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "key" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_TRY_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "key1" }, { name: "key2" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Trigger Functions (Table 9.107) ====================
+    { name: "SUPPRESS_REDUNDANT_UPDATES_TRIGGER", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TSVECTOR_UPDATE_TRIGGER", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "TSVECTOR_UPDATE_TRIGGER_COLUMN", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Event Trigger Functions (Table 9.108-9.111) ====================
+    { name: "PG_EVENT_TRIGGER_DDL_COMMANDS", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_EVENT_TRIGGER_DROPPED_OBJECTS", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_EVENT_TRIGGER_TABLE_REWRITE_OID", args: [], format: "COERCE_EXPLICIT_CALL" },
+    { name: "PG_EVENT_TRIGGER_TABLE_REWRITE_REASON", args: [], format: "COERCE_EXPLICIT_CALL" },
+
+    // ==================== Statistics Functions (Table 9.112) ====================
+    { name: "PG_MCV_LIST_ITEMS", args: [{ name: "pg_mcv_list" }], format: "COERCE_EXPLICIT_CALL" },
+
+    // SQL/JSON Query Functions (Table 9.54)
+    { name: "JSON_EXISTS", args: [{ name: "contextItem" }, { name: "pathExpression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EXISTS", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_EXISTS", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "onError" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }, { name: "quotes" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }, { name: "quotes" }, { name: "onEmpty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_QUERY", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "wrapper" }, { name: "quotes" }, { name: "onEmpty" }, { name: "onError" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "onEmpty" }], format: "COERCE_EXPLICIT_CALL" },
+    { name: "JSON_VALUE", args: [{ name: "contextItem" }, { name: "pathExpression" }, { name: "passing" }, { name: "returning" }, { name: "onEmpty" }, { name: "onError" }], format: "COERCE_EXPLICIT_CALL" },
+]
+export default pgFunctionList

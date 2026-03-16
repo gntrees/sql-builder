@@ -21,16 +21,15 @@ bun install
 ### Basic Usage
 
 ```typescript
-import { sqlBuilder } from '@gntrees/sql-builder';
+import { sqlBuilder } from '@gntrees/sql-builder/pg';
 
-const q = sqlBuilder({
-    formatParamHandler: 'pg',
-    execHandler: async ({ sql, parameters }) => {
+const q = sqlBuilder()
+    .setFormatParamHandler('pg')
+    .setExecutionHandler(async ({ sql, parameters }) => {
         // Execute query with your database client
         console.log(sql, parameters);
         return { rows: [] };
-    },
-});
+    });
 
 // Simple SELECT
 const users = await q
@@ -78,16 +77,36 @@ q.select(q.jsonb_build_object(
 )).from('users');
 ```
 
+### Pg Format (Browser Safe)
+
+Formatter logic is a browser-safe port of `node-pg-format` (MIT).
+
+```typescript
+import {
+    format,
+    formatWithArray,
+    quoteIdent,
+    quoteLiteral,
+    quoteString,
+} from '@gntrees/sql-builder/pg/format';
+
+const sql = format('SELECT * FROM %I WHERE id = %L', 'users', 42);
+const sql2 = formatWithArray('UPDATE %I SET name = %L', ['users', 'ada']);
+const ident = quoteIdent('user.name');
+const literal = quoteLiteral({ active: true });
+const str = quoteString('raw');
+```
+
 ## Development
 
 ### Running Tests
 
 ```bash
 # Run all tests
-bun test src/tests/*.test.ts
+bun test src/dialects/pg/tests/*.test.ts
 
 # Run specific test file
-bun test src/tests/math-functions.test.ts
+bun test src/dialects/pg/tests/math-functions.test.ts
 ```
 
 ### Code Generation

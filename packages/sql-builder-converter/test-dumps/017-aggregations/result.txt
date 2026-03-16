@@ -1,3 +1,0 @@
-Match: PASS
-Input SQL: SELECT MAX(price), MIN(price) FROM products
-Output SQL: SELECT MAX(price), MIN(price) FROM products
