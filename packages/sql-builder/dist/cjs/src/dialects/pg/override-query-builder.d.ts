@@ -105,4 +105,7 @@ export declare class OverrideQueryBuilder extends OperatorFunctionBuilder {
     some(...params: Statement[]): this;
     over(...param: Statement[]): this;
     partitionBy(...cols: Statement[]): this;
+    schemaColumn(db: string, table: string, column: string): this;
+    schemaTable(db: string, table: string): this;
+    schemaDatabase(db: string): this;
 }

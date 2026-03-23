@@ -32,7 +32,7 @@ export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> = {}> {
     }
 }
 
-class SqlSchemaQueryBuilder {
+export class SqlSchemaQueryBuilder {
     protected sqlBuilder: QueryBuilder;
     constructor(sqlSchema: QueryBuilder) {
         this.sqlBuilder = sqlSchema;

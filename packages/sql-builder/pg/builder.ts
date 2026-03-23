@@ -1,6 +1,5 @@
 import { QueryInstance } from "../src/dialects/pg/generated/query-instance";
 import type { RequiredDBInstance } from "../src/dialects/pg/types";
-import { QueryBuilder } from "../src/dialects/pg/query-builder";
 
 class QueryInstanceBuilder extends QueryInstance {
   setFormatParamHandler(
@@ -29,5 +28,3 @@ export function sqlBuilder(): QueryInstanceBuilder {
   };
   return new QueryInstanceBuilder(requiredDbInstance);
 }
-
-export { QueryBuilder, QueryInstance };

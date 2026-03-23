@@ -228,7 +228,12 @@ function quoteIdent(value) {
     }
     const ident = value.toString().slice(0);
     if (/^[a-z_][a-z0-9_$.]*$/.test(ident) && isReserved(ident) === false) {
-        return ident;
+        // cek jika ada titik maka harus di quote
+        const parts = ident.split(".");
+        if (parts.length > 1) {
+            return parts.map((part) => quoteIdent(part)).join(".");
+        }
+        // return ident;
     }
     let quoted = '"';
     for (let i = 0; i < ident.length; i += 1) {

@@ -1,6 +1,6 @@
 import { parse } from 'pgsql-parser';
-import { specialNodeValues } from './packages/sql-builder-converter/dist/src/handlers/values.js';
-import { specialNode } from './packages/sql-builder-converter/dist/src/handlers/index.js';
+import { specialNodeValues } from './packages/sql-builder-cli/dist/src/handlers/values.js';
+import { specialNode } from './packages/sql-builder-cli/dist/src/handlers/index.js';
 
 const sql = 'SELECT ROW_NUMBER() OVER (ORDER BY created_at) AS rn FROM users';
 const ast = await parse(sql);

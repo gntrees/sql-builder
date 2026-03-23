@@ -14,19 +14,19 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
     queryBuilder: {
         // c() method tests
         "should add column identifier from string": {
-            sql: "SELECT WHERE column_name = $1",
+            sql: "SELECT WHERE \"column_name\" = $1",
             parameters: ["test"],
         },
         "should add column with table prefix": {
-            sql: "SELECT WHERE table_name.column_name = $1",
+            sql: "SELECT WHERE \"table_name\".\"column_name\" = $1",
             parameters: ["test"],
         },
         "should add column from QueryBuilder (subquery)": {
-            sql: "SELECT WHERE SELECT id FROM users = $1",
+            sql: "SELECT WHERE SELECT \"id\" FROM \"users\" = $1",
             parameters: [1],
         },
         "c() should be chainable": {
-            sql: "SELECT WHERE status = $1",
+            sql: "SELECT WHERE \"status\" = $1",
             parameters: ["active"],
         },
 
@@ -48,35 +48,35 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [false, 1],
         },
         "should add value from QueryBuilder (subquery)": {
-            sql: "SELECT WHERE SELECT COUNT(*) FROM users = $1",
+            sql: "SELECT WHERE SELECT COUNT(*) FROM \"users\" = $1",
             parameters: [1],
         },
         "v() should be chainable": {
-            sql: "SELECT WHERE id = $1",
+            sql: "SELECT WHERE \"id\" = $1",
             parameters: [123],
         },
 
         // c() and v() combination tests
         "should work together in insert statement": {
-            sql: "INSERT INTO users SET name = $1, age = $2, active = $3",
+            sql: "INSERT INTO \"users\" SET \"name\" = $1, \"age\" = $2, \"active\" = $3",
             parameters: ["John", 25, true],
         },
         "should work together in update statement": {
-            sql: "UPDATE users SET last_login = $1 WHERE id = $2",
+            sql: "UPDATE \"users\" SET \"last_login\" = $1 WHERE \"id\" = $2",
             parameters: ["2024-01-01", 1],
         },
         "should work with complex query": {
-            sql: "SELECT users.id, users.name FROM users WHERE users.active = $1 AND users.age < $2 OR users.age > $3 ORDER BY users.name",
+            sql: "SELECT \"users\".\"id\", \"users\".\"name\" FROM \"users\" WHERE \"users\".\"active\" = $1 AND \"users\".\"age\" < $2 OR \"users\".\"age\" > $3 ORDER BY \"users\".\"name\"",
             parameters: [true, 18, 65],
         },
 
         // comma method tests
         "joins multiple queries with commas": {
-            sql: "SELECT id FROM users, SELECT name FROM products",
+            sql: "SELECT \"id\" FROM \"users\", SELECT \"name\" FROM \"products\"",
             parameters: [],
         },
         "handles queries that resolve to empty tokens": {
-            sql: "SELECT id",
+            sql: "SELECT \"id\"",
             parameters: [],
         },
         "handles no arguments": {
@@ -84,287 +84,359 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [],
         },
         "handles single query": {
-            sql: "SELECT id FROM users",
+            sql: "SELECT \"id\" FROM \"users\"",
             parameters: [],
         },
         "is chainable": {
-            sql: "id, name FROM users",
+            sql: "\"id\", \"name\" FROM \"users\"",
             parameters: [],
         },
 
         // insert queries
         "insertQuery": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, LOWER('John@Example.com')), ($2, LOWER('John@Example.com'))",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, LOWER('John@Example.com')), ($2, LOWER('John@Example.com'))",
             parameters: ["john", "doe"],
         },
         "insertRecordQuery": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, LOWER('Maria@Example.com')), ($2, LOWER('Lia@Example.com'))",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, LOWER('Maria@Example.com')), ($2, LOWER('Lia@Example.com'))",
             parameters: ["maria", "lia"],
         },
         "returningQuery": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, LOWER('Lara@Example.com')) RETURNING id",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, LOWER('Lara@Example.com')) RETURNING \"id\"",
             parameters: ["lara"],
         },
 
         // update queries
         "updateQuery": {
-            sql: "UPDATE users SET cities.name = $1, updated_at = NOW() FROM cities WHERE users.city_id = cities.id",
+            sql: "UPDATE \"users\" SET \"cities\".\"name\" = $1, \"updated_at\" = NOW() FROM \"cities\" WHERE \"users\".\"city_id\" = cities.id",
             parameters: ["budhapest"],
         },
 
         // select queries
         "selectQuery": {
-            sql: "SELECT *, test_column, users.id, haha AS test, users.name AS another, custom_alias AS alias, NOW() AS expression FROM users WHERE users.is_active = $1 ORDER BY users.created_at",
+            sql: "SELECT *, \"test_column\", \"users\".\"id\", \"haha\" AS \"test\", \"users\".\"name\" AS \"another\", \"custom_alias\" AS \"alias\", NOW() AS \"expression\" FROM \"users\" WHERE \"users\".\"is_active\" = $1 ORDER BY \"users\".\"created_at\"",
             parameters: [true],
         },
+        "schema table column literal": {
+            sql: "SELECT \"account\".\"id\" FROM \"account\"",
+            parameters: [],
+        },
+        "schema table column literal created": {
+            sql: "SELECT \"account\".\"created_at\" FROM \"account\"",
+            parameters: [],
+        },
+        "schema table column literal with from": {
+            sql: "SELECT \"account\".\"id\" FROM \"account\"",
+            parameters: [],
+        },
+        "schema table literal": {
+            sql: "SELECT * FROM \"account\"",
+            parameters: [],
+        },
+        "schema db literal": {
+            sql: "SELECT \"gntrees_ui\"",
+            parameters: [],
+        },
+        "schema multiple columns": {
+            sql: "SELECT \"account\".\"id\", \"account\".\"user_id\" FROM \"account\"",
+            parameters: [],
+        },
+        "schema where clause": {
+            sql: "SELECT \"account\".\"id\" FROM \"account\" WHERE \"account\".\"user_id\" = $1",
+            parameters: ["1"],
+        },
+        "schema order by column": {
+            sql: "SELECT \"account\".\"id\" FROM \"account\" ORDER BY \"account\".\"created_at\" DESC",
+            parameters: [],
+        },
+        "schema limit": {
+            sql: "SELECT \"account\".\"id\" FROM \"account\" LIMIT $1",
+            parameters: [10],
+        },
+        "schema join tables": {
+            sql: "SELECT \"account\".\"id\", \"user\".\"email\" FROM \"account\" JOIN \"user\" ON \"account\".\"user_id\" = \"user\".\"id\"",
+            parameters: [],
+        },
+        "schema todo select": {
+            sql: "SELECT \"todo\".\"text\", \"todo\".\"completed\" FROM \"todo\"",
+            parameters: [],
+        },
+        "schema where updated_at": {
+            sql: "SELECT \"account\".\"updated_at\" FROM \"account\" WHERE \"account\".\"updated_at\" IS NOT NULL",
+            parameters: [],
+        },
+        "schema count table": {
+            sql: "SELECT COUNT(*) FROM \"account\"",
+            parameters: [],
+        },
+        "schema group by column": {
+            sql: "SELECT \"account\".\"user_id\", COUNT(*) FROM \"account\" GROUP BY \"account\".\"user_id\"",
+            parameters: [],
+        },
+        "schema table selection detail": {
+            sql: "SELECT \"projects_detail\".\"data\" FROM \"projects_detail\"",
+            parameters: [],
+        },
+        "schema session where": {
+            sql: "SELECT \"session\".\"id\" FROM \"session\" WHERE \"session\".\"user_id\" = $1",
+            parameters: ["1"],
+        },
+        "schema verification select": {
+            sql: "SELECT \"verification\".\"id\", \"verification\".\"identifier\" FROM \"verification\"",
+            parameters: [],
+        },
+        "schema projects select": {
+            sql: "SELECT \"projects\".\"id\", \"projects\".\"name\" FROM \"projects\"",
+            parameters: [],
+        },
         "distinctQuery": {
-            sql: "SELECT DISTINCT users.id, users.name FROM users",
+            sql: "SELECT DISTINCT \"users\".\"id\", \"users\".\"name\" FROM \"users\"",
             parameters: [],
         },
         "havingQuery": {
-            sql: "SELECT category_id FROM products GROUP BY category_id HAVING ABS(id) > $1",
+            sql: "SELECT \"category_id\" FROM \"products\" GROUP BY \"category_id\" HAVING ABS(\"id\") > $1",
             parameters: [5],
         },
         "havingQueryWithoutCondition": {
-            sql: "SELECT category_id FROM products GROUP BY category_id HAVING",
+            sql: "SELECT \"category_id\" FROM \"products\" GROUP BY \"category_id\" HAVING",
             parameters: [],
         },
         "havingQueryWithMultipleConditions": {
-            sql: "SELECT category_id FROM products GROUP BY category_id HAVING ABS(amount) > $1 AND ABS(id) < $2",
+            sql: "SELECT \"category_id\" FROM \"products\" GROUP BY \"category_id\" HAVING ABS(\"amount\") > $1 AND ABS(\"id\") < $2",
             parameters: [1000, 10],
         },
 
         // join queries
         "leftJoinQuery": {
-            sql: "SELECT users.id, profiles.bio FROM users LEFT JOIN profiles ON profiles.user_id = users.id",
+            sql: "SELECT \"users\".\"id\", \"profiles\".\"bio\" FROM \"users\" LEFT JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\"",
             parameters: [],
         },
         "leftJoinLateralQuery": {
-            sql: "SELECT users.id, user_orders.count FROM users LEFT JOIN LATERAL (SELECT orders.user_id, COUNT(*) FROM orders WHERE orders.user_id = users.id GROUP BY orders.user_id) AS user_orders ON NULL",
+            sql: "SELECT \"users\".\"id\", \"user_orders\".\"count\" FROM \"users\" LEFT JOIN LATERAL (SELECT \"orders\".\"user_id\", COUNT(*) FROM \"orders\" WHERE \"orders\".\"user_id\" = \"users\".\"id\" GROUP BY \"orders\".\"user_id\") AS \"user_orders\" ON NULL",
             parameters: [],
         },
         "innerJoinQuery": {
-            sql: "SELECT users.id, profiles.bio FROM users INNER JOIN profiles ON profiles.user_id = users.id",
+            sql: "SELECT \"users\".\"id\", \"profiles\".\"bio\" FROM \"users\" INNER JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\"",
             parameters: [],
         },
         "rightJoinQuery": {
-            sql: "SELECT profiles.user_id, users.name FROM users RIGHT JOIN profiles ON profiles.user_id = users.id",
+            sql: "SELECT \"profiles\".\"user_id\", \"users\".\"name\" FROM \"users\" RIGHT JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\"",
             parameters: [],
         },
         "innerJoinLateralQuery": {
-            sql: "SELECT users.id, user_orders.count FROM users INNER JOIN LATERAL (SELECT orders.user_id, COUNT(*) FROM orders WHERE orders.user_id = users.id GROUP BY orders.user_id) AS user_orders ON TRUE",
+            sql: "SELECT \"users\".\"id\", \"user_orders\".\"count\" FROM \"users\" INNER JOIN LATERAL (SELECT \"orders\".\"user_id\", COUNT(*) FROM \"orders\" WHERE \"orders\".\"user_id\" = \"users\".\"id\" GROUP BY \"orders\".\"user_id\") AS \"user_orders\" ON TRUE",
             parameters: [],
         },
         "fullJoinQuery": {
-            sql: "SELECT users.id, profiles.bio FROM users FULL JOIN profiles ON profiles.user_id = users.id",
+            sql: "SELECT \"users\".\"id\", \"profiles\".\"bio\" FROM \"users\" FULL JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\"",
             parameters: [],
         },
         "crossJoinQuery": {
-            sql: "SELECT users.id, roles.name FROM users CROSS JOIN roles",
+            sql: "SELECT \"users\".\"id\", \"roles\".\"name\" FROM \"users\" CROSS JOIN \"roles\"",
             parameters: [],
         },
         "rightJoinLateralQuery": {
-            sql: "SELECT users.id, user_orders.count FROM users RIGHT JOIN LATERAL (SELECT orders.user_id, COUNT(*) FROM orders WHERE orders.user_id = users.id GROUP BY orders.user_id) AS user_orders ON TRUE",
+            sql: "SELECT \"users\".\"id\", \"user_orders\".\"count\" FROM \"users\" RIGHT JOIN LATERAL (SELECT \"orders\".\"user_id\", COUNT(*) FROM \"orders\" WHERE \"orders\".\"user_id\" = \"users\".\"id\" GROUP BY \"orders\".\"user_id\") AS \"user_orders\" ON TRUE",
             parameters: [],
         },
         "crossJoinLateralQuery": {
-            sql: "SELECT users.id, user_orders.count FROM users CROSS JOIN LATERAL (SELECT orders.user_id, COUNT(*) FROM orders WHERE orders.user_id = users.id GROUP BY orders.user_id) AS user_orders",
+            sql: "SELECT \"users\".\"id\", \"user_orders\".\"count\" FROM \"users\" CROSS JOIN LATERAL (SELECT \"orders\".\"user_id\", COUNT(*) FROM \"orders\" WHERE \"orders\".\"user_id\" = \"users\".\"id\" GROUP BY \"orders\".\"user_id\") AS \"user_orders\"",
             parameters: [],
         },
         "joinQuery": {
-            sql: "SELECT users.id, profiles.bio FROM users JOIN profiles ON profiles.user_id = users.id",
+            sql: "SELECT \"users\".\"id\", \"profiles\".\"bio\" FROM \"users\" JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\"",
             parameters: [],
         },
         "onClauseQuery": {
-            sql: "SELECT users.id, profiles.bio FROM users JOIN profiles ON profiles.user_id = users.id",
+            sql: "SELECT \"users\".\"id\", \"profiles\".\"bio\" FROM \"users\" JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\"",
             parameters: [],
         },
         "onClauseWithMultipleConditions": {
-            sql: "SELECT users.id, profiles.bio FROM users JOIN profiles ON profiles.user_id = users.id AND profiles.active = $1",
+            sql: "SELECT \"users\".\"id\", \"profiles\".\"bio\" FROM \"users\" JOIN \"profiles\" ON \"profiles\".\"user_id\" = \"users\".\"id\" AND \"profiles\".\"active\" = $1",
             parameters: [true],
         },
         "naturalJoinQuery": {
-            sql: "SELECT users.id FROM users NATURAL JOIN profiles",
+            sql: "SELECT \"users\".\"id\" FROM \"users\" NATURAL JOIN \"profiles\"",
             parameters: [],
         },
         "naturalLeftJoinQuery": {
-            sql: "SELECT users.id FROM users NATURAL LEFT JOIN profiles",
+            sql: "SELECT \"users\".\"id\" FROM \"users\" NATURAL LEFT JOIN \"profiles\"",
             parameters: [],
         },
         "naturalRightJoinQuery": {
-            sql: "SELECT users.id FROM users NATURAL RIGHT JOIN profiles",
+            sql: "SELECT \"users\".\"id\" FROM \"users\" NATURAL RIGHT JOIN \"profiles\"",
             parameters: [],
         },
         "naturalInnerJoinQuery": {
-            sql: "SELECT users.id FROM users NATURAL INNER JOIN profiles",
+            sql: "SELECT \"users\".\"id\" FROM \"users\" NATURAL INNER JOIN \"profiles\"",
             parameters: [],
         },
         "naturalFullJoinQuery": {
-            sql: "SELECT users.id FROM users NATURAL FULL JOIN profiles",
+            sql: "SELECT \"users\".\"id\" FROM \"users\" NATURAL FULL JOIN \"profiles\"",
             parameters: [],
         },
         "naturalCrossJoinQuery": {
-            sql: "SELECT users.id, roles.name FROM users NATURAL CROSS JOIN roles",
+            sql: "SELECT \"users\".\"id\", \"roles\".\"name\" FROM \"users\" NATURAL CROSS JOIN \"roles\"",
             parameters: [],
         },
 
         // where queries
         "whereQuery": {
-            sql: "SELECT * FROM audit_logs WHERE audit_logs.success = $1 OR audit_logs.action > $2",
+            sql: "SELECT * FROM \"audit_logs\" WHERE \"audit_logs\".\"success\" = $1 OR \"audit_logs\".\"action\" > $2",
             parameters: [true, "login"],
         },
 
         // CTE and subquery tests
         "subSelectQuery": {
-            sql: "SELECT (SELECT id FROM admins) AS admin_ids FROM users",
+            sql: "SELECT (SELECT \"id\" FROM \"admins\") AS \"admin_ids\" FROM \"users\"",
             parameters: [],
         },
         "cteQuery": {
-            sql: "WITH admins_cte AS (SELECT id FROM admins)",
+            sql: "WITH \"admins_cte\" AS (SELECT \"id\" FROM \"admins\")",
             parameters: [],
         },
         "cteSelectQuery": {
-            sql: "SELECT * FROM admins_cte",
+            sql: "SELECT * FROM \"admins_cte\"",
             parameters: [],
         },
 
         // distinct queries
         "distinctOnQuery": {
-            sql: "SELECT DISTINCT ON (posts.author_id) posts.id, posts.title FROM posts",
+            sql: "SELECT DISTINCT ON (\"posts\".\"author_id\") \"posts\".\"id\", \"posts\".\"title\" FROM \"posts\"",
             parameters: [],
         },
 
         // group by queries
         "groupByQuery": {
-            sql: "SELECT users.role, COUNT(*) FROM users GROUP BY users.role",
+            sql: "SELECT \"users\".\"role\", COUNT(*) FROM \"users\" GROUP BY \"users\".\"role\"",
             parameters: [],
         },
         "groupByDistinctQuery": {
-            sql: "SELECT users.role, COUNT(*) FROM users GROUP BY DISTINCT users.role",
+            sql: "SELECT \"users\".\"role\", COUNT(*) FROM \"users\" GROUP BY DISTINCT \"users\".\"role\"",
             parameters: [],
         },
         "caseQuery": {
-            sql: "SELECT CASE WHEN TRUE THEN 1 ELSE 2 END AS something FROM users",
+            sql: "SELECT CASE WHEN TRUE THEN 1 ELSE 2 END AS \"something\" FROM \"users\"",
             parameters: [],
         },
 
         // order queries
         "orderQuery": {
-            sql: "SELECT posts.id, posts.title FROM posts WHERE posts.is_published = $1 ORDER BY posts.created_at, posts.id LIMIT $2 OFFSET $3",
+            sql: "SELECT \"posts\".\"id\", \"posts\".\"title\" FROM \"posts\" WHERE \"posts\".\"is_published\" = $1 ORDER BY \"posts\".\"created_at\", \"posts\".\"id\" LIMIT $2 OFFSET $3",
             parameters: [true, 23, 20],
         },
         "orderDirectionQuery": {
-            sql: "SELECT posts.id, posts.title FROM posts ORDER BY posts.created_at ASC, posts.id ASC, posts.title DESC",
+            sql: "SELECT \"posts\".\"id\", \"posts\".\"title\" FROM \"posts\" ORDER BY \"posts\".\"created_at\" ASC, \"posts\".\"id\" ASC, \"posts\".\"title\" DESC",
             parameters: [],
         },
         "nullsFirst without parameters": {
-            sql: "SELECT users.id, users.name FROM users ORDER BY status ASC NULLS FIRST",
+            sql: "SELECT \"users\".\"id\", \"users\".\"name\" FROM \"users\" ORDER BY \"status\" ASC NULLS FIRST",
             parameters: [],
         },
         "nullsLast without parameters": {
-            sql: "SELECT users.id, users.name FROM users ORDER BY created_at DESC NULLS LAST",
+            sql: "SELECT \"users\".\"id\", \"users\".\"name\" FROM \"users\" ORDER BY \"created_at\" DESC NULLS LAST",
             parameters: [],
         },
         "nullsFirst with column parameter": {
-            sql: "SELECT * FROM users ORDER BY status NULLS FIRST",
+            sql: "SELECT * FROM \"users\" ORDER BY \"status\" NULLS FIRST",
             parameters: [],
         },
         "nullsLast with column parameter": {
-            sql: "SELECT * FROM users ORDER BY created_at NULLS LAST",
+            sql: "SELECT * FROM \"users\" ORDER BY \"created_at\" NULLS LAST",
             parameters: [],
         },
         "chaining asc and nullsFirst": {
-            sql: "SELECT * FROM users ORDER BY status ASC NULLS FIRST",
+            sql: "SELECT * FROM \"users\" ORDER BY \"status\" ASC NULLS FIRST",
             parameters: [],
         },
         "chaining desc and nullsLast": {
-            sql: "SELECT * FROM users ORDER BY created_at DESC NULLS LAST",
+            sql: "SELECT * FROM \"users\" ORDER BY \"created_at\" DESC NULLS LAST",
             parameters: [],
         },
         "multiple columns with different nulls ordering": {
-            sql: "SELECT * FROM users ORDER BY status ASC NULLS FIRST, name DESC NULLS LAST",
+            sql: "SELECT * FROM \"users\" ORDER BY \"status\" ASC NULLS FIRST, \"name\" DESC NULLS LAST",
             parameters: [],
         },
 
         // fetch queries
         "fetchQuery": {
-            sql: "SELECT * FROM users ORDER BY users.created_at FETCH FIRST $1 ROWS ONLY",
+            sql: "SELECT * FROM \"users\" ORDER BY \"users\".\"created_at\" FETCH FIRST $1 ROWS ONLY",
             parameters: [10],
         },
         "fetchNextQuery": {
-            sql: "SELECT * FROM users ORDER BY users.created_at FETCH NEXT $1 ROWS ONLY",
+            sql: "SELECT * FROM \"users\" ORDER BY \"users\".\"created_at\" FETCH NEXT $1 ROWS ONLY",
             parameters: [10],
         },
         "fetchWithTiesQuery": {
-            sql: "SELECT * FROM users ORDER BY users.created_at FETCH FIRST $1 ROWS WITH TIES",
+            sql: "SELECT * FROM \"users\" ORDER BY \"users\".\"created_at\" FETCH FIRST $1 ROWS WITH TIES",
             parameters: [10],
         },
         "withTiesQuery": {
-            sql: "SELECT * FROM users ORDER BY users.created_at FETCH FIRST $1 ROWS ONLY WITH TIES",
+            sql: "SELECT * FROM \"users\" ORDER BY \"users\".\"created_at\" FETCH FIRST $1 ROWS ONLY WITH TIES",
             parameters: [10],
         },
 
         // set operations
         "setOpsUnionQuery": {
-            sql: "(SELECT admins.id FROM admins) UNION (SELECT moderators.id FROM moderators)",
+            sql: "(SELECT \"admins\".\"id\" FROM \"admins\") UNION (SELECT \"moderators\".\"id\" FROM \"moderators\")",
             parameters: [],
         },
         "setOpsChainedQuery": {
-            sql: "SELECT users.id FROM users UNION (SELECT moderators.id FROM moderators) UNION ALL (SELECT guests.id FROM guests) UNION ALL (SELECT visitors.id FROM visitors) INTERSECT (SELECT staff.id FROM staff) INTERSECT (SELECT contractors.id FROM contractors) INTERSECT ALL (SELECT vendors.id FROM vendors) INTERSECT ALL (SELECT suppliers.id FROM suppliers) EXCEPT (SELECT banned_users.id FROM banned_users) EXCEPT (SELECT blocked_users.id FROM blocked_users) EXCEPT ALL (SELECT archived_users.id FROM archived_users) EXCEPT ALL (SELECT deleted_users.id FROM deleted_users)",
+            sql: "SELECT \"users\".\"id\" FROM \"users\" UNION (SELECT \"moderators\".\"id\" FROM \"moderators\") UNION ALL (SELECT \"guests\".\"id\" FROM \"guests\") UNION ALL (SELECT \"visitors\".\"id\" FROM \"visitors\") INTERSECT (SELECT \"staff\".\"id\" FROM \"staff\") INTERSECT (SELECT \"contractors\".\"id\" FROM \"contractors\") INTERSECT ALL (SELECT \"vendors\".\"id\" FROM \"vendors\") INTERSECT ALL (SELECT \"suppliers\".\"id\" FROM \"suppliers\") EXCEPT (SELECT \"banned_users\".\"id\" FROM \"banned_users\") EXCEPT (SELECT \"blocked_users\".\"id\" FROM \"blocked_users\") EXCEPT ALL (SELECT \"archived_users\".\"id\" FROM \"archived_users\") EXCEPT ALL (SELECT \"deleted_users\".\"id\" FROM \"deleted_users\")",
             parameters: [],
         },
 
         // conflict handling
         "conflictDoNothingQuery": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) WHERE users.is_active = $3 DO NOTHING",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") WHERE \"users\".\"is_active\" = $3 DO NOTHING",
             parameters: ["john", "john@example.com", true],
         },
         "conflictDoUpdateQuery": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) WHERE users.is_active = $3 DO UPDATE SET name = $4, updated_at = NOW() WHERE users.is_deleted = $5 RETURNING id",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") WHERE \"users\".\"is_active\" = $3 DO UPDATE SET \"name\" = $4, \"updated_at\" = NOW() WHERE \"users\".\"is_deleted\" = $5 RETURNING \"id\"",
             parameters: ["donna", "donna@example.com", true, "donna", false],
         },
         "chainable onConflict doNothing": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) DO NOTHING",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") DO NOTHING",
             parameters: ["john", "john@example.com"],
         },
         "chainable onConflict with array target doNothing": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email, users.name) DO NOTHING",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\", \"users\".\"name\") DO NOTHING",
             parameters: ["john", "john@example.com"],
         },
         "chainable onConflict with target where doNothing": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) WHERE users.is_active = $3 DO NOTHING",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") WHERE \"users\".\"is_active\" = $3 DO NOTHING",
             parameters: ["john", "john@example.com", true],
         },
         "chainable onConflict doUpdate": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) DO UPDATE SET name = $3, updated_at = NOW() RETURNING id",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") DO UPDATE SET \"name\" = $3, \"updated_at\" = NOW() RETURNING \"id\"",
             parameters: ["donna", "donna@example.com", "donna"],
         },
         "chainable onConflict doUpdate with set where": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) DO UPDATE SET name = $3, updated_at = NOW() WHERE users.is_deleted = $4 RETURNING id",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") DO UPDATE SET \"name\" = $3, \"updated_at\" = NOW() WHERE \"users\".\"is_deleted\" = $4 RETURNING \"id\"",
             parameters: ["donna", "donna@example.com", "donna", false],
         },
         "chainable onConflict with array target doUpdate": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email, users.name) DO UPDATE SET name = $3, updated_at = NOW()",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\", \"users\".\"name\") DO UPDATE SET \"name\" = $3, \"updated_at\" = NOW()",
             parameters: ["donna", "donna@example.com", "donna"],
         },
         "chainable onConflict with target where doUpdate": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) WHERE users.is_active = $3 DO UPDATE SET name = $4, updated_at = NOW()",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") WHERE \"users\".\"is_active\" = $3 DO UPDATE SET \"name\" = $4, \"updated_at\" = NOW()",
             parameters: ["donna", "donna@example.com", true, "donna"],
         },
         "chainable onConflict doUpdate with array set": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT (users.email) DO UPDATE SET name = $3, updated_at = NOW()",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT (\"users\".\"email\") DO UPDATE SET \"name\" = $3, \"updated_at\" = NOW()",
             parameters: ["donna", "donna@example.com", "donna"],
         },
         "onConstraint doNothing": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT ON CONSTRAINT users_email_key DO NOTHING",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT ON CONSTRAINT \"users_email_key\" DO NOTHING",
             parameters: ["john", "john@example.com"],
         },
         "onConstraint doUpdate": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT ON CONSTRAINT users_email_key DO UPDATE SET name = $3, updated_at = NOW()",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT ON CONSTRAINT \"users_email_key\" DO UPDATE SET \"name\" = $3, \"updated_at\" = NOW()",
             parameters: ["donna", "donna@example.com", "donna"],
         },
         "onConstraint with string doNothing": {
-            sql: "INSERT INTO users (name, email) VALUES ($1, $2) ON CONFLICT ON CONSTRAINT users_email_key DO NOTHING",
+            sql: "INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2) ON CONFLICT ON CONSTRAINT \"users_email_key\" DO NOTHING",
             parameters: ["john", "john@example.com"],
         },
 
@@ -382,15 +454,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [],
         },
         "savepointTransactionQuery": {
-            sql: "SAVEPOINT sp1;",
+            sql: "SAVEPOINT \"sp1\";",
             parameters: [],
         },
         "transactionQuery": {
-            sql: "BEGIN; INSERT INTO users (name, email) VALUES ($1, $2); SAVEPOINT sp_insert_profile; UPDATE users SET updated_at = NOW() WHERE users.email = $3; COMMIT;",
+            sql: "BEGIN; INSERT INTO \"users\" (\"name\", \"email\") VALUES ($1, $2); SAVEPOINT \"sp_insert_profile\"; UPDATE \"users\" SET \"updated_at\" = NOW() WHERE \"users\".\"email\" = $3; COMMIT;",
             parameters: ["hana", "hana@example.com", "hana@example.com"],
         },
         "rawLimitOffsetQuery": {
-            sql: "SELECT * FROM posts LIMIT ALL OFFSET 10",
+            sql: "SELECT * FROM \"posts\" LIMIT ALL OFFSET 10",
             parameters: [],
         },
     },
@@ -479,23 +551,23 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["alphabet", "alph"],
         },
         "like with escape": {
-            sql: "SELECT name LIKE $1 ESCAPE $2",
+            sql: "SELECT \"name\" LIKE $1 ESCAPE $2",
             parameters: ["A\\_%", "\\"],
         },
         "ilike with escape": {
-            sql: "SELECT name ILIKE $1 ESCAPE $2",
+            sql: "SELECT \"name\" ILIKE $1 ESCAPE $2",
             parameters: ["a%_", "#"],
         },
         "similar to with escape": {
-            sql: "SELECT code SIMILAR TO $1 ESCAPE $2",
+            sql: "SELECT \"code\" SIMILAR TO $1 ESCAPE $2",
             parameters: ["%(a|b)%", "!"],
         },
         "regex operators": {
-            sql: "SELECT text ~ $1 text ~* $2 text !~ $3 text !~* $4",
+            sql: "SELECT \"text\" ~ $1 \"text\" ~* $2 \"text\" !~ $3 \"text\" !~* $4",
             parameters: ["foo.*bar", "Foo.*Bar", "baz", "BAZ"],
         },
         "starts-with operator": {
-            sql: "SELECT name ^@ $1",
+            sql: "SELECT \"name\" ^@ $1",
             parameters: ["Al"],
         },
         "pg_client_encoding": {
@@ -806,91 +878,91 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
     },
     subquery: {
         "EXISTS with simple subquery": {
-            sql: "SELECT * FROM users WHERE EXISTS (SELECT * FROM orders WHERE orders.user_id = users.id)",
+            sql: "SELECT * FROM \"users\" WHERE EXISTS (SELECT * FROM \"orders\" WHERE \"orders\".\"user_id\" = \"users\".\"id\")",
             parameters: [],
         },
         "EXISTS with complex subquery": {
-            sql: 'SELECT * FROM products WHERE EXISTS (SELECT $1 FROM order_items WHERE order_items.product_id = products.id AND order_items.quantity > $2)',
+            sql: "SELECT * FROM \"products\" WHERE EXISTS (SELECT $1 FROM \"order_items\" WHERE \"order_items\".\"product_id\" = \"products\".\"id\" AND \"order_items\".\"quantity\" > $2)",
             parameters: [1, 10],
         },
         "NOT EXISTS with simple subquery": {
-            sql: "SELECT * FROM users WHERE NOT EXISTS (SELECT * FROM banned_users WHERE banned_users.user_id = users.id)",
+            sql: "SELECT * FROM \"users\" WHERE NOT EXISTS (SELECT * FROM \"banned_users\" WHERE \"banned_users\".\"user_id\" = \"users\".\"id\")",
             parameters: [],
         },
         "NOT EXISTS with parameterized subquery": {
-            sql: "SELECT * FROM employees WHERE NOT EXISTS (SELECT * FROM excursions WHERE excursions.employee_id = employees.id AND excursions.date > $1)",
+            sql: "SELECT * FROM \"employees\" WHERE NOT EXISTS (SELECT * FROM \"excursions\" WHERE \"excursions\".\"employee_id\" = \"employees\".\"id\" AND \"excursions\".\"date\" > $1)",
             parameters: [2024],
         },
         "IN with subquery": {
-            sql: "SELECT * FROM users WHERE id IN (SELECT user_id FROM premium_users)",
+            sql: "SELECT * FROM \"users\" WHERE \"id\" IN (SELECT \"user_id\" FROM \"premium_users\")",
             parameters: [],
         },
         "IN with qualified column": {
-            sql: "SELECT * FROM orders WHERE orders.product_id IN (SELECT id FROM active_products)",
+            sql: "SELECT * FROM \"orders\" WHERE \"orders\".\"product_id\" IN (SELECT \"id\" FROM \"active_products\")",
             parameters: [],
         },
         "IN with parameterized subquery": {
-            sql: "SELECT * FROM users WHERE department_id IN (SELECT id FROM departments WHERE budget > $1)",
+            sql: "SELECT * FROM \"users\" WHERE \"department_id\" IN (SELECT \"id\" FROM \"departments\" WHERE \"budget\" > $1)",
             parameters: [100000],
         },
         "IN with multiple subqueries": {
-            sql: "SELECT * FROM users WHERE id IN (SELECT user_id FROM premium_users, SELECT user_id FROM active_users)",
+            sql: "SELECT * FROM \"users\" WHERE \"id\" IN (SELECT \"user_id\" FROM \"premium_users\", SELECT \"user_id\" FROM \"active_users\")",
             parameters: [],
         },
         "IN without subquery": {
-            sql: "SELECT * FROM users WHERE id IN",
+            sql: "SELECT * FROM \"users\" WHERE \"id\" IN",
             parameters: undefined,
         },
         "NOT IN with subquery": {
-            sql: "SELECT * FROM users WHERE id NOT IN (SELECT user_id FROM suspended_users)",
+            sql: "SELECT * FROM \"users\" WHERE \"id\" NOT IN (SELECT \"user_id\" FROM \"suspended_users\")",
             parameters: [],
         },
         "NOT IN with qualified column": {
-            sql: "SELECT * FROM products WHERE products.category_id NOT IN (SELECT id FROM discontinued_categories)",
+            sql: "SELECT * FROM \"products\" WHERE \"products\".\"category_id\" NOT IN (SELECT \"id\" FROM \"discontinued_categories\")",
             parameters: [],
         },
         "ANY with equals operator": {
-            sql: "SELECT * FROM products WHERE price = ANY (SELECT price FROM competitor_prices WHERE competitor_prices.product_id = products.id)",
+            sql: "SELECT * FROM \"products\" WHERE \"price\" = ANY (SELECT \"price\" FROM \"competitor_prices\" WHERE \"competitor_prices\".\"product_id\" = \"products\".\"id\")",
             parameters: [],
         },
         "ANY with greater than operator": {
-            sql: "SELECT * FROM employees WHERE salary > ANY (SELECT avg_salary FROM department_stats WHERE department_stats.dept_id = employees.department_id)",
+            sql: "SELECT * FROM \"employees\" WHERE \"salary\" > ANY (SELECT \"avg_salary\" FROM \"department_stats\" WHERE \"department_stats\".\"dept_id\" = \"employees\".\"department_id\")",
             parameters: [],
         },
         "ANY with less than operator and parameter": {
-            sql: "SELECT * FROM inventory WHERE quantity < ANY (SELECT threshold FROM alerts WHERE alerts.priority = $1)",
+            sql: "SELECT * FROM \"inventory\" WHERE \"quantity\" < ANY (SELECT \"threshold\" FROM \"alerts\" WHERE \"alerts\".\"priority\" = $1)",
             parameters: [1],
         },
         "SOME with equals operator": {
-            sql: "SELECT * FROM products WHERE price = SOME (SELECT target_price FROM price_targets WHERE price_targets.product_id = products.id)",
+            sql: "SELECT * FROM \"products\" WHERE \"price\" = SOME (SELECT \"target_price\" FROM \"price_targets\" WHERE \"price_targets\".\"product_id\" = \"products\".\"id\")",
             parameters: [],
         },
         "SOME with not equals operator": {
-            sql: "SELECT * FROM users WHERE status <> SOME (SELECT status_value FROM status_transitions WHERE status_transitions.user_id = users.id)",
+            sql: "SELECT * FROM \"users\" WHERE \"status\" <> SOME (SELECT \"status_value\" FROM \"status_transitions\" WHERE \"status_transitions\".\"user_id\" = \"users\".\"id\")",
             parameters: [],
         },
         "ALL with greater than operator": {
-            sql: "SELECT * FROM employees WHERE salary > ALL (SELECT min_salary FROM departments WHERE departments.id = $1)",
+            sql: "SELECT * FROM \"employees\" WHERE \"salary\" > ALL (SELECT \"min_salary\" FROM \"departments\" WHERE \"departments\".\"id\" = $1)",
             parameters: [5],
         },
         "ALL with less than operator": {
-            sql: "SELECT * FROM products WHERE price < ALL (SELECT max_price FROM price_limits WHERE price_limits.category_id = products.category_id)",
+            sql: "SELECT * FROM \"products\" WHERE \"price\" < ALL (SELECT \"max_price\" FROM \"price_limits\" WHERE \"price_limits\".\"category_id\" = \"products\".\"category_id\")",
             parameters: [],
         },
         "ALL with not equals operator": {
-            sql: "SELECT * FROM tickets WHERE status <> ALL (SELECT status FROM excluded_statuses WHERE excluded_statuses.is_active = $1)",
+            sql: "SELECT * FROM \"tickets\" WHERE \"status\" <> ALL (SELECT \"status\" FROM \"excluded_statuses\" WHERE \"excluded_statuses\".\"is_active\" = $1)",
             parameters: [true],
         },
         "combines EXISTS with AND": {
-            sql: "SELECT * FROM users WHERE EXISTS (SELECT * FROM orders WHERE orders.user_id = users.id) AND NOT EXISTS (SELECT * FROM banned_users WHERE banned_users.user_id = users.id)",
+            sql: "SELECT * FROM \"users\" WHERE EXISTS (SELECT * FROM \"orders\" WHERE \"orders\".\"user_id\" = \"users\".\"id\") AND NOT EXISTS (SELECT * FROM \"banned_users\" WHERE \"banned_users\".\"user_id\" = \"users\".\"id\")",
             parameters: [],
         },
         "combines IN with OR": {
-            sql: "SELECT * FROM products WHERE category_id IN (SELECT id FROM featured_categories) OR supplier_id IN (SELECT supplier_id FROM preferred_suppliers)",
+            sql: "SELECT * FROM \"products\" WHERE \"category_id\" IN (SELECT \"id\" FROM \"featured_categories\") OR \"supplier_id\" IN (SELECT \"supplier_id\" FROM \"preferred_suppliers\")",
             parameters: [],
         },
         "combines ALL with regular WHERE condition": {
-            sql: "SELECT * FROM employees WHERE salary > ALL (SELECT min_salary FROM salary_grades WHERE salary_grades.level = $1) AND department_id = $2",
+            sql: "SELECT * FROM \"employees\" WHERE \"salary\" > ALL (SELECT \"min_salary\" FROM \"salary_grades\" WHERE \"salary_grades\".\"level\" = $1) AND \"department_id\" = $2",
             parameters: [5, 10],
         },
     },
@@ -996,15 +1068,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["00:34:56:ab:cd:ef"],
         },
         "query with network function in WHERE clause": {
-            sql: "SELECT * FROM devices WHERE NETWORK(ip_address) = NETWORK($1)",
+            sql: "SELECT * FROM \"devices\" WHERE NETWORK(\"ip_address\") = NETWORK($1)",
             parameters: ["192.168.1.0/24"],
         },
         "query with subnet containment check": {
-            sql: "SELECT * FROM networks WHERE ip_range << $1",
+            sql: "SELECT * FROM \"networks\" WHERE \"ip_range\" << $1",
             parameters: ["10.0.0.0/8"],
         },
         "query with multiple network functions": {
-            sql: "SELECT BROADCAST(ip_address) AS broadcast, NETMASK(ip_address) AS netmask, HOST(ip_address) AS host FROM devices",
+            sql: "SELECT BROADCAST(\"ip_address\") AS \"broadcast\", NETMASK(\"ip_address\") AS \"netmask\", HOST(\"ip_address\") AS \"host\" FROM \"devices\"",
             parameters: [],
         },
     },
@@ -1271,44 +1343,44 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
         },
         // JSON Aggregate Functions
         "json_agg": {
-            sql: "SELECT JSON_AGG(column_name)",
+            sql: "SELECT JSON_AGG(\"column_name\")",
             parameters: [],
         },
         "jsonb_agg": {
-            sql: "SELECT JSONB_AGG(column_name)",
+            sql: "SELECT JSONB_AGG(\"column_name\")",
             parameters: [],
         },
         "json_object_agg": {
-            sql: "SELECT JSON_OBJECT_AGG(key_column, value_column)",
+            sql: "SELECT JSON_OBJECT_AGG(\"key_column\", \"value_column\")",
             parameters: [],
         },
         "jsonb_object_agg": {
-            sql: "SELECT JSONB_OBJECT_AGG(key_column, value_column)",
+            sql: "SELECT JSONB_OBJECT_AGG(\"key_column\", \"value_column\")",
             parameters: [],
         },
         // Integration with Query Builder
         "json functions in SELECT clause": {
-            sql: "SELECT JSONB_PRETTY(data_column) AS pretty_data FROM my_table",
+            sql: "SELECT JSONB_PRETTY(\"data_column\") AS \"pretty_data\" FROM \"my_table\"",
             parameters: [],
         },
         "json functions in WHERE clause": {
-            sql: "SELECT * FROM my_table WHERE JSONB_PATH_EXISTS(data_column, $1)",
+            sql: "SELECT * FROM \"my_table\" WHERE JSONB_PATH_EXISTS(\"data_column\", $1)",
             parameters: ['$.a[*]'],
         },
         "json_typeof in ORDER BY clause": {
-            sql: "SELECT * FROM my_table ORDER BY JSONB_TYPEOF(data_column)",
+            sql: "SELECT * FROM \"my_table\" ORDER BY JSONB_TYPEOF(\"data_column\")",
             parameters: [],
         },
         "json_build_object in SELECT with multiple columns": {
-            sql: "SELECT JSONB_BUILD_OBJECT($1, id, $2, name) AS json_data FROM users",
+            sql: "SELECT JSONB_BUILD_OBJECT($1, \"id\", $2, \"name\") AS \"json_data\" FROM \"users\"",
             parameters: ["id", "name"],
         },
         "json_array_length in HAVING clause": {
-            sql: "SELECT category FROM products GROUP BY category HAVING JSON_ARRAY_LENGTH(tags) > $1",
+            sql: "SELECT \"category\" FROM \"products\" GROUP BY \"category\" HAVING JSON_ARRAY_LENGTH(\"tags\") > $1",
             parameters: [3],
         },
         "json_agg with GROUP BY": {
-            sql: "SELECT user_id, JSON_AGG(data) AS all_data FROM logs GROUP BY user_id",
+            sql: "SELECT \"user_id\", JSON_AGG(\"data\") AS \"all_data\" FROM \"logs\" GROUP BY \"user_id\"",
             parameters: [],
         },
     },
@@ -1338,7 +1410,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["019535d9-3df7-79fb-b466-fa907fa17f9e"],
         },
         "uuid_extract_timestamp with column reference": {
-            sql: "SELECT UUID_EXTRACT_TIMESTAMP(id)",
+            sql: "SELECT UUID_EXTRACT_TIMESTAMP(\"id\")",
             parameters: [],
         },
         "uuid_extract_version": {
@@ -1346,23 +1418,23 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["41db1265-8bc1-4ab3-992f-885799a4af1d"],
         },
         "uuid_extract_version with column reference": {
-            sql: "SELECT UUID_EXTRACT_VERSION(uuid_col)",
+            sql: "SELECT UUID_EXTRACT_VERSION(\"uuid_col\")",
             parameters: [],
         },
         "insert with gen_random_uuid": {
-            sql: "INSERT INTO users (id, name) VALUES (GEN_RANDOM_UUID(), $1)",
+            sql: "INSERT INTO \"users\" (\"id\", \"name\") VALUES (GEN_RANDOM_UUID(), $1)",
             parameters: ["John Doe"],
         },
         "query with uuid functions in WHERE clause": {
-            sql: "SELECT * FROM users WHERE UUID_EXTRACT_VERSION(id) = $1",
+            sql: "SELECT * FROM \"users\" WHERE UUID_EXTRACT_VERSION(\"id\") = $1",
             parameters: [4],
         },
         "query with multiple uuid functions in SELECT": {
-            sql: "SELECT GEN_RANDOM_UUID() AS new_uuid, UUIDV4() AS v4_uuid, UUID_EXTRACT_TIMESTAMP(created_at) AS timestamp, UUID_EXTRACT_VERSION(id) AS version FROM users",
+            sql: "SELECT GEN_RANDOM_UUID() AS \"new_uuid\", UUIDV4() AS \"v4_uuid\", UUID_EXTRACT_TIMESTAMP(\"created_at\") AS \"timestamp\", UUID_EXTRACT_VERSION(\"id\") AS \"version\" FROM \"users\"",
             parameters: [],
         },
         "query with uuidv7 and timestamp extraction": {
-            sql: "SELECT UUID_EXTRACT_TIMESTAMP(UUIDV7()) AS timestamp",
+            sql: "SELECT UUID_EXTRACT_TIMESTAMP(UUIDV7()) AS \"timestamp\"",
             parameters: [],
         },
         "query with uuidv7 and shift parameter": {
@@ -1370,7 +1442,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["-5 minutes"],
         },
         "ORDER BY with uuid_extract_timestamp": {
-            sql: "SELECT * FROM events ORDER BY UUID_EXTRACT_TIMESTAMP(event_id)",
+            sql: "SELECT * FROM \"events\" ORDER BY UUID_EXTRACT_TIMESTAMP(\"event_id\")",
             parameters: [],
         },
     },
@@ -1476,27 +1548,27 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
     },
     arrays: {
         "cardinality": {
-            sql: "SELECT CARDINALITY(arr)",
+            sql: "SELECT CARDINALITY(\"arr\")",
             parameters: [],
         },
         "unnest": {
-            sql: "SELECT UNNEST(arr)",
+            sql: "SELECT UNNEST(\"arr\")",
             parameters: [],
         },
         "unnest with multiple arrays": {
-            sql: "SELECT UNNEST(arr1, arr2)",
+            sql: "SELECT UNNEST(\"arr1\", \"arr2\")",
             parameters: [],
         },
         "array_append": {
-            sql: "SELECT ARRAY_APPEND(arr, $1)",
+            sql: "SELECT ARRAY_APPEND(\"arr\", $1)",
             parameters: [4],
         },
         "array_cat": {
-            sql: "SELECT ARRAY_CAT(arr1, arr2)",
+            sql: "SELECT ARRAY_CAT(\"arr1\", \"arr2\")",
             parameters: [],
         },
         "array_dims": {
-            sql: "SELECT ARRAY_DIMS(arr)",
+            sql: "SELECT ARRAY_DIMS(\"arr\")",
             parameters: [],
         },
         "array_fill": {
@@ -1508,79 +1580,79 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [0],
         },
         "array_length": {
-            sql: "SELECT ARRAY_LENGTH(arr, $1)",
+            sql: "SELECT ARRAY_LENGTH(\"arr\", $1)",
             parameters: [1],
         },
         "array_lower": {
-            sql: "SELECT ARRAY_LOWER(arr, $1)",
+            sql: "SELECT ARRAY_LOWER(\"arr\", $1)",
             parameters: [1],
         },
         "array_ndims": {
-            sql: "SELECT ARRAY_NDIMS(arr)",
+            sql: "SELECT ARRAY_NDIMS(\"arr\")",
             parameters: [],
         },
         "array_position": {
-            sql: "SELECT ARRAY_POSITION(arr, $1)",
+            sql: "SELECT ARRAY_POSITION(\"arr\", $1)",
             parameters: ["target"],
         },
         "array_position with start": {
-            sql: "SELECT ARRAY_POSITION(arr, $1, $2)",
+            sql: "SELECT ARRAY_POSITION(\"arr\", $1, $2)",
             parameters: ["target", 2],
         },
         "array_positions": {
-            sql: "SELECT ARRAY_POSITIONS(arr, $1)",
+            sql: "SELECT ARRAY_POSITIONS(\"arr\", $1)",
             parameters: ["target"],
         },
         "array_prepend": {
-            sql: "SELECT ARRAY_PREPEND($1, arr)",
+            sql: "SELECT ARRAY_PREPEND($1, \"arr\")",
             parameters: [1],
         },
         "array_remove": {
-            sql: "SELECT ARRAY_REMOVE(arr, $1)",
+            sql: "SELECT ARRAY_REMOVE(\"arr\", $1)",
             parameters: ["value"],
         },
         "array_replace": {
-            sql: "SELECT ARRAY_REPLACE(arr, $1, $2)",
+            sql: "SELECT ARRAY_REPLACE(\"arr\", $1, $2)",
             parameters: ["old", "new"],
         },
         "array_reverse": {
-            sql: "SELECT ARRAY_REVERSE(arr)",
+            sql: "SELECT ARRAY_REVERSE(\"arr\")",
             parameters: [],
         },
         "array_sample": {
-            sql: "SELECT ARRAY_SAMPLE(arr, $1)",
+            sql: "SELECT ARRAY_SAMPLE(\"arr\", $1)",
             parameters: [5],
         },
         "array_shuffle": {
-            sql: "SELECT ARRAY_SHUFFLE(arr)",
+            sql: "SELECT ARRAY_SHUFFLE(\"arr\")",
             parameters: [],
         },
         "array_sort": {
-            sql: "SELECT ARRAY_SORT(arr)",
+            sql: "SELECT ARRAY_SORT(\"arr\")",
             parameters: [],
         },
         "array_sort with descending": {
-            sql: "SELECT ARRAY_SORT(arr, $1)",
+            sql: "SELECT ARRAY_SORT(\"arr\", $1)",
             parameters: [true],
         },
         "array_sort with descending and nulls first": {
-            sql: "SELECT ARRAY_SORT(arr, $1, $2)",
+            sql: "SELECT ARRAY_SORT(\"arr\", $1, $2)",
             parameters: [true, true],
         },
         "array_to_string": {
-            sql: "SELECT ARRAY_TO_STRING(arr, $1)",
+            sql: "SELECT ARRAY_TO_STRING(\"arr\", $1)",
             parameters: [","],
         },
         "array_to_string with null string": {
-            sql: "SELECT ARRAY_TO_STRING(arr, $1, $2)",
+            sql: "SELECT ARRAY_TO_STRING(\"arr\", $1, $2)",
             parameters: [",", "NULL"],
         },
         "array_upper": {
-            sql: "SELECT ARRAY_UPPER(arr, $1)",
+            sql: "SELECT ARRAY_UPPER(\"arr\", $1)",
             parameters: [1],
         },
         "trim_array": {
-            sql: "SELECT TRIM_ARRAY(arr, $1)",
+            sql: "SELECT TRIM_ARRAY(\"arr\", $1)",
             parameters: [2],
         },
     },
@@ -1590,7 +1662,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [null, "default", "value"],
         },
         "nullif with equal values": {
-            sql: "SELECT NULLIF(test, test)",
+            sql: "SELECT NULLIF(\"test\", \"test\")",
             parameters: undefined,
         },
         "greatest with numbers": {
@@ -1602,7 +1674,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: undefined,
         },
         "coalesce in select clause": {
-            sql: "SELECT id COALESCE(name, $1) FROM users",
+            sql: "SELECT \"id\" COALESCE(\"name\", $1) FROM \"users\"",
             parameters: undefined,
         },
         "nullif with values": {
@@ -1610,11 +1682,11 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: undefined,
         },
         "greatest with column names": {
-            sql: "SELECT GREATEST(price_a, price_b, price_c) FROM products",
+            sql: "SELECT GREATEST(\"price_a\", \"price_b\", \"price_c\") FROM \"products\"",
             parameters: undefined,
         },
         "least with mixed values": {
-            sql: "SELECT LEAST($1, min_price, $2)",
+            sql: "SELECT LEAST($1, \"min_price\", $2)",
             parameters: undefined,
         },
     },
@@ -1632,7 +1704,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["foo","content"],
         },
         "xmlelement with attributes": {
-            sql: "SELECT XMLELEMENT(NAME $1, XMLATTRIBUTES(bar AS xyz), $2)",
+            sql: "SELECT XMLELEMENT(NAME $1, XMLATTRIBUTES(\"bar\" AS \"xyz\"), $2)",
             parameters: [
                 "foo",
                 "content"
@@ -1643,11 +1715,11 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["foo","content1", "content2", "content3"],
         },
         "xmlattributes": {
-            sql: "SELECT XMLATTRIBUTES(a, b AS c)",
+            sql: "SELECT XMLATTRIBUTES(\"a\", \"b\" AS \"c\")",
             parameters: [],
         },
         "xmlforest": {
-            sql: "SELECT XMLFOREST(abc AS foo, \"123\" AS bar)",
+            sql: "SELECT XMLFOREST(\"abc\" AS \"foo\", \"123\" AS \"bar\")",
             parameters: [],
         },
         "xmlpi": {
@@ -1663,7 +1735,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["<content>abc</content>", "1.0"],
         },
         "xmlagg": {
-            sql: "SELECT XMLAGG(xml_column)",
+            sql: "SELECT XMLAGG(\"xml_column\")",
             parameters: [],
         },
         "xmlExists": {
@@ -1683,11 +1755,11 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["<fragment>content</fragment>"],
         },
         "xpath": {
-            sql: "SELECT XPATH($1, xml_col, $2)",
+            sql: "SELECT XPATH($1, \"xml_col\", $2)",
             parameters: ["/my:a/text()", "[['my', 'http://example.com']]"],
         },
         "xpathExists": {
-            sql: "SELECT XPATH_EXISTS($1, xml_col, $2)",
+            sql: "SELECT XPATH_EXISTS($1, \"xml_col\", $2)",
             parameters: ["/my:a/text()", "[['my', 'http://example.com']]"],
         },
         "tableToXml": {
@@ -1769,7 +1841,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["english", '{"a": "fat rats"}', "string"],
         },
         "tsvector_to_array": {
-            sql: "SELECT TSVECTOR_TO_ARRAY(search_vector)",
+            sql: "SELECT TSVECTOR_TO_ARRAY(\"search_vector\")",
             parameters: [],
         },
         "plainto_tsquery with query": {
@@ -1793,27 +1865,27 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["fat", "cat"],
         },
         "setweight with vector and weight": {
-            sql: "SELECT SETWEIGHT(search_vector, $1)",
+            sql: "SELECT SETWEIGHT(\"search_vector\", $1)",
             parameters: ["A"],
         },
         "strip with tsvector": {
-            sql: "SELECT STRIP(search_vector)",
+            sql: "SELECT STRIP(\"search_vector\")",
             parameters: [],
         },
         "ts_delete": {
-            sql: "SELECT TS_DELETE(search_vector, $1)",
+            sql: "SELECT TS_DELETE(\"search_vector\", $1)",
             parameters: ["fat"],
         },
         "ts_filter": {
-            sql: "SELECT TS_FILTER(search_vector, $1)",
+            sql: "SELECT TS_FILTER(\"search_vector\", $1)",
             parameters: ["{A,B}"],
         },
         "ts_rank with vector and query": {
-            sql: "SELECT TS_RANK(search_vector, TO_TSQUERY($1))",
+            sql: "SELECT TS_RANK(\"search_vector\", TO_TSQUERY($1))",
             parameters: ["cat"],
         },
         "ts_rank_cd": {
-            sql: "SELECT TS_RANK_CD(search_vector, TO_TSQUERY($1))",
+            sql: "SELECT TS_RANK_CD(\"search_vector\", TO_TSQUERY($1))",
             parameters: ["cat"],
         },
         "ts_headline with document and query": {
@@ -1857,15 +1929,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["SELECT vector FROM apod"],
         },
         "text search in WHERE clause": {
-            sql: "SELECT * FROM articles WHERE TO_TSVECTOR($1, content) @@ TO_TSQUERY($2, $3)",
+            sql: "SELECT * FROM \"articles\" WHERE TO_TSVECTOR($1, \"content\") @@ TO_TSQUERY($2, $3)",
             parameters: ["english", "fat", "cat"],
         },
         "ranking in SELECT clause": {
-            sql: "SELECT TS_RANK(search_vector, TO_TSQUERY($1)) AS rank FROM articles",
+            sql: "SELECT TS_RANK(\"search_vector\", TO_TSQUERY($1)) AS \"rank\" FROM \"articles\"",
             parameters: ["cat"],
         },
         "headline in SELECT clause": {
-            sql: "SELECT TS_HEADLINE(content, TO_TSQUERY($1), $2) AS snippet FROM articles",
+            sql: "SELECT TS_HEADLINE(\"content\", TO_TSQUERY($1), $2) AS \"snippet\" FROM \"articles\"",
             parameters: ["cat", "MaxWords=20"],
         },
         "should accept no arguments": {
@@ -1897,15 +1969,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["english", "The Fat Rats"],
         },
         "should accept two arguments (vector, query) tsRank": {
-            sql: "SELECT TS_RANK(search_vector, TO_TSQUERY($1))",
+            sql: "SELECT TS_RANK(\"search_vector\", TO_TSQUERY($1))",
             parameters: ["cat"],
         },
         "should accept three arguments (vector, query, normalization) tsRank": {
-            sql: "SELECT TS_RANK(search_vector, TO_TSQUERY($1), $2)",
+            sql: "SELECT TS_RANK(\"search_vector\", TO_TSQUERY($1), $2)",
             parameters: ["cat", 2],
         },
         "should accept four arguments (weights, vector, query, normalization) tsRank": {
-            sql: "SELECT TS_RANK($1, search_vector, TO_TSQUERY($2), $3)",
+            sql: "SELECT TS_RANK($1, \"search_vector\", TO_TSQUERY($2), $3)",
             parameters: ["{0.1,0.2,0.4,1.0}", "cat", 2],
         },
         "should accept two arguments (document, query) tsHeadline": {
@@ -1935,35 +2007,35 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [4],
         },
         "lag with value only": {
-            sql: "SELECT LAG(salary)",
+            sql: "SELECT LAG(\"salary\")",
             parameters: [],
         },
         "lag with offset": {
-            sql: "SELECT LAG(salary, $1)",
+            sql: "SELECT LAG(\"salary\", $1)",
             parameters: [1],
         },
         "lag with offset and default": {
-            sql: "SELECT LAG(salary, $1, $2)",
+            sql: "SELECT LAG(\"salary\", $1, $2)",
             parameters: [1, 0],
         },
         "lead with value only": {
-            sql: "SELECT LEAD(salary)",
+            sql: "SELECT LEAD(\"salary\")",
             parameters: [],
         },
         "lead with offset and default": {
-            sql: "SELECT LEAD(salary, $1, $2)",
+            sql: "SELECT LEAD(\"salary\", $1, $2)",
             parameters: [1, 0],
         },
         "firstValue": {
-            sql: "SELECT FIRST_VALUE(salary)",
+            sql: "SELECT FIRST_VALUE(\"salary\")",
             parameters: [],
         },
         "lastValue": {
-            sql: "SELECT LAST_VALUE(salary)",
+            sql: "SELECT LAST_VALUE(\"salary\")",
             parameters: [],
         },
         "nthValue": {
-            sql: "SELECT NTH_VALUE(salary, $1)",
+            sql: "SELECT NTH_VALUE(\"salary\", $1)",
             parameters: [2],
         },
         "over empty": {
@@ -1971,15 +2043,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [],
         },
         "over with partition by": {
-            sql: "SELECT ROW_NUMBER() OVER (PARTITION BY department_id)",
+            sql: "SELECT ROW_NUMBER() OVER (PARTITION BY \"department_id\")",
             parameters: [],
         },
         "over with partition by and order by": {
-            sql: "SELECT ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC)",
+            sql: "SELECT ROW_NUMBER() OVER (PARTITION BY \"department_id\" ORDER BY \"salary\" DESC)",
             parameters: [],
         },
         "over with order by only": {
-            sql: "SELECT ROW_NUMBER() OVER (ORDER BY salary DESC)",
+            sql: "SELECT ROW_NUMBER() OVER (ORDER BY \"salary\" DESC)",
             parameters: [],
         },
     },
@@ -2001,109 +2073,109 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [],
         },
         "generate_series with identifier reference": {
-            sql: "SELECT GENERATE_SERIES(start_val, end_val, step_val)",
+            sql: "SELECT GENERATE_SERIES(\"start_val\", \"end_val\", \"step_val\")",
             parameters: [],
         },
         "generate_subscripts(array, dim)": {
-            sql: "SELECT GENERATE_SUBSCRIPTS(arr, $1)",
+            sql: "SELECT GENERATE_SUBSCRIPTS(\"arr\", $1)",
             parameters: [1],
         },
         "generate_subscripts(array, dim, reverse)": {
-            sql: "SELECT GENERATE_SUBSCRIPTS(arr, $1, $2)",
+            sql: "SELECT GENERATE_SUBSCRIPTS(\"arr\", $1, $2)",
             parameters: [1, true],
         },
         "generate_subscripts with 2D array": {
-            sql: "SELECT GENERATE_SUBSCRIPTS(matrix, $1)",
+            sql: "SELECT GENERATE_SUBSCRIPTS(\"matrix\", $1)",
             parameters: [2],
         },
         "generate_subscripts with reverse for second dimension": {
-            sql: "SELECT GENERATE_SUBSCRIPTS(matrix, $1, $2)",
+            sql: "SELECT GENERATE_SUBSCRIPTS(\"matrix\", $1, $2)",
             parameters: [2, true],
         },
         "generate_series in FROM clause": {
-            sql: "SELECT * FROM GENERATE_SERIES($1, $2) AS n",
+            sql: "SELECT * FROM GENERATE_SERIES($1, $2) AS \"n\"",
             parameters: [1, 5],
         },
         "generate_series with alias in SELECT": {
-            sql: "SELECT GENERATE_SERIES($1, $2) AS series",
+            sql: "SELECT GENERATE_SERIES($1, $2) AS \"series\"",
             parameters: [1, 3],
         },
         "multiple SRF in same query": {
-            sql: "SELECT GENERATE_SERIES($1, $2) AS series, GENERATE_SUBSCRIPTS(arr, $3) AS subscripts",
+            sql: "SELECT GENERATE_SERIES($1, $2) AS \"series\", GENERATE_SUBSCRIPTS(\"arr\", $3) AS \"subscripts\"",
             parameters: [1, 3, 1],
         },
     },
     range: {
         "lower for range": {
-            sql: "SELECT LOWER(price_range)",
+            sql: "SELECT LOWER(\"price_range\")",
             parameters: [],
         },
         "upper for range": {
-            sql: "SELECT UPPER(date_range)",
+            sql: "SELECT UPPER(\"date_range\")",
             parameters: [],
         },
         "isempty for range": {
-            sql: "SELECT ISEMPTY(time_range)",
+            sql: "SELECT ISEMPTY(\"time_range\")",
             parameters: [],
         },
         "lowerInc for range": {
-            sql: "SELECT LOWER_INC(num_range)",
+            sql: "SELECT LOWER_INC(\"num_range\")",
             parameters: [],
         },
         "upperInc for range": {
-            sql: "SELECT UPPER_INC(ts_range)",
+            sql: "SELECT UPPER_INC(\"ts_range\")",
             parameters: [],
         },
         "lowerInf for range": {
-            sql: "SELECT LOWER_INF(int_range)",
+            sql: "SELECT LOWER_INF(\"int_range\")",
             parameters: [],
         },
         "upperInf for range": {
-            sql: "SELECT UPPER_INF(bigint_range)",
+            sql: "SELECT UPPER_INF(\"bigint_range\")",
             parameters: [],
         },
         "rangeMerge": {
-            sql: "SELECT RANGE_MERGE(range1, range2)",
+            sql: "SELECT RANGE_MERGE(\"range1\", \"range2\")",
             parameters: [],
         },
         "multirange": {
-            sql: "SELECT MULTIRANGE(single_range)",
+            sql: "SELECT MULTIRANGE(\"single_range\")",
             parameters: [],
         },
         "multirangeLower": {
-            sql: "SELECT LOWER(price_multirange)",
+            sql: "SELECT LOWER(\"price_multirange\")",
             parameters: [],
         },
         "multirangeUpper": {
-            sql: "SELECT UPPER(date_multirange)",
+            sql: "SELECT UPPER(\"date_multirange\")",
             parameters: [],
         },
         "multirangeIsempty": {
-            sql: "SELECT ISEMPTY(time_multirange)",
+            sql: "SELECT ISEMPTY(\"time_multirange\")",
             parameters: [],
         },
         "multirangeLowerInc": {
-            sql: "SELECT LOWER_INC(num_multirange)",
+            sql: "SELECT LOWER_INC(\"num_multirange\")",
             parameters: [],
         },
         "multirangeUpperInc": {
-            sql: "SELECT UPPER_INC(ts_multirange)",
+            sql: "SELECT UPPER_INC(\"ts_multirange\")",
             parameters: [],
         },
         "multirangeLowerInf": {
-            sql: "SELECT LOWER_INF(int_multirange)",
+            sql: "SELECT LOWER_INF(\"int_multirange\")",
             parameters: [],
         },
         "multirangeUpperInf": {
-            sql: "SELECT UPPER_INF(bigint_multirange)",
+            sql: "SELECT UPPER_INF(\"bigint_multirange\")",
             parameters: [],
         },
         "multirangeRangeMerge": {
-            sql: "SELECT RANGE_MERGE(mr)",
+            sql: "SELECT RANGE_MERGE(\"mr\")",
             parameters: [],
         },
         "unnestMultirange": {
-            sql: "SELECT UNNEST(my_multirange)",
+            sql: "SELECT UNNEST(\"my_multirange\")",
             parameters: [],
         },
     },
@@ -2149,11 +2221,11 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [],
         },
         "merge_action with alias": {
-            sql: "SELECT MERGE_ACTION() AS action",
+            sql: "SELECT MERGE_ACTION() AS \"action\"",
             parameters: [],
         },
         "query with merge_action and other columns": {
-            sql: "SELECT MERGE_ACTION() AS action_type, product_id, in_stock, quantity FROM products",
+            sql: "SELECT MERGE_ACTION() AS \"action_type\", \"product_id\", \"in_stock\", \"quantity\" FROM \"products\"",
             parameters: [],
         },
     },
@@ -2243,15 +2315,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: undefined,
         },
         "has_any_column_privilege with table and privilege": {
-            sql: "SELECT HAS_ANY_COLUMN_PRIVILEGE(users, $1)",
+            sql: "SELECT HAS_ANY_COLUMN_PRIVILEGE(\"users\", $1)",
             parameters: ["SELECT"],
         },
         "has_any_column_privilege with user table and privilege": {
-            sql: "SELECT HAS_ANY_COLUMN_PRIVILEGE($1, users, $2)",
+            sql: "SELECT HAS_ANY_COLUMN_PRIVILEGE($1, \"users\", $2)",
             parameters: ["current_user", "SELECT"],
         },
         "has_column_privilege": {
-            sql: "SELECT HAS_COLUMN_PRIVILEGE(users, id, $1)",
+            sql: "SELECT HAS_COLUMN_PRIVILEGE(\"users\", \"id\", $1)",
             parameters: ["SELECT"],
         },
         "has_database_privilege": {
@@ -2271,11 +2343,11 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["public", "CREATE"],
         },
         "has_sequence_privilege": {
-            sql: "SELECT HAS_SEQUENCE_PRIVILEGE(user_id_seq, $1)",
+            sql: "SELECT HAS_SEQUENCE_PRIVILEGE(\"user_id_seq\", $1)",
             parameters: ["USAGE"],
         },
         "has_table_privilege": {
-            sql: "SELECT HAS_TABLE_PRIVILEGE(users, $1)",
+            sql: "SELECT HAS_TABLE_PRIVILEGE(\"users\", $1)",
             parameters: ["INSERT"],
         },
         "has_tablespace_privilege": {
@@ -2283,7 +2355,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["pg_default", "CREATE"],
         },
         "has_type_privilege": {
-            sql: "SELECT HAS_TYPE_PRIVILEGE(my_type, $1)",
+            sql: "SELECT HAS_TYPE_PRIVILEGE(\"my_type\", $1)",
             parameters: ["USAGE"],
         },
         "pg_has_role": {
@@ -2291,7 +2363,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["postgres", "MEMBER"],
         },
         "row_security_active": {
-            sql: "SELECT ROW_SECURITY_ACTIVE(users)",
+            sql: "SELECT ROW_SECURITY_ACTIVE(\"users\")",
             parameters: undefined,
         },
         "acldefault": {
@@ -2299,7 +2371,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["TABLE", 1],
         },
         "aclexplode": {
-            sql: "SELECT ACLEXPLODE(users.acl)",
+            sql: "SELECT ACLEXPLODE(\"users\".\"acl\")",
             parameters: undefined,
         },
         "makeaclitem": {
@@ -2319,7 +2391,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["calculate"],
         },
         "pg_table_is_visible": {
-            sql: "SELECT PG_TABLE_IS_VISIBLE(users)",
+            sql: "SELECT PG_TABLE_IS_VISIBLE(\"users\")",
             parameters: undefined,
         },
         "pg_type_is_visible": {
@@ -2351,7 +2423,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [12345],
         },
         "pg_get_serial_sequence": {
-            sql: "SELECT PG_GET_SERIAL_SEQUENCE(users, id)",
+            sql: "SELECT PG_GET_SERIAL_SEQUENCE(\"users\", \"id\")",
             parameters: undefined,
         },
         "pg_get_triggerdef": {
@@ -2363,7 +2435,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [1],
         },
         "pg_get_viewdef": {
-            sql: "SELECT PG_GET_VIEWDEF(my_view)",
+            sql: "SELECT PG_GET_VIEWDEF(\"my_view\")",
             parameters: undefined,
         },
         "pg_index_has_property": {
@@ -2399,7 +2471,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["pg_class", 12345, 0],
         },
         "col_description": {
-            sql: "SELECT COL_DESCRIPTION(users, id)",
+            sql: "SELECT COL_DESCRIPTION(\"users\", \"id\")",
             parameters: undefined,
         },
         "obj_description": {
@@ -2523,15 +2595,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: undefined,
         },
         "query with info function in SELECT clause": {
-            sql: "SELECT id, CURRENT_DATABASE() AS db, SESSION_USER AS session_user_name FROM users",
+            sql: "SELECT \"id\", CURRENT_DATABASE() AS \"db\", SESSION_USER AS \"session_user_name\" FROM \"users\"",
             parameters: undefined,
         },
         "query with privilege check in WHERE clause": {
-            sql: "SELECT * FROM table_names WHERE HAS_TABLE_PRIVILEGE($1, table_names, $2)",
+            sql: "SELECT * FROM \"table_names\" WHERE HAS_TABLE_PRIVILEGE($1, \"table_names\", $2)",
             parameters: ["current_user", "SELECT"],
         },
         "query with pg_typeof in SELECT": {
-            sql: "SELECT id, PG_TYPEOF(id) AS type FROM users",
+            sql: "SELECT \"id\", PG_TYPEOF(\"id\") AS \"type\" FROM \"users\"",
             parameters: undefined,
         },
         "query with multiple session info functions": {
@@ -2761,15 +2833,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [],
         },
         "pg_column_size": {
-            sql: "SELECT PG_COLUMN_SIZE(my_column)",
+            sql: "SELECT PG_COLUMN_SIZE(\"my_column\")",
             parameters: [],
         },
         "pg_column_compression": {
-            sql: "SELECT PG_COLUMN_COMPRESSION(my_column)",
+            sql: "SELECT PG_COLUMN_COMPRESSION(\"my_column\")",
             parameters: [],
         },
         "pg_column_toast_chunk_id": {
-            sql: "SELECT PG_COLUMN_TOAST_CHUNK_ID(my_column)",
+            sql: "SELECT PG_COLUMN_TOAST_CHUNK_ID(\"my_column\")",
             parameters: [],
         },
         "pg_database_size": {
@@ -2777,15 +2849,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["mydb"],
         },
         "pg_indexes_size": {
-            sql: "SELECT PG_INDEXES_SIZE(my_table)",
+            sql: "SELECT PG_INDEXES_SIZE(\"my_table\")",
             parameters: [],
         },
         "pg_relation_size": {
-            sql: "SELECT PG_RELATION_SIZE(my_table)",
+            sql: "SELECT PG_RELATION_SIZE(\"my_table\")",
             parameters: [],
         },
         "pg_relation_size with fork": {
-            sql: "SELECT PG_RELATION_SIZE(my_table, $1)",
+            sql: "SELECT PG_RELATION_SIZE(\"my_table\", $1)",
             parameters: ["main"],
         },
         "pg_size_bytes": {
@@ -2797,7 +2869,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: [10737418240],
         },
         "pg_table_size": {
-            sql: "SELECT PG_TABLE_SIZE(my_table)",
+            sql: "SELECT PG_TABLE_SIZE(\"my_table\")",
             parameters: [],
         },
         "pg_tablespace_size": {
@@ -2805,15 +2877,15 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["pg_default"],
         },
         "pg_total_relation_size": {
-            sql: "SELECT PG_TOTAL_RELATION_SIZE(my_table)",
+            sql: "SELECT PG_TOTAL_RELATION_SIZE(\"my_table\")",
             parameters: [],
         },
         "pg_relation_filenode": {
-            sql: "SELECT PG_RELATION_FILENODE(my_table)",
+            sql: "SELECT PG_RELATION_FILENODE(\"my_table\")",
             parameters: [],
         },
         "pg_relation_filepath": {
-            sql: "SELECT PG_RELATION_FILEPATH(my_table)",
+            sql: "SELECT PG_RELATION_FILEPATH(\"my_table\")",
             parameters: [],
         },
         "pg_filenode_relation": {
@@ -2833,31 +2905,31 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
             parameters: ["public"],
         },
         "pg_partition_tree": {
-            sql: "SELECT PG_PARTITION_TREE(my_table)",
+            sql: "SELECT PG_PARTITION_TREE(\"my_table\")",
             parameters: [],
         },
         "pg_partition_ancestors": {
-            sql: "SELECT PG_PARTITION_ANCESTORS(my_table)",
+            sql: "SELECT PG_PARTITION_ANCESTORS(\"my_table\")",
             parameters: [],
         },
         "pg_partition_root": {
-            sql: "SELECT PG_PARTITION_ROOT(my_table)",
+            sql: "SELECT PG_PARTITION_ROOT(\"my_table\")",
             parameters: [],
         },
         "brin_summarize_new_values": {
-            sql: "SELECT BRIN_SUMMARIZE_NEW_VALUES(my_index)",
+            sql: "SELECT BRIN_SUMMARIZE_NEW_VALUES(\"my_index\")",
             parameters: [],
         },
         "brin_summarize_range": {
-            sql: "SELECT BRIN_SUMMARIZE_RANGE(my_index, $1)",
+            sql: "SELECT BRIN_SUMMARIZE_RANGE(\"my_index\", $1)",
             parameters: [1000],
         },
         "brin_desummarize_range": {
-            sql: "SELECT BRIN_DESUMMARIZE_RANGE(my_index, $1)",
+            sql: "SELECT BRIN_DESUMMARIZE_RANGE(\"my_index\", $1)",
             parameters: [1000],
         },
         "gin_clean_pending_list": {
-            sql: "SELECT GIN_CLEAN_PENDING_LIST(my_index)",
+            sql: "SELECT GIN_CLEAN_PENDING_LIST(\"my_index\")",
             parameters: [],
         },
         "pg_ls_dir": {
@@ -2987,7 +3059,7 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
     },
     statistics: {
         "pg_mcv_list_items with identifier": {
-            sql: "SELECT PG_MCV_LIST_ITEMS(stxdmcv)",
+            sql: "SELECT PG_MCV_LIST_ITEMS(\"stxdmcv\")",
             parameters: undefined,
         },
         "pg_mcv_list_items with literal": {
@@ -3092,267 +3164,267 @@ export const testSql: Record<string, Record<string, TestExpectation>> = {
 
         // Comparison Operators
         "eq": {
-            sql: "SELECT id = $1",
+            sql: "SELECT \"id\" = $1",
             parameters: [1],
         },
         "ne": {
-            sql: "SELECT status <> $1",
+            sql: "SELECT \"status\" <> $1",
             parameters: ["active"],
         },
         "notEq": {
-            sql: "SELECT status != $1",
+            sql: "SELECT \"status\" != $1",
             parameters: ["active"],
         },
         "gt": {
-            sql: "SELECT age > $1",
+            sql: "SELECT \"age\" > $1",
             parameters: [18],
         },
         "lt": {
-            sql: "SELECT age < $1",
+            sql: "SELECT \"age\" < $1",
             parameters: [65],
         },
         "lte": {
-            sql: "SELECT age <= $1",
+            sql: "SELECT \"age\" <= $1",
             parameters: [100],
         },
         "gte": {
-            sql: "SELECT age >= $1",
+            sql: "SELECT \"age\" >= $1",
             parameters: [0],
         },
 
         // Pattern Matching Operators
         "like (override, no suffix)": {
-            sql: "SELECT name LIKE $1",
+            sql: "SELECT \"name\" LIKE $1",
             parameters: ["%test%"],
         },
         "notLike": {
-            sql: "name NOT LIKE $1",
+            sql: "\"name\" NOT LIKE $1",
             parameters: ["%test%"],
         },
         "ilike (override, no suffix)": {
-            sql: "name ILIKE $1",
+            sql: "\"name\" ILIKE $1",
             parameters: ["%test%"],
         },
         "notIlike": {
-            sql: "name NOT ILIKE $1",
+            sql: "\"name\" NOT ILIKE $1",
             parameters: ["%test%"],
         },
         "matchRegex (no suffix)": {
-            sql: "email ~ $1",
+            sql: "\"email\" ~ $1",
             parameters: ["^[a-z]+@"],
         },
         "matchRegexInsensitive": {
-            sql: "email ~* $1",
+            sql: "\"email\" ~* $1",
             parameters: ["^[A-Z]+@"],
         },
         "notMatchRegex": {
-            sql: "email !~ $1",
+            sql: "\"email\" !~ $1",
             parameters: ["^[0-9]+"],
         },
         "notMatchRegexInsensitive": {
-            sql: "email !~* $1",
+            sql: "\"email\" !~* $1",
             parameters: ["^[0-9]+"],
         },
         "similarTo (no suffix)": {
-            sql: "pattern SIMILAR TO $1",
+            sql: "\"pattern\" SIMILAR TO $1",
             parameters: ["%(a|b)%"],
         },
         "notSimilarTo": {
-            sql: "pattern NOT SIMILAR TO $1",
+            sql: "\"pattern\" NOT SIMILAR TO $1",
             parameters: ["%(a|b)%"],
         },
 
         // Logical Operators
         "exclamation": {
-            sql: "active !",
+            sql: "\"active\" !",
             parameters: [],
         },
         "is": {
-            sql: "deleted_at IS $1",
+            sql: "\"deleted_at\" IS $1",
             parameters: [null],
         },
         "isNot": {
-            sql: "deleted_at IS NOT $1",
+            sql: "\"deleted_at\" IS NOT $1",
             parameters: [null],
         },
 
         // Arithmetic Operators
         "plus": {
-            sql: "price + tax",
+            sql: "\"price\" + \"tax\"",
             parameters: [],
         },
         "minus": {
-            sql: "price - discount",
+            sql: "\"price\" - \"discount\"",
             parameters: [],
         },
         "multiply (no suffix)": {
-            sql: "quantity * $1",
+            sql: "\"quantity\" * $1",
             parameters: [2],
         },
         "divide": {
-            sql: "total / count",
+            sql: "\"total\" / \"count\"",
             parameters: [],
         },
         "modulo": {
-            sql: "number % $1",
+            sql: "\"number\" % $1",
             parameters: [10],
         },
         "textCat": {
-            sql: "first_name || last_name",
+            sql: "\"first_name\" || \"last_name\"",
             parameters: [],
         },
 
         // Bitwise Operators
         "bitwiseAnd": {
-            sql: "flags1 & flags2",
+            sql: "\"flags1\" & \"flags2\"",
             parameters: [],
         },
         "bitwiseOr": {
-            sql: "flags1 | flags2",
+            sql: "\"flags1\" | \"flags2\"",
             parameters: [],
         },
         "bitwiseXor": {
-            sql: "flags1 ^ flags2",
+            sql: "\"flags1\" ^ \"flags2\"",
             parameters: [],
         },
         "bitwiseLeftShift": {
-            sql: "value << $1",
+            sql: "\"value\" << $1",
             parameters: [2],
         },
         "bitwiseRightShift": {
-            sql: "value >> $1",
+            sql: "\"value\" >> $1",
             parameters: [2],
         },
         "bitwiseLeftShiftAssign": {
-            sql: "value <<= $1",
+            sql: "\"value\" <<= $1",
             parameters: [2],
         },
         "bitwiseRightShiftAssign": {
-            sql: "value >>= $1",
+            sql: "\"value\" >>= $1",
             parameters: [2],
         },
 
         // PostgreSQL-Specific Operators
         "atSign": {
-            sql: "point1 @ point2",
+            sql: "\"point1\" @ \"point2\"",
             parameters: [],
         },
         "hash": {
-            sql: "value # $1",
+            sql: "\"value\" # $1",
             parameters: [5],
         },
         "caretAt": {
-            sql: "point1 ^@ point2",
+            sql: "\"point1\" ^@ \"point2\"",
             parameters: [],
         },
 
         // Geometric Operators
         "totalLength": {
-            sql: "path @-@",
+            sql: "\"path\" @-@",
             parameters: [],
         },
         "middle": {
-            sql: "box @@",
+            sql: "\"box\" @@",
             parameters: [],
         },
         "closestPoint": {
-            sql: "line1 ## line2",
+            sql: "\"line1\" ## \"line2\"",
             parameters: [],
         },
         "distance (no suffix)": {
-            sql: "point1 <-> point2",
+            sql: "\"point1\" <-> \"point2\"",
             parameters: [],
         },
         "containment (no suffix)": {
-            sql: "circle @> point",
+            sql: "\"circle\" @> \"point\"",
             parameters: [],
         },
         "containedBy": {
-            sql: "point <@ circle",
+            sql: "\"point\" <@ \"circle\"",
             parameters: [],
         },
         "notExtendRight": {
-            sql: "box1 &< box2",
+            sql: "\"box1\" &< \"box2\"",
             parameters: [],
         },
         "notExtendLeft": {
-            sql: "box1 &> box2",
+            sql: "\"box1\" &> \"box2\"",
             parameters: [],
         },
         "strictlyBelow": {
-            sql: "box1 <<| box2",
+            sql: "\"box1\" <<| \"box2\"",
             parameters: [],
         },
         "strictlyAbove": {
-            sql: "box1 |>> box2",
+            sql: "\"box1\" |>> \"box2\"",
             parameters: [],
         },
         "notExtendAbove": {
-            sql: "box1 &<| box2",
+            sql: "\"box1\" &<| \"box2\"",
             parameters: [],
         },
         "notExtendBelow": {
-            sql: "box1 |&> box2",
+            sql: "\"box1\" |&> \"box2\"",
             parameters: [],
         },
         "below": {
-            sql: "box1 <^ box2",
+            sql: "\"box1\" <^ \"box2\"",
             parameters: [],
         },
         "above": {
-            sql: "box1 >^ box2",
+            sql: "\"box1\" >^ \"box2\"",
             parameters: [],
         },
         "crosses (no suffix)": {
-            sql: "path1 ?# path2",
+            sql: "\"path1\" ?# \"path2\"",
             parameters: [],
         },
         "horizontal": {
-            sql: "line1 ?- line2",
+            sql: "\"line1\" ?- \"line2\"",
             parameters: [],
         },
         "vertical": {
-            sql: "line1 ?| line2",
+            sql: "\"line1\" ?| \"line2\"",
             parameters: [],
         },
         "perpendicular": {
-            sql: "line1 ?-| line2",
+            sql: "\"line1\" ?-| \"line2\"",
             parameters: [],
         },
         "isParallel (no suffix)": {
-            sql: "line1 ?|| line2",
+            sql: "\"line1\" ?|| \"line2\"",
             parameters: [],
         },
         "sameAs": {
-            sql: "box1 ~= box2",
+            sql: "\"box1\" ~= \"box2\"",
             parameters: [],
         },
 
         // Between operators
         "between": {
-            sql: "age BETWEEN $1 AND $2",
+            sql: "\"age\" BETWEEN $1 AND $2",
             parameters: [18, 65],
         },
         "notBetween": {
-            sql: "age NOT BETWEEN $1 AND $2",
+            sql: "\"age\" NOT BETWEEN $1 AND $2",
             parameters: [18, 65],
         },
         "betweenSymmetric": {
-            sql: "age BETWEEN SYMMETRIC $1 AND $2",
+            sql: "\"age\" BETWEEN SYMMETRIC $1 AND $2",
             parameters: [18, 65],
         },
         "notBetweenSymmetric": {
-            sql: "age NOT BETWEEN SYMMETRIC $1 AND $2",
+            sql: "\"age\" NOT BETWEEN SYMMETRIC $1 AND $2",
             parameters: [18, 65],
         },
 
         // Complex Query Examples
         "Combined operators in WHERE clause": {
-            sql: "SELECT name FROM users WHERE age >= $1 AND status = $2",
+            sql: "SELECT \"name\" FROM \"users\" WHERE \"age\" >= $1 AND \"status\" = $2",
             parameters: [18, "active"],
         },
         "Pattern matching with OR": {
-            sql: "SELECT email FROM users WHERE email LIKE $1 OR email LIKE $2",
+            sql: "SELECT \"email\" FROM \"users\" WHERE \"email\" LIKE $1 OR \"email\" LIKE $2",
             parameters: ["%@gmail.com", "%@yahoo.com"],
         },
     },

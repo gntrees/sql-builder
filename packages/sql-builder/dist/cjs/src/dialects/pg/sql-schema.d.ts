@@ -9,14 +9,14 @@ export declare class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> =
     getJSON(): {
         sql: {
             [k: string]: {
-                query: import("../../converter-types").FunctionListType[];
+                query: import("@gntrees/sql-builder-cli").FunctionListType[];
                 tags: string[];
                 tokens: (string | import("./base-raw-query-builder").ParameterType)[];
             };
         };
     };
 }
-declare class SqlSchemaQueryBuilder {
+export declare class SqlSchemaQueryBuilder {
     protected sqlBuilder: QueryBuilder;
     constructor(sqlSchema: QueryBuilder);
     protected tagList: string[];
@@ -24,4 +24,3 @@ declare class SqlSchemaQueryBuilder {
     getTags(): string[];
     tags(...tags: string[]): this;
 }
-export {};

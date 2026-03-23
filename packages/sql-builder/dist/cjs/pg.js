@@ -33,13 +33,17 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QueryInstance = exports.QueryBuilder = void 0;
+exports.ColumnSchema = exports.TableSchema = exports.DBSchema = exports.QueryInstance = exports.QueryBuilder = void 0;
 exports.sqlBuilder = sqlBuilder;
 exports.sqlSchema = sqlSchema;
 const pg_1 = require("pg");
 const queryInstanceModule = __importStar(require("./src/dialects/pg/generated/query-instance"));
 const queryBuilderModule = __importStar(require("./src/dialects/pg/query-builder"));
 const sql_schema_1 = require("./src/dialects/pg/sql-schema");
+const db_schema_1 = require("./src/dialects/pg/db-schema");
+Object.defineProperty(exports, "DBSchema", { enumerable: true, get: function () { return db_schema_1.DBSchema; } });
+Object.defineProperty(exports, "TableSchema", { enumerable: true, get: function () { return db_schema_1.TableSchema; } });
+Object.defineProperty(exports, "ColumnSchema", { enumerable: true, get: function () { return db_schema_1.ColumnSchema; } });
 const { QueryInstance } = queryInstanceModule;
 exports.QueryInstance = QueryInstance;
 const { QueryBuilder } = queryBuilderModule;

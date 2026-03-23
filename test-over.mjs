@@ -1,4 +1,4 @@
-import { convert } from './packages/sql-builder-converter/dist/index.mjs';
+import { convert } from './packages/sql-builder-cli/dist/index.mjs';
 
 const sql = 'SELECT ROW_NUMBER() OVER (ORDER BY created_at) AS rn FROM users';
 const result = await convert(sql);

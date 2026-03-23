@@ -135,7 +135,7 @@ class OverrideQueryBuilder extends override_operator_functions_1.OperatorFunctio
         }
         const columns = [];
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens = [];
@@ -167,7 +167,7 @@ class OverrideQueryBuilder extends override_operator_functions_1.OperatorFunctio
         }
         const columns = [];
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens = [];
@@ -206,7 +206,7 @@ class OverrideQueryBuilder extends override_operator_functions_1.OperatorFunctio
         }
         const columns = [];
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens = [];
@@ -376,7 +376,7 @@ class OverrideQueryBuilder extends override_operator_functions_1.OperatorFunctio
         }
         let hasAssignments = false;
         set.forEach((item) => {
-            if (item !== null && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder)) {
+            if (item !== null && typeof item === "object" && !(item instanceof query_builder_1.QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([column, value]) => {
                     const resolvedColumn = super.resolveIdentifierStatement(column);
@@ -1525,6 +1525,18 @@ class OverrideQueryBuilder extends override_operator_functions_1.OperatorFunctio
         }
         const resolvedColumns = cols.map((item) => super.resolveStatement(item));
         super.pushSeparatedTokens(resolvedColumns, ",");
+        return this.endClass();
+    }
+    schemaColumn(db, table, column) {
+        this.c(`${table}.${column}`);
+        return this.endClass();
+    }
+    schemaTable(db, table) {
+        this.t(table);
+        return this.endClass();
+    }
+    schemaDatabase(db) {
+        this.i(db);
         return this.endClass();
     }
 }

@@ -30,7 +30,7 @@ export class SqlSchema {
         return json;
     }
 }
-class SqlSchemaQueryBuilder {
+export class SqlSchemaQueryBuilder {
     sqlBuilder;
     constructor(sqlSchema) {
         this.sqlBuilder = sqlSchema;

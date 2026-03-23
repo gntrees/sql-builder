@@ -4,6 +4,7 @@ exports.CoreQueryBuilder = void 0;
 const format_1 = require("../../../pg/format");
 const base_raw_query_builder_1 = require("./base-raw-query-builder");
 const query_builder_1 = require("./query-builder");
+const pg_1 = require("@gntrees/sql-builder/pg");
 class CoreQueryBuilder {
     query = { sql: [] };
     schemaQueryBuilder = [];
@@ -30,6 +31,18 @@ class CoreQueryBuilder {
         this.callLevel -= 1;
         return this;
     }
+    isColumnSchema(value) {
+        return value instanceof pg_1.ColumnSchema;
+    }
+    isTableSchema(value) {
+        return value instanceof pg_1.TableSchema;
+    }
+    isDbSchema(value) {
+        return value instanceof pg_1.DBSchema;
+    }
+    isSchemaObject(value) {
+        return this.isColumnSchema(value) || this.isTableSchema(value) || this.isDbSchema(value);
+    }
     normalizeSchemaParam(paramRaw, type) {
         const paramsArray = Array.isArray(paramRaw) ? paramRaw : [paramRaw];
         const normalizeSingleParam = (param) => {
@@ -40,6 +53,27 @@ class CoreQueryBuilder {
                             typeof param === "boolean" ? "boolean" :
                                 param === null ? "null" : "undefined",
                     name: param, arguments: []
+                };
+            }
+            if (this.isColumnSchema(param)) {
+                return {
+                    paramType: "string",
+                    name: `${param.tableSchema.tableSchemaName}.${param.columnSchemaName}`,
+                    arguments: [],
+                };
+            }
+            if (this.isTableSchema(param)) {
+                return {
+                    paramType: "string",
+                    name: param.tableSchemaName,
+                    arguments: [],
+                };
+            }
+            if (this.isDbSchema(param)) {
+                return {
+                    paramType: "string",
+                    name: param.dbSchemaName,
+                    arguments: [],
                 };
             }
             if (Array.isArray(param)) {
@@ -94,32 +128,40 @@ class CoreQueryBuilder {
         this.schemaQueryBuilder.push(schema);
         return schema;
     }
-    getSqlWithInstance() {
+    getSqlCore() {
         if (!this.queryInstance)
             throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         if (formatParamHandler === "pg") {
             let literalIndex = 0;
-            return joinSqlTokens(this.query.sql.map((item) => {
+            const sqlParams = [];
+            const sqlTokens = joinSqlTokens(this.query.sql.map((item) => {
                 if (item instanceof base_raw_query_builder_1.ParameterType) {
+                    // if (item.type === "literal") {
+                    // }
                     if (item.type === "literal") {
                         literalIndex += 1;
                         return `$${literalIndex}`;
                     }
                     if (item.type === "identifier") {
-                        return (0, format_1.format)("%I", item.value);
+                        sqlParams.push(item.value);
+                        return "%I";
                     }
                     if (item.type === "percent") {
-                        return (0, format_1.format)("%%", item.value);
+                        sqlParams.push(item.value);
+                        return "%%";
                     }
                     if (item.type === "string") {
-                        return (0, format_1.format)("%s", item.value);
+                        sqlParams.push(item.value);
+                        return "%s";
                     }
                     return "";
+                    // return formatPgParameterToken(item, literalIndex);
                 }
                 return item.trim();
             }));
+            return (0, format_1.format)(sqlTokens, ...sqlParams);
         }
         let paramIndex = 0;
         return joinSqlTokens(this.query.sql.map((item) => {
@@ -130,16 +172,16 @@ class CoreQueryBuilder {
             return item;
         }));
     }
-    getParametersWithInstance() {
+    getParametersCore() {
         if (!this.queryInstance)
             throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
-        if (formatParamHandler === "pg") {
+        if (formatParamHandler === "pg")
             return this.query.sql
-                .filter((i) => i instanceof base_raw_query_builder_1.ParameterType && i.type === "literal")
+                .filter((i) => i instanceof base_raw_query_builder_1.ParameterType
+                && i.type === "literal")
                 .map((i) => i.value);
-        }
         if (formatParamHandler === "pg-format") {
             return this.query.sql
                 .filter((i) => i instanceof base_raw_query_builder_1.ParameterType)
@@ -149,11 +191,19 @@ class CoreQueryBuilder {
             .filter((i) => i instanceof base_raw_query_builder_1.ParameterType)
             .map((i) => i.value);
     }
-    getSqlWithParametersWithInstance() {
+    getSqlWithParametersCore() {
         if (!this.queryInstance)
             throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
+        if (formatParamHandler === "pg") {
+            return joinSqlTokens(this.query.sql.map((item) => {
+                if (item instanceof base_raw_query_builder_1.ParameterType) {
+                    return formatPgParameterWithValue(item);
+                }
+                return item.trim();
+            }));
+        }
         let paramIndex = 0;
         return joinSqlTokens(this.query.sql.map((item) => {
             if (item instanceof base_raw_query_builder_1.ParameterType) {
@@ -197,13 +247,22 @@ class CoreQueryBuilder {
         if (item === null) {
             return [this.createLiteralParameter(null)];
         }
+        if (this.isColumnSchema(item)) {
+            return [this.createIdentifierParameter(`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`)];
+        }
+        if (this.isTableSchema(item)) {
+            return [this.createIdentifierParameter(item.tableSchemaName)];
+        }
+        if (this.isDbSchema(item)) {
+            return [this.createIdentifierParameter(item.dbSchemaName)];
+        }
         if (item instanceof query_builder_1.QueryBuilder) {
             return item.getTokens();
         }
         if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
             return [this.createLiteralParameter(item)];
         }
-        return [this.createLiteralParameter(item)];
+        return [this.createLiteralParameter(String(item))];
     }
     resolveStatements(values) {
         return values.map((item) => this.resolveStatement(item));
@@ -212,8 +271,14 @@ class CoreQueryBuilder {
         if (item === undefined || item === null || item === "") {
             return [];
         }
-        if (item instanceof query_builder_1.QueryBuilder) {
-            return item.getTokens();
+        if (this.isColumnSchema(item)) {
+            return [this.createIdentifierParameter(`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`)];
+        }
+        if (this.isTableSchema(item)) {
+            return [this.createIdentifierParameter(item.tableSchemaName)];
+        }
+        if (this.isDbSchema(item)) {
+            return [this.createIdentifierParameter(item.dbSchemaName)];
         }
         if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
             if (item === "*") {
@@ -224,17 +289,29 @@ class CoreQueryBuilder {
             }
             return [this.createIdentifierParameter(item)];
         }
-        return [this.createIdentifierParameter(item)];
+        if (item instanceof query_builder_1.QueryBuilder) {
+            return item.getTokens();
+        }
+        return [this.createIdentifierParameter(String(item))];
     }
     resolveStringStatement(item) {
         if (item === undefined || item === null || item === "") {
             return [];
         }
-        if (item instanceof query_builder_1.QueryBuilder) {
-            return item.getTokens();
+        if (this.isColumnSchema(item)) {
+            return [`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`];
+        }
+        if (this.isTableSchema(item)) {
+            return [item.tableSchemaName];
+        }
+        if (this.isDbSchema(item)) {
+            return [item.dbSchemaName];
         }
         if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
             return [String(item)];
+        }
+        if (item instanceof query_builder_1.QueryBuilder) {
+            return item.getTokens();
         }
         throw new Error(`Unsupported string statement type: ${typeof item}`);
     }
@@ -312,42 +389,7 @@ function shouldInsertSpace(prev, next) {
 }
 function toSql(formatParamHandler, item, index) {
     if (item instanceof base_raw_query_builder_1.ParameterType) {
-        if (formatParamHandler === "pg") {
-            if (item.type === "literal") {
-                return `$${index}`;
-            }
-            else if (item.type === "identifier") {
-                return (0, format_1.format)("%I", item.value);
-            }
-            else if (item.type === "percent") {
-                return (0, format_1.format)("%%", item.value);
-            }
-            else if (item.type === "string") {
-                return (0, format_1.format)("%s", item.value);
-            }
-        }
-        else if (typeof formatParamHandler === "function") {
-            return formatParamHandler({
-                index,
-                value: item.value,
-                type: item.type,
-            });
-        }
-        else {
-            if (item.type === "literal") {
-                return "%L";
-            }
-            else if (item.type === "identifier") {
-                return "%I";
-            }
-            else if (item.type === "percent") {
-                return "%%";
-            }
-            else if (item.type === "string") {
-                return "%s";
-            }
-        }
-        return "";
+        return formatParameterToken(formatParamHandler, item, index);
     }
     else {
         return item.trim();
@@ -356,25 +398,89 @@ function toSql(formatParamHandler, item, index) {
 function toSqlWithParameters(formatParamHandler, item, index) {
     if (item instanceof base_raw_query_builder_1.ParameterType) {
         if (item.type === "literal") {
-            if (formatParamHandler === "pg") {
-                if (item.value === null)
-                    return "NULL";
-                if (item.value === true)
-                    return "TRUE";
-                if (item.value === false)
-                    return "FALSE";
-                return (0, format_1.format)("%L", item.value);
-            }
-            if (typeof formatParamHandler === "function") {
-                return formatParamHandler({
-                    index,
-                    value: item.value,
-                    type: item.type,
-                });
-            }
-            return (0, format_1.format)("%L", item.value);
+            return formatLiteralWithParameters(formatParamHandler, item, index);
         }
         return toSql(formatParamHandler, item, index);
     }
     return item;
+}
+function formatPgParameterToken(item, literalIndex) {
+    if (item.type === "literal") {
+        return `$${literalIndex}`;
+    }
+    if (item.type === "identifier") {
+        return (0, format_1.format)("%I", item.value);
+    }
+    if (item.type === "percent") {
+        return (0, format_1.format)("%%", item.value);
+    }
+    if (item.type === "string") {
+        return (0, format_1.format)("%s", item.value);
+    }
+    return "";
+}
+function formatPgParameterWithValue(item) {
+    if (item.type === "literal") {
+        if (item.value === null)
+            return "NULL";
+        if (item.value === true)
+            return "TRUE";
+        if (item.value === false)
+            return "FALSE";
+        return (0, format_1.format)("%L", item.value);
+    }
+    if (item.type === "identifier") {
+        return (0, format_1.format)("%I", item.value);
+    }
+    if (item.type === "percent") {
+        return (0, format_1.format)("%%", item.value);
+    }
+    if (item.type === "string") {
+        return (0, format_1.format)("%s", item.value);
+    }
+    return "";
+}
+function formatParameterToken(formatParamHandler, item, index) {
+    if (formatParamHandler === "pg") {
+        return formatPgParameterToken(item, index);
+    }
+    if (typeof formatParamHandler === "function") {
+        return formatParamHandler({
+            index,
+            value: item.value,
+            type: item.type,
+        });
+    }
+    if (item.type === "literal") {
+        return "%L";
+    }
+    if (item.type === "identifier") {
+        return "%I";
+    }
+    if (item.type === "percent") {
+        return "%%";
+    }
+    if (item.type === "string") {
+        return "%s";
+    }
+    return "";
+}
+function formatLiteralWithParameters(formatParamHandler, item, index) {
+    if (formatParamHandler === "pg") {
+        if (item.value === null)
+            return "NULL";
+        if (item.value === true)
+            return "TRUE";
+        if (item.value === false)
+            return "FALSE";
+        return (0, format_1.format)("%L", item.value);
+    }
+    if (typeof formatParamHandler === "function") {
+        return formatParamHandler({
+            index,
+            value: item.value,
+            type: item.type,
+        });
+    }
+    return (0, format_1.format)("%L", item.value);
 }

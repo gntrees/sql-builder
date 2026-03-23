@@ -1,5 +1,6 @@
 import type { ParameterType } from "./base-raw-query-builder";
 import type { QueryBuilder } from "./query-builder";
+import type { DBSchema, TableSchema, ColumnSchema } from "./db-schema";
 
 export interface QueryType {
     sql: (string | ParameterType)[];
@@ -69,7 +70,16 @@ export type OperatorType = typeof OPERATORS[number];
 // - QueryBuilder -> used for identifiers (columns, tables) and subqueries
 // - ParameterType -> internal parameter type for resolved values
 // - undefined -> return base function OR omit parameter (for postgres functions)
-export type Statement = QueryBuilder | number | string | boolean | null | undefined;
+export type Statement =
+    | QueryBuilder
+    | number
+    | string
+    | boolean
+    | null
+    | undefined
+    | DBSchema
+    | TableSchema
+    | ColumnSchema;
 export type AllPossibleFunctionParamType =
     Statement |
     Statement[] |

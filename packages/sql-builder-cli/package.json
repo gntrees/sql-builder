@@ -1,0 +1,46 @@
+{
+  "name": "@gntrees/sql-builder-cli",
+  "version": "0.0.1",
+  "description": "SQL to query builder converter for gntrees-sql-builder",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "bin": {
+    "sql-builder-cli": "./dist/esm/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "bun run prebuild && bun run build:cjs && bun run build:esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "test": "rm -rf test-dumps/* && bun run tests/run-tests.ts"
+  },
+  "dependencies": {
+    "@gntrees/sql-builder": "workspace:*",
+    "@pgsql/enums": "^17.6.2",
+    "@pgsql/traverse": "^17.2.4",
+    "@pgsql/types": "^17.6.2",
+    "@pgsql/utils": "^17.8.12",
+    "kysely": "^0.27.6",
+    "kysely-codegen": "^0.19.0",
+    "pgsql-parser": "^17.6.2",
+    "pg": "^8.13.3",
+    "prettier": "^3.8.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.13",
+    "@types/bun": "latest"
+  }
+}

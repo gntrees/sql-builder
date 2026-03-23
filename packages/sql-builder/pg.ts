@@ -3,6 +3,7 @@ import * as queryInstanceModule from "./src/dialects/pg/generated/query-instance
 import * as queryBuilderModule from "./src/dialects/pg/query-builder";
 import type { RequiredDBInstance } from "./src/dialects/pg/types";
 import { SqlSchema } from "./src/dialects/pg/sql-schema";
+import { DBSchema, TableSchema, ColumnSchema } from "./src/dialects/pg/db-schema";
 
 const { QueryInstance } = queryInstanceModule;
 const { QueryBuilder } = queryBuilderModule;
@@ -48,4 +49,4 @@ export function sqlSchema() {
   return new SqlSchema();
 }
 
-export { QueryBuilder, QueryInstance };
+export { QueryBuilder, QueryInstance, DBSchema, TableSchema, ColumnSchema };

@@ -1,5 +1,5 @@
 import { parse } from 'pgsql-parser';
-import { normalizeNode } from './packages/sql-builder-converter/dist/src/utils/resolvers.js';
+import { normalizeNode } from './packages/sql-builder-cli/dist/src/utils/resolvers.js';
 
 const sql = 'SELECT ROW_NUMBER() OVER (ORDER BY created_at) AS rn FROM users';
 const ast = await parse(sql);

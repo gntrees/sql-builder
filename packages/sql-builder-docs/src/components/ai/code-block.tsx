@@ -1,5 +1,6 @@
 "use client"
 
+import { Buffer } from "buffer"
 import { CheckIcon, CopyIcon } from "lucide-react"
 import {
   type ComponentProps,
@@ -58,7 +59,11 @@ const extractQueryBuildingPart = (source: string) => {
   return queryBuildingPart.trim()
 }
 const run = async (queryBuildingPart: string) => {
+  if (typeof globalThis !== "undefined" && !globalThis.Buffer) {
+    globalThis.Buffer = Buffer
+  }
   const { sqlBuilder } = await import("@gntrees/sql-builder/pg/builder")
+  
   const functionBody = `const q = sqlBuilder();\n${queryBuildingPart}\nreturn query;`
   const func = new Function("sqlBuilder", functionBody)
   const query = func(sqlBuilder)

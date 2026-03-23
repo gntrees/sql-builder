@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "outDir": "./dist/cjs",
+        "rootDir": ".",
+        "declaration": true,
+        "declarationDir": "./dist/cjs",
+        "emitDeclarationOnly": false,
+        "allowImportingTsExtensions": false,
+        "verbatimModuleSyntax": false,
+        "moduleResolution": "node"
+    },
+    "include": ["index.ts", "cli.ts", "src/**/*.ts"],
+    "exclude": ["tests/**", "**/*.test.ts"]
+}

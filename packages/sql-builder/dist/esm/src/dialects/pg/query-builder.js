@@ -1,19 +1,19 @@
 import { SchemaOverrider } from "./generated/schema-overrider";
 export class QueryBuilder extends SchemaOverrider {
     getSql() {
-        return this.getSqlWithInstance();
+        return this.getSqlCore();
     }
     getParameters() {
-        return this.getParametersWithInstance();
+        return this.getParametersCore();
     }
     getSqlAndParameters() {
         return {
-            sql: this.getSqlWithInstance(),
-            parameters: this.getParametersWithInstance(),
+            sql: this.getSqlCore(),
+            parameters: this.getParametersCore(),
         };
     }
     getSqlWithParameters() {
-        return this.getSqlWithParametersWithInstance();
+        return this.getSqlWithParametersCore();
     }
     execute(meta) {
         if (!this.queryInstance)

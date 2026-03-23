@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SqlSchema = void 0;
+exports.SqlSchemaQueryBuilder = exports.SqlSchema = void 0;
 class SqlSchema {
     definitions;
     constructor(definitions = {}) {
@@ -51,3 +51,4 @@ class SqlSchemaQueryBuilder {
         return this;
     }
 }
+exports.SqlSchemaQueryBuilder = SqlSchemaQueryBuilder;

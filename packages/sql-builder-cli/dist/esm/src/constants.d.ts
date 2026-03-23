@@ -1,0 +1,10 @@
+import type { BoolExprType, SortByDir } from "./ast-types";
+export declare const DEFAULT_FORMAT_PARAM_HANDLER = "pg";
+export declare const DEFAULT_EXEC_HANDLER = "async ({ sql, parameters, meta }): Promise<any> => {\n    return \"Executed\";\n}";
+export declare const JOIN_METHOD_MAP: Record<string, string>;
+export declare const BOOL_OP_METHOD: Record<BoolExprType, string>;
+export declare const SORT_DIR_METHOD: Record<SortByDir, string | null>;
+export declare const SORTBY_NULLS_METHOD: Record<string, string | null>;
+export declare const SET_OP_METHOD: Record<string, string>;
+export declare const LOCK_STRENGTH_METHOD: Record<string, string>;
+export declare const LOCK_WAIT_POLICY: Record<string, 'nowait' | 'skipLocked'>;

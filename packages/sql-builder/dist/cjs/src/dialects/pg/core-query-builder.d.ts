@@ -1,7 +1,8 @@
-import type { FunctionListType } from "../../converter-types";
+import type { FunctionListType } from "@gntrees/sql-builder-cli";
 import { ParameterType } from "./base-raw-query-builder";
 import type { QueryInstance } from "./generated/query-instance";
 import type { PGFunction } from "./postgres-functions-list";
+import { ColumnSchema, DBSchema, TableSchema } from "@gntrees/sql-builder/pg";
 import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, Statement } from "./types";
 export declare class CoreQueryBuilder {
     protected query: QueryType;
@@ -14,11 +15,15 @@ export declare class CoreQueryBuilder {
     getSchema(): FunctionListType[];
     startClass(): this;
     endClass(): this;
+    private isColumnSchema;
+    private isTableSchema;
+    private isDbSchema;
+    protected isSchemaObject(value: unknown): value is ColumnSchema | TableSchema | DBSchema;
     protected normalizeSchemaParam(paramRaw: AllPossibleFunctionParamType, type: FunctionListType['paramType']): FunctionListType["arguments"];
     protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType;
-    protected getSqlWithInstance(): string;
-    protected getParametersWithInstance(): ParameterValueType[];
-    protected getSqlWithParametersWithInstance(): string;
+    protected getSqlCore(): string;
+    protected getParametersCore(): ParameterValueType[];
+    protected getSqlWithParametersCore(): string;
     protected createLiteralParameter(value: ParameterValueType): ParameterType;
     protected createIdentifierParameter(value: string | number | boolean): ParameterType;
     protected createStringParameter(value: string): ParameterType;

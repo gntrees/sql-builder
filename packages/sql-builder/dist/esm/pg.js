@@ -2,6 +2,7 @@ import { Client } from "pg";
 import * as queryInstanceModule from "./src/dialects/pg/generated/query-instance";
 import * as queryBuilderModule from "./src/dialects/pg/query-builder";
 import { SqlSchema } from "./src/dialects/pg/sql-schema";
+import { DBSchema, TableSchema, ColumnSchema } from "./src/dialects/pg/db-schema";
 const { QueryInstance } = queryInstanceModule;
 const { QueryBuilder } = queryBuilderModule;
 class QueryInstanceBuilder extends QueryInstance {
@@ -38,4 +39,4 @@ export function sqlBuilder(url) {
 export function sqlSchema() {
     return new SqlSchema();
 }
-export { QueryBuilder, QueryInstance };
+export { QueryBuilder, QueryInstance, DBSchema, TableSchema, ColumnSchema };

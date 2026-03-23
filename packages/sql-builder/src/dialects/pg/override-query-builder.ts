@@ -150,7 +150,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const columns: (string | ParameterType)[][] = []
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens: QueryBuilder["query"]["sql"] = [];
@@ -184,7 +184,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const columns: (string | ParameterType)[][] = []
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens: QueryBuilder["query"]["sql"] = [];
@@ -226,7 +226,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const columns: (string | ParameterType)[][] = []
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens: QueryBuilder["query"]["sql"] = [];
@@ -401,7 +401,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         let hasAssignments = false;
         set.forEach((item) => {
-            if (item !== null && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item !== null && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([column, value]) => {
                     const resolvedColumn = super.resolveIdentifierStatement(column);
@@ -1039,20 +1039,20 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         if (this.query.sql.length === 0) {
             const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-            this.query.sql.push("(", ...baseQuery, ")");
+                this.query.sql.push("(", ...baseQuery, ")");
             }
             resolvedQueries.slice(1).forEach((tokens) => {
-            super.union();
-            if (tokens) {
-                this.query.sql.push("(", ...tokens, ")");
-            }
+                super.union();
+                if (tokens) {
+                    this.query.sql.push("(", ...tokens, ")");
+                }
             });
             return this.endClass();
         }
         resolvedQueries.forEach((tokens) => {
             super.union();
             if (tokens) {
-            this.query.sql.push("(", ...tokens, ")");
+                this.query.sql.push("(", ...tokens, ")");
             }
         });
         return this.endClass();
@@ -1618,4 +1618,16 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         return this.endClass();
     }
 
+    schemaColumn(db: string, table: string, column: string) {
+        this.c(`${table}.${column}`);
+        return this.endClass();
+    }
+    schemaTable(db: string, table: string) {
+        this.t(table);
+        return this.endClass();
+    }
+    schemaDatabase(db: string) {
+        this.i(db);
+        return this.endClass();
+    }
 }

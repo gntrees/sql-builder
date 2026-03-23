@@ -132,7 +132,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const columns = [];
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens = [];
@@ -164,7 +164,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const columns = [];
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens = [];
@@ -203,7 +203,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const columns = [];
         cols.forEach((item) => {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([alias, column]) => {
                     const tokens = [];
@@ -373,7 +373,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         let hasAssignments = false;
         set.forEach((item) => {
-            if (item !== null && typeof item === "object" && !(item instanceof QueryBuilder)) {
+            if (item !== null && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
                 const entries = Object.entries(item);
                 entries.forEach(([column, value]) => {
                     const resolvedColumn = super.resolveIdentifierStatement(column);
@@ -1522,6 +1522,18 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         const resolvedColumns = cols.map((item) => super.resolveStatement(item));
         super.pushSeparatedTokens(resolvedColumns, ",");
+        return this.endClass();
+    }
+    schemaColumn(db, table, column) {
+        this.c(`${table}.${column}`);
+        return this.endClass();
+    }
+    schemaTable(db, table) {
+        this.t(table);
+        return this.endClass();
+    }
+    schemaDatabase(db) {
+        this.i(db);
         return this.endClass();
     }
 }

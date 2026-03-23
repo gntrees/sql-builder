@@ -1,5 +1,4 @@
 import { QueryInstance } from "../src/dialects/pg/generated/query-instance";
-import { QueryBuilder } from "../src/dialects/pg/query-builder";
 class QueryInstanceBuilder extends QueryInstance {
     setFormatParamHandler(formatParamHandler) {
         this.dbInstance.formatParamHandler = formatParamHandler;
@@ -19,4 +18,3 @@ export function sqlBuilder() {
     };
     return new QueryInstanceBuilder(requiredDbInstance);
 }
-export { QueryBuilder, QueryInstance };
