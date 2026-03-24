@@ -1,7 +1,7 @@
 import type { A_Const, FuncCall, List, String } from '../ast-types.js';
 import type { FunctionListType } from '../types.ts';
 import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray, toCamelCase } from '../utils/resolvers.js';
-import functionList from '@gntrees/sql-builder/src/dialects/pg/generated/function-list.json';
+import functionList from '@gntrees/sql-builder-shared';
 
 // const currentDir = dirname(fileURLToPath(import.meta.url));
 // const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
@@ -83,7 +83,7 @@ const specialNodeValues: Record<string, (node: any) => FunctionListType[] | Func
         const result: FunctionListType[] = [];
         const funcName = node.FuncCall.funcname?.map(resolveNode).flat().map((r: any) => r.name.toUpperCase()).join('_') || "";
         
-        const availableFuncName = functionList.allMethods.find((f) => f === toCamelCase(funcName));
+        const availableFuncName = functionList.allMethods.find((f: string) => f === toCamelCase(funcName));
         if (!availableFuncName) {
             return fallbackNode(node);
         }

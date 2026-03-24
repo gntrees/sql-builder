@@ -3,7 +3,7 @@ import { writeFile } from "node:fs/promises";
 import { convert, generate } from "./index.js";
 
 const USAGE = `Usage:
-  npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--schema=true] [--output="./query.ts"]
+  npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--sqlSchema=true] [--dbSchema=true] [--output="./query.ts"]
   npx @gntrees/sql-builder-cli generate --url="postgres://..." [--output="./db-name.schema.ts"]`;
 
 type ParsedArgs = {
@@ -11,7 +11,8 @@ type ParsedArgs = {
   sql?: string;
   url?: string;
   output?: string;
-  schema?: boolean;
+  sqlSchema?: boolean;
+  dbSchema?: boolean;
 };
 
 const parseArgs = (args: string[]): ParsedArgs => {
@@ -19,7 +20,8 @@ const parseArgs = (args: string[]): ParsedArgs => {
   let sql: string | undefined;
   let url: string | undefined;
   let output: string | undefined;
-  let schema: boolean | undefined;
+  let sqlSchema: boolean | undefined;
+  let dbSchema: boolean | undefined;
 
   for (const arg of rest) {
     if (arg.startsWith("--sql=")) {
@@ -31,17 +33,21 @@ const parseArgs = (args: string[]): ParsedArgs => {
     if (arg.startsWith("--output=")) {
       output = arg.slice("--output=".length);
     }
-    if (arg.startsWith("--schema=")) {
-      const schemaValue = arg.slice("--schema=".length).toLowerCase();
-      schema = schemaValue === "true";
+    if (arg.startsWith("--sqlSchema=")) {
+      const schemaValue = arg.slice("--sqlSchema=".length).toLowerCase();
+      sqlSchema = schemaValue === "true";
+    }
+    if (arg.startsWith("--dbSchema=")) {
+      const schemaValue = arg.slice("--dbSchema=".length).toLowerCase();
+      dbSchema = schemaValue === "true";
     }
   }
 
-  return { command, sql, url, output, schema };
+  return { command, sql, url, output, sqlSchema, dbSchema };
 };
 
 const main = async () => {
-  const { command, sql, url, output, schema } = parseArgs(process.argv.slice(2));
+  const { command, sql, url, output, sqlSchema, dbSchema } = parseArgs(process.argv.slice(2));
 
   if (!command || command === "help" || command === "--help" || command === "-h") {
     console.log(USAGE);
@@ -67,7 +73,7 @@ const main = async () => {
     }
 
     try {
-      const result = await convert(sql, { schema });
+      const result = await convert(sql, { sqlSchema, dbSchema });
       if (output) {
         await writeFile(output, result.formatted + "\n", "utf8");
         process.stdout.write(`Written output to ${output}\n`);

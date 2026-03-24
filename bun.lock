@@ -39,6 +39,7 @@
       },
       "dependencies": {
         "@gntrees/sql-builder": "workspace:*",
+        "@gntrees/sql-builder-shared": "workspace:*",
         "@pgsql/enums": "^17.6.2",
         "@pgsql/traverse": "^17.2.4",
         "@pgsql/types": "^17.6.2",
@@ -57,8 +58,8 @@
         "typescript": "^5.9.3",
       },
     },
-    "packages/sql-builder-docs-3": {
-      "name": "sql-builder-docs-3",
+    "packages/sql-builder-docs": {
+      "name": "sql-builder-docs",
       "dependencies": {
         "@codemirror/lang-javascript": "^6.2.5",
         "@codemirror/lang-sql": "^6.10.0",
@@ -98,6 +99,16 @@
         "vite": "^7.3.1",
         "vite-tsconfig-paths": "^5.1.4",
         "vitest": "^3.0.5",
+      },
+    },
+    "packages/sql-builder-shared": {
+      "name": "@gntrees/sql-builder-shared",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5.9.3",
       },
     },
   },
@@ -253,6 +264,8 @@
     "@gntrees/sql-builder": ["@gntrees/sql-builder@workspace:packages/sql-builder"],
 
     "@gntrees/sql-builder-cli": ["@gntrees/sql-builder-cli@workspace:packages/sql-builder-cli"],
+
+    "@gntrees/sql-builder-shared": ["@gntrees/sql-builder-shared@workspace:packages/sql-builder-shared"],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
@@ -1146,7 +1159,7 @@
 
     "split2": ["split2@4.2.0", "", {}, "sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg=="],
 
-    "sql-builder-docs-3": ["sql-builder-docs-3@workspace:packages/sql-builder-docs-3"],
+    "sql-builder-docs": ["sql-builder-docs@workspace:packages/sql-builder-docs"],
 
     "srvx": ["srvx@0.11.13", "", { "bin": { "srvx": "bin/srvx.mjs" } }, "sha512-oknN6qduuMPafxKtHucUeG32Q963pjriA5g3/Bl05cwEsUe5VVbIU4qR9LrALHbipSCyBe+VmfDGGydqazDRkw=="],
 

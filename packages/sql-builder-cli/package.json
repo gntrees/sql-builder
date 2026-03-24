@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@gntrees/sql-builder": "workspace:*",
+    "@gntrees/sql-builder-shared": "workspace:*",
     "@pgsql/enums": "^17.6.2",
     "@pgsql/traverse": "^17.2.4",
     "@pgsql/types": "^17.6.2",

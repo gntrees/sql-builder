@@ -4,7 +4,7 @@ exports.CoreQueryBuilder = void 0;
 const format_1 = require("../../../pg/format");
 const base_raw_query_builder_1 = require("./base-raw-query-builder");
 const query_builder_1 = require("./query-builder");
-const pg_1 = require("@gntrees/sql-builder/pg");
+const db_schema_1 = require("./db-schema");
 class CoreQueryBuilder {
     query = { sql: [] };
     schemaQueryBuilder = [];
@@ -32,13 +32,13 @@ class CoreQueryBuilder {
         return this;
     }
     isColumnSchema(value) {
-        return value instanceof pg_1.ColumnSchema;
+        return value instanceof db_schema_1.ColumnSchema;
     }
     isTableSchema(value) {
-        return value instanceof pg_1.TableSchema;
+        return value instanceof db_schema_1.TableSchema;
     }
     isDbSchema(value) {
-        return value instanceof pg_1.DBSchema;
+        return value instanceof db_schema_1.DBSchema;
     }
     isSchemaObject(value) {
         return this.isColumnSchema(value) || this.isTableSchema(value) || this.isDbSchema(value);

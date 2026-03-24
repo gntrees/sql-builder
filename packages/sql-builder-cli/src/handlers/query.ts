@@ -355,10 +355,10 @@ const specialNodeQuery: Record<string, (node: any) => FunctionListType[]> = {
                     tempAfterFromFunctions.push(...resolveNode({ JoinExpr: { ...(i as any).JoinExpr, larg: undefined } }));
                     return false;
                 } else return true
-            })
+            })            
             result.push({
                 name: 'from',
-                arguments: [...resolveNodeArray(resolved), ...tableFromJoinExpr],
+                arguments: [[...resolveNodeArray(resolved), ...tableFromJoinExpr]],
                 paramType: 'function'
             });
             result.push(...tempAfterFromFunctions);

@@ -1,10 +1,14 @@
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray, toCamelCase } from '../utils/resolvers.js';
-const currentDir = dirname(fileURLToPath(import.meta.url));
-const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
-const functionList = JSON.parse(readFileSync(functionListPath, "utf-8"));
+import functionList from '@gntrees/sql-builder-shared';
+// const currentDir = dirname(fileURLToPath(import.meta.url));
+// const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
+// const functionList = JSON.parse(readFileSync(functionListPath, "utf-8")) as {
+//     baseRawMethods?: string[];
+//     overrideMethods?: string[];
+//     keywordMethods?: string[];
+//     allMethods: string[];
+//     totalCount?: number;
+// };
 const specialNodeValues = {
     A_Const: (rawNode) => {
         let result = [];

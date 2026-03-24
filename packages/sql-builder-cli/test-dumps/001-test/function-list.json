@@ -1,0 +1,46 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "u.id"
+            ],
+            "paramType": "function"
+          },
+          {
+            "name": "as",
+            "arguments": [
+              "id"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      {
+        "name": "t",
+        "arguments": [
+          "users"
+        ],
+        "paramType": "function"
+      },
+      {
+        "name": "as",
+        "arguments": [
+          "u"
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  }
+]

@@ -1,0 +1,1 @@
+SELECT u.id as id FROM users u

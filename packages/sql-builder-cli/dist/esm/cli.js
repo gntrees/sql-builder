@@ -2,14 +2,15 @@
 import { writeFile } from "node:fs/promises";
 import { convert, generate } from "./index.js";
 const USAGE = `Usage:
-  npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--schema=true] [--output="./query.ts"]
+  npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--sqlSchema=true] [--dbSchema=true] [--output="./query.ts"]
   npx @gntrees/sql-builder-cli generate --url="postgres://..." [--output="./db-name.schema.ts"]`;
 const parseArgs = (args) => {
     const [command, ...rest] = args;
     let sql;
     let url;
     let output;
-    let schema;
+    let sqlSchema;
+    let dbSchema;
     for (const arg of rest) {
         if (arg.startsWith("--sql=")) {
             sql = arg.slice("--sql=".length);
@@ -20,15 +21,19 @@ const parseArgs = (args) => {
         if (arg.startsWith("--output=")) {
             output = arg.slice("--output=".length);
         }
-        if (arg.startsWith("--schema=")) {
-            const schemaValue = arg.slice("--schema=".length).toLowerCase();
-            schema = schemaValue === "true";
+        if (arg.startsWith("--sqlSchema=")) {
+            const schemaValue = arg.slice("--sqlSchema=".length).toLowerCase();
+            sqlSchema = schemaValue === "true";
+        }
+        if (arg.startsWith("--dbSchema=")) {
+            const schemaValue = arg.slice("--dbSchema=".length).toLowerCase();
+            dbSchema = schemaValue === "true";
         }
     }
-    return { command, sql, url, output, schema };
+    return { command, sql, url, output, sqlSchema, dbSchema };
 };
 const main = async () => {
-    const { command, sql, url, output, schema } = parseArgs(process.argv.slice(2));
+    const { command, sql, url, output, sqlSchema, dbSchema } = parseArgs(process.argv.slice(2));
     if (!command || command === "help" || command === "--help" || command === "-h") {
         console.log(USAGE);
         process.exit(0);
@@ -49,7 +54,7 @@ const main = async () => {
             process.exit(1);
         }
         try {
-            const result = await convert(sql, { schema });
+            const result = await convert(sql, { sqlSchema, dbSchema });
             if (output) {
                 await writeFile(output, result.formatted + "\n", "utf8");
                 process.stdout.write(`Written output to ${output}\n`);

@@ -15,5 +15,6 @@ export interface ConvertOptions {
     formatParamHandler?: string;
     execHandler?: string;
     testName?: string;
-    schema?: boolean;
+    sqlSchema?: boolean;
+    dbSchema?: boolean;
 }

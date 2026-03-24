@@ -356,7 +356,7 @@ const specialNodeQuery = {
             });
             result.push({
                 name: 'from',
-                arguments: [...resolveNodeArray(resolved), ...tableFromJoinExpr],
+                arguments: [[...resolveNodeArray(resolved), ...tableFromJoinExpr]],
                 paramType: 'function'
             });
             result.push(...tempAfterFromFunctions);

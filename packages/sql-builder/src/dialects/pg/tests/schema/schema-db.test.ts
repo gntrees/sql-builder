@@ -1,6 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { sqlBuilder } from "../../../../../pg";
-import { expectQuery } from "../test-helpers";
 import {
     account,
     gntreesUi,
@@ -10,7 +8,9 @@ import {
     todo,
     user,
     verification,
-} from "../../../../../trash/schema/db.schema";
+} from "./db.schema";
+import { expectQuery } from "../test-helpers";
+import { sqlBuilder } from "../../../../../pg";
 
 const connectionUrl =
     "postgresql://gntrees_ui_admin:cuanBanyak20Triliun@localhost:5432/gntrees_ui";
@@ -46,7 +46,7 @@ describe("schema db structure", () => {
     });
 
     it("should accept another column from schema", async () => {
-        const builder = q.select(account.createdAt).from(account);
+        const builder = q.select(q.c(account.createdAt)).from(account);
         expectQuery(builder, "queryBuilder", "schema table column literal created");
         await expectExecute(builder);
     });
