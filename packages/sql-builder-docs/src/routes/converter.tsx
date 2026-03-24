@@ -1,19 +1,22 @@
-import { CodeCopyButton } from "#/components/code-copy-button"
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "#/components/ui/resizable"
+import { CodeCopyButton } from "#/components/code-copy-button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "#/components/ui/dropdown-menu"
-import { createFileRoute } from "@tanstack/react-router"
-import CodeMirror from "@uiw/react-codemirror"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { useState } from "react"
+} from "#/components/ui/dropdown-menu";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "#/components/ui/resizable";
+import { javascript } from '@codemirror/lang-javascript';
+import { sql } from "@codemirror/lang-sql";
+import { createFileRoute } from "@tanstack/react-router";
+import CodeMirror from "@uiw/react-codemirror";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
+
 
 type DialectOption = {
   label: string
@@ -58,12 +61,14 @@ function RouteComponent() {
         )
         return
       }
-      ;(globalThis as { Module?: { locateFile?: (path: string) => string } })
-        .Module = {
-        locateFile: () => "/libpg-query.wasm",
-      }
-      const { convert } = await import("@gntrees/sql-builder-cli")
-      const result = await convert(sqlInput)
+      // ;(globalThis as { Module?: { locateFile?: (path: string) => string } })
+      //   .Module = {
+      //   locateFile: () => "/libpg-query.wasm",
+      // }
+      const { convert } = await import("@gntrees/sql-builder-cli/src/convert")
+      const result = await convert(sqlInput, {
+        schema: true,
+      })
       setConverted(result.formatted)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Conversion failed")
@@ -167,7 +172,9 @@ function RouteComponent() {
               <CodeMirror
                 value={sqlInput}
                 height="100%"
-                // extensions={sqlExtensions}
+                extensions={[
+                  sql(),
+                ]}
                 onChange={(value: string) => setSqlInput(value)}
                 theme="light"
                 basicSetup={{
@@ -205,7 +212,10 @@ function RouteComponent() {
               <CodeMirror
                 value={converted}
                 height="100%"
-                extensions={[]}
+                extensions={[
+                  javascript({ typescript: true }),
+                  // EditorView.lineWrapping
+                ]}
                 editable={false}
                 theme="light"
                 basicSetup={{

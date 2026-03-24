@@ -1,19 +1,17 @@
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import type { A_Const, FuncCall, List, String } from '../ast-types.js';
 import type { FunctionListType } from '../types.ts';
 import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray, toCamelCase } from '../utils/resolvers.js';
+import functionList from '@gntrees/sql-builder/src/dialects/pg/generated/function-list.json';
 
-const currentDir = dirname(fileURLToPath(import.meta.url));
-const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
-const functionList = JSON.parse(readFileSync(functionListPath, "utf-8")) as {
-    baseRawMethods?: string[];
-    overrideMethods?: string[];
-    keywordMethods?: string[];
-    allMethods: string[];
-    totalCount?: number;
-};
+// const currentDir = dirname(fileURLToPath(import.meta.url));
+// const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
+// const functionList = JSON.parse(readFileSync(functionListPath, "utf-8")) as {
+//     baseRawMethods?: string[];
+//     overrideMethods?: string[];
+//     keywordMethods?: string[];
+//     allMethods: string[];
+//     totalCount?: number;
+// };
 
 const specialNodeValues: Record<string, (node: any) => FunctionListType[] | FunctionListType[][]> = {
     A_Const: (rawNode: any): FunctionListType[] => {

@@ -1,11 +1,12 @@
 import { format } from "../../../pg/format";
-import type { FunctionListType } from "@gntrees/sql-builder-cli";
 import { ParameterType } from "./base-raw-query-builder";
 import type { QueryInstance } from "./generated/query-instance";
 import type { PGFunction } from "./postgres-functions-list";
 import { QueryBuilder } from "./query-builder";
-import { ColumnSchema, DBSchema, TableSchema } from "@gntrees/sql-builder/pg";
+
 import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, RequiredDBInstance, Statement } from "./types";
+import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
+import type { FunctionListType } from "@gntrees/sql-builder-cli";
 
 export class CoreQueryBuilder {
     protected query: QueryType = { sql: [] };

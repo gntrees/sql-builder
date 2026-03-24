@@ -1,11 +1,10 @@
-import type { Walker } from '@pgsql/traverse';
 import * as prettier from "prettier";
 
-import { NodePath } from '@pgsql/traverse';
-import { loadModule, parse } from 'pgsql-parser';
+// import { parse } from 'pgsql-parser';
+import { parse } from 'pgsql-parser';
 import type { ConvertOptions, FunctionListType } from './types.js';
-import { resolveNode } from './utils/resolvers.js';
 import { functionListToString } from './utils/stringifiers.js';
+import { resolveNode } from './utils/resolvers.js';
 const MOCK_EXEC_HANDLER_BODY = "return { sql, parameters };";
 const MOCK_FORMAT_PARAM_HANDLER = "pg";
 
@@ -42,17 +41,17 @@ const DEFAULT_EXEC_HANDLER = `async ({ sql, parameters, meta }): Promise<any> =>
 }`;
 
 
-const walker: (specialNode: Record<string, (node: unknown) => FunctionListType[]>, functionList: FunctionListType[]) => Walker = (specialNode, functionList) => {
-    return (path: NodePath) => {
-        try {
-            const nodes = resolveNode({ [path.tag]: path.node });
-            functionList.push(...nodes);
-            return false;
-        } catch (error) {
-            return false;
-        }
-    };
-};
+// const walker: (specialNode: Record<string, (node: unknown) => FunctionListType[]>, functionList: FunctionListType[]) => Walker = (specialNode, functionList) => {
+//     return (path: NodePath) => {
+//         try {
+//             const nodes = resolveNode({ [path.tag]: path.node });
+//             functionList.push(...nodes);
+//             return false;
+//         } catch (error) {
+//             return false;
+//         }
+//     };
+// };
 
 export interface ConvertResult {
     code: string;
@@ -62,7 +61,7 @@ export interface ConvertResult {
 }
 
 export async function convert(sql: string, options: ConvertOptions = {}): Promise<ConvertResult> {
-    await loadModule();
+    // await loadModule();
     const ast = await parse(sql);
     const functionList: FunctionListType[] = [];
     for (const [i, stmt] of ast.stmts.entries()) {
