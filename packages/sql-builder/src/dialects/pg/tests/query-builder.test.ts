@@ -656,3 +656,57 @@ describe("transaction queries", () => {
         expectQuery(builder, "queryBuilder", "rawLimitOffsetQuery");
     });
 });
+
+describe("rebuild queries", () => {
+    it("rebuilds a simple query from instanceStructure", () => {
+        const builder = q
+            .select(q.c("users.id"), q.c("users.name"))
+            .from(q.t("users"))
+            .where(q.i("users.active").op("=").v(true));
+
+        const sqlBefore = builder.getSql();
+        const paramsBefore = builder.getParameters();
+
+        builder.setTokens([]);
+        builder.rebuild();
+
+        expect(builder.getSql()).toBe(sqlBefore);
+        expect(builder.getParameters()).toEqual(paramsBefore);
+    });
+
+    it("rebuilds query with nested subquery", () => {
+        const sub = q.select(q.c("orders.user_id")).from(q.t("orders")).where(q.i("orders.total").op(">").v(100));
+        const builder = q.select(q.c("users.id")).from(q.t("users")).where(q.i("users.id").in(sub));
+
+        const sqlBefore = builder.getSql();
+        const paramsBefore = builder.getParameters();
+
+        builder.setTokens([]);
+        builder.rebuild();
+
+        expect(builder.getSql()).toBe(sqlBefore);
+        expect(builder.getParameters()).toEqual(paramsBefore);
+    });
+
+    it("rebuild is idempotent", () => {
+        const builder = q
+            .insert(q.t("users"), {
+                name: "donna",
+                email: "donna@example.com",
+            })
+            .onConflict(q.c("users.email"))
+            .doUpdate({
+                name: "donna",
+                updated_at: q.r`NOW()`,
+            });
+
+        const sqlBefore = builder.getSql();
+        const paramsBefore = builder.getParameters();
+
+        builder.rebuild();
+        builder.rebuild();
+
+        expect(builder.getSql()).toBe(sqlBefore);
+        expect(builder.getParameters()).toEqual(paramsBefore);
+    });
+});

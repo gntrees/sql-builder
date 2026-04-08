@@ -8,11 +8,41 @@ import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, Requi
 import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
 import type { FunctionListType } from "@gntrees/sql-builder-cli";
 
+type InstanceStructureSerializableValue =
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | {
+        kind: "query-builder";
+        value: InstanceStructureNode[];
+    }
+    | {
+        kind: "identifier";
+        value: string;
+    }
+    | {
+        kind: "array";
+        value: InstanceStructureSerializableValue[];
+    }
+    | {
+        kind: "object";
+        value: Record<string, InstanceStructureSerializableValue>;
+    };
+
+type InstanceStructureNode = {
+    name: string;
+    args: InstanceStructureSerializableValue[];
+};
+
 export class CoreQueryBuilder {
     protected query: QueryType = { sql: [] };
     protected schemaQueryBuilder: FunctionListType[] = [];
+    protected instanceStructure: InstanceStructureNode[] = [];
     protected callLevel: number = 0;
     protected queryInstance?: QueryInstance;
+    private isRebuilding: boolean = false;
     constructor(queryInstance?: QueryInstance) {
         this.queryInstance = queryInstance;
     }
@@ -25,6 +55,24 @@ export class CoreQueryBuilder {
     }
     getSchema(): FunctionListType[] {
         return this.schemaQueryBuilder;
+    }
+    getInstanceStructure(): InstanceStructureNode[] {
+        return cloneInstanceStructure(this.instanceStructure);
+    }
+    setInstanceStructure(structure: InstanceStructureNode[]): this {
+        this.instanceStructure = cloneInstanceStructure(structure);
+        return this;
+    }
+    rebuild(): this {
+        const structure = this.getInstanceStructure();
+        this.query.sql = [];
+        this.isRebuilding = true;
+        try {
+            structure.forEach((node) => this.replayInstanceNode(node));
+        } finally {
+            this.isRebuilding = false;
+        }
+        return this;
     }
     startClass() {
         this.callLevel += 1;
@@ -101,6 +149,106 @@ export class CoreQueryBuilder {
         }
         return paramsArray.map(normalizeSingleParam);
     }
+    private captureInstanceStructure(name: FunctionListType['name'], params: AllPossibleFunctionParamType) {
+        if (this.isRebuilding) {
+            return;
+        }
+        const normalizedArgs = (Array.isArray(params) ? params : [params])
+            .map((arg) => this.serializeInstanceValue(arg));
+        this.instanceStructure.push({ name: String(name), args: normalizedArgs });
+    }
+    private serializeInstanceValue(value: unknown): InstanceStructureSerializableValue {
+        if (value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+            return value;
+        }
+        if (value instanceof QueryBuilder) {
+            return {
+                kind: "query-builder",
+                value: value.getInstanceStructure(),
+            };
+        }
+        if (this.isColumnSchema(value)) {
+            return {
+                kind: "identifier",
+                value: `${value.tableSchema.tableSchemaName}.${value.columnSchemaName}`,
+            };
+        }
+        if (this.isTableSchema(value)) {
+            return {
+                kind: "identifier",
+                value: value.tableSchemaName,
+            };
+        }
+        if (this.isDbSchema(value)) {
+            return {
+                kind: "identifier",
+                value: value.dbSchemaName,
+            };
+        }
+        if (Array.isArray(value)) {
+            return {
+                kind: "array",
+                value: value.map((item) => this.serializeInstanceValue(item)),
+            };
+        }
+        if (typeof value === "object") {
+            const entries = Object.entries(value as Record<string, unknown>)
+                .reduce<Record<string, InstanceStructureSerializableValue>>((acc, [key, val]) => {
+                    acc[key] = this.serializeInstanceValue(val);
+                    return acc;
+                }, {});
+            return {
+                kind: "object",
+                value: entries,
+            };
+        }
+        return String(value);
+    }
+    private deserializeInstanceValue(value: InstanceStructureSerializableValue): unknown {
+        if (value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+            return value;
+        }
+        if (value.kind === "query-builder") {
+            const nested = new QueryBuilder(this.queryInstance);
+            nested.setInstanceStructure(value.value);
+            nested.rebuild();
+            return nested;
+        }
+        if (value.kind === "identifier") {
+            return new QueryBuilder(this.queryInstance).i(value.value);
+        }
+        if (value.kind === "array") {
+            return value.value.map((item) => this.deserializeInstanceValue(item));
+        }
+        return Object.entries(value.value).reduce<Record<string, unknown>>((acc, [key, val]) => {
+            acc[key] = this.deserializeInstanceValue(val);
+            return acc;
+        }, {});
+    }
+    private replayInstanceNode(node: InstanceStructureNode) {
+        const target = (this as unknown as Record<string, unknown>)[node.name];
+        if (typeof target !== "function") {
+            throw new Error(`Cannot rebuild query: method '${node.name}' is not available`);
+        }
+        if (node.name === "raw" || node.name === "r") {
+            const templateFlat = node.args.map((arg) => this.deserializeInstanceValue(arg));
+            const strings: string[] = [];
+            const values: unknown[] = [];
+            templateFlat.forEach((item, index) => {
+                if (index % 2 === 0) {
+                    strings.push(String(item ?? ""));
+                } else {
+                    values.push(item);
+                }
+            });
+            const templateStrings = strings as unknown as TemplateStringsArray;
+            (templateStrings as { raw: readonly string[] }).raw = [...strings];
+            (target as (...args: unknown[]) => unknown).apply(this, [templateStrings, ...values]);
+            return;
+        }
+        const args = node.args.map((arg) => this.deserializeInstanceValue(arg));
+        (target as (...args: unknown[]) => unknown).apply(this, args);
+    }
     protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType {
         this.startClass();
         if (this.callLevel > 1) {
@@ -125,11 +273,17 @@ export class CoreQueryBuilder {
                 name,
                 arguments: normalizedParams
             } as FunctionListType
-            this.schemaQueryBuilder.push(schema);
+            if (!this.isRebuilding) {
+                this.captureInstanceStructure(name, params);
+                this.schemaQueryBuilder.push(schema);
+            }
             return schema;
         }
         const schema = { paramType: (type as any), name: name, arguments: this.normalizeSchemaParam(params, type) } as FunctionListType;
-        this.schemaQueryBuilder.push(schema);
+        if (!this.isRebuilding) {
+            this.captureInstanceStructure(name, params);
+            this.schemaQueryBuilder.push(schema);
+        }
         return schema;
     }
     protected getSqlCore() {
@@ -371,6 +525,44 @@ export class CoreQueryBuilder {
         }
         return this;
     }
+}
+
+function cloneInstanceStructure(structure: InstanceStructureNode[]): InstanceStructureNode[] {
+    return structure.map((node) => ({
+        name: node.name,
+        args: node.args.map(cloneInstanceValue),
+    }));
+}
+
+function cloneInstanceValue(value: InstanceStructureSerializableValue): InstanceStructureSerializableValue {
+    if (value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+        return value;
+    }
+    if (value.kind === "query-builder") {
+        return {
+            kind: "query-builder",
+            value: cloneInstanceStructure(value.value),
+        };
+    }
+    if (value.kind === "identifier") {
+        return {
+            kind: "identifier",
+            value: value.value,
+        };
+    }
+    if (value.kind === "array") {
+        return {
+            kind: "array",
+            value: value.value.map(cloneInstanceValue),
+        };
+    }
+    return {
+        kind: "object",
+        value: Object.entries(value.value).reduce<Record<string, InstanceStructureSerializableValue>>((acc, [key, val]) => {
+            acc[key] = cloneInstanceValue(val);
+            return acc;
+        }, {}),
+    };
 }
 
 
