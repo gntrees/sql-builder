@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { sqlBuilder } from "../../../../pg";
 import { expectQuery } from "./test-helpers";
+import { account } from "./schema/db.schema";
 
 const q = sqlBuilder()
     .setFormatParamHandler("pg")
@@ -690,21 +691,19 @@ describe("rebuild queries", () => {
 
     it("rebuild is idempotent", () => {
         const builder = q
-            .insert(q.t("users"), {
-                name: "donna",
-                email: "donna@example.com",
-            })
-            .onConflict(q.c("users.email"))
-            .doUpdate({
-                name: "donna",
-                updated_at: q.r`NOW()`,
-            });
+                    .select(account.userId, q.count("*"))
+                    .from(account)
+                    .groupBy(account.userId)
+                    .innerJoin(account).on(q.c(account.userId).op("=").i("users.id"))
+                    .r`WHERE users.is_active = ${true} AND users.created_at > ${"2024-01-01"}`;
 
         const sqlBefore = builder.getSql();
         const paramsBefore = builder.getParameters();
+        
+        builder.rebuild();
+        builder.rebuild();
 
-        builder.rebuild();
-        builder.rebuild();
+        console.log(JSON.stringify(builder.getInstanceStructure(),null,2));
 
         expect(builder.getSql()).toBe(sqlBefore);
         expect(builder.getParameters()).toEqual(paramsBefore);

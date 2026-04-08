@@ -36,6 +36,9 @@ type InstanceStructureNode = {
     args: InstanceStructureSerializableValue[];
 };
 
+type PrimitiveSchemaParam = string | number | boolean | null;
+
+// Core query builder state and orchestration.
 export class CoreQueryBuilder {
     protected query: QueryType = { sql: [] };
     protected schemaQueryBuilder: FunctionListType[] = [];
@@ -43,26 +46,34 @@ export class CoreQueryBuilder {
     protected callLevel: number = 0;
     protected queryInstance?: QueryInstance;
     private isRebuilding: boolean = false;
+
     constructor(queryInstance?: QueryInstance) {
         this.queryInstance = queryInstance;
     }
+
+    // Basic getters/setters and lifecycle.
     getTokens(): QueryType['sql'] {
         return this.query.sql;
     }
+
     setTokens(tokens: QueryType['sql']): this {
         this.query.sql = tokens;
         return this;
     }
+
     getSchema(): FunctionListType[] {
         return this.schemaQueryBuilder;
     }
+
     getInstanceStructure(): InstanceStructureNode[] {
         return cloneInstanceStructure(this.instanceStructure);
     }
-    setInstanceStructure(structure: InstanceStructureNode[]): this {
+
+    protected setInstanceStructure(structure: InstanceStructureNode[]): this {
         this.instanceStructure = cloneInstanceStructure(structure);
         return this;
     }
+
     rebuild(): this {
         const structure = this.getInstanceStructure();
         this.query.sql = [];
@@ -74,58 +85,57 @@ export class CoreQueryBuilder {
         }
         return this;
     }
-    startClass() {
+
+    protected startClass() {
         this.callLevel += 1;
         return this;
     }
-    endClass() {
-        this.callLevel -= 1;
+
+    protected endClass() {
+        this.callLevel = Math.max(0, this.callLevel - 1);
         return this;
     }
+
+    // Schema type guards and normalization.
     private isColumnSchema(value: unknown): value is ColumnSchema {
         return value instanceof ColumnSchema;
     }
+
     private isTableSchema(value: unknown): value is TableSchema {
         return value instanceof TableSchema;
     }
+
     private isDbSchema(value: unknown): value is DBSchema {
         return value instanceof DBSchema;
     }
+
     protected isSchemaObject(value: unknown): value is ColumnSchema | TableSchema | DBSchema {
         return this.isColumnSchema(value) || this.isTableSchema(value) || this.isDbSchema(value);
     }
+
+    private getSchemaIdentifier(value: ColumnSchema | TableSchema | DBSchema): string {
+        if (this.isColumnSchema(value)) {
+            return `${value.tableSchema.tableSchemaName}.${value.columnSchemaName}`;
+        }
+        if (this.isTableSchema(value)) {
+            return value.tableSchemaName;
+        }
+        return value.dbSchemaName;
+    }
+
     protected normalizeSchemaParam(paramRaw: AllPossibleFunctionParamType, type: FunctionListType['paramType']): FunctionListType["arguments"] {
         const paramsArray = Array.isArray(paramRaw) ? paramRaw : [paramRaw];
         const normalizeSingleParam = (param: any): FunctionListType["arguments"][number] => {
-            
-            if (typeof param === "string" || typeof param === "number" || typeof param === "boolean" || param === null) {
+            if (isPrimitiveSchemaParam(param)) {
                 return {
-                    paramType:
-                        typeof param === "string" ? "string" :
-                            typeof param === "number" ? "number" :
-                                typeof param === "boolean" ? "boolean" :
-                                    param === null ? "null" : "undefined",
+                    paramType: getPrimitiveSchemaParamType(param),
                     name: param, arguments: []
                 } as FunctionListType;
             }
-            if (this.isColumnSchema(param)) {
+            if (this.isSchemaObject(param)) {
                 return {
                     paramType: "string",
-                    name: `${param.tableSchema.tableSchemaName}.${param.columnSchemaName}`,
-                    arguments: [],
-                } as FunctionListType;
-            }
-            if (this.isTableSchema(param)) {
-                return {
-                    paramType: "string",
-                    name: param.tableSchemaName,
-                    arguments: [],
-                } as FunctionListType;
-            }
-            if (this.isDbSchema(param)) {
-                return {
-                    paramType: "string",
-                    name: param.dbSchemaName,
+                    name: this.getSchemaIdentifier(param),
                     arguments: [],
                 } as FunctionListType;
             }
@@ -149,6 +159,46 @@ export class CoreQueryBuilder {
         }
         return paramsArray.map(normalizeSingleParam);
     }
+
+    private registerSchemaCall(name: FunctionListType['name'], params: AllPossibleFunctionParamType, schema: FunctionListType): FunctionListType {
+        if (!this.isRebuilding && this.callLevel === 1) {
+            this.captureInstanceStructure(name, params);
+            this.schemaQueryBuilder.push(schema);
+        }
+        return schema;
+    }
+
+    protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType {
+        this.startClass();
+        if (this.callLevel > 1) {
+            return {
+                paramType: type,
+                name,
+                arguments: []
+            } as FunctionListType;
+        }
+        if (type === "template-literal") {
+            const arrayParams = Array.isArray(params) ? params : [params];
+            const normalizedParams = arrayParams.map((param, i) => {
+                // jika ganjil maka string jika genap maka normalize
+                if (i % 2 === 0) {
+                    return param;
+                } else {
+                    return this.normalizeSchemaParam(param as any, type);
+                }
+            })
+            const schema = {
+                paramType: type,
+                name,
+                arguments: normalizedParams
+            } as FunctionListType;
+            return this.registerSchemaCall(name, params, schema);
+        }
+        const schema = { paramType: (type as any), name: name, arguments: this.normalizeSchemaParam(params, type) } as FunctionListType;
+        return this.registerSchemaCall(name, params, schema);
+    }
+
+    // Instance structure capture, serialization, and replay.
     private captureInstanceStructure(name: FunctionListType['name'], params: AllPossibleFunctionParamType) {
         if (this.isRebuilding) {
             return;
@@ -157,8 +207,9 @@ export class CoreQueryBuilder {
             .map((arg) => this.serializeInstanceValue(arg));
         this.instanceStructure.push({ name: String(name), args: normalizedArgs });
     }
+
     private serializeInstanceValue(value: unknown): InstanceStructureSerializableValue {
-        if (value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+        if (isSerializablePrimitive(value)) {
             return value;
         }
         if (value instanceof QueryBuilder) {
@@ -167,22 +218,10 @@ export class CoreQueryBuilder {
                 value: value.getInstanceStructure(),
             };
         }
-        if (this.isColumnSchema(value)) {
+        if (this.isSchemaObject(value)) {
             return {
                 kind: "identifier",
-                value: `${value.tableSchema.tableSchemaName}.${value.columnSchemaName}`,
-            };
-        }
-        if (this.isTableSchema(value)) {
-            return {
-                kind: "identifier",
-                value: value.tableSchemaName,
-            };
-        }
-        if (this.isDbSchema(value)) {
-            return {
-                kind: "identifier",
-                value: value.dbSchemaName,
+                value: this.getSchemaIdentifier(value),
             };
         }
         if (Array.isArray(value)) {
@@ -204,8 +243,9 @@ export class CoreQueryBuilder {
         }
         return String(value);
     }
+
     private deserializeInstanceValue(value: InstanceStructureSerializableValue): unknown {
-        if (value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+        if (isSerializablePrimitive(value)) {
             return value;
         }
         if (value.kind === "query-builder") {
@@ -225,6 +265,7 @@ export class CoreQueryBuilder {
             return acc;
         }, {});
     }
+
     private replayInstanceNode(node: InstanceStructureNode) {
         const target = (this as unknown as Record<string, unknown>)[node.name];
         if (typeof target !== "function") {
@@ -249,43 +290,8 @@ export class CoreQueryBuilder {
         const args = node.args.map((arg) => this.deserializeInstanceValue(arg));
         (target as (...args: unknown[]) => unknown).apply(this, args);
     }
-    protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType {
-        this.startClass();
-        if (this.callLevel > 1) {
-            return {
-                paramType: type,
-                name,
-                arguments: []
-            } as FunctionListType;
-        }
-        if (type === "template-literal") {
-            const arrayParams = Array.isArray(params) ? params : [params];
-            const normalizedParams = arrayParams.map((param, i) => {
-                // jika ganjil maka string jika genap maka normalize
-                if (i % 2 === 0) {
-                    return param;
-                } else {
-                    return this.normalizeSchemaParam(param as any, type);
-                }
-            })
-            const schema = {
-                paramType: type,
-                name,
-                arguments: normalizedParams
-            } as FunctionListType
-            if (!this.isRebuilding) {
-                this.captureInstanceStructure(name, params);
-                this.schemaQueryBuilder.push(schema);
-            }
-            return schema;
-        }
-        const schema = { paramType: (type as any), name: name, arguments: this.normalizeSchemaParam(params, type) } as FunctionListType;
-        if (!this.isRebuilding) {
-            this.captureInstanceStructure(name, params);
-            this.schemaQueryBuilder.push(schema);
-        }
-        return schema;
-    }
+
+    // SQL rendering and parameter extraction.
     protected getSqlCore() {
         if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
@@ -297,26 +303,22 @@ export class CoreQueryBuilder {
             const sqlTokens = joinSqlTokens(
                 this.query.sql.map((item) => {
                     if (item instanceof ParameterType) {
-                        // if (item.type === "literal") {
-                        // }
-                        if (item.type === "literal") {
-                            literalIndex += 1;
-                            return `$${literalIndex}`;
+                        switch (item.type) {
+                            case "literal":
+                                literalIndex += 1;
+                                return `$${literalIndex}`;
+                            case "identifier":
+                                sqlParams.push(item.value);
+                                return "%I";
+                            case "percent":
+                                sqlParams.push(item.value);
+                                return "%%";
+                            case "string":
+                                sqlParams.push(item.value);
+                                return "%s";
+                            default:
+                                return "";
                         }
-                        if (item.type === "identifier") {
-                            sqlParams.push(item.value);
-                            return "%I";
-                        }
-                        if (item.type === "percent") {
-                            sqlParams.push(item.value);
-                            return "%%";
-                        }
-                        if (item.type === "string") {
-                            sqlParams.push(item.value);
-                            return "%s";
-                        }
-                        return "";
-                        // return formatPgParameterToken(item, literalIndex);
                     }
                     return item.trim();
                 }),
@@ -334,26 +336,18 @@ export class CoreQueryBuilder {
             }),
         );
     }
+
     protected getParametersCore() {
-        
         if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
-        if (formatParamHandler === "pg")
-            return this.query.sql
-                .filter((i) => i instanceof ParameterType
-                    && i.type === "literal"
-                )
-                .map((i) => (i as ParameterType).value);
-        if (formatParamHandler === "pg-format") {
-            return this.query.sql
-                .filter((i) => i instanceof ParameterType)
-                .map((i) => (i as ParameterType).value);
-        }
+        const onlyLiterals = formatParamHandler === "pg";
+
         return this.query.sql
-            .filter((i) => i instanceof ParameterType)
-            .map((i) => (i as ParameterType).value);
+            .filter((item): item is ParameterType => item instanceof ParameterType && (!onlyLiterals || item.type === "literal"))
+            .map((item) => item.value);
     }
+
     protected getSqlWithParametersCore() {
         if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
@@ -379,30 +373,8 @@ export class CoreQueryBuilder {
             }),
         );
     }
-    protected createLiteralParameter(value: ParameterValueType): ParameterType {
-        return new ParameterType({
-            value,
-            type: "literal",
-        });
-    }
-    protected createIdentifierParameter(value: string | number | boolean): ParameterType {
-        return new ParameterType({
-            value,
-            type: "identifier",
-        });
-    }
-    protected createStringParameter(value: string): ParameterType {
-        return new ParameterType({
-            value,
-            type: "string",
-        });
-    }
-    protected createPercentParameter(): ParameterType {
-        return new ParameterType({
-            value: '%',
-            type: "percent",
-        });
-    }
+
+    // Statement resolution helpers.
     protected resolveStatement(item: Statement): QueryType['sql'] {
         if (item == "*") {
             return ["*"];
@@ -462,6 +434,7 @@ export class CoreQueryBuilder {
         }
         return [this.createIdentifierParameter(String(item))]
     }
+
     protected resolveStringStatement(item: Statement): QueryType['sql'] {
         if (item === undefined || item === null || item === "") {
             return [];
@@ -484,6 +457,36 @@ export class CoreQueryBuilder {
         throw new Error(`Unsupported string statement type: ${typeof item}`);
     }
 
+    // Token creation helpers.
+    protected createLiteralParameter(value: ParameterValueType): ParameterType {
+        return new ParameterType({
+            value,
+            type: "literal",
+        });
+    }
+
+    protected createIdentifierParameter(value: string | number | boolean): ParameterType {
+        return new ParameterType({
+            value,
+            type: "identifier",
+        });
+    }
+
+    protected createStringParameter(value: string): ParameterType {
+        return new ParameterType({
+            value,
+            type: "string",
+        });
+    }
+
+    protected createPercentParameter(): ParameterType {
+        return new ParameterType({
+            value: '%',
+            type: "percent",
+        });
+    }
+
+    // SQL token composition helpers.
     protected pushSeparatedTokens(tokensList: QueryType['sql'][], separator: string) {
         let hasTokens = false;
         for (const tokens of tokensList) {
@@ -527,6 +530,29 @@ export class CoreQueryBuilder {
     }
 }
 
+// Primitive and schema parameter helpers.
+function isSerializablePrimitive(value: unknown): value is string | number | boolean | null | undefined {
+    return value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+}
+
+function isPrimitiveSchemaParam(value: unknown): value is PrimitiveSchemaParam {
+    return value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+}
+
+function getPrimitiveSchemaParamType(value: PrimitiveSchemaParam): FunctionListType['paramType'] {
+    if (value === null) {
+        return "null";
+    }
+    if (typeof value === "string") {
+        return "string";
+    }
+    if (typeof value === "number") {
+        return "number";
+    }
+    return "boolean";
+}
+
+// Instance structure cloning helpers.
 function cloneInstanceStructure(structure: InstanceStructureNode[]): InstanceStructureNode[] {
     return structure.map((node) => ({
         name: node.name,
@@ -535,7 +561,7 @@ function cloneInstanceStructure(structure: InstanceStructureNode[]): InstanceStr
 }
 
 function cloneInstanceValue(value: InstanceStructureSerializableValue): InstanceStructureSerializableValue {
-    if (value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    if (isSerializablePrimitive(value)) {
         return value;
     }
     if (value.kind === "query-builder") {
@@ -565,7 +591,7 @@ function cloneInstanceValue(value: InstanceStructureSerializableValue): Instance
     };
 }
 
-
+// SQL token spacing helper.
 function joinSqlTokens(tokens: string[]): string {
     const spacedTokens: string[] = [];
     for (const token of tokens) {
@@ -600,6 +626,7 @@ function shouldInsertSpace(prev: string, next: string): boolean {
     return true;
 }
 
+// SQL formatting helpers.
 function toSql(
     formatParamHandler: RequiredDBInstance["formatParamHandler"],
     item: string | ParameterType,

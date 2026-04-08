@@ -165,4 +165,3 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
         return OPERATORS.map(i => i.toLowerCase()).includes((value as OperatorType).toLowerCase());
     }
 }
-
