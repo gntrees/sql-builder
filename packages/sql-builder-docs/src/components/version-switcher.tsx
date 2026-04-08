@@ -1,18 +1,12 @@
 import { useNavigate, useRouterState } from "@tanstack/react-router"
-import { Check, ChevronsUpDown } from "lucide-react"
 
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "#/components/ui/dropdown-menu"
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "#/components/ui/sidebar"
-import { ImageLogo } from "./image-logo"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "#/components/ui/select"
 
 type DatabaseOption = {
   label: string
@@ -32,48 +26,31 @@ export function VersionSwitcher({
     options.find((option) => option.to === pathname) ?? options[0]
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <div className="flex size-8 items-center justify-center">
-                <ImageLogo />
-              </div>
-              <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium text-xs">Gntrees Sql Builder</span>
-                <span className="font-bold">{selectedOption.label}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width)"
-            align="start"
+    <Select
+      value={selectedOption.value}
+      onValueChange={(nextValue) => {
+        const nextOption = options.find((option) => option.value === nextValue)
+        if (!nextOption || nextOption.disabled) {
+          return
+        }
+
+        navigate({ to: nextOption.to })
+      }}
+    >
+      <SelectTrigger className="h-10 w-full bg-sidebar-accent/40">
+        <SelectValue placeholder="Select database" />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem
+            key={option.value}
+            value={option.value}
+            disabled={option.disabled}
           >
-            {options.map((option) => (
-              <DropdownMenuItem
-                key={option.value}
-                disabled={option.disabled}
-                onSelect={() => {
-                  if (option.disabled) {
-                    return
-                  }
-                  navigate({ to: option.to })
-                }}
-              >
-                {option.label}
-                {option.value === selectedOption.value && (
-                  <Check className="ml-auto" />
-                )}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

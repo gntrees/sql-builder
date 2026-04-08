@@ -1,0 +1,37 @@
+import { ParameterType } from "./base-raw-query-builder";
+import type { QueryInstance } from "./generated/query-instance";
+import type { PGFunction } from "./postgres-functions-list";
+import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, Statement } from "./types";
+import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
+import type { FunctionListType } from "@gntrees/sql-builder-cli";
+export declare class CoreQueryBuilder {
+    protected query: QueryType;
+    protected schemaQueryBuilder: FunctionListType[];
+    protected callLevel: number;
+    protected queryInstance?: QueryInstance;
+    constructor(queryInstance?: QueryInstance);
+    getTokens(): QueryType['sql'];
+    setTokens(tokens: QueryType['sql']): this;
+    getSchema(): FunctionListType[];
+    startClass(): this;
+    endClass(): this;
+    private isColumnSchema;
+    private isTableSchema;
+    private isDbSchema;
+    protected isSchemaObject(value: unknown): value is ColumnSchema | TableSchema | DBSchema;
+    protected normalizeSchemaParam(paramRaw: AllPossibleFunctionParamType, type: FunctionListType['paramType']): FunctionListType["arguments"];
+    protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType;
+    protected getSqlCore(): string;
+    protected getParametersCore(): ParameterValueType[];
+    protected getSqlWithParametersCore(): string;
+    protected createLiteralParameter(value: ParameterValueType): ParameterType;
+    protected createIdentifierParameter(value: string | number | boolean): ParameterType;
+    protected createStringParameter(value: string): ParameterType;
+    protected createPercentParameter(): ParameterType;
+    protected resolveStatement(item: Statement): QueryType['sql'];
+    protected resolveStatements(values: Statement[]): QueryType['sql'][];
+    protected resolveIdentifierStatement(item: Statement): QueryType['sql'];
+    protected resolveStringStatement(item: Statement): QueryType['sql'];
+    protected pushSeparatedTokens(tokensList: QueryType['sql'][], separator: string): void;
+    protected pushFunction(func: PGFunction, ...runtimeArgs: Statement[]): this;
+}

@@ -1,28 +1,11 @@
-import ThemeToggle from "#/components/ThemeToggle"
 import { createFileRoute } from "@tanstack/react-router"
-import { CodeBlock } from "../components/ai/code-block"
 import { Logo } from "../components/logo"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion"
 import { Badge } from "../components/ui/badge"
 import { Button } from "../components/ui/button"
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "../components/ui/card"
+import { Card } from "../components/ui/card"
 import { SampleCodeBlock } from "#/components/sample-code-block"
 
 export const Route = createFileRoute('/')({ component: HomePage })
-
-const codeSample = `const query = q.select(
-  q.c("users.id"),
-  q.c("users.name"),
-)
-  .from(q.t("users"))
-  .where(q.c("users.age").op(">=").v(65))
-  .orderBy(q.c("users.name"));`
 
 function HomePage() {
 	return (
@@ -42,7 +25,6 @@ function HomePage() {
 						</a>
 					</nav>
 					<div className="flex items-center gap-2 ml-auto">
-						<ThemeToggle />
 						<Button asChild variant="outline" size="icon">
 							<a
 								href="https://github.com"

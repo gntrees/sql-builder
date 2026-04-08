@@ -49,6 +49,7 @@ export class CoreQueryBuilder {
     protected normalizeSchemaParam(paramRaw: AllPossibleFunctionParamType, type: FunctionListType['paramType']): FunctionListType["arguments"] {
         const paramsArray = Array.isArray(paramRaw) ? paramRaw : [paramRaw];
         const normalizeSingleParam = (param: any): FunctionListType["arguments"][number] => {
+            
             if (typeof param === "string" || typeof param === "number" || typeof param === "boolean" || param === null) {
                 return {
                     paramType:
@@ -73,7 +74,6 @@ export class CoreQueryBuilder {
                     arguments: [],
                 } as FunctionListType;
             }
-
             if (this.isDbSchema(param)) {
                 return {
                     paramType: "string",
@@ -100,7 +100,6 @@ export class CoreQueryBuilder {
             }
         }
         return paramsArray.map(normalizeSingleParam);
-
     }
     protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType {
         this.startClass();
@@ -175,7 +174,7 @@ export class CoreQueryBuilder {
             this.query.sql.map((item) => {
                 if (item instanceof ParameterType) {
                     paramIndex += 1;
-                    return toSql(formatParamHandler, item, paramIndex);
+                    return formatPgParameterToken(item, paramIndex);
                 }
                 return item;
             }),

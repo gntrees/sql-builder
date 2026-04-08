@@ -3,6 +3,7 @@ import { Kysely, PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import { dirname, resolve } from "path";
+import { createDbSchemaSource } from "./utils/db-schema-writer.js";
 const DEFAULT_DB_NAME = "DbName";
 const extractDbName = (urlValue) => {
     try {
@@ -100,54 +101,8 @@ const parseColumns = (source, tableType) => {
         return [];
     return parseInterfaceProperties(tableBlock).map((prop) => prop.key);
 };
-const buildSchemaSource = (dbName, dbNameRaw, tables) => {
-    const importLine = 'import { ColumnSchema, DBSchema, TableSchema } from "@gntrees/sql-builder/pg";';
-    const dbClassName = toPascalCase(dbName);
-    const dbVarName = toSafeIdentifier(toCamelCase(dbClassName), "db");
-    const dbClassLines = [];
-    dbClassLines.push(`class ${dbClassName} extends DBSchema {`);
-    for (const table of tables) {
-        dbClassLines.push(`  public ${table.tableVar}: ${table.tableClass};`);
-    }
-    dbClassLines.push(`  constructor(dbSchemaName: string) {`);
-    dbClassLines.push(`    super(dbSchemaName);`);
-    for (const table of tables) {
-        dbClassLines.push(`    this.${table.tableVar} = new ${table.tableClass}(this);`);
-    }
-    dbClassLines.push(`  }`);
-    dbClassLines.push(`}`);
-    const tableClassBlocks = tables
-        .map((table) => {
-        const lines = [];
-        lines.push(`class ${table.tableClass} extends TableSchema {`);
-        for (const column of table.columns) {
-            lines.push(`  public ${column.prop}: ColumnSchema;`);
-        }
-        lines.push(`  constructor(dbSchema: DBSchema) {`);
-        lines.push(`    super(dbSchema, "${table.tableName}");`);
-        for (const column of table.columns) {
-            lines.push(`    this.${column.prop} = new ColumnSchema(this.dbSchema, this, "${column.name}");`);
-        }
-        lines.push(`  }`);
-        lines.push(`}`);
-        return lines.join("\n");
-    })
-        .join("\n\n");
-    const exportLines = [];
-    exportLines.push(`export const ${dbVarName} = new ${dbClassName}("${dbNameRaw}");`);
-    for (const table of tables) {
-        exportLines.push(`export const ${table.tableVar} = ${dbVarName}.${table.tableVar};`);
-    }
-    return [
-        importLine,
-        "",
-        dbClassLines.join("\n"),
-        "",
-        tableClassBlocks,
-        "",
-        exportLines.join("\n"),
-        "",
-    ].join("\n");
+const buildSchemaSource = (structure) => {
+    return createDbSchemaSource(structure);
 };
 const buildParsedTables = (source) => {
     const tables = parseTables(source);
@@ -172,7 +127,6 @@ const buildParsedTables = (source) => {
 };
 export async function generate(options) {
     const dbNameRaw = extractDbName(options.url);
-    const dbName = toPascalCase(dbNameRaw);
     const outputPath = options.output ?? `./${dbNameRaw}.schema.ts`;
     const absoluteOutputPath = resolve(process.cwd(), outputPath);
     await mkdir(dirname(absoluteOutputPath), { recursive: true });
@@ -193,7 +147,14 @@ export async function generate(options) {
         });
         const generated = await readFile(tempOutFile, "utf8");
         const tables = buildParsedTables(generated);
-        const schemaSource = buildSchemaSource(dbName, dbNameRaw, tables);
+        const structure = {
+            dbName: dbNameRaw,
+            tables: tables.map((table) => ({
+                name: table.tableName,
+                columns: table.columns.map((column) => column.name),
+            })),
+        };
+        const schemaSource = buildSchemaSource(structure);
         await writeFile(absoluteOutputPath, schemaSource, "utf8");
         return { outputPath: absoluteOutputPath };
     }

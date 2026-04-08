@@ -1,11 +1,30 @@
 import type { FunctionListType } from '../types.ts';
 
-export const functionListToString = (fnList: FunctionListType[], baseQueryBuilder: string): string => {
+interface StringifyOptions {
+    simplifyLiteral?: boolean;
+}
+
+export const functionListToString = (
+    fnList: FunctionListType[],
+    baseQueryBuilder: string,
+    options: StringifyOptions = {},
+): string => {
+    const simplifyLiteral = options.simplifyLiteral ?? true;
     const INDENT = "    ";
 
     function stringifyFunction(fn: FunctionListType, asExpression = false): string {
         const emitPrefix = asExpression ? `${baseQueryBuilder}` : '';
         if (fn.paramType === "function") {
+            if (simplifyLiteral && fn.name === "l") {
+                const literalArg = fn.arguments[0];
+                return stringifyArg(literalArg);
+            }
+            if (simplifyLiteral && fn.name === "c") {
+                const columnArg = fn.arguments[0];
+                if (typeof columnArg === "string" && columnArg.trim() === "*") {
+                    return `"*"`;
+                }
+            }
             const argsArr = fn.arguments.map(stringifyArg);
             const args = argsArr.join(", ");
             const body = `${fn.name}(${args})`;

@@ -1,65 +1,13 @@
-import prettier from "prettier/standalone";
-import parserTypescript from "prettier/plugins/typescript";
 import parserEstree from "prettier/plugins/estree";
+import parserTypescript from "prettier/plugins/typescript";
+import prettier from "prettier/standalone";
 
 // import { parse } from 'pgsql-parser';
-import { deparseSync, parse } from 'pgsql-parser';
-import type { ConvertOptions, FunctionListType } from './types.js';
-import { functionListToString } from './utils/stringifiers.js';
+import { parse } from 'pgsql-parser';
+import type { ConvertOptions, DbSchemaStructure, FunctionListType } from './types.js';
 import { resolveNode } from './utils/resolvers.js';
-import { dumpTestResult } from "../tests/utils/test-helper";
-const MOCK_EXEC_HANDLER_BODY = "return { sql, parameters };";
-const MOCK_FORMAT_PARAM_HANDLER = "pg";
-
-
-const extractQueryBuildingPart = async (code: string): Promise<string> => {
-    const lines = code.split("\n");
-    let queryBuildingPart = "";
-    let inQueryBuilding = false;
-
-    for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (
-            trimmedLine.startsWith("const query = q") ||
-            (inQueryBuilding && (trimmedLine.startsWith(".select") || trimmedLine.startsWith("q.select")))
-        ) {
-            inQueryBuilding = true;
-        }
-        if (inQueryBuilding) {
-            queryBuildingPart += line + "\n";
-        }
-        if (trimmedLine.startsWith("console.log")) {
-            break;
-        }
-    }
-
-    queryBuildingPart = queryBuildingPart.replace(/console\.log\(query\.getSql\(\)\);?\n?/g, "");
-
-    return queryBuildingPart.trim();
-};
-
-const DEFAULT_FORMAT_PARAM_HANDLER = 'pg';
-const DEFAULT_EXEC_HANDLER = `async ({ sql, parameters, meta }): Promise<any> => {
-    return "Executed";
-}`;
-
-
-// const walker: (specialNode: Record<string, (node: unknown) => FunctionListType[]>, functionList: FunctionListType[]) => Walker = (specialNode, functionList) => {
-//     return (path: NodePath) => {
-//         try {
-//             const nodes = resolveNode({ [path.tag]: path.node });
-//             functionList.push(...nodes);
-//             return false;
-//         } catch (error) {
-//             return false;
-//         }
-//     };
-// };
-
-export interface DbSchemaStructure {
-    dbName: string;
-    tables: Array<{ name: string; alias?: string; columns: string[] }>;
-}
+import { functionListToString } from './utils/stringifiers.js';
+import { createDbSchemaSource } from './utils/db-schema-writer.js';
 
 export interface ConvertResult {
     code: string;
@@ -67,6 +15,7 @@ export interface ConvertResult {
     functionList: FunctionListType[];
     options: ConvertOptions;
     dbSchemaStructure?: DbSchemaStructure;
+    dbSchemaAssumption?: string;
 }
 
 const DEFAULT_DB_NAME = "DbName";
@@ -499,11 +448,15 @@ export async function convert(sql: string, options: ConvertOptions = {}): Promis
     // });
 
     const baseQueryBuilder = 'q';
-    const queryBuilderChain = `q${functionListToString(functionList, baseQueryBuilder)}`;
+    const queryBuilderChain = `q${functionListToString(functionList, baseQueryBuilder, {
+        simplifyLiteral: options.simplifyLiteral,
+    })}`;
     let dbSchemaStructure: DbSchemaStructure | undefined;
+    let dbSchemaAssumption: string | undefined;
     let chainForOutput = queryBuilderChain;
     if (options.dbSchema) {
         dbSchemaStructure = inferDbSchemaStructure(functionList);
+        dbSchemaAssumption = createDbSchemaSource(dbSchemaStructure);
     }
     if (options.dbSchema && dbSchemaStructure) {
         const { chain } = applySchemaInjection(chainForOutput, dbSchemaStructure);
@@ -514,11 +467,11 @@ export async function convert(sql: string, options: ConvertOptions = {}): Promis
 
 const q = sqlBuilder();
 const sch = sqlSchema();
-const schema = sch.set("query", sch
-    .query(${chainForOutput}));
+const schema = sch.setQuery("query", sch
+    .set.query(${chainForOutput}));
     
 export default schema;`
-        : `import { sqlBuilder } from "@gntrees/sql-builder/pg/builder";
+        : `import { sqlBuilder } from "@gntrees/sql-builder/pg";
 
 const q = sqlBuilder();
 const query = ${chainForOutput};
@@ -531,5 +484,5 @@ export default query;`;
     });
     
 
-    return { code, formatted, functionList, options, dbSchemaStructure };
+    return { code, formatted, functionList, options, dbSchemaStructure, dbSchemaAssumption };
 }

@@ -167,7 +167,7 @@ class CoreQueryBuilder {
         return joinSqlTokens(this.query.sql.map((item) => {
             if (item instanceof base_raw_query_builder_1.ParameterType) {
                 paramIndex += 1;
-                return toSql(formatParamHandler, item, paramIndex);
+                return formatPgParameterToken(item, paramIndex);
             }
             return item;
         }));

@@ -24,7 +24,7 @@ const setupCode = `import { sqlBuilder } from "@gntrees/sql-builder/pg"
 
 sqlBuilder("postgresql://user:password@localhost:5432/app")`
 
-const basicQueryCode = `const users = await q
+const basicQueryCode = `const query = await q
   .select(
     q.c("users.id"),
     q.c("users.name"),
@@ -36,7 +36,7 @@ const basicQueryCode = `const users = await q
   .limit(10)
   .execute()
 
-console.log(users)`
+console.log(query)`
 
 const handlerSetupCode = `import { sqlBuilder } from "@gntrees/sql-builder/pg"
 import { Pool } from "pg"

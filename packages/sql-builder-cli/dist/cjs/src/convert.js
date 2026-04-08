@@ -1,10 +1,11 @@
-import prettier from "prettier/standalone";
-import parserTypescript from "prettier/plugins/typescript";
 import parserEstree from "prettier/plugins/estree";
+import parserTypescript from "prettier/plugins/typescript";
+import prettier from "prettier/standalone";
 // import { parse } from 'pgsql-parser';
 import { parse } from 'pgsql-parser';
-import { functionListToString } from './utils/stringifiers.js';
 import { resolveNode } from './utils/resolvers.js';
+import { functionListToString } from './utils/stringifiers.js';
+import { createDbSchemaSource } from './utils/db-schema-writer.js';
 const MOCK_EXEC_HANDLER_BODY = "return { sql, parameters };";
 const MOCK_FORMAT_PARAM_HANDLER = "pg";
 const extractQueryBuildingPart = async (code) => {
@@ -435,11 +436,15 @@ export async function convert(sql, options = {}) {
     //     error: undefined,
     // });
     const baseQueryBuilder = 'q';
-    const queryBuilderChain = `q${functionListToString(functionList, baseQueryBuilder)}`;
+    const queryBuilderChain = `q${functionListToString(functionList, baseQueryBuilder, {
+        simplifyLiteral: options.simplifyLiteral,
+    })}`;
     let dbSchemaStructure;
+    let dbSchemaAssumption;
     let chainForOutput = queryBuilderChain;
     if (options.dbSchema) {
         dbSchemaStructure = inferDbSchemaStructure(functionList);
+        dbSchemaAssumption = createDbSchemaSource(dbSchemaStructure);
     }
     if (options.dbSchema && dbSchemaStructure) {
         const { chain } = applySchemaInjection(chainForOutput, dbSchemaStructure);
@@ -454,7 +459,7 @@ const schema = sch.set("query", sch
     .query(${chainForOutput}));
     
 export default schema;`
-        : `import { sqlBuilder } from "@gntrees/sql-builder/pg/builder";
+        : `import { sqlBuilder } from "@gntrees/sql-builder/pg";
 
 const q = sqlBuilder();
 const query = ${chainForOutput};
@@ -464,5 +469,5 @@ export default query;`;
         parser: 'typescript',
         plugins: [parserTypescript, parserEstree],
     });
-    return { code, formatted, functionList, options, dbSchemaStructure };
+    return { code, formatted, functionList, options, dbSchemaStructure, dbSchemaAssumption };
 }

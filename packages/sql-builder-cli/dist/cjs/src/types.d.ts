@@ -17,4 +17,13 @@ export interface ConvertOptions {
     testName?: string;
     sqlSchema?: boolean;
     dbSchema?: boolean;
+    simplifyLiteral?: boolean;
+}
+export interface DbSchemaStructure {
+    dbName: string;
+    tables: Array<{
+        name: string;
+        alias?: string;
+        columns: string[];
+    }>;
 }

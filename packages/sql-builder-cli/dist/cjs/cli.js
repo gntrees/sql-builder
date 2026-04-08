@@ -2,7 +2,7 @@
 import { writeFile } from "node:fs/promises";
 import { convert, generate } from "./index.js";
 const USAGE = `Usage:
-  npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--sqlSchema=true] [--dbSchema=true] [--output="./query.ts"]
+  npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--sqlSchema=true] [--dbSchema=true] [--simplify-literal=true] [--output="./query.ts"]
   npx @gntrees/sql-builder-cli generate --url="postgres://..." [--output="./db-name.schema.ts"]`;
 const parseArgs = (args) => {
     const [command, ...rest] = args;
@@ -11,6 +11,7 @@ const parseArgs = (args) => {
     let output;
     let sqlSchema;
     let dbSchema;
+    let simplifyLiteral;
     for (const arg of rest) {
         if (arg.startsWith("--sql=")) {
             sql = arg.slice("--sql=".length);
@@ -29,11 +30,15 @@ const parseArgs = (args) => {
             const schemaValue = arg.slice("--dbSchema=".length).toLowerCase();
             dbSchema = schemaValue === "true";
         }
+        if (arg.startsWith("--simplify-literal=")) {
+            const simplifyLiteralValue = arg.slice("--simplify-literal=".length).toLowerCase();
+            simplifyLiteral = simplifyLiteralValue === "true";
+        }
     }
-    return { command, sql, url, output, sqlSchema, dbSchema };
+    return { command, sql, url, output, sqlSchema, dbSchema, simplifyLiteral };
 };
 const main = async () => {
-    const { command, sql, url, output, sqlSchema, dbSchema } = parseArgs(process.argv.slice(2));
+    const { command, sql, url, output, sqlSchema, dbSchema, simplifyLiteral } = parseArgs(process.argv.slice(2));
     if (!command || command === "help" || command === "--help" || command === "-h") {
         console.log(USAGE);
         process.exit(0);
@@ -54,7 +59,7 @@ const main = async () => {
             process.exit(1);
         }
         try {
-            const result = await convert(sql, { sqlSchema, dbSchema });
+            const result = await convert(sql, { sqlSchema, dbSchema, simplifyLiteral });
             if (output) {
                 await writeFile(output, result.formatted + "\n", "utf8");
                 process.stdout.write(`Written output to ${output}\n`);

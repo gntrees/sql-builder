@@ -93,7 +93,7 @@ const specialNodeQuery: Record<string, (node: any) => FunctionListType[]> = {
                             name: "op",
                             arguments: [
                                 {
-                                    name: "i",
+                                    name: "c",
                                     arguments: [deparsedName],
                                     paramType: "function",
                                 },

@@ -14,7 +14,10 @@ const config = defineConfig({
   resolve: {
     alias: {
       '@gntrees/sql-builder-cli/src/convert': resolve(rootDir, '../sql-builder-cli/src/convert.ts'),
+      '@gntrees/sql-builder-shared': resolve(rootDir, '../sql-builder-shared/src/function-list.json'),
+      '@gntrees/sql-builder-cli/tests/fixtures/sql-samples': resolve(rootDir, '../sql-builder-cli/tests/fixtures/sql-samples.ts'),
       '@gntrees/sql-builder/src/dialects/pg/generated/function-list.json': resolve(rootDir, '../sql-builder/src/dialects/pg/generated/function-list.json'),
+      '@gntrees/sql-builder/src/dialects/pg/tests/test-list': resolve(rootDir, '../sql-builder/src/dialects/pg/tests/test-list.ts'),
       '@gntrees/sql-builder/pg/builder': resolve(
         rootDir,
         '../sql-builder/pg/builder.ts',

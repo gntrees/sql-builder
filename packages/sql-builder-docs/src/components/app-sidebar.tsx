@@ -1,6 +1,8 @@
 import * as React from "react"
+import { Link } from "@tanstack/react-router"
 
 import { VersionSwitcher } from "#/components/version-switcher"
+import { ImageLogo } from "#/components/image-logo"
 import {
   Sidebar,
   SidebarContent,
@@ -55,10 +57,6 @@ const data = {
       title: "Basics",
       url: "#",
       items: [
-        {
-          title: "Converter",
-          url: "/converter",
-        },
         {
           title: "Raw Query",
           url: "/docs/pg/raw",
@@ -116,9 +114,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          options={data.databases}
-        />
+        <Link
+          to="/"
+          className="flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-sidebar-accent/50"
+        >
+          <span className="flex size-8 items-center justify-center rounded-md border border-sidebar-border/70 bg-sidebar-accent/20">
+            <ImageLogo />
+          </span>
+          <span className="text-sm font-semibold tracking-tight text-sidebar-foreground">
+            Gntrees SQL Builder
+          </span>
+        </Link>
+        <VersionSwitcher options={data.databases} />
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
