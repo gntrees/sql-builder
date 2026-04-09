@@ -3544,11 +3544,26 @@ class QueryInstance {
     schema() {
         return (new query_builder_1.QueryBuilder(this)).schema();
     }
+    schemaCase(...args) {
+        return (new query_builder_1.QueryBuilder(this)).schemaCase(...args);
+    }
+    schemaColumn(...args) {
+        return (new query_builder_1.QueryBuilder(this)).schemaColumn(...args);
+    }
+    schemaDatabase(...args) {
+        return (new query_builder_1.QueryBuilder(this)).schemaDatabase(...args);
+    }
     schemaName() {
         return (new query_builder_1.QueryBuilder(this)).schemaName();
     }
+    schemaParam(...args) {
+        return (new query_builder_1.QueryBuilder(this)).schemaParam(...args);
+    }
     schemas() {
         return (new query_builder_1.QueryBuilder(this)).schemas();
+    }
+    schemaTable(...args) {
+        return (new query_builder_1.QueryBuilder(this)).schemaTable(...args);
     }
     schemaToXml(...args) {
         return (new query_builder_1.QueryBuilder(this)).schemaToXml(...args);
@@ -3651,6 +3666,9 @@ class QueryInstance {
     }
     setof() {
         return (new query_builder_1.QueryBuilder(this)).setof();
+    }
+    setParams(...args) {
+        return (new query_builder_1.QueryBuilder(this)).setParams(...args);
     }
     sets() {
         return (new query_builder_1.QueryBuilder(this)).sets();

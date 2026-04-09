@@ -129,7 +129,7 @@ function generateSchemaOverrider(): string {
 
     const methodSet = new Set<string>([...baseRawMethods, ...overrideMethods, ...keywordMethods]);
     const excludedMethods = new Set<string>([
-        'raw', 'r'
+        'raw', 'r', 'schemaParam', 'schemaCase', 'setParams'
     ]);
     // exclude raw and r
     const filteredMethods = Array.from(methodSet).filter((method) => !excludedMethods.has(method));

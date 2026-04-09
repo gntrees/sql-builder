@@ -1184,8 +1184,13 @@ export declare class QueryInstance {
     scalar(): QueryBuilder;
     scale(...args: Parameters<OverrideQueryBuilder["scale"]>): QueryBuilder;
     schema(): QueryBuilder;
+    schemaCase(...args: Parameters<OverrideQueryBuilder["schemaCase"]>): QueryBuilder;
+    schemaColumn(...args: Parameters<OverrideQueryBuilder["schemaColumn"]>): QueryBuilder;
+    schemaDatabase(...args: Parameters<OverrideQueryBuilder["schemaDatabase"]>): QueryBuilder;
     schemaName(): QueryBuilder;
+    schemaParam(...args: Parameters<OverrideQueryBuilder["schemaParam"]>): import("../sql-param").SqlSchemaParam<string, never>;
     schemas(): QueryBuilder;
+    schemaTable(...args: Parameters<OverrideQueryBuilder["schemaTable"]>): QueryBuilder;
     schemaToXml(...args: Parameters<OverrideQueryBuilder["schemaToXml"]>): QueryBuilder;
     schemaToXmlAndXmlschema(...args: Parameters<OverrideQueryBuilder["schemaToXmlAndXmlschema"]>): QueryBuilder;
     schemaToXmlschema(...args: Parameters<OverrideQueryBuilder["schemaToXmlschema"]>): QueryBuilder;
@@ -1220,6 +1225,7 @@ export declare class QueryInstance {
     setConfig(...args: Parameters<OverrideQueryBuilder["setConfig"]>): QueryBuilder;
     setMasklen(...args: Parameters<OverrideQueryBuilder["setMasklen"]>): QueryBuilder;
     setof(): QueryBuilder;
+    setParams(...args: Parameters<OverrideQueryBuilder["setParams"]>): QueryBuilder;
     sets(): QueryBuilder;
     setseed(...args: Parameters<OverrideQueryBuilder["setseed"]>): QueryBuilder;
     setval(...args: Parameters<OverrideQueryBuilder["setval"]>): QueryBuilder;

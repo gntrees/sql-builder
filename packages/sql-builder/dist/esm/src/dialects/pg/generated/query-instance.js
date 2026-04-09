@@ -3541,11 +3541,26 @@ export class QueryInstance {
     schema() {
         return (new QueryBuilder(this)).schema();
     }
+    schemaCase(...args) {
+        return (new QueryBuilder(this)).schemaCase(...args);
+    }
+    schemaColumn(...args) {
+        return (new QueryBuilder(this)).schemaColumn(...args);
+    }
+    schemaDatabase(...args) {
+        return (new QueryBuilder(this)).schemaDatabase(...args);
+    }
     schemaName() {
         return (new QueryBuilder(this)).schemaName();
     }
+    schemaParam(...args) {
+        return (new QueryBuilder(this)).schemaParam(...args);
+    }
     schemas() {
         return (new QueryBuilder(this)).schemas();
+    }
+    schemaTable(...args) {
+        return (new QueryBuilder(this)).schemaTable(...args);
     }
     schemaToXml(...args) {
         return (new QueryBuilder(this)).schemaToXml(...args);
@@ -3648,6 +3663,9 @@ export class QueryInstance {
     }
     setof() {
         return (new QueryBuilder(this)).setof();
+    }
+    setParams(...args) {
+        return (new QueryBuilder(this)).setParams(...args);
     }
     sets() {
         return (new QueryBuilder(this)).sets();

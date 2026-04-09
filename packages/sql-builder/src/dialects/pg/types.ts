@@ -1,6 +1,7 @@
 import type { ParameterType } from "./base-raw-query-builder";
+import type { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
 import type { QueryBuilder } from "./query-builder";
-import type { DBSchema, TableSchema, ColumnSchema } from "./db-schema";
+import type { SqlSchemaParam, SqlSchemaParamType } from "./sql-param";
 
 export interface QueryType {
     sql: (string | ParameterType)[];
@@ -79,7 +80,8 @@ export type Statement =
     | undefined
     | DBSchema
     | TableSchema
-    | ColumnSchema;
+    | ColumnSchema
+    | SqlSchemaParam<SqlSchemaParam['key'],SqlSchemaParamType>
 export type AllPossibleFunctionParamType =
     Statement |
     Statement[] |

@@ -1176,8 +1176,11 @@ export declare class SchemaOverrider extends OverrideQueryBuilder {
     scalar(...args: Parameters<OverrideQueryBuilder["scalar"]>): this;
     scale(...args: Parameters<OverrideQueryBuilder["scale"]>): this;
     schema(...args: Parameters<OverrideQueryBuilder["schema"]>): this;
+    schemaColumn(...args: Parameters<OverrideQueryBuilder["schemaColumn"]>): this;
+    schemaDatabase(...args: Parameters<OverrideQueryBuilder["schemaDatabase"]>): this;
     schemaName(...args: Parameters<OverrideQueryBuilder["schemaName"]>): this;
     schemas(...args: Parameters<OverrideQueryBuilder["schemas"]>): this;
+    schemaTable(...args: Parameters<OverrideQueryBuilder["schemaTable"]>): this;
     schemaToXml(...args: Parameters<OverrideQueryBuilder["schemaToXml"]>): this;
     schemaToXmlAndXmlschema(...args: Parameters<OverrideQueryBuilder["schemaToXmlAndXmlschema"]>): this;
     schemaToXmlschema(...args: Parameters<OverrideQueryBuilder["schemaToXmlschema"]>): this;

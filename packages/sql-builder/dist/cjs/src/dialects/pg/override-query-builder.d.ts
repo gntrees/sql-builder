@@ -1,6 +1,11 @@
+import type { CoreQueryBuilder } from "./core-query-builder";
+import type { SqlSchemaParam } from "./sql-param";
 import { OperatorFunctionBuilder } from "./override-operator-functions";
 import type { Statement } from "./types";
 export declare class OverrideQueryBuilder extends OperatorFunctionBuilder {
+    schemaParam<TKey extends string>(key: TKey): SqlSchemaParam<TKey>;
+    schemaCase(...param: Parameters<CoreQueryBuilder['schemaCaseCore']>): this;
+    setParams(...param: Parameters<CoreQueryBuilder["setParamsCore"]>): this;
     escape(value?: Statement): this;
     semicolon(): this;
     sc(): this;

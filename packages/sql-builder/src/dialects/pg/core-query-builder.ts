@@ -7,6 +7,7 @@ import { QueryBuilder } from "./query-builder";
 import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, RequiredDBInstance, Statement } from "./types";
 import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
 import type { FunctionListType } from "@gntrees/sql-builder-cli";
+import { SqlSchemaParam, SqlSchemaParamCase, type SqlSchemaParamType } from "./sql-param";
 
 type InstanceStructureSerializableValue =
     | string
@@ -23,6 +24,15 @@ type InstanceStructureSerializableValue =
         value: string;
     }
     | {
+        kind: "schema-param";
+        value: {
+            key: string;
+            types: ("number" | "boolean" | "string" | "null")[];
+            hasDefault: boolean;
+            defaultValue?: string | number | boolean | null;
+        };
+    }
+    | {
         kind: "array";
         value: InstanceStructureSerializableValue[];
     }
@@ -37,6 +47,9 @@ type InstanceStructureNode = {
 };
 
 type PrimitiveSchemaParam = string | number | boolean | null;
+interface RuntimeParams {
+    [key: SqlSchemaParam['key']]: PrimitiveSchemaParam | RuntimeParams;
+}
 
 // Core query builder state and orchestration.
 export class CoreQueryBuilder {
@@ -45,6 +58,7 @@ export class CoreQueryBuilder {
     protected instanceStructure: InstanceStructureNode[] = [];
     protected callLevel: number = 0;
     protected queryInstance?: QueryInstance;
+    protected runtimeParams: RuntimeParams = {};
     private isRebuilding: boolean = false;
 
     constructor(queryInstance?: QueryInstance) {
@@ -67,6 +81,55 @@ export class CoreQueryBuilder {
 
     getInstanceStructure(): InstanceStructureNode[] {
         return cloneInstanceStructure(this.instanceStructure);
+    }
+
+    getRuntimeParams(): RuntimeParams {
+        return this.runtimeParams;
+    }
+
+    // still prototype
+    schemaParamCore<TKey extends string>(key: TKey): SqlSchemaParam<TKey> {
+        this.endClass();
+        return new SqlSchemaParam(key);
+    }
+
+    // still prototype
+    schemaCaseCore<TKey extends string>(key: TKey, queryBuilder: QueryBuilder): this {
+        this.resolveSchemaParam("function", "schemaCase", [key, queryBuilder]);
+        const runtimeValue = this.runtimeParams[key];
+        if (runtimeValue === undefined || runtimeValue === false) {
+            return this.endClass();
+        }
+        if (runtimeValue === true) {
+            queryBuilder.setParams({});
+            this.query.sql.push(...queryBuilder.getTokens());
+            return this.endClass();
+        }
+        if (isPlainObject(runtimeValue)) {
+            const schemaCase = new SqlSchemaParamCase(key, {
+                setParams: (params) => queryBuilder.setParams(params as RuntimeParams),
+                getTokens: () => queryBuilder.getTokens(),
+            });
+            schemaCase.setParams(runtimeValue);
+            const caseTokens = schemaCase.getQueryBuilder().getTokens() as QueryType["sql"];
+            this.query.sql.push(...caseTokens);
+            return this.endClass();
+        }
+        throw new Error(
+            `Invalid schemaCase value for '${key}'. Expected boolean or object, got ${describeValueType(runtimeValue)}.`,
+        );
+    }
+
+    // still prototype
+    setParamsCore(params: RuntimeParams): this {
+        if (!isPlainObject(params)) {
+            throw new Error(`setParams expects an object, got ${describeValueType(params)}.`);
+        }
+        this.runtimeParams = { ...(params as RuntimeParams) };
+        if (!this.isRebuilding) {
+            this.rebuild();
+        }
+        return this.endClass();
     }
 
     protected setInstanceStructure(structure: InstanceStructureNode[]): this {
@@ -132,6 +195,19 @@ export class CoreQueryBuilder {
                     name: param, arguments: []
                 } as FunctionListType;
             }
+            if (param instanceof SqlSchemaParam) {
+                return {
+                    paramType: "object",
+                    name: {
+                        kind: "schema-param",
+                        key: param.getKey(),
+                        types: param.getTypes(),
+                        hasDefault: param.hasDefault(),
+                        defaultValue: param.getDefaultValue(),
+                    },
+                    arguments: [],
+                } as FunctionListType;
+            }
             if (this.isSchemaObject(param)) {
                 return {
                     paramType: "string",
@@ -161,6 +237,9 @@ export class CoreQueryBuilder {
     }
 
     private registerSchemaCall(name: FunctionListType['name'], params: AllPossibleFunctionParamType, schema: FunctionListType): FunctionListType {
+        if (name === "setParams") {
+            return schema;
+        }
         if (!this.isRebuilding && this.callLevel === 1) {
             this.captureInstanceStructure(name, params);
             this.schemaQueryBuilder.push(schema);
@@ -212,6 +291,17 @@ export class CoreQueryBuilder {
         if (isSerializablePrimitive(value)) {
             return value;
         }
+        if (value instanceof SqlSchemaParam) {
+            return {
+                kind: "schema-param",
+                value: {
+                    key: value.getKey(),
+                    types: value.getTypes(),
+                    hasDefault: value.hasDefault(),
+                    defaultValue: value.getDefaultValue(),
+                },
+            };
+        }
         if (value instanceof QueryBuilder) {
             return {
                 kind: "query-builder",
@@ -247,6 +337,19 @@ export class CoreQueryBuilder {
     private deserializeInstanceValue(value: InstanceStructureSerializableValue): unknown {
         if (isSerializablePrimitive(value)) {
             return value;
+        }
+        if (value.kind === "schema-param") {
+            const schemaParam = new SqlSchemaParam(value.value.key);
+            value.value.types.forEach((type) => {
+                if (type === "number") schemaParam.number();
+                if (type === "boolean") schemaParam.boolean();
+                if (type === "string") schemaParam.string();
+                if (type === "null") schemaParam.nullable();
+            });
+            if (value.value.hasDefault) {
+                schemaParam.default(value.value.defaultValue as any);
+            }
+            return schemaParam;
         }
         if (value.kind === "query-builder") {
             const nested = new QueryBuilder(this.queryInstance);
@@ -385,6 +488,13 @@ export class CoreQueryBuilder {
         if (item === null) {
             return [this.createLiteralParameter(null)];
         }
+        if (item instanceof SqlSchemaParam) {
+            const resolvedValue = this.resolveSqlSchemaParamValue(item);
+            if (resolvedValue === undefined) {
+                return [];
+            }
+            return [this.createLiteralParameter(resolvedValue)];
+        }
         if (this.isColumnSchema(item)) {
             return [this.createIdentifierParameter(`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`)];
         }
@@ -395,6 +505,9 @@ export class CoreQueryBuilder {
             return [this.createIdentifierParameter(item.dbSchemaName)];
         }
         if (item instanceof QueryBuilder) {
+            if (Object.keys(this.runtimeParams).length > 0) {
+                item.setParams(this.runtimeParams);
+            }
             return item.getTokens();
         }
         if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
@@ -410,6 +523,16 @@ export class CoreQueryBuilder {
     protected resolveIdentifierStatement(item: Statement): QueryType['sql'] {
         if (item === undefined || item === null || item === "") {
             return [];
+        }
+        if (item instanceof SqlSchemaParam) {
+            const resolvedValue = this.resolveSqlSchemaParamValue(item);
+            if (resolvedValue === undefined) {
+                return [];
+            }
+            if (resolvedValue === null) {
+                throw new Error(`SqlSchemaParam '${item.getKey()}' cannot resolve to null for identifier statement.`);
+            }
+            return [this.createIdentifierParameter(resolvedValue)];
         }
         if (this.isColumnSchema(item)) {
             return [this.createIdentifierParameter(`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`)];
@@ -430,6 +553,9 @@ export class CoreQueryBuilder {
             return [this.createIdentifierParameter(item)];
         }
         if (item instanceof QueryBuilder) {
+            if (Object.keys(this.runtimeParams).length > 0) {
+                item.setParams(this.runtimeParams);
+            }
             return item.getTokens();
         }
         return [this.createIdentifierParameter(String(item))]
@@ -438,6 +564,16 @@ export class CoreQueryBuilder {
     protected resolveStringStatement(item: Statement): QueryType['sql'] {
         if (item === undefined || item === null || item === "") {
             return [];
+        }
+        if (item instanceof SqlSchemaParam) {
+            const resolvedValue = this.resolveSqlSchemaParamValue(item);
+            if (resolvedValue === undefined) {
+                return [];
+            }
+            if (resolvedValue === null) {
+                throw new Error(`SqlSchemaParam '${item.getKey()}' cannot resolve to null for string statement.`);
+            }
+            return [String(resolvedValue)];
         }
         if (this.isColumnSchema(item)) {
             return [`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`];
@@ -452,6 +588,9 @@ export class CoreQueryBuilder {
             return [String(item)];
         }
         if (item instanceof QueryBuilder) {
+            if (Object.keys(this.runtimeParams).length > 0) {
+                item.setParams(this.runtimeParams);
+            }
             return item.getTokens();
         }
         throw new Error(`Unsupported string statement type: ${typeof item}`);
@@ -528,6 +667,39 @@ export class CoreQueryBuilder {
         }
         return this;
     }
+
+    protected resolveSqlSchemaParamValue(param: SqlSchemaParam<SqlSchemaParam['key'], SqlSchemaParamType>): ParameterValueType | undefined {
+        const key = param.getKey();
+        const hasRuntimeValue = Object.prototype.hasOwnProperty.call(this.runtimeParams, key);
+        const value = hasRuntimeValue
+            ? this.runtimeParams[key]
+            : param.hasDefault()
+                ? param.getDefaultValue()
+                : undefined;
+
+        if (value === undefined) {
+            return undefined;
+        }
+
+        if (value !== null && typeof value !== "string" && typeof value !== "number" && typeof value !== "boolean") {
+            throw new Error(`SqlSchemaParam '${key}' must resolve to string | number | boolean | null, got ${describeValueType(value)}.`);
+        }
+
+        const scalarValue = value as ParameterValueType;
+        const expectedTypes = param.getTypes();
+        if (expectedTypes.length === 0) {
+            return scalarValue;
+        }
+
+        const resolvedType: "string" | "number" | "boolean" | "null" = scalarValue === null
+            ? "null"
+            : (typeof scalarValue as "string" | "number" | "boolean");
+        if (!expectedTypes.includes(resolvedType)) {
+            throw new Error(`Invalid value for SqlSchemaParam '${key}'. Expected ${expectedTypes.join(" | ")}, got ${resolvedType}.`);
+        }
+
+        return scalarValue;
+    }
 }
 
 // Primitive and schema parameter helpers.
@@ -576,6 +748,17 @@ function cloneInstanceValue(value: InstanceStructureSerializableValue): Instance
             value: value.value,
         };
     }
+    if (value.kind === "schema-param") {
+        return {
+            kind: "schema-param",
+            value: {
+                key: value.value.key,
+                types: [...value.value.types],
+                hasDefault: value.value.hasDefault,
+                defaultValue: value.value.defaultValue,
+            },
+        };
+    }
     if (value.kind === "array") {
         return {
             kind: "array",
@@ -589,6 +772,20 @@ function cloneInstanceValue(value: InstanceStructureSerializableValue): Instance
             return acc;
         }, {}),
     };
+}
+
+function isPlainObject(value: unknown): value is RuntimeParams {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function describeValueType(value: unknown): string {
+    if (value === null) {
+        return "null";
+    }
+    if (Array.isArray(value)) {
+        return "array";
+    }
+    return typeof value;
 }
 
 // SQL token spacing helper.

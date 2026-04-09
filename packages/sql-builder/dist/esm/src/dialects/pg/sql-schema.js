@@ -13,18 +13,6 @@ export class SqlSchema {
             return new SqlSchemaQueryBuilder(query);
         },
     };
-    param = {
-        set(key) {
-            return new SqlSchemaParam(key);
-        },
-        case(key, queryBuilder, defaultUsed = true) {
-            return new SqlSchemaParamCase({
-                key,
-                queryBuilder,
-                isUsed: defaultUsed,
-            });
-        }
-    };
     query(key) {
         const sqlSchemaQueryBuilder = this.sql[key];
         if (!sqlSchemaQueryBuilder)
@@ -42,67 +30,6 @@ export class SqlSchema {
             })),
         };
         return json;
-    }
-}
-export class SqlSchemaParamCase {
-    cases = [];
-    constructor(first) {
-        this.cases.push(first);
-    }
-    case(key, queryBuilder, defaultUsed = true) {
-        this.cases.push({
-            key,
-            queryBuilder,
-            isUsed: defaultUsed,
-        });
-        return this;
-    }
-}
-export class SqlSchemaParam {
-    key;
-    types = [];
-    constructor(key) {
-        this.key = key;
-    }
-    value;
-    addType(type) {
-        if (!this.types.includes(type)) {
-            this.types.push(type);
-        }
-    }
-    getKey() {
-        return this.key;
-    }
-    number(defaultValue = 2) {
-        this.addType("number");
-        const next = this;
-        next.value = defaultValue;
-        return next;
-    }
-    boolean(defaultValue = true) {
-        this.addType("boolean");
-        const next = this;
-        next.value = defaultValue;
-        return next;
-    }
-    string(defaultValue = "test") {
-        this.addType("string");
-        const next = this;
-        next.value = defaultValue;
-        return next;
-    }
-    queryBuilder(defaultValue) {
-        this.addType("query-builder");
-        const next = this;
-        next.value = defaultValue;
-        return next;
-    }
-    nullable() {
-        this.addType("null");
-        return this;
-    }
-    getTypes() {
-        return this.types;
     }
 }
 export class SqlSchemaQueryBuilder {
@@ -123,5 +50,8 @@ export class SqlSchemaQueryBuilder {
     }
     execute(...params) {
         return this.sqlBuilder.execute(...params);
+    }
+    setParams(...params) {
+        return this.sqlBuilder.setParams(...params);
     }
 }

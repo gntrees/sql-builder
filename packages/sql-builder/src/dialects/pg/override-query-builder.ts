@@ -1,9 +1,31 @@
 import type { ParameterType } from "./base-raw-query-builder";
+import type { CoreQueryBuilder } from "./core-query-builder";
+import type { SqlSchemaParam } from "./sql-param";
 import { OperatorFunctionBuilder } from "./override-operator-functions";
 import { QueryBuilder } from "./query-builder";
 import type { Statement } from "./types";
 
 export class OverrideQueryBuilder extends OperatorFunctionBuilder {
+    // special for params feature
+    // still prototype
+    schemaParam<
+        TKey extends string,
+    >(key: TKey): SqlSchemaParam<TKey> {
+        return this.schemaParamCore(key);
+    }
+
+    // still prototype
+    schemaCase(...param:Parameters<CoreQueryBuilder['schemaCaseCore']>): this {
+        this.schemaCaseCore(...param);
+        return this;
+    }
+
+    // still prototype
+    setParams(...param: Parameters<CoreQueryBuilder["setParamsCore"]>): this {
+        return this.setParamsCore(...param);
+    }
+
+    // rest
     override escape(value?: Statement) {
         if (value === undefined) {
             return super.escape();
@@ -441,7 +463,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
                     this.query.sql.push(")");
                 }
             } else {
-                const resolvedTarget = super.resolveStatement(target as QueryBuilder);
+                const resolvedTarget = super.resolveStatement(target);
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
                     this.query.sql.push(...resolvedTarget);
@@ -539,7 +561,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
                     this.query.sql.push(")");
                 }
             } else {
-                const resolvedTarget = super.resolveStatement(options.target as QueryBuilder);
+                const resolvedTarget = super.resolveStatement(options.target);
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push(...resolvedTarget);
                 }
@@ -574,7 +596,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
                     this.query.sql.push(")");
                 }
             } else {
-                const resolvedTarget = super.resolveStatement(options.target as QueryBuilder);
+                const resolvedTarget = super.resolveStatement(options.target);
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push(...resolvedTarget);
                 }
@@ -758,7 +780,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -778,7 +800,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -797,7 +819,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -816,7 +838,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -836,7 +858,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -855,7 +877,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -875,7 +897,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -918,7 +940,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         }
         if (on) {
             super.on();
-            const resolvedOn = super.resolveStatement(on as QueryBuilder);
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
                 this.query.sql.push(...resolvedOn);
             }
@@ -1205,13 +1227,13 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
     override with(cteName?: Statement, subQuery?: Statement) {
         super.with();
         if (cteName !== undefined && cteName !== null) {
-            const resolvedCteName = super.resolveStatement(cteName as QueryBuilder);
+            const resolvedCteName = super.resolveStatement(cteName);
             if (resolvedCteName.length > 0) {
                 this.query.sql.push(...resolvedCteName);
             }
         }
         if (subQuery) {
-            const resolvedSubQuery = super.resolveStatement(subQuery as QueryBuilder);
+            const resolvedSubQuery = super.resolveStatement(subQuery);
             if (resolvedSubQuery.length > 0) {
                 this.query.sql.push("AS", "(", ...resolvedSubQuery, ")");
             }
@@ -1324,7 +1346,7 @@ export class OverrideQueryBuilder extends OperatorFunctionBuilder {
         if (col === undefined || col === null) {
             return this.endClass();
         }
-        const resolvedColumn = super.resolveStatement(col as QueryBuilder);
+        const resolvedColumn = super.resolveStatement(col);
         if (resolvedColumn.length > 0) {
             this.query.sql.push(...resolvedColumn);
         }

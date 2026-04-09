@@ -1,6 +1,21 @@
 import { OperatorFunctionBuilder } from "./override-operator-functions";
 import { QueryBuilder } from "./query-builder";
 export class OverrideQueryBuilder extends OperatorFunctionBuilder {
+    // special for params feature
+    // still prototype
+    schemaParam(key) {
+        return this.schemaParamCore(key);
+    }
+    // still prototype
+    schemaCase(...param) {
+        this.schemaCaseCore(...param);
+        return this;
+    }
+    // still prototype
+    setParams(...param) {
+        return this.setParamsCore(...param);
+    }
+    // rest
     escape(value) {
         if (value === undefined) {
             return super.escape();

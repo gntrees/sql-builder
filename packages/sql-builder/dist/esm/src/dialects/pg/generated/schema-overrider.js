@@ -4705,6 +4705,14 @@ export class SchemaOverrider extends OverrideQueryBuilder {
         this.resolveSchemaParam('function', 'schema', args);
         return super.schema(...args);
     }
+    schemaColumn(...args) {
+        this.resolveSchemaParam('function', 'schemaColumn', args);
+        return super.schemaColumn(...args);
+    }
+    schemaDatabase(...args) {
+        this.resolveSchemaParam('function', 'schemaDatabase', args);
+        return super.schemaDatabase(...args);
+    }
     schemaName(...args) {
         this.resolveSchemaParam('function', 'schemaName', args);
         return super.schemaName(...args);
@@ -4712,6 +4720,10 @@ export class SchemaOverrider extends OverrideQueryBuilder {
     schemas(...args) {
         this.resolveSchemaParam('function', 'schemas', args);
         return super.schemas(...args);
+    }
+    schemaTable(...args) {
+        this.resolveSchemaParam('function', 'schemaTable', args);
+        return super.schemaTable(...args);
     }
     schemaToXml(...args) {
         this.resolveSchemaParam('function', 'schemaToXml', args);

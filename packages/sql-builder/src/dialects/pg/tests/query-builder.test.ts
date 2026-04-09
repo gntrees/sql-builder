@@ -2,6 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { sqlBuilder } from "../../../../pg";
 import { expectQuery } from "./test-helpers";
 import { account } from "./schema/db.schema";
+import type { QueryBuilder } from "../query-builder";
 
 const q = sqlBuilder()
     .setFormatParamHandler("pg")
@@ -691,7 +692,16 @@ describe("rebuild queries", () => {
 
     it("rebuild is idempotent", () => {
         const builder = q
-                    .select(account.userId, q.count("*"))
+                    .select(
+                        account.userId, 
+                        q.count("*"),
+                        q.sub(
+                            q.select(q.c("id"))
+                                .from(account)
+                                .where(q.i("is_active").op("=").l(true))
+                                .r`AND ${q.i("created_at").op(">").l("2024-01-01")}`
+                        ).as("active_accounts")
+                    )
                     .from(account)
                     .groupBy(account.userId)
                     .innerJoin(account).on(q.c(account.userId).op("=").i("users.id"))
@@ -703,9 +713,78 @@ describe("rebuild queries", () => {
         builder.rebuild();
         builder.rebuild();
 
-        console.log(JSON.stringify(builder.getInstanceStructure(),null,2));
-
         expect(builder.getSql()).toBe(sqlBefore);
         expect(builder.getParameters()).toEqual(paramsBefore);
+    });
+});
+
+describe("schema params", () => {
+    const buildSchemaParamQuery = (): QueryBuilder => {
+        const builder = q.select("*").from(q.t("users"));
+        return builder
+            .schemaCase(
+                "filter",
+                q.where(
+                    q.ilike(
+                        q.c("users.name"),
+                        builder.schemaParam("name").string().default("test"),
+                    ),
+                ),
+            )
+            .limit(builder.schemaParam("limit").number().default(10));
+    };
+
+    const asQueryBuilder = (builder: unknown): QueryBuilder => builder as QueryBuilder;
+
+    it("uses default value for schemaParam when runtime param is missing", () => {
+        const builder = asQueryBuilder(buildSchemaParamQuery());
+        expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
+        expect(builder.getParameters()).toEqual([10]);
+    });
+
+    it("overrides default schemaParam value from setParams", () => {
+        const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ limit: 5 }));
+        expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
+        expect(builder.getParameters()).toEqual([5]);
+    });
+
+    it("skips schemaCase when value is undefined", () => {
+        const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ limit: 5 }));
+        expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
+        expect(builder.getParameters()).toEqual([5]);
+    });
+
+    it("skips schemaCase when value is false", () => {
+        const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ filter: false, limit: 5 }));
+        expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
+        expect(builder.getParameters()).toEqual([5]);
+    });
+
+    it("enables schemaCase with default nested params when value is true", () => {
+        const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ filter: true, limit: 5 }));
+        expect(builder.getSql()).toBe ("SELECT * FROM \"users\" WHERE \"users\".\"name\" ILIKE $1 LIMIT $2");
+        expect(builder.getParameters()).toEqual(["test", 5]);
+    });
+
+    it("passes nested params object to schemaCase query", () => {
+        const builder = asQueryBuilder(buildSchemaParamQuery().setParams({
+            filter: { name: "john" },
+            limit: 5,
+        }));
+        expect(builder.getSql()).toBe("SELECT * FROM \"users\" WHERE \"users\".\"name\" ILIKE $1 LIMIT $2");
+        expect(builder.getParameters()).toEqual(["john", 5]);
+    });
+
+    it("throws on schemaParam type mismatch", () => {
+        expect(() => buildSchemaParamQuery().setParams({ limit: "5" })).toThrow(
+            "Invalid value for SqlSchemaParam 'limit'",
+        );
+    });
+
+    it("throws on nested schemaCase param type mismatch", () => {
+        expect(() => buildSchemaParamQuery().setParams({
+            filter: { name: 123 },
+            limit: 5,
+        })).toThrow("Invalid value for SqlSchemaParam 'name'");
     });
 });

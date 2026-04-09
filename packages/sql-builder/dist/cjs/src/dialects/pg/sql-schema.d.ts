@@ -7,11 +7,7 @@ export declare class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> =
     set: {
         query: (query: QueryBuilder) => SqlSchemaQueryBuilder;
     };
-    param: {
-        set(key: string): SqlSchemaParam<never>;
-        case(key: string, queryBuilder: QueryBuilder, defaultUsed?: boolean): SqlSchemaParamCase;
-    };
-    query(key: keyof T): SqlSchemaQueryBuilder;
+    query<K extends keyof T>(key: K): T[K];
     getJSON(): {
         sql: {
             [k: string]: {
@@ -22,43 +18,6 @@ export declare class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> =
         };
     };
 }
-type SqlSchemaParamCaseType = {
-    key: string;
-    queryBuilder: QueryBuilder;
-    isUsed?: boolean;
-};
-type SqlSchemaParamType = "number" | "boolean" | "string" | "query-builder" | "null";
-type SqlSchemaParamTypeValueMap = {
-    number: number;
-    boolean: boolean;
-    string: string;
-    "query-builder": QueryBuilder | undefined;
-    null: null;
-};
-type SqlSchemaParamValue<T extends SqlSchemaParamType> = SqlSchemaParamTypeValueMap[T];
-type SqlSchemaParamAllValue = boolean | number | string | QueryBuilder | null;
-type SqlSchemaParamValueUnion<T extends SqlSchemaParamType> = [
-    T
-] extends [never] ? SqlSchemaParamAllValue : Exclude<SqlSchemaParamValue<T>, undefined> | (undefined extends SqlSchemaParamValue<T> ? SqlSchemaParamAllValue : never);
-export declare class SqlSchemaParamCase {
-    protected cases: SqlSchemaParamCaseType[];
-    constructor(first: SqlSchemaParamCaseType);
-    case(key: string, queryBuilder: QueryBuilder, defaultUsed?: boolean): this;
-}
-export declare class SqlSchemaParam<T extends SqlSchemaParamType = never> {
-    protected key: string;
-    protected types: SqlSchemaParamType[];
-    constructor(key: string);
-    value: SqlSchemaParamValueUnion<T>;
-    protected addType(type: SqlSchemaParamType): void;
-    getKey(): string;
-    number(defaultValue?: number): SqlSchemaParam<"number" | T>;
-    boolean(defaultValue?: boolean): SqlSchemaParam<"boolean" | T>;
-    string(defaultValue?: string): SqlSchemaParam<"string" | T>;
-    queryBuilder(defaultValue?: QueryBuilder): SqlSchemaParam<"query-builder" | T>;
-    nullable(): SqlSchemaParam<T | "null">;
-    getTypes(): T[];
-}
 export declare class SqlSchemaQueryBuilder {
     protected sqlBuilder: QueryBuilder;
     constructor(sqlSchema: QueryBuilder);
@@ -67,5 +26,5 @@ export declare class SqlSchemaQueryBuilder {
     getTags(): string[];
     tags(...tags: string[]): this;
     execute(...params: Parameters<QueryBuilder["execute"]>): Promise<any>;
+    setParams(...params: Parameters<QueryBuilder["setParams"]>): QueryBuilder;
 }
-export {};

@@ -679,6 +679,11 @@
     "savepointTransaction",
     "sc",
     "scale",
+    "schemaCase",
+    "schemaColumn",
+    "schemaDatabase",
+    "schemaParam",
+    "schemaTable",
     "schemaToXml",
     "schemaToXmlAndXmlschema",
     "schemaToXmlschema",
@@ -691,6 +696,7 @@
     "setByte",
     "setConfig",
     "setMasklen",
+    "setParams",
     "setseed",
     "setval",
     "setweight",
@@ -2861,8 +2867,13 @@
     "scalar",
     "scale",
     "schema",
+    "schemaCase",
+    "schemaColumn",
+    "schemaDatabase",
     "schemaName",
+    "schemaParam",
     "schemas",
+    "schemaTable",
     "schemaToXml",
     "schemaToXmlAndXmlschema",
     "schemaToXmlschema",
@@ -2897,6 +2908,7 @@
     "setConfig",
     "setMasklen",
     "setof",
+    "setParams",
     "sets",
     "setseed",
     "setval",
@@ -3191,5 +3203,5 @@
     "yes",
     "zone"
   ],
-  "totalCount": 1507
+  "totalCount": 1513
 }

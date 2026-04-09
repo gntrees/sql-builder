@@ -3546,11 +3546,26 @@ export class QueryInstance {
   schema() {
     return (new QueryBuilder(this)).schema();
   }
+  schemaCase(...args: Parameters<OverrideQueryBuilder["schemaCase"]>) {
+    return (new QueryBuilder(this)).schemaCase(...args);
+  }
+  schemaColumn(...args: Parameters<OverrideQueryBuilder["schemaColumn"]>) {
+    return (new QueryBuilder(this)).schemaColumn(...args);
+  }
+  schemaDatabase(...args: Parameters<OverrideQueryBuilder["schemaDatabase"]>) {
+    return (new QueryBuilder(this)).schemaDatabase(...args);
+  }
   schemaName() {
     return (new QueryBuilder(this)).schemaName();
   }
+  schemaParam(...args: Parameters<OverrideQueryBuilder["schemaParam"]>) {
+    return (new QueryBuilder(this)).schemaParam(...args);
+  }
   schemas() {
     return (new QueryBuilder(this)).schemas();
+  }
+  schemaTable(...args: Parameters<OverrideQueryBuilder["schemaTable"]>) {
+    return (new QueryBuilder(this)).schemaTable(...args);
   }
   schemaToXml(...args: Parameters<OverrideQueryBuilder["schemaToXml"]>) {
     return (new QueryBuilder(this)).schemaToXml(...args);
@@ -3653,6 +3668,9 @@ export class QueryInstance {
   }
   setof() {
     return (new QueryBuilder(this)).setof();
+  }
+  setParams(...args: Parameters<OverrideQueryBuilder["setParams"]>) {
+    return (new QueryBuilder(this)).setParams(...args);
   }
   sets() {
     return (new QueryBuilder(this)).sets();

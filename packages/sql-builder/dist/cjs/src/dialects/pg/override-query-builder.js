@@ -4,6 +4,21 @@ exports.OverrideQueryBuilder = void 0;
 const override_operator_functions_1 = require("./override-operator-functions");
 const query_builder_1 = require("./query-builder");
 class OverrideQueryBuilder extends override_operator_functions_1.OperatorFunctionBuilder {
+    // special for params feature
+    // still prototype
+    schemaParam(key) {
+        return this.schemaParamCore(key);
+    }
+    // still prototype
+    schemaCase(...param) {
+        this.schemaCaseCore(...param);
+        return this;
+    }
+    // still prototype
+    setParams(...param) {
+        return this.setParamsCore(...param);
+    }
+    // rest
     escape(value) {
         if (value === undefined) {
             return super.escape();

@@ -145,10 +145,15 @@ describe("schema db structure", () => {
     });
 
     it("should accept where with session table schema", async () => {
-        const builder = q.select(session.id).from(session).where(q.i(session.userId).op("=").l("1"));
+        const builder = q.select(session.id).from(session).where(
+            q.i(session.userId).op("=").l(q.schemaParam("userId").string().default("2"))
+        );
+        builder.setParams({
+            "userId": "1",
+        });
         expectQuery(builder, "queryBuilder", "schema session where");
         await expectExecute(builder);
-    });
+    }); 
 
     it("should accept select with verification table schema", async () => {
         const builder = q.select(verification.id, verification.identifier).from(verification);
