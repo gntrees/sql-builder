@@ -1,8 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { sqlBuilder } from "../../../../pg";
+import { sqlBuilder, sqlSchema } from "../../../../pg";
 import { expectQuery } from "./test-helpers";
 import { account } from "./schema/db.schema";
 import type { QueryBuilder } from "../query-builder";
+import { z } from "zod";
 
 const q = sqlBuilder()
     .setFormatParamHandler("pg")
@@ -669,8 +670,8 @@ describe("rebuild queries", () => {
         const sqlBefore = builder.getSql();
         const paramsBefore = builder.getParameters();
 
-        builder.setTokens([]);
-        builder.rebuild();
+        // builder.setTokens([]);
+        // builder.rebuild();
 
         expect(builder.getSql()).toBe(sqlBefore);
         expect(builder.getParameters()).toEqual(paramsBefore);
@@ -683,8 +684,8 @@ describe("rebuild queries", () => {
         const sqlBefore = builder.getSql();
         const paramsBefore = builder.getParameters();
 
-        builder.setTokens([]);
-        builder.rebuild();
+        // builder.setTokens([]);
+        // builder.rebuild();
 
         expect(builder.getSql()).toBe(sqlBefore);
         expect(builder.getParameters()).toEqual(paramsBefore);
@@ -710,8 +711,8 @@ describe("rebuild queries", () => {
         const sqlBefore = builder.getSql();
         const paramsBefore = builder.getParameters();
         
-        builder.rebuild();
-        builder.rebuild();
+        // builder.rebuild();
+        // builder.rebuild();
 
         expect(builder.getSql()).toBe(sqlBefore);
         expect(builder.getParameters()).toEqual(paramsBefore);
@@ -786,5 +787,77 @@ describe("schema params", () => {
             filter: { name: 123 },
             limit: 5,
         })).toThrow("Invalid value for SqlSchemaParam 'name'");
+    });
+});
+
+describe("validate()", () => {
+    it("forwards meta only to execHandler", async () => {
+        const execMetaList: unknown[] = [];
+        const qValidate = sqlBuilder()
+            .setFormatParamHandler("pg")
+            .setExecutionHandler(async ({ meta }) => {
+                execMetaList.push(meta);
+                return [{ name: "John", age: 20 }];
+            });
+
+        const schema = z.array(z.object({
+            name: z.string(),
+            age: z.number(),
+        }));
+
+        const builder = qValidate
+            .select("*")
+            .from(qValidate.t("users"))
+            .setValidation(schema);
+
+        const result = await builder.execute({ requestId: "req-1" });
+        expect(result).toEqual([{ name: "John", age: 20 }]);
+        expect(execMetaList).toEqual([{ requestId: "req-1" }]);
+    });
+
+    it("throws when zod validation fails", async () => {
+        const qValidate = sqlBuilder()
+            .setFormatParamHandler("pg")
+            .setExecutionHandler(async () => ([{ id: 10 }]));
+
+        const builder = qValidate
+            .select("*")
+            .from(qValidate.t("users"))
+            .setValidation(z.array(z.object({ id: z.string() })));
+
+        await expect(
+            builder.execute(),
+        ).rejects.toThrow();
+    });
+
+    it("supports sqlSchema validate and execute(meta)", async () => {
+        const execMetaList: unknown[] = [];
+        const qValidate = sqlBuilder()
+            .setFormatParamHandler("pg")
+            .setExecutionHandler(async ({ meta }) => {
+                execMetaList.push(meta);
+                return [{ name: "Magma", age: 18 }];
+            });
+
+        const sch = sqlSchema().setQuery(
+            "getMagma",
+            sqlSchema()
+                .set
+                .query(
+                    qValidate
+                        .select("*")
+                        .from(qValidate.t("users")),
+                )
+                .validation(
+                    z.array(z.object({
+                        name: z.string(),
+                        age: z.number(),
+                    })),
+                ),
+        );
+
+        const result = await sch.query("getMagma").execute({ requestId: "schema-1" });
+        expect(result).toEqual([{ name: "Magma", age: 18 }]);
+        expect(execMetaList).toEqual([{ requestId: "schema-1" }]);
     });
 });

@@ -10,14 +10,15 @@ import {
     verification,
 } from "./db.schema";
 import { expectQuery } from "../test-helpers";
-import { sqlBuilder } from "../../../../../pg";
+import { sqlBuilder, sqlSchema } from "../../../../../pg";
+import { z } from "zod";
 
 const connectionUrl =
     "postgresql://gntrees_ui_admin:cuanBanyak20Triliun@localhost:5432/gntrees_ui";
 
 const q = sqlBuilder(connectionUrl)
     .setFormatParamHandler("pg")
-    .setExecutionHandler(async ({ sql, parameters }) => {        
+    .setExecutionHandler(async ({ sql, parameters }) => {
         if (typeof connectionUrl !== "string") {
             throw new Error("Database connection URL must be provided for execution");
         }
@@ -30,11 +31,11 @@ const q = sqlBuilder(connectionUrl)
         } finally {
             await client.end();
         }
-    });
+    })
 
 async function expectExecute(builder: any) {
     const result = await builder.execute();
-    console.log("Execution result:", result);    
+    console.log("Execution result:", result);
     expect(result).toBeDefined();
 }
 
@@ -115,10 +116,10 @@ describe("schema db structure", () => {
         const builder = q
             .select(account.updatedAt)
             .from(account)
-            .where(q.op(account.updatedAt,"IS NOT",q.null()));
+            .where(q.op(account.updatedAt, "IS NOT", q.null()));
         // console.log(builder.getTokens());
-        
-        
+
+
         expectQuery(builder, "queryBuilder", "schema where updated_at");
         await expectExecute(builder);
     });
@@ -153,7 +154,7 @@ describe("schema db structure", () => {
         });
         expectQuery(builder, "queryBuilder", "schema session where");
         await expectExecute(builder);
-    }); 
+    });
 
     it("should accept select with verification table schema", async () => {
         const builder = q.select(verification.id, verification.identifier).from(verification);
@@ -165,5 +166,56 @@ describe("schema db structure", () => {
         const builder = q.select(projects.id, projects.name).from(projects);
         expectQuery(builder, "queryBuilder", "schema projects select");
         await expectExecute(builder);
+    });
+
+    // validation test
+    it("should validate parameters with schema validation", async () => {
+        const sch = sqlSchema()
+        const schema = sch.setQuery("getProjects", sch.set
+            .query(q
+                .select(
+                    projects.id,
+                    projects.name,
+                    projects.description
+                )
+                .from(projects)
+                .schemaCase("getProjects",
+                    q.where(
+                        q.ilike(projects.name, q.schemaParam("search").string().default("%na%"))
+                    )
+                )
+                .schemaCase("getProjectsNoSearch",
+                    q.where(
+                        q.op(projects.name, "IS NOT", q.null())
+                    )
+                )
+            )
+            .validation(
+                z.array(z.object({
+                    id: z.string(),
+                    name: z.string().optional(),
+                    description: z.string(),
+                }))
+            ));
+        try {
+            const res = await schema.query("getProjects").setParams({
+                // getProjects:{
+                //     search: "project"
+                // }
+            }).execute();
+            // await builder.setValidation(
+            //     z.array(z.object({
+            //         id: z.string(),
+            //         name: z.string(),
+            //         descriptions: z.string(),
+            //     }))
+            // ).execute();  
+            console.log("Validation result:", res);
+            console.log("Validation result:", schema.query("getProjects").getSqlBuilder().getSqlWithParameters());
+
+            throw new Error("Expected validation error was not thrown");
+        } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
     });
 });

@@ -70,7 +70,7 @@ export class CoreQueryBuilder {
         return this.query.sql;
     }
 
-    setTokens(tokens: QueryType['sql']): this {
+    protected setTokens(tokens: QueryType['sql']): this {
         this.query.sql = tokens;
         return this;
     }
@@ -79,22 +79,22 @@ export class CoreQueryBuilder {
         return this.schemaQueryBuilder;
     }
 
-    getInstanceStructure(): InstanceStructureNode[] {
+    protected getInstanceStructure(): InstanceStructureNode[] {
         return cloneInstanceStructure(this.instanceStructure);
     }
 
-    getRuntimeParams(): RuntimeParams {
+    protected getRuntimeParams(): RuntimeParams {
         return this.runtimeParams;
     }
 
     // still prototype
-    schemaParamCore<TKey extends string>(key: TKey): SqlSchemaParam<TKey> {
+    protected schemaParamCore<TKey extends string>(key: TKey): SqlSchemaParam<TKey> {
         this.endClass();
         return new SqlSchemaParam(key);
     }
 
     // still prototype
-    schemaCaseCore<TKey extends string>(key: TKey, queryBuilder: QueryBuilder): this {
+    protected schemaCaseCore<TKey extends string>(key: TKey, queryBuilder: QueryBuilder): this {
         this.resolveSchemaParam("function", "schemaCase", [key, queryBuilder]);
         const runtimeValue = this.runtimeParams[key];
         if (runtimeValue === undefined || runtimeValue === false) {
@@ -121,7 +121,7 @@ export class CoreQueryBuilder {
     }
 
     // still prototype
-    setParamsCore(params: RuntimeParams): this {
+    protected setParamsCore(params: RuntimeParams): this {
         if (!isPlainObject(params)) {
             throw new Error(`setParams expects an object, got ${describeValueType(params)}.`);
         }
@@ -137,7 +137,7 @@ export class CoreQueryBuilder {
         return this;
     }
 
-    rebuild(): this {
+    protected rebuild(): this {
         const structure = this.getInstanceStructure();
         this.query.sql = [];
         this.isRebuilding = true;

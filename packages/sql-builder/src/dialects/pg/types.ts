@@ -2,10 +2,17 @@ import type { ParameterType } from "./base-raw-query-builder";
 import type { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
 import type { QueryBuilder } from "./query-builder";
 import type { SqlSchemaParam, SqlSchemaParamType } from "./sql-param";
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 
 export interface QueryType {
     sql: (string | ParameterType)[];
 }
+
+export type InferValidationOutput<TSchema, TFallback> = TSchema extends StandardSchemaV1
+    ? StandardSchemaV1.InferOutput<TSchema>
+    : TFallback;
+
+export type StandardSchemaLike<TInput = unknown, TOutput = TInput> = StandardSchemaV1<TInput, TOutput>;
 
 // type PrimitiveType = string | number | boolean | null | undefined;
 // type SchemaParamType = PrimitiveType | SchemaType | SchemaParamType[];

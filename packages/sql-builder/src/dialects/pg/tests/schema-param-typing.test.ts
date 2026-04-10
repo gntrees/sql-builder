@@ -1,6 +1,14 @@
 import { describe, test } from "bun:test";
 import { sqlBuilder } from "../../../../pg/builder";
 
+type Equal<T, U> =
+    (<G>() => G extends T ? 1 : 2) extends
+    (<G>() => G extends U ? 1 : 2)
+        ? true
+        : false;
+
+type Assert<T extends true> = T;
+
 describe("schema param typing", () => {
     test("setParams infers keys from schemaParam and schemaCase", () => {
         const q = sqlBuilder();
@@ -23,47 +31,18 @@ describe("schema param typing", () => {
                 ),
             );
 
-        // type InferredSetParams = Parameters<typeof query.setParams>[0];
-        // type ExpectedSetParams = {
-        //     userId?: number;
-        //     filter?: {
-        //         name?: string;
-        //     } | boolean;
-        // };
-        // type _assertParams = Assert<Equal<InferredSetParams, ExpectedSetParams>>;
-        // const _unused: _assertParams = true;
-        // void _unused;
-
         query.setParams({
             userId: 1,
             // userId: 1,
-            filter: { name: "john" },
+            filter: { 
+                name: "john",
+             },
         });
 
         query.setParams({
             filter: true,
         });
 
-        // if (false) {
-        //     // @ts-expect-error invalid top-level key
-        //     query.setParams({
-        //         unknownKey: 1,
-        //     });
 
-        //     // @ts-expect-error invalid schemaParam value type
-        //     query.setParams({
-        //         userId: "1",
-        //     });
-
-        //     // @ts-expect-error invalid nested key
-        //     query.setParams({
-        //         filter: { unknownNested: "x" },
-        //     });
-
-        //     // @ts-expect-error invalid nested schemaParam value type
-        //     query.setParams({
-        //         filter: { name: 123 },
-        //     });
-        // }
     });
 });

@@ -137,12 +137,12 @@ function generateSchemaOverrider(): string {
 
     const methodDeclarations = sortedMethods
         .map((name) => {
-            return `\n  override ${name}(...args: Parameters<OverrideQueryBuilder["${name}"]>) {\n    this.resolveSchemaParam('function','${name}', args);\n    return super.${name}(...args);\n  }`;
+            return `\n  override ${name}<TThis extends this, TArgs extends Parameters<OverrideQueryBuilder["${name}"]>>(this: TThis, ...args: TArgs): ApplyInferredBuilderParams<TThis, InferSchemaParamsFromArgs<TArgs>> {\n    this.resolveSchemaParam('function','${name}', args as unknown as Parameters<OverrideQueryBuilder["${name}"]>);\n    return super.${name}(...(args as unknown as Parameters<OverrideQueryBuilder["${name}"]>)) as ApplyInferredBuilderParams<TThis, InferSchemaParamsFromArgs<TArgs>>;\n  }`;
         })
         .join('');
 
     return `// AUTO-GENERATED - DO NOT EDIT.
-import { OverrideQueryBuilder } from "../override-query-builder";
+import { OverrideQueryBuilder, type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../override-query-builder";
 
 export class SchemaOverrider extends OverrideQueryBuilder {${methodDeclarations}
 }`;
@@ -159,8 +159,14 @@ function generateQueryInstance(): string {
 
     const methodDeclarations = sortedMethods
         .map((name) => {
+            if (name === 'schemaParam') {
+                return `\n  schemaParam<TKey extends string>(key: TKey) {\n    return (new QueryBuilder(this)).schemaParam(key);\n  }`;
+            }
+            if (name === 'schemaCase') {
+                return `\n  schemaCase<TKey extends string, TCaseQuery extends QueryBuilder>(key: TKey, queryBuilder: TCaseQuery) {\n    return (new QueryBuilder(this)).schemaCase(key, queryBuilder);\n  }`;
+            }
             if (overrideMethods.includes(name)) {
-                return `\n  ${name}(...args: Parameters<OverrideQueryBuilder["${name}"]>) {\n    return (new QueryBuilder(this)).${name}(...args);\n  }`;
+                return `\n  ${name}<TArgs extends Parameters<OverrideQueryBuilder["${name}"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {\n    return (new QueryBuilder(this)).${name}(...(args as unknown as Parameters<OverrideQueryBuilder["${name}"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;\n  }`;
             }
             if (baseRawMethods.includes(name)) {
                 return `\n  ${name}(...args: Parameters<BaseRawQueryBuilder["${name}"]>) {\n    return (new QueryBuilder(this)).${name}(...args);\n  }`;
@@ -173,7 +179,7 @@ function generateQueryInstance(): string {
 import type { RequiredDBInstance } from "../types";
 import { QueryBuilder } from "../query-builder";
 import { BaseRawQueryBuilder } from "../base-raw-query-builder";
-import { OverrideQueryBuilder } from "../override-query-builder";
+import { OverrideQueryBuilder, type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../override-query-builder";
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;

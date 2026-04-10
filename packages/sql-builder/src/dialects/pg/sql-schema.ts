@@ -1,9 +1,18 @@
 import type { QueryBuilder } from "./query-builder";
+import type { InferValidationOutput, StandardSchemaLike } from "./types";
 
-export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> = {}> {
+type ValidationSchemaHolder<TSchema> = {
+    validationSchema?: TSchema;
+};
+
+type ExtractSchema<TSchemaQueryBuilder> = TSchemaQueryBuilder extends ValidationSchemaHolder<infer TSchema>
+    ? TSchema
+    : undefined;
+
+export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder<any>> = {}> {
     constructor(public definitions: T = {} as T) { }
-    protected sql: Record<string, SqlSchemaQueryBuilder> = {}
-    setQuery<K extends string, V extends SqlSchemaQueryBuilder>(
+    protected sql: Record<string, SqlSchemaQueryBuilder<any>> = {}
+    setQuery<K extends string, V extends SqlSchemaQueryBuilder<any>>(
         name: K,
         sqlSchemaQueryBuilder: V
     ): SqlSchema<T & Record<K, V>> {
@@ -11,7 +20,7 @@ export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> = {}> {
         return this as unknown as SqlSchema<T & Record<K, V>>;
     }
     public set = {
-        query: (query: QueryBuilder) => {
+        query: <TQueryBuilder extends QueryBuilder>(query: TQueryBuilder) => {
             return new SqlSchemaQueryBuilder(query);
         },
     }
@@ -34,13 +43,14 @@ export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder> = {}> {
     }
 }
 
-export class SqlSchemaQueryBuilder {
-    protected sqlBuilder: QueryBuilder;
-    constructor(sqlSchema: QueryBuilder) {
+export class SqlSchemaQueryBuilder<TQueryBuilder extends QueryBuilder = QueryBuilder> {
+    protected sqlBuilder: TQueryBuilder;
+    protected validationSchema: unknown = undefined;
+    constructor(sqlSchema: TQueryBuilder) {
         this.sqlBuilder = sqlSchema;
     }
     protected tagList: string[] = [];
-    getSqlBuilder() {
+    getSqlBuilder(): TQueryBuilder {
         return this.sqlBuilder;
     }
     getTags() {
@@ -50,10 +60,17 @@ export class SqlSchemaQueryBuilder {
         this.tagList.push(...tags);
         return this;
     }
-    execute(...params: Parameters<QueryBuilder["execute"]>) {
-        return this.sqlBuilder.execute(...params);
+    async execute<TThis extends this>(this: TThis, ...params: Parameters<QueryBuilder["execute"]>): Promise<InferValidationOutput<ExtractSchema<TThis>, Awaited<ReturnType<TQueryBuilder["execute"]>>> > {
+        if (typeof this.validationSchema !== "undefined") {
+            this.sqlBuilder.setValidation(this.validationSchema as StandardSchemaLike);
+        }
+        return await this.sqlBuilder.execute(...params) as InferValidationOutput<ExtractSchema<TThis>, Awaited<ReturnType<TQueryBuilder["execute"]>>>;
     }
-    setParams(...params: Parameters<QueryBuilder["setParams"]>) {
-        return this.sqlBuilder.setParams(...params);
+    validation<TSchema extends StandardSchemaLike>(schema: TSchema): this & ValidationSchemaHolder<TSchema> {
+        this.validationSchema = schema;
+        return this as this & ValidationSchemaHolder<TSchema>;
+    }
+    setParams(...params: Parameters<TQueryBuilder["setParams"]>) {
+        return this.sqlBuilder.setParams(...(params as [any]));
     }
 }

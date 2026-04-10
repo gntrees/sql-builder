@@ -680,10 +680,7 @@
     "sc",
     "scale",
     "schemaCase",
-    "schemaColumn",
-    "schemaDatabase",
     "schemaParam",
-    "schemaTable",
     "schemaToXml",
     "schemaToXmlAndXmlschema",
     "schemaToXmlschema",
@@ -2868,12 +2865,9 @@
     "scale",
     "schema",
     "schemaCase",
-    "schemaColumn",
-    "schemaDatabase",
     "schemaName",
     "schemaParam",
     "schemas",
-    "schemaTable",
     "schemaToXml",
     "schemaToXmlAndXmlschema",
     "schemaToXmlschema",
@@ -3203,5 +3197,5 @@
     "yes",
     "zone"
   ],
-  "totalCount": 1513
+  "totalCount": 1510
 }

@@ -2,7 +2,7 @@
 import type { RequiredDBInstance } from "../types";
 import { QueryBuilder } from "../query-builder";
 import { BaseRawQueryBuilder } from "../base-raw-query-builder";
-import { OverrideQueryBuilder } from "../override-query-builder";
+import { OverrideQueryBuilder, type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../override-query-builder";
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;
@@ -15,17 +15,17 @@ export class QueryInstance {
   a() {
     return (new QueryBuilder(this)).a();
   }
-  abbrev(...args: Parameters<OverrideQueryBuilder["abbrev"]>) {
-    return (new QueryBuilder(this)).abbrev(...args);
+  abbrev<TArgs extends Parameters<OverrideQueryBuilder["abbrev"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).abbrev(...(args as unknown as Parameters<OverrideQueryBuilder["abbrev"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   abort() {
     return (new QueryBuilder(this)).abort();
   }
-  above(...args: Parameters<OverrideQueryBuilder["above"]>) {
-    return (new QueryBuilder(this)).above(...args);
+  above<TArgs extends Parameters<OverrideQueryBuilder["above"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).above(...(args as unknown as Parameters<OverrideQueryBuilder["above"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  abs(...args: Parameters<OverrideQueryBuilder["abs"]>) {
-    return (new QueryBuilder(this)).abs(...args);
+  abs<TArgs extends Parameters<OverrideQueryBuilder["abs"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).abs(...(args as unknown as Parameters<OverrideQueryBuilder["abs"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   absent() {
     return (new QueryBuilder(this)).absent();
@@ -39,20 +39,20 @@ export class QueryInstance {
   according() {
     return (new QueryBuilder(this)).according();
   }
-  acldefault(...args: Parameters<OverrideQueryBuilder["acldefault"]>) {
-    return (new QueryBuilder(this)).acldefault(...args);
+  acldefault<TArgs extends Parameters<OverrideQueryBuilder["acldefault"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).acldefault(...(args as unknown as Parameters<OverrideQueryBuilder["acldefault"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  aclexplode(...args: Parameters<OverrideQueryBuilder["aclexplode"]>) {
-    return (new QueryBuilder(this)).aclexplode(...args);
+  aclexplode<TArgs extends Parameters<OverrideQueryBuilder["aclexplode"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).aclexplode(...(args as unknown as Parameters<OverrideQueryBuilder["aclexplode"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  acos(...args: Parameters<OverrideQueryBuilder["acos"]>) {
-    return (new QueryBuilder(this)).acos(...args);
+  acos<TArgs extends Parameters<OverrideQueryBuilder["acos"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).acos(...(args as unknown as Parameters<OverrideQueryBuilder["acos"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  acosd(...args: Parameters<OverrideQueryBuilder["acosd"]>) {
-    return (new QueryBuilder(this)).acosd(...args);
+  acosd<TArgs extends Parameters<OverrideQueryBuilder["acosd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).acosd(...(args as unknown as Parameters<OverrideQueryBuilder["acosd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  acosh(...args: Parameters<OverrideQueryBuilder["acosh"]>) {
-    return (new QueryBuilder(this)).acosh(...args);
+  acosh<TArgs extends Parameters<OverrideQueryBuilder["acosh"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).acosh(...(args as unknown as Parameters<OverrideQueryBuilder["acosh"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   action() {
     return (new QueryBuilder(this)).action();
@@ -69,14 +69,14 @@ export class QueryInstance {
   after() {
     return (new QueryBuilder(this)).after();
   }
-  age(...args: Parameters<OverrideQueryBuilder["age"]>) {
-    return (new QueryBuilder(this)).age(...args);
+  age<TArgs extends Parameters<OverrideQueryBuilder["age"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).age(...(args as unknown as Parameters<OverrideQueryBuilder["age"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   aggregate() {
     return (new QueryBuilder(this)).aggregate();
   }
-  all(...args: Parameters<OverrideQueryBuilder["all"]>) {
-    return (new QueryBuilder(this)).all(...args);
+  all<TArgs extends Parameters<OverrideQueryBuilder["all"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).all(...(args as unknown as Parameters<OverrideQueryBuilder["all"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   allocate() {
     return (new QueryBuilder(this)).allocate();
@@ -96,110 +96,110 @@ export class QueryInstance {
   analyze() {
     return (new QueryBuilder(this)).analyze();
   }
-  and(...args: Parameters<OverrideQueryBuilder["and"]>) {
-    return (new QueryBuilder(this)).and(...args);
+  and<TArgs extends Parameters<OverrideQueryBuilder["and"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).and(...(args as unknown as Parameters<OverrideQueryBuilder["and"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  any(...args: Parameters<OverrideQueryBuilder["any"]>) {
-    return (new QueryBuilder(this)).any(...args);
+  any<TArgs extends Parameters<OverrideQueryBuilder["any"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).any(...(args as unknown as Parameters<OverrideQueryBuilder["any"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  anyValue(...args: Parameters<OverrideQueryBuilder["anyValue"]>) {
-    return (new QueryBuilder(this)).anyValue(...args);
+  anyValue<TArgs extends Parameters<OverrideQueryBuilder["anyValue"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).anyValue(...(args as unknown as Parameters<OverrideQueryBuilder["anyValue"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   are() {
     return (new QueryBuilder(this)).are();
   }
-  area(...args: Parameters<OverrideQueryBuilder["area"]>) {
-    return (new QueryBuilder(this)).area(...args);
+  area<TArgs extends Parameters<OverrideQueryBuilder["area"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).area(...(args as unknown as Parameters<OverrideQueryBuilder["area"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   array() {
     return (new QueryBuilder(this)).array();
   }
-  arrayAgg(...args: Parameters<OverrideQueryBuilder["arrayAgg"]>) {
-    return (new QueryBuilder(this)).arrayAgg(...args);
+  arrayAgg<TArgs extends Parameters<OverrideQueryBuilder["arrayAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayAgg(...(args as unknown as Parameters<OverrideQueryBuilder["arrayAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayAppend(...args: Parameters<OverrideQueryBuilder["arrayAppend"]>) {
-    return (new QueryBuilder(this)).arrayAppend(...args);
+  arrayAppend<TArgs extends Parameters<OverrideQueryBuilder["arrayAppend"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayAppend(...(args as unknown as Parameters<OverrideQueryBuilder["arrayAppend"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayCat(...args: Parameters<OverrideQueryBuilder["arrayCat"]>) {
-    return (new QueryBuilder(this)).arrayCat(...args);
+  arrayCat<TArgs extends Parameters<OverrideQueryBuilder["arrayCat"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayCat(...(args as unknown as Parameters<OverrideQueryBuilder["arrayCat"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayDims(...args: Parameters<OverrideQueryBuilder["arrayDims"]>) {
-    return (new QueryBuilder(this)).arrayDims(...args);
+  arrayDims<TArgs extends Parameters<OverrideQueryBuilder["arrayDims"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayDims(...(args as unknown as Parameters<OverrideQueryBuilder["arrayDims"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayFill(...args: Parameters<OverrideQueryBuilder["arrayFill"]>) {
-    return (new QueryBuilder(this)).arrayFill(...args);
+  arrayFill<TArgs extends Parameters<OverrideQueryBuilder["arrayFill"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayFill(...(args as unknown as Parameters<OverrideQueryBuilder["arrayFill"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayLength(...args: Parameters<OverrideQueryBuilder["arrayLength"]>) {
-    return (new QueryBuilder(this)).arrayLength(...args);
+  arrayLength<TArgs extends Parameters<OverrideQueryBuilder["arrayLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayLength(...(args as unknown as Parameters<OverrideQueryBuilder["arrayLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayLower(...args: Parameters<OverrideQueryBuilder["arrayLower"]>) {
-    return (new QueryBuilder(this)).arrayLower(...args);
+  arrayLower<TArgs extends Parameters<OverrideQueryBuilder["arrayLower"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayLower(...(args as unknown as Parameters<OverrideQueryBuilder["arrayLower"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   arraymaxcardinality() {
     return (new QueryBuilder(this)).arraymaxcardinality();
   }
-  arrayNdims(...args: Parameters<OverrideQueryBuilder["arrayNdims"]>) {
-    return (new QueryBuilder(this)).arrayNdims(...args);
+  arrayNdims<TArgs extends Parameters<OverrideQueryBuilder["arrayNdims"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayNdims(...(args as unknown as Parameters<OverrideQueryBuilder["arrayNdims"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayPosition(...args: Parameters<OverrideQueryBuilder["arrayPosition"]>) {
-    return (new QueryBuilder(this)).arrayPosition(...args);
+  arrayPosition<TArgs extends Parameters<OverrideQueryBuilder["arrayPosition"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayPosition(...(args as unknown as Parameters<OverrideQueryBuilder["arrayPosition"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayPositions(...args: Parameters<OverrideQueryBuilder["arrayPositions"]>) {
-    return (new QueryBuilder(this)).arrayPositions(...args);
+  arrayPositions<TArgs extends Parameters<OverrideQueryBuilder["arrayPositions"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayPositions(...(args as unknown as Parameters<OverrideQueryBuilder["arrayPositions"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayPrepend(...args: Parameters<OverrideQueryBuilder["arrayPrepend"]>) {
-    return (new QueryBuilder(this)).arrayPrepend(...args);
+  arrayPrepend<TArgs extends Parameters<OverrideQueryBuilder["arrayPrepend"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayPrepend(...(args as unknown as Parameters<OverrideQueryBuilder["arrayPrepend"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayRemove(...args: Parameters<OverrideQueryBuilder["arrayRemove"]>) {
-    return (new QueryBuilder(this)).arrayRemove(...args);
+  arrayRemove<TArgs extends Parameters<OverrideQueryBuilder["arrayRemove"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayRemove(...(args as unknown as Parameters<OverrideQueryBuilder["arrayRemove"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayReplace(...args: Parameters<OverrideQueryBuilder["arrayReplace"]>) {
-    return (new QueryBuilder(this)).arrayReplace(...args);
+  arrayReplace<TArgs extends Parameters<OverrideQueryBuilder["arrayReplace"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayReplace(...(args as unknown as Parameters<OverrideQueryBuilder["arrayReplace"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayReverse(...args: Parameters<OverrideQueryBuilder["arrayReverse"]>) {
-    return (new QueryBuilder(this)).arrayReverse(...args);
+  arrayReverse<TArgs extends Parameters<OverrideQueryBuilder["arrayReverse"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayReverse(...(args as unknown as Parameters<OverrideQueryBuilder["arrayReverse"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arraySample(...args: Parameters<OverrideQueryBuilder["arraySample"]>) {
-    return (new QueryBuilder(this)).arraySample(...args);
+  arraySample<TArgs extends Parameters<OverrideQueryBuilder["arraySample"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arraySample(...(args as unknown as Parameters<OverrideQueryBuilder["arraySample"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayShuffle(...args: Parameters<OverrideQueryBuilder["arrayShuffle"]>) {
-    return (new QueryBuilder(this)).arrayShuffle(...args);
+  arrayShuffle<TArgs extends Parameters<OverrideQueryBuilder["arrayShuffle"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayShuffle(...(args as unknown as Parameters<OverrideQueryBuilder["arrayShuffle"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arraySort(...args: Parameters<OverrideQueryBuilder["arraySort"]>) {
-    return (new QueryBuilder(this)).arraySort(...args);
+  arraySort<TArgs extends Parameters<OverrideQueryBuilder["arraySort"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arraySort(...(args as unknown as Parameters<OverrideQueryBuilder["arraySort"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayToJson(...args: Parameters<OverrideQueryBuilder["arrayToJson"]>) {
-    return (new QueryBuilder(this)).arrayToJson(...args);
+  arrayToJson<TArgs extends Parameters<OverrideQueryBuilder["arrayToJson"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayToJson(...(args as unknown as Parameters<OverrideQueryBuilder["arrayToJson"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayToString(...args: Parameters<OverrideQueryBuilder["arrayToString"]>) {
-    return (new QueryBuilder(this)).arrayToString(...args);
+  arrayToString<TArgs extends Parameters<OverrideQueryBuilder["arrayToString"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayToString(...(args as unknown as Parameters<OverrideQueryBuilder["arrayToString"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayToTsvector(...args: Parameters<OverrideQueryBuilder["arrayToTsvector"]>) {
-    return (new QueryBuilder(this)).arrayToTsvector(...args);
+  arrayToTsvector<TArgs extends Parameters<OverrideQueryBuilder["arrayToTsvector"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayToTsvector(...(args as unknown as Parameters<OverrideQueryBuilder["arrayToTsvector"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  arrayUpper(...args: Parameters<OverrideQueryBuilder["arrayUpper"]>) {
-    return (new QueryBuilder(this)).arrayUpper(...args);
+  arrayUpper<TArgs extends Parameters<OverrideQueryBuilder["arrayUpper"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).arrayUpper(...(args as unknown as Parameters<OverrideQueryBuilder["arrayUpper"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  as(...args: Parameters<OverrideQueryBuilder["as"]>) {
-    return (new QueryBuilder(this)).as(...args);
+  as<TArgs extends Parameters<OverrideQueryBuilder["as"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).as(...(args as unknown as Parameters<OverrideQueryBuilder["as"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  asc(...args: Parameters<OverrideQueryBuilder["asc"]>) {
-    return (new QueryBuilder(this)).asc(...args);
+  asc<TArgs extends Parameters<OverrideQueryBuilder["asc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).asc(...(args as unknown as Parameters<OverrideQueryBuilder["asc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  ascii(...args: Parameters<OverrideQueryBuilder["ascii"]>) {
-    return (new QueryBuilder(this)).ascii(...args);
+  ascii<TArgs extends Parameters<OverrideQueryBuilder["ascii"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ascii(...(args as unknown as Parameters<OverrideQueryBuilder["ascii"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   asensitive() {
     return (new QueryBuilder(this)).asensitive();
   }
-  asin(...args: Parameters<OverrideQueryBuilder["asin"]>) {
-    return (new QueryBuilder(this)).asin(...args);
+  asin<TArgs extends Parameters<OverrideQueryBuilder["asin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).asin(...(args as unknown as Parameters<OverrideQueryBuilder["asin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  asind(...args: Parameters<OverrideQueryBuilder["asind"]>) {
-    return (new QueryBuilder(this)).asind(...args);
+  asind<TArgs extends Parameters<OverrideQueryBuilder["asind"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).asind(...(args as unknown as Parameters<OverrideQueryBuilder["asind"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  asinh(...args: Parameters<OverrideQueryBuilder["asinh"]>) {
-    return (new QueryBuilder(this)).asinh(...args);
+  asinh<TArgs extends Parameters<OverrideQueryBuilder["asinh"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).asinh(...(args as unknown as Parameters<OverrideQueryBuilder["asinh"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   assertion() {
     return (new QueryBuilder(this)).assertion();
@@ -213,26 +213,26 @@ export class QueryInstance {
   at() {
     return (new QueryBuilder(this)).at();
   }
-  atan(...args: Parameters<OverrideQueryBuilder["atan"]>) {
-    return (new QueryBuilder(this)).atan(...args);
+  atan<TArgs extends Parameters<OverrideQueryBuilder["atan"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).atan(...(args as unknown as Parameters<OverrideQueryBuilder["atan"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  atan2(...args: Parameters<OverrideQueryBuilder["atan2"]>) {
-    return (new QueryBuilder(this)).atan2(...args);
+  atan2<TArgs extends Parameters<OverrideQueryBuilder["atan2"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).atan2(...(args as unknown as Parameters<OverrideQueryBuilder["atan2"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  atan2d(...args: Parameters<OverrideQueryBuilder["atan2d"]>) {
-    return (new QueryBuilder(this)).atan2d(...args);
+  atan2d<TArgs extends Parameters<OverrideQueryBuilder["atan2d"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).atan2d(...(args as unknown as Parameters<OverrideQueryBuilder["atan2d"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  atand(...args: Parameters<OverrideQueryBuilder["atand"]>) {
-    return (new QueryBuilder(this)).atand(...args);
+  atand<TArgs extends Parameters<OverrideQueryBuilder["atand"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).atand(...(args as unknown as Parameters<OverrideQueryBuilder["atand"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  atanh(...args: Parameters<OverrideQueryBuilder["atanh"]>) {
-    return (new QueryBuilder(this)).atanh(...args);
+  atanh<TArgs extends Parameters<OverrideQueryBuilder["atanh"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).atanh(...(args as unknown as Parameters<OverrideQueryBuilder["atanh"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   atomic() {
     return (new QueryBuilder(this)).atomic();
   }
-  atSign(...args: Parameters<OverrideQueryBuilder["atSign"]>) {
-    return (new QueryBuilder(this)).atSign(...args);
+  atSign<TArgs extends Parameters<OverrideQueryBuilder["atSign"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).atSign(...(args as unknown as Parameters<OverrideQueryBuilder["atSign"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   attach() {
     return (new QueryBuilder(this)).attach();
@@ -246,8 +246,8 @@ export class QueryInstance {
   authorization() {
     return (new QueryBuilder(this)).authorization();
   }
-  avg(...args: Parameters<OverrideQueryBuilder["avg"]>) {
-    return (new QueryBuilder(this)).avg(...args);
+  avg<TArgs extends Parameters<OverrideQueryBuilder["avg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).avg(...(args as unknown as Parameters<OverrideQueryBuilder["avg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   backward() {
     return (new QueryBuilder(this)).backward();
@@ -267,20 +267,20 @@ export class QueryInstance {
   beginPartition() {
     return (new QueryBuilder(this)).beginPartition();
   }
-  beginTransaction(...args: Parameters<OverrideQueryBuilder["beginTransaction"]>) {
-    return (new QueryBuilder(this)).beginTransaction(...args);
+  beginTransaction<TArgs extends Parameters<OverrideQueryBuilder["beginTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).beginTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["beginTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  below(...args: Parameters<OverrideQueryBuilder["below"]>) {
-    return (new QueryBuilder(this)).below(...args);
+  below<TArgs extends Parameters<OverrideQueryBuilder["below"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).below(...(args as unknown as Parameters<OverrideQueryBuilder["below"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   bernoulli() {
     return (new QueryBuilder(this)).bernoulli();
   }
-  between(...args: Parameters<OverrideQueryBuilder["between"]>) {
-    return (new QueryBuilder(this)).between(...args);
+  between<TArgs extends Parameters<OverrideQueryBuilder["between"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).between(...(args as unknown as Parameters<OverrideQueryBuilder["between"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  betweenSymmetric(...args: Parameters<OverrideQueryBuilder["betweenSymmetric"]>) {
-    return (new QueryBuilder(this)).betweenSymmetric(...args);
+  betweenSymmetric<TArgs extends Parameters<OverrideQueryBuilder["betweenSymmetric"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).betweenSymmetric(...(args as unknown as Parameters<OverrideQueryBuilder["betweenSymmetric"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   bigint() {
     return (new QueryBuilder(this)).bigint();
@@ -291,41 +291,41 @@ export class QueryInstance {
   bit() {
     return (new QueryBuilder(this)).bit();
   }
-  bitAnd(...args: Parameters<OverrideQueryBuilder["bitAnd"]>) {
-    return (new QueryBuilder(this)).bitAnd(...args);
+  bitAnd<TArgs extends Parameters<OverrideQueryBuilder["bitAnd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitAnd(...(args as unknown as Parameters<OverrideQueryBuilder["bitAnd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitCount(...args: Parameters<OverrideQueryBuilder["bitCount"]>) {
-    return (new QueryBuilder(this)).bitCount(...args);
+  bitCount<TArgs extends Parameters<OverrideQueryBuilder["bitCount"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitCount(...(args as unknown as Parameters<OverrideQueryBuilder["bitCount"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitLength(...args: Parameters<OverrideQueryBuilder["bitLength"]>) {
-    return (new QueryBuilder(this)).bitLength(...args);
+  bitLength<TArgs extends Parameters<OverrideQueryBuilder["bitLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitLength(...(args as unknown as Parameters<OverrideQueryBuilder["bitLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitOr(...args: Parameters<OverrideQueryBuilder["bitOr"]>) {
-    return (new QueryBuilder(this)).bitOr(...args);
+  bitOr<TArgs extends Parameters<OverrideQueryBuilder["bitOr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitOr(...(args as unknown as Parameters<OverrideQueryBuilder["bitOr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseAnd(...args: Parameters<OverrideQueryBuilder["bitwiseAnd"]>) {
-    return (new QueryBuilder(this)).bitwiseAnd(...args);
+  bitwiseAnd<TArgs extends Parameters<OverrideQueryBuilder["bitwiseAnd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseAnd(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseAnd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseLeftShift(...args: Parameters<OverrideQueryBuilder["bitwiseLeftShift"]>) {
-    return (new QueryBuilder(this)).bitwiseLeftShift(...args);
+  bitwiseLeftShift<TArgs extends Parameters<OverrideQueryBuilder["bitwiseLeftShift"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseLeftShift(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseLeftShift"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseLeftShiftAssign(...args: Parameters<OverrideQueryBuilder["bitwiseLeftShiftAssign"]>) {
-    return (new QueryBuilder(this)).bitwiseLeftShiftAssign(...args);
+  bitwiseLeftShiftAssign<TArgs extends Parameters<OverrideQueryBuilder["bitwiseLeftShiftAssign"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseLeftShiftAssign(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseLeftShiftAssign"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseOr(...args: Parameters<OverrideQueryBuilder["bitwiseOr"]>) {
-    return (new QueryBuilder(this)).bitwiseOr(...args);
+  bitwiseOr<TArgs extends Parameters<OverrideQueryBuilder["bitwiseOr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseOr(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseOr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseRightShift(...args: Parameters<OverrideQueryBuilder["bitwiseRightShift"]>) {
-    return (new QueryBuilder(this)).bitwiseRightShift(...args);
+  bitwiseRightShift<TArgs extends Parameters<OverrideQueryBuilder["bitwiseRightShift"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseRightShift(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseRightShift"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseRightShiftAssign(...args: Parameters<OverrideQueryBuilder["bitwiseRightShiftAssign"]>) {
-    return (new QueryBuilder(this)).bitwiseRightShiftAssign(...args);
+  bitwiseRightShiftAssign<TArgs extends Parameters<OverrideQueryBuilder["bitwiseRightShiftAssign"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseRightShiftAssign(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseRightShiftAssign"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitwiseXor(...args: Parameters<OverrideQueryBuilder["bitwiseXor"]>) {
-    return (new QueryBuilder(this)).bitwiseXor(...args);
+  bitwiseXor<TArgs extends Parameters<OverrideQueryBuilder["bitwiseXor"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitwiseXor(...(args as unknown as Parameters<OverrideQueryBuilder["bitwiseXor"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  bitXor(...args: Parameters<OverrideQueryBuilder["bitXor"]>) {
-    return (new QueryBuilder(this)).bitXor(...args);
+  bitXor<TArgs extends Parameters<OverrideQueryBuilder["bitXor"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).bitXor(...(args as unknown as Parameters<OverrideQueryBuilder["bitXor"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   blob() {
     return (new QueryBuilder(this)).blob();
@@ -336,47 +336,47 @@ export class QueryInstance {
   bom() {
     return (new QueryBuilder(this)).bom();
   }
-  boolAnd(...args: Parameters<OverrideQueryBuilder["boolAnd"]>) {
-    return (new QueryBuilder(this)).boolAnd(...args);
+  boolAnd<TArgs extends Parameters<OverrideQueryBuilder["boolAnd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).boolAnd(...(args as unknown as Parameters<OverrideQueryBuilder["boolAnd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   boolean() {
     return (new QueryBuilder(this)).boolean();
   }
-  boolOr(...args: Parameters<OverrideQueryBuilder["boolOr"]>) {
-    return (new QueryBuilder(this)).boolOr(...args);
+  boolOr<TArgs extends Parameters<OverrideQueryBuilder["boolOr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).boolOr(...(args as unknown as Parameters<OverrideQueryBuilder["boolOr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   both() {
     return (new QueryBuilder(this)).both();
   }
-  boundBox(...args: Parameters<OverrideQueryBuilder["boundBox"]>) {
-    return (new QueryBuilder(this)).boundBox(...args);
+  boundBox<TArgs extends Parameters<OverrideQueryBuilder["boundBox"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).boundBox(...(args as unknown as Parameters<OverrideQueryBuilder["boundBox"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  box(...args: Parameters<OverrideQueryBuilder["box"]>) {
-    return (new QueryBuilder(this)).box(...args);
+  box<TArgs extends Parameters<OverrideQueryBuilder["box"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).box(...(args as unknown as Parameters<OverrideQueryBuilder["box"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   breadth() {
     return (new QueryBuilder(this)).breadth();
   }
-  brinDesummarizeRange(...args: Parameters<OverrideQueryBuilder["brinDesummarizeRange"]>) {
-    return (new QueryBuilder(this)).brinDesummarizeRange(...args);
+  brinDesummarizeRange<TArgs extends Parameters<OverrideQueryBuilder["brinDesummarizeRange"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).brinDesummarizeRange(...(args as unknown as Parameters<OverrideQueryBuilder["brinDesummarizeRange"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  brinSummarizeNewValues(...args: Parameters<OverrideQueryBuilder["brinSummarizeNewValues"]>) {
-    return (new QueryBuilder(this)).brinSummarizeNewValues(...args);
+  brinSummarizeNewValues<TArgs extends Parameters<OverrideQueryBuilder["brinSummarizeNewValues"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).brinSummarizeNewValues(...(args as unknown as Parameters<OverrideQueryBuilder["brinSummarizeNewValues"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  brinSummarizeRange(...args: Parameters<OverrideQueryBuilder["brinSummarizeRange"]>) {
-    return (new QueryBuilder(this)).brinSummarizeRange(...args);
+  brinSummarizeRange<TArgs extends Parameters<OverrideQueryBuilder["brinSummarizeRange"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).brinSummarizeRange(...(args as unknown as Parameters<OverrideQueryBuilder["brinSummarizeRange"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  broadcast(...args: Parameters<OverrideQueryBuilder["broadcast"]>) {
-    return (new QueryBuilder(this)).broadcast(...args);
+  broadcast<TArgs extends Parameters<OverrideQueryBuilder["broadcast"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).broadcast(...(args as unknown as Parameters<OverrideQueryBuilder["broadcast"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  btrim(...args: Parameters<OverrideQueryBuilder["btrim"]>) {
-    return (new QueryBuilder(this)).btrim(...args);
+  btrim<TArgs extends Parameters<OverrideQueryBuilder["btrim"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).btrim(...(args as unknown as Parameters<OverrideQueryBuilder["btrim"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   by() {
     return (new QueryBuilder(this)).by();
   }
-  c(...args: Parameters<OverrideQueryBuilder["c"]>) {
-    return (new QueryBuilder(this)).c(...args);
+  c<TArgs extends Parameters<OverrideQueryBuilder["c"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).c(...(args as unknown as Parameters<OverrideQueryBuilder["c"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cache() {
     return (new QueryBuilder(this)).cache();
@@ -387,11 +387,11 @@ export class QueryInstance {
   called() {
     return (new QueryBuilder(this)).called();
   }
-  cardinality(...args: Parameters<OverrideQueryBuilder["cardinality"]>) {
-    return (new QueryBuilder(this)).cardinality(...args);
+  cardinality<TArgs extends Parameters<OverrideQueryBuilder["cardinality"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cardinality(...(args as unknown as Parameters<OverrideQueryBuilder["cardinality"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  caretAt(...args: Parameters<OverrideQueryBuilder["caretAt"]>) {
-    return (new QueryBuilder(this)).caretAt(...args);
+  caretAt<TArgs extends Parameters<OverrideQueryBuilder["caretAt"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).caretAt(...(args as unknown as Parameters<OverrideQueryBuilder["caretAt"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cascade() {
     return (new QueryBuilder(this)).cascade();
@@ -399,11 +399,11 @@ export class QueryInstance {
   cascaded() {
     return (new QueryBuilder(this)).cascaded();
   }
-  case(...args: Parameters<OverrideQueryBuilder["case"]>) {
-    return (new QueryBuilder(this)).case(...args);
+  case<TArgs extends Parameters<OverrideQueryBuilder["case"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).case(...(args as unknown as Parameters<OverrideQueryBuilder["case"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  casefold(...args: Parameters<OverrideQueryBuilder["casefold"]>) {
-    return (new QueryBuilder(this)).casefold(...args);
+  casefold<TArgs extends Parameters<OverrideQueryBuilder["casefold"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).casefold(...(args as unknown as Parameters<OverrideQueryBuilder["casefold"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cast() {
     return (new QueryBuilder(this)).cast();
@@ -414,17 +414,17 @@ export class QueryInstance {
   catalogName() {
     return (new QueryBuilder(this)).catalogName();
   }
-  cbrt(...args: Parameters<OverrideQueryBuilder["cbrt"]>) {
-    return (new QueryBuilder(this)).cbrt(...args);
+  cbrt<TArgs extends Parameters<OverrideQueryBuilder["cbrt"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cbrt(...(args as unknown as Parameters<OverrideQueryBuilder["cbrt"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  ceil(...args: Parameters<OverrideQueryBuilder["ceil"]>) {
-    return (new QueryBuilder(this)).ceil(...args);
+  ceil<TArgs extends Parameters<OverrideQueryBuilder["ceil"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ceil(...(args as unknown as Parameters<OverrideQueryBuilder["ceil"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  ceiling(...args: Parameters<OverrideQueryBuilder["ceiling"]>) {
-    return (new QueryBuilder(this)).ceiling(...args);
+  ceiling<TArgs extends Parameters<OverrideQueryBuilder["ceiling"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ceiling(...(args as unknown as Parameters<OverrideQueryBuilder["ceiling"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  center(...args: Parameters<OverrideQueryBuilder["center"]>) {
-    return (new QueryBuilder(this)).center(...args);
+  center<TArgs extends Parameters<OverrideQueryBuilder["center"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).center(...(args as unknown as Parameters<OverrideQueryBuilder["center"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   chain() {
     return (new QueryBuilder(this)).chain();
@@ -441,8 +441,8 @@ export class QueryInstance {
   characteristics() {
     return (new QueryBuilder(this)).characteristics();
   }
-  characterLength(...args: Parameters<OverrideQueryBuilder["characterLength"]>) {
-    return (new QueryBuilder(this)).characterLength(...args);
+  characterLength<TArgs extends Parameters<OverrideQueryBuilder["characterLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).characterLength(...(args as unknown as Parameters<OverrideQueryBuilder["characterLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   characters() {
     return (new QueryBuilder(this)).characters();
@@ -456,8 +456,8 @@ export class QueryInstance {
   characterSetSchema() {
     return (new QueryBuilder(this)).characterSetSchema();
   }
-  charLength(...args: Parameters<OverrideQueryBuilder["charLength"]>) {
-    return (new QueryBuilder(this)).charLength(...args);
+  charLength<TArgs extends Parameters<OverrideQueryBuilder["charLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).charLength(...(args as unknown as Parameters<OverrideQueryBuilder["charLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   check() {
     return (new QueryBuilder(this)).check();
@@ -465,11 +465,11 @@ export class QueryInstance {
   checkpoint() {
     return (new QueryBuilder(this)).checkpoint();
   }
-  chr(...args: Parameters<OverrideQueryBuilder["chr"]>) {
-    return (new QueryBuilder(this)).chr(...args);
+  chr<TArgs extends Parameters<OverrideQueryBuilder["chr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).chr(...(args as unknown as Parameters<OverrideQueryBuilder["chr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  circle(...args: Parameters<OverrideQueryBuilder["circle"]>) {
-    return (new QueryBuilder(this)).circle(...args);
+  circle<TArgs extends Parameters<OverrideQueryBuilder["circle"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).circle(...(args as unknown as Parameters<OverrideQueryBuilder["circle"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   class() {
     return (new QueryBuilder(this)).class();
@@ -483,26 +483,26 @@ export class QueryInstance {
   clob() {
     return (new QueryBuilder(this)).clob();
   }
-  clockTimestamp(...args: Parameters<OverrideQueryBuilder["clockTimestamp"]>) {
-    return (new QueryBuilder(this)).clockTimestamp(...args);
+  clockTimestamp<TArgs extends Parameters<OverrideQueryBuilder["clockTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).clockTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["clockTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   close() {
     return (new QueryBuilder(this)).close();
   }
-  closestPoint(...args: Parameters<OverrideQueryBuilder["closestPoint"]>) {
-    return (new QueryBuilder(this)).closestPoint(...args);
+  closestPoint<TArgs extends Parameters<OverrideQueryBuilder["closestPoint"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).closestPoint(...(args as unknown as Parameters<OverrideQueryBuilder["closestPoint"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cluster() {
     return (new QueryBuilder(this)).cluster();
   }
-  coalesce(...args: Parameters<OverrideQueryBuilder["coalesce"]>) {
-    return (new QueryBuilder(this)).coalesce(...args);
+  coalesce<TArgs extends Parameters<OverrideQueryBuilder["coalesce"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).coalesce(...(args as unknown as Parameters<OverrideQueryBuilder["coalesce"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cobol() {
     return (new QueryBuilder(this)).cobol();
   }
-  colDescription(...args: Parameters<OverrideQueryBuilder["colDescription"]>) {
-    return (new QueryBuilder(this)).colDescription(...args);
+  colDescription<TArgs extends Parameters<OverrideQueryBuilder["colDescription"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).colDescription(...(args as unknown as Parameters<OverrideQueryBuilder["colDescription"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   collate() {
     return (new QueryBuilder(this)).collate();
@@ -513,8 +513,8 @@ export class QueryInstance {
   collationCatalog() {
     return (new QueryBuilder(this)).collationCatalog();
   }
-  collationFor(...args: Parameters<OverrideQueryBuilder["collationFor"]>) {
-    return (new QueryBuilder(this)).collationFor(...args);
+  collationFor<TArgs extends Parameters<OverrideQueryBuilder["collationFor"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).collationFor(...(args as unknown as Parameters<OverrideQueryBuilder["collationFor"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   collationName() {
     return (new QueryBuilder(this)).collationName();
@@ -525,8 +525,8 @@ export class QueryInstance {
   collect() {
     return (new QueryBuilder(this)).collect();
   }
-  column(...args: Parameters<OverrideQueryBuilder["column"]>) {
-    return (new QueryBuilder(this)).column(...args);
+  column<TArgs extends Parameters<OverrideQueryBuilder["column"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).column(...(args as unknown as Parameters<OverrideQueryBuilder["column"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   columnName() {
     return (new QueryBuilder(this)).columnName();
@@ -534,8 +534,8 @@ export class QueryInstance {
   columns() {
     return (new QueryBuilder(this)).columns();
   }
-  comma(...args: Parameters<OverrideQueryBuilder["comma"]>) {
-    return (new QueryBuilder(this)).comma(...args);
+  comma<TArgs extends Parameters<OverrideQueryBuilder["comma"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).comma(...(args as unknown as Parameters<OverrideQueryBuilder["comma"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   commandFunction() {
     return (new QueryBuilder(this)).commandFunction();
@@ -552,23 +552,23 @@ export class QueryInstance {
   commit() {
     return (new QueryBuilder(this)).commit();
   }
-  commitPreparedTransaction(...args: Parameters<OverrideQueryBuilder["commitPreparedTransaction"]>) {
-    return (new QueryBuilder(this)).commitPreparedTransaction(...args);
+  commitPreparedTransaction<TArgs extends Parameters<OverrideQueryBuilder["commitPreparedTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).commitPreparedTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["commitPreparedTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   committed() {
     return (new QueryBuilder(this)).committed();
   }
-  commitTransaction(...args: Parameters<OverrideQueryBuilder["commitTransaction"]>) {
-    return (new QueryBuilder(this)).commitTransaction(...args);
+  commitTransaction<TArgs extends Parameters<OverrideQueryBuilder["commitTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).commitTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["commitTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   compression() {
     return (new QueryBuilder(this)).compression();
   }
-  concat(...args: Parameters<OverrideQueryBuilder["concat"]>) {
-    return (new QueryBuilder(this)).concat(...args);
+  concat<TArgs extends Parameters<OverrideQueryBuilder["concat"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).concat(...(args as unknown as Parameters<OverrideQueryBuilder["concat"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  concatWs(...args: Parameters<OverrideQueryBuilder["concatWs"]>) {
-    return (new QueryBuilder(this)).concatWs(...args);
+  concatWs<TArgs extends Parameters<OverrideQueryBuilder["concatWs"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).concatWs(...(args as unknown as Parameters<OverrideQueryBuilder["concatWs"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   concurrently() {
     return (new QueryBuilder(this)).concurrently();
@@ -615,11 +615,11 @@ export class QueryInstance {
   constructorKeyword() {
     return (new QueryBuilder(this)).constructorKeyword();
   }
-  containedBy(...args: Parameters<OverrideQueryBuilder["containedBy"]>) {
-    return (new QueryBuilder(this)).containedBy(...args);
+  containedBy<TArgs extends Parameters<OverrideQueryBuilder["containedBy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).containedBy(...(args as unknown as Parameters<OverrideQueryBuilder["containedBy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  containment(...args: Parameters<OverrideQueryBuilder["containment"]>) {
-    return (new QueryBuilder(this)).containment(...args);
+  containment<TArgs extends Parameters<OverrideQueryBuilder["containment"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).containment(...(args as unknown as Parameters<OverrideQueryBuilder["containment"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   contains() {
     return (new QueryBuilder(this)).contains();
@@ -636,14 +636,14 @@ export class QueryInstance {
   conversion() {
     return (new QueryBuilder(this)).conversion();
   }
-  convert(...args: Parameters<OverrideQueryBuilder["convert"]>) {
-    return (new QueryBuilder(this)).convert(...args);
+  convert<TArgs extends Parameters<OverrideQueryBuilder["convert"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).convert(...(args as unknown as Parameters<OverrideQueryBuilder["convert"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  convertFrom(...args: Parameters<OverrideQueryBuilder["convertFrom"]>) {
-    return (new QueryBuilder(this)).convertFrom(...args);
+  convertFrom<TArgs extends Parameters<OverrideQueryBuilder["convertFrom"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).convertFrom(...(args as unknown as Parameters<OverrideQueryBuilder["convertFrom"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  convertTo(...args: Parameters<OverrideQueryBuilder["convertTo"]>) {
-    return (new QueryBuilder(this)).convertTo(...args);
+  convertTo<TArgs extends Parameters<OverrideQueryBuilder["convertTo"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).convertTo(...(args as unknown as Parameters<OverrideQueryBuilder["convertTo"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   copartition() {
     return (new QueryBuilder(this)).copartition();
@@ -651,44 +651,44 @@ export class QueryInstance {
   copy() {
     return (new QueryBuilder(this)).copy();
   }
-  corr(...args: Parameters<OverrideQueryBuilder["corr"]>) {
-    return (new QueryBuilder(this)).corr(...args);
+  corr<TArgs extends Parameters<OverrideQueryBuilder["corr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).corr(...(args as unknown as Parameters<OverrideQueryBuilder["corr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   corresponding() {
     return (new QueryBuilder(this)).corresponding();
   }
-  cos(...args: Parameters<OverrideQueryBuilder["cos"]>) {
-    return (new QueryBuilder(this)).cos(...args);
+  cos<TArgs extends Parameters<OverrideQueryBuilder["cos"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cos(...(args as unknown as Parameters<OverrideQueryBuilder["cos"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  cosd(...args: Parameters<OverrideQueryBuilder["cosd"]>) {
-    return (new QueryBuilder(this)).cosd(...args);
+  cosd<TArgs extends Parameters<OverrideQueryBuilder["cosd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cosd(...(args as unknown as Parameters<OverrideQueryBuilder["cosd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  cosh(...args: Parameters<OverrideQueryBuilder["cosh"]>) {
-    return (new QueryBuilder(this)).cosh(...args);
+  cosh<TArgs extends Parameters<OverrideQueryBuilder["cosh"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cosh(...(args as unknown as Parameters<OverrideQueryBuilder["cosh"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cost() {
     return (new QueryBuilder(this)).cost();
   }
-  cot(...args: Parameters<OverrideQueryBuilder["cot"]>) {
-    return (new QueryBuilder(this)).cot(...args);
+  cot<TArgs extends Parameters<OverrideQueryBuilder["cot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cot(...(args as unknown as Parameters<OverrideQueryBuilder["cot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  cotd(...args: Parameters<OverrideQueryBuilder["cotd"]>) {
-    return (new QueryBuilder(this)).cotd(...args);
+  cotd<TArgs extends Parameters<OverrideQueryBuilder["cotd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cotd(...(args as unknown as Parameters<OverrideQueryBuilder["cotd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  count(...args: Parameters<OverrideQueryBuilder["count"]>) {
-    return (new QueryBuilder(this)).count(...args);
+  count<TArgs extends Parameters<OverrideQueryBuilder["count"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).count(...(args as unknown as Parameters<OverrideQueryBuilder["count"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  covarPop(...args: Parameters<OverrideQueryBuilder["covarPop"]>) {
-    return (new QueryBuilder(this)).covarPop(...args);
+  covarPop<TArgs extends Parameters<OverrideQueryBuilder["covarPop"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).covarPop(...(args as unknown as Parameters<OverrideQueryBuilder["covarPop"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  covarSamp(...args: Parameters<OverrideQueryBuilder["covarSamp"]>) {
-    return (new QueryBuilder(this)).covarSamp(...args);
+  covarSamp<TArgs extends Parameters<OverrideQueryBuilder["covarSamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).covarSamp(...(args as unknown as Parameters<OverrideQueryBuilder["covarSamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  crc32(...args: Parameters<OverrideQueryBuilder["crc32"]>) {
-    return (new QueryBuilder(this)).crc32(...args);
+  crc32<TArgs extends Parameters<OverrideQueryBuilder["crc32"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).crc32(...(args as unknown as Parameters<OverrideQueryBuilder["crc32"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  crc32c(...args: Parameters<OverrideQueryBuilder["crc32c"]>) {
-    return (new QueryBuilder(this)).crc32c(...args);
+  crc32c<TArgs extends Parameters<OverrideQueryBuilder["crc32c"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).crc32c(...(args as unknown as Parameters<OverrideQueryBuilder["crc32c"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   create() {
     return (new QueryBuilder(this)).create();
@@ -696,14 +696,14 @@ export class QueryInstance {
   cross() {
     return (new QueryBuilder(this)).cross();
   }
-  crosses(...args: Parameters<OverrideQueryBuilder["crosses"]>) {
-    return (new QueryBuilder(this)).crosses(...args);
+  crosses<TArgs extends Parameters<OverrideQueryBuilder["crosses"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).crosses(...(args as unknown as Parameters<OverrideQueryBuilder["crosses"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  crossJoin(...args: Parameters<OverrideQueryBuilder["crossJoin"]>) {
-    return (new QueryBuilder(this)).crossJoin(...args);
+  crossJoin<TArgs extends Parameters<OverrideQueryBuilder["crossJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).crossJoin(...(args as unknown as Parameters<OverrideQueryBuilder["crossJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  crossJoinLateral(...args: Parameters<OverrideQueryBuilder["crossJoinLateral"]>) {
-    return (new QueryBuilder(this)).crossJoinLateral(...args);
+  crossJoinLateral<TArgs extends Parameters<OverrideQueryBuilder["crossJoinLateral"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).crossJoinLateral(...(args as unknown as Parameters<OverrideQueryBuilder["crossJoinLateral"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   csv() {
     return (new QueryBuilder(this)).csv();
@@ -711,8 +711,8 @@ export class QueryInstance {
   cube() {
     return (new QueryBuilder(this)).cube();
   }
-  cumeDist(...args: Parameters<OverrideQueryBuilder["cumeDist"]>) {
-    return (new QueryBuilder(this)).cumeDist(...args);
+  cumeDist<TArgs extends Parameters<OverrideQueryBuilder["cumeDist"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cumeDist(...(args as unknown as Parameters<OverrideQueryBuilder["cumeDist"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   current() {
     return (new QueryBuilder(this)).current();
@@ -720,11 +720,11 @@ export class QueryInstance {
   currentCatalog() {
     return (new QueryBuilder(this)).currentCatalog();
   }
-  currentDatabase(...args: Parameters<OverrideQueryBuilder["currentDatabase"]>) {
-    return (new QueryBuilder(this)).currentDatabase(...args);
+  currentDatabase<TArgs extends Parameters<OverrideQueryBuilder["currentDatabase"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentDatabase(...(args as unknown as Parameters<OverrideQueryBuilder["currentDatabase"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  currentDate(...args: Parameters<OverrideQueryBuilder["currentDate"]>) {
-    return (new QueryBuilder(this)).currentDate(...args);
+  currentDate<TArgs extends Parameters<OverrideQueryBuilder["currentDate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentDate(...(args as unknown as Parameters<OverrideQueryBuilder["currentDate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   currentdefaulttransformgroup() {
     return (new QueryBuilder(this)).currentdefaulttransformgroup();
@@ -732,8 +732,8 @@ export class QueryInstance {
   currentPath() {
     return (new QueryBuilder(this)).currentPath();
   }
-  currentQuery(...args: Parameters<OverrideQueryBuilder["currentQuery"]>) {
-    return (new QueryBuilder(this)).currentQuery(...args);
+  currentQuery<TArgs extends Parameters<OverrideQueryBuilder["currentQuery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentQuery(...(args as unknown as Parameters<OverrideQueryBuilder["currentQuery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   currentRole() {
     return (new QueryBuilder(this)).currentRole();
@@ -741,20 +741,20 @@ export class QueryInstance {
   currentRow() {
     return (new QueryBuilder(this)).currentRow();
   }
-  currentSchema(...args: Parameters<OverrideQueryBuilder["currentSchema"]>) {
-    return (new QueryBuilder(this)).currentSchema(...args);
+  currentSchema<TArgs extends Parameters<OverrideQueryBuilder["currentSchema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentSchema(...(args as unknown as Parameters<OverrideQueryBuilder["currentSchema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  currentSchemas(...args: Parameters<OverrideQueryBuilder["currentSchemas"]>) {
-    return (new QueryBuilder(this)).currentSchemas(...args);
+  currentSchemas<TArgs extends Parameters<OverrideQueryBuilder["currentSchemas"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentSchemas(...(args as unknown as Parameters<OverrideQueryBuilder["currentSchemas"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  currentSetting(...args: Parameters<OverrideQueryBuilder["currentSetting"]>) {
-    return (new QueryBuilder(this)).currentSetting(...args);
+  currentSetting<TArgs extends Parameters<OverrideQueryBuilder["currentSetting"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentSetting(...(args as unknown as Parameters<OverrideQueryBuilder["currentSetting"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  currentTime(...args: Parameters<OverrideQueryBuilder["currentTime"]>) {
-    return (new QueryBuilder(this)).currentTime(...args);
+  currentTime<TArgs extends Parameters<OverrideQueryBuilder["currentTime"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentTime(...(args as unknown as Parameters<OverrideQueryBuilder["currentTime"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  currentTimestamp(...args: Parameters<OverrideQueryBuilder["currentTimestamp"]>) {
-    return (new QueryBuilder(this)).currentTimestamp(...args);
+  currentTimestamp<TArgs extends Parameters<OverrideQueryBuilder["currentTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currentTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["currentTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   currenttransformgroupfortype() {
     return (new QueryBuilder(this)).currenttransformgroupfortype();
@@ -762,8 +762,8 @@ export class QueryInstance {
   currentUser() {
     return (new QueryBuilder(this)).currentUser();
   }
-  currval(...args: Parameters<OverrideQueryBuilder["currval"]>) {
-    return (new QueryBuilder(this)).currval(...args);
+  currval<TArgs extends Parameters<OverrideQueryBuilder["currval"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).currval(...(args as unknown as Parameters<OverrideQueryBuilder["currval"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cursor() {
     return (new QueryBuilder(this)).cursor();
@@ -771,11 +771,11 @@ export class QueryInstance {
   cursorName() {
     return (new QueryBuilder(this)).cursorName();
   }
-  cursorToXml(...args: Parameters<OverrideQueryBuilder["cursorToXml"]>) {
-    return (new QueryBuilder(this)).cursorToXml(...args);
+  cursorToXml<TArgs extends Parameters<OverrideQueryBuilder["cursorToXml"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cursorToXml(...(args as unknown as Parameters<OverrideQueryBuilder["cursorToXml"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  cursorToXmlschema(...args: Parameters<OverrideQueryBuilder["cursorToXmlschema"]>) {
-    return (new QueryBuilder(this)).cursorToXmlschema(...args);
+  cursorToXmlschema<TArgs extends Parameters<OverrideQueryBuilder["cursorToXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).cursorToXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["cursorToXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   cycle() {
     return (new QueryBuilder(this)).cycle();
@@ -786,14 +786,14 @@ export class QueryInstance {
   database() {
     return (new QueryBuilder(this)).database();
   }
-  databaseToXml(...args: Parameters<OverrideQueryBuilder["databaseToXml"]>) {
-    return (new QueryBuilder(this)).databaseToXml(...args);
+  databaseToXml<TArgs extends Parameters<OverrideQueryBuilder["databaseToXml"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).databaseToXml(...(args as unknown as Parameters<OverrideQueryBuilder["databaseToXml"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  databaseToXmlAndXmlschema(...args: Parameters<OverrideQueryBuilder["databaseToXmlAndXmlschema"]>) {
-    return (new QueryBuilder(this)).databaseToXmlAndXmlschema(...args);
+  databaseToXmlAndXmlschema<TArgs extends Parameters<OverrideQueryBuilder["databaseToXmlAndXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).databaseToXmlAndXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["databaseToXmlAndXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  databaseToXmlschema(...args: Parameters<OverrideQueryBuilder["databaseToXmlschema"]>) {
-    return (new QueryBuilder(this)).databaseToXmlschema(...args);
+  databaseToXmlschema<TArgs extends Parameters<OverrideQueryBuilder["databaseToXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).databaseToXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["databaseToXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   datalink() {
     return (new QueryBuilder(this)).datalink();
@@ -801,17 +801,17 @@ export class QueryInstance {
   date() {
     return (new QueryBuilder(this)).date();
   }
-  dateAdd(...args: Parameters<OverrideQueryBuilder["dateAdd"]>) {
-    return (new QueryBuilder(this)).dateAdd(...args);
+  dateAdd<TArgs extends Parameters<OverrideQueryBuilder["dateAdd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).dateAdd(...(args as unknown as Parameters<OverrideQueryBuilder["dateAdd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  dateBin(...args: Parameters<OverrideQueryBuilder["dateBin"]>) {
-    return (new QueryBuilder(this)).dateBin(...args);
+  dateBin<TArgs extends Parameters<OverrideQueryBuilder["dateBin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).dateBin(...(args as unknown as Parameters<OverrideQueryBuilder["dateBin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  datePart(...args: Parameters<OverrideQueryBuilder["datePart"]>) {
-    return (new QueryBuilder(this)).datePart(...args);
+  datePart<TArgs extends Parameters<OverrideQueryBuilder["datePart"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).datePart(...(args as unknown as Parameters<OverrideQueryBuilder["datePart"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  dateSubtract(...args: Parameters<OverrideQueryBuilder["dateSubtract"]>) {
-    return (new QueryBuilder(this)).dateSubtract(...args);
+  dateSubtract<TArgs extends Parameters<OverrideQueryBuilder["dateSubtract"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).dateSubtract(...(args as unknown as Parameters<OverrideQueryBuilder["dateSubtract"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   datetimeintervalcode() {
     return (new QueryBuilder(this)).datetimeintervalcode();
@@ -819,8 +819,8 @@ export class QueryInstance {
   datetimeintervalprecision() {
     return (new QueryBuilder(this)).datetimeintervalprecision();
   }
-  dateTrunc(...args: Parameters<OverrideQueryBuilder["dateTrunc"]>) {
-    return (new QueryBuilder(this)).dateTrunc(...args);
+  dateTrunc<TArgs extends Parameters<OverrideQueryBuilder["dateTrunc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).dateTrunc(...(args as unknown as Parameters<OverrideQueryBuilder["dateTrunc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   day() {
     return (new QueryBuilder(this)).day();
@@ -843,8 +843,8 @@ export class QueryInstance {
   declare() {
     return (new QueryBuilder(this)).declare();
   }
-  decode(...args: Parameters<OverrideQueryBuilder["decode"]>) {
-    return (new QueryBuilder(this)).decode(...args);
+  decode<TArgs extends Parameters<OverrideQueryBuilder["decode"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).decode(...(args as unknown as Parameters<OverrideQueryBuilder["decode"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   default() {
     return (new QueryBuilder(this)).default();
@@ -870,11 +870,11 @@ export class QueryInstance {
   degree() {
     return (new QueryBuilder(this)).degree();
   }
-  degrees(...args: Parameters<OverrideQueryBuilder["degrees"]>) {
-    return (new QueryBuilder(this)).degrees(...args);
+  degrees<TArgs extends Parameters<OverrideQueryBuilder["degrees"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).degrees(...(args as unknown as Parameters<OverrideQueryBuilder["degrees"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  delete(...args: Parameters<OverrideQueryBuilder["delete"]>) {
-    return (new QueryBuilder(this)).delete(...args);
+  delete<TArgs extends Parameters<OverrideQueryBuilder["delete"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).delete(...(args as unknown as Parameters<OverrideQueryBuilder["delete"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   delimiter() {
     return (new QueryBuilder(this)).delimiter();
@@ -882,8 +882,8 @@ export class QueryInstance {
   delimiters() {
     return (new QueryBuilder(this)).delimiters();
   }
-  denseRank(...args: Parameters<OverrideQueryBuilder["denseRank"]>) {
-    return (new QueryBuilder(this)).denseRank(...args);
+  denseRank<TArgs extends Parameters<OverrideQueryBuilder["denseRank"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).denseRank(...(args as unknown as Parameters<OverrideQueryBuilder["denseRank"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   depends() {
     return (new QueryBuilder(this)).depends();
@@ -897,8 +897,8 @@ export class QueryInstance {
   derived() {
     return (new QueryBuilder(this)).derived();
   }
-  desc(...args: Parameters<OverrideQueryBuilder["desc"]>) {
-    return (new QueryBuilder(this)).desc(...args);
+  desc<TArgs extends Parameters<OverrideQueryBuilder["desc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).desc(...(args as unknown as Parameters<OverrideQueryBuilder["desc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   describe() {
     return (new QueryBuilder(this)).describe();
@@ -915,11 +915,11 @@ export class QueryInstance {
   diagnostics() {
     return (new QueryBuilder(this)).diagnostics();
   }
-  diagonal(...args: Parameters<OverrideQueryBuilder["diagonal"]>) {
-    return (new QueryBuilder(this)).diagonal(...args);
+  diagonal<TArgs extends Parameters<OverrideQueryBuilder["diagonal"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).diagonal(...(args as unknown as Parameters<OverrideQueryBuilder["diagonal"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  diameter(...args: Parameters<OverrideQueryBuilder["diameter"]>) {
-    return (new QueryBuilder(this)).diameter(...args);
+  diameter<TArgs extends Parameters<OverrideQueryBuilder["diameter"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).diameter(...(args as unknown as Parameters<OverrideQueryBuilder["diameter"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   dictionary() {
     return (new QueryBuilder(this)).dictionary();
@@ -936,17 +936,17 @@ export class QueryInstance {
   dispatch() {
     return (new QueryBuilder(this)).dispatch();
   }
-  distance(...args: Parameters<OverrideQueryBuilder["distance"]>) {
-    return (new QueryBuilder(this)).distance(...args);
+  distance<TArgs extends Parameters<OverrideQueryBuilder["distance"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).distance(...(args as unknown as Parameters<OverrideQueryBuilder["distance"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   distinct() {
     return (new QueryBuilder(this)).distinct();
   }
-  div(...args: Parameters<OverrideQueryBuilder["div"]>) {
-    return (new QueryBuilder(this)).div(...args);
+  div<TArgs extends Parameters<OverrideQueryBuilder["div"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).div(...(args as unknown as Parameters<OverrideQueryBuilder["div"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  divide(...args: Parameters<OverrideQueryBuilder["divide"]>) {
-    return (new QueryBuilder(this)).divide(...args);
+  divide<TArgs extends Parameters<OverrideQueryBuilder["divide"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).divide(...(args as unknown as Parameters<OverrideQueryBuilder["divide"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   dlnewcopy() {
     return (new QueryBuilder(this)).dlnewcopy();
@@ -990,14 +990,14 @@ export class QueryInstance {
   domain() {
     return (new QueryBuilder(this)).domain();
   }
-  doNothing(...args: Parameters<OverrideQueryBuilder["doNothing"]>) {
-    return (new QueryBuilder(this)).doNothing(...args);
+  doNothing<TArgs extends Parameters<OverrideQueryBuilder["doNothing"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).doNothing(...(args as unknown as Parameters<OverrideQueryBuilder["doNothing"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   double() {
     return (new QueryBuilder(this)).double();
   }
-  doUpdate(...args: Parameters<OverrideQueryBuilder["doUpdate"]>) {
-    return (new QueryBuilder(this)).doUpdate(...args);
+  doUpdate<TArgs extends Parameters<OverrideQueryBuilder["doUpdate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).doUpdate(...(args as unknown as Parameters<OverrideQueryBuilder["doUpdate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   drop() {
     return (new QueryBuilder(this)).drop();
@@ -1017,8 +1017,8 @@ export class QueryInstance {
   element() {
     return (new QueryBuilder(this)).element();
   }
-  else(...args: Parameters<OverrideQueryBuilder["else"]>) {
-    return (new QueryBuilder(this)).else(...args);
+  else<TArgs extends Parameters<OverrideQueryBuilder["else"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).else(...(args as unknown as Parameters<OverrideQueryBuilder["else"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   empty() {
     return (new QueryBuilder(this)).empty();
@@ -1026,8 +1026,8 @@ export class QueryInstance {
   enable() {
     return (new QueryBuilder(this)).enable();
   }
-  encode(...args: Parameters<OverrideQueryBuilder["encode"]>) {
-    return (new QueryBuilder(this)).encode(...args);
+  encode<TArgs extends Parameters<OverrideQueryBuilder["encode"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).encode(...(args as unknown as Parameters<OverrideQueryBuilder["encode"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   encoding() {
     return (new QueryBuilder(this)).encoding();
@@ -1053,50 +1053,50 @@ export class QueryInstance {
   enum() {
     return (new QueryBuilder(this)).enum();
   }
-  enumFirst(...args: Parameters<OverrideQueryBuilder["enumFirst"]>) {
-    return (new QueryBuilder(this)).enumFirst(...args);
+  enumFirst<TArgs extends Parameters<OverrideQueryBuilder["enumFirst"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).enumFirst(...(args as unknown as Parameters<OverrideQueryBuilder["enumFirst"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  enumLast(...args: Parameters<OverrideQueryBuilder["enumLast"]>) {
-    return (new QueryBuilder(this)).enumLast(...args);
+  enumLast<TArgs extends Parameters<OverrideQueryBuilder["enumLast"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).enumLast(...(args as unknown as Parameters<OverrideQueryBuilder["enumLast"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  enumRange(...args: Parameters<OverrideQueryBuilder["enumRange"]>) {
-    return (new QueryBuilder(this)).enumRange(...args);
+  enumRange<TArgs extends Parameters<OverrideQueryBuilder["enumRange"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).enumRange(...(args as unknown as Parameters<OverrideQueryBuilder["enumRange"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  eq(...args: Parameters<OverrideQueryBuilder["eq"]>) {
-    return (new QueryBuilder(this)).eq(...args);
+  eq<TArgs extends Parameters<OverrideQueryBuilder["eq"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).eq(...(args as unknown as Parameters<OverrideQueryBuilder["eq"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   equals() {
     return (new QueryBuilder(this)).equals();
   }
-  erf(...args: Parameters<OverrideQueryBuilder["erf"]>) {
-    return (new QueryBuilder(this)).erf(...args);
+  erf<TArgs extends Parameters<OverrideQueryBuilder["erf"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).erf(...(args as unknown as Parameters<OverrideQueryBuilder["erf"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  erfc(...args: Parameters<OverrideQueryBuilder["erfc"]>) {
-    return (new QueryBuilder(this)).erfc(...args);
+  erfc<TArgs extends Parameters<OverrideQueryBuilder["erfc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).erfc(...(args as unknown as Parameters<OverrideQueryBuilder["erfc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   error() {
     return (new QueryBuilder(this)).error();
   }
-  escape(...args: Parameters<OverrideQueryBuilder["escape"]>) {
-    return (new QueryBuilder(this)).escape(...args);
+  escape<TArgs extends Parameters<OverrideQueryBuilder["escape"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).escape(...(args as unknown as Parameters<OverrideQueryBuilder["escape"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   event() {
     return (new QueryBuilder(this)).event();
   }
-  every(...args: Parameters<OverrideQueryBuilder["every"]>) {
-    return (new QueryBuilder(this)).every(...args);
+  every<TArgs extends Parameters<OverrideQueryBuilder["every"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).every(...(args as unknown as Parameters<OverrideQueryBuilder["every"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  except(...args: Parameters<OverrideQueryBuilder["except"]>) {
-    return (new QueryBuilder(this)).except(...args);
+  except<TArgs extends Parameters<OverrideQueryBuilder["except"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).except(...(args as unknown as Parameters<OverrideQueryBuilder["except"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  exceptAll(...args: Parameters<OverrideQueryBuilder["exceptAll"]>) {
-    return (new QueryBuilder(this)).exceptAll(...args);
+  exceptAll<TArgs extends Parameters<OverrideQueryBuilder["exceptAll"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).exceptAll(...(args as unknown as Parameters<OverrideQueryBuilder["exceptAll"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   exception() {
     return (new QueryBuilder(this)).exception();
   }
-  exclamation(...args: Parameters<OverrideQueryBuilder["exclamation"]>) {
-    return (new QueryBuilder(this)).exclamation(...args);
+  exclamation<TArgs extends Parameters<OverrideQueryBuilder["exclamation"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).exclamation(...(args as unknown as Parameters<OverrideQueryBuilder["exclamation"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   exclude() {
     return (new QueryBuilder(this)).exclude();
@@ -1113,11 +1113,11 @@ export class QueryInstance {
   executeKeyword() {
     return (new QueryBuilder(this)).executeKeyword();
   }
-  exists(...args: Parameters<OverrideQueryBuilder["exists"]>) {
-    return (new QueryBuilder(this)).exists(...args);
+  exists<TArgs extends Parameters<OverrideQueryBuilder["exists"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).exists(...(args as unknown as Parameters<OverrideQueryBuilder["exists"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  exp(...args: Parameters<OverrideQueryBuilder["exp"]>) {
-    return (new QueryBuilder(this)).exp(...args);
+  exp<TArgs extends Parameters<OverrideQueryBuilder["exp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).exp(...(args as unknown as Parameters<OverrideQueryBuilder["exp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   explain() {
     return (new QueryBuilder(this)).explain();
@@ -1131,20 +1131,20 @@ export class QueryInstance {
   external() {
     return (new QueryBuilder(this)).external();
   }
-  extract(...args: Parameters<OverrideQueryBuilder["extract"]>) {
-    return (new QueryBuilder(this)).extract(...args);
+  extract<TArgs extends Parameters<OverrideQueryBuilder["extract"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).extract(...(args as unknown as Parameters<OverrideQueryBuilder["extract"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  factorial(...args: Parameters<OverrideQueryBuilder["factorial"]>) {
-    return (new QueryBuilder(this)).factorial(...args);
+  factorial<TArgs extends Parameters<OverrideQueryBuilder["factorial"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).factorial(...(args as unknown as Parameters<OverrideQueryBuilder["factorial"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   false() {
     return (new QueryBuilder(this)).false();
   }
-  family(...args: Parameters<OverrideQueryBuilder["family"]>) {
-    return (new QueryBuilder(this)).family(...args);
+  family<TArgs extends Parameters<OverrideQueryBuilder["family"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).family(...(args as unknown as Parameters<OverrideQueryBuilder["family"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  fetch(...args: Parameters<OverrideQueryBuilder["fetch"]>) {
-    return (new QueryBuilder(this)).fetch(...args);
+  fetch<TArgs extends Parameters<OverrideQueryBuilder["fetch"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).fetch(...(args as unknown as Parameters<OverrideQueryBuilder["fetch"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   file() {
     return (new QueryBuilder(this)).file();
@@ -1164,8 +1164,8 @@ export class QueryInstance {
   first() {
     return (new QueryBuilder(this)).first();
   }
-  firstValue(...args: Parameters<OverrideQueryBuilder["firstValue"]>) {
-    return (new QueryBuilder(this)).firstValue(...args);
+  firstValue<TArgs extends Parameters<OverrideQueryBuilder["firstValue"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).firstValue(...(args as unknown as Parameters<OverrideQueryBuilder["firstValue"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   flag() {
     return (new QueryBuilder(this)).flag();
@@ -1173,8 +1173,8 @@ export class QueryInstance {
   float() {
     return (new QueryBuilder(this)).float();
   }
-  floor(...args: Parameters<OverrideQueryBuilder["floor"]>) {
-    return (new QueryBuilder(this)).floor(...args);
+  floor<TArgs extends Parameters<OverrideQueryBuilder["floor"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).floor(...(args as unknown as Parameters<OverrideQueryBuilder["floor"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   following() {
     return (new QueryBuilder(this)).following();
@@ -1188,11 +1188,11 @@ export class QueryInstance {
   foreign() {
     return (new QueryBuilder(this)).foreign();
   }
-  format(...args: Parameters<OverrideQueryBuilder["format"]>) {
-    return (new QueryBuilder(this)).format(...args);
+  format<TArgs extends Parameters<OverrideQueryBuilder["format"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).format(...(args as unknown as Parameters<OverrideQueryBuilder["format"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  formatType(...args: Parameters<OverrideQueryBuilder["formatType"]>) {
-    return (new QueryBuilder(this)).formatType(...args);
+  formatType<TArgs extends Parameters<OverrideQueryBuilder["formatType"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).formatType(...(args as unknown as Parameters<OverrideQueryBuilder["formatType"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   fortran() {
     return (new QueryBuilder(this)).fortran();
@@ -1212,8 +1212,8 @@ export class QueryInstance {
   freeze() {
     return (new QueryBuilder(this)).freeze();
   }
-  from(...args: Parameters<OverrideQueryBuilder["from"]>) {
-    return (new QueryBuilder(this)).from(...args);
+  from<TArgs extends Parameters<OverrideQueryBuilder["from"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).from(...(args as unknown as Parameters<OverrideQueryBuilder["from"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   fs() {
     return (new QueryBuilder(this)).fs();
@@ -1224,8 +1224,8 @@ export class QueryInstance {
   full() {
     return (new QueryBuilder(this)).full();
   }
-  fullJoin(...args: Parameters<OverrideQueryBuilder["fullJoin"]>) {
-    return (new QueryBuilder(this)).fullJoin(...args);
+  fullJoin<TArgs extends Parameters<OverrideQueryBuilder["fullJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).fullJoin(...(args as unknown as Parameters<OverrideQueryBuilder["fullJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   function() {
     return (new QueryBuilder(this)).function();
@@ -1239,11 +1239,11 @@ export class QueryInstance {
   g() {
     return (new QueryBuilder(this)).g();
   }
-  gamma(...args: Parameters<OverrideQueryBuilder["gamma"]>) {
-    return (new QueryBuilder(this)).gamma(...args);
+  gamma<TArgs extends Parameters<OverrideQueryBuilder["gamma"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).gamma(...(args as unknown as Parameters<OverrideQueryBuilder["gamma"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  gcd(...args: Parameters<OverrideQueryBuilder["gcd"]>) {
-    return (new QueryBuilder(this)).gcd(...args);
+  gcd<TArgs extends Parameters<OverrideQueryBuilder["gcd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).gcd(...(args as unknown as Parameters<OverrideQueryBuilder["gcd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   general() {
     return (new QueryBuilder(this)).general();
@@ -1251,29 +1251,29 @@ export class QueryInstance {
   generated() {
     return (new QueryBuilder(this)).generated();
   }
-  generateSeries(...args: Parameters<OverrideQueryBuilder["generateSeries"]>) {
-    return (new QueryBuilder(this)).generateSeries(...args);
+  generateSeries<TArgs extends Parameters<OverrideQueryBuilder["generateSeries"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).generateSeries(...(args as unknown as Parameters<OverrideQueryBuilder["generateSeries"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  generateSubscripts(...args: Parameters<OverrideQueryBuilder["generateSubscripts"]>) {
-    return (new QueryBuilder(this)).generateSubscripts(...args);
+  generateSubscripts<TArgs extends Parameters<OverrideQueryBuilder["generateSubscripts"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).generateSubscripts(...(args as unknown as Parameters<OverrideQueryBuilder["generateSubscripts"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  genRandomUuid(...args: Parameters<OverrideQueryBuilder["genRandomUuid"]>) {
-    return (new QueryBuilder(this)).genRandomUuid(...args);
+  genRandomUuid<TArgs extends Parameters<OverrideQueryBuilder["genRandomUuid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).genRandomUuid(...(args as unknown as Parameters<OverrideQueryBuilder["genRandomUuid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   get() {
     return (new QueryBuilder(this)).get();
   }
-  getBit(...args: Parameters<OverrideQueryBuilder["getBit"]>) {
-    return (new QueryBuilder(this)).getBit(...args);
+  getBit<TArgs extends Parameters<OverrideQueryBuilder["getBit"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).getBit(...(args as unknown as Parameters<OverrideQueryBuilder["getBit"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  getByte(...args: Parameters<OverrideQueryBuilder["getByte"]>) {
-    return (new QueryBuilder(this)).getByte(...args);
+  getByte<TArgs extends Parameters<OverrideQueryBuilder["getByte"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).getByte(...(args as unknown as Parameters<OverrideQueryBuilder["getByte"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  getCurrentTsConfig(...args: Parameters<OverrideQueryBuilder["getCurrentTsConfig"]>) {
-    return (new QueryBuilder(this)).getCurrentTsConfig(...args);
+  getCurrentTsConfig<TArgs extends Parameters<OverrideQueryBuilder["getCurrentTsConfig"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).getCurrentTsConfig(...(args as unknown as Parameters<OverrideQueryBuilder["getCurrentTsConfig"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  ginCleanPendingList(...args: Parameters<OverrideQueryBuilder["ginCleanPendingList"]>) {
-    return (new QueryBuilder(this)).ginCleanPendingList(...args);
+  ginCleanPendingList<TArgs extends Parameters<OverrideQueryBuilder["ginCleanPendingList"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ginCleanPendingList(...(args as unknown as Parameters<OverrideQueryBuilder["ginCleanPendingList"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   global() {
     return (new QueryBuilder(this)).global();
@@ -1290,86 +1290,86 @@ export class QueryInstance {
   granted() {
     return (new QueryBuilder(this)).granted();
   }
-  greatest(...args: Parameters<OverrideQueryBuilder["greatest"]>) {
-    return (new QueryBuilder(this)).greatest(...args);
+  greatest<TArgs extends Parameters<OverrideQueryBuilder["greatest"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).greatest(...(args as unknown as Parameters<OverrideQueryBuilder["greatest"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   group() {
     return (new QueryBuilder(this)).group();
   }
-  groupBy(...args: Parameters<OverrideQueryBuilder["groupBy"]>) {
-    return (new QueryBuilder(this)).groupBy(...args);
+  groupBy<TArgs extends Parameters<OverrideQueryBuilder["groupBy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).groupBy(...(args as unknown as Parameters<OverrideQueryBuilder["groupBy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  groupByDistinct(...args: Parameters<OverrideQueryBuilder["groupByDistinct"]>) {
-    return (new QueryBuilder(this)).groupByDistinct(...args);
+  groupByDistinct<TArgs extends Parameters<OverrideQueryBuilder["groupByDistinct"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).groupByDistinct(...(args as unknown as Parameters<OverrideQueryBuilder["groupByDistinct"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  grouping(...args: Parameters<OverrideQueryBuilder["grouping"]>) {
-    return (new QueryBuilder(this)).grouping(...args);
+  grouping<TArgs extends Parameters<OverrideQueryBuilder["grouping"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).grouping(...(args as unknown as Parameters<OverrideQueryBuilder["grouping"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   groups() {
     return (new QueryBuilder(this)).groups();
   }
-  gt(...args: Parameters<OverrideQueryBuilder["gt"]>) {
-    return (new QueryBuilder(this)).gt(...args);
+  gt<TArgs extends Parameters<OverrideQueryBuilder["gt"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).gt(...(args as unknown as Parameters<OverrideQueryBuilder["gt"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  gte(...args: Parameters<OverrideQueryBuilder["gte"]>) {
-    return (new QueryBuilder(this)).gte(...args);
+  gte<TArgs extends Parameters<OverrideQueryBuilder["gte"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).gte(...(args as unknown as Parameters<OverrideQueryBuilder["gte"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   handler() {
     return (new QueryBuilder(this)).handler();
   }
-  hasAnyColumnPrivilege(...args: Parameters<OverrideQueryBuilder["hasAnyColumnPrivilege"]>) {
-    return (new QueryBuilder(this)).hasAnyColumnPrivilege(...args);
+  hasAnyColumnPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasAnyColumnPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasAnyColumnPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasAnyColumnPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasColumnPrivilege(...args: Parameters<OverrideQueryBuilder["hasColumnPrivilege"]>) {
-    return (new QueryBuilder(this)).hasColumnPrivilege(...args);
+  hasColumnPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasColumnPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasColumnPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasColumnPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasDatabasePrivilege(...args: Parameters<OverrideQueryBuilder["hasDatabasePrivilege"]>) {
-    return (new QueryBuilder(this)).hasDatabasePrivilege(...args);
+  hasDatabasePrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasDatabasePrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasDatabasePrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasDatabasePrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasForeignDataWrapperPrivilege(...args: Parameters<OverrideQueryBuilder["hasForeignDataWrapperPrivilege"]>) {
-    return (new QueryBuilder(this)).hasForeignDataWrapperPrivilege(...args);
+  hasForeignDataWrapperPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasForeignDataWrapperPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasForeignDataWrapperPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasForeignDataWrapperPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasFunctionPrivilege(...args: Parameters<OverrideQueryBuilder["hasFunctionPrivilege"]>) {
-    return (new QueryBuilder(this)).hasFunctionPrivilege(...args);
+  hasFunctionPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasFunctionPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasFunctionPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasFunctionPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hash(...args: Parameters<OverrideQueryBuilder["hash"]>) {
-    return (new QueryBuilder(this)).hash(...args);
+  hash<TArgs extends Parameters<OverrideQueryBuilder["hash"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hash(...(args as unknown as Parameters<OverrideQueryBuilder["hash"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasLanguagePrivilege(...args: Parameters<OverrideQueryBuilder["hasLanguagePrivilege"]>) {
-    return (new QueryBuilder(this)).hasLanguagePrivilege(...args);
+  hasLanguagePrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasLanguagePrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasLanguagePrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasLanguagePrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasLargeobjectPrivilege(...args: Parameters<OverrideQueryBuilder["hasLargeobjectPrivilege"]>) {
-    return (new QueryBuilder(this)).hasLargeobjectPrivilege(...args);
+  hasLargeobjectPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasLargeobjectPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasLargeobjectPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasLargeobjectPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasParameterPrivilege(...args: Parameters<OverrideQueryBuilder["hasParameterPrivilege"]>) {
-    return (new QueryBuilder(this)).hasParameterPrivilege(...args);
+  hasParameterPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasParameterPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasParameterPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasParameterPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasSchemaPrivilege(...args: Parameters<OverrideQueryBuilder["hasSchemaPrivilege"]>) {
-    return (new QueryBuilder(this)).hasSchemaPrivilege(...args);
+  hasSchemaPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasSchemaPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasSchemaPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasSchemaPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasSequencePrivilege(...args: Parameters<OverrideQueryBuilder["hasSequencePrivilege"]>) {
-    return (new QueryBuilder(this)).hasSequencePrivilege(...args);
+  hasSequencePrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasSequencePrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasSequencePrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasSequencePrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasServerPrivilege(...args: Parameters<OverrideQueryBuilder["hasServerPrivilege"]>) {
-    return (new QueryBuilder(this)).hasServerPrivilege(...args);
+  hasServerPrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasServerPrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasServerPrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasServerPrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasTablePrivilege(...args: Parameters<OverrideQueryBuilder["hasTablePrivilege"]>) {
-    return (new QueryBuilder(this)).hasTablePrivilege(...args);
+  hasTablePrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasTablePrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasTablePrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasTablePrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasTablespacePrivilege(...args: Parameters<OverrideQueryBuilder["hasTablespacePrivilege"]>) {
-    return (new QueryBuilder(this)).hasTablespacePrivilege(...args);
+  hasTablespacePrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasTablespacePrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasTablespacePrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasTablespacePrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hasTypePrivilege(...args: Parameters<OverrideQueryBuilder["hasTypePrivilege"]>) {
-    return (new QueryBuilder(this)).hasTypePrivilege(...args);
+  hasTypePrivilege<TArgs extends Parameters<OverrideQueryBuilder["hasTypePrivilege"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hasTypePrivilege(...(args as unknown as Parameters<OverrideQueryBuilder["hasTypePrivilege"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  having(...args: Parameters<OverrideQueryBuilder["having"]>) {
-    return (new QueryBuilder(this)).having(...args);
+  having<TArgs extends Parameters<OverrideQueryBuilder["having"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).having(...(args as unknown as Parameters<OverrideQueryBuilder["having"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   header() {
     return (new QueryBuilder(this)).header();
   }
-  height(...args: Parameters<OverrideQueryBuilder["height"]>) {
-    return (new QueryBuilder(this)).height(...args);
+  height<TArgs extends Parameters<OverrideQueryBuilder["height"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).height(...(args as unknown as Parameters<OverrideQueryBuilder["height"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   hex() {
     return (new QueryBuilder(this)).hex();
@@ -1380,14 +1380,14 @@ export class QueryInstance {
   hold() {
     return (new QueryBuilder(this)).hold();
   }
-  horizontal(...args: Parameters<OverrideQueryBuilder["horizontal"]>) {
-    return (new QueryBuilder(this)).horizontal(...args);
+  horizontal<TArgs extends Parameters<OverrideQueryBuilder["horizontal"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).horizontal(...(args as unknown as Parameters<OverrideQueryBuilder["horizontal"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  host(...args: Parameters<OverrideQueryBuilder["host"]>) {
-    return (new QueryBuilder(this)).host(...args);
+  host<TArgs extends Parameters<OverrideQueryBuilder["host"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).host(...(args as unknown as Parameters<OverrideQueryBuilder["host"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  hostmask(...args: Parameters<OverrideQueryBuilder["hostmask"]>) {
-    return (new QueryBuilder(this)).hostmask(...args);
+  hostmask<TArgs extends Parameters<OverrideQueryBuilder["hostmask"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).hostmask(...(args as unknown as Parameters<OverrideQueryBuilder["hostmask"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   hour() {
     return (new QueryBuilder(this)).hour();
@@ -1395,8 +1395,8 @@ export class QueryInstance {
   i(...args: Parameters<BaseRawQueryBuilder["i"]>) {
     return (new QueryBuilder(this)).i(...args);
   }
-  icuUnicodeVersion(...args: Parameters<OverrideQueryBuilder["icuUnicodeVersion"]>) {
-    return (new QueryBuilder(this)).icuUnicodeVersion(...args);
+  icuUnicodeVersion<TArgs extends Parameters<OverrideQueryBuilder["icuUnicodeVersion"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).icuUnicodeVersion(...(args as unknown as Parameters<OverrideQueryBuilder["icuUnicodeVersion"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   id() {
     return (new QueryBuilder(this)).id();
@@ -1416,8 +1416,8 @@ export class QueryInstance {
   ignore() {
     return (new QueryBuilder(this)).ignore();
   }
-  ilike(...args: Parameters<OverrideQueryBuilder["ilike"]>) {
-    return (new QueryBuilder(this)).ilike(...args);
+  ilike<TArgs extends Parameters<OverrideQueryBuilder["ilike"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ilike(...(args as unknown as Parameters<OverrideQueryBuilder["ilike"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   immediate() {
     return (new QueryBuilder(this)).immediate();
@@ -1437,8 +1437,8 @@ export class QueryInstance {
   import() {
     return (new QueryBuilder(this)).import();
   }
-  in(...args: Parameters<OverrideQueryBuilder["in"]>) {
-    return (new QueryBuilder(this)).in(...args);
+  in<TArgs extends Parameters<OverrideQueryBuilder["in"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).in(...(args as unknown as Parameters<OverrideQueryBuilder["in"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   include() {
     return (new QueryBuilder(this)).include();
@@ -1461,23 +1461,23 @@ export class QueryInstance {
   indicator() {
     return (new QueryBuilder(this)).indicator();
   }
-  inetClientAddr(...args: Parameters<OverrideQueryBuilder["inetClientAddr"]>) {
-    return (new QueryBuilder(this)).inetClientAddr(...args);
+  inetClientAddr<TArgs extends Parameters<OverrideQueryBuilder["inetClientAddr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).inetClientAddr(...(args as unknown as Parameters<OverrideQueryBuilder["inetClientAddr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  inetClientPort(...args: Parameters<OverrideQueryBuilder["inetClientPort"]>) {
-    return (new QueryBuilder(this)).inetClientPort(...args);
+  inetClientPort<TArgs extends Parameters<OverrideQueryBuilder["inetClientPort"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).inetClientPort(...(args as unknown as Parameters<OverrideQueryBuilder["inetClientPort"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  inetMerge(...args: Parameters<OverrideQueryBuilder["inetMerge"]>) {
-    return (new QueryBuilder(this)).inetMerge(...args);
+  inetMerge<TArgs extends Parameters<OverrideQueryBuilder["inetMerge"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).inetMerge(...(args as unknown as Parameters<OverrideQueryBuilder["inetMerge"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  inetSameFamily(...args: Parameters<OverrideQueryBuilder["inetSameFamily"]>) {
-    return (new QueryBuilder(this)).inetSameFamily(...args);
+  inetSameFamily<TArgs extends Parameters<OverrideQueryBuilder["inetSameFamily"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).inetSameFamily(...(args as unknown as Parameters<OverrideQueryBuilder["inetSameFamily"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  inetServerAddr(...args: Parameters<OverrideQueryBuilder["inetServerAddr"]>) {
-    return (new QueryBuilder(this)).inetServerAddr(...args);
+  inetServerAddr<TArgs extends Parameters<OverrideQueryBuilder["inetServerAddr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).inetServerAddr(...(args as unknown as Parameters<OverrideQueryBuilder["inetServerAddr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  inetServerPort(...args: Parameters<OverrideQueryBuilder["inetServerPort"]>) {
-    return (new QueryBuilder(this)).inetServerPort(...args);
+  inetServerPort<TArgs extends Parameters<OverrideQueryBuilder["inetServerPort"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).inetServerPort(...(args as unknown as Parameters<OverrideQueryBuilder["inetServerPort"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   inherit() {
     return (new QueryBuilder(this)).inherit();
@@ -1485,8 +1485,8 @@ export class QueryInstance {
   inherits() {
     return (new QueryBuilder(this)).inherits();
   }
-  initcap(...args: Parameters<OverrideQueryBuilder["initcap"]>) {
-    return (new QueryBuilder(this)).initcap(...args);
+  initcap<TArgs extends Parameters<OverrideQueryBuilder["initcap"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).initcap(...(args as unknown as Parameters<OverrideQueryBuilder["initcap"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   initial() {
     return (new QueryBuilder(this)).initial();
@@ -1500,11 +1500,11 @@ export class QueryInstance {
   inner() {
     return (new QueryBuilder(this)).inner();
   }
-  innerJoin(...args: Parameters<OverrideQueryBuilder["innerJoin"]>) {
-    return (new QueryBuilder(this)).innerJoin(...args);
+  innerJoin<TArgs extends Parameters<OverrideQueryBuilder["innerJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).innerJoin(...(args as unknown as Parameters<OverrideQueryBuilder["innerJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  innerJoinLateral(...args: Parameters<OverrideQueryBuilder["innerJoinLateral"]>) {
-    return (new QueryBuilder(this)).innerJoinLateral(...args);
+  innerJoinLateral<TArgs extends Parameters<OverrideQueryBuilder["innerJoinLateral"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).innerJoinLateral(...(args as unknown as Parameters<OverrideQueryBuilder["innerJoinLateral"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   inout() {
     return (new QueryBuilder(this)).inout();
@@ -1515,11 +1515,11 @@ export class QueryInstance {
   insensitive() {
     return (new QueryBuilder(this)).insensitive();
   }
-  insert(...args: Parameters<OverrideQueryBuilder["insert"]>) {
-    return (new QueryBuilder(this)).insert(...args);
+  insert<TArgs extends Parameters<OverrideQueryBuilder["insert"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).insert(...(args as unknown as Parameters<OverrideQueryBuilder["insert"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  insertInto(...args: Parameters<OverrideQueryBuilder["insertInto"]>) {
-    return (new QueryBuilder(this)).insertInto(...args);
+  insertInto<TArgs extends Parameters<OverrideQueryBuilder["insertInto"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).insertInto(...(args as unknown as Parameters<OverrideQueryBuilder["insertInto"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   instance() {
     return (new QueryBuilder(this)).instance();
@@ -1539,11 +1539,11 @@ export class QueryInstance {
   integrity() {
     return (new QueryBuilder(this)).integrity();
   }
-  intersect(...args: Parameters<OverrideQueryBuilder["intersect"]>) {
-    return (new QueryBuilder(this)).intersect(...args);
+  intersect<TArgs extends Parameters<OverrideQueryBuilder["intersect"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).intersect(...(args as unknown as Parameters<OverrideQueryBuilder["intersect"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  intersectAll(...args: Parameters<OverrideQueryBuilder["intersectAll"]>) {
-    return (new QueryBuilder(this)).intersectAll(...args);
+  intersectAll<TArgs extends Parameters<OverrideQueryBuilder["intersectAll"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).intersectAll(...(args as unknown as Parameters<OverrideQueryBuilder["intersectAll"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   intersection() {
     return (new QueryBuilder(this)).intersection();
@@ -1551,26 +1551,26 @@ export class QueryInstance {
   interval() {
     return (new QueryBuilder(this)).interval();
   }
-  into(...args: Parameters<OverrideQueryBuilder["into"]>) {
-    return (new QueryBuilder(this)).into(...args);
+  into<TArgs extends Parameters<OverrideQueryBuilder["into"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).into(...(args as unknown as Parameters<OverrideQueryBuilder["into"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   invoker() {
     return (new QueryBuilder(this)).invoker();
   }
-  is(...args: Parameters<OverrideQueryBuilder["is"]>) {
-    return (new QueryBuilder(this)).is(...args);
+  is<TArgs extends Parameters<OverrideQueryBuilder["is"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).is(...(args as unknown as Parameters<OverrideQueryBuilder["is"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  isclosed(...args: Parameters<OverrideQueryBuilder["isclosed"]>) {
-    return (new QueryBuilder(this)).isclosed(...args);
+  isclosed<TArgs extends Parameters<OverrideQueryBuilder["isclosed"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).isclosed(...(args as unknown as Parameters<OverrideQueryBuilder["isclosed"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  isempty(...args: Parameters<OverrideQueryBuilder["isempty"]>) {
-    return (new QueryBuilder(this)).isempty(...args);
+  isempty<TArgs extends Parameters<OverrideQueryBuilder["isempty"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).isempty(...(args as unknown as Parameters<OverrideQueryBuilder["isempty"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  isfinite(...args: Parameters<OverrideQueryBuilder["isfinite"]>) {
-    return (new QueryBuilder(this)).isfinite(...args);
+  isfinite<TArgs extends Parameters<OverrideQueryBuilder["isfinite"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).isfinite(...(args as unknown as Parameters<OverrideQueryBuilder["isfinite"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  isNot(...args: Parameters<OverrideQueryBuilder["isNot"]>) {
-    return (new QueryBuilder(this)).isNot(...args);
+  isNot<TArgs extends Parameters<OverrideQueryBuilder["isNot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).isNot(...(args as unknown as Parameters<OverrideQueryBuilder["isNot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   isnull() {
     return (new QueryBuilder(this)).isnull();
@@ -1578,215 +1578,215 @@ export class QueryInstance {
   isolation() {
     return (new QueryBuilder(this)).isolation();
   }
-  isopen(...args: Parameters<OverrideQueryBuilder["isopen"]>) {
-    return (new QueryBuilder(this)).isopen(...args);
+  isopen<TArgs extends Parameters<OverrideQueryBuilder["isopen"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).isopen(...(args as unknown as Parameters<OverrideQueryBuilder["isopen"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  isParallel(...args: Parameters<OverrideQueryBuilder["isParallel"]>) {
-    return (new QueryBuilder(this)).isParallel(...args);
+  isParallel<TArgs extends Parameters<OverrideQueryBuilder["isParallel"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).isParallel(...(args as unknown as Parameters<OverrideQueryBuilder["isParallel"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  join(...args: Parameters<OverrideQueryBuilder["join"]>) {
-    return (new QueryBuilder(this)).join(...args);
+  join<TArgs extends Parameters<OverrideQueryBuilder["join"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).join(...(args as unknown as Parameters<OverrideQueryBuilder["join"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   json() {
     return (new QueryBuilder(this)).json();
   }
-  jsonAgg(...args: Parameters<OverrideQueryBuilder["jsonAgg"]>) {
-    return (new QueryBuilder(this)).jsonAgg(...args);
+  jsonAgg<TArgs extends Parameters<OverrideQueryBuilder["jsonAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonAgg(...(args as unknown as Parameters<OverrideQueryBuilder["jsonAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonAggStrict(...args: Parameters<OverrideQueryBuilder["jsonAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonAggStrict(...args);
+  jsonAggStrict<TArgs extends Parameters<OverrideQueryBuilder["jsonAggStrict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonAggStrict(...(args as unknown as Parameters<OverrideQueryBuilder["jsonAggStrict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonArray(...args: Parameters<OverrideQueryBuilder["jsonArray"]>) {
-    return (new QueryBuilder(this)).jsonArray(...args);
+  jsonArray<TArgs extends Parameters<OverrideQueryBuilder["jsonArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonArray(...(args as unknown as Parameters<OverrideQueryBuilder["jsonArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonArrayagg(...args: Parameters<OverrideQueryBuilder["jsonArrayagg"]>) {
-    return (new QueryBuilder(this)).jsonArrayagg(...args);
+  jsonArrayagg<TArgs extends Parameters<OverrideQueryBuilder["jsonArrayagg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonArrayagg(...(args as unknown as Parameters<OverrideQueryBuilder["jsonArrayagg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonArrayElements(...args: Parameters<OverrideQueryBuilder["jsonArrayElements"]>) {
-    return (new QueryBuilder(this)).jsonArrayElements(...args);
+  jsonArrayElements<TArgs extends Parameters<OverrideQueryBuilder["jsonArrayElements"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonArrayElements(...(args as unknown as Parameters<OverrideQueryBuilder["jsonArrayElements"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonArrayElementsText(...args: Parameters<OverrideQueryBuilder["jsonArrayElementsText"]>) {
-    return (new QueryBuilder(this)).jsonArrayElementsText(...args);
+  jsonArrayElementsText<TArgs extends Parameters<OverrideQueryBuilder["jsonArrayElementsText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonArrayElementsText(...(args as unknown as Parameters<OverrideQueryBuilder["jsonArrayElementsText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonArrayLength(...args: Parameters<OverrideQueryBuilder["jsonArrayLength"]>) {
-    return (new QueryBuilder(this)).jsonArrayLength(...args);
+  jsonArrayLength<TArgs extends Parameters<OverrideQueryBuilder["jsonArrayLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonArrayLength(...(args as unknown as Parameters<OverrideQueryBuilder["jsonArrayLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbAgg(...args: Parameters<OverrideQueryBuilder["jsonbAgg"]>) {
-    return (new QueryBuilder(this)).jsonbAgg(...args);
+  jsonbAgg<TArgs extends Parameters<OverrideQueryBuilder["jsonbAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbAgg(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbAggStrict(...args: Parameters<OverrideQueryBuilder["jsonbAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonbAggStrict(...args);
+  jsonbAggStrict<TArgs extends Parameters<OverrideQueryBuilder["jsonbAggStrict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbAggStrict(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbAggStrict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbArrayElements(...args: Parameters<OverrideQueryBuilder["jsonbArrayElements"]>) {
-    return (new QueryBuilder(this)).jsonbArrayElements(...args);
+  jsonbArrayElements<TArgs extends Parameters<OverrideQueryBuilder["jsonbArrayElements"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbArrayElements(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbArrayElements"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbArrayElementsText(...args: Parameters<OverrideQueryBuilder["jsonbArrayElementsText"]>) {
-    return (new QueryBuilder(this)).jsonbArrayElementsText(...args);
+  jsonbArrayElementsText<TArgs extends Parameters<OverrideQueryBuilder["jsonbArrayElementsText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbArrayElementsText(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbArrayElementsText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbArrayLength(...args: Parameters<OverrideQueryBuilder["jsonbArrayLength"]>) {
-    return (new QueryBuilder(this)).jsonbArrayLength(...args);
+  jsonbArrayLength<TArgs extends Parameters<OverrideQueryBuilder["jsonbArrayLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbArrayLength(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbArrayLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbBuildArray(...args: Parameters<OverrideQueryBuilder["jsonbBuildArray"]>) {
-    return (new QueryBuilder(this)).jsonbBuildArray(...args);
+  jsonbBuildArray<TArgs extends Parameters<OverrideQueryBuilder["jsonbBuildArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbBuildArray(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbBuildArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbBuildObject(...args: Parameters<OverrideQueryBuilder["jsonbBuildObject"]>) {
-    return (new QueryBuilder(this)).jsonbBuildObject(...args);
+  jsonbBuildObject<TArgs extends Parameters<OverrideQueryBuilder["jsonbBuildObject"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbBuildObject(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbBuildObject"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbEach(...args: Parameters<OverrideQueryBuilder["jsonbEach"]>) {
-    return (new QueryBuilder(this)).jsonbEach(...args);
+  jsonbEach<TArgs extends Parameters<OverrideQueryBuilder["jsonbEach"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbEach(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbEach"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbEachText(...args: Parameters<OverrideQueryBuilder["jsonbEachText"]>) {
-    return (new QueryBuilder(this)).jsonbEachText(...args);
+  jsonbEachText<TArgs extends Parameters<OverrideQueryBuilder["jsonbEachText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbEachText(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbEachText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbExtractPath(...args: Parameters<OverrideQueryBuilder["jsonbExtractPath"]>) {
-    return (new QueryBuilder(this)).jsonbExtractPath(...args);
+  jsonbExtractPath<TArgs extends Parameters<OverrideQueryBuilder["jsonbExtractPath"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbExtractPath(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbExtractPath"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbExtractPathText(...args: Parameters<OverrideQueryBuilder["jsonbExtractPathText"]>) {
-    return (new QueryBuilder(this)).jsonbExtractPathText(...args);
+  jsonbExtractPathText<TArgs extends Parameters<OverrideQueryBuilder["jsonbExtractPathText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbExtractPathText(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbExtractPathText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbInsert(...args: Parameters<OverrideQueryBuilder["jsonbInsert"]>) {
-    return (new QueryBuilder(this)).jsonbInsert(...args);
+  jsonbInsert<TArgs extends Parameters<OverrideQueryBuilder["jsonbInsert"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbInsert(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbInsert"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbObject(...args: Parameters<OverrideQueryBuilder["jsonbObject"]>) {
-    return (new QueryBuilder(this)).jsonbObject(...args);
+  jsonbObject<TArgs extends Parameters<OverrideQueryBuilder["jsonbObject"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbObject(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbObject"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbObjectAgg(...args: Parameters<OverrideQueryBuilder["jsonbObjectAgg"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAgg(...args);
+  jsonbObjectAgg<TArgs extends Parameters<OverrideQueryBuilder["jsonbObjectAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbObjectAgg(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbObjectAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbObjectAggStrict(...args: Parameters<OverrideQueryBuilder["jsonbObjectAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAggStrict(...args);
+  jsonbObjectAggStrict<TArgs extends Parameters<OverrideQueryBuilder["jsonbObjectAggStrict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbObjectAggStrict(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbObjectAggStrict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbObjectAggUnique(...args: Parameters<OverrideQueryBuilder["jsonbObjectAggUnique"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAggUnique(...args);
+  jsonbObjectAggUnique<TArgs extends Parameters<OverrideQueryBuilder["jsonbObjectAggUnique"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbObjectAggUnique(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbObjectAggUnique"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbObjectAggUniqueStrict(...args: Parameters<OverrideQueryBuilder["jsonbObjectAggUniqueStrict"]>) {
-    return (new QueryBuilder(this)).jsonbObjectAggUniqueStrict(...args);
+  jsonbObjectAggUniqueStrict<TArgs extends Parameters<OverrideQueryBuilder["jsonbObjectAggUniqueStrict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbObjectAggUniqueStrict(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbObjectAggUniqueStrict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbObjectKeys(...args: Parameters<OverrideQueryBuilder["jsonbObjectKeys"]>) {
-    return (new QueryBuilder(this)).jsonbObjectKeys(...args);
+  jsonbObjectKeys<TArgs extends Parameters<OverrideQueryBuilder["jsonbObjectKeys"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbObjectKeys(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbObjectKeys"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathExists(...args: Parameters<OverrideQueryBuilder["jsonbPathExists"]>) {
-    return (new QueryBuilder(this)).jsonbPathExists(...args);
+  jsonbPathExists<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathExists"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathExists(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathExists"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathExistsTz(...args: Parameters<OverrideQueryBuilder["jsonbPathExistsTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathExistsTz(...args);
+  jsonbPathExistsTz<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathExistsTz"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathExistsTz(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathExistsTz"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathMatch(...args: Parameters<OverrideQueryBuilder["jsonbPathMatch"]>) {
-    return (new QueryBuilder(this)).jsonbPathMatch(...args);
+  jsonbPathMatch<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathMatch"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathMatch(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathMatch"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathMatchTz(...args: Parameters<OverrideQueryBuilder["jsonbPathMatchTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathMatchTz(...args);
+  jsonbPathMatchTz<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathMatchTz"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathMatchTz(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathMatchTz"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathQuery(...args: Parameters<OverrideQueryBuilder["jsonbPathQuery"]>) {
-    return (new QueryBuilder(this)).jsonbPathQuery(...args);
+  jsonbPathQuery<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathQuery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathQuery(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathQuery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathQueryArray(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryArray"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryArray(...args);
+  jsonbPathQueryArray<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathQueryArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathQueryArray(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathQueryArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathQueryArrayTz(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryArrayTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryArrayTz(...args);
+  jsonbPathQueryArrayTz<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathQueryArrayTz"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathQueryArrayTz(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathQueryArrayTz"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathQueryFirst(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryFirst"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryFirst(...args);
+  jsonbPathQueryFirst<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathQueryFirst"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathQueryFirst(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathQueryFirst"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathQueryFirstTz(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryFirstTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryFirstTz(...args);
+  jsonbPathQueryFirstTz<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathQueryFirstTz"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathQueryFirstTz(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathQueryFirstTz"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPathQueryTz(...args: Parameters<OverrideQueryBuilder["jsonbPathQueryTz"]>) {
-    return (new QueryBuilder(this)).jsonbPathQueryTz(...args);
+  jsonbPathQueryTz<TArgs extends Parameters<OverrideQueryBuilder["jsonbPathQueryTz"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPathQueryTz(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPathQueryTz"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPopulateRecord(...args: Parameters<OverrideQueryBuilder["jsonbPopulateRecord"]>) {
-    return (new QueryBuilder(this)).jsonbPopulateRecord(...args);
+  jsonbPopulateRecord<TArgs extends Parameters<OverrideQueryBuilder["jsonbPopulateRecord"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPopulateRecord(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPopulateRecord"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPopulateRecordset(...args: Parameters<OverrideQueryBuilder["jsonbPopulateRecordset"]>) {
-    return (new QueryBuilder(this)).jsonbPopulateRecordset(...args);
+  jsonbPopulateRecordset<TArgs extends Parameters<OverrideQueryBuilder["jsonbPopulateRecordset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPopulateRecordset(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPopulateRecordset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPopulateRecordValid(...args: Parameters<OverrideQueryBuilder["jsonbPopulateRecordValid"]>) {
-    return (new QueryBuilder(this)).jsonbPopulateRecordValid(...args);
+  jsonbPopulateRecordValid<TArgs extends Parameters<OverrideQueryBuilder["jsonbPopulateRecordValid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPopulateRecordValid(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPopulateRecordValid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbPretty(...args: Parameters<OverrideQueryBuilder["jsonbPretty"]>) {
-    return (new QueryBuilder(this)).jsonbPretty(...args);
+  jsonbPretty<TArgs extends Parameters<OverrideQueryBuilder["jsonbPretty"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbPretty(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbPretty"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbSet(...args: Parameters<OverrideQueryBuilder["jsonbSet"]>) {
-    return (new QueryBuilder(this)).jsonbSet(...args);
+  jsonbSet<TArgs extends Parameters<OverrideQueryBuilder["jsonbSet"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbSet(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbSet"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbSetLax(...args: Parameters<OverrideQueryBuilder["jsonbSetLax"]>) {
-    return (new QueryBuilder(this)).jsonbSetLax(...args);
+  jsonbSetLax<TArgs extends Parameters<OverrideQueryBuilder["jsonbSetLax"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbSetLax(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbSetLax"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbStripNulls(...args: Parameters<OverrideQueryBuilder["jsonbStripNulls"]>) {
-    return (new QueryBuilder(this)).jsonbStripNulls(...args);
+  jsonbStripNulls<TArgs extends Parameters<OverrideQueryBuilder["jsonbStripNulls"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbStripNulls(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbStripNulls"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbToRecord(...args: Parameters<OverrideQueryBuilder["jsonbToRecord"]>) {
-    return (new QueryBuilder(this)).jsonbToRecord(...args);
+  jsonbToRecord<TArgs extends Parameters<OverrideQueryBuilder["jsonbToRecord"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbToRecord(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbToRecord"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbToRecordset(...args: Parameters<OverrideQueryBuilder["jsonbToRecordset"]>) {
-    return (new QueryBuilder(this)).jsonbToRecordset(...args);
+  jsonbToRecordset<TArgs extends Parameters<OverrideQueryBuilder["jsonbToRecordset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbToRecordset(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbToRecordset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbToTsvector(...args: Parameters<OverrideQueryBuilder["jsonbToTsvector"]>) {
-    return (new QueryBuilder(this)).jsonbToTsvector(...args);
+  jsonbToTsvector<TArgs extends Parameters<OverrideQueryBuilder["jsonbToTsvector"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbToTsvector(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbToTsvector"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonbTypeof(...args: Parameters<OverrideQueryBuilder["jsonbTypeof"]>) {
-    return (new QueryBuilder(this)).jsonbTypeof(...args);
+  jsonbTypeof<TArgs extends Parameters<OverrideQueryBuilder["jsonbTypeof"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonbTypeof(...(args as unknown as Parameters<OverrideQueryBuilder["jsonbTypeof"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonBuildArray(...args: Parameters<OverrideQueryBuilder["jsonBuildArray"]>) {
-    return (new QueryBuilder(this)).jsonBuildArray(...args);
+  jsonBuildArray<TArgs extends Parameters<OverrideQueryBuilder["jsonBuildArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonBuildArray(...(args as unknown as Parameters<OverrideQueryBuilder["jsonBuildArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonBuildObject(...args: Parameters<OverrideQueryBuilder["jsonBuildObject"]>) {
-    return (new QueryBuilder(this)).jsonBuildObject(...args);
+  jsonBuildObject<TArgs extends Parameters<OverrideQueryBuilder["jsonBuildObject"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonBuildObject(...(args as unknown as Parameters<OverrideQueryBuilder["jsonBuildObject"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonEach(...args: Parameters<OverrideQueryBuilder["jsonEach"]>) {
-    return (new QueryBuilder(this)).jsonEach(...args);
+  jsonEach<TArgs extends Parameters<OverrideQueryBuilder["jsonEach"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonEach(...(args as unknown as Parameters<OverrideQueryBuilder["jsonEach"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonEachText(...args: Parameters<OverrideQueryBuilder["jsonEachText"]>) {
-    return (new QueryBuilder(this)).jsonEachText(...args);
+  jsonEachText<TArgs extends Parameters<OverrideQueryBuilder["jsonEachText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonEachText(...(args as unknown as Parameters<OverrideQueryBuilder["jsonEachText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonExists(...args: Parameters<OverrideQueryBuilder["jsonExists"]>) {
-    return (new QueryBuilder(this)).jsonExists(...args);
+  jsonExists<TArgs extends Parameters<OverrideQueryBuilder["jsonExists"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonExists(...(args as unknown as Parameters<OverrideQueryBuilder["jsonExists"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonExtractPath(...args: Parameters<OverrideQueryBuilder["jsonExtractPath"]>) {
-    return (new QueryBuilder(this)).jsonExtractPath(...args);
+  jsonExtractPath<TArgs extends Parameters<OverrideQueryBuilder["jsonExtractPath"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonExtractPath(...(args as unknown as Parameters<OverrideQueryBuilder["jsonExtractPath"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonExtractPathText(...args: Parameters<OverrideQueryBuilder["jsonExtractPathText"]>) {
-    return (new QueryBuilder(this)).jsonExtractPathText(...args);
+  jsonExtractPathText<TArgs extends Parameters<OverrideQueryBuilder["jsonExtractPathText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonExtractPathText(...(args as unknown as Parameters<OverrideQueryBuilder["jsonExtractPathText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObject(...args: Parameters<OverrideQueryBuilder["jsonObject"]>) {
-    return (new QueryBuilder(this)).jsonObject(...args);
+  jsonObject<TArgs extends Parameters<OverrideQueryBuilder["jsonObject"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObject(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObject"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObjectagg(...args: Parameters<OverrideQueryBuilder["jsonObjectagg"]>) {
-    return (new QueryBuilder(this)).jsonObjectagg(...args);
+  jsonObjectagg<TArgs extends Parameters<OverrideQueryBuilder["jsonObjectagg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObjectagg(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObjectagg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObjectAgg(...args: Parameters<OverrideQueryBuilder["jsonObjectAgg"]>) {
-    return (new QueryBuilder(this)).jsonObjectAgg(...args);
+  jsonObjectAgg<TArgs extends Parameters<OverrideQueryBuilder["jsonObjectAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObjectAgg(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObjectAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObjectAggStrict(...args: Parameters<OverrideQueryBuilder["jsonObjectAggStrict"]>) {
-    return (new QueryBuilder(this)).jsonObjectAggStrict(...args);
+  jsonObjectAggStrict<TArgs extends Parameters<OverrideQueryBuilder["jsonObjectAggStrict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObjectAggStrict(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObjectAggStrict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObjectAggUnique(...args: Parameters<OverrideQueryBuilder["jsonObjectAggUnique"]>) {
-    return (new QueryBuilder(this)).jsonObjectAggUnique(...args);
+  jsonObjectAggUnique<TArgs extends Parameters<OverrideQueryBuilder["jsonObjectAggUnique"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObjectAggUnique(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObjectAggUnique"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObjectAggUniqueStrict(...args: Parameters<OverrideQueryBuilder["jsonObjectAggUniqueStrict"]>) {
-    return (new QueryBuilder(this)).jsonObjectAggUniqueStrict(...args);
+  jsonObjectAggUniqueStrict<TArgs extends Parameters<OverrideQueryBuilder["jsonObjectAggUniqueStrict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObjectAggUniqueStrict(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObjectAggUniqueStrict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonObjectKeys(...args: Parameters<OverrideQueryBuilder["jsonObjectKeys"]>) {
-    return (new QueryBuilder(this)).jsonObjectKeys(...args);
+  jsonObjectKeys<TArgs extends Parameters<OverrideQueryBuilder["jsonObjectKeys"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonObjectKeys(...(args as unknown as Parameters<OverrideQueryBuilder["jsonObjectKeys"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonPopulateRecord(...args: Parameters<OverrideQueryBuilder["jsonPopulateRecord"]>) {
-    return (new QueryBuilder(this)).jsonPopulateRecord(...args);
+  jsonPopulateRecord<TArgs extends Parameters<OverrideQueryBuilder["jsonPopulateRecord"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonPopulateRecord(...(args as unknown as Parameters<OverrideQueryBuilder["jsonPopulateRecord"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonPopulateRecordset(...args: Parameters<OverrideQueryBuilder["jsonPopulateRecordset"]>) {
-    return (new QueryBuilder(this)).jsonPopulateRecordset(...args);
+  jsonPopulateRecordset<TArgs extends Parameters<OverrideQueryBuilder["jsonPopulateRecordset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonPopulateRecordset(...(args as unknown as Parameters<OverrideQueryBuilder["jsonPopulateRecordset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonQuery(...args: Parameters<OverrideQueryBuilder["jsonQuery"]>) {
-    return (new QueryBuilder(this)).jsonQuery(...args);
+  jsonQuery<TArgs extends Parameters<OverrideQueryBuilder["jsonQuery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonQuery(...(args as unknown as Parameters<OverrideQueryBuilder["jsonQuery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonScalar(...args: Parameters<OverrideQueryBuilder["jsonScalar"]>) {
-    return (new QueryBuilder(this)).jsonScalar(...args);
+  jsonScalar<TArgs extends Parameters<OverrideQueryBuilder["jsonScalar"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonScalar(...(args as unknown as Parameters<OverrideQueryBuilder["jsonScalar"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonSerialize(...args: Parameters<OverrideQueryBuilder["jsonSerialize"]>) {
-    return (new QueryBuilder(this)).jsonSerialize(...args);
+  jsonSerialize<TArgs extends Parameters<OverrideQueryBuilder["jsonSerialize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonSerialize(...(args as unknown as Parameters<OverrideQueryBuilder["jsonSerialize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonStripNulls(...args: Parameters<OverrideQueryBuilder["jsonStripNulls"]>) {
-    return (new QueryBuilder(this)).jsonStripNulls(...args);
+  jsonStripNulls<TArgs extends Parameters<OverrideQueryBuilder["jsonStripNulls"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonStripNulls(...(args as unknown as Parameters<OverrideQueryBuilder["jsonStripNulls"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   jsonTable() {
     return (new QueryBuilder(this)).jsonTable();
@@ -1794,29 +1794,29 @@ export class QueryInstance {
   jsonTablePrimitive() {
     return (new QueryBuilder(this)).jsonTablePrimitive();
   }
-  jsonToRecord(...args: Parameters<OverrideQueryBuilder["jsonToRecord"]>) {
-    return (new QueryBuilder(this)).jsonToRecord(...args);
+  jsonToRecord<TArgs extends Parameters<OverrideQueryBuilder["jsonToRecord"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonToRecord(...(args as unknown as Parameters<OverrideQueryBuilder["jsonToRecord"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonToRecordset(...args: Parameters<OverrideQueryBuilder["jsonToRecordset"]>) {
-    return (new QueryBuilder(this)).jsonToRecordset(...args);
+  jsonToRecordset<TArgs extends Parameters<OverrideQueryBuilder["jsonToRecordset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonToRecordset(...(args as unknown as Parameters<OverrideQueryBuilder["jsonToRecordset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonToTsvector(...args: Parameters<OverrideQueryBuilder["jsonToTsvector"]>) {
-    return (new QueryBuilder(this)).jsonToTsvector(...args);
+  jsonToTsvector<TArgs extends Parameters<OverrideQueryBuilder["jsonToTsvector"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonToTsvector(...(args as unknown as Parameters<OverrideQueryBuilder["jsonToTsvector"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonTypeof(...args: Parameters<OverrideQueryBuilder["jsonTypeof"]>) {
-    return (new QueryBuilder(this)).jsonTypeof(...args);
+  jsonTypeof<TArgs extends Parameters<OverrideQueryBuilder["jsonTypeof"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonTypeof(...(args as unknown as Parameters<OverrideQueryBuilder["jsonTypeof"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  jsonValue(...args: Parameters<OverrideQueryBuilder["jsonValue"]>) {
-    return (new QueryBuilder(this)).jsonValue(...args);
+  jsonValue<TArgs extends Parameters<OverrideQueryBuilder["jsonValue"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).jsonValue(...(args as unknown as Parameters<OverrideQueryBuilder["jsonValue"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  justifyDays(...args: Parameters<OverrideQueryBuilder["justifyDays"]>) {
-    return (new QueryBuilder(this)).justifyDays(...args);
+  justifyDays<TArgs extends Parameters<OverrideQueryBuilder["justifyDays"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).justifyDays(...(args as unknown as Parameters<OverrideQueryBuilder["justifyDays"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  justifyHours(...args: Parameters<OverrideQueryBuilder["justifyHours"]>) {
-    return (new QueryBuilder(this)).justifyHours(...args);
+  justifyHours<TArgs extends Parameters<OverrideQueryBuilder["justifyHours"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).justifyHours(...(args as unknown as Parameters<OverrideQueryBuilder["justifyHours"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  justifyInterval(...args: Parameters<OverrideQueryBuilder["justifyInterval"]>) {
-    return (new QueryBuilder(this)).justifyInterval(...args);
+  justifyInterval<TArgs extends Parameters<OverrideQueryBuilder["justifyInterval"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).justifyInterval(...(args as unknown as Parameters<OverrideQueryBuilder["justifyInterval"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   k() {
     return (new QueryBuilder(this)).k();
@@ -1842,8 +1842,8 @@ export class QueryInstance {
   label() {
     return (new QueryBuilder(this)).label();
   }
-  lag(...args: Parameters<OverrideQueryBuilder["lag"]>) {
-    return (new QueryBuilder(this)).lag(...args);
+  lag<TArgs extends Parameters<OverrideQueryBuilder["lag"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lag(...(args as unknown as Parameters<OverrideQueryBuilder["lag"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   language() {
     return (new QueryBuilder(this)).language();
@@ -1854,20 +1854,20 @@ export class QueryInstance {
   last() {
     return (new QueryBuilder(this)).last();
   }
-  lastval(...args: Parameters<OverrideQueryBuilder["lastval"]>) {
-    return (new QueryBuilder(this)).lastval(...args);
+  lastval<TArgs extends Parameters<OverrideQueryBuilder["lastval"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lastval(...(args as unknown as Parameters<OverrideQueryBuilder["lastval"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lastValue(...args: Parameters<OverrideQueryBuilder["lastValue"]>) {
-    return (new QueryBuilder(this)).lastValue(...args);
+  lastValue<TArgs extends Parameters<OverrideQueryBuilder["lastValue"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lastValue(...(args as unknown as Parameters<OverrideQueryBuilder["lastValue"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   lateral() {
     return (new QueryBuilder(this)).lateral();
   }
-  lcm(...args: Parameters<OverrideQueryBuilder["lcm"]>) {
-    return (new QueryBuilder(this)).lcm(...args);
+  lcm<TArgs extends Parameters<OverrideQueryBuilder["lcm"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lcm(...(args as unknown as Parameters<OverrideQueryBuilder["lcm"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lead(...args: Parameters<OverrideQueryBuilder["lead"]>) {
-    return (new QueryBuilder(this)).lead(...args);
+  lead<TArgs extends Parameters<OverrideQueryBuilder["lead"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lead(...(args as unknown as Parameters<OverrideQueryBuilder["lead"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   leading() {
     return (new QueryBuilder(this)).leading();
@@ -1875,41 +1875,41 @@ export class QueryInstance {
   leakproof() {
     return (new QueryBuilder(this)).leakproof();
   }
-  least(...args: Parameters<OverrideQueryBuilder["least"]>) {
-    return (new QueryBuilder(this)).least(...args);
+  least<TArgs extends Parameters<OverrideQueryBuilder["least"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).least(...(args as unknown as Parameters<OverrideQueryBuilder["least"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  left(...args: Parameters<OverrideQueryBuilder["left"]>) {
-    return (new QueryBuilder(this)).left(...args);
+  left<TArgs extends Parameters<OverrideQueryBuilder["left"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).left(...(args as unknown as Parameters<OverrideQueryBuilder["left"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  leftJoin(...args: Parameters<OverrideQueryBuilder["leftJoin"]>) {
-    return (new QueryBuilder(this)).leftJoin(...args);
+  leftJoin<TArgs extends Parameters<OverrideQueryBuilder["leftJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).leftJoin(...(args as unknown as Parameters<OverrideQueryBuilder["leftJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  leftJoinLateral(...args: Parameters<OverrideQueryBuilder["leftJoinLateral"]>) {
-    return (new QueryBuilder(this)).leftJoinLateral(...args);
+  leftJoinLateral<TArgs extends Parameters<OverrideQueryBuilder["leftJoinLateral"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).leftJoinLateral(...(args as unknown as Parameters<OverrideQueryBuilder["leftJoinLateral"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  length(...args: Parameters<OverrideQueryBuilder["length"]>) {
-    return (new QueryBuilder(this)).length(...args);
+  length<TArgs extends Parameters<OverrideQueryBuilder["length"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).length(...(args as unknown as Parameters<OverrideQueryBuilder["length"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   level() {
     return (new QueryBuilder(this)).level();
   }
-  lgamma(...args: Parameters<OverrideQueryBuilder["lgamma"]>) {
-    return (new QueryBuilder(this)).lgamma(...args);
+  lgamma<TArgs extends Parameters<OverrideQueryBuilder["lgamma"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lgamma(...(args as unknown as Parameters<OverrideQueryBuilder["lgamma"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   library() {
     return (new QueryBuilder(this)).library();
   }
-  like(...args: Parameters<OverrideQueryBuilder["like"]>) {
-    return (new QueryBuilder(this)).like(...args);
+  like<TArgs extends Parameters<OverrideQueryBuilder["like"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).like(...(args as unknown as Parameters<OverrideQueryBuilder["like"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   likeRegex() {
     return (new QueryBuilder(this)).likeRegex();
   }
-  limit(...args: Parameters<OverrideQueryBuilder["limit"]>) {
-    return (new QueryBuilder(this)).limit(...args);
+  limit<TArgs extends Parameters<OverrideQueryBuilder["limit"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).limit(...(args as unknown as Parameters<OverrideQueryBuilder["limit"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  line(...args: Parameters<OverrideQueryBuilder["line"]>) {
-    return (new QueryBuilder(this)).line(...args);
+  line<TArgs extends Parameters<OverrideQueryBuilder["line"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).line(...(args as unknown as Parameters<OverrideQueryBuilder["line"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   link() {
     return (new QueryBuilder(this)).link();
@@ -1926,8 +1926,8 @@ export class QueryInstance {
   literalArray(...args: Parameters<BaseRawQueryBuilder["literalArray"]>) {
     return (new QueryBuilder(this)).literalArray(...args);
   }
-  ln(...args: Parameters<OverrideQueryBuilder["ln"]>) {
-    return (new QueryBuilder(this)).ln(...args);
+  ln<TArgs extends Parameters<OverrideQueryBuilder["ln"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ln(...(args as unknown as Parameters<OverrideQueryBuilder["ln"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   load() {
     return (new QueryBuilder(this)).load();
@@ -1935,11 +1935,11 @@ export class QueryInstance {
   local() {
     return (new QueryBuilder(this)).local();
   }
-  localtime(...args: Parameters<OverrideQueryBuilder["localtime"]>) {
-    return (new QueryBuilder(this)).localtime(...args);
+  localtime<TArgs extends Parameters<OverrideQueryBuilder["localtime"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).localtime(...(args as unknown as Parameters<OverrideQueryBuilder["localtime"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  localtimestamp(...args: Parameters<OverrideQueryBuilder["localtimestamp"]>) {
-    return (new QueryBuilder(this)).localtimestamp(...args);
+  localtimestamp<TArgs extends Parameters<OverrideQueryBuilder["localtimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).localtimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["localtimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   location() {
     return (new QueryBuilder(this)).location();
@@ -1953,62 +1953,62 @@ export class QueryInstance {
   locked() {
     return (new QueryBuilder(this)).locked();
   }
-  log(...args: Parameters<OverrideQueryBuilder["log"]>) {
-    return (new QueryBuilder(this)).log(...args);
+  log<TArgs extends Parameters<OverrideQueryBuilder["log"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).log(...(args as unknown as Parameters<OverrideQueryBuilder["log"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  log10(...args: Parameters<OverrideQueryBuilder["log10"]>) {
-    return (new QueryBuilder(this)).log10(...args);
+  log10<TArgs extends Parameters<OverrideQueryBuilder["log10"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).log10(...(args as unknown as Parameters<OverrideQueryBuilder["log10"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   logged() {
     return (new QueryBuilder(this)).logged();
   }
-  lower(...args: Parameters<OverrideQueryBuilder["lower"]>) {
-    return (new QueryBuilder(this)).lower(...args);
+  lower<TArgs extends Parameters<OverrideQueryBuilder["lower"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lower(...(args as unknown as Parameters<OverrideQueryBuilder["lower"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lowerInc(...args: Parameters<OverrideQueryBuilder["lowerInc"]>) {
-    return (new QueryBuilder(this)).lowerInc(...args);
+  lowerInc<TArgs extends Parameters<OverrideQueryBuilder["lowerInc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lowerInc(...(args as unknown as Parameters<OverrideQueryBuilder["lowerInc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lowerInf(...args: Parameters<OverrideQueryBuilder["lowerInf"]>) {
-    return (new QueryBuilder(this)).lowerInf(...args);
+  lowerInf<TArgs extends Parameters<OverrideQueryBuilder["lowerInf"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lowerInf(...(args as unknown as Parameters<OverrideQueryBuilder["lowerInf"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lpad(...args: Parameters<OverrideQueryBuilder["lpad"]>) {
-    return (new QueryBuilder(this)).lpad(...args);
+  lpad<TArgs extends Parameters<OverrideQueryBuilder["lpad"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lpad(...(args as unknown as Parameters<OverrideQueryBuilder["lpad"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lseg(...args: Parameters<OverrideQueryBuilder["lseg"]>) {
-    return (new QueryBuilder(this)).lseg(...args);
+  lseg<TArgs extends Parameters<OverrideQueryBuilder["lseg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lseg(...(args as unknown as Parameters<OverrideQueryBuilder["lseg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lt(...args: Parameters<OverrideQueryBuilder["lt"]>) {
-    return (new QueryBuilder(this)).lt(...args);
+  lt<TArgs extends Parameters<OverrideQueryBuilder["lt"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lt(...(args as unknown as Parameters<OverrideQueryBuilder["lt"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  lte(...args: Parameters<OverrideQueryBuilder["lte"]>) {
-    return (new QueryBuilder(this)).lte(...args);
+  lte<TArgs extends Parameters<OverrideQueryBuilder["lte"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).lte(...(args as unknown as Parameters<OverrideQueryBuilder["lte"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  ltrim(...args: Parameters<OverrideQueryBuilder["ltrim"]>) {
-    return (new QueryBuilder(this)).ltrim(...args);
+  ltrim<TArgs extends Parameters<OverrideQueryBuilder["ltrim"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ltrim(...(args as unknown as Parameters<OverrideQueryBuilder["ltrim"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   m() {
     return (new QueryBuilder(this)).m();
   }
-  macaddr8Set7bit(...args: Parameters<OverrideQueryBuilder["macaddr8Set7bit"]>) {
-    return (new QueryBuilder(this)).macaddr8Set7bit(...args);
+  macaddr8Set7bit<TArgs extends Parameters<OverrideQueryBuilder["macaddr8Set7bit"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).macaddr8Set7bit(...(args as unknown as Parameters<OverrideQueryBuilder["macaddr8Set7bit"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  makeaclitem(...args: Parameters<OverrideQueryBuilder["makeaclitem"]>) {
-    return (new QueryBuilder(this)).makeaclitem(...args);
+  makeaclitem<TArgs extends Parameters<OverrideQueryBuilder["makeaclitem"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).makeaclitem(...(args as unknown as Parameters<OverrideQueryBuilder["makeaclitem"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  makeDate(...args: Parameters<OverrideQueryBuilder["makeDate"]>) {
-    return (new QueryBuilder(this)).makeDate(...args);
+  makeDate<TArgs extends Parameters<OverrideQueryBuilder["makeDate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).makeDate(...(args as unknown as Parameters<OverrideQueryBuilder["makeDate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  makeInterval(...args: Parameters<OverrideQueryBuilder["makeInterval"]>) {
-    return (new QueryBuilder(this)).makeInterval(...args);
+  makeInterval<TArgs extends Parameters<OverrideQueryBuilder["makeInterval"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).makeInterval(...(args as unknown as Parameters<OverrideQueryBuilder["makeInterval"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  makeTime(...args: Parameters<OverrideQueryBuilder["makeTime"]>) {
-    return (new QueryBuilder(this)).makeTime(...args);
+  makeTime<TArgs extends Parameters<OverrideQueryBuilder["makeTime"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).makeTime(...(args as unknown as Parameters<OverrideQueryBuilder["makeTime"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  makeTimestamp(...args: Parameters<OverrideQueryBuilder["makeTimestamp"]>) {
-    return (new QueryBuilder(this)).makeTimestamp(...args);
+  makeTimestamp<TArgs extends Parameters<OverrideQueryBuilder["makeTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).makeTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["makeTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  makeTimestamptz(...args: Parameters<OverrideQueryBuilder["makeTimestamptz"]>) {
-    return (new QueryBuilder(this)).makeTimestamptz(...args);
+  makeTimestamptz<TArgs extends Parameters<OverrideQueryBuilder["makeTimestamptz"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).makeTimestamptz(...(args as unknown as Parameters<OverrideQueryBuilder["makeTimestamptz"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   map() {
     return (new QueryBuilder(this)).map();
@@ -2016,8 +2016,8 @@ export class QueryInstance {
   mapping() {
     return (new QueryBuilder(this)).mapping();
   }
-  masklen(...args: Parameters<OverrideQueryBuilder["masklen"]>) {
-    return (new QueryBuilder(this)).masklen(...args);
+  masklen<TArgs extends Parameters<OverrideQueryBuilder["masklen"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).masklen(...(args as unknown as Parameters<OverrideQueryBuilder["masklen"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   match() {
     return (new QueryBuilder(this)).match();
@@ -2034,23 +2034,23 @@ export class QueryInstance {
   matchRecognize() {
     return (new QueryBuilder(this)).matchRecognize();
   }
-  matchRegex(...args: Parameters<OverrideQueryBuilder["matchRegex"]>) {
-    return (new QueryBuilder(this)).matchRegex(...args);
+  matchRegex<TArgs extends Parameters<OverrideQueryBuilder["matchRegex"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).matchRegex(...(args as unknown as Parameters<OverrideQueryBuilder["matchRegex"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  matchRegexInsensitive(...args: Parameters<OverrideQueryBuilder["matchRegexInsensitive"]>) {
-    return (new QueryBuilder(this)).matchRegexInsensitive(...args);
+  matchRegexInsensitive<TArgs extends Parameters<OverrideQueryBuilder["matchRegexInsensitive"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).matchRegexInsensitive(...(args as unknown as Parameters<OverrideQueryBuilder["matchRegexInsensitive"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   materialized() {
     return (new QueryBuilder(this)).materialized();
   }
-  max(...args: Parameters<OverrideQueryBuilder["max"]>) {
-    return (new QueryBuilder(this)).max(...args);
+  max<TArgs extends Parameters<OverrideQueryBuilder["max"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).max(...(args as unknown as Parameters<OverrideQueryBuilder["max"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   maxvalue() {
     return (new QueryBuilder(this)).maxvalue();
   }
-  md5(...args: Parameters<OverrideQueryBuilder["md5"]>) {
-    return (new QueryBuilder(this)).md5(...args);
+  md5<TArgs extends Parameters<OverrideQueryBuilder["md5"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).md5(...(args as unknown as Parameters<OverrideQueryBuilder["md5"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   measures() {
     return (new QueryBuilder(this)).measures();
@@ -2061,8 +2061,8 @@ export class QueryInstance {
   merge() {
     return (new QueryBuilder(this)).merge();
   }
-  mergeAction(...args: Parameters<OverrideQueryBuilder["mergeAction"]>) {
-    return (new QueryBuilder(this)).mergeAction(...args);
+  mergeAction<TArgs extends Parameters<OverrideQueryBuilder["mergeAction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).mergeAction(...(args as unknown as Parameters<OverrideQueryBuilder["mergeAction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   messageLength() {
     return (new QueryBuilder(this)).messageLength();
@@ -2076,17 +2076,17 @@ export class QueryInstance {
   method() {
     return (new QueryBuilder(this)).method();
   }
-  middle(...args: Parameters<OverrideQueryBuilder["middle"]>) {
-    return (new QueryBuilder(this)).middle(...args);
+  middle<TArgs extends Parameters<OverrideQueryBuilder["middle"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).middle(...(args as unknown as Parameters<OverrideQueryBuilder["middle"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  min(...args: Parameters<OverrideQueryBuilder["min"]>) {
-    return (new QueryBuilder(this)).min(...args);
+  min<TArgs extends Parameters<OverrideQueryBuilder["min"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).min(...(args as unknown as Parameters<OverrideQueryBuilder["min"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  minScale(...args: Parameters<OverrideQueryBuilder["minScale"]>) {
-    return (new QueryBuilder(this)).minScale(...args);
+  minScale<TArgs extends Parameters<OverrideQueryBuilder["minScale"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).minScale(...(args as unknown as Parameters<OverrideQueryBuilder["minScale"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  minus(...args: Parameters<OverrideQueryBuilder["minus"]>) {
-    return (new QueryBuilder(this)).minus(...args);
+  minus<TArgs extends Parameters<OverrideQueryBuilder["minus"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).minus(...(args as unknown as Parameters<OverrideQueryBuilder["minus"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   minute() {
     return (new QueryBuilder(this)).minute();
@@ -2094,11 +2094,11 @@ export class QueryInstance {
   minvalue() {
     return (new QueryBuilder(this)).minvalue();
   }
-  mod(...args: Parameters<OverrideQueryBuilder["mod"]>) {
-    return (new QueryBuilder(this)).mod(...args);
+  mod<TArgs extends Parameters<OverrideQueryBuilder["mod"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).mod(...(args as unknown as Parameters<OverrideQueryBuilder["mod"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  mode(...args: Parameters<OverrideQueryBuilder["mode"]>) {
-    return (new QueryBuilder(this)).mode(...args);
+  mode<TArgs extends Parameters<OverrideQueryBuilder["mode"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).mode(...(args as unknown as Parameters<OverrideQueryBuilder["mode"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   modifies() {
     return (new QueryBuilder(this)).modifies();
@@ -2106,8 +2106,8 @@ export class QueryInstance {
   module() {
     return (new QueryBuilder(this)).module();
   }
-  modulo(...args: Parameters<OverrideQueryBuilder["modulo"]>) {
-    return (new QueryBuilder(this)).modulo(...args);
+  modulo<TArgs extends Parameters<OverrideQueryBuilder["modulo"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).modulo(...(args as unknown as Parameters<OverrideQueryBuilder["modulo"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   month() {
     return (new QueryBuilder(this)).month();
@@ -2118,11 +2118,11 @@ export class QueryInstance {
   move() {
     return (new QueryBuilder(this)).move();
   }
-  multiply(...args: Parameters<OverrideQueryBuilder["multiply"]>) {
-    return (new QueryBuilder(this)).multiply(...args);
+  multiply<TArgs extends Parameters<OverrideQueryBuilder["multiply"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).multiply(...(args as unknown as Parameters<OverrideQueryBuilder["multiply"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  multirange(...args: Parameters<OverrideQueryBuilder["multirange"]>) {
-    return (new QueryBuilder(this)).multirange(...args);
+  multirange<TArgs extends Parameters<OverrideQueryBuilder["multirange"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).multirange(...(args as unknown as Parameters<OverrideQueryBuilder["multirange"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   multiset() {
     return (new QueryBuilder(this)).multiset();
@@ -2130,8 +2130,8 @@ export class QueryInstance {
   mumps() {
     return (new QueryBuilder(this)).mumps();
   }
-  mxidAge(...args: Parameters<OverrideQueryBuilder["mxidAge"]>) {
-    return (new QueryBuilder(this)).mxidAge(...args);
+  mxidAge<TArgs extends Parameters<OverrideQueryBuilder["mxidAge"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).mxidAge(...(args as unknown as Parameters<OverrideQueryBuilder["mxidAge"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   name() {
     return (new QueryBuilder(this)).name();
@@ -2148,23 +2148,23 @@ export class QueryInstance {
   natural() {
     return (new QueryBuilder(this)).natural();
   }
-  naturalCrossJoin(...args: Parameters<OverrideQueryBuilder["naturalCrossJoin"]>) {
-    return (new QueryBuilder(this)).naturalCrossJoin(...args);
+  naturalCrossJoin<TArgs extends Parameters<OverrideQueryBuilder["naturalCrossJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).naturalCrossJoin(...(args as unknown as Parameters<OverrideQueryBuilder["naturalCrossJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  naturalFullJoin(...args: Parameters<OverrideQueryBuilder["naturalFullJoin"]>) {
-    return (new QueryBuilder(this)).naturalFullJoin(...args);
+  naturalFullJoin<TArgs extends Parameters<OverrideQueryBuilder["naturalFullJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).naturalFullJoin(...(args as unknown as Parameters<OverrideQueryBuilder["naturalFullJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  naturalInnerJoin(...args: Parameters<OverrideQueryBuilder["naturalInnerJoin"]>) {
-    return (new QueryBuilder(this)).naturalInnerJoin(...args);
+  naturalInnerJoin<TArgs extends Parameters<OverrideQueryBuilder["naturalInnerJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).naturalInnerJoin(...(args as unknown as Parameters<OverrideQueryBuilder["naturalInnerJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  naturalJoin(...args: Parameters<OverrideQueryBuilder["naturalJoin"]>) {
-    return (new QueryBuilder(this)).naturalJoin(...args);
+  naturalJoin<TArgs extends Parameters<OverrideQueryBuilder["naturalJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).naturalJoin(...(args as unknown as Parameters<OverrideQueryBuilder["naturalJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  naturalLeftJoin(...args: Parameters<OverrideQueryBuilder["naturalLeftJoin"]>) {
-    return (new QueryBuilder(this)).naturalLeftJoin(...args);
+  naturalLeftJoin<TArgs extends Parameters<OverrideQueryBuilder["naturalLeftJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).naturalLeftJoin(...(args as unknown as Parameters<OverrideQueryBuilder["naturalLeftJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  naturalRightJoin(...args: Parameters<OverrideQueryBuilder["naturalRightJoin"]>) {
-    return (new QueryBuilder(this)).naturalRightJoin(...args);
+  naturalRightJoin<TArgs extends Parameters<OverrideQueryBuilder["naturalRightJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).naturalRightJoin(...(args as unknown as Parameters<OverrideQueryBuilder["naturalRightJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   nchar() {
     return (new QueryBuilder(this)).nchar();
@@ -2172,8 +2172,8 @@ export class QueryInstance {
   nclob() {
     return (new QueryBuilder(this)).nclob();
   }
-  ne(...args: Parameters<OverrideQueryBuilder["ne"]>) {
-    return (new QueryBuilder(this)).ne(...args);
+  ne<TArgs extends Parameters<OverrideQueryBuilder["ne"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ne(...(args as unknown as Parameters<OverrideQueryBuilder["ne"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   nested() {
     return (new QueryBuilder(this)).nested();
@@ -2181,11 +2181,11 @@ export class QueryInstance {
   nesting() {
     return (new QueryBuilder(this)).nesting();
   }
-  netmask(...args: Parameters<OverrideQueryBuilder["netmask"]>) {
-    return (new QueryBuilder(this)).netmask(...args);
+  netmask<TArgs extends Parameters<OverrideQueryBuilder["netmask"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).netmask(...(args as unknown as Parameters<OverrideQueryBuilder["netmask"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  network(...args: Parameters<OverrideQueryBuilder["network"]>) {
-    return (new QueryBuilder(this)).network(...args);
+  network<TArgs extends Parameters<OverrideQueryBuilder["network"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).network(...(args as unknown as Parameters<OverrideQueryBuilder["network"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   new() {
     return (new QueryBuilder(this)).new();
@@ -2193,8 +2193,8 @@ export class QueryInstance {
   next() {
     return (new QueryBuilder(this)).next();
   }
-  nextval(...args: Parameters<OverrideQueryBuilder["nextval"]>) {
-    return (new QueryBuilder(this)).nextval(...args);
+  nextval<TArgs extends Parameters<OverrideQueryBuilder["nextval"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).nextval(...(args as unknown as Parameters<OverrideQueryBuilder["nextval"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   nfc() {
     return (new QueryBuilder(this)).nfc();
@@ -2217,38 +2217,38 @@ export class QueryInstance {
   none() {
     return (new QueryBuilder(this)).none();
   }
-  normalize(...args: Parameters<OverrideQueryBuilder["normalize"]>) {
-    return (new QueryBuilder(this)).normalize(...args);
+  normalize<TArgs extends Parameters<OverrideQueryBuilder["normalize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).normalize(...(args as unknown as Parameters<OverrideQueryBuilder["normalize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   normalized() {
     return (new QueryBuilder(this)).normalized();
   }
-  not(...args: Parameters<OverrideQueryBuilder["not"]>) {
-    return (new QueryBuilder(this)).not(...args);
+  not<TArgs extends Parameters<OverrideQueryBuilder["not"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).not(...(args as unknown as Parameters<OverrideQueryBuilder["not"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notBetween(...args: Parameters<OverrideQueryBuilder["notBetween"]>) {
-    return (new QueryBuilder(this)).notBetween(...args);
+  notBetween<TArgs extends Parameters<OverrideQueryBuilder["notBetween"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notBetween(...(args as unknown as Parameters<OverrideQueryBuilder["notBetween"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notBetweenSymmetric(...args: Parameters<OverrideQueryBuilder["notBetweenSymmetric"]>) {
-    return (new QueryBuilder(this)).notBetweenSymmetric(...args);
+  notBetweenSymmetric<TArgs extends Parameters<OverrideQueryBuilder["notBetweenSymmetric"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notBetweenSymmetric(...(args as unknown as Parameters<OverrideQueryBuilder["notBetweenSymmetric"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notEq(...args: Parameters<OverrideQueryBuilder["notEq"]>) {
-    return (new QueryBuilder(this)).notEq(...args);
+  notEq<TArgs extends Parameters<OverrideQueryBuilder["notEq"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notEq(...(args as unknown as Parameters<OverrideQueryBuilder["notEq"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notExists(...args: Parameters<OverrideQueryBuilder["notExists"]>) {
-    return (new QueryBuilder(this)).notExists(...args);
+  notExists<TArgs extends Parameters<OverrideQueryBuilder["notExists"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notExists(...(args as unknown as Parameters<OverrideQueryBuilder["notExists"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notExtendAbove(...args: Parameters<OverrideQueryBuilder["notExtendAbove"]>) {
-    return (new QueryBuilder(this)).notExtendAbove(...args);
+  notExtendAbove<TArgs extends Parameters<OverrideQueryBuilder["notExtendAbove"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notExtendAbove(...(args as unknown as Parameters<OverrideQueryBuilder["notExtendAbove"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notExtendBelow(...args: Parameters<OverrideQueryBuilder["notExtendBelow"]>) {
-    return (new QueryBuilder(this)).notExtendBelow(...args);
+  notExtendBelow<TArgs extends Parameters<OverrideQueryBuilder["notExtendBelow"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notExtendBelow(...(args as unknown as Parameters<OverrideQueryBuilder["notExtendBelow"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notExtendLeft(...args: Parameters<OverrideQueryBuilder["notExtendLeft"]>) {
-    return (new QueryBuilder(this)).notExtendLeft(...args);
+  notExtendLeft<TArgs extends Parameters<OverrideQueryBuilder["notExtendLeft"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notExtendLeft(...(args as unknown as Parameters<OverrideQueryBuilder["notExtendLeft"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notExtendRight(...args: Parameters<OverrideQueryBuilder["notExtendRight"]>) {
-    return (new QueryBuilder(this)).notExtendRight(...args);
+  notExtendRight<TArgs extends Parameters<OverrideQueryBuilder["notExtendRight"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notExtendRight(...(args as unknown as Parameters<OverrideQueryBuilder["notExtendRight"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   nothing() {
     return (new QueryBuilder(this)).nothing();
@@ -2256,41 +2256,41 @@ export class QueryInstance {
   notify() {
     return (new QueryBuilder(this)).notify();
   }
-  notIlike(...args: Parameters<OverrideQueryBuilder["notIlike"]>) {
-    return (new QueryBuilder(this)).notIlike(...args);
+  notIlike<TArgs extends Parameters<OverrideQueryBuilder["notIlike"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notIlike(...(args as unknown as Parameters<OverrideQueryBuilder["notIlike"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notIn(...args: Parameters<OverrideQueryBuilder["notIn"]>) {
-    return (new QueryBuilder(this)).notIn(...args);
+  notIn<TArgs extends Parameters<OverrideQueryBuilder["notIn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notIn(...(args as unknown as Parameters<OverrideQueryBuilder["notIn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notLike(...args: Parameters<OverrideQueryBuilder["notLike"]>) {
-    return (new QueryBuilder(this)).notLike(...args);
+  notLike<TArgs extends Parameters<OverrideQueryBuilder["notLike"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notLike(...(args as unknown as Parameters<OverrideQueryBuilder["notLike"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notMatchRegex(...args: Parameters<OverrideQueryBuilder["notMatchRegex"]>) {
-    return (new QueryBuilder(this)).notMatchRegex(...args);
+  notMatchRegex<TArgs extends Parameters<OverrideQueryBuilder["notMatchRegex"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notMatchRegex(...(args as unknown as Parameters<OverrideQueryBuilder["notMatchRegex"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  notMatchRegexInsensitive(...args: Parameters<OverrideQueryBuilder["notMatchRegexInsensitive"]>) {
-    return (new QueryBuilder(this)).notMatchRegexInsensitive(...args);
+  notMatchRegexInsensitive<TArgs extends Parameters<OverrideQueryBuilder["notMatchRegexInsensitive"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notMatchRegexInsensitive(...(args as unknown as Parameters<OverrideQueryBuilder["notMatchRegexInsensitive"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   notnull() {
     return (new QueryBuilder(this)).notnull();
   }
-  notSimilarTo(...args: Parameters<OverrideQueryBuilder["notSimilarTo"]>) {
-    return (new QueryBuilder(this)).notSimilarTo(...args);
+  notSimilarTo<TArgs extends Parameters<OverrideQueryBuilder["notSimilarTo"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).notSimilarTo(...(args as unknown as Parameters<OverrideQueryBuilder["notSimilarTo"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  now(...args: Parameters<OverrideQueryBuilder["now"]>) {
-    return (new QueryBuilder(this)).now(...args);
+  now<TArgs extends Parameters<OverrideQueryBuilder["now"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).now(...(args as unknown as Parameters<OverrideQueryBuilder["now"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   nowait() {
     return (new QueryBuilder(this)).nowait();
   }
-  npoints(...args: Parameters<OverrideQueryBuilder["npoints"]>) {
-    return (new QueryBuilder(this)).npoints(...args);
+  npoints<TArgs extends Parameters<OverrideQueryBuilder["npoints"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).npoints(...(args as unknown as Parameters<OverrideQueryBuilder["npoints"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  nthValue(...args: Parameters<OverrideQueryBuilder["nthValue"]>) {
-    return (new QueryBuilder(this)).nthValue(...args);
+  nthValue<TArgs extends Parameters<OverrideQueryBuilder["nthValue"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).nthValue(...(args as unknown as Parameters<OverrideQueryBuilder["nthValue"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  ntile(...args: Parameters<OverrideQueryBuilder["ntile"]>) {
-    return (new QueryBuilder(this)).ntile(...args);
+  ntile<TArgs extends Parameters<OverrideQueryBuilder["ntile"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).ntile(...(args as unknown as Parameters<OverrideQueryBuilder["ntile"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   null() {
     return (new QueryBuilder(this)).null();
@@ -2298,8 +2298,8 @@ export class QueryInstance {
   nullable() {
     return (new QueryBuilder(this)).nullable();
   }
-  nullif(...args: Parameters<OverrideQueryBuilder["nullif"]>) {
-    return (new QueryBuilder(this)).nullif(...args);
+  nullif<TArgs extends Parameters<OverrideQueryBuilder["nullif"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).nullif(...(args as unknown as Parameters<OverrideQueryBuilder["nullif"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   nullOrdering() {
     return (new QueryBuilder(this)).nullOrdering();
@@ -2307,11 +2307,11 @@ export class QueryInstance {
   nulls() {
     return (new QueryBuilder(this)).nulls();
   }
-  nullsFirst(...args: Parameters<OverrideQueryBuilder["nullsFirst"]>) {
-    return (new QueryBuilder(this)).nullsFirst(...args);
+  nullsFirst<TArgs extends Parameters<OverrideQueryBuilder["nullsFirst"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).nullsFirst(...(args as unknown as Parameters<OverrideQueryBuilder["nullsFirst"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  nullsLast(...args: Parameters<OverrideQueryBuilder["nullsLast"]>) {
-    return (new QueryBuilder(this)).nullsLast(...args);
+  nullsLast<TArgs extends Parameters<OverrideQueryBuilder["nullsLast"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).nullsLast(...(args as unknown as Parameters<OverrideQueryBuilder["nullsLast"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   number() {
     return (new QueryBuilder(this)).number();
@@ -2319,11 +2319,11 @@ export class QueryInstance {
   numeric() {
     return (new QueryBuilder(this)).numeric();
   }
-  numnode(...args: Parameters<OverrideQueryBuilder["numnode"]>) {
-    return (new QueryBuilder(this)).numnode(...args);
+  numnode<TArgs extends Parameters<OverrideQueryBuilder["numnode"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).numnode(...(args as unknown as Parameters<OverrideQueryBuilder["numnode"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  objDescription(...args: Parameters<OverrideQueryBuilder["objDescription"]>) {
-    return (new QueryBuilder(this)).objDescription(...args);
+  objDescription<TArgs extends Parameters<OverrideQueryBuilder["objDescription"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).objDescription(...(args as unknown as Parameters<OverrideQueryBuilder["objDescription"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   object() {
     return (new QueryBuilder(this)).object();
@@ -2337,8 +2337,8 @@ export class QueryInstance {
   occurrencesRegex() {
     return (new QueryBuilder(this)).occurrencesRegex();
   }
-  octetLength(...args: Parameters<OverrideQueryBuilder["octetLength"]>) {
-    return (new QueryBuilder(this)).octetLength(...args);
+  octetLength<TArgs extends Parameters<OverrideQueryBuilder["octetLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).octetLength(...(args as unknown as Parameters<OverrideQueryBuilder["octetLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   octets() {
     return (new QueryBuilder(this)).octets();
@@ -2349,8 +2349,8 @@ export class QueryInstance {
   off() {
     return (new QueryBuilder(this)).off();
   }
-  offset(...args: Parameters<OverrideQueryBuilder["offset"]>) {
-    return (new QueryBuilder(this)).offset(...args);
+  offset<TArgs extends Parameters<OverrideQueryBuilder["offset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).offset(...(args as unknown as Parameters<OverrideQueryBuilder["offset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   oids() {
     return (new QueryBuilder(this)).oids();
@@ -2361,20 +2361,20 @@ export class QueryInstance {
   omit() {
     return (new QueryBuilder(this)).omit();
   }
-  on(...args: Parameters<OverrideQueryBuilder["on"]>) {
-    return (new QueryBuilder(this)).on(...args);
+  on<TArgs extends Parameters<OverrideQueryBuilder["on"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).on(...(args as unknown as Parameters<OverrideQueryBuilder["on"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  onConflict(...args: Parameters<OverrideQueryBuilder["onConflict"]>) {
-    return (new QueryBuilder(this)).onConflict(...args);
+  onConflict<TArgs extends Parameters<OverrideQueryBuilder["onConflict"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).onConflict(...(args as unknown as Parameters<OverrideQueryBuilder["onConflict"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  onConflictDoNothing(...args: Parameters<OverrideQueryBuilder["onConflictDoNothing"]>) {
-    return (new QueryBuilder(this)).onConflictDoNothing(...args);
+  onConflictDoNothing<TArgs extends Parameters<OverrideQueryBuilder["onConflictDoNothing"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).onConflictDoNothing(...(args as unknown as Parameters<OverrideQueryBuilder["onConflictDoNothing"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  onConflictDoUpdate(...args: Parameters<OverrideQueryBuilder["onConflictDoUpdate"]>) {
-    return (new QueryBuilder(this)).onConflictDoUpdate(...args);
+  onConflictDoUpdate<TArgs extends Parameters<OverrideQueryBuilder["onConflictDoUpdate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).onConflictDoUpdate(...(args as unknown as Parameters<OverrideQueryBuilder["onConflictDoUpdate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  onConstraint(...args: Parameters<OverrideQueryBuilder["onConstraint"]>) {
-    return (new QueryBuilder(this)).onConstraint(...args);
+  onConstraint<TArgs extends Parameters<OverrideQueryBuilder["onConstraint"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).onConstraint(...(args as unknown as Parameters<OverrideQueryBuilder["onConstraint"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   one() {
     return (new QueryBuilder(this)).one();
@@ -2397,14 +2397,14 @@ export class QueryInstance {
   options() {
     return (new QueryBuilder(this)).options();
   }
-  or(...args: Parameters<OverrideQueryBuilder["or"]>) {
-    return (new QueryBuilder(this)).or(...args);
+  or<TArgs extends Parameters<OverrideQueryBuilder["or"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).or(...(args as unknown as Parameters<OverrideQueryBuilder["or"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   order() {
     return (new QueryBuilder(this)).order();
   }
-  orderBy(...args: Parameters<OverrideQueryBuilder["orderBy"]>) {
-    return (new QueryBuilder(this)).orderBy(...args);
+  orderBy<TArgs extends Parameters<OverrideQueryBuilder["orderBy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).orderBy(...(args as unknown as Parameters<OverrideQueryBuilder["orderBy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   ordering() {
     return (new QueryBuilder(this)).ordering();
@@ -2424,8 +2424,8 @@ export class QueryInstance {
   output() {
     return (new QueryBuilder(this)).output();
   }
-  over(...args: Parameters<OverrideQueryBuilder["over"]>) {
-    return (new QueryBuilder(this)).over(...args);
+  over<TArgs extends Parameters<OverrideQueryBuilder["over"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).over(...(args as unknown as Parameters<OverrideQueryBuilder["over"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   overflow() {
     return (new QueryBuilder(this)).overflow();
@@ -2433,8 +2433,8 @@ export class QueryInstance {
   overlaps() {
     return (new QueryBuilder(this)).overlaps();
   }
-  overlay(...args: Parameters<OverrideQueryBuilder["overlay"]>) {
-    return (new QueryBuilder(this)).overlay(...args);
+  overlay<TArgs extends Parameters<OverrideQueryBuilder["overlay"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).overlay(...(args as unknown as Parameters<OverrideQueryBuilder["overlay"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   overriding() {
     return (new QueryBuilder(this)).overriding();
@@ -2475,8 +2475,8 @@ export class QueryInstance {
   parameterspecificschema() {
     return (new QueryBuilder(this)).parameterspecificschema();
   }
-  parseIdent(...args: Parameters<OverrideQueryBuilder["parseIdent"]>) {
-    return (new QueryBuilder(this)).parseIdent(...args);
+  parseIdent<TArgs extends Parameters<OverrideQueryBuilder["parseIdent"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).parseIdent(...(args as unknown as Parameters<OverrideQueryBuilder["parseIdent"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   parser() {
     return (new QueryBuilder(this)).parser();
@@ -2487,8 +2487,8 @@ export class QueryInstance {
   partition() {
     return (new QueryBuilder(this)).partition();
   }
-  partitionBy(...args: Parameters<OverrideQueryBuilder["partitionBy"]>) {
-    return (new QueryBuilder(this)).partitionBy(...args);
+  partitionBy<TArgs extends Parameters<OverrideQueryBuilder["partitionBy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).partitionBy(...(args as unknown as Parameters<OverrideQueryBuilder["partitionBy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   pascal() {
     return (new QueryBuilder(this)).pascal();
@@ -2508,14 +2508,14 @@ export class QueryInstance {
   past() {
     return (new QueryBuilder(this)).past();
   }
-  path(...args: Parameters<OverrideQueryBuilder["path"]>) {
-    return (new QueryBuilder(this)).path(...args);
+  path<TArgs extends Parameters<OverrideQueryBuilder["path"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).path(...(args as unknown as Parameters<OverrideQueryBuilder["path"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   pattern() {
     return (new QueryBuilder(this)).pattern();
   }
-  pclose(...args: Parameters<OverrideQueryBuilder["pclose"]>) {
-    return (new QueryBuilder(this)).pclose(...args);
+  pclose<TArgs extends Parameters<OverrideQueryBuilder["pclose"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pclose(...(args as unknown as Parameters<OverrideQueryBuilder["pclose"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   per() {
     return (new QueryBuilder(this)).per();
@@ -2526,14 +2526,14 @@ export class QueryInstance {
   percentCharacter(...args: Parameters<BaseRawQueryBuilder["percentCharacter"]>) {
     return (new QueryBuilder(this)).percentCharacter(...args);
   }
-  percentileCont(...args: Parameters<OverrideQueryBuilder["percentileCont"]>) {
-    return (new QueryBuilder(this)).percentileCont(...args);
+  percentileCont<TArgs extends Parameters<OverrideQueryBuilder["percentileCont"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).percentileCont(...(args as unknown as Parameters<OverrideQueryBuilder["percentileCont"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  percentileDisc(...args: Parameters<OverrideQueryBuilder["percentileDisc"]>) {
-    return (new QueryBuilder(this)).percentileDisc(...args);
+  percentileDisc<TArgs extends Parameters<OverrideQueryBuilder["percentileDisc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).percentileDisc(...(args as unknown as Parameters<OverrideQueryBuilder["percentileDisc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  percentRank(...args: Parameters<OverrideQueryBuilder["percentRank"]>) {
-    return (new QueryBuilder(this)).percentRank(...args);
+  percentRank<TArgs extends Parameters<OverrideQueryBuilder["percentRank"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).percentRank(...(args as unknown as Parameters<OverrideQueryBuilder["percentRank"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   period() {
     return (new QueryBuilder(this)).period();
@@ -2544,581 +2544,581 @@ export class QueryInstance {
   permute() {
     return (new QueryBuilder(this)).permute();
   }
-  perpendicular(...args: Parameters<OverrideQueryBuilder["perpendicular"]>) {
-    return (new QueryBuilder(this)).perpendicular(...args);
+  perpendicular<TArgs extends Parameters<OverrideQueryBuilder["perpendicular"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).perpendicular(...(args as unknown as Parameters<OverrideQueryBuilder["perpendicular"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryLock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryLock"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryLock(...args);
+  pgAdvisoryLock<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryLock"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryLock(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryLock"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryLockShared(...args: Parameters<OverrideQueryBuilder["pgAdvisoryLockShared"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryLockShared(...args);
+  pgAdvisoryLockShared<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryLockShared"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryLockShared(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryLockShared"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryUnlock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryUnlock"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryUnlock(...args);
+  pgAdvisoryUnlock<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryUnlock"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryUnlock(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryUnlock"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryUnlockAll(...args: Parameters<OverrideQueryBuilder["pgAdvisoryUnlockAll"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryUnlockAll(...args);
+  pgAdvisoryUnlockAll<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryUnlockAll"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryUnlockAll(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryUnlockAll"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryUnlockShared(...args: Parameters<OverrideQueryBuilder["pgAdvisoryUnlockShared"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryUnlockShared(...args);
+  pgAdvisoryUnlockShared<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryUnlockShared"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryUnlockShared(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryUnlockShared"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryXactLock(...args: Parameters<OverrideQueryBuilder["pgAdvisoryXactLock"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryXactLock(...args);
+  pgAdvisoryXactLock<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryXactLock"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryXactLock(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryXactLock"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAdvisoryXactLockShared(...args: Parameters<OverrideQueryBuilder["pgAdvisoryXactLockShared"]>) {
-    return (new QueryBuilder(this)).pgAdvisoryXactLockShared(...args);
+  pgAdvisoryXactLockShared<TArgs extends Parameters<OverrideQueryBuilder["pgAdvisoryXactLockShared"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAdvisoryXactLockShared(...(args as unknown as Parameters<OverrideQueryBuilder["pgAdvisoryXactLockShared"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgAvailableWalSummaries(...args: Parameters<OverrideQueryBuilder["pgAvailableWalSummaries"]>) {
-    return (new QueryBuilder(this)).pgAvailableWalSummaries(...args);
+  pgAvailableWalSummaries<TArgs extends Parameters<OverrideQueryBuilder["pgAvailableWalSummaries"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgAvailableWalSummaries(...(args as unknown as Parameters<OverrideQueryBuilder["pgAvailableWalSummaries"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgBackendPid(...args: Parameters<OverrideQueryBuilder["pgBackendPid"]>) {
-    return (new QueryBuilder(this)).pgBackendPid(...args);
+  pgBackendPid<TArgs extends Parameters<OverrideQueryBuilder["pgBackendPid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgBackendPid(...(args as unknown as Parameters<OverrideQueryBuilder["pgBackendPid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgBackupStart(...args: Parameters<OverrideQueryBuilder["pgBackupStart"]>) {
-    return (new QueryBuilder(this)).pgBackupStart(...args);
+  pgBackupStart<TArgs extends Parameters<OverrideQueryBuilder["pgBackupStart"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgBackupStart(...(args as unknown as Parameters<OverrideQueryBuilder["pgBackupStart"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgBackupStop(...args: Parameters<OverrideQueryBuilder["pgBackupStop"]>) {
-    return (new QueryBuilder(this)).pgBackupStop(...args);
+  pgBackupStop<TArgs extends Parameters<OverrideQueryBuilder["pgBackupStop"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgBackupStop(...(args as unknown as Parameters<OverrideQueryBuilder["pgBackupStop"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgBasetype(...args: Parameters<OverrideQueryBuilder["pgBasetype"]>) {
-    return (new QueryBuilder(this)).pgBasetype(...args);
+  pgBasetype<TArgs extends Parameters<OverrideQueryBuilder["pgBasetype"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgBasetype(...(args as unknown as Parameters<OverrideQueryBuilder["pgBasetype"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgBlockingPids(...args: Parameters<OverrideQueryBuilder["pgBlockingPids"]>) {
-    return (new QueryBuilder(this)).pgBlockingPids(...args);
+  pgBlockingPids<TArgs extends Parameters<OverrideQueryBuilder["pgBlockingPids"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgBlockingPids(...(args as unknown as Parameters<OverrideQueryBuilder["pgBlockingPids"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCancelBackend(...args: Parameters<OverrideQueryBuilder["pgCancelBackend"]>) {
-    return (new QueryBuilder(this)).pgCancelBackend(...args);
+  pgCancelBackend<TArgs extends Parameters<OverrideQueryBuilder["pgCancelBackend"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCancelBackend(...(args as unknown as Parameters<OverrideQueryBuilder["pgCancelBackend"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCharToEncoding(...args: Parameters<OverrideQueryBuilder["pgCharToEncoding"]>) {
-    return (new QueryBuilder(this)).pgCharToEncoding(...args);
+  pgCharToEncoding<TArgs extends Parameters<OverrideQueryBuilder["pgCharToEncoding"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCharToEncoding(...(args as unknown as Parameters<OverrideQueryBuilder["pgCharToEncoding"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgClearAttributeStats(...args: Parameters<OverrideQueryBuilder["pgClearAttributeStats"]>) {
-    return (new QueryBuilder(this)).pgClearAttributeStats(...args);
+  pgClearAttributeStats<TArgs extends Parameters<OverrideQueryBuilder["pgClearAttributeStats"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgClearAttributeStats(...(args as unknown as Parameters<OverrideQueryBuilder["pgClearAttributeStats"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgClearRelationStats(...args: Parameters<OverrideQueryBuilder["pgClearRelationStats"]>) {
-    return (new QueryBuilder(this)).pgClearRelationStats(...args);
+  pgClearRelationStats<TArgs extends Parameters<OverrideQueryBuilder["pgClearRelationStats"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgClearRelationStats(...(args as unknown as Parameters<OverrideQueryBuilder["pgClearRelationStats"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgClientEncoding(...args: Parameters<OverrideQueryBuilder["pgClientEncoding"]>) {
-    return (new QueryBuilder(this)).pgClientEncoding(...args);
+  pgClientEncoding<TArgs extends Parameters<OverrideQueryBuilder["pgClientEncoding"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgClientEncoding(...(args as unknown as Parameters<OverrideQueryBuilder["pgClientEncoding"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCollationActualVersion(...args: Parameters<OverrideQueryBuilder["pgCollationActualVersion"]>) {
-    return (new QueryBuilder(this)).pgCollationActualVersion(...args);
+  pgCollationActualVersion<TArgs extends Parameters<OverrideQueryBuilder["pgCollationActualVersion"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCollationActualVersion(...(args as unknown as Parameters<OverrideQueryBuilder["pgCollationActualVersion"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCollationIsVisible(...args: Parameters<OverrideQueryBuilder["pgCollationIsVisible"]>) {
-    return (new QueryBuilder(this)).pgCollationIsVisible(...args);
+  pgCollationIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgCollationIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCollationIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgCollationIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgColumnCompression(...args: Parameters<OverrideQueryBuilder["pgColumnCompression"]>) {
-    return (new QueryBuilder(this)).pgColumnCompression(...args);
+  pgColumnCompression<TArgs extends Parameters<OverrideQueryBuilder["pgColumnCompression"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgColumnCompression(...(args as unknown as Parameters<OverrideQueryBuilder["pgColumnCompression"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgColumnSize(...args: Parameters<OverrideQueryBuilder["pgColumnSize"]>) {
-    return (new QueryBuilder(this)).pgColumnSize(...args);
+  pgColumnSize<TArgs extends Parameters<OverrideQueryBuilder["pgColumnSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgColumnSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgColumnSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgColumnToastChunkId(...args: Parameters<OverrideQueryBuilder["pgColumnToastChunkId"]>) {
-    return (new QueryBuilder(this)).pgColumnToastChunkId(...args);
+  pgColumnToastChunkId<TArgs extends Parameters<OverrideQueryBuilder["pgColumnToastChunkId"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgColumnToastChunkId(...(args as unknown as Parameters<OverrideQueryBuilder["pgColumnToastChunkId"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgConfLoadTime(...args: Parameters<OverrideQueryBuilder["pgConfLoadTime"]>) {
-    return (new QueryBuilder(this)).pgConfLoadTime(...args);
+  pgConfLoadTime<TArgs extends Parameters<OverrideQueryBuilder["pgConfLoadTime"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgConfLoadTime(...(args as unknown as Parameters<OverrideQueryBuilder["pgConfLoadTime"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgControlCheckpoint(...args: Parameters<OverrideQueryBuilder["pgControlCheckpoint"]>) {
-    return (new QueryBuilder(this)).pgControlCheckpoint(...args);
+  pgControlCheckpoint<TArgs extends Parameters<OverrideQueryBuilder["pgControlCheckpoint"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgControlCheckpoint(...(args as unknown as Parameters<OverrideQueryBuilder["pgControlCheckpoint"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgControlInit(...args: Parameters<OverrideQueryBuilder["pgControlInit"]>) {
-    return (new QueryBuilder(this)).pgControlInit(...args);
+  pgControlInit<TArgs extends Parameters<OverrideQueryBuilder["pgControlInit"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgControlInit(...(args as unknown as Parameters<OverrideQueryBuilder["pgControlInit"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgControlRecovery(...args: Parameters<OverrideQueryBuilder["pgControlRecovery"]>) {
-    return (new QueryBuilder(this)).pgControlRecovery(...args);
+  pgControlRecovery<TArgs extends Parameters<OverrideQueryBuilder["pgControlRecovery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgControlRecovery(...(args as unknown as Parameters<OverrideQueryBuilder["pgControlRecovery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgControlSystem(...args: Parameters<OverrideQueryBuilder["pgControlSystem"]>) {
-    return (new QueryBuilder(this)).pgControlSystem(...args);
+  pgControlSystem<TArgs extends Parameters<OverrideQueryBuilder["pgControlSystem"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgControlSystem(...(args as unknown as Parameters<OverrideQueryBuilder["pgControlSystem"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgConversionIsVisible(...args: Parameters<OverrideQueryBuilder["pgConversionIsVisible"]>) {
-    return (new QueryBuilder(this)).pgConversionIsVisible(...args);
+  pgConversionIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgConversionIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgConversionIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgConversionIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCopyLogicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCopyLogicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCopyLogicalReplicationSlot(...args);
+  pgCopyLogicalReplicationSlot<TArgs extends Parameters<OverrideQueryBuilder["pgCopyLogicalReplicationSlot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCopyLogicalReplicationSlot(...(args as unknown as Parameters<OverrideQueryBuilder["pgCopyLogicalReplicationSlot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCopyPhysicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCopyPhysicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCopyPhysicalReplicationSlot(...args);
+  pgCopyPhysicalReplicationSlot<TArgs extends Parameters<OverrideQueryBuilder["pgCopyPhysicalReplicationSlot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCopyPhysicalReplicationSlot(...(args as unknown as Parameters<OverrideQueryBuilder["pgCopyPhysicalReplicationSlot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCreateLogicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCreateLogicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCreateLogicalReplicationSlot(...args);
+  pgCreateLogicalReplicationSlot<TArgs extends Parameters<OverrideQueryBuilder["pgCreateLogicalReplicationSlot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCreateLogicalReplicationSlot(...(args as unknown as Parameters<OverrideQueryBuilder["pgCreateLogicalReplicationSlot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCreatePhysicalReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgCreatePhysicalReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgCreatePhysicalReplicationSlot(...args);
+  pgCreatePhysicalReplicationSlot<TArgs extends Parameters<OverrideQueryBuilder["pgCreatePhysicalReplicationSlot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCreatePhysicalReplicationSlot(...(args as unknown as Parameters<OverrideQueryBuilder["pgCreatePhysicalReplicationSlot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCreateRestorePoint(...args: Parameters<OverrideQueryBuilder["pgCreateRestorePoint"]>) {
-    return (new QueryBuilder(this)).pgCreateRestorePoint(...args);
+  pgCreateRestorePoint<TArgs extends Parameters<OverrideQueryBuilder["pgCreateRestorePoint"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCreateRestorePoint(...(args as unknown as Parameters<OverrideQueryBuilder["pgCreateRestorePoint"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentLogfile(...args: Parameters<OverrideQueryBuilder["pgCurrentLogfile"]>) {
-    return (new QueryBuilder(this)).pgCurrentLogfile(...args);
+  pgCurrentLogfile<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentLogfile"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentLogfile(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentLogfile"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentSnapshot(...args: Parameters<OverrideQueryBuilder["pgCurrentSnapshot"]>) {
-    return (new QueryBuilder(this)).pgCurrentSnapshot(...args);
+  pgCurrentSnapshot<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentSnapshot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentSnapshot(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentSnapshot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentWalFlushLsn(...args: Parameters<OverrideQueryBuilder["pgCurrentWalFlushLsn"]>) {
-    return (new QueryBuilder(this)).pgCurrentWalFlushLsn(...args);
+  pgCurrentWalFlushLsn<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentWalFlushLsn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentWalFlushLsn(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentWalFlushLsn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentWalInsertLsn(...args: Parameters<OverrideQueryBuilder["pgCurrentWalInsertLsn"]>) {
-    return (new QueryBuilder(this)).pgCurrentWalInsertLsn(...args);
+  pgCurrentWalInsertLsn<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentWalInsertLsn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentWalInsertLsn(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentWalInsertLsn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentWalLsn(...args: Parameters<OverrideQueryBuilder["pgCurrentWalLsn"]>) {
-    return (new QueryBuilder(this)).pgCurrentWalLsn(...args);
+  pgCurrentWalLsn<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentWalLsn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentWalLsn(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentWalLsn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentXactId(...args: Parameters<OverrideQueryBuilder["pgCurrentXactId"]>) {
-    return (new QueryBuilder(this)).pgCurrentXactId(...args);
+  pgCurrentXactId<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentXactId"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentXactId(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentXactId"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgCurrentXactIdIfAssigned(...args: Parameters<OverrideQueryBuilder["pgCurrentXactIdIfAssigned"]>) {
-    return (new QueryBuilder(this)).pgCurrentXactIdIfAssigned(...args);
+  pgCurrentXactIdIfAssigned<TArgs extends Parameters<OverrideQueryBuilder["pgCurrentXactIdIfAssigned"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgCurrentXactIdIfAssigned(...(args as unknown as Parameters<OverrideQueryBuilder["pgCurrentXactIdIfAssigned"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgDatabaseCollationActualVersion(...args: Parameters<OverrideQueryBuilder["pgDatabaseCollationActualVersion"]>) {
-    return (new QueryBuilder(this)).pgDatabaseCollationActualVersion(...args);
+  pgDatabaseCollationActualVersion<TArgs extends Parameters<OverrideQueryBuilder["pgDatabaseCollationActualVersion"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgDatabaseCollationActualVersion(...(args as unknown as Parameters<OverrideQueryBuilder["pgDatabaseCollationActualVersion"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgDatabaseSize(...args: Parameters<OverrideQueryBuilder["pgDatabaseSize"]>) {
-    return (new QueryBuilder(this)).pgDatabaseSize(...args);
+  pgDatabaseSize<TArgs extends Parameters<OverrideQueryBuilder["pgDatabaseSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgDatabaseSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgDatabaseSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgDescribeObject(...args: Parameters<OverrideQueryBuilder["pgDescribeObject"]>) {
-    return (new QueryBuilder(this)).pgDescribeObject(...args);
+  pgDescribeObject<TArgs extends Parameters<OverrideQueryBuilder["pgDescribeObject"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgDescribeObject(...(args as unknown as Parameters<OverrideQueryBuilder["pgDescribeObject"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgDropReplicationSlot(...args: Parameters<OverrideQueryBuilder["pgDropReplicationSlot"]>) {
-    return (new QueryBuilder(this)).pgDropReplicationSlot(...args);
+  pgDropReplicationSlot<TArgs extends Parameters<OverrideQueryBuilder["pgDropReplicationSlot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgDropReplicationSlot(...(args as unknown as Parameters<OverrideQueryBuilder["pgDropReplicationSlot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgEncodingToChar(...args: Parameters<OverrideQueryBuilder["pgEncodingToChar"]>) {
-    return (new QueryBuilder(this)).pgEncodingToChar(...args);
+  pgEncodingToChar<TArgs extends Parameters<OverrideQueryBuilder["pgEncodingToChar"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgEncodingToChar(...(args as unknown as Parameters<OverrideQueryBuilder["pgEncodingToChar"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgEventTriggerDdlCommands(...args: Parameters<OverrideQueryBuilder["pgEventTriggerDdlCommands"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerDdlCommands(...args);
+  pgEventTriggerDdlCommands<TArgs extends Parameters<OverrideQueryBuilder["pgEventTriggerDdlCommands"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgEventTriggerDdlCommands(...(args as unknown as Parameters<OverrideQueryBuilder["pgEventTriggerDdlCommands"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgEventTriggerDroppedObjects(...args: Parameters<OverrideQueryBuilder["pgEventTriggerDroppedObjects"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerDroppedObjects(...args);
+  pgEventTriggerDroppedObjects<TArgs extends Parameters<OverrideQueryBuilder["pgEventTriggerDroppedObjects"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgEventTriggerDroppedObjects(...(args as unknown as Parameters<OverrideQueryBuilder["pgEventTriggerDroppedObjects"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgEventTriggerTableRewriteOid(...args: Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteOid"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerTableRewriteOid(...args);
+  pgEventTriggerTableRewriteOid<TArgs extends Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteOid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgEventTriggerTableRewriteOid(...(args as unknown as Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteOid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgEventTriggerTableRewriteReason(...args: Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteReason"]>) {
-    return (new QueryBuilder(this)).pgEventTriggerTableRewriteReason(...args);
+  pgEventTriggerTableRewriteReason<TArgs extends Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteReason"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgEventTriggerTableRewriteReason(...(args as unknown as Parameters<OverrideQueryBuilder["pgEventTriggerTableRewriteReason"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgExportSnapshot(...args: Parameters<OverrideQueryBuilder["pgExportSnapshot"]>) {
-    return (new QueryBuilder(this)).pgExportSnapshot(...args);
+  pgExportSnapshot<TArgs extends Parameters<OverrideQueryBuilder["pgExportSnapshot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgExportSnapshot(...(args as unknown as Parameters<OverrideQueryBuilder["pgExportSnapshot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgFilenodeRelation(...args: Parameters<OverrideQueryBuilder["pgFilenodeRelation"]>) {
-    return (new QueryBuilder(this)).pgFilenodeRelation(...args);
+  pgFilenodeRelation<TArgs extends Parameters<OverrideQueryBuilder["pgFilenodeRelation"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgFilenodeRelation(...(args as unknown as Parameters<OverrideQueryBuilder["pgFilenodeRelation"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgFunctionIsVisible(...args: Parameters<OverrideQueryBuilder["pgFunctionIsVisible"]>) {
-    return (new QueryBuilder(this)).pgFunctionIsVisible(...args);
+  pgFunctionIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgFunctionIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgFunctionIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgFunctionIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetAcl(...args: Parameters<OverrideQueryBuilder["pgGetAcl"]>) {
-    return (new QueryBuilder(this)).pgGetAcl(...args);
+  pgGetAcl<TArgs extends Parameters<OverrideQueryBuilder["pgGetAcl"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetAcl(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetAcl"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetCatalogForeignKeys(...args: Parameters<OverrideQueryBuilder["pgGetCatalogForeignKeys"]>) {
-    return (new QueryBuilder(this)).pgGetCatalogForeignKeys(...args);
+  pgGetCatalogForeignKeys<TArgs extends Parameters<OverrideQueryBuilder["pgGetCatalogForeignKeys"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetCatalogForeignKeys(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetCatalogForeignKeys"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetConstraintdef(...args: Parameters<OverrideQueryBuilder["pgGetConstraintdef"]>) {
-    return (new QueryBuilder(this)).pgGetConstraintdef(...args);
+  pgGetConstraintdef<TArgs extends Parameters<OverrideQueryBuilder["pgGetConstraintdef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetConstraintdef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetConstraintdef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetExpr(...args: Parameters<OverrideQueryBuilder["pgGetExpr"]>) {
-    return (new QueryBuilder(this)).pgGetExpr(...args);
+  pgGetExpr<TArgs extends Parameters<OverrideQueryBuilder["pgGetExpr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetExpr(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetExpr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetFunctionArguments(...args: Parameters<OverrideQueryBuilder["pgGetFunctionArguments"]>) {
-    return (new QueryBuilder(this)).pgGetFunctionArguments(...args);
+  pgGetFunctionArguments<TArgs extends Parameters<OverrideQueryBuilder["pgGetFunctionArguments"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetFunctionArguments(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetFunctionArguments"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetFunctiondef(...args: Parameters<OverrideQueryBuilder["pgGetFunctiondef"]>) {
-    return (new QueryBuilder(this)).pgGetFunctiondef(...args);
+  pgGetFunctiondef<TArgs extends Parameters<OverrideQueryBuilder["pgGetFunctiondef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetFunctiondef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetFunctiondef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetFunctionIdentityArguments(...args: Parameters<OverrideQueryBuilder["pgGetFunctionIdentityArguments"]>) {
-    return (new QueryBuilder(this)).pgGetFunctionIdentityArguments(...args);
+  pgGetFunctionIdentityArguments<TArgs extends Parameters<OverrideQueryBuilder["pgGetFunctionIdentityArguments"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetFunctionIdentityArguments(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetFunctionIdentityArguments"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetFunctionResult(...args: Parameters<OverrideQueryBuilder["pgGetFunctionResult"]>) {
-    return (new QueryBuilder(this)).pgGetFunctionResult(...args);
+  pgGetFunctionResult<TArgs extends Parameters<OverrideQueryBuilder["pgGetFunctionResult"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetFunctionResult(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetFunctionResult"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetIndexdef(...args: Parameters<OverrideQueryBuilder["pgGetIndexdef"]>) {
-    return (new QueryBuilder(this)).pgGetIndexdef(...args);
+  pgGetIndexdef<TArgs extends Parameters<OverrideQueryBuilder["pgGetIndexdef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetIndexdef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetIndexdef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetKeywords(...args: Parameters<OverrideQueryBuilder["pgGetKeywords"]>) {
-    return (new QueryBuilder(this)).pgGetKeywords(...args);
+  pgGetKeywords<TArgs extends Parameters<OverrideQueryBuilder["pgGetKeywords"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetKeywords(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetKeywords"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetLoadedModules(...args: Parameters<OverrideQueryBuilder["pgGetLoadedModules"]>) {
-    return (new QueryBuilder(this)).pgGetLoadedModules(...args);
+  pgGetLoadedModules<TArgs extends Parameters<OverrideQueryBuilder["pgGetLoadedModules"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetLoadedModules(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetLoadedModules"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetMultixactMembers(...args: Parameters<OverrideQueryBuilder["pgGetMultixactMembers"]>) {
-    return (new QueryBuilder(this)).pgGetMultixactMembers(...args);
+  pgGetMultixactMembers<TArgs extends Parameters<OverrideQueryBuilder["pgGetMultixactMembers"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetMultixactMembers(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetMultixactMembers"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetObjectAddress(...args: Parameters<OverrideQueryBuilder["pgGetObjectAddress"]>) {
-    return (new QueryBuilder(this)).pgGetObjectAddress(...args);
+  pgGetObjectAddress<TArgs extends Parameters<OverrideQueryBuilder["pgGetObjectAddress"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetObjectAddress(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetObjectAddress"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetPartitionConstraintdef(...args: Parameters<OverrideQueryBuilder["pgGetPartitionConstraintdef"]>) {
-    return (new QueryBuilder(this)).pgGetPartitionConstraintdef(...args);
+  pgGetPartitionConstraintdef<TArgs extends Parameters<OverrideQueryBuilder["pgGetPartitionConstraintdef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetPartitionConstraintdef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetPartitionConstraintdef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetPartkeydef(...args: Parameters<OverrideQueryBuilder["pgGetPartkeydef"]>) {
-    return (new QueryBuilder(this)).pgGetPartkeydef(...args);
+  pgGetPartkeydef<TArgs extends Parameters<OverrideQueryBuilder["pgGetPartkeydef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetPartkeydef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetPartkeydef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetRuledef(...args: Parameters<OverrideQueryBuilder["pgGetRuledef"]>) {
-    return (new QueryBuilder(this)).pgGetRuledef(...args);
+  pgGetRuledef<TArgs extends Parameters<OverrideQueryBuilder["pgGetRuledef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetRuledef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetRuledef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetSerialSequence(...args: Parameters<OverrideQueryBuilder["pgGetSerialSequence"]>) {
-    return (new QueryBuilder(this)).pgGetSerialSequence(...args);
+  pgGetSerialSequence<TArgs extends Parameters<OverrideQueryBuilder["pgGetSerialSequence"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetSerialSequence(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetSerialSequence"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetStatisticsobjdef(...args: Parameters<OverrideQueryBuilder["pgGetStatisticsobjdef"]>) {
-    return (new QueryBuilder(this)).pgGetStatisticsobjdef(...args);
+  pgGetStatisticsobjdef<TArgs extends Parameters<OverrideQueryBuilder["pgGetStatisticsobjdef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetStatisticsobjdef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetStatisticsobjdef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetTriggerdef(...args: Parameters<OverrideQueryBuilder["pgGetTriggerdef"]>) {
-    return (new QueryBuilder(this)).pgGetTriggerdef(...args);
+  pgGetTriggerdef<TArgs extends Parameters<OverrideQueryBuilder["pgGetTriggerdef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetTriggerdef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetTriggerdef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetUserbyid(...args: Parameters<OverrideQueryBuilder["pgGetUserbyid"]>) {
-    return (new QueryBuilder(this)).pgGetUserbyid(...args);
+  pgGetUserbyid<TArgs extends Parameters<OverrideQueryBuilder["pgGetUserbyid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetUserbyid(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetUserbyid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetViewdef(...args: Parameters<OverrideQueryBuilder["pgGetViewdef"]>) {
-    return (new QueryBuilder(this)).pgGetViewdef(...args);
+  pgGetViewdef<TArgs extends Parameters<OverrideQueryBuilder["pgGetViewdef"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetViewdef(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetViewdef"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetWalReplayPauseState(...args: Parameters<OverrideQueryBuilder["pgGetWalReplayPauseState"]>) {
-    return (new QueryBuilder(this)).pgGetWalReplayPauseState(...args);
+  pgGetWalReplayPauseState<TArgs extends Parameters<OverrideQueryBuilder["pgGetWalReplayPauseState"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetWalReplayPauseState(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetWalReplayPauseState"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetWalResourceManagers(...args: Parameters<OverrideQueryBuilder["pgGetWalResourceManagers"]>) {
-    return (new QueryBuilder(this)).pgGetWalResourceManagers(...args);
+  pgGetWalResourceManagers<TArgs extends Parameters<OverrideQueryBuilder["pgGetWalResourceManagers"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetWalResourceManagers(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetWalResourceManagers"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgGetWalSummarizerState(...args: Parameters<OverrideQueryBuilder["pgGetWalSummarizerState"]>) {
-    return (new QueryBuilder(this)).pgGetWalSummarizerState(...args);
+  pgGetWalSummarizerState<TArgs extends Parameters<OverrideQueryBuilder["pgGetWalSummarizerState"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgGetWalSummarizerState(...(args as unknown as Parameters<OverrideQueryBuilder["pgGetWalSummarizerState"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgHasRole(...args: Parameters<OverrideQueryBuilder["pgHasRole"]>) {
-    return (new QueryBuilder(this)).pgHasRole(...args);
+  pgHasRole<TArgs extends Parameters<OverrideQueryBuilder["pgHasRole"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgHasRole(...(args as unknown as Parameters<OverrideQueryBuilder["pgHasRole"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIdentifyObject(...args: Parameters<OverrideQueryBuilder["pgIdentifyObject"]>) {
-    return (new QueryBuilder(this)).pgIdentifyObject(...args);
+  pgIdentifyObject<TArgs extends Parameters<OverrideQueryBuilder["pgIdentifyObject"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIdentifyObject(...(args as unknown as Parameters<OverrideQueryBuilder["pgIdentifyObject"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIdentifyObjectAsAddress(...args: Parameters<OverrideQueryBuilder["pgIdentifyObjectAsAddress"]>) {
-    return (new QueryBuilder(this)).pgIdentifyObjectAsAddress(...args);
+  pgIdentifyObjectAsAddress<TArgs extends Parameters<OverrideQueryBuilder["pgIdentifyObjectAsAddress"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIdentifyObjectAsAddress(...(args as unknown as Parameters<OverrideQueryBuilder["pgIdentifyObjectAsAddress"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgImportSystemCollations(...args: Parameters<OverrideQueryBuilder["pgImportSystemCollations"]>) {
-    return (new QueryBuilder(this)).pgImportSystemCollations(...args);
+  pgImportSystemCollations<TArgs extends Parameters<OverrideQueryBuilder["pgImportSystemCollations"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgImportSystemCollations(...(args as unknown as Parameters<OverrideQueryBuilder["pgImportSystemCollations"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIndexamHasProperty(...args: Parameters<OverrideQueryBuilder["pgIndexamHasProperty"]>) {
-    return (new QueryBuilder(this)).pgIndexamHasProperty(...args);
+  pgIndexamHasProperty<TArgs extends Parameters<OverrideQueryBuilder["pgIndexamHasProperty"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIndexamHasProperty(...(args as unknown as Parameters<OverrideQueryBuilder["pgIndexamHasProperty"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIndexColumnHasProperty(...args: Parameters<OverrideQueryBuilder["pgIndexColumnHasProperty"]>) {
-    return (new QueryBuilder(this)).pgIndexColumnHasProperty(...args);
+  pgIndexColumnHasProperty<TArgs extends Parameters<OverrideQueryBuilder["pgIndexColumnHasProperty"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIndexColumnHasProperty(...(args as unknown as Parameters<OverrideQueryBuilder["pgIndexColumnHasProperty"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIndexesSize(...args: Parameters<OverrideQueryBuilder["pgIndexesSize"]>) {
-    return (new QueryBuilder(this)).pgIndexesSize(...args);
+  pgIndexesSize<TArgs extends Parameters<OverrideQueryBuilder["pgIndexesSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIndexesSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgIndexesSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIndexHasProperty(...args: Parameters<OverrideQueryBuilder["pgIndexHasProperty"]>) {
-    return (new QueryBuilder(this)).pgIndexHasProperty(...args);
+  pgIndexHasProperty<TArgs extends Parameters<OverrideQueryBuilder["pgIndexHasProperty"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIndexHasProperty(...(args as unknown as Parameters<OverrideQueryBuilder["pgIndexHasProperty"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgInputErrorInfo(...args: Parameters<OverrideQueryBuilder["pgInputErrorInfo"]>) {
-    return (new QueryBuilder(this)).pgInputErrorInfo(...args);
+  pgInputErrorInfo<TArgs extends Parameters<OverrideQueryBuilder["pgInputErrorInfo"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgInputErrorInfo(...(args as unknown as Parameters<OverrideQueryBuilder["pgInputErrorInfo"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgInputIsValid(...args: Parameters<OverrideQueryBuilder["pgInputIsValid"]>) {
-    return (new QueryBuilder(this)).pgInputIsValid(...args);
+  pgInputIsValid<TArgs extends Parameters<OverrideQueryBuilder["pgInputIsValid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgInputIsValid(...(args as unknown as Parameters<OverrideQueryBuilder["pgInputIsValid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIsInRecovery(...args: Parameters<OverrideQueryBuilder["pgIsInRecovery"]>) {
-    return (new QueryBuilder(this)).pgIsInRecovery(...args);
+  pgIsInRecovery<TArgs extends Parameters<OverrideQueryBuilder["pgIsInRecovery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIsInRecovery(...(args as unknown as Parameters<OverrideQueryBuilder["pgIsInRecovery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIsOtherTempSchema(...args: Parameters<OverrideQueryBuilder["pgIsOtherTempSchema"]>) {
-    return (new QueryBuilder(this)).pgIsOtherTempSchema(...args);
+  pgIsOtherTempSchema<TArgs extends Parameters<OverrideQueryBuilder["pgIsOtherTempSchema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIsOtherTempSchema(...(args as unknown as Parameters<OverrideQueryBuilder["pgIsOtherTempSchema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgIsWalReplayPaused(...args: Parameters<OverrideQueryBuilder["pgIsWalReplayPaused"]>) {
-    return (new QueryBuilder(this)).pgIsWalReplayPaused(...args);
+  pgIsWalReplayPaused<TArgs extends Parameters<OverrideQueryBuilder["pgIsWalReplayPaused"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgIsWalReplayPaused(...(args as unknown as Parameters<OverrideQueryBuilder["pgIsWalReplayPaused"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgJitAvailable(...args: Parameters<OverrideQueryBuilder["pgJitAvailable"]>) {
-    return (new QueryBuilder(this)).pgJitAvailable(...args);
+  pgJitAvailable<TArgs extends Parameters<OverrideQueryBuilder["pgJitAvailable"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgJitAvailable(...(args as unknown as Parameters<OverrideQueryBuilder["pgJitAvailable"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLastCommittedXact(...args: Parameters<OverrideQueryBuilder["pgLastCommittedXact"]>) {
-    return (new QueryBuilder(this)).pgLastCommittedXact(...args);
+  pgLastCommittedXact<TArgs extends Parameters<OverrideQueryBuilder["pgLastCommittedXact"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLastCommittedXact(...(args as unknown as Parameters<OverrideQueryBuilder["pgLastCommittedXact"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLastWalReceiveLsn(...args: Parameters<OverrideQueryBuilder["pgLastWalReceiveLsn"]>) {
-    return (new QueryBuilder(this)).pgLastWalReceiveLsn(...args);
+  pgLastWalReceiveLsn<TArgs extends Parameters<OverrideQueryBuilder["pgLastWalReceiveLsn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLastWalReceiveLsn(...(args as unknown as Parameters<OverrideQueryBuilder["pgLastWalReceiveLsn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLastWalReplayLsn(...args: Parameters<OverrideQueryBuilder["pgLastWalReplayLsn"]>) {
-    return (new QueryBuilder(this)).pgLastWalReplayLsn(...args);
+  pgLastWalReplayLsn<TArgs extends Parameters<OverrideQueryBuilder["pgLastWalReplayLsn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLastWalReplayLsn(...(args as unknown as Parameters<OverrideQueryBuilder["pgLastWalReplayLsn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLastXactReplayTimestamp(...args: Parameters<OverrideQueryBuilder["pgLastXactReplayTimestamp"]>) {
-    return (new QueryBuilder(this)).pgLastXactReplayTimestamp(...args);
+  pgLastXactReplayTimestamp<TArgs extends Parameters<OverrideQueryBuilder["pgLastXactReplayTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLastXactReplayTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["pgLastXactReplayTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgListeningChannels(...args: Parameters<OverrideQueryBuilder["pgListeningChannels"]>) {
-    return (new QueryBuilder(this)).pgListeningChannels(...args);
+  pgListeningChannels<TArgs extends Parameters<OverrideQueryBuilder["pgListeningChannels"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgListeningChannels(...(args as unknown as Parameters<OverrideQueryBuilder["pgListeningChannels"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogBackendMemoryContexts(...args: Parameters<OverrideQueryBuilder["pgLogBackendMemoryContexts"]>) {
-    return (new QueryBuilder(this)).pgLogBackendMemoryContexts(...args);
+  pgLogBackendMemoryContexts<TArgs extends Parameters<OverrideQueryBuilder["pgLogBackendMemoryContexts"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogBackendMemoryContexts(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogBackendMemoryContexts"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogicalEmitMessage(...args: Parameters<OverrideQueryBuilder["pgLogicalEmitMessage"]>) {
-    return (new QueryBuilder(this)).pgLogicalEmitMessage(...args);
+  pgLogicalEmitMessage<TArgs extends Parameters<OverrideQueryBuilder["pgLogicalEmitMessage"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogicalEmitMessage(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogicalEmitMessage"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogicalSlotGetBinaryChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotGetBinaryChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotGetBinaryChanges(...args);
+  pgLogicalSlotGetBinaryChanges<TArgs extends Parameters<OverrideQueryBuilder["pgLogicalSlotGetBinaryChanges"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogicalSlotGetBinaryChanges(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogicalSlotGetBinaryChanges"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogicalSlotGetChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotGetChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotGetChanges(...args);
+  pgLogicalSlotGetChanges<TArgs extends Parameters<OverrideQueryBuilder["pgLogicalSlotGetChanges"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogicalSlotGetChanges(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogicalSlotGetChanges"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogicalSlotPeekBinaryChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotPeekBinaryChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotPeekBinaryChanges(...args);
+  pgLogicalSlotPeekBinaryChanges<TArgs extends Parameters<OverrideQueryBuilder["pgLogicalSlotPeekBinaryChanges"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogicalSlotPeekBinaryChanges(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogicalSlotPeekBinaryChanges"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogicalSlotPeekChanges(...args: Parameters<OverrideQueryBuilder["pgLogicalSlotPeekChanges"]>) {
-    return (new QueryBuilder(this)).pgLogicalSlotPeekChanges(...args);
+  pgLogicalSlotPeekChanges<TArgs extends Parameters<OverrideQueryBuilder["pgLogicalSlotPeekChanges"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogicalSlotPeekChanges(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogicalSlotPeekChanges"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLogStandbySnapshot(...args: Parameters<OverrideQueryBuilder["pgLogStandbySnapshot"]>) {
-    return (new QueryBuilder(this)).pgLogStandbySnapshot(...args);
+  pgLogStandbySnapshot<TArgs extends Parameters<OverrideQueryBuilder["pgLogStandbySnapshot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLogStandbySnapshot(...(args as unknown as Parameters<OverrideQueryBuilder["pgLogStandbySnapshot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsArchiveStatusdir(...args: Parameters<OverrideQueryBuilder["pgLsArchiveStatusdir"]>) {
-    return (new QueryBuilder(this)).pgLsArchiveStatusdir(...args);
+  pgLsArchiveStatusdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsArchiveStatusdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsArchiveStatusdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsArchiveStatusdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsDir(...args: Parameters<OverrideQueryBuilder["pgLsDir"]>) {
-    return (new QueryBuilder(this)).pgLsDir(...args);
+  pgLsDir<TArgs extends Parameters<OverrideQueryBuilder["pgLsDir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsDir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsDir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsLogdir(...args: Parameters<OverrideQueryBuilder["pgLsLogdir"]>) {
-    return (new QueryBuilder(this)).pgLsLogdir(...args);
+  pgLsLogdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsLogdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsLogdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsLogdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsLogicalmapdir(...args: Parameters<OverrideQueryBuilder["pgLsLogicalmapdir"]>) {
-    return (new QueryBuilder(this)).pgLsLogicalmapdir(...args);
+  pgLsLogicalmapdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsLogicalmapdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsLogicalmapdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsLogicalmapdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsLogicalsnapdir(...args: Parameters<OverrideQueryBuilder["pgLsLogicalsnapdir"]>) {
-    return (new QueryBuilder(this)).pgLsLogicalsnapdir(...args);
+  pgLsLogicalsnapdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsLogicalsnapdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsLogicalsnapdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsLogicalsnapdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsReplslotdir(...args: Parameters<OverrideQueryBuilder["pgLsReplslotdir"]>) {
-    return (new QueryBuilder(this)).pgLsReplslotdir(...args);
+  pgLsReplslotdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsReplslotdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsReplslotdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsReplslotdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsSummariesdir(...args: Parameters<OverrideQueryBuilder["pgLsSummariesdir"]>) {
-    return (new QueryBuilder(this)).pgLsSummariesdir(...args);
+  pgLsSummariesdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsSummariesdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsSummariesdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsSummariesdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsTmpdir(...args: Parameters<OverrideQueryBuilder["pgLsTmpdir"]>) {
-    return (new QueryBuilder(this)).pgLsTmpdir(...args);
+  pgLsTmpdir<TArgs extends Parameters<OverrideQueryBuilder["pgLsTmpdir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsTmpdir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsTmpdir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgLsWaldir(...args: Parameters<OverrideQueryBuilder["pgLsWaldir"]>) {
-    return (new QueryBuilder(this)).pgLsWaldir(...args);
+  pgLsWaldir<TArgs extends Parameters<OverrideQueryBuilder["pgLsWaldir"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgLsWaldir(...(args as unknown as Parameters<OverrideQueryBuilder["pgLsWaldir"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgMcvListItems(...args: Parameters<OverrideQueryBuilder["pgMcvListItems"]>) {
-    return (new QueryBuilder(this)).pgMcvListItems(...args);
+  pgMcvListItems<TArgs extends Parameters<OverrideQueryBuilder["pgMcvListItems"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgMcvListItems(...(args as unknown as Parameters<OverrideQueryBuilder["pgMcvListItems"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgMyTempSchema(...args: Parameters<OverrideQueryBuilder["pgMyTempSchema"]>) {
-    return (new QueryBuilder(this)).pgMyTempSchema(...args);
+  pgMyTempSchema<TArgs extends Parameters<OverrideQueryBuilder["pgMyTempSchema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgMyTempSchema(...(args as unknown as Parameters<OverrideQueryBuilder["pgMyTempSchema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgNotificationQueueUsage(...args: Parameters<OverrideQueryBuilder["pgNotificationQueueUsage"]>) {
-    return (new QueryBuilder(this)).pgNotificationQueueUsage(...args);
+  pgNotificationQueueUsage<TArgs extends Parameters<OverrideQueryBuilder["pgNotificationQueueUsage"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgNotificationQueueUsage(...(args as unknown as Parameters<OverrideQueryBuilder["pgNotificationQueueUsage"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgNumaAvailable(...args: Parameters<OverrideQueryBuilder["pgNumaAvailable"]>) {
-    return (new QueryBuilder(this)).pgNumaAvailable(...args);
+  pgNumaAvailable<TArgs extends Parameters<OverrideQueryBuilder["pgNumaAvailable"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgNumaAvailable(...(args as unknown as Parameters<OverrideQueryBuilder["pgNumaAvailable"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgOpclassIsVisible(...args: Parameters<OverrideQueryBuilder["pgOpclassIsVisible"]>) {
-    return (new QueryBuilder(this)).pgOpclassIsVisible(...args);
+  pgOpclassIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgOpclassIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgOpclassIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgOpclassIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgOperatorIsVisible(...args: Parameters<OverrideQueryBuilder["pgOperatorIsVisible"]>) {
-    return (new QueryBuilder(this)).pgOperatorIsVisible(...args);
+  pgOperatorIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgOperatorIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgOperatorIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgOperatorIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgOpfamilyIsVisible(...args: Parameters<OverrideQueryBuilder["pgOpfamilyIsVisible"]>) {
-    return (new QueryBuilder(this)).pgOpfamilyIsVisible(...args);
+  pgOpfamilyIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgOpfamilyIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgOpfamilyIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgOpfamilyIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgOptionsToTable(...args: Parameters<OverrideQueryBuilder["pgOptionsToTable"]>) {
-    return (new QueryBuilder(this)).pgOptionsToTable(...args);
+  pgOptionsToTable<TArgs extends Parameters<OverrideQueryBuilder["pgOptionsToTable"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgOptionsToTable(...(args as unknown as Parameters<OverrideQueryBuilder["pgOptionsToTable"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgPartitionAncestors(...args: Parameters<OverrideQueryBuilder["pgPartitionAncestors"]>) {
-    return (new QueryBuilder(this)).pgPartitionAncestors(...args);
+  pgPartitionAncestors<TArgs extends Parameters<OverrideQueryBuilder["pgPartitionAncestors"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgPartitionAncestors(...(args as unknown as Parameters<OverrideQueryBuilder["pgPartitionAncestors"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgPartitionRoot(...args: Parameters<OverrideQueryBuilder["pgPartitionRoot"]>) {
-    return (new QueryBuilder(this)).pgPartitionRoot(...args);
+  pgPartitionRoot<TArgs extends Parameters<OverrideQueryBuilder["pgPartitionRoot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgPartitionRoot(...(args as unknown as Parameters<OverrideQueryBuilder["pgPartitionRoot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgPartitionTree(...args: Parameters<OverrideQueryBuilder["pgPartitionTree"]>) {
-    return (new QueryBuilder(this)).pgPartitionTree(...args);
+  pgPartitionTree<TArgs extends Parameters<OverrideQueryBuilder["pgPartitionTree"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgPartitionTree(...(args as unknown as Parameters<OverrideQueryBuilder["pgPartitionTree"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgPostmasterStartTime(...args: Parameters<OverrideQueryBuilder["pgPostmasterStartTime"]>) {
-    return (new QueryBuilder(this)).pgPostmasterStartTime(...args);
+  pgPostmasterStartTime<TArgs extends Parameters<OverrideQueryBuilder["pgPostmasterStartTime"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgPostmasterStartTime(...(args as unknown as Parameters<OverrideQueryBuilder["pgPostmasterStartTime"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgPromote(...args: Parameters<OverrideQueryBuilder["pgPromote"]>) {
-    return (new QueryBuilder(this)).pgPromote(...args);
+  pgPromote<TArgs extends Parameters<OverrideQueryBuilder["pgPromote"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgPromote(...(args as unknown as Parameters<OverrideQueryBuilder["pgPromote"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReadBinaryFile(...args: Parameters<OverrideQueryBuilder["pgReadBinaryFile"]>) {
-    return (new QueryBuilder(this)).pgReadBinaryFile(...args);
+  pgReadBinaryFile<TArgs extends Parameters<OverrideQueryBuilder["pgReadBinaryFile"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReadBinaryFile(...(args as unknown as Parameters<OverrideQueryBuilder["pgReadBinaryFile"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReadFile(...args: Parameters<OverrideQueryBuilder["pgReadFile"]>) {
-    return (new QueryBuilder(this)).pgReadFile(...args);
+  pgReadFile<TArgs extends Parameters<OverrideQueryBuilder["pgReadFile"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReadFile(...(args as unknown as Parameters<OverrideQueryBuilder["pgReadFile"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgRelationFilenode(...args: Parameters<OverrideQueryBuilder["pgRelationFilenode"]>) {
-    return (new QueryBuilder(this)).pgRelationFilenode(...args);
+  pgRelationFilenode<TArgs extends Parameters<OverrideQueryBuilder["pgRelationFilenode"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgRelationFilenode(...(args as unknown as Parameters<OverrideQueryBuilder["pgRelationFilenode"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgRelationFilepath(...args: Parameters<OverrideQueryBuilder["pgRelationFilepath"]>) {
-    return (new QueryBuilder(this)).pgRelationFilepath(...args);
+  pgRelationFilepath<TArgs extends Parameters<OverrideQueryBuilder["pgRelationFilepath"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgRelationFilepath(...(args as unknown as Parameters<OverrideQueryBuilder["pgRelationFilepath"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgRelationSize(...args: Parameters<OverrideQueryBuilder["pgRelationSize"]>) {
-    return (new QueryBuilder(this)).pgRelationSize(...args);
+  pgRelationSize<TArgs extends Parameters<OverrideQueryBuilder["pgRelationSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgRelationSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgRelationSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReloadConf(...args: Parameters<OverrideQueryBuilder["pgReloadConf"]>) {
-    return (new QueryBuilder(this)).pgReloadConf(...args);
+  pgReloadConf<TArgs extends Parameters<OverrideQueryBuilder["pgReloadConf"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReloadConf(...(args as unknown as Parameters<OverrideQueryBuilder["pgReloadConf"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginAdvance(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginAdvance"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginAdvance(...args);
+  pgReplicationOriginAdvance<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginAdvance"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginAdvance(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginAdvance"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginCreate(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginCreate"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginCreate(...args);
+  pgReplicationOriginCreate<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginCreate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginCreate(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginCreate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginDrop(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginDrop"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginDrop(...args);
+  pgReplicationOriginDrop<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginDrop"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginDrop(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginDrop"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginOid(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginOid"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginOid(...args);
+  pgReplicationOriginOid<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginOid"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginOid(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginOid"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginProgress(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginProgress"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginProgress(...args);
+  pgReplicationOriginProgress<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginProgress"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginProgress(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginProgress"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginSessionIsSetup(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionIsSetup"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionIsSetup(...args);
+  pgReplicationOriginSessionIsSetup<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginSessionIsSetup"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginSessionIsSetup(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginSessionIsSetup"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginSessionProgress(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionProgress"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionProgress(...args);
+  pgReplicationOriginSessionProgress<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginSessionProgress"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginSessionProgress(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginSessionProgress"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginSessionReset(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionReset"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionReset(...args);
+  pgReplicationOriginSessionReset<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginSessionReset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginSessionReset(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginSessionReset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginSessionSetup(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginSessionSetup"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginSessionSetup(...args);
+  pgReplicationOriginSessionSetup<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginSessionSetup"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginSessionSetup(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginSessionSetup"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginXactReset(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginXactReset"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginXactReset(...args);
+  pgReplicationOriginXactReset<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginXactReset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginXactReset(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginXactReset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationOriginXactSetup(...args: Parameters<OverrideQueryBuilder["pgReplicationOriginXactSetup"]>) {
-    return (new QueryBuilder(this)).pgReplicationOriginXactSetup(...args);
+  pgReplicationOriginXactSetup<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationOriginXactSetup"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationOriginXactSetup(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationOriginXactSetup"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgReplicationSlotAdvance(...args: Parameters<OverrideQueryBuilder["pgReplicationSlotAdvance"]>) {
-    return (new QueryBuilder(this)).pgReplicationSlotAdvance(...args);
+  pgReplicationSlotAdvance<TArgs extends Parameters<OverrideQueryBuilder["pgReplicationSlotAdvance"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgReplicationSlotAdvance(...(args as unknown as Parameters<OverrideQueryBuilder["pgReplicationSlotAdvance"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgRestoreAttributeStats(...args: Parameters<OverrideQueryBuilder["pgRestoreAttributeStats"]>) {
-    return (new QueryBuilder(this)).pgRestoreAttributeStats(...args);
+  pgRestoreAttributeStats<TArgs extends Parameters<OverrideQueryBuilder["pgRestoreAttributeStats"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgRestoreAttributeStats(...(args as unknown as Parameters<OverrideQueryBuilder["pgRestoreAttributeStats"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgRestoreRelationStats(...args: Parameters<OverrideQueryBuilder["pgRestoreRelationStats"]>) {
-    return (new QueryBuilder(this)).pgRestoreRelationStats(...args);
+  pgRestoreRelationStats<TArgs extends Parameters<OverrideQueryBuilder["pgRestoreRelationStats"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgRestoreRelationStats(...(args as unknown as Parameters<OverrideQueryBuilder["pgRestoreRelationStats"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgRotateLogfile(...args: Parameters<OverrideQueryBuilder["pgRotateLogfile"]>) {
-    return (new QueryBuilder(this)).pgRotateLogfile(...args);
+  pgRotateLogfile<TArgs extends Parameters<OverrideQueryBuilder["pgRotateLogfile"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgRotateLogfile(...(args as unknown as Parameters<OverrideQueryBuilder["pgRotateLogfile"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSafeSnapshotBlockingPids(...args: Parameters<OverrideQueryBuilder["pgSafeSnapshotBlockingPids"]>) {
-    return (new QueryBuilder(this)).pgSafeSnapshotBlockingPids(...args);
+  pgSafeSnapshotBlockingPids<TArgs extends Parameters<OverrideQueryBuilder["pgSafeSnapshotBlockingPids"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSafeSnapshotBlockingPids(...(args as unknown as Parameters<OverrideQueryBuilder["pgSafeSnapshotBlockingPids"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSettingsGetFlags(...args: Parameters<OverrideQueryBuilder["pgSettingsGetFlags"]>) {
-    return (new QueryBuilder(this)).pgSettingsGetFlags(...args);
+  pgSettingsGetFlags<TArgs extends Parameters<OverrideQueryBuilder["pgSettingsGetFlags"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSettingsGetFlags(...(args as unknown as Parameters<OverrideQueryBuilder["pgSettingsGetFlags"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSizeBytes(...args: Parameters<OverrideQueryBuilder["pgSizeBytes"]>) {
-    return (new QueryBuilder(this)).pgSizeBytes(...args);
+  pgSizeBytes<TArgs extends Parameters<OverrideQueryBuilder["pgSizeBytes"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSizeBytes(...(args as unknown as Parameters<OverrideQueryBuilder["pgSizeBytes"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSizePretty(...args: Parameters<OverrideQueryBuilder["pgSizePretty"]>) {
-    return (new QueryBuilder(this)).pgSizePretty(...args);
+  pgSizePretty<TArgs extends Parameters<OverrideQueryBuilder["pgSizePretty"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSizePretty(...(args as unknown as Parameters<OverrideQueryBuilder["pgSizePretty"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSleep(...args: Parameters<OverrideQueryBuilder["pgSleep"]>) {
-    return (new QueryBuilder(this)).pgSleep(...args);
+  pgSleep<TArgs extends Parameters<OverrideQueryBuilder["pgSleep"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSleep(...(args as unknown as Parameters<OverrideQueryBuilder["pgSleep"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSleepFor(...args: Parameters<OverrideQueryBuilder["pgSleepFor"]>) {
-    return (new QueryBuilder(this)).pgSleepFor(...args);
+  pgSleepFor<TArgs extends Parameters<OverrideQueryBuilder["pgSleepFor"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSleepFor(...(args as unknown as Parameters<OverrideQueryBuilder["pgSleepFor"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSleepUntil(...args: Parameters<OverrideQueryBuilder["pgSleepUntil"]>) {
-    return (new QueryBuilder(this)).pgSleepUntil(...args);
+  pgSleepUntil<TArgs extends Parameters<OverrideQueryBuilder["pgSleepUntil"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSleepUntil(...(args as unknown as Parameters<OverrideQueryBuilder["pgSleepUntil"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSnapshotXip(...args: Parameters<OverrideQueryBuilder["pgSnapshotXip"]>) {
-    return (new QueryBuilder(this)).pgSnapshotXip(...args);
+  pgSnapshotXip<TArgs extends Parameters<OverrideQueryBuilder["pgSnapshotXip"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSnapshotXip(...(args as unknown as Parameters<OverrideQueryBuilder["pgSnapshotXip"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSnapshotXmax(...args: Parameters<OverrideQueryBuilder["pgSnapshotXmax"]>) {
-    return (new QueryBuilder(this)).pgSnapshotXmax(...args);
+  pgSnapshotXmax<TArgs extends Parameters<OverrideQueryBuilder["pgSnapshotXmax"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSnapshotXmax(...(args as unknown as Parameters<OverrideQueryBuilder["pgSnapshotXmax"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSnapshotXmin(...args: Parameters<OverrideQueryBuilder["pgSnapshotXmin"]>) {
-    return (new QueryBuilder(this)).pgSnapshotXmin(...args);
+  pgSnapshotXmin<TArgs extends Parameters<OverrideQueryBuilder["pgSnapshotXmin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSnapshotXmin(...(args as unknown as Parameters<OverrideQueryBuilder["pgSnapshotXmin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSplitWalfileName(...args: Parameters<OverrideQueryBuilder["pgSplitWalfileName"]>) {
-    return (new QueryBuilder(this)).pgSplitWalfileName(...args);
+  pgSplitWalfileName<TArgs extends Parameters<OverrideQueryBuilder["pgSplitWalfileName"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSplitWalfileName(...(args as unknown as Parameters<OverrideQueryBuilder["pgSplitWalfileName"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgStatFile(...args: Parameters<OverrideQueryBuilder["pgStatFile"]>) {
-    return (new QueryBuilder(this)).pgStatFile(...args);
+  pgStatFile<TArgs extends Parameters<OverrideQueryBuilder["pgStatFile"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgStatFile(...(args as unknown as Parameters<OverrideQueryBuilder["pgStatFile"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgStatisticsObjIsVisible(...args: Parameters<OverrideQueryBuilder["pgStatisticsObjIsVisible"]>) {
-    return (new QueryBuilder(this)).pgStatisticsObjIsVisible(...args);
+  pgStatisticsObjIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgStatisticsObjIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgStatisticsObjIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgStatisticsObjIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSwitchWal(...args: Parameters<OverrideQueryBuilder["pgSwitchWal"]>) {
-    return (new QueryBuilder(this)).pgSwitchWal(...args);
+  pgSwitchWal<TArgs extends Parameters<OverrideQueryBuilder["pgSwitchWal"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSwitchWal(...(args as unknown as Parameters<OverrideQueryBuilder["pgSwitchWal"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgSyncReplicationSlots(...args: Parameters<OverrideQueryBuilder["pgSyncReplicationSlots"]>) {
-    return (new QueryBuilder(this)).pgSyncReplicationSlots(...args);
+  pgSyncReplicationSlots<TArgs extends Parameters<OverrideQueryBuilder["pgSyncReplicationSlots"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgSyncReplicationSlots(...(args as unknown as Parameters<OverrideQueryBuilder["pgSyncReplicationSlots"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTableIsVisible(...args: Parameters<OverrideQueryBuilder["pgTableIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTableIsVisible(...args);
+  pgTableIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgTableIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTableIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgTableIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTableSize(...args: Parameters<OverrideQueryBuilder["pgTableSize"]>) {
-    return (new QueryBuilder(this)).pgTableSize(...args);
+  pgTableSize<TArgs extends Parameters<OverrideQueryBuilder["pgTableSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTableSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgTableSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTablespaceDatabases(...args: Parameters<OverrideQueryBuilder["pgTablespaceDatabases"]>) {
-    return (new QueryBuilder(this)).pgTablespaceDatabases(...args);
+  pgTablespaceDatabases<TArgs extends Parameters<OverrideQueryBuilder["pgTablespaceDatabases"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTablespaceDatabases(...(args as unknown as Parameters<OverrideQueryBuilder["pgTablespaceDatabases"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTablespaceLocation(...args: Parameters<OverrideQueryBuilder["pgTablespaceLocation"]>) {
-    return (new QueryBuilder(this)).pgTablespaceLocation(...args);
+  pgTablespaceLocation<TArgs extends Parameters<OverrideQueryBuilder["pgTablespaceLocation"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTablespaceLocation(...(args as unknown as Parameters<OverrideQueryBuilder["pgTablespaceLocation"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTablespaceSize(...args: Parameters<OverrideQueryBuilder["pgTablespaceSize"]>) {
-    return (new QueryBuilder(this)).pgTablespaceSize(...args);
+  pgTablespaceSize<TArgs extends Parameters<OverrideQueryBuilder["pgTablespaceSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTablespaceSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgTablespaceSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTerminateBackend(...args: Parameters<OverrideQueryBuilder["pgTerminateBackend"]>) {
-    return (new QueryBuilder(this)).pgTerminateBackend(...args);
+  pgTerminateBackend<TArgs extends Parameters<OverrideQueryBuilder["pgTerminateBackend"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTerminateBackend(...(args as unknown as Parameters<OverrideQueryBuilder["pgTerminateBackend"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTotalRelationSize(...args: Parameters<OverrideQueryBuilder["pgTotalRelationSize"]>) {
-    return (new QueryBuilder(this)).pgTotalRelationSize(...args);
+  pgTotalRelationSize<TArgs extends Parameters<OverrideQueryBuilder["pgTotalRelationSize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTotalRelationSize(...(args as unknown as Parameters<OverrideQueryBuilder["pgTotalRelationSize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTriggerDepth(...args: Parameters<OverrideQueryBuilder["pgTriggerDepth"]>) {
-    return (new QueryBuilder(this)).pgTriggerDepth(...args);
+  pgTriggerDepth<TArgs extends Parameters<OverrideQueryBuilder["pgTriggerDepth"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTriggerDepth(...(args as unknown as Parameters<OverrideQueryBuilder["pgTriggerDepth"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTryAdvisoryLock(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryLock"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryLock(...args);
+  pgTryAdvisoryLock<TArgs extends Parameters<OverrideQueryBuilder["pgTryAdvisoryLock"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTryAdvisoryLock(...(args as unknown as Parameters<OverrideQueryBuilder["pgTryAdvisoryLock"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTryAdvisoryLockShared(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryLockShared"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryLockShared(...args);
+  pgTryAdvisoryLockShared<TArgs extends Parameters<OverrideQueryBuilder["pgTryAdvisoryLockShared"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTryAdvisoryLockShared(...(args as unknown as Parameters<OverrideQueryBuilder["pgTryAdvisoryLockShared"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTryAdvisoryXactLock(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLock"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryXactLock(...args);
+  pgTryAdvisoryXactLock<TArgs extends Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLock"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTryAdvisoryXactLock(...(args as unknown as Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLock"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTryAdvisoryXactLockShared(...args: Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLockShared"]>) {
-    return (new QueryBuilder(this)).pgTryAdvisoryXactLockShared(...args);
+  pgTryAdvisoryXactLockShared<TArgs extends Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLockShared"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTryAdvisoryXactLockShared(...(args as unknown as Parameters<OverrideQueryBuilder["pgTryAdvisoryXactLockShared"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTsConfigIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsConfigIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsConfigIsVisible(...args);
+  pgTsConfigIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgTsConfigIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTsConfigIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgTsConfigIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTsDictIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsDictIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsDictIsVisible(...args);
+  pgTsDictIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgTsDictIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTsDictIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgTsDictIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTsParserIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsParserIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsParserIsVisible(...args);
+  pgTsParserIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgTsParserIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTsParserIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgTsParserIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTsTemplateIsVisible(...args: Parameters<OverrideQueryBuilder["pgTsTemplateIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTsTemplateIsVisible(...args);
+  pgTsTemplateIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgTsTemplateIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTsTemplateIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgTsTemplateIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTypeIsVisible(...args: Parameters<OverrideQueryBuilder["pgTypeIsVisible"]>) {
-    return (new QueryBuilder(this)).pgTypeIsVisible(...args);
+  pgTypeIsVisible<TArgs extends Parameters<OverrideQueryBuilder["pgTypeIsVisible"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTypeIsVisible(...(args as unknown as Parameters<OverrideQueryBuilder["pgTypeIsVisible"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgTypeof(...args: Parameters<OverrideQueryBuilder["pgTypeof"]>) {
-    return (new QueryBuilder(this)).pgTypeof(...args);
+  pgTypeof<TArgs extends Parameters<OverrideQueryBuilder["pgTypeof"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgTypeof(...(args as unknown as Parameters<OverrideQueryBuilder["pgTypeof"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgVisibleInSnapshot(...args: Parameters<OverrideQueryBuilder["pgVisibleInSnapshot"]>) {
-    return (new QueryBuilder(this)).pgVisibleInSnapshot(...args);
+  pgVisibleInSnapshot<TArgs extends Parameters<OverrideQueryBuilder["pgVisibleInSnapshot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgVisibleInSnapshot(...(args as unknown as Parameters<OverrideQueryBuilder["pgVisibleInSnapshot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgWalfileName(...args: Parameters<OverrideQueryBuilder["pgWalfileName"]>) {
-    return (new QueryBuilder(this)).pgWalfileName(...args);
+  pgWalfileName<TArgs extends Parameters<OverrideQueryBuilder["pgWalfileName"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgWalfileName(...(args as unknown as Parameters<OverrideQueryBuilder["pgWalfileName"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgWalfileNameOffset(...args: Parameters<OverrideQueryBuilder["pgWalfileNameOffset"]>) {
-    return (new QueryBuilder(this)).pgWalfileNameOffset(...args);
+  pgWalfileNameOffset<TArgs extends Parameters<OverrideQueryBuilder["pgWalfileNameOffset"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgWalfileNameOffset(...(args as unknown as Parameters<OverrideQueryBuilder["pgWalfileNameOffset"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgWalLsnDiff(...args: Parameters<OverrideQueryBuilder["pgWalLsnDiff"]>) {
-    return (new QueryBuilder(this)).pgWalLsnDiff(...args);
+  pgWalLsnDiff<TArgs extends Parameters<OverrideQueryBuilder["pgWalLsnDiff"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgWalLsnDiff(...(args as unknown as Parameters<OverrideQueryBuilder["pgWalLsnDiff"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgWalReplayPause(...args: Parameters<OverrideQueryBuilder["pgWalReplayPause"]>) {
-    return (new QueryBuilder(this)).pgWalReplayPause(...args);
+  pgWalReplayPause<TArgs extends Parameters<OverrideQueryBuilder["pgWalReplayPause"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgWalReplayPause(...(args as unknown as Parameters<OverrideQueryBuilder["pgWalReplayPause"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgWalReplayResume(...args: Parameters<OverrideQueryBuilder["pgWalReplayResume"]>) {
-    return (new QueryBuilder(this)).pgWalReplayResume(...args);
+  pgWalReplayResume<TArgs extends Parameters<OverrideQueryBuilder["pgWalReplayResume"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgWalReplayResume(...(args as unknown as Parameters<OverrideQueryBuilder["pgWalReplayResume"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgWalSummaryContents(...args: Parameters<OverrideQueryBuilder["pgWalSummaryContents"]>) {
-    return (new QueryBuilder(this)).pgWalSummaryContents(...args);
+  pgWalSummaryContents<TArgs extends Parameters<OverrideQueryBuilder["pgWalSummaryContents"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgWalSummaryContents(...(args as unknown as Parameters<OverrideQueryBuilder["pgWalSummaryContents"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgXactCommitTimestamp(...args: Parameters<OverrideQueryBuilder["pgXactCommitTimestamp"]>) {
-    return (new QueryBuilder(this)).pgXactCommitTimestamp(...args);
+  pgXactCommitTimestamp<TArgs extends Parameters<OverrideQueryBuilder["pgXactCommitTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgXactCommitTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["pgXactCommitTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgXactCommitTimestampOrigin(...args: Parameters<OverrideQueryBuilder["pgXactCommitTimestampOrigin"]>) {
-    return (new QueryBuilder(this)).pgXactCommitTimestampOrigin(...args);
+  pgXactCommitTimestampOrigin<TArgs extends Parameters<OverrideQueryBuilder["pgXactCommitTimestampOrigin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgXactCommitTimestampOrigin(...(args as unknown as Parameters<OverrideQueryBuilder["pgXactCommitTimestampOrigin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pgXactStatus(...args: Parameters<OverrideQueryBuilder["pgXactStatus"]>) {
-    return (new QueryBuilder(this)).pgXactStatus(...args);
+  pgXactStatus<TArgs extends Parameters<OverrideQueryBuilder["pgXactStatus"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pgXactStatus(...(args as unknown as Parameters<OverrideQueryBuilder["pgXactStatus"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  phrasetoTsquery(...args: Parameters<OverrideQueryBuilder["phrasetoTsquery"]>) {
-    return (new QueryBuilder(this)).phrasetoTsquery(...args);
+  phrasetoTsquery<TArgs extends Parameters<OverrideQueryBuilder["phrasetoTsquery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).phrasetoTsquery(...(args as unknown as Parameters<OverrideQueryBuilder["phrasetoTsquery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  pi(...args: Parameters<OverrideQueryBuilder["pi"]>) {
-    return (new QueryBuilder(this)).pi(...args);
+  pi<TArgs extends Parameters<OverrideQueryBuilder["pi"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).pi(...(args as unknown as Parameters<OverrideQueryBuilder["pi"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   pipe() {
     return (new QueryBuilder(this)).pipe();
@@ -3126,8 +3126,8 @@ export class QueryInstance {
   placing() {
     return (new QueryBuilder(this)).placing();
   }
-  plaintoTsquery(...args: Parameters<OverrideQueryBuilder["plaintoTsquery"]>) {
-    return (new QueryBuilder(this)).plaintoTsquery(...args);
+  plaintoTsquery<TArgs extends Parameters<OverrideQueryBuilder["plaintoTsquery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).plaintoTsquery(...(args as unknown as Parameters<OverrideQueryBuilder["plaintoTsquery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   plan() {
     return (new QueryBuilder(this)).plan();
@@ -3138,32 +3138,32 @@ export class QueryInstance {
   pli() {
     return (new QueryBuilder(this)).pli();
   }
-  plus(...args: Parameters<OverrideQueryBuilder["plus"]>) {
-    return (new QueryBuilder(this)).plus(...args);
+  plus<TArgs extends Parameters<OverrideQueryBuilder["plus"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).plus(...(args as unknown as Parameters<OverrideQueryBuilder["plus"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  point(...args: Parameters<OverrideQueryBuilder["point"]>) {
-    return (new QueryBuilder(this)).point(...args);
+  point<TArgs extends Parameters<OverrideQueryBuilder["point"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).point(...(args as unknown as Parameters<OverrideQueryBuilder["point"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   policy() {
     return (new QueryBuilder(this)).policy();
   }
-  polygon(...args: Parameters<OverrideQueryBuilder["polygon"]>) {
-    return (new QueryBuilder(this)).polygon(...args);
+  polygon<TArgs extends Parameters<OverrideQueryBuilder["polygon"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).polygon(...(args as unknown as Parameters<OverrideQueryBuilder["polygon"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  popen(...args: Parameters<OverrideQueryBuilder["popen"]>) {
-    return (new QueryBuilder(this)).popen(...args);
+  popen<TArgs extends Parameters<OverrideQueryBuilder["popen"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).popen(...(args as unknown as Parameters<OverrideQueryBuilder["popen"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   portion() {
     return (new QueryBuilder(this)).portion();
   }
-  position(...args: Parameters<OverrideQueryBuilder["position"]>) {
-    return (new QueryBuilder(this)).position(...args);
+  position<TArgs extends Parameters<OverrideQueryBuilder["position"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).position(...(args as unknown as Parameters<OverrideQueryBuilder["position"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   positionRegex() {
     return (new QueryBuilder(this)).positionRegex();
   }
-  power(...args: Parameters<OverrideQueryBuilder["power"]>) {
-    return (new QueryBuilder(this)).power(...args);
+  power<TArgs extends Parameters<OverrideQueryBuilder["power"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).power(...(args as unknown as Parameters<OverrideQueryBuilder["power"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   precedes() {
     return (new QueryBuilder(this)).precedes();
@@ -3180,8 +3180,8 @@ export class QueryInstance {
   prepared() {
     return (new QueryBuilder(this)).prepared();
   }
-  prepareTransaction(...args: Parameters<OverrideQueryBuilder["prepareTransaction"]>) {
-    return (new QueryBuilder(this)).prepareTransaction(...args);
+  prepareTransaction<TArgs extends Parameters<OverrideQueryBuilder["prepareTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).prepareTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["prepareTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   preserve() {
     return (new QueryBuilder(this)).preserve();
@@ -3225,29 +3225,29 @@ export class QueryInstance {
   publication() {
     return (new QueryBuilder(this)).publication();
   }
-  queryToXml(...args: Parameters<OverrideQueryBuilder["queryToXml"]>) {
-    return (new QueryBuilder(this)).queryToXml(...args);
+  queryToXml<TArgs extends Parameters<OverrideQueryBuilder["queryToXml"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).queryToXml(...(args as unknown as Parameters<OverrideQueryBuilder["queryToXml"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  queryToXmlAndXmlschema(...args: Parameters<OverrideQueryBuilder["queryToXmlAndXmlschema"]>) {
-    return (new QueryBuilder(this)).queryToXmlAndXmlschema(...args);
+  queryToXmlAndXmlschema<TArgs extends Parameters<OverrideQueryBuilder["queryToXmlAndXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).queryToXmlAndXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["queryToXmlAndXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  queryToXmlschema(...args: Parameters<OverrideQueryBuilder["queryToXmlschema"]>) {
-    return (new QueryBuilder(this)).queryToXmlschema(...args);
+  queryToXmlschema<TArgs extends Parameters<OverrideQueryBuilder["queryToXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).queryToXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["queryToXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  querytree(...args: Parameters<OverrideQueryBuilder["querytree"]>) {
-    return (new QueryBuilder(this)).querytree(...args);
+  querytree<TArgs extends Parameters<OverrideQueryBuilder["querytree"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).querytree(...(args as unknown as Parameters<OverrideQueryBuilder["querytree"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   quote() {
     return (new QueryBuilder(this)).quote();
   }
-  quoteIdent(...args: Parameters<OverrideQueryBuilder["quoteIdent"]>) {
-    return (new QueryBuilder(this)).quoteIdent(...args);
+  quoteIdent<TArgs extends Parameters<OverrideQueryBuilder["quoteIdent"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).quoteIdent(...(args as unknown as Parameters<OverrideQueryBuilder["quoteIdent"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  quoteLiteral(...args: Parameters<OverrideQueryBuilder["quoteLiteral"]>) {
-    return (new QueryBuilder(this)).quoteLiteral(...args);
+  quoteLiteral<TArgs extends Parameters<OverrideQueryBuilder["quoteLiteral"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).quoteLiteral(...(args as unknown as Parameters<OverrideQueryBuilder["quoteLiteral"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  quoteNullable(...args: Parameters<OverrideQueryBuilder["quoteNullable"]>) {
-    return (new QueryBuilder(this)).quoteNullable(...args);
+  quoteNullable<TArgs extends Parameters<OverrideQueryBuilder["quoteNullable"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).quoteNullable(...(args as unknown as Parameters<OverrideQueryBuilder["quoteNullable"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   quotes() {
     return (new QueryBuilder(this)).quotes();
@@ -3255,32 +3255,32 @@ export class QueryInstance {
   r(...args: Parameters<BaseRawQueryBuilder["r"]>) {
     return (new QueryBuilder(this)).r(...args);
   }
-  radians(...args: Parameters<OverrideQueryBuilder["radians"]>) {
-    return (new QueryBuilder(this)).radians(...args);
+  radians<TArgs extends Parameters<OverrideQueryBuilder["radians"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).radians(...(args as unknown as Parameters<OverrideQueryBuilder["radians"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  radius(...args: Parameters<OverrideQueryBuilder["radius"]>) {
-    return (new QueryBuilder(this)).radius(...args);
+  radius<TArgs extends Parameters<OverrideQueryBuilder["radius"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).radius(...(args as unknown as Parameters<OverrideQueryBuilder["radius"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  random(...args: Parameters<OverrideQueryBuilder["random"]>) {
-    return (new QueryBuilder(this)).random(...args);
+  random<TArgs extends Parameters<OverrideQueryBuilder["random"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).random(...(args as unknown as Parameters<OverrideQueryBuilder["random"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  randomNormal(...args: Parameters<OverrideQueryBuilder["randomNormal"]>) {
-    return (new QueryBuilder(this)).randomNormal(...args);
+  randomNormal<TArgs extends Parameters<OverrideQueryBuilder["randomNormal"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).randomNormal(...(args as unknown as Parameters<OverrideQueryBuilder["randomNormal"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   range() {
     return (new QueryBuilder(this)).range();
   }
-  rangeAgg(...args: Parameters<OverrideQueryBuilder["rangeAgg"]>) {
-    return (new QueryBuilder(this)).rangeAgg(...args);
+  rangeAgg<TArgs extends Parameters<OverrideQueryBuilder["rangeAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rangeAgg(...(args as unknown as Parameters<OverrideQueryBuilder["rangeAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rangeIntersectAgg(...args: Parameters<OverrideQueryBuilder["rangeIntersectAgg"]>) {
-    return (new QueryBuilder(this)).rangeIntersectAgg(...args);
+  rangeIntersectAgg<TArgs extends Parameters<OverrideQueryBuilder["rangeIntersectAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rangeIntersectAgg(...(args as unknown as Parameters<OverrideQueryBuilder["rangeIntersectAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rangeMerge(...args: Parameters<OverrideQueryBuilder["rangeMerge"]>) {
-    return (new QueryBuilder(this)).rangeMerge(...args);
+  rangeMerge<TArgs extends Parameters<OverrideQueryBuilder["rangeMerge"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rangeMerge(...(args as unknown as Parameters<OverrideQueryBuilder["rangeMerge"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rank(...args: Parameters<OverrideQueryBuilder["rank"]>) {
-    return (new QueryBuilder(this)).rank(...args);
+  rank<TArgs extends Parameters<OverrideQueryBuilder["rank"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rank(...(args as unknown as Parameters<OverrideQueryBuilder["rank"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   raw(...args: Parameters<BaseRawQueryBuilder["raw"]>) {
     return (new QueryBuilder(this)).raw(...args);
@@ -3318,59 +3318,59 @@ export class QueryInstance {
   refresh() {
     return (new QueryBuilder(this)).refresh();
   }
-  regexpCount(...args: Parameters<OverrideQueryBuilder["regexpCount"]>) {
-    return (new QueryBuilder(this)).regexpCount(...args);
+  regexpCount<TArgs extends Parameters<OverrideQueryBuilder["regexpCount"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpCount(...(args as unknown as Parameters<OverrideQueryBuilder["regexpCount"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpInstr(...args: Parameters<OverrideQueryBuilder["regexpInstr"]>) {
-    return (new QueryBuilder(this)).regexpInstr(...args);
+  regexpInstr<TArgs extends Parameters<OverrideQueryBuilder["regexpInstr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpInstr(...(args as unknown as Parameters<OverrideQueryBuilder["regexpInstr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpLike(...args: Parameters<OverrideQueryBuilder["regexpLike"]>) {
-    return (new QueryBuilder(this)).regexpLike(...args);
+  regexpLike<TArgs extends Parameters<OverrideQueryBuilder["regexpLike"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpLike(...(args as unknown as Parameters<OverrideQueryBuilder["regexpLike"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpMatch(...args: Parameters<OverrideQueryBuilder["regexpMatch"]>) {
-    return (new QueryBuilder(this)).regexpMatch(...args);
+  regexpMatch<TArgs extends Parameters<OverrideQueryBuilder["regexpMatch"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpMatch(...(args as unknown as Parameters<OverrideQueryBuilder["regexpMatch"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpMatches(...args: Parameters<OverrideQueryBuilder["regexpMatches"]>) {
-    return (new QueryBuilder(this)).regexpMatches(...args);
+  regexpMatches<TArgs extends Parameters<OverrideQueryBuilder["regexpMatches"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpMatches(...(args as unknown as Parameters<OverrideQueryBuilder["regexpMatches"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpReplace(...args: Parameters<OverrideQueryBuilder["regexpReplace"]>) {
-    return (new QueryBuilder(this)).regexpReplace(...args);
+  regexpReplace<TArgs extends Parameters<OverrideQueryBuilder["regexpReplace"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpReplace(...(args as unknown as Parameters<OverrideQueryBuilder["regexpReplace"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpSplitToArray(...args: Parameters<OverrideQueryBuilder["regexpSplitToArray"]>) {
-    return (new QueryBuilder(this)).regexpSplitToArray(...args);
+  regexpSplitToArray<TArgs extends Parameters<OverrideQueryBuilder["regexpSplitToArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpSplitToArray(...(args as unknown as Parameters<OverrideQueryBuilder["regexpSplitToArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpSplitToTable(...args: Parameters<OverrideQueryBuilder["regexpSplitToTable"]>) {
-    return (new QueryBuilder(this)).regexpSplitToTable(...args);
+  regexpSplitToTable<TArgs extends Parameters<OverrideQueryBuilder["regexpSplitToTable"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpSplitToTable(...(args as unknown as Parameters<OverrideQueryBuilder["regexpSplitToTable"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regexpSubstr(...args: Parameters<OverrideQueryBuilder["regexpSubstr"]>) {
-    return (new QueryBuilder(this)).regexpSubstr(...args);
+  regexpSubstr<TArgs extends Parameters<OverrideQueryBuilder["regexpSubstr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regexpSubstr(...(args as unknown as Parameters<OverrideQueryBuilder["regexpSubstr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrAvgx(...args: Parameters<OverrideQueryBuilder["regrAvgx"]>) {
-    return (new QueryBuilder(this)).regrAvgx(...args);
+  regrAvgx<TArgs extends Parameters<OverrideQueryBuilder["regrAvgx"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrAvgx(...(args as unknown as Parameters<OverrideQueryBuilder["regrAvgx"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrAvgy(...args: Parameters<OverrideQueryBuilder["regrAvgy"]>) {
-    return (new QueryBuilder(this)).regrAvgy(...args);
+  regrAvgy<TArgs extends Parameters<OverrideQueryBuilder["regrAvgy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrAvgy(...(args as unknown as Parameters<OverrideQueryBuilder["regrAvgy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrCount(...args: Parameters<OverrideQueryBuilder["regrCount"]>) {
-    return (new QueryBuilder(this)).regrCount(...args);
+  regrCount<TArgs extends Parameters<OverrideQueryBuilder["regrCount"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrCount(...(args as unknown as Parameters<OverrideQueryBuilder["regrCount"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrIntercept(...args: Parameters<OverrideQueryBuilder["regrIntercept"]>) {
-    return (new QueryBuilder(this)).regrIntercept(...args);
+  regrIntercept<TArgs extends Parameters<OverrideQueryBuilder["regrIntercept"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrIntercept(...(args as unknown as Parameters<OverrideQueryBuilder["regrIntercept"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrR2(...args: Parameters<OverrideQueryBuilder["regrR2"]>) {
-    return (new QueryBuilder(this)).regrR2(...args);
+  regrR2<TArgs extends Parameters<OverrideQueryBuilder["regrR2"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrR2(...(args as unknown as Parameters<OverrideQueryBuilder["regrR2"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrSlope(...args: Parameters<OverrideQueryBuilder["regrSlope"]>) {
-    return (new QueryBuilder(this)).regrSlope(...args);
+  regrSlope<TArgs extends Parameters<OverrideQueryBuilder["regrSlope"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrSlope(...(args as unknown as Parameters<OverrideQueryBuilder["regrSlope"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrSxx(...args: Parameters<OverrideQueryBuilder["regrSxx"]>) {
-    return (new QueryBuilder(this)).regrSxx(...args);
+  regrSxx<TArgs extends Parameters<OverrideQueryBuilder["regrSxx"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrSxx(...(args as unknown as Parameters<OverrideQueryBuilder["regrSxx"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrSxy(...args: Parameters<OverrideQueryBuilder["regrSxy"]>) {
-    return (new QueryBuilder(this)).regrSxy(...args);
+  regrSxy<TArgs extends Parameters<OverrideQueryBuilder["regrSxy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrSxy(...(args as unknown as Parameters<OverrideQueryBuilder["regrSxy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  regrSyy(...args: Parameters<OverrideQueryBuilder["regrSyy"]>) {
-    return (new QueryBuilder(this)).regrSyy(...args);
+  regrSyy<TArgs extends Parameters<OverrideQueryBuilder["regrSyy"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).regrSyy(...(args as unknown as Parameters<OverrideQueryBuilder["regrSyy"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   reindex() {
     return (new QueryBuilder(this)).reindex();
@@ -3381,20 +3381,20 @@ export class QueryInstance {
   release() {
     return (new QueryBuilder(this)).release();
   }
-  releaseTransaction(...args: Parameters<OverrideQueryBuilder["releaseTransaction"]>) {
-    return (new QueryBuilder(this)).releaseTransaction(...args);
+  releaseTransaction<TArgs extends Parameters<OverrideQueryBuilder["releaseTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).releaseTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["releaseTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   rename() {
     return (new QueryBuilder(this)).rename();
   }
-  repeat(...args: Parameters<OverrideQueryBuilder["repeat"]>) {
-    return (new QueryBuilder(this)).repeat(...args);
+  repeat<TArgs extends Parameters<OverrideQueryBuilder["repeat"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).repeat(...(args as unknown as Parameters<OverrideQueryBuilder["repeat"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   repeatable() {
     return (new QueryBuilder(this)).repeatable();
   }
-  replace(...args: Parameters<OverrideQueryBuilder["replace"]>) {
-    return (new QueryBuilder(this)).replace(...args);
+  replace<TArgs extends Parameters<OverrideQueryBuilder["replace"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).replace(...(args as unknown as Parameters<OverrideQueryBuilder["replace"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   replica() {
     return (new QueryBuilder(this)).replica();
@@ -3435,26 +3435,26 @@ export class QueryInstance {
   returnedSqlstate() {
     return (new QueryBuilder(this)).returnedSqlstate();
   }
-  returning(...args: Parameters<OverrideQueryBuilder["returning"]>) {
-    return (new QueryBuilder(this)).returning(...args);
+  returning<TArgs extends Parameters<OverrideQueryBuilder["returning"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).returning(...(args as unknown as Parameters<OverrideQueryBuilder["returning"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   returns() {
     return (new QueryBuilder(this)).returns();
   }
-  reverse(...args: Parameters<OverrideQueryBuilder["reverse"]>) {
-    return (new QueryBuilder(this)).reverse(...args);
+  reverse<TArgs extends Parameters<OverrideQueryBuilder["reverse"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).reverse(...(args as unknown as Parameters<OverrideQueryBuilder["reverse"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   revoke() {
     return (new QueryBuilder(this)).revoke();
   }
-  right(...args: Parameters<OverrideQueryBuilder["right"]>) {
-    return (new QueryBuilder(this)).right(...args);
+  right<TArgs extends Parameters<OverrideQueryBuilder["right"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).right(...(args as unknown as Parameters<OverrideQueryBuilder["right"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rightJoin(...args: Parameters<OverrideQueryBuilder["rightJoin"]>) {
-    return (new QueryBuilder(this)).rightJoin(...args);
+  rightJoin<TArgs extends Parameters<OverrideQueryBuilder["rightJoin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rightJoin(...(args as unknown as Parameters<OverrideQueryBuilder["rightJoin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rightJoinLateral(...args: Parameters<OverrideQueryBuilder["rightJoinLateral"]>) {
-    return (new QueryBuilder(this)).rightJoinLateral(...args);
+  rightJoinLateral<TArgs extends Parameters<OverrideQueryBuilder["rightJoinLateral"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rightJoinLateral(...(args as unknown as Parameters<OverrideQueryBuilder["rightJoinLateral"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   role() {
     return (new QueryBuilder(this)).role();
@@ -3462,20 +3462,20 @@ export class QueryInstance {
   rollback() {
     return (new QueryBuilder(this)).rollback();
   }
-  rollbackPreparedTransaction(...args: Parameters<OverrideQueryBuilder["rollbackPreparedTransaction"]>) {
-    return (new QueryBuilder(this)).rollbackPreparedTransaction(...args);
+  rollbackPreparedTransaction<TArgs extends Parameters<OverrideQueryBuilder["rollbackPreparedTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rollbackPreparedTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["rollbackPreparedTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rollbackToSavepointTransaction(...args: Parameters<OverrideQueryBuilder["rollbackToSavepointTransaction"]>) {
-    return (new QueryBuilder(this)).rollbackToSavepointTransaction(...args);
+  rollbackToSavepointTransaction<TArgs extends Parameters<OverrideQueryBuilder["rollbackToSavepointTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rollbackToSavepointTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["rollbackToSavepointTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rollbackTransaction(...args: Parameters<OverrideQueryBuilder["rollbackTransaction"]>) {
-    return (new QueryBuilder(this)).rollbackTransaction(...args);
+  rollbackTransaction<TArgs extends Parameters<OverrideQueryBuilder["rollbackTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rollbackTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["rollbackTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   rollup() {
     return (new QueryBuilder(this)).rollup();
   }
-  round(...args: Parameters<OverrideQueryBuilder["round"]>) {
-    return (new QueryBuilder(this)).round(...args);
+  round<TArgs extends Parameters<OverrideQueryBuilder["round"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).round(...(args as unknown as Parameters<OverrideQueryBuilder["round"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   routine() {
     return (new QueryBuilder(this)).routine();
@@ -3498,26 +3498,26 @@ export class QueryInstance {
   rowCount() {
     return (new QueryBuilder(this)).rowCount();
   }
-  rowNumber(...args: Parameters<OverrideQueryBuilder["rowNumber"]>) {
-    return (new QueryBuilder(this)).rowNumber(...args);
+  rowNumber<TArgs extends Parameters<OverrideQueryBuilder["rowNumber"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rowNumber(...(args as unknown as Parameters<OverrideQueryBuilder["rowNumber"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   rows() {
     return (new QueryBuilder(this)).rows();
   }
-  rowSecurityActive(...args: Parameters<OverrideQueryBuilder["rowSecurityActive"]>) {
-    return (new QueryBuilder(this)).rowSecurityActive(...args);
+  rowSecurityActive<TArgs extends Parameters<OverrideQueryBuilder["rowSecurityActive"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rowSecurityActive(...(args as unknown as Parameters<OverrideQueryBuilder["rowSecurityActive"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rowToJson(...args: Parameters<OverrideQueryBuilder["rowToJson"]>) {
-    return (new QueryBuilder(this)).rowToJson(...args);
+  rowToJson<TArgs extends Parameters<OverrideQueryBuilder["rowToJson"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rowToJson(...(args as unknown as Parameters<OverrideQueryBuilder["rowToJson"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  rpad(...args: Parameters<OverrideQueryBuilder["rpad"]>) {
-    return (new QueryBuilder(this)).rpad(...args);
+  rpad<TArgs extends Parameters<OverrideQueryBuilder["rpad"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rpad(...(args as unknown as Parameters<OverrideQueryBuilder["rpad"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   rs(...args: Parameters<BaseRawQueryBuilder["rs"]>) {
     return (new QueryBuilder(this)).rs(...args);
   }
-  rtrim(...args: Parameters<OverrideQueryBuilder["rtrim"]>) {
-    return (new QueryBuilder(this)).rtrim(...args);
+  rtrim<TArgs extends Parameters<OverrideQueryBuilder["rtrim"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).rtrim(...(args as unknown as Parameters<OverrideQueryBuilder["rtrim"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   rule() {
     return (new QueryBuilder(this)).rule();
@@ -3525,56 +3525,47 @@ export class QueryInstance {
   running() {
     return (new QueryBuilder(this)).running();
   }
-  sameAs(...args: Parameters<OverrideQueryBuilder["sameAs"]>) {
-    return (new QueryBuilder(this)).sameAs(...args);
+  sameAs<TArgs extends Parameters<OverrideQueryBuilder["sameAs"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sameAs(...(args as unknown as Parameters<OverrideQueryBuilder["sameAs"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   savepoint() {
     return (new QueryBuilder(this)).savepoint();
   }
-  savepointTransaction(...args: Parameters<OverrideQueryBuilder["savepointTransaction"]>) {
-    return (new QueryBuilder(this)).savepointTransaction(...args);
+  savepointTransaction<TArgs extends Parameters<OverrideQueryBuilder["savepointTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).savepointTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["savepointTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sc(...args: Parameters<OverrideQueryBuilder["sc"]>) {
-    return (new QueryBuilder(this)).sc(...args);
+  sc<TArgs extends Parameters<OverrideQueryBuilder["sc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sc(...(args as unknown as Parameters<OverrideQueryBuilder["sc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   scalar() {
     return (new QueryBuilder(this)).scalar();
   }
-  scale(...args: Parameters<OverrideQueryBuilder["scale"]>) {
-    return (new QueryBuilder(this)).scale(...args);
+  scale<TArgs extends Parameters<OverrideQueryBuilder["scale"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).scale(...(args as unknown as Parameters<OverrideQueryBuilder["scale"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   schema() {
     return (new QueryBuilder(this)).schema();
   }
-  schemaCase(...args: Parameters<OverrideQueryBuilder["schemaCase"]>) {
-    return (new QueryBuilder(this)).schemaCase(...args);
-  }
-  schemaColumn(...args: Parameters<OverrideQueryBuilder["schemaColumn"]>) {
-    return (new QueryBuilder(this)).schemaColumn(...args);
-  }
-  schemaDatabase(...args: Parameters<OverrideQueryBuilder["schemaDatabase"]>) {
-    return (new QueryBuilder(this)).schemaDatabase(...args);
+  schemaCase<TKey extends string, TCaseQuery extends QueryBuilder>(key: TKey, queryBuilder: TCaseQuery) {
+    return (new QueryBuilder(this)).schemaCase(key, queryBuilder);
   }
   schemaName() {
     return (new QueryBuilder(this)).schemaName();
   }
-  schemaParam(...args: Parameters<OverrideQueryBuilder["schemaParam"]>) {
-    return (new QueryBuilder(this)).schemaParam(...args);
+  schemaParam<TKey extends string>(key: TKey) {
+    return (new QueryBuilder(this)).schemaParam(key);
   }
   schemas() {
     return (new QueryBuilder(this)).schemas();
   }
-  schemaTable(...args: Parameters<OverrideQueryBuilder["schemaTable"]>) {
-    return (new QueryBuilder(this)).schemaTable(...args);
+  schemaToXml<TArgs extends Parameters<OverrideQueryBuilder["schemaToXml"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).schemaToXml(...(args as unknown as Parameters<OverrideQueryBuilder["schemaToXml"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  schemaToXml(...args: Parameters<OverrideQueryBuilder["schemaToXml"]>) {
-    return (new QueryBuilder(this)).schemaToXml(...args);
+  schemaToXmlAndXmlschema<TArgs extends Parameters<OverrideQueryBuilder["schemaToXmlAndXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).schemaToXmlAndXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["schemaToXmlAndXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  schemaToXmlAndXmlschema(...args: Parameters<OverrideQueryBuilder["schemaToXmlAndXmlschema"]>) {
-    return (new QueryBuilder(this)).schemaToXmlAndXmlschema(...args);
-  }
-  schemaToXmlschema(...args: Parameters<OverrideQueryBuilder["schemaToXmlschema"]>) {
-    return (new QueryBuilder(this)).schemaToXmlschema(...args);
+  schemaToXmlschema<TArgs extends Parameters<OverrideQueryBuilder["schemaToXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).schemaToXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["schemaToXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   scope() {
     return (new QueryBuilder(this)).scope();
@@ -3606,14 +3597,14 @@ export class QueryInstance {
   seek() {
     return (new QueryBuilder(this)).seek();
   }
-  select(...args: Parameters<OverrideQueryBuilder["select"]>) {
-    return (new QueryBuilder(this)).select(...args);
+  select<TArgs extends Parameters<OverrideQueryBuilder["select"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).select(...(args as unknown as Parameters<OverrideQueryBuilder["select"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  selectDistinct(...args: Parameters<OverrideQueryBuilder["selectDistinct"]>) {
-    return (new QueryBuilder(this)).selectDistinct(...args);
+  selectDistinct<TArgs extends Parameters<OverrideQueryBuilder["selectDistinct"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).selectDistinct(...(args as unknown as Parameters<OverrideQueryBuilder["selectDistinct"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  selectDistinctOn(...args: Parameters<OverrideQueryBuilder["selectDistinctOn"]>) {
-    return (new QueryBuilder(this)).selectDistinctOn(...args);
+  selectDistinctOn<TArgs extends Parameters<OverrideQueryBuilder["selectDistinctOn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).selectDistinctOn(...(args as unknown as Parameters<OverrideQueryBuilder["selectDistinctOn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   selective() {
     return (new QueryBuilder(this)).selective();
@@ -3624,8 +3615,8 @@ export class QueryInstance {
   semantics() {
     return (new QueryBuilder(this)).semantics();
   }
-  semicolon(...args: Parameters<OverrideQueryBuilder["semicolon"]>) {
-    return (new QueryBuilder(this)).semicolon(...args);
+  semicolon<TArgs extends Parameters<OverrideQueryBuilder["semicolon"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).semicolon(...(args as unknown as Parameters<OverrideQueryBuilder["semicolon"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   sensitive() {
     return (new QueryBuilder(this)).sensitive();
@@ -3651,80 +3642,80 @@ export class QueryInstance {
   sessionUser() {
     return (new QueryBuilder(this)).sessionUser();
   }
-  set(...args: Parameters<OverrideQueryBuilder["set"]>) {
-    return (new QueryBuilder(this)).set(...args);
+  set<TArgs extends Parameters<OverrideQueryBuilder["set"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).set(...(args as unknown as Parameters<OverrideQueryBuilder["set"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  setBit(...args: Parameters<OverrideQueryBuilder["setBit"]>) {
-    return (new QueryBuilder(this)).setBit(...args);
+  setBit<TArgs extends Parameters<OverrideQueryBuilder["setBit"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setBit(...(args as unknown as Parameters<OverrideQueryBuilder["setBit"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  setByte(...args: Parameters<OverrideQueryBuilder["setByte"]>) {
-    return (new QueryBuilder(this)).setByte(...args);
+  setByte<TArgs extends Parameters<OverrideQueryBuilder["setByte"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setByte(...(args as unknown as Parameters<OverrideQueryBuilder["setByte"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  setConfig(...args: Parameters<OverrideQueryBuilder["setConfig"]>) {
-    return (new QueryBuilder(this)).setConfig(...args);
+  setConfig<TArgs extends Parameters<OverrideQueryBuilder["setConfig"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setConfig(...(args as unknown as Parameters<OverrideQueryBuilder["setConfig"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  setMasklen(...args: Parameters<OverrideQueryBuilder["setMasklen"]>) {
-    return (new QueryBuilder(this)).setMasklen(...args);
+  setMasklen<TArgs extends Parameters<OverrideQueryBuilder["setMasklen"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setMasklen(...(args as unknown as Parameters<OverrideQueryBuilder["setMasklen"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   setof() {
     return (new QueryBuilder(this)).setof();
   }
-  setParams(...args: Parameters<OverrideQueryBuilder["setParams"]>) {
-    return (new QueryBuilder(this)).setParams(...args);
+  setParams<TArgs extends Parameters<OverrideQueryBuilder["setParams"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setParams(...(args as unknown as Parameters<OverrideQueryBuilder["setParams"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   sets() {
     return (new QueryBuilder(this)).sets();
   }
-  setseed(...args: Parameters<OverrideQueryBuilder["setseed"]>) {
-    return (new QueryBuilder(this)).setseed(...args);
+  setseed<TArgs extends Parameters<OverrideQueryBuilder["setseed"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setseed(...(args as unknown as Parameters<OverrideQueryBuilder["setseed"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  setval(...args: Parameters<OverrideQueryBuilder["setval"]>) {
-    return (new QueryBuilder(this)).setval(...args);
+  setval<TArgs extends Parameters<OverrideQueryBuilder["setval"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setval(...(args as unknown as Parameters<OverrideQueryBuilder["setval"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  setweight(...args: Parameters<OverrideQueryBuilder["setweight"]>) {
-    return (new QueryBuilder(this)).setweight(...args);
+  setweight<TArgs extends Parameters<OverrideQueryBuilder["setweight"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).setweight(...(args as unknown as Parameters<OverrideQueryBuilder["setweight"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sha224(...args: Parameters<OverrideQueryBuilder["sha224"]>) {
-    return (new QueryBuilder(this)).sha224(...args);
+  sha224<TArgs extends Parameters<OverrideQueryBuilder["sha224"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sha224(...(args as unknown as Parameters<OverrideQueryBuilder["sha224"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sha256(...args: Parameters<OverrideQueryBuilder["sha256"]>) {
-    return (new QueryBuilder(this)).sha256(...args);
+  sha256<TArgs extends Parameters<OverrideQueryBuilder["sha256"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sha256(...(args as unknown as Parameters<OverrideQueryBuilder["sha256"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sha384(...args: Parameters<OverrideQueryBuilder["sha384"]>) {
-    return (new QueryBuilder(this)).sha384(...args);
+  sha384<TArgs extends Parameters<OverrideQueryBuilder["sha384"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sha384(...(args as unknown as Parameters<OverrideQueryBuilder["sha384"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sha512(...args: Parameters<OverrideQueryBuilder["sha512"]>) {
-    return (new QueryBuilder(this)).sha512(...args);
+  sha512<TArgs extends Parameters<OverrideQueryBuilder["sha512"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sha512(...(args as unknown as Parameters<OverrideQueryBuilder["sha512"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   share() {
     return (new QueryBuilder(this)).share();
   }
-  shobjDescription(...args: Parameters<OverrideQueryBuilder["shobjDescription"]>) {
-    return (new QueryBuilder(this)).shobjDescription(...args);
+  shobjDescription<TArgs extends Parameters<OverrideQueryBuilder["shobjDescription"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).shobjDescription(...(args as unknown as Parameters<OverrideQueryBuilder["shobjDescription"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   show() {
     return (new QueryBuilder(this)).show();
   }
-  sign(...args: Parameters<OverrideQueryBuilder["sign"]>) {
-    return (new QueryBuilder(this)).sign(...args);
+  sign<TArgs extends Parameters<OverrideQueryBuilder["sign"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sign(...(args as unknown as Parameters<OverrideQueryBuilder["sign"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   similar() {
     return (new QueryBuilder(this)).similar();
   }
-  similarTo(...args: Parameters<OverrideQueryBuilder["similarTo"]>) {
-    return (new QueryBuilder(this)).similarTo(...args);
+  similarTo<TArgs extends Parameters<OverrideQueryBuilder["similarTo"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).similarTo(...(args as unknown as Parameters<OverrideQueryBuilder["similarTo"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   simple() {
     return (new QueryBuilder(this)).simple();
   }
-  sin(...args: Parameters<OverrideQueryBuilder["sin"]>) {
-    return (new QueryBuilder(this)).sin(...args);
+  sin<TArgs extends Parameters<OverrideQueryBuilder["sin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sin(...(args as unknown as Parameters<OverrideQueryBuilder["sin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sind(...args: Parameters<OverrideQueryBuilder["sind"]>) {
-    return (new QueryBuilder(this)).sind(...args);
+  sind<TArgs extends Parameters<OverrideQueryBuilder["sind"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sind(...(args as unknown as Parameters<OverrideQueryBuilder["sind"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  sinh(...args: Parameters<OverrideQueryBuilder["sinh"]>) {
-    return (new QueryBuilder(this)).sinh(...args);
+  sinh<TArgs extends Parameters<OverrideQueryBuilder["sinh"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sinh(...(args as unknown as Parameters<OverrideQueryBuilder["sinh"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   size() {
     return (new QueryBuilder(this)).size();
@@ -3732,8 +3723,8 @@ export class QueryInstance {
   skip() {
     return (new QueryBuilder(this)).skip();
   }
-  slope(...args: Parameters<OverrideQueryBuilder["slope"]>) {
-    return (new QueryBuilder(this)).slope(...args);
+  slope<TArgs extends Parameters<OverrideQueryBuilder["slope"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).slope(...(args as unknown as Parameters<OverrideQueryBuilder["slope"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   smallint() {
     return (new QueryBuilder(this)).smallint();
@@ -3741,8 +3732,8 @@ export class QueryInstance {
   snapshot() {
     return (new QueryBuilder(this)).snapshot();
   }
-  some(...args: Parameters<OverrideQueryBuilder["some"]>) {
-    return (new QueryBuilder(this)).some(...args);
+  some<TArgs extends Parameters<OverrideQueryBuilder["some"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).some(...(args as unknown as Parameters<OverrideQueryBuilder["some"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   sortDirection() {
     return (new QueryBuilder(this)).sortDirection();
@@ -3762,8 +3753,8 @@ export class QueryInstance {
   specifictype() {
     return (new QueryBuilder(this)).specifictype();
   }
-  splitPart(...args: Parameters<OverrideQueryBuilder["splitPart"]>) {
-    return (new QueryBuilder(this)).splitPart(...args);
+  splitPart<TArgs extends Parameters<OverrideQueryBuilder["splitPart"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).splitPart(...(args as unknown as Parameters<OverrideQueryBuilder["splitPart"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   sql() {
     return (new QueryBuilder(this)).sql();
@@ -3783,8 +3774,8 @@ export class QueryInstance {
   sqlwarning() {
     return (new QueryBuilder(this)).sqlwarning();
   }
-  sqrt(...args: Parameters<OverrideQueryBuilder["sqrt"]>) {
-    return (new QueryBuilder(this)).sqrt(...args);
+  sqrt<TArgs extends Parameters<OverrideQueryBuilder["sqrt"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sqrt(...(args as unknown as Parameters<OverrideQueryBuilder["sqrt"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   stable() {
     return (new QueryBuilder(this)).stable();
@@ -3795,11 +3786,11 @@ export class QueryInstance {
   start() {
     return (new QueryBuilder(this)).start();
   }
-  startsWith(...args: Parameters<OverrideQueryBuilder["startsWith"]>) {
-    return (new QueryBuilder(this)).startsWith(...args);
+  startsWith<TArgs extends Parameters<OverrideQueryBuilder["startsWith"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).startsWith(...(args as unknown as Parameters<OverrideQueryBuilder["startsWith"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  startTransaction(...args: Parameters<OverrideQueryBuilder["startTransaction"]>) {
-    return (new QueryBuilder(this)).startTransaction(...args);
+  startTransaction<TArgs extends Parameters<OverrideQueryBuilder["startTransaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).startTransaction(...(args as unknown as Parameters<OverrideQueryBuilder["startTransaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   state() {
     return (new QueryBuilder(this)).state();
@@ -3807,8 +3798,8 @@ export class QueryInstance {
   statement() {
     return (new QueryBuilder(this)).statement();
   }
-  statementTimestamp(...args: Parameters<OverrideQueryBuilder["statementTimestamp"]>) {
-    return (new QueryBuilder(this)).statementTimestamp(...args);
+  statementTimestamp<TArgs extends Parameters<OverrideQueryBuilder["statementTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).statementTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["statementTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   static() {
     return (new QueryBuilder(this)).static();
@@ -3816,14 +3807,14 @@ export class QueryInstance {
   statistics() {
     return (new QueryBuilder(this)).statistics();
   }
-  stddev(...args: Parameters<OverrideQueryBuilder["stddev"]>) {
-    return (new QueryBuilder(this)).stddev(...args);
+  stddev<TArgs extends Parameters<OverrideQueryBuilder["stddev"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).stddev(...(args as unknown as Parameters<OverrideQueryBuilder["stddev"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  stddevPop(...args: Parameters<OverrideQueryBuilder["stddevPop"]>) {
-    return (new QueryBuilder(this)).stddevPop(...args);
+  stddevPop<TArgs extends Parameters<OverrideQueryBuilder["stddevPop"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).stddevPop(...(args as unknown as Parameters<OverrideQueryBuilder["stddevPop"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  stddevSamp(...args: Parameters<OverrideQueryBuilder["stddevSamp"]>) {
-    return (new QueryBuilder(this)).stddevSamp(...args);
+  stddevSamp<TArgs extends Parameters<OverrideQueryBuilder["stddevSamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).stddevSamp(...(args as unknown as Parameters<OverrideQueryBuilder["stddevSamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   stdin() {
     return (new QueryBuilder(this)).stdin();
@@ -3840,29 +3831,29 @@ export class QueryInstance {
   strict() {
     return (new QueryBuilder(this)).strict();
   }
-  strictlyAbove(...args: Parameters<OverrideQueryBuilder["strictlyAbove"]>) {
-    return (new QueryBuilder(this)).strictlyAbove(...args);
+  strictlyAbove<TArgs extends Parameters<OverrideQueryBuilder["strictlyAbove"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).strictlyAbove(...(args as unknown as Parameters<OverrideQueryBuilder["strictlyAbove"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  strictlyBelow(...args: Parameters<OverrideQueryBuilder["strictlyBelow"]>) {
-    return (new QueryBuilder(this)).strictlyBelow(...args);
+  strictlyBelow<TArgs extends Parameters<OverrideQueryBuilder["strictlyBelow"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).strictlyBelow(...(args as unknown as Parameters<OverrideQueryBuilder["strictlyBelow"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   string() {
     return (new QueryBuilder(this)).string();
   }
-  stringAgg(...args: Parameters<OverrideQueryBuilder["stringAgg"]>) {
-    return (new QueryBuilder(this)).stringAgg(...args);
+  stringAgg<TArgs extends Parameters<OverrideQueryBuilder["stringAgg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).stringAgg(...(args as unknown as Parameters<OverrideQueryBuilder["stringAgg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  stringToArray(...args: Parameters<OverrideQueryBuilder["stringToArray"]>) {
-    return (new QueryBuilder(this)).stringToArray(...args);
+  stringToArray<TArgs extends Parameters<OverrideQueryBuilder["stringToArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).stringToArray(...(args as unknown as Parameters<OverrideQueryBuilder["stringToArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  stringToTable(...args: Parameters<OverrideQueryBuilder["stringToTable"]>) {
-    return (new QueryBuilder(this)).stringToTable(...args);
+  stringToTable<TArgs extends Parameters<OverrideQueryBuilder["stringToTable"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).stringToTable(...(args as unknown as Parameters<OverrideQueryBuilder["stringToTable"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  strip(...args: Parameters<OverrideQueryBuilder["strip"]>) {
-    return (new QueryBuilder(this)).strip(...args);
+  strip<TArgs extends Parameters<OverrideQueryBuilder["strip"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).strip(...(args as unknown as Parameters<OverrideQueryBuilder["strip"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  strpos(...args: Parameters<OverrideQueryBuilder["strpos"]>) {
-    return (new QueryBuilder(this)).strpos(...args);
+  strpos<TArgs extends Parameters<OverrideQueryBuilder["strpos"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).strpos(...(args as unknown as Parameters<OverrideQueryBuilder["strpos"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   structure() {
     return (new QueryBuilder(this)).structure();
@@ -3870,8 +3861,8 @@ export class QueryInstance {
   style() {
     return (new QueryBuilder(this)).style();
   }
-  sub(...args: Parameters<OverrideQueryBuilder["sub"]>) {
-    return (new QueryBuilder(this)).sub(...args);
+  sub<TArgs extends Parameters<OverrideQueryBuilder["sub"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sub(...(args as unknown as Parameters<OverrideQueryBuilder["sub"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   subclassOrigin() {
     return (new QueryBuilder(this)).subclassOrigin();
@@ -3885,11 +3876,11 @@ export class QueryInstance {
   subset() {
     return (new QueryBuilder(this)).subset();
   }
-  substr(...args: Parameters<OverrideQueryBuilder["substr"]>) {
-    return (new QueryBuilder(this)).substr(...args);
+  substr<TArgs extends Parameters<OverrideQueryBuilder["substr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).substr(...(args as unknown as Parameters<OverrideQueryBuilder["substr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  substring(...args: Parameters<OverrideQueryBuilder["substring"]>) {
-    return (new QueryBuilder(this)).substring(...args);
+  substring<TArgs extends Parameters<OverrideQueryBuilder["substring"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).substring(...(args as unknown as Parameters<OverrideQueryBuilder["substring"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   substringRegex() {
     return (new QueryBuilder(this)).substringRegex();
@@ -3897,14 +3888,14 @@ export class QueryInstance {
   succeeds() {
     return (new QueryBuilder(this)).succeeds();
   }
-  sum(...args: Parameters<OverrideQueryBuilder["sum"]>) {
-    return (new QueryBuilder(this)).sum(...args);
+  sum<TArgs extends Parameters<OverrideQueryBuilder["sum"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).sum(...(args as unknown as Parameters<OverrideQueryBuilder["sum"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   support() {
     return (new QueryBuilder(this)).support();
   }
-  suppressRedundantUpdatesTrigger(...args: Parameters<OverrideQueryBuilder["suppressRedundantUpdatesTrigger"]>) {
-    return (new QueryBuilder(this)).suppressRedundantUpdatesTrigger(...args);
+  suppressRedundantUpdatesTrigger<TArgs extends Parameters<OverrideQueryBuilder["suppressRedundantUpdatesTrigger"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).suppressRedundantUpdatesTrigger(...(args as unknown as Parameters<OverrideQueryBuilder["suppressRedundantUpdatesTrigger"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   symmetric() {
     return (new QueryBuilder(this)).symmetric();
@@ -3921,8 +3912,8 @@ export class QueryInstance {
   systemUser() {
     return (new QueryBuilder(this)).systemUser();
   }
-  t(...args: Parameters<OverrideQueryBuilder["t"]>) {
-    return (new QueryBuilder(this)).t(...args);
+  t<TArgs extends Parameters<OverrideQueryBuilder["t"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).t(...(args as unknown as Parameters<OverrideQueryBuilder["t"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   table() {
     return (new QueryBuilder(this)).table();
@@ -3939,23 +3930,23 @@ export class QueryInstance {
   tablespace() {
     return (new QueryBuilder(this)).tablespace();
   }
-  tableToXml(...args: Parameters<OverrideQueryBuilder["tableToXml"]>) {
-    return (new QueryBuilder(this)).tableToXml(...args);
+  tableToXml<TArgs extends Parameters<OverrideQueryBuilder["tableToXml"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tableToXml(...(args as unknown as Parameters<OverrideQueryBuilder["tableToXml"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tableToXmlAndXmlschema(...args: Parameters<OverrideQueryBuilder["tableToXmlAndXmlschema"]>) {
-    return (new QueryBuilder(this)).tableToXmlAndXmlschema(...args);
+  tableToXmlAndXmlschema<TArgs extends Parameters<OverrideQueryBuilder["tableToXmlAndXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tableToXmlAndXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["tableToXmlAndXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tableToXmlschema(...args: Parameters<OverrideQueryBuilder["tableToXmlschema"]>) {
-    return (new QueryBuilder(this)).tableToXmlschema(...args);
+  tableToXmlschema<TArgs extends Parameters<OverrideQueryBuilder["tableToXmlschema"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tableToXmlschema(...(args as unknown as Parameters<OverrideQueryBuilder["tableToXmlschema"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tan(...args: Parameters<OverrideQueryBuilder["tan"]>) {
-    return (new QueryBuilder(this)).tan(...args);
+  tan<TArgs extends Parameters<OverrideQueryBuilder["tan"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tan(...(args as unknown as Parameters<OverrideQueryBuilder["tan"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tand(...args: Parameters<OverrideQueryBuilder["tand"]>) {
-    return (new QueryBuilder(this)).tand(...args);
+  tand<TArgs extends Parameters<OverrideQueryBuilder["tand"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tand(...(args as unknown as Parameters<OverrideQueryBuilder["tand"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tanh(...args: Parameters<OverrideQueryBuilder["tanh"]>) {
-    return (new QueryBuilder(this)).tanh(...args);
+  tanh<TArgs extends Parameters<OverrideQueryBuilder["tanh"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tanh(...(args as unknown as Parameters<OverrideQueryBuilder["tanh"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   target() {
     return (new QueryBuilder(this)).target();
@@ -3972,11 +3963,11 @@ export class QueryInstance {
   text() {
     return (new QueryBuilder(this)).text();
   }
-  textCat(...args: Parameters<OverrideQueryBuilder["textCat"]>) {
-    return (new QueryBuilder(this)).textCat(...args);
+  textCat<TArgs extends Parameters<OverrideQueryBuilder["textCat"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).textCat(...(args as unknown as Parameters<OverrideQueryBuilder["textCat"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  then(...args: Parameters<OverrideQueryBuilder["then"]>) {
-    return (new QueryBuilder(this)).then(...args);
+  then<TArgs extends Parameters<OverrideQueryBuilder["then"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).then(...(args as unknown as Parameters<OverrideQueryBuilder["then"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   through() {
     return (new QueryBuilder(this)).through();
@@ -3987,8 +3978,8 @@ export class QueryInstance {
   time() {
     return (new QueryBuilder(this)).time();
   }
-  timeofday(...args: Parameters<OverrideQueryBuilder["timeofday"]>) {
-    return (new QueryBuilder(this)).timeofday(...args);
+  timeofday<TArgs extends Parameters<OverrideQueryBuilder["timeofday"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).timeofday(...(args as unknown as Parameters<OverrideQueryBuilder["timeofday"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   timestamp() {
     return (new QueryBuilder(this)).timestamp();
@@ -4002,89 +3993,89 @@ export class QueryInstance {
   to() {
     return (new QueryBuilder(this)).to();
   }
-  toAscii(...args: Parameters<OverrideQueryBuilder["toAscii"]>) {
-    return (new QueryBuilder(this)).toAscii(...args);
+  toAscii<TArgs extends Parameters<OverrideQueryBuilder["toAscii"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toAscii(...(args as unknown as Parameters<OverrideQueryBuilder["toAscii"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toBin(...args: Parameters<OverrideQueryBuilder["toBin"]>) {
-    return (new QueryBuilder(this)).toBin(...args);
+  toBin<TArgs extends Parameters<OverrideQueryBuilder["toBin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toBin(...(args as unknown as Parameters<OverrideQueryBuilder["toBin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toChar(...args: Parameters<OverrideQueryBuilder["toChar"]>) {
-    return (new QueryBuilder(this)).toChar(...args);
+  toChar<TArgs extends Parameters<OverrideQueryBuilder["toChar"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toChar(...(args as unknown as Parameters<OverrideQueryBuilder["toChar"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toDate(...args: Parameters<OverrideQueryBuilder["toDate"]>) {
-    return (new QueryBuilder(this)).toDate(...args);
+  toDate<TArgs extends Parameters<OverrideQueryBuilder["toDate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toDate(...(args as unknown as Parameters<OverrideQueryBuilder["toDate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toHex(...args: Parameters<OverrideQueryBuilder["toHex"]>) {
-    return (new QueryBuilder(this)).toHex(...args);
+  toHex<TArgs extends Parameters<OverrideQueryBuilder["toHex"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toHex(...(args as unknown as Parameters<OverrideQueryBuilder["toHex"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toJson(...args: Parameters<OverrideQueryBuilder["toJson"]>) {
-    return (new QueryBuilder(this)).toJson(...args);
+  toJson<TArgs extends Parameters<OverrideQueryBuilder["toJson"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toJson(...(args as unknown as Parameters<OverrideQueryBuilder["toJson"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toJsonb(...args: Parameters<OverrideQueryBuilder["toJsonb"]>) {
-    return (new QueryBuilder(this)).toJsonb(...args);
+  toJsonb<TArgs extends Parameters<OverrideQueryBuilder["toJsonb"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toJsonb(...(args as unknown as Parameters<OverrideQueryBuilder["toJsonb"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   token() {
     return (new QueryBuilder(this)).token();
   }
-  toNumber(...args: Parameters<OverrideQueryBuilder["toNumber"]>) {
-    return (new QueryBuilder(this)).toNumber(...args);
+  toNumber<TArgs extends Parameters<OverrideQueryBuilder["toNumber"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toNumber(...(args as unknown as Parameters<OverrideQueryBuilder["toNumber"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toOct(...args: Parameters<OverrideQueryBuilder["toOct"]>) {
-    return (new QueryBuilder(this)).toOct(...args);
+  toOct<TArgs extends Parameters<OverrideQueryBuilder["toOct"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toOct(...(args as unknown as Parameters<OverrideQueryBuilder["toOct"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   topLevelCount() {
     return (new QueryBuilder(this)).topLevelCount();
   }
-  toRegclass(...args: Parameters<OverrideQueryBuilder["toRegclass"]>) {
-    return (new QueryBuilder(this)).toRegclass(...args);
+  toRegclass<TArgs extends Parameters<OverrideQueryBuilder["toRegclass"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegclass(...(args as unknown as Parameters<OverrideQueryBuilder["toRegclass"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegcollation(...args: Parameters<OverrideQueryBuilder["toRegcollation"]>) {
-    return (new QueryBuilder(this)).toRegcollation(...args);
+  toRegcollation<TArgs extends Parameters<OverrideQueryBuilder["toRegcollation"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegcollation(...(args as unknown as Parameters<OverrideQueryBuilder["toRegcollation"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegnamespace(...args: Parameters<OverrideQueryBuilder["toRegnamespace"]>) {
-    return (new QueryBuilder(this)).toRegnamespace(...args);
+  toRegnamespace<TArgs extends Parameters<OverrideQueryBuilder["toRegnamespace"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegnamespace(...(args as unknown as Parameters<OverrideQueryBuilder["toRegnamespace"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegoper(...args: Parameters<OverrideQueryBuilder["toRegoper"]>) {
-    return (new QueryBuilder(this)).toRegoper(...args);
+  toRegoper<TArgs extends Parameters<OverrideQueryBuilder["toRegoper"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegoper(...(args as unknown as Parameters<OverrideQueryBuilder["toRegoper"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegoperator(...args: Parameters<OverrideQueryBuilder["toRegoperator"]>) {
-    return (new QueryBuilder(this)).toRegoperator(...args);
+  toRegoperator<TArgs extends Parameters<OverrideQueryBuilder["toRegoperator"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegoperator(...(args as unknown as Parameters<OverrideQueryBuilder["toRegoperator"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegproc(...args: Parameters<OverrideQueryBuilder["toRegproc"]>) {
-    return (new QueryBuilder(this)).toRegproc(...args);
+  toRegproc<TArgs extends Parameters<OverrideQueryBuilder["toRegproc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegproc(...(args as unknown as Parameters<OverrideQueryBuilder["toRegproc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegprocedure(...args: Parameters<OverrideQueryBuilder["toRegprocedure"]>) {
-    return (new QueryBuilder(this)).toRegprocedure(...args);
+  toRegprocedure<TArgs extends Parameters<OverrideQueryBuilder["toRegprocedure"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegprocedure(...(args as unknown as Parameters<OverrideQueryBuilder["toRegprocedure"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegrole(...args: Parameters<OverrideQueryBuilder["toRegrole"]>) {
-    return (new QueryBuilder(this)).toRegrole(...args);
+  toRegrole<TArgs extends Parameters<OverrideQueryBuilder["toRegrole"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegrole(...(args as unknown as Parameters<OverrideQueryBuilder["toRegrole"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegtype(...args: Parameters<OverrideQueryBuilder["toRegtype"]>) {
-    return (new QueryBuilder(this)).toRegtype(...args);
+  toRegtype<TArgs extends Parameters<OverrideQueryBuilder["toRegtype"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegtype(...(args as unknown as Parameters<OverrideQueryBuilder["toRegtype"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toRegtypemod(...args: Parameters<OverrideQueryBuilder["toRegtypemod"]>) {
-    return (new QueryBuilder(this)).toRegtypemod(...args);
+  toRegtypemod<TArgs extends Parameters<OverrideQueryBuilder["toRegtypemod"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toRegtypemod(...(args as unknown as Parameters<OverrideQueryBuilder["toRegtypemod"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  totalLength(...args: Parameters<OverrideQueryBuilder["totalLength"]>) {
-    return (new QueryBuilder(this)).totalLength(...args);
+  totalLength<TArgs extends Parameters<OverrideQueryBuilder["totalLength"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).totalLength(...(args as unknown as Parameters<OverrideQueryBuilder["totalLength"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toText(...args: Parameters<OverrideQueryBuilder["toText"]>) {
-    return (new QueryBuilder(this)).toText(...args);
+  toText<TArgs extends Parameters<OverrideQueryBuilder["toText"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toText(...(args as unknown as Parameters<OverrideQueryBuilder["toText"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toTimestamp(...args: Parameters<OverrideQueryBuilder["toTimestamp"]>) {
-    return (new QueryBuilder(this)).toTimestamp(...args);
+  toTimestamp<TArgs extends Parameters<OverrideQueryBuilder["toTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["toTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toTsquery(...args: Parameters<OverrideQueryBuilder["toTsquery"]>) {
-    return (new QueryBuilder(this)).toTsquery(...args);
+  toTsquery<TArgs extends Parameters<OverrideQueryBuilder["toTsquery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toTsquery(...(args as unknown as Parameters<OverrideQueryBuilder["toTsquery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  toTsvector(...args: Parameters<OverrideQueryBuilder["toTsvector"]>) {
-    return (new QueryBuilder(this)).toTsvector(...args);
+  toTsvector<TArgs extends Parameters<OverrideQueryBuilder["toTsvector"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).toTsvector(...(args as unknown as Parameters<OverrideQueryBuilder["toTsvector"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   trailing() {
     return (new QueryBuilder(this)).trailing();
   }
-  transaction(...args: Parameters<OverrideQueryBuilder["transaction"]>) {
-    return (new QueryBuilder(this)).transaction(...args);
+  transaction<TArgs extends Parameters<OverrideQueryBuilder["transaction"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).transaction(...(args as unknown as Parameters<OverrideQueryBuilder["transaction"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   transactionActive() {
     return (new QueryBuilder(this)).transactionActive();
@@ -4095,8 +4086,8 @@ export class QueryInstance {
   transactionsrolledback() {
     return (new QueryBuilder(this)).transactionsrolledback();
   }
-  transactionTimestamp(...args: Parameters<OverrideQueryBuilder["transactionTimestamp"]>) {
-    return (new QueryBuilder(this)).transactionTimestamp(...args);
+  transactionTimestamp<TArgs extends Parameters<OverrideQueryBuilder["transactionTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).transactionTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["transactionTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   transform() {
     return (new QueryBuilder(this)).transform();
@@ -4104,8 +4095,8 @@ export class QueryInstance {
   transforms() {
     return (new QueryBuilder(this)).transforms();
   }
-  translate(...args: Parameters<OverrideQueryBuilder["translate"]>) {
-    return (new QueryBuilder(this)).translate(...args);
+  translate<TArgs extends Parameters<OverrideQueryBuilder["translate"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).translate(...(args as unknown as Parameters<OverrideQueryBuilder["translate"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   translateRegex() {
     return (new QueryBuilder(this)).translateRegex();
@@ -4128,20 +4119,20 @@ export class QueryInstance {
   triggerSchema() {
     return (new QueryBuilder(this)).triggerSchema();
   }
-  trim(...args: Parameters<OverrideQueryBuilder["trim"]>) {
-    return (new QueryBuilder(this)).trim(...args);
+  trim<TArgs extends Parameters<OverrideQueryBuilder["trim"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).trim(...(args as unknown as Parameters<OverrideQueryBuilder["trim"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  trimArray(...args: Parameters<OverrideQueryBuilder["trimArray"]>) {
-    return (new QueryBuilder(this)).trimArray(...args);
+  trimArray<TArgs extends Parameters<OverrideQueryBuilder["trimArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).trimArray(...(args as unknown as Parameters<OverrideQueryBuilder["trimArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  trimScale(...args: Parameters<OverrideQueryBuilder["trimScale"]>) {
-    return (new QueryBuilder(this)).trimScale(...args);
+  trimScale<TArgs extends Parameters<OverrideQueryBuilder["trimScale"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).trimScale(...(args as unknown as Parameters<OverrideQueryBuilder["trimScale"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   true() {
     return (new QueryBuilder(this)).true();
   }
-  trunc(...args: Parameters<OverrideQueryBuilder["trunc"]>) {
-    return (new QueryBuilder(this)).trunc(...args);
+  trunc<TArgs extends Parameters<OverrideQueryBuilder["trunc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).trunc(...(args as unknown as Parameters<OverrideQueryBuilder["trunc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   truncate() {
     return (new QueryBuilder(this)).truncate();
@@ -4149,74 +4140,74 @@ export class QueryInstance {
   trusted() {
     return (new QueryBuilder(this)).trusted();
   }
-  tsDebug(...args: Parameters<OverrideQueryBuilder["tsDebug"]>) {
-    return (new QueryBuilder(this)).tsDebug(...args);
+  tsDebug<TArgs extends Parameters<OverrideQueryBuilder["tsDebug"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsDebug(...(args as unknown as Parameters<OverrideQueryBuilder["tsDebug"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsDelete(...args: Parameters<OverrideQueryBuilder["tsDelete"]>) {
-    return (new QueryBuilder(this)).tsDelete(...args);
+  tsDelete<TArgs extends Parameters<OverrideQueryBuilder["tsDelete"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsDelete(...(args as unknown as Parameters<OverrideQueryBuilder["tsDelete"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsFilter(...args: Parameters<OverrideQueryBuilder["tsFilter"]>) {
-    return (new QueryBuilder(this)).tsFilter(...args);
+  tsFilter<TArgs extends Parameters<OverrideQueryBuilder["tsFilter"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsFilter(...(args as unknown as Parameters<OverrideQueryBuilder["tsFilter"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsHeadline(...args: Parameters<OverrideQueryBuilder["tsHeadline"]>) {
-    return (new QueryBuilder(this)).tsHeadline(...args);
+  tsHeadline<TArgs extends Parameters<OverrideQueryBuilder["tsHeadline"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsHeadline(...(args as unknown as Parameters<OverrideQueryBuilder["tsHeadline"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsLexize(...args: Parameters<OverrideQueryBuilder["tsLexize"]>) {
-    return (new QueryBuilder(this)).tsLexize(...args);
+  tsLexize<TArgs extends Parameters<OverrideQueryBuilder["tsLexize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsLexize(...(args as unknown as Parameters<OverrideQueryBuilder["tsLexize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsParse(...args: Parameters<OverrideQueryBuilder["tsParse"]>) {
-    return (new QueryBuilder(this)).tsParse(...args);
+  tsParse<TArgs extends Parameters<OverrideQueryBuilder["tsParse"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsParse(...(args as unknown as Parameters<OverrideQueryBuilder["tsParse"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsqueryPhrase(...args: Parameters<OverrideQueryBuilder["tsqueryPhrase"]>) {
-    return (new QueryBuilder(this)).tsqueryPhrase(...args);
+  tsqueryPhrase<TArgs extends Parameters<OverrideQueryBuilder["tsqueryPhrase"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsqueryPhrase(...(args as unknown as Parameters<OverrideQueryBuilder["tsqueryPhrase"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsRank(...args: Parameters<OverrideQueryBuilder["tsRank"]>) {
-    return (new QueryBuilder(this)).tsRank(...args);
+  tsRank<TArgs extends Parameters<OverrideQueryBuilder["tsRank"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsRank(...(args as unknown as Parameters<OverrideQueryBuilder["tsRank"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsRankCd(...args: Parameters<OverrideQueryBuilder["tsRankCd"]>) {
-    return (new QueryBuilder(this)).tsRankCd(...args);
+  tsRankCd<TArgs extends Parameters<OverrideQueryBuilder["tsRankCd"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsRankCd(...(args as unknown as Parameters<OverrideQueryBuilder["tsRankCd"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsRewrite(...args: Parameters<OverrideQueryBuilder["tsRewrite"]>) {
-    return (new QueryBuilder(this)).tsRewrite(...args);
+  tsRewrite<TArgs extends Parameters<OverrideQueryBuilder["tsRewrite"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsRewrite(...(args as unknown as Parameters<OverrideQueryBuilder["tsRewrite"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsStat(...args: Parameters<OverrideQueryBuilder["tsStat"]>) {
-    return (new QueryBuilder(this)).tsStat(...args);
+  tsStat<TArgs extends Parameters<OverrideQueryBuilder["tsStat"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsStat(...(args as unknown as Parameters<OverrideQueryBuilder["tsStat"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsTokenType(...args: Parameters<OverrideQueryBuilder["tsTokenType"]>) {
-    return (new QueryBuilder(this)).tsTokenType(...args);
+  tsTokenType<TArgs extends Parameters<OverrideQueryBuilder["tsTokenType"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsTokenType(...(args as unknown as Parameters<OverrideQueryBuilder["tsTokenType"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsvectorToArray(...args: Parameters<OverrideQueryBuilder["tsvectorToArray"]>) {
-    return (new QueryBuilder(this)).tsvectorToArray(...args);
+  tsvectorToArray<TArgs extends Parameters<OverrideQueryBuilder["tsvectorToArray"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsvectorToArray(...(args as unknown as Parameters<OverrideQueryBuilder["tsvectorToArray"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsvectorUpdateTrigger(...args: Parameters<OverrideQueryBuilder["tsvectorUpdateTrigger"]>) {
-    return (new QueryBuilder(this)).tsvectorUpdateTrigger(...args);
+  tsvectorUpdateTrigger<TArgs extends Parameters<OverrideQueryBuilder["tsvectorUpdateTrigger"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsvectorUpdateTrigger(...(args as unknown as Parameters<OverrideQueryBuilder["tsvectorUpdateTrigger"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  tsvectorUpdateTriggerColumn(...args: Parameters<OverrideQueryBuilder["tsvectorUpdateTriggerColumn"]>) {
-    return (new QueryBuilder(this)).tsvectorUpdateTriggerColumn(...args);
+  tsvectorUpdateTriggerColumn<TArgs extends Parameters<OverrideQueryBuilder["tsvectorUpdateTriggerColumn"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).tsvectorUpdateTriggerColumn(...(args as unknown as Parameters<OverrideQueryBuilder["tsvectorUpdateTriggerColumn"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidCurrent(...args: Parameters<OverrideQueryBuilder["txidCurrent"]>) {
-    return (new QueryBuilder(this)).txidCurrent(...args);
+  txidCurrent<TArgs extends Parameters<OverrideQueryBuilder["txidCurrent"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidCurrent(...(args as unknown as Parameters<OverrideQueryBuilder["txidCurrent"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidCurrentIfAssigned(...args: Parameters<OverrideQueryBuilder["txidCurrentIfAssigned"]>) {
-    return (new QueryBuilder(this)).txidCurrentIfAssigned(...args);
+  txidCurrentIfAssigned<TArgs extends Parameters<OverrideQueryBuilder["txidCurrentIfAssigned"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidCurrentIfAssigned(...(args as unknown as Parameters<OverrideQueryBuilder["txidCurrentIfAssigned"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidCurrentSnapshot(...args: Parameters<OverrideQueryBuilder["txidCurrentSnapshot"]>) {
-    return (new QueryBuilder(this)).txidCurrentSnapshot(...args);
+  txidCurrentSnapshot<TArgs extends Parameters<OverrideQueryBuilder["txidCurrentSnapshot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidCurrentSnapshot(...(args as unknown as Parameters<OverrideQueryBuilder["txidCurrentSnapshot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidSnapshotXip(...args: Parameters<OverrideQueryBuilder["txidSnapshotXip"]>) {
-    return (new QueryBuilder(this)).txidSnapshotXip(...args);
+  txidSnapshotXip<TArgs extends Parameters<OverrideQueryBuilder["txidSnapshotXip"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidSnapshotXip(...(args as unknown as Parameters<OverrideQueryBuilder["txidSnapshotXip"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidSnapshotXmax(...args: Parameters<OverrideQueryBuilder["txidSnapshotXmax"]>) {
-    return (new QueryBuilder(this)).txidSnapshotXmax(...args);
+  txidSnapshotXmax<TArgs extends Parameters<OverrideQueryBuilder["txidSnapshotXmax"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidSnapshotXmax(...(args as unknown as Parameters<OverrideQueryBuilder["txidSnapshotXmax"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidSnapshotXmin(...args: Parameters<OverrideQueryBuilder["txidSnapshotXmin"]>) {
-    return (new QueryBuilder(this)).txidSnapshotXmin(...args);
+  txidSnapshotXmin<TArgs extends Parameters<OverrideQueryBuilder["txidSnapshotXmin"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidSnapshotXmin(...(args as unknown as Parameters<OverrideQueryBuilder["txidSnapshotXmin"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidStatus(...args: Parameters<OverrideQueryBuilder["txidStatus"]>) {
-    return (new QueryBuilder(this)).txidStatus(...args);
+  txidStatus<TArgs extends Parameters<OverrideQueryBuilder["txidStatus"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidStatus(...(args as unknown as Parameters<OverrideQueryBuilder["txidStatus"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  txidVisibleInSnapshot(...args: Parameters<OverrideQueryBuilder["txidVisibleInSnapshot"]>) {
-    return (new QueryBuilder(this)).txidVisibleInSnapshot(...args);
+  txidVisibleInSnapshot<TArgs extends Parameters<OverrideQueryBuilder["txidVisibleInSnapshot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).txidVisibleInSnapshot(...(args as unknown as Parameters<OverrideQueryBuilder["txidVisibleInSnapshot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   type() {
     return (new QueryBuilder(this)).type();
@@ -4242,23 +4233,23 @@ export class QueryInstance {
   unencrypted() {
     return (new QueryBuilder(this)).unencrypted();
   }
-  unicodeAssigned(...args: Parameters<OverrideQueryBuilder["unicodeAssigned"]>) {
-    return (new QueryBuilder(this)).unicodeAssigned(...args);
+  unicodeAssigned<TArgs extends Parameters<OverrideQueryBuilder["unicodeAssigned"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).unicodeAssigned(...(args as unknown as Parameters<OverrideQueryBuilder["unicodeAssigned"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  unicodeVersion(...args: Parameters<OverrideQueryBuilder["unicodeVersion"]>) {
-    return (new QueryBuilder(this)).unicodeVersion(...args);
+  unicodeVersion<TArgs extends Parameters<OverrideQueryBuilder["unicodeVersion"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).unicodeVersion(...(args as unknown as Parameters<OverrideQueryBuilder["unicodeVersion"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  union(...args: Parameters<OverrideQueryBuilder["union"]>) {
-    return (new QueryBuilder(this)).union(...args);
+  union<TArgs extends Parameters<OverrideQueryBuilder["union"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).union(...(args as unknown as Parameters<OverrideQueryBuilder["union"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  unionAll(...args: Parameters<OverrideQueryBuilder["unionAll"]>) {
-    return (new QueryBuilder(this)).unionAll(...args);
+  unionAll<TArgs extends Parameters<OverrideQueryBuilder["unionAll"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).unionAll(...(args as unknown as Parameters<OverrideQueryBuilder["unionAll"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   unique() {
     return (new QueryBuilder(this)).unique();
   }
-  unistr(...args: Parameters<OverrideQueryBuilder["unistr"]>) {
-    return (new QueryBuilder(this)).unistr(...args);
+  unistr<TArgs extends Parameters<OverrideQueryBuilder["unistr"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).unistr(...(args as unknown as Parameters<OverrideQueryBuilder["unistr"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   unknown() {
     return (new QueryBuilder(this)).unknown();
@@ -4278,8 +4269,8 @@ export class QueryInstance {
   unnamed() {
     return (new QueryBuilder(this)).unnamed();
   }
-  unnest(...args: Parameters<OverrideQueryBuilder["unnest"]>) {
-    return (new QueryBuilder(this)).unnest(...args);
+  unnest<TArgs extends Parameters<OverrideQueryBuilder["unnest"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).unnest(...(args as unknown as Parameters<OverrideQueryBuilder["unnest"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   until() {
     return (new QueryBuilder(this)).until();
@@ -4287,17 +4278,17 @@ export class QueryInstance {
   untyped() {
     return (new QueryBuilder(this)).untyped();
   }
-  update(...args: Parameters<OverrideQueryBuilder["update"]>) {
-    return (new QueryBuilder(this)).update(...args);
+  update<TArgs extends Parameters<OverrideQueryBuilder["update"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).update(...(args as unknown as Parameters<OverrideQueryBuilder["update"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  upper(...args: Parameters<OverrideQueryBuilder["upper"]>) {
-    return (new QueryBuilder(this)).upper(...args);
+  upper<TArgs extends Parameters<OverrideQueryBuilder["upper"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).upper(...(args as unknown as Parameters<OverrideQueryBuilder["upper"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  upperInc(...args: Parameters<OverrideQueryBuilder["upperInc"]>) {
-    return (new QueryBuilder(this)).upperInc(...args);
+  upperInc<TArgs extends Parameters<OverrideQueryBuilder["upperInc"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).upperInc(...(args as unknown as Parameters<OverrideQueryBuilder["upperInc"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  upperInf(...args: Parameters<OverrideQueryBuilder["upperInf"]>) {
-    return (new QueryBuilder(this)).upperInf(...args);
+  upperInf<TArgs extends Parameters<OverrideQueryBuilder["upperInf"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).upperInf(...(args as unknown as Parameters<OverrideQueryBuilder["upperInf"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   uri() {
     return (new QueryBuilder(this)).uri();
@@ -4332,17 +4323,17 @@ export class QueryInstance {
   utf8() {
     return (new QueryBuilder(this)).utf8();
   }
-  uuidExtractTimestamp(...args: Parameters<OverrideQueryBuilder["uuidExtractTimestamp"]>) {
-    return (new QueryBuilder(this)).uuidExtractTimestamp(...args);
+  uuidExtractTimestamp<TArgs extends Parameters<OverrideQueryBuilder["uuidExtractTimestamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).uuidExtractTimestamp(...(args as unknown as Parameters<OverrideQueryBuilder["uuidExtractTimestamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  uuidExtractVersion(...args: Parameters<OverrideQueryBuilder["uuidExtractVersion"]>) {
-    return (new QueryBuilder(this)).uuidExtractVersion(...args);
+  uuidExtractVersion<TArgs extends Parameters<OverrideQueryBuilder["uuidExtractVersion"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).uuidExtractVersion(...(args as unknown as Parameters<OverrideQueryBuilder["uuidExtractVersion"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  uuidv4(...args: Parameters<OverrideQueryBuilder["uuidv4"]>) {
-    return (new QueryBuilder(this)).uuidv4(...args);
+  uuidv4<TArgs extends Parameters<OverrideQueryBuilder["uuidv4"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).uuidv4(...(args as unknown as Parameters<OverrideQueryBuilder["uuidv4"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  uuidv7(...args: Parameters<OverrideQueryBuilder["uuidv7"]>) {
-    return (new QueryBuilder(this)).uuidv7(...args);
+  uuidv7<TArgs extends Parameters<OverrideQueryBuilder["uuidv7"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).uuidv7(...(args as unknown as Parameters<OverrideQueryBuilder["uuidv7"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   v(...args: Parameters<BaseRawQueryBuilder["v"]>) {
     return (new QueryBuilder(this)).v(...args);
@@ -4365,8 +4356,8 @@ export class QueryInstance {
   valueOfKeyword() {
     return (new QueryBuilder(this)).valueOfKeyword();
   }
-  values(...args: Parameters<OverrideQueryBuilder["values"]>) {
-    return (new QueryBuilder(this)).values(...args);
+  values<TArgs extends Parameters<OverrideQueryBuilder["values"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).values(...(args as unknown as Parameters<OverrideQueryBuilder["values"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   varbinary() {
     return (new QueryBuilder(this)).varbinary();
@@ -4377,14 +4368,14 @@ export class QueryInstance {
   variadic() {
     return (new QueryBuilder(this)).variadic();
   }
-  variance(...args: Parameters<OverrideQueryBuilder["variance"]>) {
-    return (new QueryBuilder(this)).variance(...args);
+  variance<TArgs extends Parameters<OverrideQueryBuilder["variance"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).variance(...(args as unknown as Parameters<OverrideQueryBuilder["variance"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  varPop(...args: Parameters<OverrideQueryBuilder["varPop"]>) {
-    return (new QueryBuilder(this)).varPop(...args);
+  varPop<TArgs extends Parameters<OverrideQueryBuilder["varPop"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).varPop(...(args as unknown as Parameters<OverrideQueryBuilder["varPop"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  varSamp(...args: Parameters<OverrideQueryBuilder["varSamp"]>) {
-    return (new QueryBuilder(this)).varSamp(...args);
+  varSamp<TArgs extends Parameters<OverrideQueryBuilder["varSamp"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).varSamp(...(args as unknown as Parameters<OverrideQueryBuilder["varSamp"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   varying() {
     return (new QueryBuilder(this)).varying();
@@ -4392,14 +4383,14 @@ export class QueryInstance {
   verbose() {
     return (new QueryBuilder(this)).verbose();
   }
-  version(...args: Parameters<OverrideQueryBuilder["version"]>) {
-    return (new QueryBuilder(this)).version(...args);
+  version<TArgs extends Parameters<OverrideQueryBuilder["version"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).version(...(args as unknown as Parameters<OverrideQueryBuilder["version"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   versioning() {
     return (new QueryBuilder(this)).versioning();
   }
-  vertical(...args: Parameters<OverrideQueryBuilder["vertical"]>) {
-    return (new QueryBuilder(this)).vertical(...args);
+  vertical<TArgs extends Parameters<OverrideQueryBuilder["vertical"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).vertical(...(args as unknown as Parameters<OverrideQueryBuilder["vertical"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   view() {
     return (new QueryBuilder(this)).view();
@@ -4413,32 +4404,32 @@ export class QueryInstance {
   volatile() {
     return (new QueryBuilder(this)).volatile();
   }
-  websearchToTsquery(...args: Parameters<OverrideQueryBuilder["websearchToTsquery"]>) {
-    return (new QueryBuilder(this)).websearchToTsquery(...args);
+  websearchToTsquery<TArgs extends Parameters<OverrideQueryBuilder["websearchToTsquery"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).websearchToTsquery(...(args as unknown as Parameters<OverrideQueryBuilder["websearchToTsquery"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  when(...args: Parameters<OverrideQueryBuilder["when"]>) {
-    return (new QueryBuilder(this)).when(...args);
+  when<TArgs extends Parameters<OverrideQueryBuilder["when"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).when(...(args as unknown as Parameters<OverrideQueryBuilder["when"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   whenever() {
     return (new QueryBuilder(this)).whenever();
   }
-  where(...args: Parameters<OverrideQueryBuilder["where"]>) {
-    return (new QueryBuilder(this)).where(...args);
+  where<TArgs extends Parameters<OverrideQueryBuilder["where"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).where(...(args as unknown as Parameters<OverrideQueryBuilder["where"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   whitespace() {
     return (new QueryBuilder(this)).whitespace();
   }
-  width(...args: Parameters<OverrideQueryBuilder["width"]>) {
-    return (new QueryBuilder(this)).width(...args);
+  width<TArgs extends Parameters<OverrideQueryBuilder["width"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).width(...(args as unknown as Parameters<OverrideQueryBuilder["width"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  widthBucket(...args: Parameters<OverrideQueryBuilder["widthBucket"]>) {
-    return (new QueryBuilder(this)).widthBucket(...args);
+  widthBucket<TArgs extends Parameters<OverrideQueryBuilder["widthBucket"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).widthBucket(...(args as unknown as Parameters<OverrideQueryBuilder["widthBucket"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  window(...args: Parameters<OverrideQueryBuilder["window"]>) {
-    return (new QueryBuilder(this)).window(...args);
+  window<TArgs extends Parameters<OverrideQueryBuilder["window"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).window(...(args as unknown as Parameters<OverrideQueryBuilder["window"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  with(...args: Parameters<OverrideQueryBuilder["with"]>) {
-    return (new QueryBuilder(this)).with(...args);
+  with<TArgs extends Parameters<OverrideQueryBuilder["with"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).with(...(args as unknown as Parameters<OverrideQueryBuilder["with"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   within() {
     return (new QueryBuilder(this)).within();
@@ -4446,8 +4437,8 @@ export class QueryInstance {
   without() {
     return (new QueryBuilder(this)).without();
   }
-  withTies(...args: Parameters<OverrideQueryBuilder["withTies"]>) {
-    return (new QueryBuilder(this)).withTies(...args);
+  withTies<TArgs extends Parameters<OverrideQueryBuilder["withTies"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).withTies(...(args as unknown as Parameters<OverrideQueryBuilder["withTies"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   work() {
     return (new QueryBuilder(this)).work();
@@ -4461,11 +4452,11 @@ export class QueryInstance {
   xml() {
     return (new QueryBuilder(this)).xml();
   }
-  xmlagg(...args: Parameters<OverrideQueryBuilder["xmlagg"]>) {
-    return (new QueryBuilder(this)).xmlagg(...args);
+  xmlagg<TArgs extends Parameters<OverrideQueryBuilder["xmlagg"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlagg(...(args as unknown as Parameters<OverrideQueryBuilder["xmlagg"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlattributes(...args: Parameters<OverrideQueryBuilder["xmlattributes"]>) {
-    return (new QueryBuilder(this)).xmlattributes(...args);
+  xmlattributes<TArgs extends Parameters<OverrideQueryBuilder["xmlattributes"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlattributes(...(args as unknown as Parameters<OverrideQueryBuilder["xmlattributes"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmlbinary() {
     return (new QueryBuilder(this)).xmlbinary();
@@ -4473,11 +4464,11 @@ export class QueryInstance {
   xmlcast() {
     return (new QueryBuilder(this)).xmlcast();
   }
-  xmlcomment(...args: Parameters<OverrideQueryBuilder["xmlcomment"]>) {
-    return (new QueryBuilder(this)).xmlcomment(...args);
+  xmlcomment<TArgs extends Parameters<OverrideQueryBuilder["xmlcomment"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlcomment(...(args as unknown as Parameters<OverrideQueryBuilder["xmlcomment"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlconcat(...args: Parameters<OverrideQueryBuilder["xmlconcat"]>) {
-    return (new QueryBuilder(this)).xmlconcat(...args);
+  xmlconcat<TArgs extends Parameters<OverrideQueryBuilder["xmlconcat"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlconcat(...(args as unknown as Parameters<OverrideQueryBuilder["xmlconcat"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmldeclaration() {
     return (new QueryBuilder(this)).xmldeclaration();
@@ -4485,23 +4476,23 @@ export class QueryInstance {
   xmldocument() {
     return (new QueryBuilder(this)).xmldocument();
   }
-  xmlelement(...args: Parameters<OverrideQueryBuilder["xmlelement"]>) {
-    return (new QueryBuilder(this)).xmlelement(...args);
+  xmlelement<TArgs extends Parameters<OverrideQueryBuilder["xmlelement"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlelement(...(args as unknown as Parameters<OverrideQueryBuilder["xmlelement"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlexists(...args: Parameters<OverrideQueryBuilder["xmlexists"]>) {
-    return (new QueryBuilder(this)).xmlexists(...args);
+  xmlexists<TArgs extends Parameters<OverrideQueryBuilder["xmlexists"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlexists(...(args as unknown as Parameters<OverrideQueryBuilder["xmlexists"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlforest(...args: Parameters<OverrideQueryBuilder["xmlforest"]>) {
-    return (new QueryBuilder(this)).xmlforest(...args);
+  xmlforest<TArgs extends Parameters<OverrideQueryBuilder["xmlforest"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlforest(...(args as unknown as Parameters<OverrideQueryBuilder["xmlforest"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlIsWellFormed(...args: Parameters<OverrideQueryBuilder["xmlIsWellFormed"]>) {
-    return (new QueryBuilder(this)).xmlIsWellFormed(...args);
+  xmlIsWellFormed<TArgs extends Parameters<OverrideQueryBuilder["xmlIsWellFormed"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlIsWellFormed(...(args as unknown as Parameters<OverrideQueryBuilder["xmlIsWellFormed"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlIsWellFormedContent(...args: Parameters<OverrideQueryBuilder["xmlIsWellFormedContent"]>) {
-    return (new QueryBuilder(this)).xmlIsWellFormedContent(...args);
+  xmlIsWellFormedContent<TArgs extends Parameters<OverrideQueryBuilder["xmlIsWellFormedContent"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlIsWellFormedContent(...(args as unknown as Parameters<OverrideQueryBuilder["xmlIsWellFormedContent"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlIsWellFormedDocument(...args: Parameters<OverrideQueryBuilder["xmlIsWellFormedDocument"]>) {
-    return (new QueryBuilder(this)).xmlIsWellFormedDocument(...args);
+  xmlIsWellFormedDocument<TArgs extends Parameters<OverrideQueryBuilder["xmlIsWellFormedDocument"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlIsWellFormedDocument(...(args as unknown as Parameters<OverrideQueryBuilder["xmlIsWellFormedDocument"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmliterate() {
     return (new QueryBuilder(this)).xmliterate();
@@ -4509,38 +4500,38 @@ export class QueryInstance {
   xmlnamespaces() {
     return (new QueryBuilder(this)).xmlnamespaces();
   }
-  xmlparse(...args: Parameters<OverrideQueryBuilder["xmlparse"]>) {
-    return (new QueryBuilder(this)).xmlparse(...args);
+  xmlparse<TArgs extends Parameters<OverrideQueryBuilder["xmlparse"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlparse(...(args as unknown as Parameters<OverrideQueryBuilder["xmlparse"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xmlpi(...args: Parameters<OverrideQueryBuilder["xmlpi"]>) {
-    return (new QueryBuilder(this)).xmlpi(...args);
+  xmlpi<TArgs extends Parameters<OverrideQueryBuilder["xmlpi"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlpi(...(args as unknown as Parameters<OverrideQueryBuilder["xmlpi"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmlquery() {
     return (new QueryBuilder(this)).xmlquery();
   }
-  xmlroot(...args: Parameters<OverrideQueryBuilder["xmlroot"]>) {
-    return (new QueryBuilder(this)).xmlroot(...args);
+  xmlroot<TArgs extends Parameters<OverrideQueryBuilder["xmlroot"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlroot(...(args as unknown as Parameters<OverrideQueryBuilder["xmlroot"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmlschema() {
     return (new QueryBuilder(this)).xmlschema();
   }
-  xmlserialize(...args: Parameters<OverrideQueryBuilder["xmlserialize"]>) {
-    return (new QueryBuilder(this)).xmlserialize(...args);
+  xmlserialize<TArgs extends Parameters<OverrideQueryBuilder["xmlserialize"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmlserialize(...(args as unknown as Parameters<OverrideQueryBuilder["xmlserialize"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmltable() {
     return (new QueryBuilder(this)).xmltable();
   }
-  xmltext(...args: Parameters<OverrideQueryBuilder["xmltext"]>) {
-    return (new QueryBuilder(this)).xmltext(...args);
+  xmltext<TArgs extends Parameters<OverrideQueryBuilder["xmltext"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xmltext(...(args as unknown as Parameters<OverrideQueryBuilder["xmltext"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   xmlvalidate() {
     return (new QueryBuilder(this)).xmlvalidate();
   }
-  xpath(...args: Parameters<OverrideQueryBuilder["xpath"]>) {
-    return (new QueryBuilder(this)).xpath(...args);
+  xpath<TArgs extends Parameters<OverrideQueryBuilder["xpath"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xpath(...(args as unknown as Parameters<OverrideQueryBuilder["xpath"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
-  xpathExists(...args: Parameters<OverrideQueryBuilder["xpathExists"]>) {
-    return (new QueryBuilder(this)).xpathExists(...args);
+  xpathExists<TArgs extends Parameters<OverrideQueryBuilder["xpathExists"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
+    return (new QueryBuilder(this)).xpathExists(...(args as unknown as Parameters<OverrideQueryBuilder["xpathExists"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
   }
   year() {
     return (new QueryBuilder(this)).year();
