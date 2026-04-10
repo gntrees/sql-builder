@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/raw")({
   loader: async () => {
@@ -26,6 +29,26 @@ export const Route = createFileRoute("/docs/pg/raw")({
       percentCharacter,
       operatorBasics,
       behaviorNotes,
+      rawBasicsSqlResult,
+      rawAliasSqlResult,
+      rawInterpolationSqlResult,
+      rawFragmentSqlResult,
+      rawStandaloneSqlResult,
+      rawStringBasicsSqlResult,
+      rawStringAliasSqlResult,
+      rawStringCastSqlResult,
+      rawStringLimitSqlResult,
+      literalBasicsSqlResult,
+      literalAliasSqlResult,
+      literalArraySqlResult,
+      identifierBasicsSqlResult,
+      identifierAliasSqlResult,
+      identifierArraySqlResult,
+      valueBasicsSqlResult,
+      valueExpressionSqlResult,
+      percentCharacterSqlResult,
+      operatorBasicsSqlResult,
+      behaviorNotesSqlResult,
     ] = await Promise.all([
       highlightCodeBlock(rawBasicsCode, "ts"),
       highlightCodeBlock(rawAliasCode, "ts"),
@@ -47,6 +70,26 @@ export const Route = createFileRoute("/docs/pg/raw")({
       highlightCodeBlock(percentCharacterCode, "ts"),
       highlightCodeBlock(operatorBasicsCode, "ts"),
       highlightCodeBlock(behaviorNotesCode, "ts"),
+      buildSqlResultFromCode(rawBasicsCode),
+      buildSqlResultFromCode(rawAliasCode),
+      buildSqlResultFromCode(rawInterpolationCode),
+      buildSqlResultFromCode(rawFragmentCode),
+      buildSqlResultFromCode(rawStandaloneCode),
+      buildSqlResultFromCode(rawStringBasicsCode),
+      buildSqlResultFromCode(rawStringAliasCode),
+      buildSqlResultFromCode(rawStringCastCode),
+      buildSqlResultFromCode(rawStringLimitCode),
+      buildSqlResultFromCode(literalBasicsCode),
+      buildSqlResultFromCode(literalAliasCode),
+      buildSqlResultFromCode(literalArrayCode),
+      buildSqlResultFromCode(identifierBasicsCode),
+      buildSqlResultFromCode(identifierAliasCode),
+      buildSqlResultFromCode(identifierArrayCode),
+      buildSqlResultFromCode(valueBasicsCode),
+      buildSqlResultFromCode(valueExpressionCode),
+      buildSqlResultFromCode(percentCharacterCode),
+      buildSqlResultFromCode(operatorBasicsCode),
+      buildSqlResultFromCode(behaviorNotesCode),
     ])
 
     return {
@@ -70,6 +113,26 @@ export const Route = createFileRoute("/docs/pg/raw")({
       percentCharacter,
       operatorBasics,
       behaviorNotes,
+      rawBasicsSqlResult,
+      rawAliasSqlResult,
+      rawInterpolationSqlResult,
+      rawFragmentSqlResult,
+      rawStandaloneSqlResult,
+      rawStringBasicsSqlResult,
+      rawStringAliasSqlResult,
+      rawStringCastSqlResult,
+      rawStringLimitSqlResult,
+      literalBasicsSqlResult,
+      literalAliasSqlResult,
+      literalArraySqlResult,
+      identifierBasicsSqlResult,
+      identifierAliasSqlResult,
+      identifierArraySqlResult,
+      valueBasicsSqlResult,
+      valueExpressionSqlResult,
+      percentCharacterSqlResult,
+      operatorBasicsSqlResult,
+      behaviorNotesSqlResult,
     }
   },
   component: RouteComponent,
@@ -225,7 +288,7 @@ function RouteComponent() {
           code={rawBasicsCode}
           html={highlighted.rawBasics.light}
           darkHtml={highlighted.rawBasics.dark}
-          sqlResult={{ code: rawBasicsCode }}
+          sqlResult={highlighted.rawBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -233,7 +296,7 @@ function RouteComponent() {
           code={rawAliasCode}
           html={highlighted.rawAlias.light}
           darkHtml={highlighted.rawAlias.dark}
-          sqlResult={{ code: rawAliasCode }}
+          sqlResult={highlighted.rawAliasSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -241,7 +304,7 @@ function RouteComponent() {
           code={rawInterpolationCode}
           html={highlighted.rawInterpolation.light}
           darkHtml={highlighted.rawInterpolation.dark}
-          sqlResult={{ code: rawInterpolationCode }}
+          sqlResult={highlighted.rawInterpolationSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -249,7 +312,7 @@ function RouteComponent() {
           code={rawFragmentCode}
           html={highlighted.rawFragment.light}
           darkHtml={highlighted.rawFragment.dark}
-          sqlResult={{ code: rawFragmentCode }}
+          sqlResult={highlighted.rawFragmentSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -257,7 +320,7 @@ function RouteComponent() {
           code={rawStandaloneCode}
           html={highlighted.rawStandalone.light}
           darkHtml={highlighted.rawStandalone.dark}
-          sqlResult={{ code: rawStandaloneCode }}
+          sqlResult={highlighted.rawStandaloneSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -273,7 +336,7 @@ function RouteComponent() {
           code={literalBasicsCode}
           html={highlighted.literalBasics.light}
           darkHtml={highlighted.literalBasics.dark}
-          sqlResult={{ code: literalBasicsCode }}
+          sqlResult={highlighted.literalBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -281,7 +344,7 @@ function RouteComponent() {
           code={literalAliasCode}
           html={highlighted.literalAlias.light}
           darkHtml={highlighted.literalAlias.dark}
-          sqlResult={{ code: literalAliasCode }}
+          sqlResult={highlighted.literalAliasSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -296,7 +359,7 @@ function RouteComponent() {
           code={literalArrayCode}
           html={highlighted.literalArray.light}
           darkHtml={highlighted.literalArray.dark}
-          sqlResult={{ code: literalArrayCode }}
+          sqlResult={highlighted.literalArraySqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -311,7 +374,7 @@ function RouteComponent() {
           code={identifierBasicsCode}
           html={highlighted.identifierBasics.light}
           darkHtml={highlighted.identifierBasics.dark}
-          sqlResult={{ code: identifierBasicsCode }}
+          sqlResult={highlighted.identifierBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -319,7 +382,7 @@ function RouteComponent() {
           code={identifierAliasCode}
           html={highlighted.identifierAlias.light}
           darkHtml={highlighted.identifierAlias.dark}
-          sqlResult={{ code: identifierAliasCode }}
+          sqlResult={highlighted.identifierAliasSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -334,7 +397,7 @@ function RouteComponent() {
           code={identifierArrayCode}
           html={highlighted.identifierArray.light}
           darkHtml={highlighted.identifierArray.dark}
-          sqlResult={{ code: identifierArrayCode }}
+          sqlResult={highlighted.identifierArraySqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -350,7 +413,7 @@ function RouteComponent() {
           code={rawStringBasicsCode}
           html={highlighted.rawStringBasics.light}
           darkHtml={highlighted.rawStringBasics.dark}
-          sqlResult={{ code: rawStringBasicsCode }}
+          sqlResult={highlighted.rawStringBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -358,7 +421,7 @@ function RouteComponent() {
           code={rawStringAliasCode}
           html={highlighted.rawStringAlias.light}
           darkHtml={highlighted.rawStringAlias.dark}
-          sqlResult={{ code: rawStringAliasCode }}
+          sqlResult={highlighted.rawStringAliasSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -366,7 +429,7 @@ function RouteComponent() {
           code={rawStringCastCode}
           html={highlighted.rawStringCast.light}
           darkHtml={highlighted.rawStringCast.dark}
-          sqlResult={{ code: rawStringCastCode }}
+          sqlResult={highlighted.rawStringCastSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -374,7 +437,7 @@ function RouteComponent() {
           code={rawStringLimitCode}
           html={highlighted.rawStringLimit.light}
           darkHtml={highlighted.rawStringLimit.dark}
-          sqlResult={{ code: rawStringLimitCode }}
+          sqlResult={highlighted.rawStringLimitSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -389,7 +452,7 @@ function RouteComponent() {
           code={valueBasicsCode}
           html={highlighted.valueBasics.light}
           darkHtml={highlighted.valueBasics.dark}
-          sqlResult={{ code: valueBasicsCode }}
+          sqlResult={highlighted.valueBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -397,7 +460,7 @@ function RouteComponent() {
           code={valueExpressionCode}
           html={highlighted.valueExpression.light}
           darkHtml={highlighted.valueExpression.dark}
-          sqlResult={{ code: valueExpressionCode }}
+          sqlResult={highlighted.valueExpressionSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -412,7 +475,7 @@ function RouteComponent() {
           code={percentCharacterCode}
           html={highlighted.percentCharacter.light}
           darkHtml={highlighted.percentCharacter.dark}
-          sqlResult={{ code: percentCharacterCode }}
+          sqlResult={highlighted.percentCharacterSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -428,7 +491,7 @@ function RouteComponent() {
           code={operatorBasicsCode}
           html={highlighted.operatorBasics.light}
           darkHtml={highlighted.operatorBasics.dark}
-          sqlResult={{ code: operatorBasicsCode }}
+          sqlResult={highlighted.operatorBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -443,7 +506,7 @@ function RouteComponent() {
           code={behaviorNotesCode}
           html={highlighted.behaviorNotes.light}
           darkHtml={highlighted.behaviorNotes.dark}
-          sqlResult={{ code: behaviorNotesCode }}
+          sqlResult={highlighted.behaviorNotesSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

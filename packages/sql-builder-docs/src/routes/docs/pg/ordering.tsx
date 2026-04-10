@@ -1,20 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/ordering")({
   loader: async () => {
-    const [orderByBasics, orderNullsBasics, fetchBasics] = await Promise.all([
+    const [
+      orderByBasics,
+      orderNullsBasics,
+      fetchBasics,
+      orderByBasicsSqlResult,
+      orderNullsBasicsSqlResult,
+      fetchBasicsSqlResult,
+    ] = await Promise.all([
       highlightCodeBlock(orderByBasicsCode, "ts"),
       highlightCodeBlock(orderNullsBasicsCode, "ts"),
       highlightCodeBlock(fetchBasicsCode, "ts"),
+      buildSqlResultFromCode(orderByBasicsCode),
+      buildSqlResultFromCode(orderNullsBasicsCode),
+      buildSqlResultFromCode(fetchBasicsCode),
     ])
 
     return {
       orderByBasics,
       orderNullsBasics,
       fetchBasics,
+      orderByBasicsSqlResult,
+      orderNullsBasicsSqlResult,
+      fetchBasicsSqlResult,
     }
   },
   component: RouteComponent,
@@ -75,7 +91,7 @@ function RouteComponent() {
           code={orderByBasicsCode}
           html={highlighted.orderByBasics.light}
           darkHtml={highlighted.orderByBasics.dark}
-          sqlResult={{ code: orderByBasicsCode }}
+          sqlResult={highlighted.orderByBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -91,7 +107,7 @@ function RouteComponent() {
           code={orderNullsBasicsCode}
           html={highlighted.orderNullsBasics.light}
           darkHtml={highlighted.orderNullsBasics.dark}
-          sqlResult={{ code: orderNullsBasicsCode }}
+          sqlResult={highlighted.orderNullsBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -107,7 +123,7 @@ function RouteComponent() {
           code={fetchBasicsCode}
           html={highlighted.fetchBasics.light}
           darkHtml={highlighted.fetchBasics.dark}
-          sqlResult={{ code: fetchBasicsCode }}
+          sqlResult={highlighted.fetchBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

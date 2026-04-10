@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  // buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/sql-schema")({
   loader: async () => {
@@ -11,12 +14,20 @@ export const Route = createFileRoute("/docs/pg/sql-schema")({
       schemaParams,
       schemaCaseBehavior,
       nestedSchemaCase,
+      // schemaSetupSqlResult,
+      // schemaParamsSqlResult,
+      // schemaCaseBehaviorSqlResult,
+      // nestedSchemaCaseSqlResult,
     ] = await Promise.all([
       highlightCodeBlock(schemaSetupCode, "ts"),
       highlightCodeBlock(schemaParamRulesCode, "ts"),
       highlightCodeBlock(schemaParamsCode, "ts"),
       highlightCodeBlock(schemaCaseBehaviorCode, "ts"),
       highlightCodeBlock(nestedSchemaCaseCode, "ts"),
+      // buildSqlResultFromCode(schemaSetupCode),
+      // buildSqlResultFromCode(schemaParamsCode),
+      // buildSqlResultFromCode(schemaCaseBehaviorCode),
+      // buildSqlResultFromCode(nestedSchemaCaseCode),
     ])
 
     return {
@@ -25,6 +36,10 @@ export const Route = createFileRoute("/docs/pg/sql-schema")({
       schemaParams,
       schemaCaseBehavior,
       nestedSchemaCase,
+      // schemaSetupSqlResult,
+      // schemaParamsSqlResult,
+      // schemaCaseBehaviorSqlResult,
+      // nestedSchemaCaseSqlResult,
     }
   },
   component: RouteComponent,
@@ -228,7 +243,7 @@ function RouteComponent() {
           code={schemaSetupCode}
           html={highlighted.schemaSetup.light}
           darkHtml={highlighted.schemaSetup.dark}
-          sqlResult={{ code: schemaSetupCode }}
+          // sqlResult={highlighted.schemaSetupSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -311,7 +326,7 @@ function RouteComponent() {
           code={schemaParamsCode}
           html={highlighted.schemaParams.light}
           darkHtml={highlighted.schemaParams.dark}
-          sqlResult={{ code: schemaParamsCode }}
+          // sqlResult={highlighted.schemaParamsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -365,7 +380,7 @@ function RouteComponent() {
           code={schemaCaseBehaviorCode}
           html={highlighted.schemaCaseBehavior.light}
           darkHtml={highlighted.schemaCaseBehavior.dark}
-          sqlResult={{ code: schemaCaseBehaviorCode }}
+          // sqlResult={highlighted.schemaCaseBehaviorSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -381,7 +396,7 @@ function RouteComponent() {
           code={nestedSchemaCaseCode}
           html={highlighted.nestedSchemaCase.light}
           darkHtml={highlighted.nestedSchemaCase.dark}
-          sqlResult={{ code: nestedSchemaCaseCode }}
+          // sqlResult={highlighted.nestedSchemaCaseSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useMemo, useState } from "react"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/operators")({
   loader: async () => {
@@ -15,6 +18,14 @@ export const Route = createFileRoute("/docs/pg/operators")({
       postgresSpecificBasics,
       geometricBasics,
       betweenBasics,
+      comparisonBasicsSqlResult,
+      logicalBasicsSqlResult,
+      patternMatchingBasicsSqlResult,
+      bitwiseBasicsSqlResult,
+      arithmeticBasicsSqlResult,
+      postgresSpecificBasicsSqlResult,
+      geometricBasicsSqlResult,
+      betweenBasicsSqlResult,
     ] = await Promise.all([
       highlightCodeBlock(comparisonBasicsCode, "ts"),
       highlightCodeBlock(logicalBasicsCode, "ts"),
@@ -24,6 +35,14 @@ export const Route = createFileRoute("/docs/pg/operators")({
       highlightCodeBlock(postgresSpecificBasicsCode, "ts"),
       highlightCodeBlock(geometricBasicsCode, "ts"),
       highlightCodeBlock(betweenBasicsCode, "ts"),
+      buildSqlResultFromCode(comparisonBasicsCode),
+      buildSqlResultFromCode(logicalBasicsCode),
+      buildSqlResultFromCode(patternMatchingBasicsCode),
+      buildSqlResultFromCode(bitwiseBasicsCode),
+      buildSqlResultFromCode(arithmeticBasicsCode),
+      buildSqlResultFromCode(postgresSpecificBasicsCode),
+      buildSqlResultFromCode(geometricBasicsCode),
+      buildSqlResultFromCode(betweenBasicsCode),
     ])
 
     return {
@@ -35,6 +54,14 @@ export const Route = createFileRoute("/docs/pg/operators")({
       postgresSpecificBasics,
       geometricBasics,
       betweenBasics,
+      comparisonBasicsSqlResult,
+      logicalBasicsSqlResult,
+      patternMatchingBasicsSqlResult,
+      bitwiseBasicsSqlResult,
+      arithmeticBasicsSqlResult,
+      postgresSpecificBasicsSqlResult,
+      geometricBasicsSqlResult,
+      betweenBasicsSqlResult,
     }
   },
   component: RouteComponent,
@@ -210,7 +237,7 @@ function RouteComponent() {
           code={comparisonBasicsCode}
           html={highlighted.comparisonBasics.light}
           darkHtml={highlighted.comparisonBasics.dark}
-          sqlResult={{ code: comparisonBasicsCode }}
+          sqlResult={highlighted.comparisonBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -226,7 +253,7 @@ function RouteComponent() {
           code={logicalBasicsCode}
           html={highlighted.logicalBasics.light}
           darkHtml={highlighted.logicalBasics.dark}
-          sqlResult={{ code: logicalBasicsCode }}
+          sqlResult={highlighted.logicalBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -242,7 +269,7 @@ function RouteComponent() {
           code={patternMatchingBasicsCode}
           html={highlighted.patternMatchingBasics.light}
           darkHtml={highlighted.patternMatchingBasics.dark}
-          sqlResult={{ code: patternMatchingBasicsCode }}
+          sqlResult={highlighted.patternMatchingBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -258,7 +285,7 @@ function RouteComponent() {
           code={bitwiseBasicsCode}
           html={highlighted.bitwiseBasics.light}
           darkHtml={highlighted.bitwiseBasics.dark}
-          sqlResult={{ code: bitwiseBasicsCode }}
+          sqlResult={highlighted.bitwiseBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -274,7 +301,7 @@ function RouteComponent() {
           code={arithmeticBasicsCode}
           html={highlighted.arithmeticBasics.light}
           darkHtml={highlighted.arithmeticBasics.dark}
-          sqlResult={{ code: arithmeticBasicsCode }}
+          sqlResult={highlighted.arithmeticBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -290,7 +317,7 @@ function RouteComponent() {
           code={postgresSpecificBasicsCode}
           html={highlighted.postgresSpecificBasics.light}
           darkHtml={highlighted.postgresSpecificBasics.dark}
-          sqlResult={{ code: postgresSpecificBasicsCode }}
+          sqlResult={highlighted.postgresSpecificBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -306,7 +333,7 @@ function RouteComponent() {
           code={geometricBasicsCode}
           html={highlighted.geometricBasics.light}
           darkHtml={highlighted.geometricBasics.dark}
-          sqlResult={{ code: geometricBasicsCode }}
+          sqlResult={highlighted.geometricBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -322,7 +349,7 @@ function RouteComponent() {
           code={betweenBasicsCode}
           html={highlighted.betweenBasics.light}
           darkHtml={highlighted.betweenBasics.dark}
-          sqlResult={{ code: betweenBasicsCode }}
+          sqlResult={highlighted.betweenBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

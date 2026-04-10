@@ -1,20 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/predicates")({
   loader: async () => {
-    const [whereBasics, logicalBasics, membershipBasics] = await Promise.all([
+    const [
+      whereBasics,
+      logicalBasics,
+      membershipBasics,
+      whereBasicsSqlResult,
+      logicalBasicsSqlResult,
+      membershipBasicsSqlResult,
+    ] = await Promise.all([
       highlightCodeBlock(whereBasicsCode, "ts"),
       highlightCodeBlock(logicalBasicsCode, "ts"),
       highlightCodeBlock(membershipBasicsCode, "ts"),
+      buildSqlResultFromCode(whereBasicsCode),
+      buildSqlResultFromCode(logicalBasicsCode),
+      buildSqlResultFromCode(membershipBasicsCode),
     ])
 
     return {
       whereBasics,
       logicalBasics,
       membershipBasics,
+      whereBasicsSqlResult,
+      logicalBasicsSqlResult,
+      membershipBasicsSqlResult,
     }
   },
   component: RouteComponent,
@@ -86,7 +102,7 @@ function RouteComponent() {
           code={whereBasicsCode}
           html={highlighted.whereBasics.light}
           darkHtml={highlighted.whereBasics.dark}
-          sqlResult={{ code: whereBasicsCode }}
+          sqlResult={highlighted.whereBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -102,7 +118,7 @@ function RouteComponent() {
           code={logicalBasicsCode}
           html={highlighted.logicalBasics.light}
           darkHtml={highlighted.logicalBasics.dark}
-          sqlResult={{ code: logicalBasicsCode }}
+          sqlResult={highlighted.logicalBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -118,7 +134,7 @@ function RouteComponent() {
           code={membershipBasicsCode}
           html={highlighted.membershipBasics.light}
           darkHtml={highlighted.membershipBasics.dark}
-          sqlResult={{ code: membershipBasicsCode }}
+          sqlResult={highlighted.membershipBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

@@ -1,20 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/joins")({
   loader: async () => {
-    const [joinBasics, joinLateralBasics, joinNaturalBasics] = await Promise.all([
+    const [
+      joinBasics,
+      joinLateralBasics,
+      joinNaturalBasics,
+      joinBasicsSqlResult,
+      joinLateralBasicsSqlResult,
+      joinNaturalBasicsSqlResult,
+    ] = await Promise.all([
       highlightCodeBlock(joinBasicsCode, "ts"),
       highlightCodeBlock(joinLateralBasicsCode, "ts"),
       highlightCodeBlock(joinNaturalBasicsCode, "ts"),
+      buildSqlResultFromCode(joinBasicsCode),
+      buildSqlResultFromCode(joinLateralBasicsCode),
+      buildSqlResultFromCode(joinNaturalBasicsCode),
     ])
 
     return {
       joinBasics,
       joinLateralBasics,
       joinNaturalBasics,
+      joinBasicsSqlResult,
+      joinLateralBasicsSqlResult,
+      joinNaturalBasicsSqlResult,
     }
   },
   component: RouteComponent,
@@ -81,7 +97,7 @@ function RouteComponent() {
           code={joinBasicsCode}
           html={highlighted.joinBasics.light}
           darkHtml={highlighted.joinBasics.dark}
-          sqlResult={{ code: joinBasicsCode }}
+          sqlResult={highlighted.joinBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -97,7 +113,7 @@ function RouteComponent() {
           code={joinLateralBasicsCode}
           html={highlighted.joinLateralBasics.light}
           darkHtml={highlighted.joinLateralBasics.dark}
-          sqlResult={{ code: joinLateralBasicsCode }}
+          sqlResult={highlighted.joinLateralBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -112,7 +128,7 @@ function RouteComponent() {
           code={joinNaturalBasicsCode}
           html={highlighted.joinNaturalBasics.light}
           darkHtml={highlighted.joinNaturalBasics.dark}
-          sqlResult={{ code: joinNaturalBasicsCode }}
+          sqlResult={highlighted.joinNaturalBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

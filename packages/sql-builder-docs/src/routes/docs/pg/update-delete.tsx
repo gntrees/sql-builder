@@ -1,18 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/update-delete")({
   loader: async () => {
-    const [updateBasics, deleteBasics] = await Promise.all([
+    const [updateBasics, deleteBasics, updateBasicsSqlResult, deleteBasicsSqlResult] =
+      await Promise.all([
       highlightCodeBlock(updateBasicsCode, "ts"),
       highlightCodeBlock(deleteBasicsCode, "ts"),
+      buildSqlResultFromCode(updateBasicsCode),
+      buildSqlResultFromCode(deleteBasicsCode),
     ])
 
     return {
       updateBasics,
       deleteBasics,
+      updateBasicsSqlResult,
+      deleteBasicsSqlResult,
     }
   },
   component: RouteComponent,
@@ -65,7 +73,7 @@ function RouteComponent() {
           code={updateBasicsCode}
           html={highlighted.updateBasics.light}
           darkHtml={highlighted.updateBasics.dark}
-          sqlResult={{ code: updateBasicsCode }}
+          sqlResult={highlighted.updateBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -81,7 +89,7 @@ function RouteComponent() {
           code={deleteBasicsCode}
           html={highlighted.deleteBasics.light}
           darkHtml={highlighted.deleteBasics.dark}
-          sqlResult={{ code: deleteBasicsCode }}
+          sqlResult={highlighted.deleteBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

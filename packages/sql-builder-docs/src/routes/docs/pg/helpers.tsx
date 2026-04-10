@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/helpers")({
   loader: async () => {
@@ -12,6 +15,12 @@ export const Route = createFileRoute("/docs/pg/helpers")({
       paginationHelpers,
       identifierHelpers,
       windowHelpers,
+      clauseHelpersSqlResult,
+      cteHelpersSqlResult,
+      setOpsHelpersSqlResult,
+      paginationHelpersSqlResult,
+      identifierHelpersSqlResult,
+      windowHelpersSqlResult,
     ] = await Promise.all([
       highlightCodeBlock(clauseHelpersCode, "ts"),
       highlightCodeBlock(cteHelpersCode, "ts"),
@@ -19,6 +28,12 @@ export const Route = createFileRoute("/docs/pg/helpers")({
       highlightCodeBlock(paginationHelpersCode, "ts"),
       highlightCodeBlock(identifierHelpersCode, "ts"),
       highlightCodeBlock(windowHelpersCode, "ts"),
+      buildSqlResultFromCode(clauseHelpersCode),
+      buildSqlResultFromCode(cteHelpersCode),
+      buildSqlResultFromCode(setOpsHelpersCode),
+      buildSqlResultFromCode(paginationHelpersCode),
+      buildSqlResultFromCode(identifierHelpersCode),
+      buildSqlResultFromCode(windowHelpersCode),
     ])
 
     return {
@@ -28,6 +43,12 @@ export const Route = createFileRoute("/docs/pg/helpers")({
       paginationHelpers,
       identifierHelpers,
       windowHelpers,
+      clauseHelpersSqlResult,
+      cteHelpersSqlResult,
+      setOpsHelpersSqlResult,
+      paginationHelpersSqlResult,
+      identifierHelpersSqlResult,
+      windowHelpersSqlResult,
     }
   },
   component: RouteComponent,
@@ -116,7 +137,7 @@ function RouteComponent() {
           code={clauseHelpersCode}
           html={highlighted.clauseHelpers.light}
           darkHtml={highlighted.clauseHelpers.dark}
-          sqlResult={{ code: clauseHelpersCode }}
+          sqlResult={highlighted.clauseHelpersSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -131,7 +152,7 @@ function RouteComponent() {
           code={cteHelpersCode}
           html={highlighted.cteHelpers.light}
           darkHtml={highlighted.cteHelpers.dark}
-          sqlResult={{ code: cteHelpersCode }}
+          sqlResult={highlighted.cteHelpersSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -147,7 +168,7 @@ function RouteComponent() {
           code={setOpsHelpersCode}
           html={highlighted.setOpsHelpers.light}
           darkHtml={highlighted.setOpsHelpers.dark}
-          sqlResult={{ code: setOpsHelpersCode }}
+          sqlResult={highlighted.setOpsHelpersSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -162,7 +183,7 @@ function RouteComponent() {
           code={paginationHelpersCode}
           html={highlighted.paginationHelpers.light}
           darkHtml={highlighted.paginationHelpers.dark}
-          sqlResult={{ code: paginationHelpersCode }}
+          sqlResult={highlighted.paginationHelpersSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -178,7 +199,7 @@ function RouteComponent() {
           code={identifierHelpersCode}
           html={highlighted.identifierHelpers.light}
           darkHtml={highlighted.identifierHelpers.dark}
-          sqlResult={{ code: identifierHelpersCode }}
+          sqlResult={highlighted.identifierHelpersSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -193,7 +214,7 @@ function RouteComponent() {
           code={windowHelpersCode}
           html={highlighted.windowHelpers.light}
           darkHtml={highlighted.windowHelpers.dark}
-          sqlResult={{ code: windowHelpersCode }}
+          sqlResult={highlighted.windowHelpersSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

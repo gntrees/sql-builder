@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/transactions")({
   loader: async () => {
@@ -11,12 +14,22 @@ export const Route = createFileRoute("/docs/pg/transactions")({
       transactionPrepared,
       transactionWrapper,
       transactionSemicolon,
+      transactionBasicsSqlResult,
+      transactionSavepointSqlResult,
+      transactionPreparedSqlResult,
+      transactionWrapperSqlResult,
+      transactionSemicolonSqlResult,
     ] = await Promise.all([
       highlightCodeBlock(transactionBasicsCode, "ts"),
       highlightCodeBlock(transactionSavepointCode, "ts"),
       highlightCodeBlock(transactionPreparedCode, "ts"),
       highlightCodeBlock(transactionWrapperCode, "ts"),
       highlightCodeBlock(transactionSemicolonCode, "ts"),
+      buildSqlResultFromCode(transactionBasicsCode),
+      buildSqlResultFromCode(transactionSavepointCode),
+      buildSqlResultFromCode(transactionPreparedCode),
+      buildSqlResultFromCode(transactionWrapperCode),
+      buildSqlResultFromCode(transactionSemicolonCode),
     ])
 
     return {
@@ -25,6 +38,11 @@ export const Route = createFileRoute("/docs/pg/transactions")({
       transactionPrepared,
       transactionWrapper,
       transactionSemicolon,
+      transactionBasicsSqlResult,
+      transactionSavepointSqlResult,
+      transactionPreparedSqlResult,
+      transactionWrapperSqlResult,
+      transactionSemicolonSqlResult,
     }
   },
   component: RouteComponent,
@@ -97,7 +115,7 @@ function RouteComponent() {
           code={transactionBasicsCode}
           html={highlighted.transactionBasics.light}
           darkHtml={highlighted.transactionBasics.dark}
-          sqlResult={{ code: transactionBasicsCode }}
+          sqlResult={highlighted.transactionBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -113,7 +131,7 @@ function RouteComponent() {
           code={transactionSavepointCode}
           html={highlighted.transactionSavepoint.light}
           darkHtml={highlighted.transactionSavepoint.dark}
-          sqlResult={{ code: transactionSavepointCode }}
+          sqlResult={highlighted.transactionSavepointSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -129,7 +147,7 @@ function RouteComponent() {
           code={transactionPreparedCode}
           html={highlighted.transactionPrepared.light}
           darkHtml={highlighted.transactionPrepared.dark}
-          sqlResult={{ code: transactionPreparedCode }}
+          sqlResult={highlighted.transactionPreparedSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -145,7 +163,7 @@ function RouteComponent() {
           code={transactionWrapperCode}
           html={highlighted.transactionWrapper.light}
           darkHtml={highlighted.transactionWrapper.dark}
-          sqlResult={{ code: transactionWrapperCode }}
+          sqlResult={highlighted.transactionWrapperSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -161,7 +179,7 @@ function RouteComponent() {
           code={transactionSemicolonCode}
           html={highlighted.transactionSemicolon.light}
           darkHtml={highlighted.transactionSemicolon.dark}
-          sqlResult={{ code: transactionSemicolonCode }}
+          sqlResult={highlighted.transactionSemicolonSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

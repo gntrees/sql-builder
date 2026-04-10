@@ -1,20 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/select")({
   loader: async () => {
-    const [selectBasics, selectDistinct, selectDistinctOn] = await Promise.all([
+    const [
+      selectBasics,
+      selectDistinct,
+      selectDistinctOn,
+      selectBasicsSqlResult,
+      selectDistinctSqlResult,
+      selectDistinctOnSqlResult,
+    ] = await Promise.all([
       highlightCodeBlock(selectBasicsCode, "ts"),
       highlightCodeBlock(selectDistinctCode, "ts"),
       highlightCodeBlock(selectDistinctOnCode, "ts"),
+      buildSqlResultFromCode(selectBasicsCode),
+      buildSqlResultFromCode(selectDistinctCode),
+      buildSqlResultFromCode(selectDistinctOnCode),
     ])
 
     return {
       selectBasics,
       selectDistinct,
       selectDistinctOn,
+      selectBasicsSqlResult,
+      selectDistinctSqlResult,
+      selectDistinctOnSqlResult,
     }
   },
   component: RouteComponent,
@@ -75,7 +91,7 @@ function RouteComponent() {
           code={selectBasicsCode}
           html={highlighted.selectBasics.light}
           darkHtml={highlighted.selectBasics.dark}
-          sqlResult={{ code: selectBasicsCode }}
+          sqlResult={highlighted.selectBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -90,7 +106,7 @@ function RouteComponent() {
           code={selectDistinctCode}
           html={highlighted.selectDistinct.light}
           darkHtml={highlighted.selectDistinct.dark}
-          sqlResult={{ code: selectDistinctCode }}
+          sqlResult={highlighted.selectDistinctSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -106,7 +122,7 @@ function RouteComponent() {
           code={selectDistinctOnCode}
           html={highlighted.selectDistinctOn.light}
           darkHtml={highlighted.selectDistinctOn.dark}
-          sqlResult={{ code: selectDistinctOnCode }}
+          sqlResult={highlighted.selectDistinctOnSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

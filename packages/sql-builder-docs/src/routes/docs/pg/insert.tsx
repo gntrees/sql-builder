@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/insert")({
   loader: async () => {
@@ -11,12 +14,22 @@ export const Route = createFileRoute("/docs/pg/insert")({
       upsertBasics,
       conflictTargets,
       conflictActions,
+      insertIntoBasicsSqlResult,
+      insertValuesBasicsSqlResult,
+      upsertBasicsSqlResult,
+      conflictTargetsSqlResult,
+      conflictActionsSqlResult,
     ] = await Promise.all([
       highlightCodeBlock(insertIntoBasicsCode, "ts"),
       highlightCodeBlock(insertValuesBasicsCode, "ts"),
       highlightCodeBlock(upsertBasicsCode, "ts"),
       highlightCodeBlock(conflictTargetsCode, "ts"),
       highlightCodeBlock(conflictActionsCode, "ts"),
+      buildSqlResultFromCode(insertIntoBasicsCode),
+      buildSqlResultFromCode(insertValuesBasicsCode),
+      buildSqlResultFromCode(upsertBasicsCode),
+      buildSqlResultFromCode(conflictTargetsCode),
+      buildSqlResultFromCode(conflictActionsCode),
     ])
 
     return {
@@ -25,6 +38,11 @@ export const Route = createFileRoute("/docs/pg/insert")({
       upsertBasics,
       conflictTargets,
       conflictActions,
+      insertIntoBasicsSqlResult,
+      insertValuesBasicsSqlResult,
+      upsertBasicsSqlResult,
+      conflictTargetsSqlResult,
+      conflictActionsSqlResult,
     }
   },
   component: RouteComponent,
@@ -110,7 +128,7 @@ function RouteComponent() {
           code={insertIntoBasicsCode}
           html={highlighted.insertIntoBasics.light}
           darkHtml={highlighted.insertIntoBasics.dark}
-          sqlResult={{ code: insertIntoBasicsCode }}
+          sqlResult={highlighted.insertIntoBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -125,7 +143,7 @@ function RouteComponent() {
           code={insertValuesBasicsCode}
           html={highlighted.insertValuesBasics.light}
           darkHtml={highlighted.insertValuesBasics.dark}
-          sqlResult={{ code: insertValuesBasicsCode }}
+          sqlResult={highlighted.insertValuesBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -141,7 +159,7 @@ function RouteComponent() {
           code={upsertBasicsCode}
           html={highlighted.upsertBasics.light}
           darkHtml={highlighted.upsertBasics.dark}
-          sqlResult={{ code: upsertBasicsCode }}
+          sqlResult={highlighted.upsertBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -157,7 +175,7 @@ function RouteComponent() {
           code={conflictTargetsCode}
           html={highlighted.conflictTargets.light}
           darkHtml={highlighted.conflictTargets.dark}
-          sqlResult={{ code: conflictTargetsCode }}
+          sqlResult={highlighted.conflictTargetsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -173,7 +191,7 @@ function RouteComponent() {
           code={conflictActionsCode}
           html={highlighted.conflictActions.light}
           darkHtml={highlighted.conflictActions.dark}
-          sqlResult={{ code: conflictActionsCode }}
+          sqlResult={highlighted.conflictActionsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

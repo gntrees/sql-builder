@@ -6,18 +6,19 @@ import {
   createContext,
   type HTMLAttributes,
   useContext,
-  useEffect,
   useState,
 } from "react"
 import { cn } from "../../lib/utils"
-import { highlightCodeBlock } from "./code-block.loader"
 
 type CodeBlockProps = HTMLAttributes<HTMLDivElement> & {
   code: string
   html: string
   darkHtml: string
   sqlResult?: {
-    code?: string
+    code: string
+    html: string
+    darkHtml: string
+    params?: { value: unknown }[]
   }
 }
 
@@ -29,50 +30,6 @@ const CodeBlockContext = createContext<CodeBlockContextType>({
   code: "",
 })
 
-const extractQueryBuildingPart = (source: string) => {
-  const lines = source.split("\n")
-  let queryBuildingPart = ""
-  let inQueryBuilding = false
-
-  for (const line of lines) {
-    const trimmedLine = line.trim()
-    if (!inQueryBuilding && /^const\s+query\s*=/.test(trimmedLine)) {
-      inQueryBuilding = true
-    }
-
-    if (!inQueryBuilding) {
-      continue
-    }
-
-    if (
-      (trimmedLine.startsWith("query.") && !/^const\s+query\s*=/.test(trimmedLine)) ||
-      (trimmedLine.startsWith("const ") && !/^const\s+query\s*=/.test(trimmedLine)) ||
-      trimmedLine.startsWith("return ")
-    ) {
-      break
-    }
-
-    queryBuildingPart += line + "\n"
-  }
-
-  return queryBuildingPart.trim()
-}
-const { sqlBuilder } = await import("@gntrees/sql-builder/pg/builder")
-const run = async (queryBuildingPart: string) => {    
-  const functionBody = `const q = sqlBuilder();\n${queryBuildingPart}\nreturn query;`
-  const func = new Function("sqlBuilder", functionBody)
-  const query = func(sqlBuilder)
-
-  if (!query || typeof query.getSql !== "function") {
-    throw new Error("Query builder returned no SQL")
-  }
-
-  const sql = query.getSql()
-  
-  const params = typeof query.getSqlParameters === "function" ? query.getSqlParameters() : []
-  const highlighted = await highlightCodeBlock(sql, "sql")
-  return { highlighted, params}
-}
 export const CodeBlock = ({
   code,
   html,
@@ -83,57 +40,7 @@ export const CodeBlock = ({
   ...props
 }: CodeBlockProps) => {
   const [isResultOpen, setIsResultOpen] = useState(false)
-  const [resultHtml, setResultHtml] = useState<string | null>(null)
-  const [resultDarkHtml, setResultDarkHtml] = useState<string | null>(null)
-  const [resultParams, setResultParams] = useState<unknown[] | null>(null)
-  const [isResultLoading, setIsResultLoading] = useState(false)
-  const [resultError, setResultError] = useState<string | null>(null)
   const hasResult = Boolean(sqlResult)
-
-  useEffect(() => {
-    if (!isResultOpen || !sqlResult || resultHtml || isResultLoading) {
-      return
-    }
-    let isActive = true
-    const source = sqlResult.code ?? code
-    const queryBuildingPart = extractQueryBuildingPart(source)
-
-    if (!queryBuildingPart) {
-      setResultError("Query builder not found")
-      return
-    }
-
-    setIsResultLoading(true)
-    setResultError(null)
-
-
-
-    run(queryBuildingPart)
-      .then((result) => {
-        if (!isActive || !result) {
-          return
-        }
-        setResultHtml(result.highlighted.light)
-        setResultDarkHtml(result.highlighted.dark)
-        setResultParams(result.params)
-      })
-      .catch((error) => {
-        if (!isActive) {
-          return
-        }
-        setResultError(error instanceof Error ? error.message : "Failed to load")
-      })
-      .finally(() => {
-        if (!isActive) {
-          return
-        }
-        setIsResultLoading(false)
-      })
-
-    return () => {
-      isActive = false
-    }
-  }, [isResultOpen])
 
   return (
     <CodeBlockContext.Provider value={{ code }}>
@@ -174,33 +81,23 @@ export const CodeBlock = ({
               SQL Result
             </p>
             <div className="mt-2">
-              {isResultLoading && (
-                <p className="text-xs text-muted-foreground">Loading SQL result...</p>
-              )}
-              {resultError && (
-                <p className="text-xs text-destructive">{resultError}</p>
-              )}
-              {!isResultLoading && !resultError && (
-                <>
-                  <div
-                    className="overflow-auto dark:hidden [&>pre]:m-0 [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:text-foreground! [&>pre]:whitespace-pre-wrap [&>pre]:break-words"
-                    dangerouslySetInnerHTML={{ __html: resultHtml ?? "" }}
-                  />
-                  <div
-                    className="hidden overflow-auto dark:block [&>pre]:m-0 [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:text-foreground! [&>pre]:whitespace-pre-wrap [&>pre]:break-words"
-                    dangerouslySetInnerHTML={{ __html: resultDarkHtml ?? "" }}
-                  />
-                </>
-              )}
+              <div
+                className="overflow-auto dark:hidden [&>pre]:m-0 [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:text-foreground! [&>pre]:whitespace-pre-wrap [&>pre]:break-words"
+                dangerouslySetInnerHTML={{ __html: sqlResult?.html ?? "" }}
+              />
+              <div
+                className="hidden overflow-auto dark:block [&>pre]:m-0 [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:text-foreground! [&>pre]:whitespace-pre-wrap [&>pre]:break-words"
+                dangerouslySetInnerHTML={{ __html: sqlResult?.darkHtml ?? "" }}
+              />
             </div>
-            {resultParams && resultParams.length > 0 && (
+            {sqlResult?.params && sqlResult.params.length > 0 && (
               <div className="mt-3 border-t border-border/60 pt-3">
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Parameters
                 </p>
                 <pre className="mt-2 whitespace-pre-wrap break-words text-xs text-foreground">
                   {JSON.stringify(
-                    resultParams,
+                    sqlResult.params,
                     null,
                     2,
                   )}

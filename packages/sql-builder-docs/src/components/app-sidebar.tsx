@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "@tanstack/react-router"
+import { Link, useRouterState } from "@tanstack/react-router"
 
 import { VersionSwitcher } from "#/components/version-switcher"
 import { ImageLogo } from "#/components/image-logo"
@@ -139,6 +139,17 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
+  const normalizePath = React.useCallback((path: string) => {
+    if (path.length > 1 && path.endsWith("/")) {
+      return path.slice(0, -1)
+    }
+
+    return path
+  }, [])
+
+  const currentPath = normalizePath(pathname)
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -164,8 +175,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>{item.title}</a>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={normalizePath(item.url) === currentPath}
+                    >
+                      <Link to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

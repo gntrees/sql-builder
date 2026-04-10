@@ -1,17 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/installation/")({
   loader: async () => {
-    const [install, setup, basic, handler] = await Promise.all([
+    const [install, setup, basic, handler, basicSqlResult] = await Promise.all([
       highlightCodeBlock(installCode, "bash"),
       highlightCodeBlock(setupCode, "ts"),
       highlightCodeBlock(basicQueryCode, "ts", true),
       highlightCodeBlock(handlerSetupCode, "ts"),
+      buildSqlResultFromCode(basicQuerySqlPreviewCode),
     ])
-    return { install, setup, basic, handler }
+    return { install, setup, basic, handler, basicSqlResult }
   },
   component: RouteComponent,
 })
@@ -37,6 +41,17 @@ const basicQueryCode = `const query = await q
   .execute()
 
 console.log(query)`
+
+const basicQuerySqlPreviewCode = `const query = q
+  .select(
+    q.c("users.id"),
+    q.c("users.name"),
+    q.c("users.email"),
+  )
+  .from(q.t("users"))
+  .where(q.c("users.status").op("=").v("active"))
+  .orderBy(q.c("users.name"))
+  .limit(10)`
 
 const handlerSetupCode = `import { sqlBuilder } from "@gntrees/sql-builder/pg"
 import { Pool } from "pg"
@@ -129,7 +144,7 @@ function RouteComponent() {
           code={basicQueryCode}
           html={highlighted.basic.light}
           darkHtml={highlighted.basic.dark}
-          sqlResult={{ code: basicQueryCode }}
+          sqlResult={highlighted.basicSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

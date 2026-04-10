@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  highlightCodeBlock
+} from "#/components/ai/code-block.loader"
+import { DocsLayout } from "#/components/docs-layout"
+import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/docs/pg/db-schema")({
   loader: async () => {
@@ -177,7 +179,6 @@ function RouteComponent() {
           code={schemaDefinitionCode}
           html={highlighted.schemaDefinition.light}
           darkHtml={highlighted.schemaDefinition.dark}
-          sqlResult={{ code: schemaDefinitionCode }}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -193,7 +194,6 @@ function RouteComponent() {
           code={schemaSelectJoinCode}
           html={highlighted.schemaSelectJoin.light}
           darkHtml={highlighted.schemaSelectJoin.dark}
-          sqlResult={{ code: schemaSelectJoinCode }}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -209,7 +209,6 @@ function RouteComponent() {
           code={schemaWhereGroupCode}
           html={highlighted.schemaWhereGroup.light}
           darkHtml={highlighted.schemaWhereGroup.dark}
-          sqlResult={{ code: schemaWhereGroupCode }}
         >
           <CodeBlockCopyButton />
         </CodeBlock>

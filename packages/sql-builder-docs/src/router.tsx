@@ -8,7 +8,7 @@ export function getRouter() {
     defaultNotFoundComponent: NotFound,
     scrollRestoration: true,
     defaultPreload: 'intent',
-    defaultPreloadStaleTime: 0,
+    defaultPreloadStaleTime: 60_000,
   })
 
   return router

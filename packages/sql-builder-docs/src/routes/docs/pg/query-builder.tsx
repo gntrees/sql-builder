@@ -2,21 +2,36 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useMemo, useState } from "react"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
-import { highlightCodeBlock } from "#/components/ai/code-block.loader"
+import {
+  buildSqlResultFromCode,
+  highlightCodeBlock,
+} from "#/components/ai/code-block.loader"
 
 export const Route = createFileRoute("/docs/pg/query-builder")({
   loader: async () => {
-    const [queryBuilderBasics, queryBuilderParam, queryBuilderExecute] =
-      await Promise.all([
+    const [
+      queryBuilderBasics,
+      queryBuilderParam,
+      queryBuilderExecute,
+      queryBuilderBasicsSqlResult,
+      queryBuilderParamSqlResult,
+      queryBuilderExecuteSqlResult,
+    ] = await Promise.all([
         highlightCodeBlock(queryBuilderBasicsCode, "ts"),
         highlightCodeBlock(queryBuilderParamCode, "ts"),
         highlightCodeBlock(queryBuilderExecuteCode, "ts"),
+        buildSqlResultFromCode(queryBuilderBasicsCode),
+        buildSqlResultFromCode(queryBuilderParamCode),
+        buildSqlResultFromCode(queryBuilderExecuteCode),
       ])
 
     return {
       queryBuilderBasics,
       queryBuilderParam,
       queryBuilderExecute,
+      queryBuilderBasicsSqlResult,
+      queryBuilderParamSqlResult,
+      queryBuilderExecuteSqlResult,
     }
   },
   component: RouteComponent,
@@ -155,7 +170,7 @@ function RouteComponent() {
           code={queryBuilderBasicsCode}
           html={highlighted.queryBuilderBasics.light}
           darkHtml={highlighted.queryBuilderBasics.dark}
-          sqlResult={{ code: queryBuilderBasicsCode }}
+          sqlResult={highlighted.queryBuilderBasicsSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -172,7 +187,7 @@ function RouteComponent() {
           code={queryBuilderParamCode}
           html={highlighted.queryBuilderParam.light}
           darkHtml={highlighted.queryBuilderParam.dark}
-          sqlResult={{ code: queryBuilderParamCode }}
+          sqlResult={highlighted.queryBuilderParamSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
@@ -188,7 +203,7 @@ function RouteComponent() {
           code={queryBuilderExecuteCode}
           html={highlighted.queryBuilderExecute.light}
           darkHtml={highlighted.queryBuilderExecute.dark}
-          sqlResult={{ code: queryBuilderExecuteCode }}
+          sqlResult={highlighted.queryBuilderExecuteSqlResult}
         >
           <CodeBlockCopyButton />
         </CodeBlock>
