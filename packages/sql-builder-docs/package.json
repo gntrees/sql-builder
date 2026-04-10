@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vite dev --port 3000",
-    "build": "vite build && cp dist/client/index.html dist/client/404.html",
+    "build": "vite build && cp dist/client/index.html dist/client/404.html && mkdir -p dist/client/converter && cp dist/client/libpg-query.wasm dist/client/converter/libpg-query.wasm",
     "preview": "vite preview",
     "test": "vitest run"
   },
