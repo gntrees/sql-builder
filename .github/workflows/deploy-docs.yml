@@ -41,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: packages/sql-builder-docs/dist
+          path: packages/sql-builder-docs/dist/client
 
   deploy:
     runs-on: ubuntu-latest
