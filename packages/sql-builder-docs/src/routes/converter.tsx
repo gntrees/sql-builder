@@ -335,10 +335,19 @@ return query;`,
         setQueryBuilderSchema(emptyQueryBuilderSchema)
         return
       }
-      // ;(globalThis as { Module?: { locateFile?: (path: string) => string } })
-      //   .Module = {
-      //   locateFile: () => "/libpg-query.wasm",
-      // }
+      const normalizedBaseUrl = import.meta.env.BASE_URL.endsWith("/")
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`
+      ;(globalThis as { Module?: { locateFile?: (path: string) => string } })
+        .Module = {
+        locateFile: (path: string) => {
+          if (path.endsWith(".wasm")) {
+            return `${normalizedBaseUrl}libpg-query.wasm`
+          }
+
+          return path
+        },
+      }
       const { convert } = await import("@gntrees/sql-builder-cli/src/convert")
       const result = await convert(sqlInput, {
         sqlSchema: useSqlSchema,
