@@ -1,19 +1,22 @@
-import { normalizeNode, resolveNode, resolveNodeArray } from '../utils/resolvers.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.specialNodeWindowFunc = void 0;
+const resolvers_js_1 = require("../utils/resolvers.js");
 const specialNodeWindowFunc = {
     WindowDef: (rawNode) => {
         let result = [];
-        const node = normalizeNode("WindowDef", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("WindowDef", rawNode);
         if (node.WindowDef.partitionClause && node.WindowDef.partitionClause.length > 0) {
             result.push({
                 name: 'partitionBy',
-                arguments: [resolveNodeArray(node.WindowDef.partitionClause)],
+                arguments: [(0, resolvers_js_1.resolveNodeArray)(node.WindowDef.partitionClause)],
                 paramType: 'function'
             });
         }
         if (node.WindowDef.orderClause && node.WindowDef.orderClause.length > 0) {
             result.push({
                 name: 'orderBy',
-                arguments: [resolveNodeArray(node.WindowDef.orderClause)],
+                arguments: [(0, resolvers_js_1.resolveNodeArray)(node.WindowDef.orderClause)],
                 paramType: 'function'
             });
         }
@@ -25,7 +28,7 @@ const specialNodeWindowFunc = {
             }, {
                 name: "between",
                 arguments: [
-                    ...resolveNode(node.WindowDef.startOffset),
+                    ...(0, resolvers_js_1.resolveNode)(node.WindowDef.startOffset),
                 ],
                 paramType: "function"
             }, {
@@ -39,7 +42,7 @@ const specialNodeWindowFunc = {
             }, {
                 name: "l",
                 arguments: [
-                    ...resolveNode(node.WindowDef.endOffset),
+                    ...(0, resolvers_js_1.resolveNode)(node.WindowDef.endOffset),
                 ],
                 paramType: "function"
             }, {
@@ -65,4 +68,4 @@ const specialNodeWindowFunc = {
         return result;
     }
 };
-export { specialNodeWindowFunc };
+exports.specialNodeWindowFunc = specialNodeWindowFunc;

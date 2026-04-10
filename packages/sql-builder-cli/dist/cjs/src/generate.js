@@ -1,9 +1,12 @@
-import { generate as generateTypes, PostgresDialect as CodegenPostgresDialect } from "kysely-codegen";
-import { Kysely, PostgresDialect } from "kysely";
-import { Pool } from "pg";
-import { mkdir, readFile, unlink, writeFile } from "fs/promises";
-import { dirname, resolve } from "path";
-import { createDbSchemaSource } from "./utils/db-schema-writer.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generate = generate;
+const kysely_codegen_1 = require("kysely-codegen");
+const kysely_1 = require("kysely");
+const pg_1 = require("pg");
+const promises_1 = require("fs/promises");
+const path_1 = require("path");
+const db_schema_writer_js_1 = require("./utils/db-schema-writer.js");
 const DEFAULT_DB_NAME = "DbName";
 const extractDbName = (urlValue) => {
     try {
@@ -102,7 +105,7 @@ const parseColumns = (source, tableType) => {
     return parseInterfaceProperties(tableBlock).map((prop) => prop.key);
 };
 const buildSchemaSource = (structure) => {
-    return createDbSchemaSource(structure);
+    return (0, db_schema_writer_js_1.createDbSchemaSource)(structure);
 };
 const buildParsedTables = (source) => {
     const tables = parseTables(source);
@@ -125,27 +128,27 @@ const buildParsedTables = (source) => {
     }
     return parsed;
 };
-export async function generate(options) {
+async function generate(options) {
     const dbNameRaw = extractDbName(options.url);
     const outputPath = options.output ?? `./${dbNameRaw}.schema.ts`;
-    const absoluteOutputPath = resolve(process.cwd(), outputPath);
-    await mkdir(dirname(absoluteOutputPath), { recursive: true });
-    const db = new Kysely({
-        dialect: new PostgresDialect({
-            pool: new Pool({
+    const absoluteOutputPath = (0, path_1.resolve)(process.cwd(), outputPath);
+    await (0, promises_1.mkdir)((0, path_1.dirname)(absoluteOutputPath), { recursive: true });
+    const db = new kysely_1.Kysely({
+        dialect: new kysely_1.PostgresDialect({
+            pool: new pg_1.Pool({
                 connectionString: options.url,
             }),
         }),
     });
-    const tempOutFile = resolve(process.cwd(), `.kysely-codegen-${Date.now()}.d.ts`);
+    const tempOutFile = (0, path_1.resolve)(process.cwd(), `.kysely-codegen-${Date.now()}.d.ts`);
     try {
-        await generateTypes({
+        await (0, kysely_codegen_1.generate)({
             db,
-            dialect: new CodegenPostgresDialect(),
+            dialect: new kysely_codegen_1.PostgresDialect(),
             camelCase: false,
             outFile: tempOutFile,
         });
-        const generated = await readFile(tempOutFile, "utf8");
+        const generated = await (0, promises_1.readFile)(tempOutFile, "utf8");
         const tables = buildParsedTables(generated);
         const structure = {
             dbName: dbNameRaw,
@@ -155,11 +158,11 @@ export async function generate(options) {
             })),
         };
         const schemaSource = buildSchemaSource(structure);
-        await writeFile(absoluteOutputPath, schemaSource, "utf8");
+        await (0, promises_1.writeFile)(absoluteOutputPath, schemaSource, "utf8");
         return { outputPath: absoluteOutputPath };
     }
     finally {
         await db.destroy();
-        await unlink(tempOutFile).catch(() => undefined);
+        await (0, promises_1.unlink)(tempOutFile).catch(() => undefined);
     }
 }

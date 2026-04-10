@@ -29,7 +29,7 @@ const queryBuilderBasicsCode = `const query = q
 query.getSql()
 // SQL: SELECT "users"."id", "users"."email" FROM "users"
 
-query.getParameters()
+query.getSqlParameters()
 // SQL: []
 
 query.getSqlAndParameters()
@@ -47,7 +47,7 @@ const queryBuilderParamCode = `const query = q
 query.getSql()
 // SQL: SELECT "users"."id" FROM "users" WHERE "users"."status" = $1
 
-query.getParameters()
+query.getSqlParameters()
 // SQL: ["active"]
 
 query.getSqlAndParameters()
@@ -70,7 +70,7 @@ const queryBuilderIndex = [
     note: "Returns the SQL string for the query.",
   },
   {
-    name: "getParameters",
+    name: "getSqlParameters",
     returns: "unknown[]",
     note: "Returns the bound parameter list.",
   },
@@ -141,7 +141,7 @@ function RouteComponent() {
             <code>getSql()</code> returns the raw SQL string.
           </p>
           <p>
-            <code>getParameters()</code> returns the bound parameter list.
+            <code>getSqlParameters()</code> returns the bound parameter list.
           </p>
           <p>
             <code>getSqlAndParameters()</code> returns both in a single object.
@@ -165,7 +165,7 @@ function RouteComponent() {
         <h2 className="text-xl font-semibold">With Parameters</h2>
         <p className="text-sm text-muted-foreground">
           Parameterized queries surface placeholders in <code>getSql()</code> and
-          values in <code>getParameters()</code>. For debugging, use
+          values in <code>getSqlParameters()</code>. For debugging, use
           <code>getSqlWithParameters()</code>.
         </p>
         <CodeBlock

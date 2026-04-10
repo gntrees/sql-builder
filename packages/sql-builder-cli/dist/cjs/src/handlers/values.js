@@ -1,5 +1,11 @@
-import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray, toCamelCase } from '../utils/resolvers.js';
-import functionList from '@gntrees/sql-builder-shared';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.specialNodeValues = void 0;
+const resolvers_js_1 = require("../utils/resolvers.js");
+const sql_builder_shared_1 = __importDefault(require("@gntrees/sql-builder-shared"));
 // const currentDir = dirname(fileURLToPath(import.meta.url));
 // const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
 // const functionList = JSON.parse(readFileSync(functionListPath, "utf-8")) as {
@@ -12,7 +18,7 @@ import functionList from '@gntrees/sql-builder-shared';
 const specialNodeValues = {
     A_Const: (rawNode) => {
         let result = [];
-        const node = normalizeNode("A_Const", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("A_Const", rawNode);
         if (node.A_Const.ival) {
             result.push({
                 name: node.A_Const.ival.ival?.toString() ?? "0",
@@ -65,7 +71,7 @@ const specialNodeValues = {
         return result;
     },
     String: (rawNode) => {
-        const node = normalizeNode("String", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("String", rawNode);
         return [{
                 name: node.String.sval || "",
                 arguments: [],
@@ -74,41 +80,41 @@ const specialNodeValues = {
     },
     FuncCall: (rawNode) => {
         const params = [];
-        const node = normalizeNode("FuncCall", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("FuncCall", rawNode);
         const result = [];
-        const funcName = node.FuncCall.funcname?.map(resolveNode).flat().map((r) => r.name.toUpperCase()).join('_') || "";
-        const availableFuncName = functionList.allMethods.find((f) => f === toCamelCase(funcName));
+        const funcName = node.FuncCall.funcname?.map(resolvers_js_1.resolveNode).flat().map((r) => r.name.toUpperCase()).join('_') || "";
+        const availableFuncName = sql_builder_shared_1.default.allMethods.find((f) => f === (0, resolvers_js_1.toCamelCase)(funcName));
         if (!availableFuncName) {
-            return fallbackNode(node);
+            return (0, resolvers_js_1.fallbackNode)(node);
         }
         if (node.FuncCall.agg_distinct) {
             params.push({ name: 'distinct', arguments: [], paramType: 'function' });
         }
         if (node.FuncCall.func_variadic) {
-            return fallbackNode(node);
+            return (0, resolvers_js_1.fallbackNode)(node);
         }
         if (node.FuncCall.args && node.FuncCall.args.length > 0) {
-            params.push(...resolveNodeArray(node.FuncCall.args));
+            params.push(...(0, resolvers_js_1.resolveNodeArray)(node.FuncCall.args));
         }
         if (node.FuncCall.agg_order && node.FuncCall.agg_order.length > 0) {
             params.push({
                 name: 'orderBy',
-                arguments: resolveNodeArray(node.FuncCall.agg_order),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.FuncCall.agg_order),
                 paramType: 'function'
             });
         }
         if (node.FuncCall.agg_filter) {
             params.push({
                 name: 'filter',
-                arguments: resolveNode(node.FuncCall.agg_filter),
+                arguments: (0, resolvers_js_1.resolveNode)(node.FuncCall.agg_filter),
                 paramType: 'function'
             });
         }
         if (node.FuncCall.agg_within_group) {
-            return fallbackNode(node);
+            return (0, resolvers_js_1.fallbackNode)(node);
         }
         if (node.FuncCall.agg_distinct) {
-            return fallbackNode(node);
+            return (0, resolvers_js_1.fallbackNode)(node);
         }
         if (node.FuncCall.agg_star) {
             params.push({
@@ -119,15 +125,15 @@ const specialNodeValues = {
         }
         if (node.FuncCall.funcformat) {
             if (node.FuncCall.funcformat !== "COERCE_EXPLICIT_CALL")
-                return fallbackNode(node);
+                return (0, resolvers_js_1.fallbackNode)(node);
         }
         result.push({
-            name: toCamelCase(funcName),
+            name: (0, resolvers_js_1.toCamelCase)(funcName),
             arguments: params,
             paramType: "function"
         });
         if (node.FuncCall.over) {
-            const child = resolveNode({ WindowDef: node.FuncCall.over });
+            const child = (0, resolvers_js_1.resolveNode)({ WindowDef: node.FuncCall.over });
             result.push({
                 name: 'over',
                 arguments: [child],
@@ -144,16 +150,16 @@ const specialNodeValues = {
         return result;
     },
     List: (rawNode) => {
-        const node = normalizeNode("List", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("List", rawNode);
         const tempFunction = {
             name: [],
             arguments: [],
             paramType: 'raw'
         };
         if (node.List.items && node.List.items.length > 0) {
-            tempFunction.name = resolveNodeArray(node.List.items);
+            tempFunction.name = (0, resolvers_js_1.resolveNodeArray)(node.List.items);
         }
         return [tempFunction];
     }
 };
-export { specialNodeValues };
+exports.specialNodeValues = specialNodeValues;

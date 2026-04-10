@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-import { writeFile } from "node:fs/promises";
-import { convert, generate } from "./index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const promises_1 = require("node:fs/promises");
+const index_js_1 = require("./index.js");
 const USAGE = `Usage:
   npx @gntrees/sql-builder-cli convert --sql="SELECT ..." [--sqlSchema=true] [--dbSchema=true] [--simplify-literal=true] [--output="./query.ts"]
   npx @gntrees/sql-builder-cli generate --url="postgres://..." [--output="./db-name.schema.ts"]`;
@@ -54,14 +56,14 @@ const main = async () => {
             console.error(USAGE);
             process.exit(1);
         }
-        if (!convert) {
+        if (!index_js_1.convert) {
             console.error("Conversion function is not available in this build.");
             process.exit(1);
         }
         try {
-            const result = await convert(sql, { sqlSchema, dbSchema, simplifyLiteral });
+            const result = await (0, index_js_1.convert)(sql, { sqlSchema, dbSchema, simplifyLiteral });
             if (output) {
-                await writeFile(output, result.formatted + "\n", "utf8");
+                await (0, promises_1.writeFile)(output, result.formatted + "\n", "utf8");
                 process.stdout.write(`Written output to ${output}\n`);
             }
             else {
@@ -80,12 +82,12 @@ const main = async () => {
             console.error(USAGE);
             process.exit(1);
         }
-        if (!generate) {
+        if (!index_js_1.generate) {
             console.error("Generate function is not available in this build.");
             process.exit(1);
         }
         try {
-            const result = await generate({ url, output });
+            const result = await (0, index_js_1.generate)({ url, output });
             process.stdout.write(`Generated schema at ${result.outputPath}\n`);
         }
         catch (error) {

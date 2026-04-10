@@ -21,7 +21,7 @@ export function expectQuery(
     }
 
     const sql = builder.getSql();
-    const parameters = builder.getParameters();
+    const parameters = builder.getSqlParameters();
 
     expect(sql).toBe(expectation.sql);
 

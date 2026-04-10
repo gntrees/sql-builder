@@ -1,4 +1,6 @@
 import { CoreQueryBuilder } from './core-query-builder';
+import type { QueryBuilder } from './query-builder';
+import type { SqlSchemaParam, WithBuilderParams, MergeBuilderParams, ExtractBuilderParams, InferSchemaCase, Simplify } from './sql-param';
 import type {
     OperatorType,
     ParameterDataType,
@@ -163,5 +165,29 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
 
     private isOperatorType(value: string): value is OperatorType {
         return OPERATORS.map(i => i.toLowerCase()).includes((value as OperatorType).toLowerCase());
+    }
+
+    // special for params feature
+    schemaParam<
+        TKey extends string,
+    >(key: TKey): SqlSchemaParam<TKey> {
+        return this.schemaParamCore(key);
+    }
+
+    schemaCase<
+        TKey extends string,
+        TCaseQuery extends QueryBuilder,
+    >(
+        key: TKey,
+        queryBuilder: TCaseQuery,
+    ): WithBuilderParams<this, MergeBuilderParams<ExtractBuilderParams<this>, InferSchemaCase<TKey, TCaseQuery>>> {
+        this.schemaCaseCore(key, queryBuilder);
+        return this as unknown as WithBuilderParams<this, MergeBuilderParams<ExtractBuilderParams<this>, InferSchemaCase<TKey, TCaseQuery>>>;
+    }
+
+    setParams(
+        params: Simplify<ExtractBuilderParams<this>>,
+    ): this {
+        return this.setParamsCore(params as Parameters<CoreQueryBuilder["setParamsCore"]>[0]);
     }
 }

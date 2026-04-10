@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url'
 
 const rootDir = dirname(fileURLToPath(import.meta.url))
 const config = defineConfig({
+  base: '/',
   resolve: {
     alias: {
       '@gntrees/sql-builder-cli/src/convert': resolve(rootDir, '../sql-builder-cli/src/convert.ts'),
@@ -28,7 +29,13 @@ const config = defineConfig({
     devtools(),
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+        failOnError: false,
+      },
+    }),
     viteReact(),
   ],
 })

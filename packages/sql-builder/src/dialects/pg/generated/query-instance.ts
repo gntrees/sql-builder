@@ -2,7 +2,8 @@
 import type { RequiredDBInstance } from "../types";
 import { QueryBuilder } from "../query-builder";
 import { BaseRawQueryBuilder } from "../base-raw-query-builder";
-import { OverrideQueryBuilder, type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../override-query-builder";
+import { OverrideQueryBuilder } from "../override-query-builder";
+import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param";
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;
@@ -3660,8 +3661,8 @@ export class QueryInstance {
   setof() {
     return (new QueryBuilder(this)).setof();
   }
-  setParams<TArgs extends Parameters<OverrideQueryBuilder["setParams"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>> {
-    return (new QueryBuilder(this)).setParams(...(args as unknown as Parameters<OverrideQueryBuilder["setParams"]>)) as ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
+  setParams(...args: Parameters<BaseRawQueryBuilder["setParams"]>) {
+    return (new QueryBuilder(this)).setParams(...args);
   }
   sets() {
     return (new QueryBuilder(this)).sets();

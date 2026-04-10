@@ -668,13 +668,13 @@ describe("rebuild queries", () => {
             .where(q.i("users.active").op("=").v(true));
 
         const sqlBefore = builder.getSql();
-        const paramsBefore = builder.getParameters();
+        const paramsBefore = builder.getSqlParameters();
 
         // builder.setTokens([]);
         // builder.rebuild();
 
         expect(builder.getSql()).toBe(sqlBefore);
-        expect(builder.getParameters()).toEqual(paramsBefore);
+        expect(builder.getSqlParameters()).toEqual(paramsBefore);
     });
 
     it("rebuilds query with nested subquery", () => {
@@ -682,13 +682,13 @@ describe("rebuild queries", () => {
         const builder = q.select(q.c("users.id")).from(q.t("users")).where(q.i("users.id").in(sub));
 
         const sqlBefore = builder.getSql();
-        const paramsBefore = builder.getParameters();
+        const paramsBefore = builder.getSqlParameters();
 
         // builder.setTokens([]);
         // builder.rebuild();
 
         expect(builder.getSql()).toBe(sqlBefore);
-        expect(builder.getParameters()).toEqual(paramsBefore);
+        expect(builder.getSqlParameters()).toEqual(paramsBefore);
     });
 
     it("rebuild is idempotent", () => {
@@ -709,13 +709,13 @@ describe("rebuild queries", () => {
                     .r`WHERE users.is_active = ${true} AND users.created_at > ${"2024-01-01"}`;
 
         const sqlBefore = builder.getSql();
-        const paramsBefore = builder.getParameters();
+        const paramsBefore = builder.getSqlParameters();
         
         // builder.rebuild();
         // builder.rebuild();
 
         expect(builder.getSql()).toBe(sqlBefore);
-        expect(builder.getParameters()).toEqual(paramsBefore);
+        expect(builder.getSqlParameters()).toEqual(paramsBefore);
     });
 });
 
@@ -740,31 +740,31 @@ describe("schema params", () => {
     it("uses default value for schemaParam when runtime param is missing", () => {
         const builder = asQueryBuilder(buildSchemaParamQuery());
         expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
-        expect(builder.getParameters()).toEqual([10]);
+        expect(builder.getSqlParameters()).toEqual([10]);
     });
 
     it("overrides default schemaParam value from setParams", () => {
         const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ limit: 5 }));
         expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
-        expect(builder.getParameters()).toEqual([5]);
+        expect(builder.getSqlParameters()).toEqual([5]);
     });
 
     it("skips schemaCase when value is undefined", () => {
         const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ limit: 5 }));
         expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
-        expect(builder.getParameters()).toEqual([5]);
+        expect(builder.getSqlParameters()).toEqual([5]);
     });
 
     it("skips schemaCase when value is false", () => {
         const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ filter: false, limit: 5 }));
         expect(builder.getSql()).toBe("SELECT * FROM \"users\" LIMIT $1");
-        expect(builder.getParameters()).toEqual([5]);
+        expect(builder.getSqlParameters()).toEqual([5]);
     });
 
     it("enables schemaCase with default nested params when value is true", () => {
         const builder = asQueryBuilder(buildSchemaParamQuery().setParams({ filter: true, limit: 5 }));
         expect(builder.getSql()).toBe ("SELECT * FROM \"users\" WHERE \"users\".\"name\" ILIKE $1 LIMIT $2");
-        expect(builder.getParameters()).toEqual(["test", 5]);
+        expect(builder.getSqlParameters()).toEqual(["test", 5]);
     });
 
     it("passes nested params object to schemaCase query", () => {
@@ -773,7 +773,7 @@ describe("schema params", () => {
             limit: 5,
         }));
         expect(builder.getSql()).toBe("SELECT * FROM \"users\" WHERE \"users\".\"name\" ILIKE $1 LIMIT $2");
-        expect(builder.getParameters()).toEqual(["john", 5]);
+        expect(builder.getSqlParameters()).toEqual(["john", 5]);
     });
 
     it("throws on schemaParam type mismatch", () => {

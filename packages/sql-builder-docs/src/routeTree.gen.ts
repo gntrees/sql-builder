@@ -15,8 +15,10 @@ import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as DocsSqliteRouteImport } from './routes/docs/sqlite'
 import { Route as DocsMysqlRouteImport } from './routes/docs/mysql'
 import { Route as DocsMssqlRouteImport } from './routes/docs/mssql'
+import { Route as DocsPgValidationRouteImport } from './routes/docs/pg/validation'
 import { Route as DocsPgUpdateDeleteRouteImport } from './routes/docs/pg/update-delete'
 import { Route as DocsPgTransactionsRouteImport } from './routes/docs/pg/transactions'
+import { Route as DocsPgSqlSchemaRouteImport } from './routes/docs/pg/sql-schema'
 import { Route as DocsPgSelectRouteImport } from './routes/docs/pg/select'
 import { Route as DocsPgRawRouteImport } from './routes/docs/pg/raw'
 import { Route as DocsPgQueryBuilderRouteImport } from './routes/docs/pg/query-builder'
@@ -27,6 +29,8 @@ import { Route as DocsPgJoinsRouteImport } from './routes/docs/pg/joins'
 import { Route as DocsPgInsertRouteImport } from './routes/docs/pg/insert'
 import { Route as DocsPgHelpersRouteImport } from './routes/docs/pg/helpers'
 import { Route as DocsPgFunctionCallRouteImport } from './routes/docs/pg/function-call'
+import { Route as DocsPgDbSchemaRouteImport } from './routes/docs/pg/db-schema'
+import { Route as DocsPgCliRouteImport } from './routes/docs/pg/cli'
 import { Route as DocsPgInstallationIndexRouteImport } from './routes/docs/pg/installation/index'
 
 const ConverterRoute = ConverterRouteImport.update({
@@ -59,6 +63,11 @@ const DocsMssqlRoute = DocsMssqlRouteImport.update({
   path: '/docs/mssql',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsPgValidationRoute = DocsPgValidationRouteImport.update({
+  id: '/docs/pg/validation',
+  path: '/docs/pg/validation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsPgUpdateDeleteRoute = DocsPgUpdateDeleteRouteImport.update({
   id: '/docs/pg/update-delete',
   path: '/docs/pg/update-delete',
@@ -67,6 +76,11 @@ const DocsPgUpdateDeleteRoute = DocsPgUpdateDeleteRouteImport.update({
 const DocsPgTransactionsRoute = DocsPgTransactionsRouteImport.update({
   id: '/docs/pg/transactions',
   path: '/docs/pg/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsPgSqlSchemaRoute = DocsPgSqlSchemaRouteImport.update({
+  id: '/docs/pg/sql-schema',
+  path: '/docs/pg/sql-schema',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocsPgSelectRoute = DocsPgSelectRouteImport.update({
@@ -119,6 +133,16 @@ const DocsPgFunctionCallRoute = DocsPgFunctionCallRouteImport.update({
   path: '/docs/pg/function-call',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsPgDbSchemaRoute = DocsPgDbSchemaRouteImport.update({
+  id: '/docs/pg/db-schema',
+  path: '/docs/pg/db-schema',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsPgCliRoute = DocsPgCliRouteImport.update({
+  id: '/docs/pg/cli',
+  path: '/docs/pg/cli',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsPgInstallationIndexRoute = DocsPgInstallationIndexRouteImport.update({
   id: '/docs/pg/installation/',
   path: '/docs/pg/installation/',
@@ -132,6 +156,8 @@ export interface FileRoutesByFullPath {
   '/docs/mysql': typeof DocsMysqlRoute
   '/docs/sqlite': typeof DocsSqliteRoute
   '/docs/': typeof DocsIndexRoute
+  '/docs/pg/cli': typeof DocsPgCliRoute
+  '/docs/pg/db-schema': typeof DocsPgDbSchemaRoute
   '/docs/pg/function-call': typeof DocsPgFunctionCallRoute
   '/docs/pg/helpers': typeof DocsPgHelpersRoute
   '/docs/pg/insert': typeof DocsPgInsertRoute
@@ -142,8 +168,10 @@ export interface FileRoutesByFullPath {
   '/docs/pg/query-builder': typeof DocsPgQueryBuilderRoute
   '/docs/pg/raw': typeof DocsPgRawRoute
   '/docs/pg/select': typeof DocsPgSelectRoute
+  '/docs/pg/sql-schema': typeof DocsPgSqlSchemaRoute
   '/docs/pg/transactions': typeof DocsPgTransactionsRoute
   '/docs/pg/update-delete': typeof DocsPgUpdateDeleteRoute
+  '/docs/pg/validation': typeof DocsPgValidationRoute
   '/docs/pg/installation/': typeof DocsPgInstallationIndexRoute
 }
 export interface FileRoutesByTo {
@@ -153,6 +181,8 @@ export interface FileRoutesByTo {
   '/docs/mysql': typeof DocsMysqlRoute
   '/docs/sqlite': typeof DocsSqliteRoute
   '/docs': typeof DocsIndexRoute
+  '/docs/pg/cli': typeof DocsPgCliRoute
+  '/docs/pg/db-schema': typeof DocsPgDbSchemaRoute
   '/docs/pg/function-call': typeof DocsPgFunctionCallRoute
   '/docs/pg/helpers': typeof DocsPgHelpersRoute
   '/docs/pg/insert': typeof DocsPgInsertRoute
@@ -163,8 +193,10 @@ export interface FileRoutesByTo {
   '/docs/pg/query-builder': typeof DocsPgQueryBuilderRoute
   '/docs/pg/raw': typeof DocsPgRawRoute
   '/docs/pg/select': typeof DocsPgSelectRoute
+  '/docs/pg/sql-schema': typeof DocsPgSqlSchemaRoute
   '/docs/pg/transactions': typeof DocsPgTransactionsRoute
   '/docs/pg/update-delete': typeof DocsPgUpdateDeleteRoute
+  '/docs/pg/validation': typeof DocsPgValidationRoute
   '/docs/pg/installation': typeof DocsPgInstallationIndexRoute
 }
 export interface FileRoutesById {
@@ -175,6 +207,8 @@ export interface FileRoutesById {
   '/docs/mysql': typeof DocsMysqlRoute
   '/docs/sqlite': typeof DocsSqliteRoute
   '/docs/': typeof DocsIndexRoute
+  '/docs/pg/cli': typeof DocsPgCliRoute
+  '/docs/pg/db-schema': typeof DocsPgDbSchemaRoute
   '/docs/pg/function-call': typeof DocsPgFunctionCallRoute
   '/docs/pg/helpers': typeof DocsPgHelpersRoute
   '/docs/pg/insert': typeof DocsPgInsertRoute
@@ -185,8 +219,10 @@ export interface FileRoutesById {
   '/docs/pg/query-builder': typeof DocsPgQueryBuilderRoute
   '/docs/pg/raw': typeof DocsPgRawRoute
   '/docs/pg/select': typeof DocsPgSelectRoute
+  '/docs/pg/sql-schema': typeof DocsPgSqlSchemaRoute
   '/docs/pg/transactions': typeof DocsPgTransactionsRoute
   '/docs/pg/update-delete': typeof DocsPgUpdateDeleteRoute
+  '/docs/pg/validation': typeof DocsPgValidationRoute
   '/docs/pg/installation/': typeof DocsPgInstallationIndexRoute
 }
 export interface FileRouteTypes {
@@ -198,6 +234,8 @@ export interface FileRouteTypes {
     | '/docs/mysql'
     | '/docs/sqlite'
     | '/docs/'
+    | '/docs/pg/cli'
+    | '/docs/pg/db-schema'
     | '/docs/pg/function-call'
     | '/docs/pg/helpers'
     | '/docs/pg/insert'
@@ -208,8 +246,10 @@ export interface FileRouteTypes {
     | '/docs/pg/query-builder'
     | '/docs/pg/raw'
     | '/docs/pg/select'
+    | '/docs/pg/sql-schema'
     | '/docs/pg/transactions'
     | '/docs/pg/update-delete'
+    | '/docs/pg/validation'
     | '/docs/pg/installation/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -219,6 +259,8 @@ export interface FileRouteTypes {
     | '/docs/mysql'
     | '/docs/sqlite'
     | '/docs'
+    | '/docs/pg/cli'
+    | '/docs/pg/db-schema'
     | '/docs/pg/function-call'
     | '/docs/pg/helpers'
     | '/docs/pg/insert'
@@ -229,8 +271,10 @@ export interface FileRouteTypes {
     | '/docs/pg/query-builder'
     | '/docs/pg/raw'
     | '/docs/pg/select'
+    | '/docs/pg/sql-schema'
     | '/docs/pg/transactions'
     | '/docs/pg/update-delete'
+    | '/docs/pg/validation'
     | '/docs/pg/installation'
   id:
     | '__root__'
@@ -240,6 +284,8 @@ export interface FileRouteTypes {
     | '/docs/mysql'
     | '/docs/sqlite'
     | '/docs/'
+    | '/docs/pg/cli'
+    | '/docs/pg/db-schema'
     | '/docs/pg/function-call'
     | '/docs/pg/helpers'
     | '/docs/pg/insert'
@@ -250,8 +296,10 @@ export interface FileRouteTypes {
     | '/docs/pg/query-builder'
     | '/docs/pg/raw'
     | '/docs/pg/select'
+    | '/docs/pg/sql-schema'
     | '/docs/pg/transactions'
     | '/docs/pg/update-delete'
+    | '/docs/pg/validation'
     | '/docs/pg/installation/'
   fileRoutesById: FileRoutesById
 }
@@ -262,6 +310,8 @@ export interface RootRouteChildren {
   DocsMysqlRoute: typeof DocsMysqlRoute
   DocsSqliteRoute: typeof DocsSqliteRoute
   DocsIndexRoute: typeof DocsIndexRoute
+  DocsPgCliRoute: typeof DocsPgCliRoute
+  DocsPgDbSchemaRoute: typeof DocsPgDbSchemaRoute
   DocsPgFunctionCallRoute: typeof DocsPgFunctionCallRoute
   DocsPgHelpersRoute: typeof DocsPgHelpersRoute
   DocsPgInsertRoute: typeof DocsPgInsertRoute
@@ -272,8 +322,10 @@ export interface RootRouteChildren {
   DocsPgQueryBuilderRoute: typeof DocsPgQueryBuilderRoute
   DocsPgRawRoute: typeof DocsPgRawRoute
   DocsPgSelectRoute: typeof DocsPgSelectRoute
+  DocsPgSqlSchemaRoute: typeof DocsPgSqlSchemaRoute
   DocsPgTransactionsRoute: typeof DocsPgTransactionsRoute
   DocsPgUpdateDeleteRoute: typeof DocsPgUpdateDeleteRoute
+  DocsPgValidationRoute: typeof DocsPgValidationRoute
   DocsPgInstallationIndexRoute: typeof DocsPgInstallationIndexRoute
 }
 
@@ -321,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsMssqlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/pg/validation': {
+      id: '/docs/pg/validation'
+      path: '/docs/pg/validation'
+      fullPath: '/docs/pg/validation'
+      preLoaderRoute: typeof DocsPgValidationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs/pg/update-delete': {
       id: '/docs/pg/update-delete'
       path: '/docs/pg/update-delete'
@@ -333,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/docs/pg/transactions'
       fullPath: '/docs/pg/transactions'
       preLoaderRoute: typeof DocsPgTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/pg/sql-schema': {
+      id: '/docs/pg/sql-schema'
+      path: '/docs/pg/sql-schema'
+      fullPath: '/docs/pg/sql-schema'
+      preLoaderRoute: typeof DocsPgSqlSchemaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/docs/pg/select': {
@@ -405,6 +471,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsPgFunctionCallRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/pg/db-schema': {
+      id: '/docs/pg/db-schema'
+      path: '/docs/pg/db-schema'
+      fullPath: '/docs/pg/db-schema'
+      preLoaderRoute: typeof DocsPgDbSchemaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/pg/cli': {
+      id: '/docs/pg/cli'
+      path: '/docs/pg/cli'
+      fullPath: '/docs/pg/cli'
+      preLoaderRoute: typeof DocsPgCliRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs/pg/installation/': {
       id: '/docs/pg/installation/'
       path: '/docs/pg/installation'
@@ -422,6 +502,8 @@ const rootRouteChildren: RootRouteChildren = {
   DocsMysqlRoute: DocsMysqlRoute,
   DocsSqliteRoute: DocsSqliteRoute,
   DocsIndexRoute: DocsIndexRoute,
+  DocsPgCliRoute: DocsPgCliRoute,
+  DocsPgDbSchemaRoute: DocsPgDbSchemaRoute,
   DocsPgFunctionCallRoute: DocsPgFunctionCallRoute,
   DocsPgHelpersRoute: DocsPgHelpersRoute,
   DocsPgInsertRoute: DocsPgInsertRoute,
@@ -432,8 +514,10 @@ const rootRouteChildren: RootRouteChildren = {
   DocsPgQueryBuilderRoute: DocsPgQueryBuilderRoute,
   DocsPgRawRoute: DocsPgRawRoute,
   DocsPgSelectRoute: DocsPgSelectRoute,
+  DocsPgSqlSchemaRoute: DocsPgSqlSchemaRoute,
   DocsPgTransactionsRoute: DocsPgTransactionsRoute,
   DocsPgUpdateDeleteRoute: DocsPgUpdateDeleteRoute,
+  DocsPgValidationRoute: DocsPgValidationRoute,
   DocsPgInstallationIndexRoute: DocsPgInstallationIndexRoute,
 }
 export const routeTree = rootRouteImport

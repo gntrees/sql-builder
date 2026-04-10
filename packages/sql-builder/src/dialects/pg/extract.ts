@@ -142,7 +142,8 @@ function generateSchemaOverrider(): string {
         .join('');
 
     return `// AUTO-GENERATED - DO NOT EDIT.
-import { OverrideQueryBuilder, type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../override-query-builder";
+import { OverrideQueryBuilder } from "../override-query-builder";
+import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param";
 
 export class SchemaOverrider extends OverrideQueryBuilder {${methodDeclarations}
 }`;
@@ -179,7 +180,8 @@ function generateQueryInstance(): string {
 import type { RequiredDBInstance } from "../types";
 import { QueryBuilder } from "../query-builder";
 import { BaseRawQueryBuilder } from "../base-raw-query-builder";
-import { OverrideQueryBuilder, type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../override-query-builder";
+import { OverrideQueryBuilder } from "../override-query-builder";
+import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param";
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;

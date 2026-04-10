@@ -6,32 +6,6 @@ import { parse } from 'pgsql-parser';
 import { resolveNode } from './utils/resolvers.js';
 import { functionListToString } from './utils/stringifiers.js';
 import { createDbSchemaSource } from './utils/db-schema-writer.js';
-const MOCK_EXEC_HANDLER_BODY = "return { sql, parameters };";
-const MOCK_FORMAT_PARAM_HANDLER = "pg";
-const extractQueryBuildingPart = async (code) => {
-    const lines = code.split("\n");
-    let queryBuildingPart = "";
-    let inQueryBuilding = false;
-    for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (trimmedLine.startsWith("const query = q") ||
-            (inQueryBuilding && (trimmedLine.startsWith(".select") || trimmedLine.startsWith("q.select")))) {
-            inQueryBuilding = true;
-        }
-        if (inQueryBuilding) {
-            queryBuildingPart += line + "\n";
-        }
-        if (trimmedLine.startsWith("console.log")) {
-            break;
-        }
-    }
-    queryBuildingPart = queryBuildingPart.replace(/console\.log\(query\.getSql\(\)\);?\n?/g, "");
-    return queryBuildingPart.trim();
-};
-const DEFAULT_FORMAT_PARAM_HANDLER = 'pg';
-const DEFAULT_EXEC_HANDLER = `async ({ sql, parameters, meta }): Promise<any> => {
-    return "Executed";
-}`;
 const DEFAULT_DB_NAME = "DbName";
 const splitWords = (value) => {
     return value
@@ -455,8 +429,8 @@ export async function convert(sql, options = {}) {
 
 const q = sqlBuilder();
 const sch = sqlSchema();
-const schema = sch.set("query", sch
-    .query(${chainForOutput}));
+const schema = sch.setQuery("query", sch
+    .set.query(${chainForOutput}));
     
 export default schema;`
         : `import { sqlBuilder } from "@gntrees/sql-builder/pg";

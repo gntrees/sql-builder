@@ -230,7 +230,7 @@ const specialNodeExpressions = {
             }
             else {
                 result.push({
-                    name: "i",
+                    name: "c",
                     arguments: [deparsedName.replaceAll("AS", "").trim()],
                     paramType: "function",
                 });

@@ -1,6 +1,9 @@
-import { deparseSync } from "pgsql-parser";
-import { BOOL_OP_METHOD } from "../constants.js";
-import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray, toCamelCase } from "../utils/resolvers.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.specialNodeExpressions = void 0;
+const pgsql_parser_1 = require("pgsql-parser");
+const constants_js_1 = require("../constants.js");
+const resolvers_js_1 = require("../utils/resolvers.js");
 const specialNodeExpressions = {
     A_Star: (rawNode) => {
         return [
@@ -36,20 +39,20 @@ const specialNodeExpressions = {
             AEXPR_NOT_BETWEEN_SYM: "NOT_BETWEEN_SYM",
         };
         let tempRargFunction = null;
-        const node = normalizeNode("A_Expr", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("A_Expr", rawNode);
         if (node.A_Expr.lexpr) {
             if (node.A_Expr.lexpr?.['FuncCall']?.['funcname']?.[0]?.['String']?.['sval'] == "pg_catalog") {
-                return fallbackNode(node);
+                return (0, resolvers_js_1.fallbackNode)(node);
             }
             if (Object.keys(node.A_Expr.lexpr)[0] == "List") {
                 result[0]?.arguments.push({
                     name: "sub",
-                    arguments: resolveNode(node.A_Expr.lexpr),
+                    arguments: (0, resolvers_js_1.resolveNode)(node.A_Expr.lexpr),
                     paramType: "function",
                 });
             }
             else {
-                const lexprResolved = resolveNode(node.A_Expr.lexpr);
+                const lexprResolved = (0, resolvers_js_1.resolveNode)(node.A_Expr.lexpr);
                 result[0]?.arguments.push(lexprResolved);
             }
         }
@@ -59,7 +62,7 @@ const specialNodeExpressions = {
                 if (node.A_Expr.name && node.A_Expr.name.length > 0) {
                     if (result[0]) {
                         result[0].arguments.push({
-                            name: resolveNodeArray(node.A_Expr.name),
+                            name: (0, resolvers_js_1.resolveNodeArray)(node.A_Expr.name),
                             arguments: [],
                             paramType: "raw",
                         });
@@ -68,7 +71,7 @@ const specialNodeExpressions = {
             }
             else if (operatorName == "NULLIF") {
                 if (result[0]) {
-                    result[0].name = toCamelCase(operatorName);
+                    result[0].name = (0, resolvers_js_1.toCamelCase)(operatorName);
                     // result[0].arguments.push(tempRargFunction);
                     // // result[0].arguments.push({
                     // //     name: operatorName,
@@ -81,7 +84,7 @@ const specialNodeExpressions = {
             else if (operatorName == "BETWEEN" || operatorName == "NOT_BETWEEN") {
                 if (result[0]) {
                     tempRargFunction = {
-                        name: toCamelCase(operatorName),
+                        name: (0, resolvers_js_1.toCamelCase)(operatorName),
                         arguments: [],
                         paramType: "function",
                     };
@@ -90,7 +93,7 @@ const specialNodeExpressions = {
             else if (operatorName === "BETWEEN_SYM" || operatorName === "NOT_BETWEEN_SYM") {
                 if (result[0]) {
                     tempRargFunction = {
-                        name: toCamelCase(operatorName.replace("_SYM", "_SYMMETRIC")),
+                        name: (0, resolvers_js_1.toCamelCase)(operatorName.replace("_SYM", "_SYMMETRIC")),
                         arguments: [],
                         paramType: "function",
                     };
@@ -99,10 +102,10 @@ const specialNodeExpressions = {
             else {
                 if (node.A_Expr.name && node.A_Expr.name.length > 0) {
                     const useWord = ["IN", "LIKE", "ILIKE", "SIMILAR"].includes(operatorName);
-                    const operatorNameAexpr = resolveNodeArray(node.A_Expr.name).flat().map((r) => r.name.toUpperCase()).join(' ');
+                    const operatorNameAexpr = (0, resolvers_js_1.resolveNodeArray)(node.A_Expr.name).flat().map((r) => r.name.toUpperCase()).join(' ');
                     if (result[0]) {
                         result[0].arguments.push({
-                            name: useWord ? (operatorNameAexpr.includes("!") ? "NOT " : "") + operatorName : resolveNodeArray(node.A_Expr.name).flat().map((r) => r.name.toUpperCase()).join('_') || operatorName,
+                            name: useWord ? (operatorNameAexpr.includes("!") ? "NOT " : "") + operatorName : (0, resolvers_js_1.resolveNodeArray)(node.A_Expr.name).flat().map((r) => r.name.toUpperCase()).join('_') || operatorName,
                             arguments: [],
                             paramType: "string",
                         });
@@ -112,14 +115,14 @@ const specialNodeExpressions = {
         }
         if (node.A_Expr.rexpr) {
             if (node.A_Expr.rexpr?.['FuncCall']?.['funcname']?.[0]?.['String']?.['sval'] == "pg_catalog") {
-                return fallbackNode(node);
+                return (0, resolvers_js_1.fallbackNode)(node);
             }
-            let child = resolveNode(node.A_Expr.rexpr);
+            let child = (0, resolvers_js_1.resolveNode)(node.A_Expr.rexpr);
             const subExceptions = ["AEXPR_BETWEEN", "AEXPR_NOT_BETWEEN", "AEXPR_BETWEEN_SYM", "AEXPR_NOT_BETWEEN_SYM"];
             if (Object.keys(node.A_Expr.rexpr)[0] == "List" && (node.A_Expr.kind && !subExceptions.includes(node.A_Expr.kind))) {
                 child = [{
                         name: "sub",
-                        arguments: resolveNode(node.A_Expr.rexpr),
+                        arguments: (0, resolvers_js_1.resolveNode)(node.A_Expr.rexpr),
                         paramType: "function",
                     }];
             }
@@ -135,9 +138,9 @@ const specialNodeExpressions = {
     },
     BoolExpr: (rawNode) => {
         const result = [];
-        const node = normalizeNode("BoolExpr", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("BoolExpr", rawNode);
         if (node.BoolExpr.boolop) {
-            const methodName = BOOL_OP_METHOD[node.BoolExpr.boolop];
+            const methodName = constants_js_1.BOOL_OP_METHOD[node.BoolExpr.boolop];
             if (methodName) {
                 result.push({
                     name: methodName,
@@ -147,14 +150,14 @@ const specialNodeExpressions = {
             }
         }
         if (node.BoolExpr.args && node.BoolExpr.args.length > 0) {
-            result[0]?.arguments.push(...node.BoolExpr.args.map(i => [resolveNode(i)]));
+            result[0]?.arguments.push(...node.BoolExpr.args.map(i => [(0, resolvers_js_1.resolveNode)(i)]));
         }
         return result;
     },
     ColumnRef: (rawNode) => {
         const result = [];
-        const node = normalizeNode("ColumnRef", rawNode);
-        const deparsed = deparseSync(node);
+        const node = (0, resolvers_js_1.normalizeNode)("ColumnRef", rawNode);
+        const deparsed = (0, pgsql_parser_1.deparseSync)(node);
         if (node.ColumnRef.fields && node.ColumnRef.fields.length > 0) {
             result.push({
                 name: "c",
@@ -166,17 +169,17 @@ const specialNodeExpressions = {
     },
     ResTarget: (rawNode) => {
         const result = [];
-        const node = normalizeNode("ResTarget", rawNode);
-        const deparsed = deparseSync(node);
+        const node = (0, resolvers_js_1.normalizeNode)("ResTarget", rawNode);
+        const deparsed = (0, pgsql_parser_1.deparseSync)(node);
         if (deparsed.toLowerCase().includes("as") && node.ResTarget.val) {
-            const deparsedName = deparseSync({
+            const deparsedName = (0, pgsql_parser_1.deparseSync)({
                 ResTarget: {
                     ...node.ResTarget,
                     val: undefined,
                 }
             }).trim();
             if (node.ResTarget.val) {
-                result.push(...resolveNode(node.ResTarget.val));
+                result.push(...(0, resolvers_js_1.resolveNode)(node.ResTarget.val));
             }
             if (deparsedName) {
                 result.push({
@@ -211,14 +214,14 @@ const specialNodeExpressions = {
             //     });
         }
         else {
-            const deparsedName = deparseSync({
+            const deparsedName = (0, pgsql_parser_1.deparseSync)({
                 ResTarget: {
                     ...node.ResTarget,
                     val: undefined,
                 }
             }).trim();
             if (node.ResTarget.val) {
-                result.push(...resolveNode(node.ResTarget.val));
+                result.push(...(0, resolvers_js_1.resolveNode)(node.ResTarget.val));
                 if (node.ResTarget.name || node.ResTarget.indirection) {
                     result.push({
                         name: "as",
@@ -230,7 +233,7 @@ const specialNodeExpressions = {
             }
             else {
                 result.push({
-                    name: "i",
+                    name: "c",
                     arguments: [deparsedName.replaceAll("AS", "").trim()],
                     paramType: "function",
                 });
@@ -239,11 +242,11 @@ const specialNodeExpressions = {
         return result;
     },
     A_Indirection: (rawNode) => {
-        const node = normalizeNode("A_Indirection", rawNode);
-        return fallbackNode(node);
+        const node = (0, resolvers_js_1.normalizeNode)("A_Indirection", rawNode);
+        return (0, resolvers_js_1.fallbackNode)(node);
     },
     CaseExpr: (rawNode) => {
-        const node = normalizeNode("CaseExpr", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("CaseExpr", rawNode);
         const result = [];
         const tempFunction = {
             name: "case",
@@ -251,18 +254,18 @@ const specialNodeExpressions = {
             paramType: "function",
         };
         if (node.CaseExpr.xpr || node.CaseExpr.casecollid || node.CaseExpr.casetype)
-            fallbackNode(node);
+            (0, resolvers_js_1.fallbackNode)(node);
         if (node.CaseExpr.arg) {
-            tempFunction.arguments.push(resolveNode(node.CaseExpr.arg));
+            tempFunction.arguments.push((0, resolvers_js_1.resolveNode)(node.CaseExpr.arg));
         }
         result.push(tempFunction);
         if (node.CaseExpr.args && node.CaseExpr.args.length > 0) {
-            result.push(...resolveNodeArray(node.CaseExpr.args));
+            result.push(...(0, resolvers_js_1.resolveNodeArray)(node.CaseExpr.args));
         }
         if (node.CaseExpr.defresult) {
             result.push({
                 name: "else",
-                arguments: resolveNode(node.CaseExpr.defresult),
+                arguments: (0, resolvers_js_1.resolveNode)(node.CaseExpr.defresult),
                 paramType: "function",
             });
         }
@@ -274,21 +277,21 @@ const specialNodeExpressions = {
         return result;
     },
     CaseWhen: (rawNode) => {
-        const node = normalizeNode("CaseWhen", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("CaseWhen", rawNode);
         const result = [];
         if (node.CaseWhen.xpr)
-            fallbackNode(node);
+            (0, resolvers_js_1.fallbackNode)(node);
         if (node.CaseWhen.expr) {
             result.push({
                 name: "when",
-                arguments: resolveNode(node.CaseWhen.expr),
+                arguments: (0, resolvers_js_1.resolveNode)(node.CaseWhen.expr),
                 paramType: "function",
             });
         }
         if (node.CaseWhen.result) {
             result.push({
                 name: "then",
-                arguments: resolveNode(node.CaseWhen.result),
+                arguments: (0, resolvers_js_1.resolveNode)(node.CaseWhen.result),
                 paramType: "function",
             });
         }
@@ -296,12 +299,12 @@ const specialNodeExpressions = {
     },
     SubLink: (rawNode) => {
         let result = [];
-        const node = normalizeNode("SubLink", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("SubLink", rawNode);
         let tempOp = null;
         let tempSubLinkType = null;
         let tempSubselect = null;
         if (node.SubLink.operName && node.SubLink.operName.length > 0) {
-            const operNameResolved = resolveNodeArray(node.SubLink.operName);
+            const operNameResolved = (0, resolvers_js_1.resolveNodeArray)(node.SubLink.operName);
             tempOp = {
                 name: "op",
                 arguments: [],
@@ -309,10 +312,10 @@ const specialNodeExpressions = {
             };
         }
         if (node.SubLink.testexpr) {
-            result.push(...resolveNode(node.SubLink.testexpr));
+            result.push(...(0, resolvers_js_1.resolveNode)(node.SubLink.testexpr));
         }
         if (node.SubLink.operName && node.SubLink.operName.length > 0) {
-            result.push(...resolveNodeArray(node.SubLink.operName));
+            result.push(...(0, resolvers_js_1.resolveNodeArray)(node.SubLink.operName));
         }
         if (node.SubLink.subLinkType) {
             const subLinkTypeNames = {
@@ -331,13 +334,13 @@ const specialNodeExpressions = {
                 };
             }
             else if (methodName !== null) {
-                return fallbackNode(node);
+                return (0, resolvers_js_1.fallbackNode)(node);
             }
         }
         if (node.SubLink.subselect) {
             tempSubselect = {
                 name: "sub",
-                arguments: [resolveNode(node.SubLink.subselect)],
+                arguments: [(0, resolvers_js_1.resolveNode)(node.SubLink.subselect)],
                 paramType: "function",
             };
         }
@@ -364,16 +367,16 @@ const specialNodeExpressions = {
         return result;
     },
     CoalesceExpr: (rawNode) => {
-        const node = normalizeNode("CoalesceExpr", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("CoalesceExpr", rawNode);
         const result = [];
         if (node.CoalesceExpr.args && node.CoalesceExpr.args.length > 0) {
             result.push({
                 name: "coalesce",
-                arguments: resolveNodeArray(node.CoalesceExpr.args),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.CoalesceExpr.args),
                 paramType: "function",
             });
         }
         return result;
     },
 };
-export { specialNodeExpressions };
+exports.specialNodeExpressions = specialNodeExpressions;

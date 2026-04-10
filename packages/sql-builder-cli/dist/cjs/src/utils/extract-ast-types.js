@@ -1,9 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.extractAstTypes = extractAstTypes;
+exports.toJsonString = toJsonString;
+exports.extractAstTypesAsJson = extractAstTypesAsJson;
 /**
  * Extracts type information from ast-types.ts and converts to JSON format
  * where all values are represented as string arrays.
  */
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+const fs_1 = require("fs");
+const path_1 = require("path");
 /**
  * Extracts union type values from a type definition string
  * Example: "QSRC_ORIGINAL" | "QSRC_PARSER" | "QSRC_PARSER"
@@ -47,9 +52,9 @@ function extractPropertyType(propDef) {
 /**
  * Parses the ast-types.ts file and extracts type definitions
  */
-export function extractAstTypes(filePath) {
-    const astTypesPath = filePath || join(process.cwd(), 'src', 'ast-types.ts');
-    const content = readFileSync(astTypesPath, 'utf-8');
+function extractAstTypes(filePath) {
+    const astTypesPath = filePath || (0, path_1.join)(process.cwd(), 'src', 'ast-types.ts');
+    const content = (0, fs_1.readFileSync)(astTypesPath, 'utf-8');
     const result = {
         types: [],
         interfaces: []
@@ -101,21 +106,21 @@ export function extractAstTypes(filePath) {
 /**
  * Converts the parsed result to JSON string
  */
-export function toJsonString(result, pretty = true) {
+function toJsonString(result, pretty = true) {
     return pretty ? JSON.stringify(result, null, 2) : JSON.stringify(result);
 }
 /**
  * Main entry point - extracts and returns JSON
  */
-export function extractAstTypesAsJson(filePath) {
+function extractAstTypesAsJson(filePath) {
     const result = extractAstTypes(filePath);
     return toJsonString(result);
 }
 function main() {
     const jsonOutput = extractAstTypesAsJson();
     // write file 
-    const outputPath = join(__dirname, './../generated/ast-types.json');
-    writeFileSync(outputPath, jsonOutput, 'utf-8');
+    const outputPath = (0, path_1.join)(__dirname, './../generated/ast-types.json');
+    (0, fs_1.writeFileSync)(outputPath, jsonOutput, 'utf-8');
     console.log(`Extracted AST types written to ${outputPath}`);
 }
 main();

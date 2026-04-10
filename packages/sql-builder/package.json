@@ -77,8 +77,8 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "bun run prebuild && bun run build:cjs && bun run build:esm",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "NODE_OPTIONS='--max-old-space-size=8192' tsc -p tsconfig.cjs.json",
+    "build:esm": "NODE_OPTIONS='--max-old-space-size=8192' tsc -p tsconfig.esm.json",
     "generate": "bun run src/dialects/pg/extract.ts",
     "test": "bun test src/dialects/pg/tests/*.test.ts",
     "test:network": "bun test src/dialects/pg/tests/network-functions.test.ts"

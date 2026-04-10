@@ -1,23 +1,26 @@
-import { deparseSync } from 'pgsql-parser';
-import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray } from '../utils/resolvers.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.specialNodeQuery = void 0;
+const pgsql_parser_1 = require("pgsql-parser");
+const resolvers_js_1 = require("../utils/resolvers.js");
 const specialNodeQuery = {
     InsertStmt: (rawNode) => {
         const result = [];
-        const node = normalizeNode("InsertStmt", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("InsertStmt", rawNode);
         const tempFunction = {
             name: 'insertInto',
             arguments: [],
             paramType: 'function'
         };
         if (node.InsertStmt.withClause) {
-            result.push(...resolveNode({ WithClause: node.InsertStmt.withClause }));
+            result.push(...(0, resolvers_js_1.resolveNode)({ WithClause: node.InsertStmt.withClause }));
         }
         if (node.InsertStmt.relation) {
-            tempFunction.arguments.push([resolveNode({ RangeVar: node.InsertStmt.relation })]);
+            tempFunction.arguments.push([(0, resolvers_js_1.resolveNode)({ RangeVar: node.InsertStmt.relation })]);
         }
         if (node.InsertStmt.cols && node.InsertStmt.cols.length > 0) {
             tempFunction.arguments.push({
-                name: resolveNodeArray(node.InsertStmt.cols),
+                name: (0, resolvers_js_1.resolveNodeArray)(node.InsertStmt.cols),
                 arguments: [],
                 paramType: 'array'
             });
@@ -39,15 +42,15 @@ const specialNodeQuery = {
             }
         }
         if (node.InsertStmt.selectStmt) {
-            result.push(...resolveNode(node.InsertStmt.selectStmt));
+            result.push(...(0, resolvers_js_1.resolveNode)(node.InsertStmt.selectStmt));
         }
         if (node.InsertStmt.onConflictClause) {
-            result.push(...resolveNode({ OnConflictClause: node.InsertStmt.onConflictClause }));
+            result.push(...(0, resolvers_js_1.resolveNode)({ OnConflictClause: node.InsertStmt.onConflictClause }));
         }
         if (node.InsertStmt.returningList && node.InsertStmt.returningList.length > 0) {
             result.push({
                 name: 'returning',
-                arguments: resolveNodeArray(node.InsertStmt.returningList),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.InsertStmt.returningList),
                 paramType: 'function'
             });
         }
@@ -55,14 +58,14 @@ const specialNodeQuery = {
     },
     UpdateStmt: (rawNode) => {
         const result = [];
-        const node = normalizeNode("UpdateStmt", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("UpdateStmt", rawNode);
         if (node.UpdateStmt.withClause) {
-            result.push(...resolveNode({ WithClause: node.UpdateStmt.withClause }));
+            result.push(...(0, resolvers_js_1.resolveNode)({ WithClause: node.UpdateStmt.withClause }));
         }
         if (node.UpdateStmt.relation) {
             result.push({
                 name: 'update',
-                arguments: [resolveNode({ RangeVar: node.UpdateStmt.relation })],
+                arguments: [(0, resolvers_js_1.resolveNode)({ RangeVar: node.UpdateStmt.relation })],
                 paramType: 'function'
             });
         }
@@ -71,7 +74,7 @@ const specialNodeQuery = {
                 name: 'set',
                 arguments: node.UpdateStmt.targetList.map((i) => {
                     if (Object.keys(i)[0] === "ResTarget") {
-                        const deparsedName = deparseSync({
+                        const deparsedName = (0, pgsql_parser_1.deparseSync)({
                             UpdateStmt: {
                                 targetList: [
                                     {
@@ -87,7 +90,7 @@ const specialNodeQuery = {
                                 name: "op",
                                 arguments: [
                                     {
-                                        name: "i",
+                                        name: "c",
                                         arguments: [deparsedName],
                                         paramType: "function",
                                     },
@@ -96,13 +99,13 @@ const specialNodeQuery = {
                                         arguments: [],
                                         paramType: "string",
                                     },
-                                    ...(i.ResTarget.val ? [resolveNode(i.ResTarget.val)] : []),
+                                    ...(i.ResTarget.val ? [(0, resolvers_js_1.resolveNode)(i.ResTarget.val)] : []),
                                 ],
                                 paramType: "function",
                             }];
                     }
                     else {
-                        return [resolveNode(i)];
+                        return [(0, resolvers_js_1.resolveNode)(i)];
                     }
                 }),
                 paramType: 'function'
@@ -111,21 +114,21 @@ const specialNodeQuery = {
         if (node.UpdateStmt.fromClause && node.UpdateStmt.fromClause.length > 0) {
             result.push({
                 name: 'from',
-                arguments: resolveNodeArray(node.UpdateStmt.fromClause),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.UpdateStmt.fromClause),
                 paramType: 'function'
             });
         }
         if (node.UpdateStmt.whereClause) {
             result.push({
                 name: 'where',
-                arguments: resolveNode(node.UpdateStmt.whereClause),
+                arguments: (0, resolvers_js_1.resolveNode)(node.UpdateStmt.whereClause),
                 paramType: 'function'
             });
         }
         if (node.UpdateStmt.returningList && node.UpdateStmt.returningList.length > 0) {
             result.push({
                 name: 'returning',
-                arguments: resolveNodeArray(node.UpdateStmt.returningList),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.UpdateStmt.returningList),
                 paramType: 'function'
             });
         }
@@ -133,33 +136,33 @@ const specialNodeQuery = {
     },
     DeleteStmt: (rawNode) => {
         const result = [];
-        const node = normalizeNode("DeleteStmt", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("DeleteStmt", rawNode);
         const tempFunction = {
             name: 'delete',
             arguments: [],
             paramType: 'function'
         };
         if (node.DeleteStmt.withClause) {
-            result.unshift(...resolveNode({ WithClause: node.DeleteStmt.withClause }));
+            result.unshift(...(0, resolvers_js_1.resolveNode)({ WithClause: node.DeleteStmt.withClause }));
         }
         if (node.DeleteStmt.relation) {
-            result.push(...resolveNode(node.DeleteStmt.relation));
+            result.push(...(0, resolvers_js_1.resolveNode)(node.DeleteStmt.relation));
         }
         result.push(tempFunction);
         if (node.DeleteStmt.usingClause && node.DeleteStmt.usingClause.length > 0) {
-            result.push(...resolveNode({ UsingClause: node.DeleteStmt.usingClause }));
+            result.push(...(0, resolvers_js_1.resolveNode)({ UsingClause: node.DeleteStmt.usingClause }));
         }
         if (node.DeleteStmt.whereClause) {
             result.push({
                 name: 'where',
-                arguments: resolveNode(node.DeleteStmt.whereClause),
+                arguments: (0, resolvers_js_1.resolveNode)(node.DeleteStmt.whereClause),
                 paramType: 'function'
             });
         }
         if (node.DeleteStmt.returningList && node.DeleteStmt.returningList.length > 0) {
             result.push({
                 name: 'returning',
-                arguments: resolveNodeArray(node.DeleteStmt.returningList),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.DeleteStmt.returningList),
                 paramType: 'function'
             });
         }
@@ -167,7 +170,7 @@ const specialNodeQuery = {
     },
     OnConflictClause: (rawNode) => {
         const result = [];
-        const node = normalizeNode("OnConflictClause", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("OnConflictClause", rawNode);
         if (node.OnConflictClause.infer) {
             const tempFunction = {
                 name: 'onConflict',
@@ -176,7 +179,7 @@ const specialNodeQuery = {
             };
             if (node.OnConflictClause.infer.indexElems && node.OnConflictClause.infer.indexElems.length > 0) {
                 tempFunction.arguments.push({
-                    name: node.OnConflictClause.infer.indexElems.map((i) => [resolveNode(i)]),
+                    name: node.OnConflictClause.infer.indexElems.map((i) => [(0, resolvers_js_1.resolveNode)(i)]),
                     arguments: [],
                     paramType: 'array'
                 });
@@ -196,7 +199,7 @@ const specialNodeQuery = {
             if (node.OnConflictClause.infer.whereClause) {
                 result.push({
                     name: "where",
-                    arguments: resolveNode(node.OnConflictClause.infer.whereClause),
+                    arguments: (0, resolvers_js_1.resolveNode)(node.OnConflictClause.infer.whereClause),
                     paramType: 'function'
                 });
             }
@@ -222,7 +225,7 @@ const specialNodeQuery = {
                 name: 'set',
                 arguments: node.OnConflictClause.targetList.map((i) => {
                     if (Object.keys(i)[0] === "ResTarget") {
-                        const deparsedName = deparseSync({
+                        const deparsedName = (0, pgsql_parser_1.deparseSync)({
                             UpdateStmt: {
                                 targetList: [
                                     {
@@ -247,13 +250,13 @@ const specialNodeQuery = {
                                         arguments: [],
                                         paramType: "string",
                                     },
-                                    ...(i.ResTarget.val ? [resolveNode(i.ResTarget.val)] : []),
+                                    ...(i.ResTarget.val ? [(0, resolvers_js_1.resolveNode)(i.ResTarget.val)] : []),
                                 ],
                                 paramType: "function",
                             }];
                     }
                     else {
-                        return [resolveNode(i)];
+                        return [(0, resolvers_js_1.resolveNode)(i)];
                     }
                 }),
                 paramType: 'function'
@@ -262,7 +265,7 @@ const specialNodeQuery = {
         if (node.OnConflictClause.whereClause) {
             result.push({
                 name: 'where',
-                arguments: resolveNode(node.OnConflictClause.whereClause),
+                arguments: (0, resolvers_js_1.resolveNode)(node.OnConflictClause.whereClause),
                 paramType: 'function'
             });
         }
@@ -270,9 +273,9 @@ const specialNodeQuery = {
     },
     SelectStmt: (rawNode) => {
         const result = [];
-        const node = normalizeNode("SelectStmt", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("SelectStmt", rawNode);
         if (node.SelectStmt.withClause) {
-            result.push(...resolveNode({ WithClause: node.SelectStmt.withClause }));
+            result.push(...(0, resolvers_js_1.resolveNode)({ WithClause: node.SelectStmt.withClause }));
         }
         if (node.SelectStmt.op) {
             const opFunctionsMap = {
@@ -286,8 +289,8 @@ const specialNodeQuery = {
                 result.push({
                     name: opFunctionName,
                     arguments: [
-                        ...(node.SelectStmt.larg ? [resolveNode({ SelectStmt: node.SelectStmt.larg })] : []),
-                        ...(node.SelectStmt.rarg ? [resolveNode({ SelectStmt: node.SelectStmt.rarg })] : [])
+                        ...(node.SelectStmt.larg ? [(0, resolvers_js_1.resolveNode)({ SelectStmt: node.SelectStmt.larg })] : []),
+                        ...(node.SelectStmt.rarg ? [(0, resolvers_js_1.resolveNode)({ SelectStmt: node.SelectStmt.rarg })] : [])
                     ],
                     paramType: 'function'
                 });
@@ -311,7 +314,7 @@ const specialNodeQuery = {
                     name: 'selectDistinctOn',
                     arguments: [
                         {
-                            name: node.SelectStmt.distinctClause.map((i) => resolveNode(i)),
+                            name: node.SelectStmt.distinctClause.map((i) => (0, resolvers_js_1.resolveNode)(i)),
                             arguments: [],
                             paramType: 'array'
                         }
@@ -324,13 +327,13 @@ const specialNodeQuery = {
             let tempParam = [];
             if (tempFunction.name == "selectDistinctOn") {
                 tempParam.push({
-                    name: node.SelectStmt.targetList.map((i) => [resolveNode(i)]),
+                    name: node.SelectStmt.targetList.map((i) => [(0, resolvers_js_1.resolveNode)(i)]),
                     arguments: [],
                     paramType: 'array'
                 });
             }
             else {
-                tempParam.push(...node.SelectStmt.targetList.map((i) => [resolveNode(i)]));
+                tempParam.push(...node.SelectStmt.targetList.map((i) => [(0, resolvers_js_1.resolveNode)(i)]));
             }
             tempFunction.arguments.push(...tempParam);
             result.push(tempFunction);
@@ -338,7 +341,7 @@ const specialNodeQuery = {
         if (node.SelectStmt.intoClause) {
             result.push({
                 name: 'into',
-                arguments: resolveNode({ IntoClause: node.SelectStmt.intoClause }),
+                arguments: (0, resolvers_js_1.resolveNode)({ IntoClause: node.SelectStmt.intoClause }),
                 paramType: 'function'
             });
         }
@@ -347,8 +350,8 @@ const specialNodeQuery = {
             const tableFromJoinExpr = [];
             const resolved = node.SelectStmt.fromClause.filter(i => {
                 if (Object.keys(i)[0] === "JoinExpr") {
-                    tableFromJoinExpr.push(resolveNode(i.JoinExpr.larg));
-                    tempAfterFromFunctions.push(...resolveNode({ JoinExpr: { ...i.JoinExpr, larg: undefined } }));
+                    tableFromJoinExpr.push((0, resolvers_js_1.resolveNode)(i.JoinExpr.larg));
+                    tempAfterFromFunctions.push(...(0, resolvers_js_1.resolveNode)({ JoinExpr: { ...i.JoinExpr, larg: undefined } }));
                     return false;
                 }
                 else
@@ -356,7 +359,7 @@ const specialNodeQuery = {
             });
             result.push({
                 name: 'from',
-                arguments: [[...resolveNodeArray(resolved), ...tableFromJoinExpr]],
+                arguments: [[...(0, resolvers_js_1.resolveNodeArray)(resolved), ...tableFromJoinExpr]],
                 paramType: 'function'
             });
             result.push(...tempAfterFromFunctions);
@@ -364,7 +367,7 @@ const specialNodeQuery = {
         if (node.SelectStmt.whereClause) {
             result.push({
                 name: 'where',
-                arguments: [resolveNode(node.SelectStmt.whereClause)],
+                arguments: [(0, resolvers_js_1.resolveNode)(node.SelectStmt.whereClause)],
                 paramType: 'function'
             });
         }
@@ -373,7 +376,7 @@ const specialNodeQuery = {
                 name: 'values',
                 arguments: node.SelectStmt.valuesLists.map((i) => {
                     return {
-                        name: [resolveNode(i)],
+                        name: [(0, resolvers_js_1.resolveNode)(i)],
                         arguments: [],
                         paramType: 'array'
                     };
@@ -384,42 +387,42 @@ const specialNodeQuery = {
         if (node.SelectStmt.groupClause && node.SelectStmt.groupClause.length > 0) {
             result.push({
                 name: node.SelectStmt.groupDistinct ? 'groupByDistinct' : 'groupBy',
-                arguments: resolveNodeArray(node.SelectStmt.groupClause),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.SelectStmt.groupClause),
                 paramType: 'function'
             });
         }
         if (node.SelectStmt.havingClause) {
             result.push({
                 name: 'having',
-                arguments: resolveNode(node.SelectStmt.havingClause),
+                arguments: (0, resolvers_js_1.resolveNode)(node.SelectStmt.havingClause),
                 paramType: 'function'
             });
         }
         if (node.SelectStmt.windowClause && node.SelectStmt.windowClause.length > 0) {
             result.push({
                 name: 'window',
-                arguments: resolveNodeArray(node.SelectStmt.windowClause),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.SelectStmt.windowClause),
                 paramType: 'function'
             });
         }
         if (node.SelectStmt.sortClause && node.SelectStmt.sortClause.length > 0) {
             result.push({
                 name: 'orderBy',
-                arguments: [...node.SelectStmt.sortClause.map((i) => resolveNode(i))],
+                arguments: [...node.SelectStmt.sortClause.map((i) => (0, resolvers_js_1.resolveNode)(i))],
                 paramType: 'function'
             });
         }
         if (node.SelectStmt.limitCount) {
             result.push({
                 name: 'limit',
-                arguments: resolveNode(node.SelectStmt.limitCount),
+                arguments: (0, resolvers_js_1.resolveNode)(node.SelectStmt.limitCount),
                 paramType: 'function'
             });
         }
         if (node.SelectStmt.limitOffset) {
             result.push({
                 name: 'offset',
-                arguments: resolveNode(node.SelectStmt.limitOffset),
+                arguments: (0, resolvers_js_1.resolveNode)(node.SelectStmt.limitOffset),
                 paramType: 'function'
             });
         }
@@ -431,17 +434,17 @@ const specialNodeQuery = {
         //     });
         // }
         if (node.SelectStmt.lockingClause && node.SelectStmt.lockingClause.length > 0) {
-            result.push(...resolveNodeArray(node.SelectStmt.lockingClause));
+            result.push(...(0, resolvers_js_1.resolveNodeArray)(node.SelectStmt.lockingClause));
         }
         return result;
     },
     RangeVar: (rawNode) => {
         const result = [];
-        const node = normalizeNode("RangeVar", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("RangeVar", rawNode);
         const tempFunction = {
             name: 't',
             arguments: [
-                deparseSync({
+                (0, pgsql_parser_1.deparseSync)({
                     RangeVar: {
                         ...node.RangeVar,
                         alias: undefined,
@@ -452,13 +455,13 @@ const specialNodeQuery = {
         };
         result.push(tempFunction);
         if (node.RangeVar.alias) {
-            result.push(...resolveNode({ Alias: node.RangeVar.alias }));
+            result.push(...(0, resolvers_js_1.resolveNode)({ Alias: node.RangeVar.alias }));
         }
         return result;
     },
     Alias: (rawNode) => {
         const result = [];
-        const node = normalizeNode("Alias", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("Alias", rawNode);
         if (node.Alias.aliasname) {
             result.push({
                 name: 'as',
@@ -469,7 +472,7 @@ const specialNodeQuery = {
         if (node.Alias.colnames && node.Alias.colnames.length > 0) {
             result.push({
                 name: 'as',
-                arguments: resolveNodeArray(node.Alias.colnames),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.Alias.colnames),
                 paramType: 'function'
             });
         }
@@ -477,7 +480,7 @@ const specialNodeQuery = {
     },
     JoinExpr: (rawNode) => {
         let result = [];
-        const node = normalizeNode("JoinExpr", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("JoinExpr", rawNode);
         let tempFunction = {
             name: 'join',
             arguments: [],
@@ -498,7 +501,7 @@ const specialNodeQuery = {
             let joinTypeName = joinTypeMap[node.JoinExpr.jointype];
             joinTypeName = joinTypeName == "join" && !node.JoinExpr.quals && !node.JoinExpr.isNatural ? "crossJoin" : joinTypeName;
             if (joinTypeName == null)
-                return fallbackNode(node);
+                return (0, resolvers_js_1.fallbackNode)(node);
             else
                 tempFunction.name = joinTypeName;
         }
@@ -506,23 +509,23 @@ const specialNodeQuery = {
             tempFunction.name = `natural${tempFunction.name.charAt(0).toUpperCase()}${tempFunction.name.slice(1)}`;
         }
         if (node.JoinExpr.larg) {
-            result.push(...resolveNode(node.JoinExpr.larg));
+            result.push(...(0, resolvers_js_1.resolveNode)(node.JoinExpr.larg));
         }
         if (node.JoinExpr.rarg) {
-            tempFunction.arguments.push(resolveNode(node.JoinExpr.rarg));
+            tempFunction.arguments.push((0, resolvers_js_1.resolveNode)(node.JoinExpr.rarg));
         }
         result.push(tempFunction);
         if (node.JoinExpr.quals) {
             result.push({
                 name: 'on',
-                arguments: resolveNode(node.JoinExpr.quals),
+                arguments: (0, resolvers_js_1.resolveNode)(node.JoinExpr.quals),
                 paramType: 'function'
             });
         }
         if (node.JoinExpr.usingClause && node.JoinExpr.usingClause.length > 0) {
             result.push({
                 name: 'using',
-                arguments: resolveNodeArray(node.JoinExpr.usingClause),
+                arguments: (0, resolvers_js_1.resolveNodeArray)(node.JoinExpr.usingClause),
                 paramType: 'function'
             });
         }
@@ -548,21 +551,21 @@ const specialNodeQuery = {
     },
     WithClause: (rawNode) => {
         const result = [];
-        const node = normalizeNode("WithClause", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("WithClause", rawNode);
         const tempFunction = {
             name: node.WithClause.recursive ? 'withRecursive' : 'with',
             arguments: [],
             paramType: 'function'
         };
         if (node.WithClause.ctes && node.WithClause.ctes.length > 0) {
-            tempFunction.arguments.push(resolveNodeArray(node.WithClause.ctes));
+            tempFunction.arguments.push((0, resolvers_js_1.resolveNodeArray)(node.WithClause.ctes));
         }
         result.push(tempFunction);
         return result;
     },
     CommonTableExpr: (rawNode) => {
         const result = [];
-        const node = normalizeNode("CommonTableExpr", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("CommonTableExpr", rawNode);
         let tempCteName = null;
         let tempFunction = {
             name: 'sub',
@@ -580,7 +583,7 @@ const specialNodeQuery = {
                     paramType: 'template-literal'
                 });
             }
-            tempFunction.arguments.push(resolveNode(node.CommonTableExpr.ctequery));
+            tempFunction.arguments.push((0, resolvers_js_1.resolveNode)(node.CommonTableExpr.ctequery));
         }
         if (node.CommonTableExpr.ctename) {
             tempCteName = {
@@ -604,16 +607,16 @@ const specialNodeQuery = {
             (node.CommonTableExpr.ctecoltypes && node.CommonTableExpr.ctecoltypes.length > 0) ||
             (node.CommonTableExpr.ctecoltypmods && node.CommonTableExpr.ctecoltypmods.length > 0) ||
             (node.CommonTableExpr.ctecolcollations && node.CommonTableExpr.ctecolcollations.length > 0))
-            return fallbackNode(node);
+            return (0, resolvers_js_1.fallbackNode)(node);
         return result;
     },
     RawStmt: (rawNode) => {
         const result = [];
-        const node = normalizeNode("RawStmt", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("RawStmt", rawNode);
         if (node.RawStmt.stmt) {
-            result.push(...resolveNode(node.RawStmt.stmt));
+            result.push(...(0, resolvers_js_1.resolveNode)(node.RawStmt.stmt));
         }
         return result;
     }
 };
-export { specialNodeQuery };
+exports.specialNodeQuery = specialNodeQuery;

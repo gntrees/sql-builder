@@ -1,4 +1,7 @@
-export const functionListToString = (fnList, baseQueryBuilder, options = {}) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.functionListToString = void 0;
+const functionListToString = (fnList, baseQueryBuilder, options = {}) => {
     const simplifyLiteral = options.simplifyLiteral ?? true;
     const INDENT = "    ";
     function stringifyFunction(fn, asExpression = false) {
@@ -122,3 +125,4 @@ export const functionListToString = (fnList, baseQueryBuilder, options = {}) => 
     }
     return fnList.map(fn => stringifyFunction(fn, false)).join("");
 };
+exports.functionListToString = functionListToString;

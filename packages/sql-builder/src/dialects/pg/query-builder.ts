@@ -15,13 +15,13 @@ export class QueryBuilder extends SchemaOverrider {
     getSql() {
         return this.getSqlCore();
     }
-    getParameters() {
-        return this.getParametersCore();
+    getSqlParameters() {
+        return this.getSqlParametersCore();
     }
     getSqlAndParameters() {
         return {
             sql: this.getSqlCore(),
-            parameters: this.getParametersCore(),
+            parameters: this.getSqlParametersCore(),
         };
     }
     getSqlWithParameters() {

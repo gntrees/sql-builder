@@ -69,7 +69,7 @@ const run = async (queryBuildingPart: string) => {
 
   const sql = query.getSql()
   
-  const params = typeof query.getParameters === "function" ? query.getParameters() : []
+  const params = typeof query.getSqlParameters === "function" ? query.getSqlParameters() : []
   const highlighted = await highlightCodeBlock(sql, "sql")
   return { highlighted, params}
 }

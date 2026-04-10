@@ -1,8 +1,11 @@
-import { fallbackNode, normalizeNode, resolveNodeArray } from '../utils/resolvers.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.specialNodeTransactions = void 0;
+const resolvers_js_1 = require("../utils/resolvers.js");
 const specialNodeTransactions = {
     TransactionStmt: (rawNode) => {
         const results = [];
-        const node = normalizeNode("TransactionStmt", rawNode);
+        const node = (0, resolvers_js_1.normalizeNode)("TransactionStmt", rawNode);
         const tempFunction = {
             name: '',
             arguments: [],
@@ -26,7 +29,7 @@ const specialNodeTransactions = {
                 tempFunction.name = methodName;
             }
             else
-                return fallbackNode(node);
+                return (0, resolvers_js_1.fallbackNode)(node);
         }
         if (node.TransactionStmt.gid) {
             tempFunction.arguments.push({
@@ -59,7 +62,7 @@ const specialNodeTransactions = {
             });
         }
         if (node.TransactionStmt.options) {
-            results.push(...resolveNodeArray(node.TransactionStmt.options));
+            results.push(...(0, resolvers_js_1.resolveNodeArray)(node.TransactionStmt.options));
         }
         // switch (kind) {
         //     case 'TRANS_STMT_BEGIN':
@@ -95,4 +98,4 @@ const specialNodeTransactions = {
         return results;
     }
 };
-export { specialNodeTransactions };
+exports.specialNodeTransactions = specialNodeTransactions;

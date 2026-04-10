@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createDbSchemaSource = void 0;
 const DEFAULT_DB_NAME = "DbName";
 const splitWords = (value) => {
     return value
@@ -68,7 +71,7 @@ const buildTableMetadata = (structure) => {
         return { name: table.name, tableVar, tableClass, columns };
     });
 };
-export const createDbSchemaSource = (structure) => {
+const createDbSchemaSource = (structure) => {
     const tableMeta = buildTableMetadata(structure);
     const importLine = 'import { ColumnSchema, DBSchema, TableSchema } from "@gntrees/sql-builder/pg";';
     const dbClassName = toPascalCase(structure.dbName || DEFAULT_DB_NAME);
@@ -118,3 +121,4 @@ export const createDbSchemaSource = (structure) => {
         "",
     ].join("\n");
 };
+exports.createDbSchemaSource = createDbSchemaSource;

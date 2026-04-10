@@ -1,37 +1,17 @@
-import parserEstree from "prettier/plugins/estree";
-import parserTypescript from "prettier/plugins/typescript";
-import prettier from "prettier/standalone";
-// import { parse } from 'pgsql-parser';
-import { parse } from 'pgsql-parser';
-import { resolveNode } from './utils/resolvers.js';
-import { functionListToString } from './utils/stringifiers.js';
-import { createDbSchemaSource } from './utils/db-schema-writer.js';
-const MOCK_EXEC_HANDLER_BODY = "return { sql, parameters };";
-const MOCK_FORMAT_PARAM_HANDLER = "pg";
-const extractQueryBuildingPart = async (code) => {
-    const lines = code.split("\n");
-    let queryBuildingPart = "";
-    let inQueryBuilding = false;
-    for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (trimmedLine.startsWith("const query = q") ||
-            (inQueryBuilding && (trimmedLine.startsWith(".select") || trimmedLine.startsWith("q.select")))) {
-            inQueryBuilding = true;
-        }
-        if (inQueryBuilding) {
-            queryBuildingPart += line + "\n";
-        }
-        if (trimmedLine.startsWith("console.log")) {
-            break;
-        }
-    }
-    queryBuildingPart = queryBuildingPart.replace(/console\.log\(query\.getSql\(\)\);?\n?/g, "");
-    return queryBuildingPart.trim();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const DEFAULT_FORMAT_PARAM_HANDLER = 'pg';
-const DEFAULT_EXEC_HANDLER = `async ({ sql, parameters, meta }): Promise<any> => {
-    return "Executed";
-}`;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.convert = convert;
+const estree_1 = __importDefault(require("prettier/plugins/estree"));
+const typescript_1 = __importDefault(require("prettier/plugins/typescript"));
+const standalone_1 = __importDefault(require("prettier/standalone"));
+// import { parse } from 'pgsql-parser';
+const pgsql_parser_1 = require("pgsql-parser");
+const resolvers_js_1 = require("./utils/resolvers.js");
+const stringifiers_js_1 = require("./utils/stringifiers.js");
+const db_schema_writer_js_1 = require("./utils/db-schema-writer.js");
 const DEFAULT_DB_NAME = "DbName";
 const splitWords = (value) => {
     return value
@@ -401,13 +381,13 @@ const applySchemaInjection = (queryBuilderChain, structure) => {
     });
     return { chain, imports: tableMeta.map((table) => table.tableVar) };
 };
-export async function convert(sql, options = {}) {
+async function convert(sql, options = {}) {
     // await loadModule();
-    const ast = await parse(sql);
+    const ast = await (0, pgsql_parser_1.parse)(sql);
     const functionList = [];
     for (const [i, stmt] of ast.stmts.entries()) {
         if (stmt.stmt) {
-            const nodes = resolveNode({ RawStmt: stmt });
+            const nodes = (0, resolvers_js_1.resolveNode)({ RawStmt: stmt });
             functionList.push(...nodes);
             // if (options.testName == 'query-builder-83') {
             //     const normalized = normalizeLocationsNode(ast,sql);
@@ -436,7 +416,7 @@ export async function convert(sql, options = {}) {
     //     error: undefined,
     // });
     const baseQueryBuilder = 'q';
-    const queryBuilderChain = `q${functionListToString(functionList, baseQueryBuilder, {
+    const queryBuilderChain = `q${(0, stringifiers_js_1.functionListToString)(functionList, baseQueryBuilder, {
         simplifyLiteral: options.simplifyLiteral,
     })}`;
     let dbSchemaStructure;
@@ -444,7 +424,7 @@ export async function convert(sql, options = {}) {
     let chainForOutput = queryBuilderChain;
     if (options.dbSchema) {
         dbSchemaStructure = inferDbSchemaStructure(functionList);
-        dbSchemaAssumption = createDbSchemaSource(dbSchemaStructure);
+        dbSchemaAssumption = (0, db_schema_writer_js_1.createDbSchemaSource)(dbSchemaStructure);
     }
     if (options.dbSchema && dbSchemaStructure) {
         const { chain } = applySchemaInjection(chainForOutput, dbSchemaStructure);
@@ -455,8 +435,8 @@ export async function convert(sql, options = {}) {
 
 const q = sqlBuilder();
 const sch = sqlSchema();
-const schema = sch.set("query", sch
-    .query(${chainForOutput}));
+const schema = sch.setQuery("query", sch
+    .set.query(${chainForOutput}));
     
 export default schema;`
         : `import { sqlBuilder } from "@gntrees/sql-builder/pg";
@@ -465,9 +445,9 @@ const q = sqlBuilder();
 const query = ${chainForOutput};
 
 export default query;`;
-    const formatted = await prettier.format(code, {
+    const formatted = await standalone_1.default.format(code, {
         parser: 'typescript',
-        plugins: [parserTypescript, parserEstree],
+        plugins: [typescript_1.default, estree_1.default],
     });
     return { code, formatted, functionList, options, dbSchemaStructure, dbSchemaAssumption };
 }

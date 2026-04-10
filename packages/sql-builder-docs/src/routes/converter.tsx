@@ -241,8 +241,8 @@ return query;`,
       const rawSqlWithParameters = typeof query.getSqlWithParameters === "function"
         ? query.getSqlWithParameters()
         : null
-      const params = typeof query.getParameters === "function"
-        ? query.getParameters()
+      const params = typeof query.getSqlParameters === "function"
+        ? query.getSqlParameters()
         : []
       const rawQueryBuilderSchema = typeof query.getSchema === "function"
         ? query.getSchema()

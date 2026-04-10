@@ -2,6 +2,9 @@
   "name": "@gntrees/sql-builder-cli",
   "version": "0.0.1",
   "description": "SQL to query builder converter for gntrees-sql-builder",
+  "author": "gntrees",
+  "license": "MIT",
+  "private": false,
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -16,17 +19,36 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gntrees/gntrees-sql-builder.git"
+  },
+  "keywords": [
+    "postgresql",
+    "sql",
+    "query-builder",
+    "converter",
+    "cli",
+    "typescript"
+  ],
   "scripts": {
-    "prebuild": "rm -rf dist",
+    "prebuild": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
     "build": "bun run prebuild && bun run build:cjs && bun run build:esm",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "test": "rm -rf test-dumps/* && bun run tests/run-tests.ts"
+    "test": "rm -rf test-dumps/* && bun run tests/run-tests.ts",
+    "prepack": "bun run build"
   },
   "dependencies": {
-    "@gntrees/sql-builder": "workspace:*",
-    "@gntrees/sql-builder-shared": "workspace:*",
+    "@gntrees/sql-builder": "^0.0.4",
+    "@gntrees/sql-builder-shared": "file:../sql-builder-shared",
     "@pgsql/enums": "^17.6.2",
     "@pgsql/traverse": "^17.2.4",
     "@pgsql/types": "^17.6.2",
@@ -37,6 +59,9 @@
     "pg": "^8.13.3",
     "prettier": "^3.8.1"
   },
+  "bundleDependencies": [
+    "@gntrees/sql-builder-shared"
+  ],
   "peerDependencies": {
     "typescript": "^5.9.3"
   },

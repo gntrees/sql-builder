@@ -40,8 +40,8 @@
         "sql-builder-cli": "./dist/esm/cli.js",
       },
       "dependencies": {
-        "@gntrees/sql-builder": "workspace:*",
-        "@gntrees/sql-builder-shared": "workspace:*",
+        "@gntrees/sql-builder": "^0.0.4",
+        "@gntrees/sql-builder-shared": "file:../sql-builder-shared",
         "@pgsql/enums": "^17.6.2",
         "@pgsql/traverse": "^17.2.4",
         "@pgsql/types": "^17.6.2",
@@ -1331,6 +1331,8 @@
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
     "@babel/helper-compilation-targets/lru-cache": ["lru-cache@5.1.1", "", { "dependencies": { "yallist": "^3.0.2" } }, "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="],
+
+    "@gntrees/sql-builder-cli/@gntrees/sql-builder-shared": ["@gntrees/sql-builder-shared@file:packages/sql-builder-shared", { "devDependencies": { "@types/bun": "latest" }, "peerDependencies": { "typescript": "^5.9.3" } }],
 
     "@launchql/protobufjs/@types/node": ["@types/node@25.5.0", "", { "dependencies": { "undici-types": "~7.18.0" } }, "sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw=="],
 

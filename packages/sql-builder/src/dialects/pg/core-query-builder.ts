@@ -440,7 +440,7 @@ export class CoreQueryBuilder {
         );
     }
 
-    protected getParametersCore() {
+    protected getSqlParametersCore() {
         if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
         const queryInstance = this.queryInstance;
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;

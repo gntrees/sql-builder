@@ -107,6 +107,34 @@ const data = {
         },
       ],
     },
+    {
+      title: "Schema & Validation",
+      url: "#",
+      items: [
+        {
+          title: "SQL Schema",
+          url: "/docs/pg/sql-schema",
+        },
+        {
+          title: "DB Schema",
+          url: "/docs/pg/db-schema",
+        },
+        {
+          title: "Validation",
+          url: "/docs/pg/validation",
+        },
+      ],
+    },
+    {
+      title: "CLI",
+      url: "#",
+      items: [
+        {
+          title: "CLI Commands",
+          url: "/docs/pg/cli",
+        },
+      ],
+    },
   ],
 }
 

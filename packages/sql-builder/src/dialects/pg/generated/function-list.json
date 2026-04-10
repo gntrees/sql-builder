@@ -12,6 +12,9 @@
     "raw",
     "rawString",
     "rs",
+    "schemaCase",
+    "schemaParam",
+    "setParams",
     "v"
   ],
   "overrideMethods": [
@@ -679,8 +682,6 @@
     "savepointTransaction",
     "sc",
     "scale",
-    "schemaCase",
-    "schemaParam",
     "schemaToXml",
     "schemaToXmlAndXmlschema",
     "schemaToXmlschema",
@@ -693,7 +694,6 @@
     "setByte",
     "setConfig",
     "setMasklen",
-    "setParams",
     "setseed",
     "setval",
     "setweight",
