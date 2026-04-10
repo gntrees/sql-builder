@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConverterRouteImport } from './routes/converter'
+import { Route as DocsRouteRouteImport } from './routes/docs/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as DocsSqliteRouteImport } from './routes/docs/sqlite'
@@ -38,119 +39,125 @@ const ConverterRoute = ConverterRouteImport.update({
   path: '/converter',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsRouteRoute = DocsRouteRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocsIndexRoute = DocsIndexRouteImport.update({
-  id: '/docs/',
-  path: '/docs/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsSqliteRoute = DocsSqliteRouteImport.update({
-  id: '/docs/sqlite',
-  path: '/docs/sqlite',
-  getParentRoute: () => rootRouteImport,
+  id: '/sqlite',
+  path: '/sqlite',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsMysqlRoute = DocsMysqlRouteImport.update({
-  id: '/docs/mysql',
-  path: '/docs/mysql',
-  getParentRoute: () => rootRouteImport,
+  id: '/mysql',
+  path: '/mysql',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsMssqlRoute = DocsMssqlRouteImport.update({
-  id: '/docs/mssql',
-  path: '/docs/mssql',
-  getParentRoute: () => rootRouteImport,
+  id: '/mssql',
+  path: '/mssql',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgValidationRoute = DocsPgValidationRouteImport.update({
-  id: '/docs/pg/validation',
-  path: '/docs/pg/validation',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/validation',
+  path: '/pg/validation',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgUpdateDeleteRoute = DocsPgUpdateDeleteRouteImport.update({
-  id: '/docs/pg/update-delete',
-  path: '/docs/pg/update-delete',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/update-delete',
+  path: '/pg/update-delete',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgTransactionsRoute = DocsPgTransactionsRouteImport.update({
-  id: '/docs/pg/transactions',
-  path: '/docs/pg/transactions',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/transactions',
+  path: '/pg/transactions',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgSqlSchemaRoute = DocsPgSqlSchemaRouteImport.update({
-  id: '/docs/pg/sql-schema',
-  path: '/docs/pg/sql-schema',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/sql-schema',
+  path: '/pg/sql-schema',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgSelectRoute = DocsPgSelectRouteImport.update({
-  id: '/docs/pg/select',
-  path: '/docs/pg/select',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/select',
+  path: '/pg/select',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgRawRoute = DocsPgRawRouteImport.update({
-  id: '/docs/pg/raw',
-  path: '/docs/pg/raw',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/raw',
+  path: '/pg/raw',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgQueryBuilderRoute = DocsPgQueryBuilderRouteImport.update({
-  id: '/docs/pg/query-builder',
-  path: '/docs/pg/query-builder',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/query-builder',
+  path: '/pg/query-builder',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgPredicatesRoute = DocsPgPredicatesRouteImport.update({
-  id: '/docs/pg/predicates',
-  path: '/docs/pg/predicates',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/predicates',
+  path: '/pg/predicates',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgOrderingRoute = DocsPgOrderingRouteImport.update({
-  id: '/docs/pg/ordering',
-  path: '/docs/pg/ordering',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/ordering',
+  path: '/pg/ordering',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgOperatorsRoute = DocsPgOperatorsRouteImport.update({
-  id: '/docs/pg/operators',
-  path: '/docs/pg/operators',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/operators',
+  path: '/pg/operators',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgJoinsRoute = DocsPgJoinsRouteImport.update({
-  id: '/docs/pg/joins',
-  path: '/docs/pg/joins',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/joins',
+  path: '/pg/joins',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgInsertRoute = DocsPgInsertRouteImport.update({
-  id: '/docs/pg/insert',
-  path: '/docs/pg/insert',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/insert',
+  path: '/pg/insert',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgHelpersRoute = DocsPgHelpersRouteImport.update({
-  id: '/docs/pg/helpers',
-  path: '/docs/pg/helpers',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/helpers',
+  path: '/pg/helpers',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgFunctionCallRoute = DocsPgFunctionCallRouteImport.update({
-  id: '/docs/pg/function-call',
-  path: '/docs/pg/function-call',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/function-call',
+  path: '/pg/function-call',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgDbSchemaRoute = DocsPgDbSchemaRouteImport.update({
-  id: '/docs/pg/db-schema',
-  path: '/docs/pg/db-schema',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/db-schema',
+  path: '/pg/db-schema',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgCliRoute = DocsPgCliRouteImport.update({
-  id: '/docs/pg/cli',
-  path: '/docs/pg/cli',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/cli',
+  path: '/pg/cli',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsPgInstallationIndexRoute = DocsPgInstallationIndexRouteImport.update({
-  id: '/docs/pg/installation/',
-  path: '/docs/pg/installation/',
-  getParentRoute: () => rootRouteImport,
+  id: '/pg/installation/',
+  path: '/pg/installation/',
+  getParentRoute: () => DocsRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteRouteWithChildren
   '/converter': typeof ConverterRoute
   '/docs/mssql': typeof DocsMssqlRoute
   '/docs/mysql': typeof DocsMysqlRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteRouteWithChildren
   '/converter': typeof ConverterRoute
   '/docs/mssql': typeof DocsMssqlRoute
   '/docs/mysql': typeof DocsMysqlRoute
@@ -229,6 +237,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/docs'
     | '/converter'
     | '/docs/mssql'
     | '/docs/mysql'
@@ -279,6 +288,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/docs'
     | '/converter'
     | '/docs/mssql'
     | '/docs/mysql'
@@ -305,7 +315,184 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DocsRouteRoute: typeof DocsRouteRouteWithChildren
   ConverterRoute: typeof ConverterRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/converter': {
+      id: '/converter'
+      path: '/converter'
+      fullPath: '/converter'
+      preLoaderRoute: typeof ConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/sqlite': {
+      id: '/docs/sqlite'
+      path: '/sqlite'
+      fullPath: '/docs/sqlite'
+      preLoaderRoute: typeof DocsSqliteRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/mysql': {
+      id: '/docs/mysql'
+      path: '/mysql'
+      fullPath: '/docs/mysql'
+      preLoaderRoute: typeof DocsMysqlRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/mssql': {
+      id: '/docs/mssql'
+      path: '/mssql'
+      fullPath: '/docs/mssql'
+      preLoaderRoute: typeof DocsMssqlRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/validation': {
+      id: '/docs/pg/validation'
+      path: '/pg/validation'
+      fullPath: '/docs/pg/validation'
+      preLoaderRoute: typeof DocsPgValidationRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/update-delete': {
+      id: '/docs/pg/update-delete'
+      path: '/pg/update-delete'
+      fullPath: '/docs/pg/update-delete'
+      preLoaderRoute: typeof DocsPgUpdateDeleteRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/transactions': {
+      id: '/docs/pg/transactions'
+      path: '/pg/transactions'
+      fullPath: '/docs/pg/transactions'
+      preLoaderRoute: typeof DocsPgTransactionsRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/sql-schema': {
+      id: '/docs/pg/sql-schema'
+      path: '/pg/sql-schema'
+      fullPath: '/docs/pg/sql-schema'
+      preLoaderRoute: typeof DocsPgSqlSchemaRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/select': {
+      id: '/docs/pg/select'
+      path: '/pg/select'
+      fullPath: '/docs/pg/select'
+      preLoaderRoute: typeof DocsPgSelectRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/raw': {
+      id: '/docs/pg/raw'
+      path: '/pg/raw'
+      fullPath: '/docs/pg/raw'
+      preLoaderRoute: typeof DocsPgRawRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/query-builder': {
+      id: '/docs/pg/query-builder'
+      path: '/pg/query-builder'
+      fullPath: '/docs/pg/query-builder'
+      preLoaderRoute: typeof DocsPgQueryBuilderRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/predicates': {
+      id: '/docs/pg/predicates'
+      path: '/pg/predicates'
+      fullPath: '/docs/pg/predicates'
+      preLoaderRoute: typeof DocsPgPredicatesRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/ordering': {
+      id: '/docs/pg/ordering'
+      path: '/pg/ordering'
+      fullPath: '/docs/pg/ordering'
+      preLoaderRoute: typeof DocsPgOrderingRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/operators': {
+      id: '/docs/pg/operators'
+      path: '/pg/operators'
+      fullPath: '/docs/pg/operators'
+      preLoaderRoute: typeof DocsPgOperatorsRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/joins': {
+      id: '/docs/pg/joins'
+      path: '/pg/joins'
+      fullPath: '/docs/pg/joins'
+      preLoaderRoute: typeof DocsPgJoinsRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/insert': {
+      id: '/docs/pg/insert'
+      path: '/pg/insert'
+      fullPath: '/docs/pg/insert'
+      preLoaderRoute: typeof DocsPgInsertRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/helpers': {
+      id: '/docs/pg/helpers'
+      path: '/pg/helpers'
+      fullPath: '/docs/pg/helpers'
+      preLoaderRoute: typeof DocsPgHelpersRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/function-call': {
+      id: '/docs/pg/function-call'
+      path: '/pg/function-call'
+      fullPath: '/docs/pg/function-call'
+      preLoaderRoute: typeof DocsPgFunctionCallRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/db-schema': {
+      id: '/docs/pg/db-schema'
+      path: '/pg/db-schema'
+      fullPath: '/docs/pg/db-schema'
+      preLoaderRoute: typeof DocsPgDbSchemaRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/cli': {
+      id: '/docs/pg/cli'
+      path: '/pg/cli'
+      fullPath: '/docs/pg/cli'
+      preLoaderRoute: typeof DocsPgCliRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/pg/installation/': {
+      id: '/docs/pg/installation/'
+      path: '/pg/installation'
+      fullPath: '/docs/pg/installation/'
+      preLoaderRoute: typeof DocsPgInstallationIndexRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+  }
+}
+
+interface DocsRouteRouteChildren {
   DocsMssqlRoute: typeof DocsMssqlRoute
   DocsMysqlRoute: typeof DocsMysqlRoute
   DocsSqliteRoute: typeof DocsSqliteRoute
@@ -329,175 +516,7 @@ export interface RootRouteChildren {
   DocsPgInstallationIndexRoute: typeof DocsPgInstallationIndexRoute
 }
 
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/converter': {
-      id: '/converter'
-      path: '/converter'
-      fullPath: '/converter'
-      preLoaderRoute: typeof ConverterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/': {
-      id: '/docs/'
-      path: '/docs'
-      fullPath: '/docs/'
-      preLoaderRoute: typeof DocsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/sqlite': {
-      id: '/docs/sqlite'
-      path: '/docs/sqlite'
-      fullPath: '/docs/sqlite'
-      preLoaderRoute: typeof DocsSqliteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/mysql': {
-      id: '/docs/mysql'
-      path: '/docs/mysql'
-      fullPath: '/docs/mysql'
-      preLoaderRoute: typeof DocsMysqlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/mssql': {
-      id: '/docs/mssql'
-      path: '/docs/mssql'
-      fullPath: '/docs/mssql'
-      preLoaderRoute: typeof DocsMssqlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/validation': {
-      id: '/docs/pg/validation'
-      path: '/docs/pg/validation'
-      fullPath: '/docs/pg/validation'
-      preLoaderRoute: typeof DocsPgValidationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/update-delete': {
-      id: '/docs/pg/update-delete'
-      path: '/docs/pg/update-delete'
-      fullPath: '/docs/pg/update-delete'
-      preLoaderRoute: typeof DocsPgUpdateDeleteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/transactions': {
-      id: '/docs/pg/transactions'
-      path: '/docs/pg/transactions'
-      fullPath: '/docs/pg/transactions'
-      preLoaderRoute: typeof DocsPgTransactionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/sql-schema': {
-      id: '/docs/pg/sql-schema'
-      path: '/docs/pg/sql-schema'
-      fullPath: '/docs/pg/sql-schema'
-      preLoaderRoute: typeof DocsPgSqlSchemaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/select': {
-      id: '/docs/pg/select'
-      path: '/docs/pg/select'
-      fullPath: '/docs/pg/select'
-      preLoaderRoute: typeof DocsPgSelectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/raw': {
-      id: '/docs/pg/raw'
-      path: '/docs/pg/raw'
-      fullPath: '/docs/pg/raw'
-      preLoaderRoute: typeof DocsPgRawRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/query-builder': {
-      id: '/docs/pg/query-builder'
-      path: '/docs/pg/query-builder'
-      fullPath: '/docs/pg/query-builder'
-      preLoaderRoute: typeof DocsPgQueryBuilderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/predicates': {
-      id: '/docs/pg/predicates'
-      path: '/docs/pg/predicates'
-      fullPath: '/docs/pg/predicates'
-      preLoaderRoute: typeof DocsPgPredicatesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/ordering': {
-      id: '/docs/pg/ordering'
-      path: '/docs/pg/ordering'
-      fullPath: '/docs/pg/ordering'
-      preLoaderRoute: typeof DocsPgOrderingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/operators': {
-      id: '/docs/pg/operators'
-      path: '/docs/pg/operators'
-      fullPath: '/docs/pg/operators'
-      preLoaderRoute: typeof DocsPgOperatorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/joins': {
-      id: '/docs/pg/joins'
-      path: '/docs/pg/joins'
-      fullPath: '/docs/pg/joins'
-      preLoaderRoute: typeof DocsPgJoinsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/insert': {
-      id: '/docs/pg/insert'
-      path: '/docs/pg/insert'
-      fullPath: '/docs/pg/insert'
-      preLoaderRoute: typeof DocsPgInsertRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/helpers': {
-      id: '/docs/pg/helpers'
-      path: '/docs/pg/helpers'
-      fullPath: '/docs/pg/helpers'
-      preLoaderRoute: typeof DocsPgHelpersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/function-call': {
-      id: '/docs/pg/function-call'
-      path: '/docs/pg/function-call'
-      fullPath: '/docs/pg/function-call'
-      preLoaderRoute: typeof DocsPgFunctionCallRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/db-schema': {
-      id: '/docs/pg/db-schema'
-      path: '/docs/pg/db-schema'
-      fullPath: '/docs/pg/db-schema'
-      preLoaderRoute: typeof DocsPgDbSchemaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/cli': {
-      id: '/docs/pg/cli'
-      path: '/docs/pg/cli'
-      fullPath: '/docs/pg/cli'
-      preLoaderRoute: typeof DocsPgCliRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs/pg/installation/': {
-      id: '/docs/pg/installation/'
-      path: '/docs/pg/installation'
-      fullPath: '/docs/pg/installation/'
-      preLoaderRoute: typeof DocsPgInstallationIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
-}
-
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ConverterRoute: ConverterRoute,
+const DocsRouteRouteChildren: DocsRouteRouteChildren = {
   DocsMssqlRoute: DocsMssqlRoute,
   DocsMysqlRoute: DocsMysqlRoute,
   DocsSqliteRoute: DocsSqliteRoute,
@@ -519,6 +538,16 @@ const rootRouteChildren: RootRouteChildren = {
   DocsPgUpdateDeleteRoute: DocsPgUpdateDeleteRoute,
   DocsPgValidationRoute: DocsPgValidationRoute,
   DocsPgInstallationIndexRoute: DocsPgInstallationIndexRoute,
+}
+
+const DocsRouteRouteWithChildren = DocsRouteRoute._addFileChildren(
+  DocsRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  DocsRouteRoute: DocsRouteRouteWithChildren,
+  ConverterRoute: ConverterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

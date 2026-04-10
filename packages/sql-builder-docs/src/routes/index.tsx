@@ -4,10 +4,26 @@ import { Badge } from "../components/ui/badge"
 import { Button } from "../components/ui/button"
 import { Card } from "../components/ui/card"
 import { SampleCodeBlock } from "#/components/sample-code-block"
+import { highlightCodeBlock } from "#/components/ai/code-block.loader"
 
-export const Route = createFileRoute('/')({ component: HomePage })
+const homeSampleCode = `const query = q.select(
+  users.id,
+  users.name,
+)
+  .from(users)
+  .where(q.eq(users.age,65))
+  .orderBy(users.name);`
+
+export const Route = createFileRoute('/')({
+  loader: async () => {
+    return highlightCodeBlock(homeSampleCode, "ts")
+  },
+  component: HomePage,
+})
 
 function HomePage() {
+	const highlighted = Route.useLoaderData()
+
 	return (
 		<div className="min-h-screen bg-background text-foreground flex flex-col justify-between">
 			<div className="relative overflow-hidden h-full grow">
@@ -70,7 +86,7 @@ function HomePage() {
 						</div>
 
 						<Card className="fade-up delay-2 overflow-hidden p-0">
-							<SampleCodeBlock />
+							<SampleCodeBlock html={highlighted.light} darkHtml={highlighted.dark} />
 						</Card>
 					</section>
 				</main>
