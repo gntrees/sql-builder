@@ -93,9 +93,9 @@ const identifierHelpersCode = `const query = q
   )
   .from(q.t("users"))`
 
-const windowHelpersCode = `const windowSpec = q.partitionBy(q.column("department_id"))
-
-const query = q.select(q.rowNumber().over(windowSpec))`
+const windowHelpersCode = `const query = q.select(
+  q.rowNumber().over(q.partitionBy(q.column("department_id")))
+  )`
 
 function RouteComponent() {
   const highlighted = Route.useLoaderData()
