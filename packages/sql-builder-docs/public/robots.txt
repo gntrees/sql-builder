@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sqlbuilder.gntrees.com/sitemap.xml
