@@ -4,7 +4,7 @@ import type { PGFunction } from "./postgres-functions-list";
 import { QueryBuilder } from "./query-builder";
 import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, Statement } from "./types";
 import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
-import type { FunctionListType } from "@gntrees/sql-builder-cli";
+import type { FunctionListType } from "./function-list-type";
 import { SqlSchemaParam, type SqlSchemaParamType } from "./sql-param";
 type InstanceStructureSerializableValue = string | number | boolean | null | undefined | {
     kind: "query-builder";

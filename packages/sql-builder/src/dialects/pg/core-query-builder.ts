@@ -6,7 +6,7 @@ import { QueryBuilder } from "./query-builder";
 
 import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, RequiredDBInstance, Statement } from "./types";
 import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
-import type { FunctionListType } from "@gntrees/sql-builder-cli";
+import type { FunctionListType } from "./function-list-type";
 import { SqlSchemaParam, SqlSchemaParamCase, type SqlSchemaParamType } from "./sql-param";
 
 type InstanceStructureSerializableValue =
