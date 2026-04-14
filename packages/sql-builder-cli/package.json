@@ -39,7 +39,7 @@
     "typescript"
   ],
   "scripts": {
-    "prebuild": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "prebuild": "node scripts/sync.mjs && node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
     "build": "bun run prebuild && bun run build:cjs && bun run build:esm",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
@@ -47,22 +47,15 @@
     "prepack": "bun run build"
   },
   "dependencies": {
-    "@gntrees/sql-builder": "^0.0.4",
-    "@gntrees/sql-builder-shared": "file:../sql-builder-shared",
-    "@pgsql/enums": "^17.6.2",
-    "@pgsql/traverse": "^17.2.4",
     "@pgsql/types": "^17.6.2",
-    "@pgsql/utils": "^17.8.12",
     "kysely": "^0.27.6",
     "kysely-codegen": "^0.19.0",
     "pgsql-parser": "^17.6.2",
     "pg": "^8.13.3",
     "prettier": "^3.8.1"
   },
-  "bundleDependencies": [
-    "@gntrees/sql-builder-shared"
-  ],
   "peerDependencies": {
+    "@gntrees/sql-builder": "^0.0.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 import type { A_Const, FuncCall, List, String } from '../ast-types.js';
 import type { FunctionListType } from '../types.ts';
 import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray, toCamelCase } from '../utils/resolvers.js';
-import functionList from '@gntrees/sql-builder-shared';
+import functionList from '../shared/function-list';
 
 // const currentDir = dirname(fileURLToPath(import.meta.url));
 // const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
