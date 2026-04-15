@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT id FROM users UNION SELECT name FROM products
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

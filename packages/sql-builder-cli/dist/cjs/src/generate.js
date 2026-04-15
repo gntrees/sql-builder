@@ -146,6 +146,7 @@ async function generate(options) {
             db: db,
             dialect: new kysely_codegen_1.PostgresDialect(),
             camelCase: false,
+            defaultSchemas: ["public"],
             outFile: tempOutFile,
         });
         const generated = await (0, promises_1.readFile)(tempOutFile, "utf8");
@@ -163,6 +164,6 @@ async function generate(options) {
     }
     finally {
         await db.destroy();
-        await (0, promises_1.unlink)(tempOutFile).catch(() => undefined);
+        // await unlink(tempOutFile).catch(() => undefined);
     }
 }

@@ -1,0 +1,1 @@
+INSERT INTO users (name, email) VALUES ('Lara', LOWER('Lara@Example.com')) RETURNING id

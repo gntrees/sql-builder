@@ -1,0 +1,72 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "distinctClause": [
+            {}
+          ],
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "users"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "id"
+                        }
+                      }
+                    ],
+                    "location": 16
+                  }
+                },
+                "location": 16
+              }
+            },
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "users"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "name"
+                        }
+                      }
+                    ],
+                    "location": 26
+                  }
+                },
+                "location": 26
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "users",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 42
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

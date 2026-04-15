@@ -1,6 +1,6 @@
 {
   "name": "@gntrees/sql-builder",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "PostgreSQL query builder with fluent TypeScript API",
   "main": "./dist/cjs/pg.js",
   "module": "./dist/esm/pg.js",

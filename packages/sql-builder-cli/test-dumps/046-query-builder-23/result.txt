@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT DISTINCT users.id, users.name FROM users
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

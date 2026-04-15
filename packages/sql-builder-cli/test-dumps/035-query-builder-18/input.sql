@@ -1,0 +1,1 @@
+INSERT INTO users (name, email) VALUES ('John', LOWER('John@Example.com')), ('Jane', LOWER('Jane@Example.com'))

@@ -1,0 +1,114 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "A_Star": {}
+                      }
+                    ],
+                    "location": 7
+                  }
+                },
+                "location": 7
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "users",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 14
+              }
+            }
+          ],
+          "whereClause": {
+            "BoolExpr": {
+              "boolop": "AND_EXPR",
+              "args": [
+                {
+                  "A_Expr": {
+                    "kind": "AEXPR_OP",
+                    "name": [
+                      {
+                        "String": {
+                          "sval": ">"
+                        }
+                      }
+                    ],
+                    "lexpr": {
+                      "ColumnRef": {
+                        "fields": [
+                          {
+                            "String": {
+                              "sval": "created_at"
+                            }
+                          }
+                        ],
+                        "location": 26
+                      }
+                    },
+                    "rexpr": {
+                      "A_Const": {
+                        "sval": {
+                          "sval": "2024-01-01"
+                        },
+                        "location": 39
+                      }
+                    },
+                    "location": 37
+                  }
+                },
+                {
+                  "A_Expr": {
+                    "kind": "AEXPR_OP",
+                    "name": [
+                      {
+                        "String": {
+                          "sval": "="
+                        }
+                      }
+                    ],
+                    "lexpr": {
+                      "ColumnRef": {
+                        "fields": [
+                          {
+                            "String": {
+                              "sval": "status"
+                            }
+                          }
+                        ],
+                        "location": 56
+                      }
+                    },
+                    "rexpr": {
+                      "A_Const": {
+                        "sval": {
+                          "sval": "active"
+                        },
+                        "location": 65
+                      }
+                    },
+                    "location": 63
+                  }
+                }
+              ],
+              "location": 52
+            }
+          },
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

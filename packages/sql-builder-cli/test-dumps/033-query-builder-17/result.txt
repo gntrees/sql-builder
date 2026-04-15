@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT id, name FROM users
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

@@ -1,0 +1,101 @@
+[
+  {
+    "name": "update",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "users"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "set",
+    "arguments": [
+      [
+        {
+          "name": "op",
+          "arguments": [
+            {
+              "name": "c",
+              "arguments": [
+                "last_login"
+              ],
+              "paramType": "function"
+            },
+            {
+              "name": "=",
+              "arguments": [],
+              "paramType": "string"
+            },
+            [
+              {
+                "name": "l",
+                "arguments": [
+                  {
+                    "name": "2024-01-15 10:30:00",
+                    "arguments": [],
+                    "paramType": "string"
+                  }
+                ],
+                "paramType": "function"
+              }
+            ]
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "where",
+    "arguments": [
+      {
+        "name": "op",
+        "arguments": [
+          [
+            {
+              "name": "c",
+              "arguments": [
+                "id"
+              ],
+              "paramType": "function"
+            }
+          ],
+          {
+            "name": [
+              {
+                "name": "=",
+                "arguments": [],
+                "paramType": "string"
+              }
+            ],
+            "arguments": [],
+            "paramType": "raw"
+          },
+          [
+            {
+              "name": "l",
+              "arguments": [
+                {
+                  "name": "123",
+                  "arguments": [],
+                  "paramType": "number"
+                }
+              ],
+              "paramType": "function"
+            }
+          ]
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  }
+]

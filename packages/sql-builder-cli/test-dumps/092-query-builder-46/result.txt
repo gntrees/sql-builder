@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: WITH admins_cte AS (SELECT id FROM admins) SELECT * FROM admins_cte
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

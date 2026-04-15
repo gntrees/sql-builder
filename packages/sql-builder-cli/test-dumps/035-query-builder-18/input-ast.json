@@ -1,0 +1,114 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "InsertStmt": {
+          "relation": {
+            "relname": "users",
+            "inh": true,
+            "relpersistence": "p",
+            "location": 12
+          },
+          "cols": [
+            {
+              "ResTarget": {
+                "name": "name",
+                "location": 19
+              }
+            },
+            {
+              "ResTarget": {
+                "name": "email",
+                "location": 25
+              }
+            }
+          ],
+          "selectStmt": {
+            "SelectStmt": {
+              "valuesLists": [
+                {
+                  "List": {
+                    "items": [
+                      {
+                        "A_Const": {
+                          "sval": {
+                            "sval": "John"
+                          },
+                          "location": 40
+                        }
+                      },
+                      {
+                        "FuncCall": {
+                          "funcname": [
+                            {
+                              "String": {
+                                "sval": "lower"
+                              }
+                            }
+                          ],
+                          "args": [
+                            {
+                              "A_Const": {
+                                "sval": {
+                                  "sval": "John@Example.com"
+                                },
+                                "location": 54
+                              }
+                            }
+                          ],
+                          "funcformat": "COERCE_EXPLICIT_CALL",
+                          "location": 48
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "List": {
+                    "items": [
+                      {
+                        "A_Const": {
+                          "sval": {
+                            "sval": "Jane"
+                          },
+                          "location": 77
+                        }
+                      },
+                      {
+                        "FuncCall": {
+                          "funcname": [
+                            {
+                              "String": {
+                                "sval": "lower"
+                              }
+                            }
+                          ],
+                          "args": [
+                            {
+                              "A_Const": {
+                                "sval": {
+                                  "sval": "Jane@Example.com"
+                                },
+                                "location": 91
+                              }
+                            }
+                          ],
+                          "funcformat": "COERCE_EXPLICIT_CALL",
+                          "location": 85
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "limitOption": "LIMIT_OPTION_DEFAULT",
+              "op": "SETOP_NONE"
+            }
+          },
+          "override": "OVERRIDING_NOT_SET"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: INSERT INTO users (name, age, active) VALUES ('John Doe', 30, true)
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

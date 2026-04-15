@@ -1,0 +1,96 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "InsertStmt": {
+          "relation": {
+            "relname": "users",
+            "inh": true,
+            "relpersistence": "p",
+            "location": 12
+          },
+          "cols": [
+            {
+              "ResTarget": {
+                "name": "name",
+                "location": 19
+              }
+            },
+            {
+              "ResTarget": {
+                "name": "email",
+                "location": 25
+              }
+            }
+          ],
+          "selectStmt": {
+            "SelectStmt": {
+              "valuesLists": [
+                {
+                  "List": {
+                    "items": [
+                      {
+                        "A_Const": {
+                          "sval": {
+                            "sval": "Lara"
+                          },
+                          "location": 40
+                        }
+                      },
+                      {
+                        "FuncCall": {
+                          "funcname": [
+                            {
+                              "String": {
+                                "sval": "lower"
+                              }
+                            }
+                          ],
+                          "args": [
+                            {
+                              "A_Const": {
+                                "sval": {
+                                  "sval": "Lara@Example.com"
+                                },
+                                "location": 54
+                              }
+                            }
+                          ],
+                          "funcformat": "COERCE_EXPLICIT_CALL",
+                          "location": 48
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "limitOption": "LIMIT_OPTION_DEFAULT",
+              "op": "SETOP_NONE"
+            }
+          },
+          "returningList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "id"
+                        }
+                      }
+                    ],
+                    "location": 85
+                  }
+                },
+                "location": 85
+              }
+            }
+          ],
+          "override": "OVERRIDING_NOT_SET"
+        }
+      }
+    }
+  ]
+}

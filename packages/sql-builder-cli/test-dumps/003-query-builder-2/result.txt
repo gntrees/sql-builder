@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT * FROM users WHERE table_name.column_name = 'admin'
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

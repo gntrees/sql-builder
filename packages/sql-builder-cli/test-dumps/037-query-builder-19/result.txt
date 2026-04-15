@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: INSERT INTO users (name, email) VALUES ('Maria', LOWER('Maria@Example.com')), ('Lia', LOWER('Lia@Example.com'))
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

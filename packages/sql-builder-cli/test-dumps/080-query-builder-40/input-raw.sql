@@ -1,0 +1,1 @@
+SELECT users.id FROM users NATURAL LEFT JOIN profiles

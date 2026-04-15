@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT * FROM users WHERE age = 25 AND city = 'Jakarta'
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

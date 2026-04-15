@@ -1,0 +1,104 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "category_id"
+                        }
+                      }
+                    ],
+                    "location": 7
+                  }
+                },
+                "location": 7
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "products",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 24
+              }
+            }
+          ],
+          "groupClause": [
+            {
+              "ColumnRef": {
+                "fields": [
+                  {
+                    "String": {
+                      "sval": "category_id"
+                    }
+                  }
+                ],
+                "location": 42
+              }
+            }
+          ],
+          "havingClause": {
+            "A_Expr": {
+              "kind": "AEXPR_OP",
+              "name": [
+                {
+                  "String": {
+                    "sval": ">"
+                  }
+                }
+              ],
+              "lexpr": {
+                "FuncCall": {
+                  "funcname": [
+                    {
+                      "String": {
+                        "sval": "abs"
+                      }
+                    }
+                  ],
+                  "args": [
+                    {
+                      "ColumnRef": {
+                        "fields": [
+                          {
+                            "String": {
+                              "sval": "id"
+                            }
+                          }
+                        ],
+                        "location": 65
+                      }
+                    }
+                  ],
+                  "funcformat": "COERCE_EXPLICIT_CALL",
+                  "location": 61
+                }
+              },
+              "rexpr": {
+                "A_Const": {
+                  "ival": {
+                    "ival": 10
+                  },
+                  "location": 71
+                }
+              },
+              "location": 69
+            }
+          },
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

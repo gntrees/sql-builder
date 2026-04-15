@@ -1,0 +1,61 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "users"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "id"
+                        }
+                      }
+                    ],
+                    "location": 7
+                  }
+                },
+                "location": 7
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "JoinExpr": {
+                "jointype": "JOIN_INNER",
+                "isNatural": true,
+                "larg": {
+                  "RangeVar": {
+                    "relname": "users",
+                    "inh": true,
+                    "relpersistence": "p",
+                    "location": 21
+                  }
+                },
+                "rarg": {
+                  "RangeVar": {
+                    "relname": "profiles",
+                    "inh": true,
+                    "relpersistence": "p",
+                    "location": 46
+                  }
+                }
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

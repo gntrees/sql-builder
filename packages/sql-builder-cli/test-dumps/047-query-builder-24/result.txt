@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT category_id FROM products GROUP BY category_id HAVING ABS(id) > 10
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

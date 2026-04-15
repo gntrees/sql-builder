@@ -1,0 +1,34 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "id"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "users"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  }
+]

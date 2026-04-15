@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT users.id FROM users NATURAL RIGHT JOIN profiles
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

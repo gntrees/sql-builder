@@ -60,6 +60,7 @@ export class SqlSchemaQueryBuilder {
         return this;
     }
     setParams(...params) {
-        return this.sqlBuilder.setParams(...params);
+        this.sqlBuilder.setParams(...params);
+        return this;
     }
 }

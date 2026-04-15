@@ -1,0 +1,99 @@
+[
+  {
+    "name": "insertInto",
+    "arguments": [
+      [
+        [
+          {
+            "name": "t",
+            "arguments": [
+              "users"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ],
+      {
+        "name": [
+          {
+            "name": "c",
+            "arguments": [
+              "name"
+            ],
+            "paramType": "function"
+          },
+          {
+            "name": "c",
+            "arguments": [
+              "age"
+            ],
+            "paramType": "function"
+          },
+          {
+            "name": "c",
+            "arguments": [
+              "active"
+            ],
+            "paramType": "function"
+          }
+        ],
+        "arguments": [],
+        "paramType": "array"
+      }
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "values",
+    "arguments": [
+      {
+        "name": [
+          [
+            {
+              "name": [
+                {
+                  "name": "l",
+                  "arguments": [
+                    {
+                      "name": "John Doe",
+                      "arguments": [],
+                      "paramType": "string"
+                    }
+                  ],
+                  "paramType": "function"
+                },
+                {
+                  "name": "l",
+                  "arguments": [
+                    {
+                      "name": "30",
+                      "arguments": [],
+                      "paramType": "number"
+                    }
+                  ],
+                  "paramType": "function"
+                },
+                {
+                  "name": "l",
+                  "arguments": [
+                    {
+                      "name": "true",
+                      "arguments": [],
+                      "paramType": "boolean"
+                    }
+                  ],
+                  "paramType": "function"
+                }
+              ],
+              "arguments": [],
+              "paramType": "raw"
+            }
+          ]
+        ],
+        "arguments": [],
+        "paramType": "array"
+      }
+    ],
+    "paramType": "function"
+  }
+]

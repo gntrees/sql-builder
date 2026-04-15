@@ -1,0 +1,129 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "users"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "id"
+                        }
+                      }
+                    ],
+                    "location": 7
+                  }
+                },
+                "location": 7
+              }
+            },
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "profiles"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "bio"
+                        }
+                      }
+                    ],
+                    "location": 17
+                  }
+                },
+                "location": 17
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "JoinExpr": {
+                "jointype": "JOIN_INNER",
+                "larg": {
+                  "RangeVar": {
+                    "relname": "users",
+                    "inh": true,
+                    "relpersistence": "p",
+                    "location": 35
+                  }
+                },
+                "rarg": {
+                  "RangeVar": {
+                    "relname": "profiles",
+                    "inh": true,
+                    "relpersistence": "p",
+                    "location": 52
+                  }
+                },
+                "quals": {
+                  "A_Expr": {
+                    "kind": "AEXPR_OP",
+                    "name": [
+                      {
+                        "String": {
+                          "sval": "="
+                        }
+                      }
+                    ],
+                    "lexpr": {
+                      "ColumnRef": {
+                        "fields": [
+                          {
+                            "String": {
+                              "sval": "profiles"
+                            }
+                          },
+                          {
+                            "String": {
+                              "sval": "user_id"
+                            }
+                          }
+                        ],
+                        "location": 64
+                      }
+                    },
+                    "rexpr": {
+                      "ColumnRef": {
+                        "fields": [
+                          {
+                            "String": {
+                              "sval": "users"
+                            }
+                          },
+                          {
+                            "String": {
+                              "sval": "id"
+                            }
+                          }
+                        ],
+                        "location": 83
+                      }
+                    },
+                    "location": 81
+                  }
+                }
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

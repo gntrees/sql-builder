@@ -1,0 +1,88 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "distinctClause": [
+            {
+              "ColumnRef": {
+                "fields": [
+                  {
+                    "String": {
+                      "sval": "posts"
+                    }
+                  },
+                  {
+                    "String": {
+                      "sval": "author_id"
+                    }
+                  }
+                ],
+                "location": 20
+              }
+            }
+          ],
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "posts"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "id"
+                        }
+                      }
+                    ],
+                    "location": 37
+                  }
+                },
+                "location": 37
+              }
+            },
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "posts"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "title"
+                        }
+                      }
+                    ],
+                    "location": 47
+                  }
+                },
+                "location": 47
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "posts",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 64
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

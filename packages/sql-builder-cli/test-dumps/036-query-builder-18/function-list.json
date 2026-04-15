@@ -1,0 +1,129 @@
+[
+  {
+    "name": "insertInto",
+    "arguments": [
+      [
+        [
+          {
+            "name": "t",
+            "arguments": [
+              "users"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ],
+      {
+        "name": [
+          {
+            "name": "c",
+            "arguments": [
+              "name"
+            ],
+            "paramType": "function"
+          },
+          {
+            "name": "c",
+            "arguments": [
+              "email"
+            ],
+            "paramType": "function"
+          }
+        ],
+        "arguments": [],
+        "paramType": "array"
+      }
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "values",
+    "arguments": [
+      {
+        "name": [
+          [
+            {
+              "name": [
+                {
+                  "name": "l",
+                  "arguments": [
+                    {
+                      "name": "John",
+                      "arguments": [],
+                      "paramType": "string"
+                    }
+                  ],
+                  "paramType": "function"
+                },
+                {
+                  "name": "lower",
+                  "arguments": [
+                    {
+                      "name": "l",
+                      "arguments": [
+                        {
+                          "name": "John@Example.com",
+                          "arguments": [],
+                          "paramType": "string"
+                        }
+                      ],
+                      "paramType": "function"
+                    }
+                  ],
+                  "paramType": "function"
+                }
+              ],
+              "arguments": [],
+              "paramType": "raw"
+            }
+          ]
+        ],
+        "arguments": [],
+        "paramType": "array"
+      },
+      {
+        "name": [
+          [
+            {
+              "name": [
+                {
+                  "name": "l",
+                  "arguments": [
+                    {
+                      "name": "Jane",
+                      "arguments": [],
+                      "paramType": "string"
+                    }
+                  ],
+                  "paramType": "function"
+                },
+                {
+                  "name": "lower",
+                  "arguments": [
+                    {
+                      "name": "l",
+                      "arguments": [
+                        {
+                          "name": "Jane@Example.com",
+                          "arguments": [],
+                          "paramType": "string"
+                        }
+                      ],
+                      "paramType": "function"
+                    }
+                  ],
+                  "paramType": "function"
+                }
+              ],
+              "arguments": [],
+              "paramType": "raw"
+            }
+          ]
+        ],
+        "arguments": [],
+        "paramType": "array"
+      }
+    ],
+    "paramType": "function"
+  }
+]

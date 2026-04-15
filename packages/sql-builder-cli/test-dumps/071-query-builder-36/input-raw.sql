@@ -1,0 +1,1 @@
+SELECT users.id, profiles.bio FROM users JOIN profiles ON profiles.user_id = users.id

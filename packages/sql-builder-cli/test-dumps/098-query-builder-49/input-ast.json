@@ -1,0 +1,85 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "String": {
+                          "sval": "users"
+                        }
+                      },
+                      {
+                        "String": {
+                          "sval": "role"
+                        }
+                      }
+                    ],
+                    "location": 7
+                  }
+                },
+                "location": 7
+              }
+            },
+            {
+              "ResTarget": {
+                "val": {
+                  "FuncCall": {
+                    "funcname": [
+                      {
+                        "String": {
+                          "sval": "count"
+                        }
+                      }
+                    ],
+                    "agg_star": true,
+                    "funcformat": "COERCE_EXPLICIT_CALL",
+                    "location": 19
+                  }
+                },
+                "location": 19
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "users",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 33
+              }
+            }
+          ],
+          "groupClause": [
+            {
+              "ColumnRef": {
+                "fields": [
+                  {
+                    "String": {
+                      "sval": "users"
+                    }
+                  },
+                  {
+                    "String": {
+                      "sval": "role"
+                    }
+                  }
+                ],
+                "location": 48
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

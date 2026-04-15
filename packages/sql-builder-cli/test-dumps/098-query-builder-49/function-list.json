@@ -1,0 +1,62 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "users.role"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "name": "count",
+            "arguments": [
+              {
+                "name": "*",
+                "arguments": [],
+                "paramType": "string"
+              }
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "users"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "groupBy",
+    "arguments": [
+      {
+        "name": "c",
+        "arguments": [
+          "users.role"
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  }
+]

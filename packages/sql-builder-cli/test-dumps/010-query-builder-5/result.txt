@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT * FROM users WHERE name = 'John' AND email = 'john@example.com'
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

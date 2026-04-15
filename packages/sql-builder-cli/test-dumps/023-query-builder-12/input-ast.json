@@ -1,0 +1,66 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "UpdateStmt": {
+          "relation": {
+            "relname": "users",
+            "inh": true,
+            "relpersistence": "p",
+            "location": 7
+          },
+          "targetList": [
+            {
+              "ResTarget": {
+                "name": "last_login",
+                "val": {
+                  "A_Const": {
+                    "sval": {
+                      "sval": "2024-01-15 10:30:00"
+                    },
+                    "location": 30
+                  }
+                },
+                "location": 17
+              }
+            }
+          ],
+          "whereClause": {
+            "A_Expr": {
+              "kind": "AEXPR_OP",
+              "name": [
+                {
+                  "String": {
+                    "sval": "="
+                  }
+                }
+              ],
+              "lexpr": {
+                "ColumnRef": {
+                  "fields": [
+                    {
+                      "String": {
+                        "sval": "id"
+                      }
+                    }
+                  ],
+                  "location": 58
+                }
+              },
+              "rexpr": {
+                "A_Const": {
+                  "ival": {
+                    "ival": 123
+                  },
+                  "location": 63
+                }
+              },
+              "location": 61
+            }
+          }
+        }
+      }
+    }
+  ]
+}

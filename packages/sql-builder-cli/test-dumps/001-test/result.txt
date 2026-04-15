@@ -1,4 +1,0 @@
-Match: PASS
-Input SQL: SELECT u.id as id FROM users u
-Output SQL: SELECT u.id AS id
-FROM users AS u

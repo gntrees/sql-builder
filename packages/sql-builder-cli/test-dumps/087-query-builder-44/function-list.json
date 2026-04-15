@@ -1,0 +1,134 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "*"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "audit_logs"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "where",
+    "arguments": [
+      [
+        {
+          "name": "or",
+          "arguments": [
+            [
+              [
+                {
+                  "name": "op",
+                  "arguments": [
+                    [
+                      {
+                        "name": "c",
+                        "arguments": [
+                          "audit_logs.success"
+                        ],
+                        "paramType": "function"
+                      }
+                    ],
+                    {
+                      "name": [
+                        {
+                          "name": "=",
+                          "arguments": [],
+                          "paramType": "string"
+                        }
+                      ],
+                      "arguments": [],
+                      "paramType": "raw"
+                    },
+                    [
+                      {
+                        "name": "l",
+                        "arguments": [
+                          {
+                            "name": "true",
+                            "arguments": [],
+                            "paramType": "boolean"
+                          }
+                        ],
+                        "paramType": "function"
+                      }
+                    ]
+                  ],
+                  "paramType": "function"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "name": "op",
+                  "arguments": [
+                    [
+                      {
+                        "name": "c",
+                        "arguments": [
+                          "audit_logs.action"
+                        ],
+                        "paramType": "function"
+                      }
+                    ],
+                    {
+                      "name": [
+                        {
+                          "name": ">",
+                          "arguments": [],
+                          "paramType": "string"
+                        }
+                      ],
+                      "arguments": [],
+                      "paramType": "raw"
+                    },
+                    [
+                      {
+                        "name": "l",
+                        "arguments": [
+                          {
+                            "name": "100",
+                            "arguments": [],
+                            "paramType": "number"
+                          }
+                        ],
+                        "paramType": "function"
+                      }
+                    ]
+                  ],
+                  "paramType": "function"
+                }
+              ]
+            ]
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  }
+]

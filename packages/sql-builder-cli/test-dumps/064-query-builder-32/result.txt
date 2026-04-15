@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT users.id, profiles.bio FROM users FULL JOIN profiles ON profiles.user_id = users.id
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

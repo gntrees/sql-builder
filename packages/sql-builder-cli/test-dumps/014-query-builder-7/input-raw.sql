@@ -1,0 +1,1 @@
+SELECT * FROM users WHERE score = 100.5 AND level = 5

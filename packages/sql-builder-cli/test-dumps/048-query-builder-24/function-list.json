@@ -1,0 +1,98 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "category_id"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "products"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "groupBy",
+    "arguments": [
+      {
+        "name": "c",
+        "arguments": [
+          "category_id"
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "having",
+    "arguments": [
+      {
+        "name": "op",
+        "arguments": [
+          [
+            {
+              "name": "abs",
+              "arguments": [
+                {
+                  "name": "c",
+                  "arguments": [
+                    "id"
+                  ],
+                  "paramType": "function"
+                }
+              ],
+              "paramType": "function"
+            }
+          ],
+          {
+            "name": [
+              {
+                "name": ">",
+                "arguments": [],
+                "paramType": "string"
+              }
+            ],
+            "arguments": [],
+            "paramType": "raw"
+          },
+          [
+            {
+              "name": "l",
+              "arguments": [
+                {
+                  "name": "10",
+                  "arguments": [],
+                  "paramType": "number"
+                }
+              ],
+              "paramType": "function"
+            }
+          ]
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  }
+]

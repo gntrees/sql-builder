@@ -1,0 +1,134 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "*"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "users"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "where",
+    "arguments": [
+      [
+        {
+          "name": "and",
+          "arguments": [
+            [
+              [
+                {
+                  "name": "op",
+                  "arguments": [
+                    [
+                      {
+                        "name": "c",
+                        "arguments": [
+                          "name"
+                        ],
+                        "paramType": "function"
+                      }
+                    ],
+                    {
+                      "name": [
+                        {
+                          "name": "=",
+                          "arguments": [],
+                          "paramType": "string"
+                        }
+                      ],
+                      "arguments": [],
+                      "paramType": "raw"
+                    },
+                    [
+                      {
+                        "name": "l",
+                        "arguments": [
+                          {
+                            "name": "John",
+                            "arguments": [],
+                            "paramType": "string"
+                          }
+                        ],
+                        "paramType": "function"
+                      }
+                    ]
+                  ],
+                  "paramType": "function"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "name": "op",
+                  "arguments": [
+                    [
+                      {
+                        "name": "c",
+                        "arguments": [
+                          "email"
+                        ],
+                        "paramType": "function"
+                      }
+                    ],
+                    {
+                      "name": [
+                        {
+                          "name": "=",
+                          "arguments": [],
+                          "paramType": "string"
+                        }
+                      ],
+                      "arguments": [],
+                      "paramType": "raw"
+                    },
+                    [
+                      {
+                        "name": "l",
+                        "arguments": [
+                          {
+                            "name": "john@example.com",
+                            "arguments": [],
+                            "paramType": "string"
+                          }
+                        ],
+                        "paramType": "function"
+                      }
+                    ]
+                  ],
+                  "paramType": "function"
+                }
+              ]
+            ]
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  }
+]

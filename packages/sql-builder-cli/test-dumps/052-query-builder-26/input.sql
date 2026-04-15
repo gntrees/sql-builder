@@ -1,0 +1,1 @@
+SELECT category_id FROM products GROUP BY category_id HAVING ABS(amount) > 100 AND ABS(id) < 1000

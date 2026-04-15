@@ -143,6 +143,7 @@ export async function generate(options) {
             db: db,
             dialect: new CodegenPostgresDialect(),
             camelCase: false,
+            defaultSchemas: ["public"],
             outFile: tempOutFile,
         });
         const generated = await readFile(tempOutFile, "utf8");
@@ -160,6 +161,6 @@ export async function generate(options) {
     }
     finally {
         await db.destroy();
-        await unlink(tempOutFile).catch(() => undefined);
+        // await unlink(tempOutFile).catch(() => undefined);
     }
 }

@@ -1,0 +1,1 @@
+SELECT category_id FROM products GROUP BY category_id HAVING COUNT(*) > 5

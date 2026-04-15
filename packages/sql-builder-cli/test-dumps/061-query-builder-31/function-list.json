@@ -1,0 +1,79 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "users.id"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "user_orders.count"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        [
+          {
+            "name": "t",
+            "arguments": [
+              "users"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "join",
+    "arguments": [
+      [
+        {
+          "name": "r",
+          "arguments": [
+            "LATERAL ( SELECT\n  orders.user_id,\n  count(*)\nFROM orders\nWHERE\n  orders.user_id = users.id\nGROUP BY\n  orders.user_id ) AS user_orders"
+          ],
+          "paramType": "template-literal"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "on",
+    "arguments": [
+      {
+        "name": "l",
+        "arguments": [
+          {
+            "name": "true",
+            "arguments": [],
+            "paramType": "boolean"
+          }
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  }
+]

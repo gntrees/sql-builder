@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT (SELECT id FROM admins LIMIT 1) AS admin_ids FROM users
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

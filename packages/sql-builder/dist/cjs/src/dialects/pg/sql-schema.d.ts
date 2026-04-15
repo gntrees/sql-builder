@@ -33,6 +33,6 @@ export declare class SqlSchemaQueryBuilder<TQueryBuilder extends QueryBuilder = 
     tags(...tags: string[]): this;
     execute<TThis extends this>(this: TThis, ...params: Parameters<QueryBuilder["execute"]>): Promise<InferValidationOutput<ExtractSchema<TThis>, Awaited<ReturnType<TQueryBuilder["execute"]>>>>;
     validation<TSchema extends StandardSchemaLike>(schema: TSchema): this & ValidationSchemaHolder<TSchema>;
-    setParams(...params: Parameters<TQueryBuilder["setParams"]>): TQueryBuilder;
+    setParams(...params: Parameters<TQueryBuilder["setParams"]>): this & ValidationSchemaHolder<ExtractSchema<this>>;
 }
 export {};

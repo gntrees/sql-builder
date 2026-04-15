@@ -1,0 +1,80 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "name": "admin_ids",
+                "val": {
+                  "SubLink": {
+                    "subLinkType": "EXPR_SUBLINK",
+                    "subselect": {
+                      "SelectStmt": {
+                        "targetList": [
+                          {
+                            "ResTarget": {
+                              "val": {
+                                "ColumnRef": {
+                                  "fields": [
+                                    {
+                                      "String": {
+                                        "sval": "id"
+                                      }
+                                    }
+                                  ],
+                                  "location": 15
+                                }
+                              },
+                              "location": 15
+                            }
+                          }
+                        ],
+                        "fromClause": [
+                          {
+                            "RangeVar": {
+                              "relname": "admins",
+                              "inh": true,
+                              "relpersistence": "p",
+                              "location": 23
+                            }
+                          }
+                        ],
+                        "limitCount": {
+                          "A_Const": {
+                            "ival": {
+                              "ival": 1
+                            },
+                            "location": 36
+                          }
+                        },
+                        "limitOption": "LIMIT_OPTION_COUNT",
+                        "op": "SETOP_NONE"
+                      }
+                    },
+                    "location": 7
+                  }
+                },
+                "location": 7
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "users",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 57
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "name": "update",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "users"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "set",
+    "arguments": [
+      [
+        {
+          "name": "op",
+          "arguments": [
+            {
+              "name": "c",
+              "arguments": [
+                "cities.name"
+              ],
+              "paramType": "function"
+            },
+            {
+              "name": "=",
+              "arguments": [],
+              "paramType": "string"
+            },
+            [
+              {
+                "name": "l",
+                "arguments": [
+                  {
+                    "name": "New York",
+                    "arguments": [],
+                    "paramType": "string"
+                  }
+                ],
+                "paramType": "function"
+              }
+            ]
+          ],
+          "paramType": "function"
+        }
+      ],
+      [
+        {
+          "name": "op",
+          "arguments": [
+            {
+              "name": "c",
+              "arguments": [
+                "updated_at"
+              ],
+              "paramType": "function"
+            },
+            {
+              "name": "=",
+              "arguments": [],
+              "paramType": "string"
+            },
+            [
+              {
+                "name": "now",
+                "arguments": [],
+                "paramType": "function"
+              }
+            ]
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      {
+        "name": "t",
+        "arguments": [
+          "cities"
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "where",
+    "arguments": [
+      {
+        "name": "op",
+        "arguments": [
+          [
+            {
+              "name": "c",
+              "arguments": [
+                "users.city_id"
+              ],
+              "paramType": "function"
+            }
+          ],
+          {
+            "name": [
+              {
+                "name": "=",
+                "arguments": [],
+                "paramType": "string"
+              }
+            ],
+            "arguments": [],
+            "paramType": "raw"
+          },
+          [
+            {
+              "name": "c",
+              "arguments": [
+                "cities.id"
+              ],
+              "paramType": "function"
+            }
+          ]
+        ],
+        "paramType": "function"
+      }
+    ],
+    "paramType": "function"
+  }
+]

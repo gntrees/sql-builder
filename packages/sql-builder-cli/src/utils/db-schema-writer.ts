@@ -40,24 +40,45 @@ const toSafeIdentifier = (value: string, fallback: string): string => {
   return fallback;
 };
 
-const makeUnique = (value: string, used: Set<string>): string => {
-  if (!used.has(value)) {
-    used.add(value);
-    return value;
-  }
-  let counter = 2;
-  while (used.has(`${value}${counter}`)) {
-    counter += 1;
-  }
-  const unique = `${value}${counter}`;
-  used.add(unique);
-  return unique;
+const normalizeQualifiedName = (value: string): string => {
+  const normalized = value.replace(/"/g, "").trim();
+  if (!normalized) return normalized;
+  return normalized;
 };
 
-const stripSchemaPrefix = (value: string): string => {
-  const normalized = value.replace(/"/g, "").trim();
+const parseQualifiedTableName = (value: string): { schemaName?: string; tableName: string } => {
+  const normalized = normalizeQualifiedName(value);
   const parts = normalized.split(".");
-  return parts[parts.length - 1] ?? normalized;
+  if (parts.length >= 2) {
+    const tableName = parts[parts.length - 1] ?? normalized;
+    const schemaName = parts.slice(0, -1).join(".");
+    return { schemaName: schemaName || undefined, tableName };
+  }
+  return { tableName: normalized };
+};
+
+const buildTableNameBase = (tableName: string): string => {
+  const { schemaName, tableName: baseTableName } = parseQualifiedTableName(tableName);
+  if (!schemaName) {
+    return baseTableName;
+  }
+  return `${schemaName} ${baseTableName}`;
+};
+
+const registerUniqueOrThrow = (
+  identifier: string,
+  sourceName: string,
+  used: Map<string, string>,
+  kind: string,
+): string => {
+  const existing = used.get(identifier);
+  if (existing && existing !== sourceName) {
+    throw new Error(
+      `Identifier collision for ${kind}: "${existing}" and "${sourceName}" both map to "${identifier}".`,
+    );
+  }
+  used.set(identifier, sourceName);
+  return identifier;
 };
 
 type TableMetadata = {
@@ -68,17 +89,18 @@ type TableMetadata = {
 };
 
 const buildTableMetadata = (structure: DbSchemaStructure): TableMetadata[] => {
-  const usedTableVars = new Set<string>();
-  const usedTableClasses = new Set<string>();
+  const usedTableVars = new Map<string, string>();
+  const usedTableClasses = new Map<string, string>();
   return structure.tables.map((table) => {
-    const tableVarBase = toSafeIdentifier(toCamelCase(stripSchemaPrefix(table.name)), "table");
-    const tableVar = makeUnique(tableVarBase, usedTableVars);
-    const tableClassBase = toSafeIdentifier(toPascalCase(stripSchemaPrefix(table.name)), "Table");
-    const tableClass = makeUnique(tableClassBase, usedTableClasses);
-    const usedColumns = new Set<string>();
+    const tableNameBase = buildTableNameBase(table.name);
+    const tableVarBase = toSafeIdentifier(toCamelCase(tableNameBase), "table");
+    const tableVar = registerUniqueOrThrow(tableVarBase, table.name, usedTableVars, "table variable");
+    const tableClassBase = toSafeIdentifier(toPascalCase(tableNameBase), "Table");
+    const tableClass = registerUniqueOrThrow(tableClassBase, table.name, usedTableClasses, "table class");
+    const usedColumns = new Map<string, string>();
     const columns = table.columns.map((columnName) => {
       const propBase = toSafeIdentifier(toCamelCase(columnName), "column");
-      const prop = makeUnique(propBase, usedColumns);
+      const prop = registerUniqueOrThrow(propBase, `${table.name}.${columnName}`, usedColumns, "column property");
       return { name: columnName, prop };
     });
     return { name: table.name, tableVar, tableClass, columns };

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "users.id"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "roles.name"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        [
+          {
+            "name": "t",
+            "arguments": [
+              "users"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "crossJoin",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "roles"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  }
+]

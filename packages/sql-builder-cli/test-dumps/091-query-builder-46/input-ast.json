@@ -1,0 +1,86 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "SelectStmt": {
+          "targetList": [
+            {
+              "ResTarget": {
+                "val": {
+                  "ColumnRef": {
+                    "fields": [
+                      {
+                        "A_Star": {}
+                      }
+                    ],
+                    "location": 50
+                  }
+                },
+                "location": 50
+              }
+            }
+          ],
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "admins_cte",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 57
+              }
+            }
+          ],
+          "limitOption": "LIMIT_OPTION_DEFAULT",
+          "withClause": {
+            "ctes": [
+              {
+                "CommonTableExpr": {
+                  "ctename": "admins_cte",
+                  "ctematerialized": "CTEMaterializeDefault",
+                  "ctequery": {
+                    "SelectStmt": {
+                      "targetList": [
+                        {
+                          "ResTarget": {
+                            "val": {
+                              "ColumnRef": {
+                                "fields": [
+                                  {
+                                    "String": {
+                                      "sval": "id"
+                                    }
+                                  }
+                                ],
+                                "location": 27
+                              }
+                            },
+                            "location": 27
+                          }
+                        }
+                      ],
+                      "fromClause": [
+                        {
+                          "RangeVar": {
+                            "relname": "admins",
+                            "inh": true,
+                            "relpersistence": "p",
+                            "location": 35
+                          }
+                        }
+                      ],
+                      "limitOption": "LIMIT_OPTION_DEFAULT",
+                      "op": "SETOP_NONE"
+                    }
+                  },
+                  "location": 5
+                }
+              }
+            ]
+          },
+          "op": "SETOP_NONE"
+        }
+      }
+    }
+  ]
+}

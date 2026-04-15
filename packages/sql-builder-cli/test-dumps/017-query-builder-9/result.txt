@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT * FROM users WHERE (SELECT COUNT(*) FROM users) > 100
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

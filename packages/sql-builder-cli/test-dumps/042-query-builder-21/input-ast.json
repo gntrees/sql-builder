@@ -1,0 +1,116 @@
+{
+  "version": 170004,
+  "stmts": [
+    {
+      "stmt": {
+        "UpdateStmt": {
+          "relation": {
+            "relname": "users",
+            "inh": true,
+            "relpersistence": "p",
+            "location": 7
+          },
+          "targetList": [
+            {
+              "ResTarget": {
+                "name": "cities",
+                "indirection": [
+                  {
+                    "String": {
+                      "sval": "name"
+                    }
+                  }
+                ],
+                "val": {
+                  "A_Const": {
+                    "sval": {
+                      "sval": "New York"
+                    },
+                    "location": 31
+                  }
+                },
+                "location": 17
+              }
+            },
+            {
+              "ResTarget": {
+                "name": "updated_at",
+                "val": {
+                  "FuncCall": {
+                    "funcname": [
+                      {
+                        "String": {
+                          "sval": "now"
+                        }
+                      }
+                    ],
+                    "funcformat": "COERCE_EXPLICIT_CALL",
+                    "location": 56
+                  }
+                },
+                "location": 43
+              }
+            }
+          ],
+          "whereClause": {
+            "A_Expr": {
+              "kind": "AEXPR_OP",
+              "name": [
+                {
+                  "String": {
+                    "sval": "="
+                  }
+                }
+              ],
+              "lexpr": {
+                "ColumnRef": {
+                  "fields": [
+                    {
+                      "String": {
+                        "sval": "users"
+                      }
+                    },
+                    {
+                      "String": {
+                        "sval": "city_id"
+                      }
+                    }
+                  ],
+                  "location": 80
+                }
+              },
+              "rexpr": {
+                "ColumnRef": {
+                  "fields": [
+                    {
+                      "String": {
+                        "sval": "cities"
+                      }
+                    },
+                    {
+                      "String": {
+                        "sval": "id"
+                      }
+                    }
+                  ],
+                  "location": 96
+                }
+              },
+              "location": 94
+            }
+          },
+          "fromClause": [
+            {
+              "RangeVar": {
+                "relname": "cities",
+                "inh": true,
+                "relpersistence": "p",
+                "location": 67
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT * FROM users WHERE status = 'pending'
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

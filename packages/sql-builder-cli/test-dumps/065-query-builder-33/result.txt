@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT users.id, roles.name FROM users CROSS JOIN roles
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

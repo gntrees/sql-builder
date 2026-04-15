@@ -1,0 +1,4 @@
+Match: FAIL
+Input SQL: SELECT DISTINCT ON (posts.author_id) posts.id, posts.title FROM posts
+Output SQL: (empty)
+Error: Unexpected keyword 'export'

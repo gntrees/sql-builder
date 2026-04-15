@@ -1,0 +1,161 @@
+[
+  {
+    "name": "select",
+    "arguments": [
+      [
+        [
+          {
+            "name": "c",
+            "arguments": [
+              "*"
+            ],
+            "paramType": "function"
+          }
+        ]
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "users"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "where",
+    "arguments": [
+      [
+        {
+          "name": "op",
+          "arguments": [
+            [
+              {
+                "name": "sub",
+                "arguments": [
+                  [
+                    {
+                      "name": "select",
+                      "arguments": [
+                        [
+                          [
+                            {
+                              "name": "c",
+                              "arguments": [
+                                "id"
+                              ],
+                              "paramType": "function"
+                            }
+                          ]
+                        ]
+                      ],
+                      "paramType": "function"
+                    },
+                    {
+                      "name": "from",
+                      "arguments": [
+                        [
+                          {
+                            "name": "t",
+                            "arguments": [
+                              "users"
+                            ],
+                            "paramType": "function"
+                          }
+                        ]
+                      ],
+                      "paramType": "function"
+                    },
+                    {
+                      "name": "where",
+                      "arguments": [
+                        [
+                          {
+                            "name": "op",
+                            "arguments": [
+                              [
+                                {
+                                  "name": "c",
+                                  "arguments": [
+                                    "id"
+                                  ],
+                                  "paramType": "function"
+                                }
+                              ],
+                              {
+                                "name": [
+                                  {
+                                    "name": "=",
+                                    "arguments": [],
+                                    "paramType": "string"
+                                  }
+                                ],
+                                "arguments": [],
+                                "paramType": "raw"
+                              },
+                              [
+                                {
+                                  "name": "l",
+                                  "arguments": [
+                                    {
+                                      "name": "1",
+                                      "arguments": [],
+                                      "paramType": "number"
+                                    }
+                                  ],
+                                  "paramType": "function"
+                                }
+                              ]
+                            ],
+                            "paramType": "function"
+                          }
+                        ]
+                      ],
+                      "paramType": "function"
+                    }
+                  ]
+                ],
+                "paramType": "function"
+              }
+            ],
+            {
+              "name": [
+                {
+                  "name": "=",
+                  "arguments": [],
+                  "paramType": "string"
+                }
+              ],
+              "arguments": [],
+              "paramType": "raw"
+            },
+            [
+              {
+                "name": "l",
+                "arguments": [
+                  {
+                    "name": "1",
+                    "arguments": [],
+                    "paramType": "number"
+                  }
+                ],
+                "paramType": "function"
+              }
+            ]
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  }
+]

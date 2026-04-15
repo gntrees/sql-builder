@@ -1,0 +1,66 @@
+[
+  {
+    "name": "selectDistinctOn",
+    "arguments": [
+      {
+        "name": [
+          [
+            {
+              "name": "c",
+              "arguments": [
+                "posts.author_id"
+              ],
+              "paramType": "function"
+            }
+          ]
+        ],
+        "arguments": [],
+        "paramType": "array"
+      },
+      {
+        "name": [
+          [
+            [
+              {
+                "name": "c",
+                "arguments": [
+                  "posts.id"
+                ],
+                "paramType": "function"
+              }
+            ]
+          ],
+          [
+            [
+              {
+                "name": "c",
+                "arguments": [
+                  "posts.title"
+                ],
+                "paramType": "function"
+              }
+            ]
+          ]
+        ],
+        "arguments": [],
+        "paramType": "array"
+      }
+    ],
+    "paramType": "function"
+  },
+  {
+    "name": "from",
+    "arguments": [
+      [
+        {
+          "name": "t",
+          "arguments": [
+            "posts"
+          ],
+          "paramType": "function"
+        }
+      ]
+    ],
+    "paramType": "function"
+  }
+]

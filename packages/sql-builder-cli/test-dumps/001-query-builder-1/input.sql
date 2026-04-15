@@ -1,0 +1,1 @@
+SELECT * FROM users WHERE column_name = 'active'
