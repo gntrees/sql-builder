@@ -199,9 +199,9 @@ describe("schema db structure", () => {
             ));
         try {
             const res = await schema.query("getProjects").setParams({
-                // getProjects:{
-                //     search: "project"
-                // }
+                getProjects:{
+                    search: "project"
+                }
             }).execute();
             // await builder.setValidation(
             //     z.array(z.object({

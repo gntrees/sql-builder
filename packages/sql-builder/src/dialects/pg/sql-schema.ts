@@ -71,6 +71,7 @@ export class SqlSchemaQueryBuilder<TQueryBuilder extends QueryBuilder = QueryBui
         return this as this & ValidationSchemaHolder<TSchema>;
     }
     setParams(...params: Parameters<TQueryBuilder["setParams"]>) {
-        return this.sqlBuilder.setParams(...(params as [any]));
+        this.sqlBuilder.setParams(...(params as [any]));
+        return this as unknown as this & ValidationSchemaHolder<ExtractSchema<this>>;
     }
 }
