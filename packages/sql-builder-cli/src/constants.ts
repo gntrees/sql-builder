@@ -1,4 +1,4 @@
-import type { BoolExprType, SortByDir } from "./ast-types";
+import type { BoolExprType, SortByDir } from "./ast-types.js";
 
 // Default handlers
 export const DEFAULT_FORMAT_PARAM_HANDLER = 'pg';

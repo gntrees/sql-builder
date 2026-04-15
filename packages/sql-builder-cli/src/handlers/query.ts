@@ -1,7 +1,7 @@
 import { deparseSync } from 'pgsql-parser';
 import { type Alias, type CommonTableExpr, type DeleteStmt, type InsertStmt, type IntoClause, type JoinExpr, type JoinType, type Node, type OnConflictAction, type OnConflictClause, type OverridingKind, type RangeVar, type RawStmt, type SelectStmt, type SetOperation, type UpdateStmt, type WithClause } from '../ast-types.js';
 import { JOIN_METHOD_MAP, LOCK_STRENGTH_METHOD, SET_OP_METHOD } from '../constants.js';
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray } from '../utils/resolvers.js';
 
 const specialNodeQuery: Record<string, (node: any) => FunctionListType[]> = {

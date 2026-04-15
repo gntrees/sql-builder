@@ -1,5 +1,5 @@
 import { deparseSync } from 'pgsql-parser';
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 import { specialNode } from '../handlers/index.js';
 
 export const resolveRaw = (node: any, asFullRaw: boolean = false): FunctionListType[] => {

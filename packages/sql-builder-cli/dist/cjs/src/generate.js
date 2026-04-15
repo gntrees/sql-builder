@@ -143,7 +143,7 @@ async function generate(options) {
     const tempOutFile = (0, path_1.resolve)(process.cwd(), `.kysely-codegen-${Date.now()}.d.ts`);
     try {
         await (0, kysely_codegen_1.generate)({
-            db,
+            db: db,
             dialect: new kysely_codegen_1.PostgresDialect(),
             camelCase: false,
             outFile: tempOutFile,

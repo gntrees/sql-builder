@@ -12,7 +12,7 @@ import type {
     SubLink
 } from "../ast-types.js";
 import { BOOL_OP_METHOD } from "../constants.js";
-import type { ArgumentType, FunctionListType } from "../types.ts";
+import type { ArgumentType, FunctionListType } from "../types.js";
 import {
     fallbackNode,
     normalizeNode,

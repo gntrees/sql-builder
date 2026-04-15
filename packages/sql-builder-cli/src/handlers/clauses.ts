@@ -1,6 +1,6 @@
 import type { Node, SortBy } from '../ast-types.js';
 import { SORT_DIR_METHOD, SORTBY_NULLS_METHOD } from '../constants.js';
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray } from '../utils/resolvers.js';
 
 const specialNodeClauses = {

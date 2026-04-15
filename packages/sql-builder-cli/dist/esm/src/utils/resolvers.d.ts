@@ -1,4 +1,4 @@
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 export declare const resolveRaw: (node: any, asFullRaw?: boolean) => FunctionListType[];
 export declare const resolveNode: (node: {
     [key: string]: any;

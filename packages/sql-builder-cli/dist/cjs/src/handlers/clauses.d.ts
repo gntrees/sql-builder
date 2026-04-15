@@ -1,4 +1,4 @@
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 declare const specialNodeClauses: {
     SortBy: (rawNode: any) => FunctionListType[];
 };

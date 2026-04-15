@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.specialNodeValues = void 0;
 const resolvers_js_1 = require("../utils/resolvers.js");
-const function_list_1 = __importDefault(require("../shared/function-list"));
+const function_list_js_1 = __importDefault(require("../shared/function-list.js"));
 // const currentDir = dirname(fileURLToPath(import.meta.url));
 // const functionListPath = resolve(currentDir, "../../../../src/generated/function-list.json");
 // const functionList = JSON.parse(readFileSync(functionListPath, "utf-8")) as {
@@ -83,7 +83,7 @@ const specialNodeValues = {
         const node = (0, resolvers_js_1.normalizeNode)("FuncCall", rawNode);
         const result = [];
         const funcName = node.FuncCall.funcname?.map(resolvers_js_1.resolveNode).flat().map((r) => r.name.toUpperCase()).join('_') || "";
-        const availableFuncName = function_list_1.default.allMethods.find((f) => f === (0, resolvers_js_1.toCamelCase)(funcName));
+        const availableFuncName = function_list_js_1.default.allMethods.find((f) => f === (0, resolvers_js_1.toCamelCase)(funcName));
         if (!availableFuncName) {
             return (0, resolvers_js_1.fallbackNode)(node);
         }

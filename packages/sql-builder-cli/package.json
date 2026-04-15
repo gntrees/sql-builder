@@ -1,6 +1,6 @@
 {
   "name": "@gntrees/sql-builder-cli",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "SQL to query builder converter for gntrees-sql-builder",
   "author": "gntrees",
   "license": "MIT",
@@ -47,6 +47,7 @@
     "prepack": "bun run build"
   },
   "dependencies": {
+    "@gntrees/sql-builder": "latest",
     "@pgsql/types": "^17.6.2",
     "kysely": "^0.27.6",
     "kysely-codegen": "^0.19.0",
@@ -55,7 +56,6 @@
     "prettier": "^3.8.1"
   },
   "peerDependencies": {
-    "@gntrees/sql-builder": "^0.0.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { SORT_DIR_METHOD, SORTBY_NULLS_METHOD } from '../constants.js';
-import { fallbackNode, normalizeNode, resolveNode } from '../utils/resolvers.js';
+import { fallbackNode, normalizeNode, resolveNode, resolveNodeArray } from '../utils/resolvers.js';
 const specialNodeClauses = {
     SortBy: (rawNode) => {
         const result = [];

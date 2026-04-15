@@ -1,4 +1,4 @@
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 
 interface StringifyOptions {
     simplifyLiteral?: boolean;

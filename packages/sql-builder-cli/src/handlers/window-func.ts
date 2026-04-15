@@ -1,5 +1,5 @@
 import type { WindowDef } from '../ast-types.js';
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 import { normalizeNode, resolveNode, resolveNodeArray } from '../utils/resolvers.js';
 
 const specialNodeWindowFunc: Record<string, (node: any) => FunctionListType[]> = {

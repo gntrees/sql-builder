@@ -10,6 +10,12 @@ Run directly with `npx`:
 npx @gntrees/sql-builder-cli help
 ```
 
+Run directly with `pnpm dlx`:
+
+```bash
+pnpm dlx @gntrees/sql-builder-cli help
+```
+
 ### Convert SQL to query-builder code
 
 ```bash

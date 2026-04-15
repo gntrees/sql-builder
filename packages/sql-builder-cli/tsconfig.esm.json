@@ -1,15 +1,15 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "module": "ESNext",
+        "module": "NodeNext",
         "outDir": "./dist/esm",
         "rootDir": ".",
         "declaration": true,
         "declarationDir": "./dist/esm",
         "emitDeclarationOnly": false,
         "allowImportingTsExtensions": false,
-        "verbatimModuleSyntax": false,
-        "moduleResolution": "node"
+        "verbatimModuleSyntax": true,
+        "moduleResolution": "NodeNext"
     },
     "include": ["index.ts", "cli.ts", "src/**/*.ts"],
     "exclude": ["tests/**", "**/*.test.ts"]

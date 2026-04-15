@@ -167,7 +167,7 @@ export async function generate(options: GenerateOptions): Promise<{ outputPath: 
   const tempOutFile = resolve(process.cwd(), `.kysely-codegen-${Date.now()}.d.ts`);
   try {
     await generateTypes({
-      db,
+      db: db as any,
       dialect: new CodegenPostgresDialect(),
       camelCase: false,
       outFile: tempOutFile,

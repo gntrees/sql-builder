@@ -1,4 +1,4 @@
-import type { BoolExprType, SortByDir } from "./ast-types";
+import type { BoolExprType, SortByDir } from "./ast-types.js";
 export declare const DEFAULT_FORMAT_PARAM_HANDLER = "pg";
 export declare const DEFAULT_EXEC_HANDLER = "async ({ sql, parameters, meta }): Promise<any> => {\n    return \"Executed\";\n}";
 export declare const JOIN_METHOD_MAP: Record<string, string>;

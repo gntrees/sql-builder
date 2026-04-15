@@ -1,5 +1,5 @@
 import type { TransactionStmt, TransactionStmtKind } from '../ast-types.js';
-import type { FunctionListType } from '../types.ts';
+import type { FunctionListType } from '../types.js';
 import { fallbackNode, normalizeNode, resolveNodeArray } from '../utils/resolvers.js';
 
 const specialNodeTransactions: Record<string, (node: any) => FunctionListType[]> = {

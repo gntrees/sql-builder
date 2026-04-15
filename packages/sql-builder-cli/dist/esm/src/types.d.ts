@@ -1,4 +1,4 @@
-export type { ArgumentType, FunctionListType, SchemaLiteral } from "./shared/function-list-type";
+export type { ArgumentType, FunctionListType, SchemaLiteral } from "./shared/function-list-type.js";
 export interface ConvertOptions {
     formatParamHandler?: string;
     execHandler?: string;
