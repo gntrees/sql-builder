@@ -1,6 +1,6 @@
 import { CoreQueryBuilder } from './core-query-builder';
-import type { QueryBuilder } from './query-builder';
-import type { SqlSchemaParam, WithBuilderParams, MergeBuilderParams, ExtractBuilderParams, InferSchemaCase, Simplify } from './sql-param';
+import { QueryBuilder } from './query-builder';
+import type { ExtractBuilderParams, InferSchemaCase, MergeBuilderParams, Simplify, SqlSchemaParam, WithBuilderParams } from './sql-param';
 import type {
     OperatorType,
     ParameterDataType,
@@ -27,11 +27,13 @@ export class ParameterType {
 
 export class BaseRawQueryBuilder extends CoreQueryBuilder {
     raw(strings: TemplateStringsArray, ...values: Statement[]) {
+        // console.log("strings:",strings.map(i=>String(i)),strings[1], values[0]);
+                
         this.resolveSchemaParam(
             "template-literal",
             "raw",
             strings.reduce<Statement[]>((acc, str, i) => {
-                return ([...acc, str, values[i]].filter(Boolean) as Statement[]);
+                return ([...acc, str, values[i]] as Statement[]);
             }, [])
         );
         const resolvedValues = this.resolveStatements(values);
@@ -111,7 +113,7 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
             "template-literal",
             "r",
             strings.reduce<Statement[]>((acc, str, i) => {
-                return ([...acc, str, values[i]].filter(Boolean) as Statement[]);
+                return ([...acc, str, values[i]] as Statement[]);
             }, [])
         );
         this.raw(strings, ...values);
@@ -137,10 +139,10 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
             this.rawString("*");
             return this.endClass();
         }
-        if (value === null){
+        if (value === null) {
             this.rawString("NULL");
             return this.endClass();
-        } 
+        }
         this.identifier(value);
         return this.endClass();
     }

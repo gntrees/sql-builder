@@ -1,6 +1,6 @@
 import { CoreQueryBuilder } from './core-query-builder';
-import type { QueryBuilder } from './query-builder';
-import type { SqlSchemaParam, WithBuilderParams, MergeBuilderParams, ExtractBuilderParams, InferSchemaCase, Simplify } from './sql-param';
+import { QueryBuilder } from './query-builder';
+import type { ExtractBuilderParams, InferSchemaCase, MergeBuilderParams, Simplify, SqlSchemaParam, WithBuilderParams } from './sql-param';
 import type { OperatorType, ParameterDataType, ParameterValueType, Statement } from './types';
 export declare class ParameterType {
     value: ParameterValueType;

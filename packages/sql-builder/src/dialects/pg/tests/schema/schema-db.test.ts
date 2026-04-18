@@ -12,6 +12,7 @@ import {
 import { expectQuery } from "../test-helpers";
 import { sqlBuilder, sqlSchema } from "../../../../../pg";
 import { z } from "zod";
+import { write } from "bun";
 
 const connectionUrl =
     "postgresql://gntrees_ui_admin:cuanBanyak20Triliun@localhost:5432/gntrees_ui";
@@ -171,38 +172,56 @@ describe("schema db structure", () => {
     // validation test
     it("should validate parameters with schema validation", async () => {
         const sch = sqlSchema()
-        const schema = sch.setQuery("getProjects", sch.set
-            .query(q
-                .select(
-                    projects.id,
-                    projects.name,
-                    projects.description
-                )
-                .from(projects)
-                .schemaCase("getProjects",
-                    q.where(
-                        q.ilike(projects.name, q.schemaParam("search").string().default("%na%"))
+        const schema = sch
+            .setQuery("getProjects", sch.set
+                .query(q
+                    .select(
+                        projects.id,
+                        projects.name,
+                        projects.description,
+                        {
+                            total: q.r`COUNT(${projects.id})`,
+                        }
                     )
-                )
-                .schemaCase("getProjectsNoSearch",
-                    q.where(
-                        q.op(projects.name, "IS NOT", q.null())
+                    .from(projects)
+                    .schemaCase("getProjects",
+                        q.where(
+                            q.and(
+                                q.ilike(projects.name, q.schemaParam("search").string().default("%na%")),
+                                q.schemaCase("getProjectsNoSearch",
+                                    q.op(projects.createdAt, "IS NOT", q.null())
+                                )
+                            )
+                        )
                     )
+                    .groupBy(projects.id, projects.name, projects.description)
                 )
-            )
-            .validation(
-                z.array(z.object({
-                    id: z.string(),
-                    name: z.string().optional(),
-                    description: z.string(),
-                }))
-            ));
+                .validation(
+                    z.array(z.object({
+                        id: z.string(),
+                        name: z.string().optional(),
+                        description: z.string(),
+                        total: z.string(),
+                    }))
+                )
+            );
         try {
+            console.log(schema.query("getProjects").setParams({
+                getProjects: {
+                    search: "%naji%",
+                    // getProjectsNoSearch: true
+                },
+            }).getSqlBuilder().getSqlWithParameters());
+            
             const res = await schema.query("getProjects").setParams({
-                getProjects:{
-                    search: "project"
-                }
+                getProjects: {
+                    search: "%naji%",
+                    // getProjectsNoSearch: true
+                },
             }).execute();
+
+
+
             // await builder.setValidation(
             //     z.array(z.object({
             //         id: z.string(),
@@ -211,11 +230,25 @@ describe("schema db structure", () => {
             //     }))
             // ).execute();  
             console.log("Validation result:", res);
-            console.log("Validation result:", schema.query("getProjects").getSqlBuilder().getSqlWithParameters());
+            console.log("Validation sql:", schema.query("getProjects").getSqlBuilder().getSqlWithParameters());
 
             throw new Error("Expected validation error was not thrown");
         } catch (error) {
+            // console.log("Validation error caught as expected:", error);
+
             expect(error).toBeInstanceOf(Error);
         }
+        const schemaJSON = schema.getJSON();
+        const getCircularReplacer = () => {
+            const seen = new WeakSet();
+            return (key: any, value: any) => {
+                if (typeof value === "object" && value !== null) {
+                    if (seen.has(value)) return; // Remove circular reference
+                    seen.add(value);
+                }
+                return value;
+            };
+        };
+        write("trash/schema.json", JSON.stringify(schemaJSON, getCircularReplacer()));
     });
 });

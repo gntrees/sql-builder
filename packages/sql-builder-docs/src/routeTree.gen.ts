@@ -9,10 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ViewRouteImport } from './routes/view'
 import { Route as ConverterRouteImport } from './routes/converter'
 import { Route as DocsRouteRouteImport } from './routes/docs/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ViewIndexRouteImport } from './routes/view.index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
+import { Route as ViewInputRouteImport } from './routes/view.input'
 import { Route as DocsSqliteRouteImport } from './routes/docs/sqlite'
 import { Route as DocsMysqlRouteImport } from './routes/docs/mysql'
 import { Route as DocsMssqlRouteImport } from './routes/docs/mssql'
@@ -34,6 +37,11 @@ import { Route as DocsPgDbSchemaRouteImport } from './routes/docs/pg/db-schema'
 import { Route as DocsPgCliRouteImport } from './routes/docs/pg/cli'
 import { Route as DocsPgInstallationIndexRouteImport } from './routes/docs/pg/installation/index'
 
+const ViewRoute = ViewRouteImport.update({
+  id: '/view',
+  path: '/view',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConverterRoute = ConverterRouteImport.update({
   id: '/converter',
   path: '/converter',
@@ -49,10 +57,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ViewIndexRoute = ViewIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ViewRoute,
+} as any)
 const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DocsRouteRoute,
+} as any)
+const ViewInputRoute = ViewInputRouteImport.update({
+  id: '/input',
+  path: '/input',
+  getParentRoute: () => ViewRoute,
 } as any)
 const DocsSqliteRoute = DocsSqliteRouteImport.update({
   id: '/sqlite',
@@ -159,10 +177,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteRouteWithChildren
   '/converter': typeof ConverterRoute
+  '/view': typeof ViewRouteWithChildren
   '/docs/mssql': typeof DocsMssqlRoute
   '/docs/mysql': typeof DocsMysqlRoute
   '/docs/sqlite': typeof DocsSqliteRoute
+  '/view/input': typeof ViewInputRoute
   '/docs/': typeof DocsIndexRoute
+  '/view/': typeof ViewIndexRoute
   '/docs/pg/cli': typeof DocsPgCliRoute
   '/docs/pg/db-schema': typeof DocsPgDbSchemaRoute
   '/docs/pg/function-call': typeof DocsPgFunctionCallRoute
@@ -187,7 +208,9 @@ export interface FileRoutesByTo {
   '/docs/mssql': typeof DocsMssqlRoute
   '/docs/mysql': typeof DocsMysqlRoute
   '/docs/sqlite': typeof DocsSqliteRoute
+  '/view/input': typeof ViewInputRoute
   '/docs': typeof DocsIndexRoute
+  '/view': typeof ViewIndexRoute
   '/docs/pg/cli': typeof DocsPgCliRoute
   '/docs/pg/db-schema': typeof DocsPgDbSchemaRoute
   '/docs/pg/function-call': typeof DocsPgFunctionCallRoute
@@ -211,10 +234,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteRouteWithChildren
   '/converter': typeof ConverterRoute
+  '/view': typeof ViewRouteWithChildren
   '/docs/mssql': typeof DocsMssqlRoute
   '/docs/mysql': typeof DocsMysqlRoute
   '/docs/sqlite': typeof DocsSqliteRoute
+  '/view/input': typeof ViewInputRoute
   '/docs/': typeof DocsIndexRoute
+  '/view/': typeof ViewIndexRoute
   '/docs/pg/cli': typeof DocsPgCliRoute
   '/docs/pg/db-schema': typeof DocsPgDbSchemaRoute
   '/docs/pg/function-call': typeof DocsPgFunctionCallRoute
@@ -239,10 +265,13 @@ export interface FileRouteTypes {
     | '/'
     | '/docs'
     | '/converter'
+    | '/view'
     | '/docs/mssql'
     | '/docs/mysql'
     | '/docs/sqlite'
+    | '/view/input'
     | '/docs/'
+    | '/view/'
     | '/docs/pg/cli'
     | '/docs/pg/db-schema'
     | '/docs/pg/function-call'
@@ -267,7 +296,9 @@ export interface FileRouteTypes {
     | '/docs/mssql'
     | '/docs/mysql'
     | '/docs/sqlite'
+    | '/view/input'
     | '/docs'
+    | '/view'
     | '/docs/pg/cli'
     | '/docs/pg/db-schema'
     | '/docs/pg/function-call'
@@ -290,10 +321,13 @@ export interface FileRouteTypes {
     | '/'
     | '/docs'
     | '/converter'
+    | '/view'
     | '/docs/mssql'
     | '/docs/mysql'
     | '/docs/sqlite'
+    | '/view/input'
     | '/docs/'
+    | '/view/'
     | '/docs/pg/cli'
     | '/docs/pg/db-schema'
     | '/docs/pg/function-call'
@@ -317,10 +351,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DocsRouteRoute: typeof DocsRouteRouteWithChildren
   ConverterRoute: typeof ConverterRoute
+  ViewRoute: typeof ViewRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/view': {
+      id: '/view'
+      path: '/view'
+      fullPath: '/view'
+      preLoaderRoute: typeof ViewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/converter': {
       id: '/converter'
       path: '/converter'
@@ -342,12 +384,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/view/': {
+      id: '/view/'
+      path: '/'
+      fullPath: '/view/'
+      preLoaderRoute: typeof ViewIndexRouteImport
+      parentRoute: typeof ViewRoute
+    }
     '/docs/': {
       id: '/docs/'
       path: '/'
       fullPath: '/docs/'
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRouteRoute
+    }
+    '/view/input': {
+      id: '/view/input'
+      path: '/input'
+      fullPath: '/view/input'
+      preLoaderRoute: typeof ViewInputRouteImport
+      parentRoute: typeof ViewRoute
     }
     '/docs/sqlite': {
       id: '/docs/sqlite'
@@ -544,10 +600,23 @@ const DocsRouteRouteWithChildren = DocsRouteRoute._addFileChildren(
   DocsRouteRouteChildren,
 )
 
+interface ViewRouteChildren {
+  ViewInputRoute: typeof ViewInputRoute
+  ViewIndexRoute: typeof ViewIndexRoute
+}
+
+const ViewRouteChildren: ViewRouteChildren = {
+  ViewInputRoute: ViewInputRoute,
+  ViewIndexRoute: ViewIndexRoute,
+}
+
+const ViewRouteWithChildren = ViewRoute._addFileChildren(ViewRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DocsRouteRoute: DocsRouteRouteWithChildren,
   ConverterRoute: ConverterRoute,
+  ViewRoute: ViewRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

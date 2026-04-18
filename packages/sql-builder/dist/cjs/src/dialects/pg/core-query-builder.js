@@ -309,6 +309,7 @@ class CoreQueryBuilder {
             throw new Error(`Cannot rebuild query: method '${node.name}' is not available`);
         }
         if (node.name === "raw" || node.name === "r") {
+            // console.log(node.args.map((i)=>String(i)));
             const templateFlat = node.args.map((arg) => this.deserializeInstanceValue(arg));
             const strings = [];
             const values = [];
@@ -321,7 +322,7 @@ class CoreQueryBuilder {
                 }
             });
             const templateStrings = strings;
-            templateStrings.raw = [...strings];
+            templateStrings.raw = [...templateStrings];
             target.apply(this, [templateStrings, ...values]);
             return;
         }

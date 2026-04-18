@@ -141,7 +141,6 @@ export class SqlSchemaParam<TKey extends string = string, T extends SqlSchemaPar
 
 // still prototype
 export class SqlSchemaParamCase {
-    protected params: Record<string, any> = {};
     constructor(
         protected key: string,
         protected queryBuilder: {
@@ -153,8 +152,8 @@ export class SqlSchemaParamCase {
     }
 
     setParams(params: Record<string, any>) {
-        this.params = { ...params };
-        this.queryBuilder.setParams(this.params);
+        const runtimeParams = { ...params };
+        this.queryBuilder.setParams(runtimeParams);
         return this;
     }
 

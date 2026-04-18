@@ -52,14 +52,13 @@ export class SqlSchemaParam {
 export class SqlSchemaParamCase {
     key;
     queryBuilder;
-    params = {};
     constructor(key, queryBuilder) {
         this.key = key;
         this.queryBuilder = queryBuilder;
     }
     setParams(params) {
-        this.params = { ...params };
-        this.queryBuilder.setParams(this.params);
+        const runtimeParams = { ...params };
+        this.queryBuilder.setParams(runtimeParams);
         return this;
     }
     getQueryBuilder() {

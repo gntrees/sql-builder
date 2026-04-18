@@ -70,7 +70,7 @@ export class CoreQueryBuilder {
         return this.query.sql;
     }
 
-    protected setTokens(tokens: QueryType['sql']): this {
+    setTokens(tokens: QueryType['sql']): this {
         this.query.sql = tokens;
         return this;
     }
@@ -249,6 +249,7 @@ export class CoreQueryBuilder {
 
     protected resolveSchemaParam(type: FunctionListType['paramType'], name: FunctionListType['name'], params: AllPossibleFunctionParamType): FunctionListType {
         this.startClass();
+
         if (this.callLevel > 1) {
             return {
                 paramType: type,
@@ -375,6 +376,7 @@ export class CoreQueryBuilder {
             throw new Error(`Cannot rebuild query: method '${node.name}' is not available`);
         }
         if (node.name === "raw" || node.name === "r") {
+            // console.log(node.args.map((i)=>String(i)));
             const templateFlat = node.args.map((arg) => this.deserializeInstanceValue(arg));
             const strings: string[] = [];
             const values: unknown[] = [];
@@ -384,9 +386,9 @@ export class CoreQueryBuilder {
                 } else {
                     values.push(item);
                 }
-            });
+            });            
             const templateStrings = strings as unknown as TemplateStringsArray;
-            (templateStrings as { raw: readonly string[] }).raw = [...strings];
+            (templateStrings as { raw: readonly any[] }).raw = [...templateStrings];
             (target as (...args: unknown[]) => unknown).apply(this, [templateStrings, ...values]);
             return;
         }

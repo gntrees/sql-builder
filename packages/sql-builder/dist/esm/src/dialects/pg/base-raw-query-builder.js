@@ -10,8 +10,9 @@ export class ParameterType {
 }
 export class BaseRawQueryBuilder extends CoreQueryBuilder {
     raw(strings, ...values) {
+        // console.log("strings:",strings.map(i=>String(i)),strings[1], values[0]);
         this.resolveSchemaParam("template-literal", "raw", strings.reduce((acc, str, i) => {
-            return [...acc, str, values[i]].filter(Boolean);
+            return [...acc, str, values[i]];
         }, []));
         const resolvedValues = this.resolveStatements(values);
         const tokens = [];
@@ -90,7 +91,7 @@ export class BaseRawQueryBuilder extends CoreQueryBuilder {
     }
     r(strings, ...values) {
         this.resolveSchemaParam("template-literal", "r", strings.reduce((acc, str, i) => {
-            return [...acc, str, values[i]].filter(Boolean);
+            return [...acc, str, values[i]];
         }, []));
         this.raw(strings, ...values);
         return this.endClass();

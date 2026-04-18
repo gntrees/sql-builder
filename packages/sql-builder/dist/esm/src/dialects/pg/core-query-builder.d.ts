@@ -45,7 +45,7 @@ export declare class CoreQueryBuilder {
     private isRebuilding;
     constructor(queryInstance?: QueryInstance);
     getTokens(): QueryType['sql'];
-    protected setTokens(tokens: QueryType['sql']): this;
+    setTokens(tokens: QueryType['sql']): this;
     getSchema(): FunctionListType[];
     protected getInstanceStructure(): InstanceStructureNode[];
     protected getRuntimeParams(): RuntimeParams;
