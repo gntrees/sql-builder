@@ -1,16 +1,21 @@
 {
   "name": "@gntrees/sql-builder",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "PostgreSQL query builder with fluent TypeScript API",
-  "main": "./dist/cjs/pg.js",
-  "module": "./dist/esm/pg.js",
-  "types": "./dist/cjs/pg.d.ts",
+  "main": "./dist/cjs/pg/index.js",
+  "module": "./dist/esm/pg/index.js",
+  "types": "./dist/cjs/pg/index.d.ts",
   "type": "module",
   "exports": {
     "./pg": {
-      "types": "./dist/cjs/pg.d.ts",
-      "import": "./dist/esm/pg.js",
-      "require": "./dist/cjs/pg.js"
+      "types": "./dist/cjs/pg/index.d.ts",
+      "import": "./dist/esm/pg/index.js",
+      "require": "./dist/cjs/pg/index.js"
+    },
+    "./pg/index": {
+      "types": "./dist/cjs/pg/index.d.ts",
+      "import": "./dist/esm/pg/index.js",
+      "require": "./dist/cjs/pg/index.js"
     },
     "./pg/format": {
       "types": "./dist/cjs/pg/format.d.ts",
@@ -24,7 +29,7 @@
     },
     "./pg/functions": {
       "types": "./dist/cjs/pg/functions.d.ts",
-      "import": "./dist/cjs/pg/functions.js",
+      "import": "./dist/esm/pg/functions.js",
       "require": "./dist/cjs/pg/functions.js"
     }
   },
@@ -72,8 +77,8 @@
     "build": "bun run prebuild && bun run build:cjs && bun run build:esm",
     "build:cjs": "NODE_OPTIONS='--max-old-space-size=8192' tsc -p tsconfig.cjs.json",
     "build:esm": "NODE_OPTIONS='--max-old-space-size=8192' tsc -p tsconfig.esm.json",
-    "generate": "bun run src/dialects/pg/extract.ts",
-    "test": "bun test src/dialects/pg/tests/*.test.ts",
-    "test:network": "bun test src/dialects/pg/tests/network-functions.test.ts"
+    "generate": "bun run pg/extract.ts",
+    "test": "bun test pg/tests/*.test.ts",
+    "test:network": "bun test pg/tests/network-functions.test.ts"
   }
 }

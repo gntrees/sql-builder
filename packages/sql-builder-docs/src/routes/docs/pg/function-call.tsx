@@ -3,7 +3,7 @@ import { useMemo, useState } from "react"
 import { DocsLayout } from "#/components/docs-layout"
 import { CodeBlock, CodeBlockCopyButton } from "#/components/ai/code-block"
 import { highlightCodeBlock, highlightSqlResult } from "#/components/ai/code-block.loader"
-import pgFunctionList from "../../../../../sql-builder/src/dialects/pg/postgres-functions-list"
+import pgFunctionList from "../../../../../sql-builder/pg/postgres-functions-list"
 
 export const Route = createFileRoute("/docs/pg/function-call")({
   loader: async () => {

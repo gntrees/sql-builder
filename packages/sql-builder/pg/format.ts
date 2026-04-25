@@ -1,15 +1,9 @@
+import type { FormatConfig, FormatValue } from "./format.types";
+
 /*
  * Browser-safe port of node-pg-format (MIT)
  * Source: https://github.com/cphillips/node-pg-format
  */
-
-export type FormatConfig = {
-  pattern?: {
-    ident?: string;
-    literal?: string;
-    string?: string;
-  };
-};
 
 const fmtPattern = {
   ident: "I",
@@ -174,18 +168,6 @@ const RESERVED_WORDS: Record<string, true> = {
   WITH: true,
   WITHOUT: true,
 };
-
-type FormatValue =
-  | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | bigint
-  | Date
-  | Uint8Array
-  | Record<string, unknown>
-  | Array<unknown>;
 
 function formatDate(value: string): string {
   return value.replace("T", " ").replace("Z", "+00");

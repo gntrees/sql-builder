@@ -33,5 +33,9 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  // exclude trash
+  "exclude": [
+    "trash/*"
+  ]
 }

@@ -10,6 +10,6 @@
         "allowImportingTsExtensions": false,
         "verbatimModuleSyntax": false
     },
-    "include": ["index.ts", "pg.ts", "pg/builder.ts", "pg/format.ts", "pg/functions.ts", "src/**/*.ts"],
-    "exclude": ["src/dialects/pg/tests/**", "**/*.test.ts", "src/dialects/pg/extract.ts"]
+    "include": ["index.ts", "pg/**/*.ts"],
+    "exclude": ["pg/tests/**", "**/*.test.ts", "pg/extract.ts"]
 }

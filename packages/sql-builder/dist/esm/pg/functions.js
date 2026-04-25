@@ -1,2 +1,2 @@
-import functionList from "../src/dialects/pg/generated/function-list.json";
+import functionList from "./generated/function-list.json";
 export { functionList };

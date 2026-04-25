@@ -4,5 +4,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.functionList = void 0;
-const function_list_json_1 = __importDefault(require("../src/dialects/pg/generated/function-list.json"));
+const function_list_json_1 = __importDefault(require("./generated/function-list.json"));
 exports.functionList = function_list_json_1.default;

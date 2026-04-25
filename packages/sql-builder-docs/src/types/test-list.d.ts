@@ -1,4 +1,4 @@
-declare module "@gntrees/sql-builder/src/dialects/pg/tests/test-list" {
+declare module "@gntrees/sql-builder/pg/tests/test-list" {
   export interface TestExpectation {
     sql: string
     parameters?: (string | number | boolean | null)[]

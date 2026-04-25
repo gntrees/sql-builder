@@ -103,10 +103,10 @@ const str = quoteString('raw');
 
 ```bash
 # Run all tests
-bun test src/dialects/pg/tests/*.test.ts
+bun test pg/tests/*.test.ts
 
 # Run specific test file
-bun test src/dialects/pg/tests/math-functions.test.ts
+bun test pg/tests/math-functions.test.ts
 ```
 
 ### Code Generation

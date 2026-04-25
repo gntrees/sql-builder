@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const syncFiles = [
   {
     source: resolve(__dirname, "../../sql-builder-shared/src/function-list-type.ts"),
-    target: resolve(__dirname, "../src/dialects/pg/function-list-type.ts"),
+    target: resolve(__dirname, "../pg/function-list-type.ts"),
   },
 ];
 
