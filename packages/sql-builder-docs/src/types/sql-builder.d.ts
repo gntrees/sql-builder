@@ -1,4 +1,4 @@
-declare module "@gntrees/sql-builder/pg/builder" {
+declare module "@gntrees/sql-builder/pg" {
   export function sqlBuilder(): unknown
   export const QueryBuilder: unknown
   export const QueryInstance: unknown

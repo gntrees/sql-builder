@@ -1,0 +1,1 @@
+- dont run or plan build or test command command until i ask you to.

@@ -19,9 +19,9 @@ const config = defineConfig({
       '@gntrees/sql-builder-cli/tests/fixtures/sql-samples': resolve(rootDir, '../sql-builder-cli/tests/fixtures/sql-samples.ts'),
       '@gntrees/sql-builder/pg/generated/function-list.json': resolve(rootDir, '../sql-builder/pg/generated/function-list.json'),
       '@gntrees/sql-builder/pg/tests/test-list': resolve(rootDir, '../sql-builder/pg/tests/test-list.ts'),
-      '@gntrees/sql-builder/pg/builder': resolve(
+      '@gntrees/sql-builder/pg': resolve(
         rootDir,
-        '../sql-builder/pg/builder.ts',
+        '../sql-builder/pg/index.ts',
       ),
     },
   },

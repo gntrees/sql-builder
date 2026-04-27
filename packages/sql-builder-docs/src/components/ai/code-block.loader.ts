@@ -102,7 +102,7 @@ export async function buildSqlResultFromCode(source: string) {
     throw new Error("Query builder not found")
   }
 
-  const { sqlBuilder } = await import("@gntrees/sql-builder/pg/builder")
+  const { sqlBuilder } = await import("@gntrees/sql-builder/pg")
   const functionBody = `const q = sqlBuilder();\n${queryBuildingPart}\nreturn { query };`
   const func = new AsyncFunction("sqlBuilder", functionBody) as (
     sqlBuilderFn: typeof sqlBuilder,

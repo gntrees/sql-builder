@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { sqlBuilder } from "@gntrees/sql-builder/pg/builder"
+import { sqlBuilder } from "@gntrees/sql-builder/pg"
 
 type SqlSchemaQueryDefinition = {
   query: unknown

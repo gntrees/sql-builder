@@ -324,6 +324,7 @@ import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;
   protected uniqueId: string = Math.random().toString(36).substring(2, 10);
+  protected builderKey: string | undefined = undefined;
   protected varableName: string | undefined = undefined;
   constructor(dbInstance: RequiredDBInstance) {
     this.dbInstance = dbInstance;
@@ -344,8 +345,15 @@ export class QueryInstance {
     this.varableName = name;
     return this;
   }
+  setKey(key: string): this {
+    this.builderKey = key;
+    return this;
+  }
   getVariableName(): string | undefined {
     return this.varableName;
+  }
+  getKey(): string | undefined {
+    return this.builderKey;
   }
   getUniqueId(): string {
     return this.uniqueId;

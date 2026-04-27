@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@gntrees/sql-builder-workspace",
@@ -10,14 +11,14 @@
     },
     "packages/sql-builder": {
       "name": "@gntrees/sql-builder",
-      "version": "0.0.5",
+      "version": "0.0.12",
       "dependencies": {
         "@standard-schema/spec": "^1.1.0",
-        "pg": "^8.16.3",
       },
       "devDependencies": {
         "@types/bun": "latest",
         "@types/pg": "^8.16.0",
+        "pg": "^8.16.3",
         "pgsql-parser": "^17.9.1",
         "typescript": "^5.9.3",
         "zod": "^3.23.8",
@@ -28,12 +29,12 @@
     },
     "packages/sql-builder-cli": {
       "name": "@gntrees/sql-builder-cli",
-      "version": "0.0.1",
+      "version": "0.0.6",
       "bin": {
         "sql-builder-cli": "./dist/esm/cli.js",
       },
       "dependencies": {
-        "@gntrees/sql-builder-shared": "file:../sql-builder-shared",
+        "@gntrees/sql-builder": "latest",
         "@pgsql/types": "^17.6.2",
         "kysely": "^0.27.6",
         "kysely-codegen": "^0.19.0",
@@ -46,7 +47,6 @@
         "@types/pg": "^8.11.13",
       },
       "peerDependencies": {
-        "@gntrees/sql-builder": "^0.0.5",
         "typescript": "^5.9.3",
       },
     },
@@ -1278,11 +1278,11 @@
 
     "@babel/helper-compilation-targets/lru-cache": ["lru-cache@5.1.1", "", { "dependencies": { "yallist": "^3.0.2" } }, "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="],
 
-    "@gntrees/sql-builder/@types/bun": ["@types/bun@1.3.12", "", { "dependencies": { "bun-types": "1.3.12" } }, "sha512-DBv81elK+/VSwXHDlnH3Qduw+KxkTIWi7TXkAeh24zpi5l0B2kUg9Ga3tb4nJaPcOFswflgi/yAvMVBPrxMB+A=="],
+    "@gntrees/sql-builder/@types/bun": ["@types/bun@1.3.13", "", { "dependencies": { "bun-types": "1.3.13" } }, "sha512-9fqXWk5YIHGGnUau9TEi+qdlTYDAnOj+xLCmSTwXfAIqXr2x4tytJb43E9uCvt09zJURKXwAtkoH4nLQfzeTXw=="],
 
-    "@gntrees/sql-builder-cli/@gntrees/sql-builder-shared": ["@gntrees/sql-builder-shared@file:packages/sql-builder-shared", { "devDependencies": { "@types/bun": "latest", "typescript": "^5.9.3" } }],
+    "@gntrees/sql-builder-cli/@gntrees/sql-builder": ["@gntrees/sql-builder@0.0.12", "", { "dependencies": { "@standard-schema/spec": "^1.1.0", "pg": "^8.16.3" }, "peerDependencies": { "typescript": "^5.9.3" } }, "sha512-UUwZTZiKe/2CRLzhMqDfY4HEfVivpHMqa8pL6RgdyDZTFnvh6xkGhcGVdFwnCSxgDqgyi+x6zZdMsyAZ/NobIg=="],
 
-    "@gntrees/sql-builder-cli/@types/bun": ["@types/bun@1.3.12", "", { "dependencies": { "bun-types": "1.3.12" } }, "sha512-DBv81elK+/VSwXHDlnH3Qduw+KxkTIWi7TXkAeh24zpi5l0B2kUg9Ga3tb4nJaPcOFswflgi/yAvMVBPrxMB+A=="],
+    "@gntrees/sql-builder-cli/@types/bun": ["@types/bun@1.3.13", "", { "dependencies": { "bun-types": "1.3.13" } }, "sha512-9fqXWk5YIHGGnUau9TEi+qdlTYDAnOj+xLCmSTwXfAIqXr2x4tytJb43E9uCvt09zJURKXwAtkoH4nLQfzeTXw=="],
 
     "@gntrees/sql-builder-shared/@types/bun": ["@types/bun@1.3.12", "", { "dependencies": { "bun-types": "1.3.12" } }, "sha512-DBv81elK+/VSwXHDlnH3Qduw+KxkTIWi7TXkAeh24zpi5l0B2kUg9Ga3tb4nJaPcOFswflgi/yAvMVBPrxMB+A=="],
 
@@ -1340,11 +1340,11 @@
 
     "strip-literal/js-tokens": ["js-tokens@9.0.1", "", {}, "sha512-mxa9E9ITFOt0ban3j6L5MpjwegGz6lBQmM1IJkWeBZGcMxto50+eWdjC/52xDbS2vy0k7vIMK0Fe2wfL9OQSpQ=="],
 
-    "@gntrees/sql-builder-cli/@types/bun/bun-types": ["bun-types@1.3.12", "", { "dependencies": { "@types/node": "*" } }, "sha512-HqOLj5PoFajAQciOMRiIZGNoKxDJSr6qigAttOX40vJuSp6DN/CxWp9s3C1Xwm4oH7ybueITwiaOcWXoYVoRkA=="],
+    "@gntrees/sql-builder-cli/@types/bun/bun-types": ["bun-types@1.3.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-QXKeHLlOLqQX9LgYaHJfzdBaV21T63HhFJnvuRCcjZiaUDpbs5ED1MgxbMra71CsryN/1dAoXuJJJwIv/2drVA=="],
 
     "@gntrees/sql-builder-shared/@types/bun/bun-types": ["bun-types@1.3.12", "", { "dependencies": { "@types/node": "*" } }, "sha512-HqOLj5PoFajAQciOMRiIZGNoKxDJSr6qigAttOX40vJuSp6DN/CxWp9s3C1Xwm4oH7ybueITwiaOcWXoYVoRkA=="],
 
-    "@gntrees/sql-builder/@types/bun/bun-types": ["bun-types@1.3.12", "", { "dependencies": { "@types/node": "*" } }, "sha512-HqOLj5PoFajAQciOMRiIZGNoKxDJSr6qigAttOX40vJuSp6DN/CxWp9s3C1Xwm4oH7ybueITwiaOcWXoYVoRkA=="],
+    "@gntrees/sql-builder/@types/bun/bun-types": ["bun-types@1.3.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-QXKeHLlOLqQX9LgYaHJfzdBaV21T63HhFJnvuRCcjZiaUDpbs5ED1MgxbMra71CsryN/1dAoXuJJJwIv/2drVA=="],
 
     "@types/pg/@types/node/undici-types": ["undici-types@7.18.2", "", {}, "sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w=="],
 

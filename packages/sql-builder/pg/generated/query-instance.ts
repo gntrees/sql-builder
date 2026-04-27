@@ -7,6 +7,7 @@ import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from 
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;
+  protected builderKey: string | undefined = undefined;
   protected varableName: string | undefined = undefined;
   constructor(dbInstance: RequiredDBInstance) {
     this.dbInstance = dbInstance;
@@ -27,8 +28,15 @@ export class QueryInstance {
     this.varableName = name;
     return this;
   }
+  setKey(key: string): this {
+    this.builderKey = key;
+    return this;
+  }
   getVariableName(): string | undefined {
     return this.varableName;
+  }
+  getKey(): string | undefined {
+    return this.builderKey;
   }
   getDbInstance() {
     return this.dbInstance;

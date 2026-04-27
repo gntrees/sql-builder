@@ -208,9 +208,9 @@ function RouteComponent() {
     }
 
     try {
-      const { sqlBuilder } = await import("@gntrees/sql-builder/pg/builder")
+      const { sqlBuilder } = await import("@gntrees/sql-builder/pg")
       const { ColumnSchema, DBSchema, TableSchema } = await import(
-        "@gntrees/sql-builder/pg/builder"
+        "@gntrees/sql-builder/pg"
       )
       const normalizedDbSchema = dbSchemaSource
         ? toExecutableDbSchemaSource(dbSchemaSource)

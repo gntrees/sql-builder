@@ -50,9 +50,20 @@ export class CoreQueryBuilder {
         return this;
     }
 
+    setKey(key: string): this {
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        this.queryInstance.setKey(key);
+        return this;
+    }
+
     getVariableName(): string | undefined {
         if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
         return this.queryInstance.getVariableName();
+    }
+
+    getKey(): string | undefined {
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        return this.queryInstance.getKey();
     }
 
     getSchema(): FunctionListType[] {

@@ -8,18 +8,18 @@ export type ArgumentType =
   | undefined
   | FunctionListType
   | {
-      [key: string]: ArgumentType;
-    }
+    [key: string]: ArgumentType;
+  }
   | ArgumentType[];
 
 export type FunctionListType =
   | {
-      paramType: "function" | "template-literal";
-      arguments: ArgumentType[];
-      name: string;
-    }
+    paramType: "function" | "template-literal";
+    arguments: ArgumentType[];
+    name: string;
+  }
   | {
-      paramType: "string" | "number" | "boolean" | "null" | "raw" | "array" | "object" | "undefined";
-      arguments: ArgumentType[];
-      name: ArgumentType[] | ArgumentType;
-    };
+    paramType: "string" | "number" | "boolean" | "null" | "raw" | "array" | "object" | "undefined";
+    arguments: ArgumentType[];
+    name: ArgumentType[] | ArgumentType;
+  };
