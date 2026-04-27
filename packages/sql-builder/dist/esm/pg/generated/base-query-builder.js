@@ -1,3400 +1,3379 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 import { BaseRawQueryBuilder } from "../base-raw-query-builder";
-var BaseQueryBuilder = /** @class */ (function (_super) {
-    __extends(BaseQueryBuilder, _super);
-    function BaseQueryBuilder() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    BaseQueryBuilder.prototype.a = function () {
+export class BaseQueryBuilder extends BaseRawQueryBuilder {
+    a() {
         this.query.sql.push('A');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.abort = function () {
+    }
+    abort() {
         this.query.sql.push('ABORT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.abs = function () {
+    }
+    abs() {
         this.query.sql.push('ABS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.absent = function () {
+    }
+    absent() {
         this.query.sql.push('ABSENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.absolute = function () {
+    }
+    absolute() {
         this.query.sql.push('ABSOLUTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.access = function () {
+    }
+    access() {
         this.query.sql.push('ACCESS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.according = function () {
+    }
+    according() {
         this.query.sql.push('ACCORDING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.acos = function () {
+    }
+    acos() {
         this.query.sql.push('ACOS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.action = function () {
+    }
+    action() {
         this.query.sql.push('ACTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ada = function () {
+    }
+    ada() {
         this.query.sql.push('ADA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.add = function () {
+    }
+    add() {
         this.query.sql.push('ADD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.admin = function () {
+    }
+    admin() {
         this.query.sql.push('ADMIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.after = function () {
+    }
+    after() {
         this.query.sql.push('AFTER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.aggregate = function () {
+    }
+    aggregate() {
         this.query.sql.push('AGGREGATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.all = function () {
+    }
+    all() {
         this.query.sql.push('ALL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.allocate = function () {
+    }
+    allocate() {
         this.query.sql.push('ALLOCATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.also = function () {
+    }
+    also() {
         this.query.sql.push('ALSO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.alter = function () {
+    }
+    alter() {
         this.query.sql.push('ALTER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.always = function () {
+    }
+    always() {
         this.query.sql.push('ALWAYS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.analyse = function () {
+    }
+    analyse() {
         this.query.sql.push('ANALYSE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.analyze = function () {
+    }
+    analyze() {
         this.query.sql.push('ANALYZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.and = function () {
+    }
+    and() {
         this.query.sql.push('AND');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.any = function () {
+    }
+    any() {
         this.query.sql.push('ANY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.anyValue = function () {
+    }
+    anyValue() {
         this.query.sql.push('ANY_VALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.are = function () {
+    }
+    are() {
         this.query.sql.push('ARE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.array = function () {
+    }
+    array() {
         this.query.sql.push('ARRAY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.arrayAgg = function () {
+    }
+    arrayAgg() {
         this.query.sql.push('ARRAY_AGG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.arraymaxcardinality = function () {
+    }
+    arraymaxcardinality() {
         this.query.sql.push('ARRAY_MAX_CARDINALITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.as = function () {
+    }
+    as() {
         this.query.sql.push('AS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.asc = function () {
+    }
+    asc() {
         this.query.sql.push('ASC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.asensitive = function () {
+    }
+    asensitive() {
         this.query.sql.push('ASENSITIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.asin = function () {
+    }
+    asin() {
         this.query.sql.push('ASIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.assertion = function () {
+    }
+    assertion() {
         this.query.sql.push('ASSERTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.assignment = function () {
+    }
+    assignment() {
         this.query.sql.push('ASSIGNMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.asymmetric = function () {
+    }
+    asymmetric() {
         this.query.sql.push('ASYMMETRIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.at = function () {
+    }
+    at() {
         this.query.sql.push('AT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.atan = function () {
+    }
+    atan() {
         this.query.sql.push('ATAN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.atomic = function () {
+    }
+    atomic() {
         this.query.sql.push('ATOMIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.attach = function () {
+    }
+    attach() {
         this.query.sql.push('ATTACH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.attribute = function () {
+    }
+    attribute() {
         this.query.sql.push('ATTRIBUTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.attributes = function () {
+    }
+    attributes() {
         this.query.sql.push('ATTRIBUTES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.authorization = function () {
+    }
+    authorization() {
         this.query.sql.push('AUTHORIZATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.avg = function () {
+    }
+    avg() {
         this.query.sql.push('AVG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.backward = function () {
+    }
+    backward() {
         this.query.sql.push('BACKWARD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.base64 = function () {
+    }
+    base64() {
         this.query.sql.push('BASE64');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.before = function () {
+    }
+    before() {
         this.query.sql.push('BEFORE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.begin = function () {
+    }
+    begin() {
         this.query.sql.push('BEGIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.beginFrame = function () {
+    }
+    beginFrame() {
         this.query.sql.push('BEGIN_FRAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.beginPartition = function () {
+    }
+    beginPartition() {
         this.query.sql.push('BEGIN_PARTITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.bernoulli = function () {
+    }
+    bernoulli() {
         this.query.sql.push('BERNOULLI');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.between = function () {
+    }
+    between() {
         this.query.sql.push('BETWEEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.bigint = function () {
+    }
+    bigint() {
         this.query.sql.push('BIGINT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.binary = function () {
+    }
+    binary() {
         this.query.sql.push('BINARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.bit = function () {
+    }
+    bit() {
         this.query.sql.push('BIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.bitLength = function () {
+    }
+    bitLength() {
         this.query.sql.push('BIT_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.blob = function () {
+    }
+    blob() {
         this.query.sql.push('BLOB');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.blocked = function () {
+    }
+    blocked() {
         this.query.sql.push('BLOCKED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.bom = function () {
+    }
+    bom() {
         this.query.sql.push('BOM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.boolean = function () {
+    }
+    boolean() {
         this.query.sql.push('BOOLEAN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.both = function () {
+    }
+    both() {
         this.query.sql.push('BOTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.breadth = function () {
+    }
+    breadth() {
         this.query.sql.push('BREADTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.btrim = function () {
+    }
+    btrim() {
         this.query.sql.push('BTRIM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.by = function () {
+    }
+    by() {
         this.query.sql.push('BY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.c = function () {
+    }
+    c() {
         this.query.sql.push('C');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cache = function () {
+    }
+    cache() {
         this.query.sql.push('CACHE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.call = function () {
+    }
+    call() {
         this.query.sql.push('CALL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.called = function () {
+    }
+    called() {
         this.query.sql.push('CALLED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cardinality = function () {
+    }
+    cardinality() {
         this.query.sql.push('CARDINALITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cascade = function () {
+    }
+    cascade() {
         this.query.sql.push('CASCADE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cascaded = function () {
+    }
+    cascaded() {
         this.query.sql.push('CASCADED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.case = function () {
+    }
+    case() {
         this.query.sql.push('CASE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cast = function () {
+    }
+    cast() {
         this.query.sql.push('CAST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.catalog = function () {
+    }
+    catalog() {
         this.query.sql.push('CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.catalogName = function () {
+    }
+    catalogName() {
         this.query.sql.push('CATALOG_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ceil = function () {
+    }
+    ceil() {
         this.query.sql.push('CEIL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ceiling = function () {
+    }
+    ceiling() {
         this.query.sql.push('CEILING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.chain = function () {
+    }
+    chain() {
         this.query.sql.push('CHAIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.chaining = function () {
+    }
+    chaining() {
         this.query.sql.push('CHAINING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.char = function () {
+    }
+    char() {
         this.query.sql.push('CHAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.character = function () {
+    }
+    character() {
         this.query.sql.push('CHARACTER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.characteristics = function () {
+    }
+    characteristics() {
         this.query.sql.push('CHARACTERISTICS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.characters = function () {
+    }
+    characters() {
         this.query.sql.push('CHARACTERS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.characterLength = function () {
+    }
+    characterLength() {
         this.query.sql.push('CHARACTER_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.charactersetcatalog = function () {
+    }
+    charactersetcatalog() {
         this.query.sql.push('CHARACTER_SET_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.characterSetName = function () {
+    }
+    characterSetName() {
         this.query.sql.push('CHARACTER_SET_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.characterSetSchema = function () {
+    }
+    characterSetSchema() {
         this.query.sql.push('CHARACTER_SET_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.charLength = function () {
+    }
+    charLength() {
         this.query.sql.push('CHAR_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.check = function () {
+    }
+    check() {
         this.query.sql.push('CHECK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.checkpoint = function () {
+    }
+    checkpoint() {
         this.query.sql.push('CHECKPOINT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.class = function () {
+    }
+    class() {
         this.query.sql.push('CLASS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.classifier = function () {
+    }
+    classifier() {
         this.query.sql.push('CLASSIFIER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.classOrigin = function () {
+    }
+    classOrigin() {
         this.query.sql.push('CLASS_ORIGIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.clob = function () {
+    }
+    clob() {
         this.query.sql.push('CLOB');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.close = function () {
+    }
+    close() {
         this.query.sql.push('CLOSE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cluster = function () {
+    }
+    cluster() {
         this.query.sql.push('CLUSTER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.coalesce = function () {
+    }
+    coalesce() {
         this.query.sql.push('COALESCE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cobol = function () {
+    }
+    cobol() {
         this.query.sql.push('COBOL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.collate = function () {
+    }
+    collate() {
         this.query.sql.push('COLLATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.collation = function () {
+    }
+    collation() {
         this.query.sql.push('COLLATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.collationCatalog = function () {
+    }
+    collationCatalog() {
         this.query.sql.push('COLLATION_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.collationName = function () {
+    }
+    collationName() {
         this.query.sql.push('COLLATION_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.collationSchema = function () {
+    }
+    collationSchema() {
         this.query.sql.push('COLLATION_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.collect = function () {
+    }
+    collect() {
         this.query.sql.push('COLLECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.column = function () {
+    }
+    column() {
         this.query.sql.push('COLUMN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.columns = function () {
+    }
+    columns() {
         this.query.sql.push('COLUMNS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.columnName = function () {
+    }
+    columnName() {
         this.query.sql.push('COLUMN_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.commandFunction = function () {
+    }
+    commandFunction() {
         this.query.sql.push('COMMAND_FUNCTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.commandfunctioncode = function () {
+    }
+    commandfunctioncode() {
         this.query.sql.push('COMMAND_FUNCTION_CODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.comment = function () {
+    }
+    comment() {
         this.query.sql.push('COMMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.comments = function () {
+    }
+    comments() {
         this.query.sql.push('COMMENTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.commit = function () {
+    }
+    commit() {
         this.query.sql.push('COMMIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.committed = function () {
+    }
+    committed() {
         this.query.sql.push('COMMITTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.compression = function () {
+    }
+    compression() {
         this.query.sql.push('COMPRESSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.concurrently = function () {
+    }
+    concurrently() {
         this.query.sql.push('CONCURRENTLY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.condition = function () {
+    }
+    condition() {
         this.query.sql.push('CONDITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.conditional = function () {
+    }
+    conditional() {
         this.query.sql.push('CONDITIONAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.conditionNumber = function () {
+    }
+    conditionNumber() {
         this.query.sql.push('CONDITION_NUMBER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.configuration = function () {
+    }
+    configuration() {
         this.query.sql.push('CONFIGURATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.conflict = function () {
+    }
+    conflict() {
         this.query.sql.push('CONFLICT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.connect = function () {
+    }
+    connect() {
         this.query.sql.push('CONNECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.connection = function () {
+    }
+    connection() {
         this.query.sql.push('CONNECTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.connectionName = function () {
+    }
+    connectionName() {
         this.query.sql.push('CONNECTION_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.constraint = function () {
+    }
+    constraint() {
         this.query.sql.push('CONSTRAINT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.constraints = function () {
+    }
+    constraints() {
         this.query.sql.push('CONSTRAINTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.constraintCatalog = function () {
+    }
+    constraintCatalog() {
         this.query.sql.push('CONSTRAINT_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.constraintName = function () {
+    }
+    constraintName() {
         this.query.sql.push('CONSTRAINT_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.constraintSchema = function () {
+    }
+    constraintSchema() {
         this.query.sql.push('CONSTRAINT_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.constructorKeyword = function () {
+    }
+    constructorKeyword() {
         this.query.sql.push('CONSTRUCTOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.contains = function () {
+    }
+    contains() {
         this.query.sql.push('CONTAINS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.content = function () {
+    }
+    content() {
         this.query.sql.push('CONTENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.continue = function () {
+    }
+    continue() {
         this.query.sql.push('CONTINUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.control = function () {
+    }
+    control() {
         this.query.sql.push('CONTROL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.conversion = function () {
+    }
+    conversion() {
         this.query.sql.push('CONVERSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.convert = function () {
+    }
+    convert() {
         this.query.sql.push('CONVERT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.copartition = function () {
+    }
+    copartition() {
         this.query.sql.push('COPARTITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.copy = function () {
+    }
+    copy() {
         this.query.sql.push('COPY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.corr = function () {
+    }
+    corr() {
         this.query.sql.push('CORR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.corresponding = function () {
+    }
+    corresponding() {
         this.query.sql.push('CORRESPONDING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cos = function () {
+    }
+    cos() {
         this.query.sql.push('COS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cosh = function () {
+    }
+    cosh() {
         this.query.sql.push('COSH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cost = function () {
+    }
+    cost() {
         this.query.sql.push('COST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.count = function () {
+    }
+    count() {
         this.query.sql.push('COUNT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.covarPop = function () {
+    }
+    covarPop() {
         this.query.sql.push('COVAR_POP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.covarSamp = function () {
+    }
+    covarSamp() {
         this.query.sql.push('COVAR_SAMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.create = function () {
+    }
+    create() {
         this.query.sql.push('CREATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cross = function () {
+    }
+    cross() {
         this.query.sql.push('CROSS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.csv = function () {
+    }
+    csv() {
         this.query.sql.push('CSV');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cube = function () {
+    }
+    cube() {
         this.query.sql.push('CUBE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cumeDist = function () {
+    }
+    cumeDist() {
         this.query.sql.push('CUME_DIST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.current = function () {
+    }
+    current() {
         this.query.sql.push('CURRENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentCatalog = function () {
+    }
+    currentCatalog() {
         this.query.sql.push('CURRENT_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentDate = function () {
+    }
+    currentDate() {
         this.query.sql.push('CURRENT_DATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentdefaulttransformgroup = function () {
+    }
+    currentdefaulttransformgroup() {
         this.query.sql.push('CURRENT_DEFAULT_TRANSFORM_GROUP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentPath = function () {
+    }
+    currentPath() {
         this.query.sql.push('CURRENT_PATH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentRole = function () {
+    }
+    currentRole() {
         this.query.sql.push('CURRENT_ROLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentRow = function () {
+    }
+    currentRow() {
         this.query.sql.push('CURRENT_ROW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentSchema = function () {
+    }
+    currentSchema() {
         this.query.sql.push('CURRENT_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentTime = function () {
+    }
+    currentTime() {
         this.query.sql.push('CURRENT_TIME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentTimestamp = function () {
+    }
+    currentTimestamp() {
         this.query.sql.push('CURRENT_TIMESTAMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currenttransformgroupfortype = function () {
+    }
+    currenttransformgroupfortype() {
         this.query.sql.push('CURRENT_TRANSFORM_GROUP_FOR_TYPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.currentUser = function () {
+    }
+    currentUser() {
         this.query.sql.push('CURRENT_USER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cursor = function () {
+    }
+    cursor() {
         this.query.sql.push('CURSOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cursorName = function () {
+    }
+    cursorName() {
         this.query.sql.push('CURSOR_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.cycle = function () {
+    }
+    cycle() {
         this.query.sql.push('CYCLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.data = function () {
+    }
+    data() {
         this.query.sql.push('DATA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.database = function () {
+    }
+    database() {
         this.query.sql.push('DATABASE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.datalink = function () {
+    }
+    datalink() {
         this.query.sql.push('DATALINK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.date = function () {
+    }
+    date() {
         this.query.sql.push('DATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.datetimeintervalcode = function () {
+    }
+    datetimeintervalcode() {
         this.query.sql.push('DATETIME_INTERVAL_CODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.datetimeintervalprecision = function () {
+    }
+    datetimeintervalprecision() {
         this.query.sql.push('DATETIME_INTERVAL_PRECISION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.day = function () {
+    }
+    day() {
         this.query.sql.push('DAY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.db = function () {
+    }
+    db() {
         this.query.sql.push('DB');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.deallocate = function () {
+    }
+    deallocate() {
         this.query.sql.push('DEALLOCATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dec = function () {
+    }
+    dec() {
         this.query.sql.push('DEC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.decfloat = function () {
+    }
+    decfloat() {
         this.query.sql.push('DECFLOAT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.decimal = function () {
+    }
+    decimal() {
         this.query.sql.push('DECIMAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.declare = function () {
+    }
+    declare() {
         this.query.sql.push('DECLARE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.default = function () {
+    }
+    default() {
         this.query.sql.push('DEFAULT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.defaults = function () {
+    }
+    defaults() {
         this.query.sql.push('DEFAULTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.deferrable = function () {
+    }
+    deferrable() {
         this.query.sql.push('DEFERRABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.deferred = function () {
+    }
+    deferred() {
         this.query.sql.push('DEFERRED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.define = function () {
+    }
+    define() {
         this.query.sql.push('DEFINE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.defined = function () {
+    }
+    defined() {
         this.query.sql.push('DEFINED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.definer = function () {
+    }
+    definer() {
         this.query.sql.push('DEFINER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.degree = function () {
+    }
+    degree() {
         this.query.sql.push('DEGREE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.delete = function () {
+    }
+    delete() {
         this.query.sql.push('DELETE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.delimiter = function () {
+    }
+    delimiter() {
         this.query.sql.push('DELIMITER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.delimiters = function () {
+    }
+    delimiters() {
         this.query.sql.push('DELIMITERS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.denseRank = function () {
+    }
+    denseRank() {
         this.query.sql.push('DENSE_RANK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.depends = function () {
+    }
+    depends() {
         this.query.sql.push('DEPENDS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.depth = function () {
+    }
+    depth() {
         this.query.sql.push('DEPTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.deref = function () {
+    }
+    deref() {
         this.query.sql.push('DEREF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.derived = function () {
+    }
+    derived() {
         this.query.sql.push('DERIVED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.desc = function () {
+    }
+    desc() {
         this.query.sql.push('DESC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.describe = function () {
+    }
+    describe() {
         this.query.sql.push('DESCRIBE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.descriptor = function () {
+    }
+    descriptor() {
         this.query.sql.push('DESCRIPTOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.detach = function () {
+    }
+    detach() {
         this.query.sql.push('DETACH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.deterministic = function () {
+    }
+    deterministic() {
         this.query.sql.push('DETERMINISTIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.diagnostics = function () {
+    }
+    diagnostics() {
         this.query.sql.push('DIAGNOSTICS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dictionary = function () {
+    }
+    dictionary() {
         this.query.sql.push('DICTIONARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.disable = function () {
+    }
+    disable() {
         this.query.sql.push('DISABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.discard = function () {
+    }
+    discard() {
         this.query.sql.push('DISCARD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.disconnect = function () {
+    }
+    disconnect() {
         this.query.sql.push('DISCONNECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dispatch = function () {
+    }
+    dispatch() {
         this.query.sql.push('DISPATCH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.distinct = function () {
+    }
+    distinct() {
         this.query.sql.push('DISTINCT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlnewcopy = function () {
+    }
+    dlnewcopy() {
         this.query.sql.push('DLNEWCOPY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlpreviouscopy = function () {
+    }
+    dlpreviouscopy() {
         this.query.sql.push('DLPREVIOUSCOPY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlcomplete = function () {
+    }
+    dlurlcomplete() {
         this.query.sql.push('DLURLCOMPLETE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlcompleteonly = function () {
+    }
+    dlurlcompleteonly() {
         this.query.sql.push('DLURLCOMPLETEONLY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlcompletewrite = function () {
+    }
+    dlurlcompletewrite() {
         this.query.sql.push('DLURLCOMPLETEWRITE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlpath = function () {
+    }
+    dlurlpath() {
         this.query.sql.push('DLURLPATH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlpathonly = function () {
+    }
+    dlurlpathonly() {
         this.query.sql.push('DLURLPATHONLY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlpathwrite = function () {
+    }
+    dlurlpathwrite() {
         this.query.sql.push('DLURLPATHWRITE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlscheme = function () {
+    }
+    dlurlscheme() {
         this.query.sql.push('DLURLSCHEME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlurlserver = function () {
+    }
+    dlurlserver() {
         this.query.sql.push('DLURLSERVER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dlvalue = function () {
+    }
+    dlvalue() {
         this.query.sql.push('DLVALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.do = function () {
+    }
+    do() {
         this.query.sql.push('DO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.document = function () {
+    }
+    document() {
         this.query.sql.push('DOCUMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.domain = function () {
+    }
+    domain() {
         this.query.sql.push('DOMAIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.double = function () {
+    }
+    double() {
         this.query.sql.push('DOUBLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.drop = function () {
+    }
+    drop() {
         this.query.sql.push('DROP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dynamic = function () {
+    }
+    dynamic() {
         this.query.sql.push('DYNAMIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dynamicFunction = function () {
+    }
+    dynamicFunction() {
         this.query.sql.push('DYNAMIC_FUNCTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.dynamicfunctioncode = function () {
+    }
+    dynamicfunctioncode() {
         this.query.sql.push('DYNAMIC_FUNCTION_CODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.each = function () {
+    }
+    each() {
         this.query.sql.push('EACH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.element = function () {
+    }
+    element() {
         this.query.sql.push('ELEMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.else = function () {
+    }
+    else() {
         this.query.sql.push('ELSE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.empty = function () {
+    }
+    empty() {
         this.query.sql.push('EMPTY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.enable = function () {
+    }
+    enable() {
         this.query.sql.push('ENABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.encoding = function () {
+    }
+    encoding() {
         this.query.sql.push('ENCODING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.encrypted = function () {
+    }
+    encrypted() {
         this.query.sql.push('ENCRYPTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.end = function () {
+    }
+    end() {
         this.query.sql.push('END');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.endExec = function () {
+    }
+    endExec() {
         this.query.sql.push('END-EXEC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.endFrame = function () {
+    }
+    endFrame() {
         this.query.sql.push('END_FRAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.endPartition = function () {
+    }
+    endPartition() {
         this.query.sql.push('END_PARTITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.enforced = function () {
+    }
+    enforced() {
         this.query.sql.push('ENFORCED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.enum = function () {
+    }
+    enum() {
         this.query.sql.push('ENUM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.equals = function () {
+    }
+    equals() {
         this.query.sql.push('EQUALS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.error = function () {
+    }
+    error() {
         this.query.sql.push('ERROR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.escape = function () {
+    }
+    escape() {
         this.query.sql.push('ESCAPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.event = function () {
+    }
+    event() {
         this.query.sql.push('EVENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.every = function () {
+    }
+    every() {
         this.query.sql.push('EVERY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.except = function () {
+    }
+    except() {
         this.query.sql.push('EXCEPT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.exception = function () {
+    }
+    exception() {
         this.query.sql.push('EXCEPTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.exclude = function () {
+    }
+    exclude() {
         this.query.sql.push('EXCLUDE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.excluding = function () {
+    }
+    excluding() {
         this.query.sql.push('EXCLUDING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.exclusive = function () {
+    }
+    exclusive() {
         this.query.sql.push('EXCLUSIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.execKeyword = function () {
+    }
+    execKeyword() {
         this.query.sql.push('EXEC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.executeKeyword = function () {
+    }
+    executeKeyword() {
         this.query.sql.push('EXECUTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.exists = function () {
+    }
+    exists() {
         this.query.sql.push('EXISTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.exp = function () {
+    }
+    exp() {
         this.query.sql.push('EXP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.explain = function () {
+    }
+    explain() {
         this.query.sql.push('EXPLAIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.expression = function () {
+    }
+    expression() {
         this.query.sql.push('EXPRESSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.extension = function () {
+    }
+    extension() {
         this.query.sql.push('EXTENSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.external = function () {
+    }
+    external() {
         this.query.sql.push('EXTERNAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.extract = function () {
+    }
+    extract() {
         this.query.sql.push('EXTRACT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.false = function () {
+    }
+    false() {
         this.query.sql.push('FALSE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.family = function () {
+    }
+    family() {
         this.query.sql.push('FAMILY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.fetch = function () {
+    }
+    fetch() {
         this.query.sql.push('FETCH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.file = function () {
+    }
+    file() {
         this.query.sql.push('FILE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.filter = function () {
+    }
+    filter() {
         this.query.sql.push('FILTER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.final = function () {
+    }
+    final() {
         this.query.sql.push('FINAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.finalize = function () {
+    }
+    finalize() {
         this.query.sql.push('FINALIZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.finish = function () {
+    }
+    finish() {
         this.query.sql.push('FINISH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.first = function () {
+    }
+    first() {
         this.query.sql.push('FIRST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.firstValue = function () {
+    }
+    firstValue() {
         this.query.sql.push('FIRST_VALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.flag = function () {
+    }
+    flag() {
         this.query.sql.push('FLAG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.float = function () {
+    }
+    float() {
         this.query.sql.push('FLOAT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.floor = function () {
+    }
+    floor() {
         this.query.sql.push('FLOOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.following = function () {
+    }
+    following() {
         this.query.sql.push('FOLLOWING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.for = function () {
+    }
+    for() {
         this.query.sql.push('FOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.force = function () {
+    }
+    force() {
         this.query.sql.push('FORCE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.foreign = function () {
+    }
+    foreign() {
         this.query.sql.push('FOREIGN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.format = function () {
+    }
+    format() {
         this.query.sql.push('FORMAT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.fortran = function () {
+    }
+    fortran() {
         this.query.sql.push('FORTRAN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.forward = function () {
+    }
+    forward() {
         this.query.sql.push('FORWARD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.found = function () {
+    }
+    found() {
         this.query.sql.push('FOUND');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.frameRow = function () {
+    }
+    frameRow() {
         this.query.sql.push('FRAME_ROW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.free = function () {
+    }
+    free() {
         this.query.sql.push('FREE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.freeze = function () {
+    }
+    freeze() {
         this.query.sql.push('FREEZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.from = function () {
+    }
+    from() {
         this.query.sql.push('FROM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.fs = function () {
+    }
+    fs() {
         this.query.sql.push('FS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.fulfill = function () {
+    }
+    fulfill() {
         this.query.sql.push('FULFILL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.full = function () {
+    }
+    full() {
         this.query.sql.push('FULL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.function = function () {
+    }
+    function() {
         this.query.sql.push('FUNCTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.functions = function () {
+    }
+    functions() {
         this.query.sql.push('FUNCTIONS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.fusion = function () {
+    }
+    fusion() {
         this.query.sql.push('FUSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.g = function () {
+    }
+    g() {
         this.query.sql.push('G');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.general = function () {
+    }
+    general() {
         this.query.sql.push('GENERAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.generated = function () {
+    }
+    generated() {
         this.query.sql.push('GENERATED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.get = function () {
+    }
+    get() {
         this.query.sql.push('GET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.global = function () {
+    }
+    global() {
         this.query.sql.push('GLOBAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.go = function () {
+    }
+    go() {
         this.query.sql.push('GO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.goto = function () {
+    }
+    goto() {
         this.query.sql.push('GOTO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.grant = function () {
+    }
+    grant() {
         this.query.sql.push('GRANT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.granted = function () {
+    }
+    granted() {
         this.query.sql.push('GRANTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.greatest = function () {
+    }
+    greatest() {
         this.query.sql.push('GREATEST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.group = function () {
+    }
+    group() {
         this.query.sql.push('GROUP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.grouping = function () {
+    }
+    grouping() {
         this.query.sql.push('GROUPING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.groups = function () {
+    }
+    groups() {
         this.query.sql.push('GROUPS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.handler = function () {
+    }
+    handler() {
         this.query.sql.push('HANDLER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.having = function () {
+    }
+    having() {
         this.query.sql.push('HAVING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.header = function () {
+    }
+    header() {
         this.query.sql.push('HEADER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.hex = function () {
+    }
+    hex() {
         this.query.sql.push('HEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.hierarchy = function () {
+    }
+    hierarchy() {
         this.query.sql.push('HIERARCHY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.hold = function () {
+    }
+    hold() {
         this.query.sql.push('HOLD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.hour = function () {
+    }
+    hour() {
         this.query.sql.push('HOUR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.id = function () {
+    }
+    id() {
         this.query.sql.push('ID');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.identity = function () {
+    }
+    identity() {
         this.query.sql.push('IDENTITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.if = function () {
+    }
+    if() {
         this.query.sql.push('IF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ignore = function () {
+    }
+    ignore() {
         this.query.sql.push('IGNORE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ilike = function () {
+    }
+    ilike() {
         this.query.sql.push('ILIKE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.immediate = function () {
+    }
+    immediate() {
         this.query.sql.push('IMMEDIATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.immediately = function () {
+    }
+    immediately() {
         this.query.sql.push('IMMEDIATELY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.immutable = function () {
+    }
+    immutable() {
         this.query.sql.push('IMMUTABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.implementation = function () {
+    }
+    implementation() {
         this.query.sql.push('IMPLEMENTATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.implicit = function () {
+    }
+    implicit() {
         this.query.sql.push('IMPLICIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.import = function () {
+    }
+    import() {
         this.query.sql.push('IMPORT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.in = function () {
+    }
+    in() {
         this.query.sql.push('IN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.include = function () {
+    }
+    include() {
         this.query.sql.push('INCLUDE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.including = function () {
+    }
+    including() {
         this.query.sql.push('INCLUDING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.increment = function () {
+    }
+    increment() {
         this.query.sql.push('INCREMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.indent = function () {
+    }
+    indent() {
         this.query.sql.push('INDENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.index = function () {
+    }
+    index() {
         this.query.sql.push('INDEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.indexes = function () {
+    }
+    indexes() {
         this.query.sql.push('INDEXES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.indicator = function () {
+    }
+    indicator() {
         this.query.sql.push('INDICATOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.inherit = function () {
+    }
+    inherit() {
         this.query.sql.push('INHERIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.inherits = function () {
+    }
+    inherits() {
         this.query.sql.push('INHERITS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.initial = function () {
+    }
+    initial() {
         this.query.sql.push('INITIAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.initially = function () {
+    }
+    initially() {
         this.query.sql.push('INITIALLY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.inline = function () {
+    }
+    inline() {
         this.query.sql.push('INLINE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.inner = function () {
+    }
+    inner() {
         this.query.sql.push('INNER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.inout = function () {
+    }
+    inout() {
         this.query.sql.push('INOUT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.input = function () {
+    }
+    input() {
         this.query.sql.push('INPUT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.insensitive = function () {
+    }
+    insensitive() {
         this.query.sql.push('INSENSITIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.insert = function () {
+    }
+    insert() {
         this.query.sql.push('INSERT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.instance = function () {
+    }
+    instance() {
         this.query.sql.push('INSTANCE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.instantiable = function () {
+    }
+    instantiable() {
         this.query.sql.push('INSTANTIABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.instead = function () {
+    }
+    instead() {
         this.query.sql.push('INSTEAD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.int = function () {
+    }
+    int() {
         this.query.sql.push('INT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.integer = function () {
+    }
+    integer() {
         this.query.sql.push('INTEGER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.integrity = function () {
+    }
+    integrity() {
         this.query.sql.push('INTEGRITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.intersect = function () {
+    }
+    intersect() {
         this.query.sql.push('INTERSECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.intersection = function () {
+    }
+    intersection() {
         this.query.sql.push('INTERSECTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.interval = function () {
+    }
+    interval() {
         this.query.sql.push('INTERVAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.into = function () {
+    }
+    into() {
         this.query.sql.push('INTO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.invoker = function () {
+    }
+    invoker() {
         this.query.sql.push('INVOKER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.is = function () {
+    }
+    is() {
         this.query.sql.push('IS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.isnull = function () {
+    }
+    isnull() {
         this.query.sql.push('ISNULL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.isolation = function () {
+    }
+    isolation() {
         this.query.sql.push('ISOLATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.join = function () {
+    }
+    join() {
         this.query.sql.push('JOIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.json = function () {
+    }
+    json() {
         this.query.sql.push('JSON');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonArray = function () {
+    }
+    jsonArray() {
         this.query.sql.push('JSON_ARRAY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonArrayagg = function () {
+    }
+    jsonArrayagg() {
         this.query.sql.push('JSON_ARRAYAGG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonExists = function () {
+    }
+    jsonExists() {
         this.query.sql.push('JSON_EXISTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonObject = function () {
+    }
+    jsonObject() {
         this.query.sql.push('JSON_OBJECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonObjectagg = function () {
+    }
+    jsonObjectagg() {
         this.query.sql.push('JSON_OBJECTAGG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonQuery = function () {
+    }
+    jsonQuery() {
         this.query.sql.push('JSON_QUERY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonScalar = function () {
+    }
+    jsonScalar() {
         this.query.sql.push('JSON_SCALAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonSerialize = function () {
+    }
+    jsonSerialize() {
         this.query.sql.push('JSON_SERIALIZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonTable = function () {
+    }
+    jsonTable() {
         this.query.sql.push('JSON_TABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonTablePrimitive = function () {
+    }
+    jsonTablePrimitive() {
         this.query.sql.push('JSON_TABLE_PRIMITIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.jsonValue = function () {
+    }
+    jsonValue() {
         this.query.sql.push('JSON_VALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.k = function () {
+    }
+    k() {
         this.query.sql.push('K');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.keep = function () {
+    }
+    keep() {
         this.query.sql.push('KEEP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.key = function () {
+    }
+    key() {
         this.query.sql.push('KEY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.keys = function () {
+    }
+    keys() {
         this.query.sql.push('KEYS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.keyMember = function () {
+    }
+    keyMember() {
         this.query.sql.push('KEY_MEMBER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.keyType = function () {
+    }
+    keyType() {
         this.query.sql.push('KEY_TYPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.label = function () {
+    }
+    label() {
         this.query.sql.push('LABEL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lag = function () {
+    }
+    lag() {
         this.query.sql.push('LAG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.language = function () {
+    }
+    language() {
         this.query.sql.push('LANGUAGE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.large = function () {
+    }
+    large() {
         this.query.sql.push('LARGE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.last = function () {
+    }
+    last() {
         this.query.sql.push('LAST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lastValue = function () {
+    }
+    lastValue() {
         this.query.sql.push('LAST_VALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lateral = function () {
+    }
+    lateral() {
         this.query.sql.push('LATERAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lead = function () {
+    }
+    lead() {
         this.query.sql.push('LEAD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.leading = function () {
+    }
+    leading() {
         this.query.sql.push('LEADING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.leakproof = function () {
+    }
+    leakproof() {
         this.query.sql.push('LEAKPROOF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.least = function () {
+    }
+    least() {
         this.query.sql.push('LEAST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.left = function () {
+    }
+    left() {
         this.query.sql.push('LEFT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.length = function () {
+    }
+    length() {
         this.query.sql.push('LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.level = function () {
+    }
+    level() {
         this.query.sql.push('LEVEL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.library = function () {
+    }
+    library() {
         this.query.sql.push('LIBRARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.like = function () {
+    }
+    like() {
         this.query.sql.push('LIKE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.likeRegex = function () {
+    }
+    likeRegex() {
         this.query.sql.push('LIKE_REGEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.limit = function () {
+    }
+    limit() {
         this.query.sql.push('LIMIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.link = function () {
+    }
+    link() {
         this.query.sql.push('LINK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.listagg = function () {
+    }
+    listagg() {
         this.query.sql.push('LISTAGG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.listen = function () {
+    }
+    listen() {
         this.query.sql.push('LISTEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ln = function () {
+    }
+    ln() {
         this.query.sql.push('LN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.load = function () {
+    }
+    load() {
         this.query.sql.push('LOAD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.local = function () {
+    }
+    local() {
         this.query.sql.push('LOCAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.localtime = function () {
+    }
+    localtime() {
         this.query.sql.push('LOCALTIME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.localtimestamp = function () {
+    }
+    localtimestamp() {
         this.query.sql.push('LOCALTIMESTAMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.location = function () {
+    }
+    location() {
         this.query.sql.push('LOCATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.locator = function () {
+    }
+    locator() {
         this.query.sql.push('LOCATOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lock = function () {
+    }
+    lock() {
         this.query.sql.push('LOCK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.locked = function () {
+    }
+    locked() {
         this.query.sql.push('LOCKED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.log = function () {
+    }
+    log() {
         this.query.sql.push('LOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.log10 = function () {
+    }
+    log10() {
         this.query.sql.push('LOG10');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.logged = function () {
+    }
+    logged() {
         this.query.sql.push('LOGGED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lower = function () {
+    }
+    lower() {
         this.query.sql.push('LOWER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.lpad = function () {
+    }
+    lpad() {
         this.query.sql.push('LPAD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ltrim = function () {
+    }
+    ltrim() {
         this.query.sql.push('LTRIM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.m = function () {
+    }
+    m() {
         this.query.sql.push('M');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.map = function () {
+    }
+    map() {
         this.query.sql.push('MAP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.mapping = function () {
+    }
+    mapping() {
         this.query.sql.push('MAPPING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.match = function () {
+    }
+    match() {
         this.query.sql.push('MATCH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.matched = function () {
+    }
+    matched() {
         this.query.sql.push('MATCHED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.matches = function () {
+    }
+    matches() {
         this.query.sql.push('MATCHES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.matchNumber = function () {
+    }
+    matchNumber() {
         this.query.sql.push('MATCH_NUMBER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.matchRecognize = function () {
+    }
+    matchRecognize() {
         this.query.sql.push('MATCH_RECOGNIZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.materialized = function () {
+    }
+    materialized() {
         this.query.sql.push('MATERIALIZED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.max = function () {
+    }
+    max() {
         this.query.sql.push('MAX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.maxvalue = function () {
+    }
+    maxvalue() {
         this.query.sql.push('MAXVALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.measures = function () {
+    }
+    measures() {
         this.query.sql.push('MEASURES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.member = function () {
+    }
+    member() {
         this.query.sql.push('MEMBER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.merge = function () {
+    }
+    merge() {
         this.query.sql.push('MERGE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.mergeAction = function () {
+    }
+    mergeAction() {
         this.query.sql.push('MERGE_ACTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.messageLength = function () {
+    }
+    messageLength() {
         this.query.sql.push('MESSAGE_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.messageOctetLength = function () {
+    }
+    messageOctetLength() {
         this.query.sql.push('MESSAGE_OCTET_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.messageText = function () {
+    }
+    messageText() {
         this.query.sql.push('MESSAGE_TEXT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.method = function () {
+    }
+    method() {
         this.query.sql.push('METHOD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.min = function () {
+    }
+    min() {
         this.query.sql.push('MIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.minute = function () {
+    }
+    minute() {
         this.query.sql.push('MINUTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.minvalue = function () {
+    }
+    minvalue() {
         this.query.sql.push('MINVALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.mod = function () {
+    }
+    mod() {
         this.query.sql.push('MOD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.mode = function () {
+    }
+    mode() {
         this.query.sql.push('MODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.modifies = function () {
+    }
+    modifies() {
         this.query.sql.push('MODIFIES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.module = function () {
+    }
+    module() {
         this.query.sql.push('MODULE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.month = function () {
+    }
+    month() {
         this.query.sql.push('MONTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.more = function () {
+    }
+    more() {
         this.query.sql.push('MORE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.move = function () {
+    }
+    move() {
         this.query.sql.push('MOVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.multiset = function () {
+    }
+    multiset() {
         this.query.sql.push('MULTISET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.mumps = function () {
+    }
+    mumps() {
         this.query.sql.push('MUMPS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.name = function () {
+    }
+    name() {
         this.query.sql.push('NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.names = function () {
+    }
+    names() {
         this.query.sql.push('NAMES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.namespace = function () {
+    }
+    namespace() {
         this.query.sql.push('NAMESPACE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.national = function () {
+    }
+    national() {
         this.query.sql.push('NATIONAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.natural = function () {
+    }
+    natural() {
         this.query.sql.push('NATURAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nchar = function () {
+    }
+    nchar() {
         this.query.sql.push('NCHAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nclob = function () {
+    }
+    nclob() {
         this.query.sql.push('NCLOB');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nested = function () {
+    }
+    nested() {
         this.query.sql.push('NESTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nesting = function () {
+    }
+    nesting() {
         this.query.sql.push('NESTING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.new = function () {
+    }
+    new() {
         this.query.sql.push('NEW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.next = function () {
+    }
+    next() {
         this.query.sql.push('NEXT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nfc = function () {
+    }
+    nfc() {
         this.query.sql.push('NFC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nfd = function () {
+    }
+    nfd() {
         this.query.sql.push('NFD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nfkc = function () {
+    }
+    nfkc() {
         this.query.sql.push('NFKC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nfkd = function () {
+    }
+    nfkd() {
         this.query.sql.push('NFKD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nil = function () {
+    }
+    nil() {
         this.query.sql.push('NIL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.no = function () {
+    }
+    no() {
         this.query.sql.push('NO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.none = function () {
+    }
+    none() {
         this.query.sql.push('NONE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.normalize = function () {
+    }
+    normalize() {
         this.query.sql.push('NORMALIZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.normalized = function () {
+    }
+    normalized() {
         this.query.sql.push('NORMALIZED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.not = function () {
+    }
+    not() {
         this.query.sql.push('NOT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nothing = function () {
+    }
+    nothing() {
         this.query.sql.push('NOTHING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.notify = function () {
+    }
+    notify() {
         this.query.sql.push('NOTIFY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.notnull = function () {
+    }
+    notnull() {
         this.query.sql.push('NOTNULL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nowait = function () {
+    }
+    nowait() {
         this.query.sql.push('NOWAIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nthValue = function () {
+    }
+    nthValue() {
         this.query.sql.push('NTH_VALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ntile = function () {
+    }
+    ntile() {
         this.query.sql.push('NTILE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.null = function () {
+    }
+    null() {
         this.query.sql.push('NULL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nullable = function () {
+    }
+    nullable() {
         this.query.sql.push('NULLABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nullif = function () {
+    }
+    nullif() {
         this.query.sql.push('NULLIF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nulls = function () {
+    }
+    nulls() {
         this.query.sql.push('NULLS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.nullOrdering = function () {
+    }
+    nullOrdering() {
         this.query.sql.push('NULL_ORDERING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.number = function () {
+    }
+    number() {
         this.query.sql.push('NUMBER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.numeric = function () {
+    }
+    numeric() {
         this.query.sql.push('NUMERIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.object = function () {
+    }
+    object() {
         this.query.sql.push('OBJECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.objects = function () {
+    }
+    objects() {
         this.query.sql.push('OBJECTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.occurrence = function () {
+    }
+    occurrence() {
         this.query.sql.push('OCCURRENCE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.occurrencesRegex = function () {
+    }
+    occurrencesRegex() {
         this.query.sql.push('OCCURRENCES_REGEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.octets = function () {
+    }
+    octets() {
         this.query.sql.push('OCTETS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.octetLength = function () {
+    }
+    octetLength() {
         this.query.sql.push('OCTET_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.of = function () {
+    }
+    of() {
         this.query.sql.push('OF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.off = function () {
+    }
+    off() {
         this.query.sql.push('OFF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.offset = function () {
+    }
+    offset() {
         this.query.sql.push('OFFSET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.oids = function () {
+    }
+    oids() {
         this.query.sql.push('OIDS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.old = function () {
+    }
+    old() {
         this.query.sql.push('OLD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.omit = function () {
+    }
+    omit() {
         this.query.sql.push('OMIT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.on = function () {
+    }
+    on() {
         this.query.sql.push('ON');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.one = function () {
+    }
+    one() {
         this.query.sql.push('ONE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.only = function () {
+    }
+    only() {
         this.query.sql.push('ONLY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.open = function () {
+    }
+    open() {
         this.query.sql.push('OPEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.operator = function () {
+    }
+    operator() {
         this.query.sql.push('OPERATOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.option = function () {
+    }
+    option() {
         this.query.sql.push('OPTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.options = function () {
+    }
+    options() {
         this.query.sql.push('OPTIONS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.or = function () {
+    }
+    or() {
         this.query.sql.push('OR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.order = function () {
+    }
+    order() {
         this.query.sql.push('ORDER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ordering = function () {
+    }
+    ordering() {
         this.query.sql.push('ORDERING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ordinality = function () {
+    }
+    ordinality() {
         this.query.sql.push('ORDINALITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.others = function () {
+    }
+    others() {
         this.query.sql.push('OTHERS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.out = function () {
+    }
+    out() {
         this.query.sql.push('OUT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.outer = function () {
+    }
+    outer() {
         this.query.sql.push('OUTER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.output = function () {
+    }
+    output() {
         this.query.sql.push('OUTPUT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.over = function () {
+    }
+    over() {
         this.query.sql.push('OVER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.overflow = function () {
+    }
+    overflow() {
         this.query.sql.push('OVERFLOW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.overlaps = function () {
+    }
+    overlaps() {
         this.query.sql.push('OVERLAPS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.overlay = function () {
+    }
+    overlay() {
         this.query.sql.push('OVERLAY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.overriding = function () {
+    }
+    overriding() {
         this.query.sql.push('OVERRIDING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.owned = function () {
+    }
+    owned() {
         this.query.sql.push('OWNED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.owner = function () {
+    }
+    owner() {
         this.query.sql.push('OWNER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.p = function () {
+    }
+    p() {
         this.query.sql.push('P');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.pad = function () {
+    }
+    pad() {
         this.query.sql.push('PAD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parallel = function () {
+    }
+    parallel() {
         this.query.sql.push('PARALLEL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameter = function () {
+    }
+    parameter() {
         this.query.sql.push('PARAMETER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameterMode = function () {
+    }
+    parameterMode() {
         this.query.sql.push('PARAMETER_MODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameterName = function () {
+    }
+    parameterName() {
         this.query.sql.push('PARAMETER_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameterordinalposition = function () {
+    }
+    parameterordinalposition() {
         this.query.sql.push('PARAMETER_ORDINAL_POSITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameterspecificcatalog = function () {
+    }
+    parameterspecificcatalog() {
         this.query.sql.push('PARAMETER_SPECIFIC_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameterspecificname = function () {
+    }
+    parameterspecificname() {
         this.query.sql.push('PARAMETER_SPECIFIC_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parameterspecificschema = function () {
+    }
+    parameterspecificschema() {
         this.query.sql.push('PARAMETER_SPECIFIC_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.parser = function () {
+    }
+    parser() {
         this.query.sql.push('PARSER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.partial = function () {
+    }
+    partial() {
         this.query.sql.push('PARTIAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.partition = function () {
+    }
+    partition() {
         this.query.sql.push('PARTITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.pascal = function () {
+    }
+    pascal() {
         this.query.sql.push('PASCAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.pass = function () {
+    }
+    pass() {
         this.query.sql.push('PASS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.passing = function () {
+    }
+    passing() {
         this.query.sql.push('PASSING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.passthrough = function () {
+    }
+    passthrough() {
         this.query.sql.push('PASSTHROUGH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.password = function () {
+    }
+    password() {
         this.query.sql.push('PASSWORD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.past = function () {
+    }
+    past() {
         this.query.sql.push('PAST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.path = function () {
+    }
+    path() {
         this.query.sql.push('PATH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.pattern = function () {
+    }
+    pattern() {
         this.query.sql.push('PATTERN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.per = function () {
+    }
+    per() {
         this.query.sql.push('PER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.percent = function () {
+    }
+    percent() {
         this.query.sql.push('PERCENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.percentileCont = function () {
+    }
+    percentileCont() {
         this.query.sql.push('PERCENTILE_CONT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.percentileDisc = function () {
+    }
+    percentileDisc() {
         this.query.sql.push('PERCENTILE_DISC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.percentRank = function () {
+    }
+    percentRank() {
         this.query.sql.push('PERCENT_RANK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.period = function () {
+    }
+    period() {
         this.query.sql.push('PERIOD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.permission = function () {
+    }
+    permission() {
         this.query.sql.push('PERMISSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.permute = function () {
+    }
+    permute() {
         this.query.sql.push('PERMUTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.pipe = function () {
+    }
+    pipe() {
         this.query.sql.push('PIPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.placing = function () {
+    }
+    placing() {
         this.query.sql.push('PLACING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.plan = function () {
+    }
+    plan() {
         this.query.sql.push('PLAN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.plans = function () {
+    }
+    plans() {
         this.query.sql.push('PLANS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.pli = function () {
+    }
+    pli() {
         this.query.sql.push('PLI');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.policy = function () {
+    }
+    policy() {
         this.query.sql.push('POLICY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.portion = function () {
+    }
+    portion() {
         this.query.sql.push('PORTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.position = function () {
+    }
+    position() {
         this.query.sql.push('POSITION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.positionRegex = function () {
+    }
+    positionRegex() {
         this.query.sql.push('POSITION_REGEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.power = function () {
+    }
+    power() {
         this.query.sql.push('POWER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.precedes = function () {
+    }
+    precedes() {
         this.query.sql.push('PRECEDES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.preceding = function () {
+    }
+    preceding() {
         this.query.sql.push('PRECEDING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.precision = function () {
+    }
+    precision() {
         this.query.sql.push('PRECISION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.prepare = function () {
+    }
+    prepare() {
         this.query.sql.push('PREPARE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.prepared = function () {
+    }
+    prepared() {
         this.query.sql.push('PREPARED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.preserve = function () {
+    }
+    preserve() {
         this.query.sql.push('PRESERVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.prev = function () {
+    }
+    prev() {
         this.query.sql.push('PREV');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.primary = function () {
+    }
+    primary() {
         this.query.sql.push('PRIMARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.prior = function () {
+    }
+    prior() {
         this.query.sql.push('PRIOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.private = function () {
+    }
+    private() {
         this.query.sql.push('PRIVATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.privileges = function () {
+    }
+    privileges() {
         this.query.sql.push('PRIVILEGES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.procedural = function () {
+    }
+    procedural() {
         this.query.sql.push('PROCEDURAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.procedure = function () {
+    }
+    procedure() {
         this.query.sql.push('PROCEDURE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.procedures = function () {
+    }
+    procedures() {
         this.query.sql.push('PROCEDURES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.program = function () {
+    }
+    program() {
         this.query.sql.push('PROGRAM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.prune = function () {
+    }
+    prune() {
         this.query.sql.push('PRUNE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ptf = function () {
+    }
+    ptf() {
         this.query.sql.push('PTF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.public = function () {
+    }
+    public() {
         this.query.sql.push('PUBLIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.publication = function () {
+    }
+    publication() {
         this.query.sql.push('PUBLICATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.quote = function () {
+    }
+    quote() {
         this.query.sql.push('QUOTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.quotes = function () {
+    }
+    quotes() {
         this.query.sql.push('QUOTES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.range = function () {
+    }
+    range() {
         this.query.sql.push('RANGE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rank = function () {
+    }
+    rank() {
         this.query.sql.push('RANK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.read = function () {
+    }
+    read() {
         this.query.sql.push('READ');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.reads = function () {
+    }
+    reads() {
         this.query.sql.push('READS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.real = function () {
+    }
+    real() {
         this.query.sql.push('REAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.reassign = function () {
+    }
+    reassign() {
         this.query.sql.push('REASSIGN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.recovery = function () {
+    }
+    recovery() {
         this.query.sql.push('RECOVERY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.recursive = function () {
+    }
+    recursive() {
         this.query.sql.push('RECURSIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ref = function () {
+    }
+    ref() {
         this.query.sql.push('REF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.references = function () {
+    }
+    references() {
         this.query.sql.push('REFERENCES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.referencing = function () {
+    }
+    referencing() {
         this.query.sql.push('REFERENCING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.refresh = function () {
+    }
+    refresh() {
         this.query.sql.push('REFRESH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrAvgx = function () {
+    }
+    regrAvgx() {
         this.query.sql.push('REGR_AVGX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrAvgy = function () {
+    }
+    regrAvgy() {
         this.query.sql.push('REGR_AVGY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrCount = function () {
+    }
+    regrCount() {
         this.query.sql.push('REGR_COUNT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrIntercept = function () {
+    }
+    regrIntercept() {
         this.query.sql.push('REGR_INTERCEPT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrR2 = function () {
+    }
+    regrR2() {
         this.query.sql.push('REGR_R2');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrSlope = function () {
+    }
+    regrSlope() {
         this.query.sql.push('REGR_SLOPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrSxx = function () {
+    }
+    regrSxx() {
         this.query.sql.push('REGR_SXX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrSxy = function () {
+    }
+    regrSxy() {
         this.query.sql.push('REGR_SXY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.regrSyy = function () {
+    }
+    regrSyy() {
         this.query.sql.push('REGR_SYY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.reindex = function () {
+    }
+    reindex() {
         this.query.sql.push('REINDEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.relative = function () {
+    }
+    relative() {
         this.query.sql.push('RELATIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.release = function () {
+    }
+    release() {
         this.query.sql.push('RELEASE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rename = function () {
+    }
+    rename() {
         this.query.sql.push('RENAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.repeatable = function () {
+    }
+    repeatable() {
         this.query.sql.push('REPEATABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.replace = function () {
+    }
+    replace() {
         this.query.sql.push('REPLACE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.replica = function () {
+    }
+    replica() {
         this.query.sql.push('REPLICA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.requiring = function () {
+    }
+    requiring() {
         this.query.sql.push('REQUIRING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.reset = function () {
+    }
+    reset() {
         this.query.sql.push('RESET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.respect = function () {
+    }
+    respect() {
         this.query.sql.push('RESPECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.restart = function () {
+    }
+    restart() {
         this.query.sql.push('RESTART');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.restore = function () {
+    }
+    restore() {
         this.query.sql.push('RESTORE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.restrict = function () {
+    }
+    restrict() {
         this.query.sql.push('RESTRICT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.result = function () {
+    }
+    result() {
         this.query.sql.push('RESULT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.return = function () {
+    }
+    return() {
         this.query.sql.push('RETURN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.returnedCardinality = function () {
+    }
+    returnedCardinality() {
         this.query.sql.push('RETURNED_CARDINALITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.returnedLength = function () {
+    }
+    returnedLength() {
         this.query.sql.push('RETURNED_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.returnedoctetlength = function () {
+    }
+    returnedoctetlength() {
         this.query.sql.push('RETURNED_OCTET_LENGTH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.returnedSqlstate = function () {
+    }
+    returnedSqlstate() {
         this.query.sql.push('RETURNED_SQLSTATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.returning = function () {
+    }
+    returning() {
         this.query.sql.push('RETURNING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.returns = function () {
+    }
+    returns() {
         this.query.sql.push('RETURNS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.revoke = function () {
+    }
+    revoke() {
         this.query.sql.push('REVOKE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.right = function () {
+    }
+    right() {
         this.query.sql.push('RIGHT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.role = function () {
+    }
+    role() {
         this.query.sql.push('ROLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rollback = function () {
+    }
+    rollback() {
         this.query.sql.push('ROLLBACK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rollup = function () {
+    }
+    rollup() {
         this.query.sql.push('ROLLUP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.routine = function () {
+    }
+    routine() {
         this.query.sql.push('ROUTINE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.routines = function () {
+    }
+    routines() {
         this.query.sql.push('ROUTINES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.routineCatalog = function () {
+    }
+    routineCatalog() {
         this.query.sql.push('ROUTINE_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.routineName = function () {
+    }
+    routineName() {
         this.query.sql.push('ROUTINE_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.routineSchema = function () {
+    }
+    routineSchema() {
         this.query.sql.push('ROUTINE_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.row = function () {
+    }
+    row() {
         this.query.sql.push('ROW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rows = function () {
+    }
+    rows() {
         this.query.sql.push('ROWS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rowCount = function () {
+    }
+    rowCount() {
         this.query.sql.push('ROW_COUNT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rowNumber = function () {
+    }
+    rowNumber() {
         this.query.sql.push('ROW_NUMBER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rpad = function () {
+    }
+    rpad() {
         this.query.sql.push('RPAD');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rtrim = function () {
+    }
+    rtrim() {
         this.query.sql.push('RTRIM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.rule = function () {
+    }
+    rule() {
         this.query.sql.push('RULE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.running = function () {
+    }
+    running() {
         this.query.sql.push('RUNNING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.savepoint = function () {
+    }
+    savepoint() {
         this.query.sql.push('SAVEPOINT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scalar = function () {
+    }
+    scalar() {
         this.query.sql.push('SCALAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scale = function () {
+    }
+    scale() {
         this.query.sql.push('SCALE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.schema = function () {
+    }
+    schema() {
         this.query.sql.push('SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.schemas = function () {
+    }
+    schemas() {
         this.query.sql.push('SCHEMAS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.schemaName = function () {
+    }
+    schemaName() {
         this.query.sql.push('SCHEMA_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scope = function () {
+    }
+    scope() {
         this.query.sql.push('SCOPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scopeCatalog = function () {
+    }
+    scopeCatalog() {
         this.query.sql.push('SCOPE_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scopeName = function () {
+    }
+    scopeName() {
         this.query.sql.push('SCOPE_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scopeSchema = function () {
+    }
+    scopeSchema() {
         this.query.sql.push('SCOPE_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.scroll = function () {
+    }
+    scroll() {
         this.query.sql.push('SCROLL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.search = function () {
+    }
+    search() {
         this.query.sql.push('SEARCH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.second = function () {
+    }
+    second() {
         this.query.sql.push('SECOND');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.section = function () {
+    }
+    section() {
         this.query.sql.push('SECTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.security = function () {
+    }
+    security() {
         this.query.sql.push('SECURITY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.seek = function () {
+    }
+    seek() {
         this.query.sql.push('SEEK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.select = function () {
+    }
+    select() {
         this.query.sql.push('SELECT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.selective = function () {
+    }
+    selective() {
         this.query.sql.push('SELECTIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.self = function () {
+    }
+    self() {
         this.query.sql.push('SELF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.semantics = function () {
+    }
+    semantics() {
         this.query.sql.push('SEMANTICS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sensitive = function () {
+    }
+    sensitive() {
         this.query.sql.push('SENSITIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sequence = function () {
+    }
+    sequence() {
         this.query.sql.push('SEQUENCE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sequences = function () {
+    }
+    sequences() {
         this.query.sql.push('SEQUENCES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.serializable = function () {
+    }
+    serializable() {
         this.query.sql.push('SERIALIZABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.server = function () {
+    }
+    server() {
         this.query.sql.push('SERVER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.serverName = function () {
+    }
+    serverName() {
         this.query.sql.push('SERVER_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.session = function () {
+    }
+    session() {
         this.query.sql.push('SESSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sessionUser = function () {
+    }
+    sessionUser() {
         this.query.sql.push('SESSION_USER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.set = function () {
+    }
+    set() {
         this.query.sql.push('SET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.setof = function () {
+    }
+    setof() {
         this.query.sql.push('SETOF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sets = function () {
+    }
+    sets() {
         this.query.sql.push('SETS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.share = function () {
+    }
+    share() {
         this.query.sql.push('SHARE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.show = function () {
+    }
+    show() {
         this.query.sql.push('SHOW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.similar = function () {
+    }
+    similar() {
         this.query.sql.push('SIMILAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.simple = function () {
+    }
+    simple() {
         this.query.sql.push('SIMPLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sin = function () {
+    }
+    sin() {
         this.query.sql.push('SIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sinh = function () {
+    }
+    sinh() {
         this.query.sql.push('SINH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.size = function () {
+    }
+    size() {
         this.query.sql.push('SIZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.skip = function () {
+    }
+    skip() {
         this.query.sql.push('SKIP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.smallint = function () {
+    }
+    smallint() {
         this.query.sql.push('SMALLINT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.snapshot = function () {
+    }
+    snapshot() {
         this.query.sql.push('SNAPSHOT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.some = function () {
+    }
+    some() {
         this.query.sql.push('SOME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sortDirection = function () {
+    }
+    sortDirection() {
         this.query.sql.push('SORT_DIRECTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.source = function () {
+    }
+    source() {
         this.query.sql.push('SOURCE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.space = function () {
+    }
+    space() {
         this.query.sql.push('SPACE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.specific = function () {
+    }
+    specific() {
         this.query.sql.push('SPECIFIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.specifictype = function () {
+    }
+    specifictype() {
         this.query.sql.push('SPECIFICTYPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.specificName = function () {
+    }
+    specificName() {
         this.query.sql.push('SPECIFIC_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sql = function () {
+    }
+    sql() {
         this.query.sql.push('SQL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sqlcode = function () {
+    }
+    sqlcode() {
         this.query.sql.push('SQLCODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sqlerror = function () {
+    }
+    sqlerror() {
         this.query.sql.push('SQLERROR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sqlexception = function () {
+    }
+    sqlexception() {
         this.query.sql.push('SQLEXCEPTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sqlstate = function () {
+    }
+    sqlstate() {
         this.query.sql.push('SQLSTATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sqlwarning = function () {
+    }
+    sqlwarning() {
         this.query.sql.push('SQLWARNING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sqrt = function () {
+    }
+    sqrt() {
         this.query.sql.push('SQRT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.stable = function () {
+    }
+    stable() {
         this.query.sql.push('STABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.standalone = function () {
+    }
+    standalone() {
         this.query.sql.push('STANDALONE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.start = function () {
+    }
+    start() {
         this.query.sql.push('START');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.state = function () {
+    }
+    state() {
         this.query.sql.push('STATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.statement = function () {
+    }
+    statement() {
         this.query.sql.push('STATEMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.static = function () {
+    }
+    static() {
         this.query.sql.push('STATIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.statistics = function () {
+    }
+    statistics() {
         this.query.sql.push('STATISTICS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.stddevPop = function () {
+    }
+    stddevPop() {
         this.query.sql.push('STDDEV_POP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.stddevSamp = function () {
+    }
+    stddevSamp() {
         this.query.sql.push('STDDEV_SAMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.stdin = function () {
+    }
+    stdin() {
         this.query.sql.push('STDIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.stdout = function () {
+    }
+    stdout() {
         this.query.sql.push('STDOUT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.storage = function () {
+    }
+    storage() {
         this.query.sql.push('STORAGE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.stored = function () {
+    }
+    stored() {
         this.query.sql.push('STORED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.strict = function () {
+    }
+    strict() {
         this.query.sql.push('STRICT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.string = function () {
+    }
+    string() {
         this.query.sql.push('STRING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.strip = function () {
+    }
+    strip() {
         this.query.sql.push('STRIP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.structure = function () {
+    }
+    structure() {
         this.query.sql.push('STRUCTURE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.style = function () {
+    }
+    style() {
         this.query.sql.push('STYLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.subclassOrigin = function () {
+    }
+    subclassOrigin() {
         this.query.sql.push('SUBCLASS_ORIGIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.submultiset = function () {
+    }
+    submultiset() {
         this.query.sql.push('SUBMULTISET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.subscription = function () {
+    }
+    subscription() {
         this.query.sql.push('SUBSCRIPTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.subset = function () {
+    }
+    subset() {
         this.query.sql.push('SUBSET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.substring = function () {
+    }
+    substring() {
         this.query.sql.push('SUBSTRING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.substringRegex = function () {
+    }
+    substringRegex() {
         this.query.sql.push('SUBSTRING_REGEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.succeeds = function () {
+    }
+    succeeds() {
         this.query.sql.push('SUCCEEDS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sum = function () {
+    }
+    sum() {
         this.query.sql.push('SUM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.support = function () {
+    }
+    support() {
         this.query.sql.push('SUPPORT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.symmetric = function () {
+    }
+    symmetric() {
         this.query.sql.push('SYMMETRIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.sysid = function () {
+    }
+    sysid() {
         this.query.sql.push('SYSID');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.system = function () {
+    }
+    system() {
         this.query.sql.push('SYSTEM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.systemTime = function () {
+    }
+    systemTime() {
         this.query.sql.push('SYSTEM_TIME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.systemUser = function () {
+    }
+    systemUser() {
         this.query.sql.push('SYSTEM_USER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.t = function () {
+    }
+    t() {
         this.query.sql.push('T');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.table = function () {
+    }
+    table() {
         this.query.sql.push('TABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.tables = function () {
+    }
+    tables() {
         this.query.sql.push('TABLES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.tablesample = function () {
+    }
+    tablesample() {
         this.query.sql.push('TABLESAMPLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.tablespace = function () {
+    }
+    tablespace() {
         this.query.sql.push('TABLESPACE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.tableName = function () {
+    }
+    tableName() {
         this.query.sql.push('TABLE_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.tan = function () {
+    }
+    tan() {
         this.query.sql.push('TAN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.tanh = function () {
+    }
+    tanh() {
         this.query.sql.push('TANH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.target = function () {
+    }
+    target() {
         this.query.sql.push('TARGET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.temp = function () {
+    }
+    temp() {
         this.query.sql.push('TEMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.template = function () {
+    }
+    template() {
         this.query.sql.push('TEMPLATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.temporary = function () {
+    }
+    temporary() {
         this.query.sql.push('TEMPORARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.text = function () {
+    }
+    text() {
         this.query.sql.push('TEXT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.then = function () {
+    }
+    then() {
         this.query.sql.push('THEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.through = function () {
+    }
+    through() {
         this.query.sql.push('THROUGH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.ties = function () {
+    }
+    ties() {
         this.query.sql.push('TIES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.time = function () {
+    }
+    time() {
         this.query.sql.push('TIME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.timestamp = function () {
+    }
+    timestamp() {
         this.query.sql.push('TIMESTAMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.timezoneHour = function () {
+    }
+    timezoneHour() {
         this.query.sql.push('TIMEZONE_HOUR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.timezoneMinute = function () {
+    }
+    timezoneMinute() {
         this.query.sql.push('TIMEZONE_MINUTE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.to = function () {
+    }
+    to() {
         this.query.sql.push('TO');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.token = function () {
+    }
+    token() {
         this.query.sql.push('TOKEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.topLevelCount = function () {
+    }
+    topLevelCount() {
         this.query.sql.push('TOP_LEVEL_COUNT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.trailing = function () {
+    }
+    trailing() {
         this.query.sql.push('TRAILING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.transaction = function () {
+    }
+    transaction() {
         this.query.sql.push('TRANSACTION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.transactionscommitted = function () {
+    }
+    transactionscommitted() {
         this.query.sql.push('TRANSACTIONS_COMMITTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.transactionsrolledback = function () {
+    }
+    transactionsrolledback() {
         this.query.sql.push('TRANSACTIONS_ROLLED_BACK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.transactionActive = function () {
+    }
+    transactionActive() {
         this.query.sql.push('TRANSACTION_ACTIVE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.transform = function () {
+    }
+    transform() {
         this.query.sql.push('TRANSFORM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.transforms = function () {
+    }
+    transforms() {
         this.query.sql.push('TRANSFORMS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.translate = function () {
+    }
+    translate() {
         this.query.sql.push('TRANSLATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.translateRegex = function () {
+    }
+    translateRegex() {
         this.query.sql.push('TRANSLATE_REGEX');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.translation = function () {
+    }
+    translation() {
         this.query.sql.push('TRANSLATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.treat = function () {
+    }
+    treat() {
         this.query.sql.push('TREAT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.trigger = function () {
+    }
+    trigger() {
         this.query.sql.push('TRIGGER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.triggerCatalog = function () {
+    }
+    triggerCatalog() {
         this.query.sql.push('TRIGGER_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.triggerName = function () {
+    }
+    triggerName() {
         this.query.sql.push('TRIGGER_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.triggerSchema = function () {
+    }
+    triggerSchema() {
         this.query.sql.push('TRIGGER_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.trim = function () {
+    }
+    trim() {
         this.query.sql.push('TRIM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.trimArray = function () {
+    }
+    trimArray() {
         this.query.sql.push('TRIM_ARRAY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.true = function () {
+    }
+    true() {
         this.query.sql.push('TRUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.truncate = function () {
+    }
+    truncate() {
         this.query.sql.push('TRUNCATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.trusted = function () {
+    }
+    trusted() {
         this.query.sql.push('TRUSTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.type = function () {
+    }
+    type() {
         this.query.sql.push('TYPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.types = function () {
+    }
+    types() {
         this.query.sql.push('TYPES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.uescape = function () {
+    }
+    uescape() {
         this.query.sql.push('UESCAPE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unbounded = function () {
+    }
+    unbounded() {
         this.query.sql.push('UNBOUNDED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.uncommitted = function () {
+    }
+    uncommitted() {
         this.query.sql.push('UNCOMMITTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unconditional = function () {
+    }
+    unconditional() {
         this.query.sql.push('UNCONDITIONAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.under = function () {
+    }
+    under() {
         this.query.sql.push('UNDER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unencrypted = function () {
+    }
+    unencrypted() {
         this.query.sql.push('UNENCRYPTED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.union = function () {
+    }
+    union() {
         this.query.sql.push('UNION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unique = function () {
+    }
+    unique() {
         this.query.sql.push('UNIQUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unknown = function () {
+    }
+    unknown() {
         this.query.sql.push('UNKNOWN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unlink = function () {
+    }
+    unlink() {
         this.query.sql.push('UNLINK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unlisten = function () {
+    }
+    unlisten() {
         this.query.sql.push('UNLISTEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unlogged = function () {
+    }
+    unlogged() {
         this.query.sql.push('UNLOGGED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unmatched = function () {
+    }
+    unmatched() {
         this.query.sql.push('UNMATCHED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unnamed = function () {
+    }
+    unnamed() {
         this.query.sql.push('UNNAMED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.unnest = function () {
+    }
+    unnest() {
         this.query.sql.push('UNNEST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.until = function () {
+    }
+    until() {
         this.query.sql.push('UNTIL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.untyped = function () {
+    }
+    untyped() {
         this.query.sql.push('UNTYPED');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.update = function () {
+    }
+    update() {
         this.query.sql.push('UPDATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.upper = function () {
+    }
+    upper() {
         this.query.sql.push('UPPER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.uri = function () {
+    }
+    uri() {
         this.query.sql.push('URI');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.usage = function () {
+    }
+    usage() {
         this.query.sql.push('USAGE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.user = function () {
+    }
+    user() {
         this.query.sql.push('USER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.userdefinedtypecatalog = function () {
+    }
+    userdefinedtypecatalog() {
         this.query.sql.push('USER_DEFINED_TYPE_CATALOG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.userdefinedtypecode = function () {
+    }
+    userdefinedtypecode() {
         this.query.sql.push('USER_DEFINED_TYPE_CODE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.userdefinedtypename = function () {
+    }
+    userdefinedtypename() {
         this.query.sql.push('USER_DEFINED_TYPE_NAME');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.userdefinedtypeschema = function () {
+    }
+    userdefinedtypeschema() {
         this.query.sql.push('USER_DEFINED_TYPE_SCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.using = function () {
+    }
+    using() {
         this.query.sql.push('USING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.utf16 = function () {
+    }
+    utf16() {
         this.query.sql.push('UTF16');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.utf32 = function () {
+    }
+    utf32() {
         this.query.sql.push('UTF32');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.utf8 = function () {
+    }
+    utf8() {
         this.query.sql.push('UTF8');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.vacuum = function () {
+    }
+    vacuum() {
         this.query.sql.push('VACUUM');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.valid = function () {
+    }
+    valid() {
         this.query.sql.push('VALID');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.validate = function () {
+    }
+    validate() {
         this.query.sql.push('VALIDATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.validator = function () {
+    }
+    validator() {
         this.query.sql.push('VALIDATOR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.value = function () {
+    }
+    value() {
         this.query.sql.push('VALUE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.values = function () {
+    }
+    values() {
         this.query.sql.push('VALUES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.valueOfKeyword = function () {
+    }
+    valueOfKeyword() {
         this.query.sql.push('VALUE_OF');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.varbinary = function () {
+    }
+    varbinary() {
         this.query.sql.push('VARBINARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.varchar = function () {
+    }
+    varchar() {
         this.query.sql.push('VARCHAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.variadic = function () {
+    }
+    variadic() {
         this.query.sql.push('VARIADIC');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.varying = function () {
+    }
+    varying() {
         this.query.sql.push('VARYING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.varPop = function () {
+    }
+    varPop() {
         this.query.sql.push('VAR_POP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.varSamp = function () {
+    }
+    varSamp() {
         this.query.sql.push('VAR_SAMP');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.verbose = function () {
+    }
+    verbose() {
         this.query.sql.push('VERBOSE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.version = function () {
+    }
+    version() {
         this.query.sql.push('VERSION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.versioning = function () {
+    }
+    versioning() {
         this.query.sql.push('VERSIONING');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.view = function () {
+    }
+    view() {
         this.query.sql.push('VIEW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.views = function () {
+    }
+    views() {
         this.query.sql.push('VIEWS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.virtual = function () {
+    }
+    virtual() {
         this.query.sql.push('VIRTUAL');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.volatile = function () {
+    }
+    volatile() {
         this.query.sql.push('VOLATILE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.when = function () {
+    }
+    when() {
         this.query.sql.push('WHEN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.whenever = function () {
+    }
+    whenever() {
         this.query.sql.push('WHENEVER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.where = function () {
+    }
+    where() {
         this.query.sql.push('WHERE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.whitespace = function () {
+    }
+    whitespace() {
         this.query.sql.push('WHITESPACE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.widthBucket = function () {
+    }
+    widthBucket() {
         this.query.sql.push('WIDTH_BUCKET');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.window = function () {
+    }
+    window() {
         this.query.sql.push('WINDOW');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.with = function () {
+    }
+    with() {
         this.query.sql.push('WITH');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.within = function () {
+    }
+    within() {
         this.query.sql.push('WITHIN');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.without = function () {
+    }
+    without() {
         this.query.sql.push('WITHOUT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.work = function () {
+    }
+    work() {
         this.query.sql.push('WORK');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.wrapper = function () {
+    }
+    wrapper() {
         this.query.sql.push('WRAPPER');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.write = function () {
+    }
+    write() {
         this.query.sql.push('WRITE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xml = function () {
+    }
+    xml() {
         this.query.sql.push('XML');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlagg = function () {
+    }
+    xmlagg() {
         this.query.sql.push('XMLAGG');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlattributes = function () {
+    }
+    xmlattributes() {
         this.query.sql.push('XMLATTRIBUTES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlbinary = function () {
+    }
+    xmlbinary() {
         this.query.sql.push('XMLBINARY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlcast = function () {
+    }
+    xmlcast() {
         this.query.sql.push('XMLCAST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlcomment = function () {
+    }
+    xmlcomment() {
         this.query.sql.push('XMLCOMMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlconcat = function () {
+    }
+    xmlconcat() {
         this.query.sql.push('XMLCONCAT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmldeclaration = function () {
+    }
+    xmldeclaration() {
         this.query.sql.push('XMLDECLARATION');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmldocument = function () {
+    }
+    xmldocument() {
         this.query.sql.push('XMLDOCUMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlelement = function () {
+    }
+    xmlelement() {
         this.query.sql.push('XMLELEMENT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlexists = function () {
+    }
+    xmlexists() {
         this.query.sql.push('XMLEXISTS');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlforest = function () {
+    }
+    xmlforest() {
         this.query.sql.push('XMLFOREST');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmliterate = function () {
+    }
+    xmliterate() {
         this.query.sql.push('XMLITERATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlnamespaces = function () {
+    }
+    xmlnamespaces() {
         this.query.sql.push('XMLNAMESPACES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlparse = function () {
+    }
+    xmlparse() {
         this.query.sql.push('XMLPARSE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlpi = function () {
+    }
+    xmlpi() {
         this.query.sql.push('XMLPI');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlquery = function () {
+    }
+    xmlquery() {
         this.query.sql.push('XMLQUERY');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlroot = function () {
+    }
+    xmlroot() {
         this.query.sql.push('XMLROOT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlschema = function () {
+    }
+    xmlschema() {
         this.query.sql.push('XMLSCHEMA');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlserialize = function () {
+    }
+    xmlserialize() {
         this.query.sql.push('XMLSERIALIZE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmltable = function () {
+    }
+    xmltable() {
         this.query.sql.push('XMLTABLE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmltext = function () {
+    }
+    xmltext() {
         this.query.sql.push('XMLTEXT');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.xmlvalidate = function () {
+    }
+    xmlvalidate() {
         this.query.sql.push('XMLVALIDATE');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.year = function () {
+    }
+    year() {
         this.query.sql.push('YEAR');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.yes = function () {
+    }
+    yes() {
         this.query.sql.push('YES');
         return this.endClass();
-    };
-    BaseQueryBuilder.prototype.zone = function () {
+    }
+    zone() {
         this.query.sql.push('ZONE');
         return this.endClass();
-    };
-    return BaseQueryBuilder;
-}(BaseRawQueryBuilder));
-export { BaseQueryBuilder };
+    }
+}

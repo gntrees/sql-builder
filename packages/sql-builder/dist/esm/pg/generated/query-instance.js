@@ -1,8711 +1,4556 @@
 import { QueryBuilder } from "../query-builder";
-var QueryInstance = /** @class */ (function () {
-    function QueryInstance(dbInstance) {
+export class QueryInstance {
+    dbInstance;
+    varableName = undefined;
+    constructor(dbInstance) {
         this.dbInstance = dbInstance;
     }
-    QueryInstance.prototype.getDbInstance = function () {
+    setFormatParamHandler(formatParamHandler) {
+        this.dbInstance.formatParamHandler = formatParamHandler;
+        return this;
+    }
+    setExecutionHandler(execHandler) {
+        this.dbInstance.execHandler = execHandler;
+        return this;
+    }
+    setVariableName(name) {
+        this.varableName = name;
+        return this;
+    }
+    getVariableName() {
+        return this.varableName;
+    }
+    getDbInstance() {
         return this.dbInstance;
-    };
-    QueryInstance.prototype.a = function () {
+    }
+    a() {
         return (new QueryBuilder(this)).a();
-    };
-    QueryInstance.prototype.abbrev = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).abbrev.apply(_a, args);
-    };
-    QueryInstance.prototype.abort = function () {
+    }
+    abbrev(...args) {
+        return (new QueryBuilder(this)).abbrev(...args);
+    }
+    abort() {
         return (new QueryBuilder(this)).abort();
-    };
-    QueryInstance.prototype.above = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).above.apply(_a, args);
-    };
-    QueryInstance.prototype.abs = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).abs.apply(_a, args);
-    };
-    QueryInstance.prototype.absent = function () {
+    }
+    above(...args) {
+        return (new QueryBuilder(this)).above(...args);
+    }
+    abs(...args) {
+        return (new QueryBuilder(this)).abs(...args);
+    }
+    absent() {
         return (new QueryBuilder(this)).absent();
-    };
-    QueryInstance.prototype.absolute = function () {
+    }
+    absolute() {
         return (new QueryBuilder(this)).absolute();
-    };
-    QueryInstance.prototype.access = function () {
+    }
+    access() {
         return (new QueryBuilder(this)).access();
-    };
-    QueryInstance.prototype.according = function () {
+    }
+    according() {
         return (new QueryBuilder(this)).according();
-    };
-    QueryInstance.prototype.acldefault = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).acldefault.apply(_a, args);
-    };
-    QueryInstance.prototype.aclexplode = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).aclexplode.apply(_a, args);
-    };
-    QueryInstance.prototype.acos = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).acos.apply(_a, args);
-    };
-    QueryInstance.prototype.acosd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).acosd.apply(_a, args);
-    };
-    QueryInstance.prototype.acosh = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).acosh.apply(_a, args);
-    };
-    QueryInstance.prototype.action = function () {
+    }
+    acldefault(...args) {
+        return (new QueryBuilder(this)).acldefault(...args);
+    }
+    aclexplode(...args) {
+        return (new QueryBuilder(this)).aclexplode(...args);
+    }
+    acos(...args) {
+        return (new QueryBuilder(this)).acos(...args);
+    }
+    acosd(...args) {
+        return (new QueryBuilder(this)).acosd(...args);
+    }
+    acosh(...args) {
+        return (new QueryBuilder(this)).acosh(...args);
+    }
+    action() {
         return (new QueryBuilder(this)).action();
-    };
-    QueryInstance.prototype.ada = function () {
+    }
+    ada() {
         return (new QueryBuilder(this)).ada();
-    };
-    QueryInstance.prototype.add = function () {
+    }
+    add() {
         return (new QueryBuilder(this)).add();
-    };
-    QueryInstance.prototype.admin = function () {
+    }
+    admin() {
         return (new QueryBuilder(this)).admin();
-    };
-    QueryInstance.prototype.after = function () {
+    }
+    after() {
         return (new QueryBuilder(this)).after();
-    };
-    QueryInstance.prototype.age = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).age.apply(_a, args);
-    };
-    QueryInstance.prototype.aggregate = function () {
+    }
+    age(...args) {
+        return (new QueryBuilder(this)).age(...args);
+    }
+    aggregate() {
         return (new QueryBuilder(this)).aggregate();
-    };
-    QueryInstance.prototype.all = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).all.apply(_a, args);
-    };
-    QueryInstance.prototype.allocate = function () {
+    }
+    all(...args) {
+        return (new QueryBuilder(this)).all(...args);
+    }
+    allocate() {
         return (new QueryBuilder(this)).allocate();
-    };
-    QueryInstance.prototype.also = function () {
+    }
+    also() {
         return (new QueryBuilder(this)).also();
-    };
-    QueryInstance.prototype.alter = function () {
+    }
+    alter() {
         return (new QueryBuilder(this)).alter();
-    };
-    QueryInstance.prototype.always = function () {
+    }
+    always() {
         return (new QueryBuilder(this)).always();
-    };
-    QueryInstance.prototype.analyse = function () {
+    }
+    analyse() {
         return (new QueryBuilder(this)).analyse();
-    };
-    QueryInstance.prototype.analyze = function () {
+    }
+    analyze() {
         return (new QueryBuilder(this)).analyze();
-    };
-    QueryInstance.prototype.and = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).and.apply(_a, args);
-    };
-    QueryInstance.prototype.any = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).any.apply(_a, args);
-    };
-    QueryInstance.prototype.anyValue = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).anyValue.apply(_a, args);
-    };
-    QueryInstance.prototype.are = function () {
+    }
+    and(...args) {
+        return (new QueryBuilder(this)).and(...args);
+    }
+    any(...args) {
+        return (new QueryBuilder(this)).any(...args);
+    }
+    anyValue(...args) {
+        return (new QueryBuilder(this)).anyValue(...args);
+    }
+    are() {
         return (new QueryBuilder(this)).are();
-    };
-    QueryInstance.prototype.area = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).area.apply(_a, args);
-    };
-    QueryInstance.prototype.array = function () {
+    }
+    area(...args) {
+        return (new QueryBuilder(this)).area(...args);
+    }
+    array() {
         return (new QueryBuilder(this)).array();
-    };
-    QueryInstance.prototype.arrayAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayAppend = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayAppend.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayCat = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayCat.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayDims = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayDims.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayFill = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayFill.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayLength.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayLower = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayLower.apply(_a, args);
-    };
-    QueryInstance.prototype.arraymaxcardinality = function () {
+    }
+    arrayAgg(...args) {
+        return (new QueryBuilder(this)).arrayAgg(...args);
+    }
+    arrayAppend(...args) {
+        return (new QueryBuilder(this)).arrayAppend(...args);
+    }
+    arrayCat(...args) {
+        return (new QueryBuilder(this)).arrayCat(...args);
+    }
+    arrayDims(...args) {
+        return (new QueryBuilder(this)).arrayDims(...args);
+    }
+    arrayFill(...args) {
+        return (new QueryBuilder(this)).arrayFill(...args);
+    }
+    arrayLength(...args) {
+        return (new QueryBuilder(this)).arrayLength(...args);
+    }
+    arrayLower(...args) {
+        return (new QueryBuilder(this)).arrayLower(...args);
+    }
+    arraymaxcardinality() {
         return (new QueryBuilder(this)).arraymaxcardinality();
-    };
-    QueryInstance.prototype.arrayNdims = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayNdims.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayPosition = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayPosition.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayPositions = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayPositions.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayPrepend = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayPrepend.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayRemove = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayRemove.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayReplace = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayReplace.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayReverse = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayReverse.apply(_a, args);
-    };
-    QueryInstance.prototype.arraySample = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arraySample.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayShuffle = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayShuffle.apply(_a, args);
-    };
-    QueryInstance.prototype.arraySort = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arraySort.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayToJson = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayToJson.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayToString = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayToString.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayToTsvector = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayToTsvector.apply(_a, args);
-    };
-    QueryInstance.prototype.arrayUpper = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).arrayUpper.apply(_a, args);
-    };
-    QueryInstance.prototype.as = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).as.apply(_a, args);
-    };
-    QueryInstance.prototype.asc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).asc.apply(_a, args);
-    };
-    QueryInstance.prototype.ascii = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ascii.apply(_a, args);
-    };
-    QueryInstance.prototype.asensitive = function () {
+    }
+    arrayNdims(...args) {
+        return (new QueryBuilder(this)).arrayNdims(...args);
+    }
+    arrayPosition(...args) {
+        return (new QueryBuilder(this)).arrayPosition(...args);
+    }
+    arrayPositions(...args) {
+        return (new QueryBuilder(this)).arrayPositions(...args);
+    }
+    arrayPrepend(...args) {
+        return (new QueryBuilder(this)).arrayPrepend(...args);
+    }
+    arrayRemove(...args) {
+        return (new QueryBuilder(this)).arrayRemove(...args);
+    }
+    arrayReplace(...args) {
+        return (new QueryBuilder(this)).arrayReplace(...args);
+    }
+    arrayReverse(...args) {
+        return (new QueryBuilder(this)).arrayReverse(...args);
+    }
+    arraySample(...args) {
+        return (new QueryBuilder(this)).arraySample(...args);
+    }
+    arrayShuffle(...args) {
+        return (new QueryBuilder(this)).arrayShuffle(...args);
+    }
+    arraySort(...args) {
+        return (new QueryBuilder(this)).arraySort(...args);
+    }
+    arrayToJson(...args) {
+        return (new QueryBuilder(this)).arrayToJson(...args);
+    }
+    arrayToString(...args) {
+        return (new QueryBuilder(this)).arrayToString(...args);
+    }
+    arrayToTsvector(...args) {
+        return (new QueryBuilder(this)).arrayToTsvector(...args);
+    }
+    arrayUpper(...args) {
+        return (new QueryBuilder(this)).arrayUpper(...args);
+    }
+    as(...args) {
+        return (new QueryBuilder(this)).as(...args);
+    }
+    asc(...args) {
+        return (new QueryBuilder(this)).asc(...args);
+    }
+    ascii(...args) {
+        return (new QueryBuilder(this)).ascii(...args);
+    }
+    asensitive() {
         return (new QueryBuilder(this)).asensitive();
-    };
-    QueryInstance.prototype.asin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).asin.apply(_a, args);
-    };
-    QueryInstance.prototype.asind = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).asind.apply(_a, args);
-    };
-    QueryInstance.prototype.asinh = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).asinh.apply(_a, args);
-    };
-    QueryInstance.prototype.assertion = function () {
+    }
+    asin(...args) {
+        return (new QueryBuilder(this)).asin(...args);
+    }
+    asind(...args) {
+        return (new QueryBuilder(this)).asind(...args);
+    }
+    asinh(...args) {
+        return (new QueryBuilder(this)).asinh(...args);
+    }
+    assertion() {
         return (new QueryBuilder(this)).assertion();
-    };
-    QueryInstance.prototype.assignment = function () {
+    }
+    assignment() {
         return (new QueryBuilder(this)).assignment();
-    };
-    QueryInstance.prototype.asymmetric = function () {
+    }
+    asymmetric() {
         return (new QueryBuilder(this)).asymmetric();
-    };
-    QueryInstance.prototype.at = function () {
+    }
+    at() {
         return (new QueryBuilder(this)).at();
-    };
-    QueryInstance.prototype.atan = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).atan.apply(_a, args);
-    };
-    QueryInstance.prototype.atan2 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).atan2.apply(_a, args);
-    };
-    QueryInstance.prototype.atan2d = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).atan2d.apply(_a, args);
-    };
-    QueryInstance.prototype.atand = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).atand.apply(_a, args);
-    };
-    QueryInstance.prototype.atanh = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).atanh.apply(_a, args);
-    };
-    QueryInstance.prototype.atomic = function () {
+    }
+    atan(...args) {
+        return (new QueryBuilder(this)).atan(...args);
+    }
+    atan2(...args) {
+        return (new QueryBuilder(this)).atan2(...args);
+    }
+    atan2d(...args) {
+        return (new QueryBuilder(this)).atan2d(...args);
+    }
+    atand(...args) {
+        return (new QueryBuilder(this)).atand(...args);
+    }
+    atanh(...args) {
+        return (new QueryBuilder(this)).atanh(...args);
+    }
+    atomic() {
         return (new QueryBuilder(this)).atomic();
-    };
-    QueryInstance.prototype.atSign = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).atSign.apply(_a, args);
-    };
-    QueryInstance.prototype.attach = function () {
+    }
+    atSign(...args) {
+        return (new QueryBuilder(this)).atSign(...args);
+    }
+    attach() {
         return (new QueryBuilder(this)).attach();
-    };
-    QueryInstance.prototype.attribute = function () {
+    }
+    attribute() {
         return (new QueryBuilder(this)).attribute();
-    };
-    QueryInstance.prototype.attributes = function () {
+    }
+    attributes() {
         return (new QueryBuilder(this)).attributes();
-    };
-    QueryInstance.prototype.authorization = function () {
+    }
+    authorization() {
         return (new QueryBuilder(this)).authorization();
-    };
-    QueryInstance.prototype.avg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).avg.apply(_a, args);
-    };
-    QueryInstance.prototype.backward = function () {
+    }
+    avg(...args) {
+        return (new QueryBuilder(this)).avg(...args);
+    }
+    backward() {
         return (new QueryBuilder(this)).backward();
-    };
-    QueryInstance.prototype.base64 = function () {
+    }
+    base64() {
         return (new QueryBuilder(this)).base64();
-    };
-    QueryInstance.prototype.before = function () {
+    }
+    before() {
         return (new QueryBuilder(this)).before();
-    };
-    QueryInstance.prototype.begin = function () {
+    }
+    begin() {
         return (new QueryBuilder(this)).begin();
-    };
-    QueryInstance.prototype.beginFrame = function () {
+    }
+    beginFrame() {
         return (new QueryBuilder(this)).beginFrame();
-    };
-    QueryInstance.prototype.beginPartition = function () {
+    }
+    beginPartition() {
         return (new QueryBuilder(this)).beginPartition();
-    };
-    QueryInstance.prototype.beginTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).beginTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.below = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).below.apply(_a, args);
-    };
-    QueryInstance.prototype.bernoulli = function () {
+    }
+    beginTransaction(...args) {
+        return (new QueryBuilder(this)).beginTransaction(...args);
+    }
+    below(...args) {
+        return (new QueryBuilder(this)).below(...args);
+    }
+    bernoulli() {
         return (new QueryBuilder(this)).bernoulli();
-    };
-    QueryInstance.prototype.between = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).between.apply(_a, args);
-    };
-    QueryInstance.prototype.betweenSymmetric = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).betweenSymmetric.apply(_a, args);
-    };
-    QueryInstance.prototype.bigint = function () {
+    }
+    between(...args) {
+        return (new QueryBuilder(this)).between(...args);
+    }
+    betweenSymmetric(...args) {
+        return (new QueryBuilder(this)).betweenSymmetric(...args);
+    }
+    bigint() {
         return (new QueryBuilder(this)).bigint();
-    };
-    QueryInstance.prototype.binary = function () {
+    }
+    binary() {
         return (new QueryBuilder(this)).binary();
-    };
-    QueryInstance.prototype.bit = function () {
+    }
+    bit() {
         return (new QueryBuilder(this)).bit();
-    };
-    QueryInstance.prototype.bitAnd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitAnd.apply(_a, args);
-    };
-    QueryInstance.prototype.bitCount = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitCount.apply(_a, args);
-    };
-    QueryInstance.prototype.bitLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitLength.apply(_a, args);
-    };
-    QueryInstance.prototype.bitOr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitOr.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseAnd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseAnd.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseLeftShift = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseLeftShift.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseLeftShiftAssign = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseLeftShiftAssign.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseOr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseOr.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseRightShift = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseRightShift.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseRightShiftAssign = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseRightShiftAssign.apply(_a, args);
-    };
-    QueryInstance.prototype.bitwiseXor = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitwiseXor.apply(_a, args);
-    };
-    QueryInstance.prototype.bitXor = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).bitXor.apply(_a, args);
-    };
-    QueryInstance.prototype.blob = function () {
+    }
+    bitAnd(...args) {
+        return (new QueryBuilder(this)).bitAnd(...args);
+    }
+    bitCount(...args) {
+        return (new QueryBuilder(this)).bitCount(...args);
+    }
+    bitLength(...args) {
+        return (new QueryBuilder(this)).bitLength(...args);
+    }
+    bitOr(...args) {
+        return (new QueryBuilder(this)).bitOr(...args);
+    }
+    bitwiseAnd(...args) {
+        return (new QueryBuilder(this)).bitwiseAnd(...args);
+    }
+    bitwiseLeftShift(...args) {
+        return (new QueryBuilder(this)).bitwiseLeftShift(...args);
+    }
+    bitwiseLeftShiftAssign(...args) {
+        return (new QueryBuilder(this)).bitwiseLeftShiftAssign(...args);
+    }
+    bitwiseOr(...args) {
+        return (new QueryBuilder(this)).bitwiseOr(...args);
+    }
+    bitwiseRightShift(...args) {
+        return (new QueryBuilder(this)).bitwiseRightShift(...args);
+    }
+    bitwiseRightShiftAssign(...args) {
+        return (new QueryBuilder(this)).bitwiseRightShiftAssign(...args);
+    }
+    bitwiseXor(...args) {
+        return (new QueryBuilder(this)).bitwiseXor(...args);
+    }
+    bitXor(...args) {
+        return (new QueryBuilder(this)).bitXor(...args);
+    }
+    blob() {
         return (new QueryBuilder(this)).blob();
-    };
-    QueryInstance.prototype.blocked = function () {
+    }
+    blocked() {
         return (new QueryBuilder(this)).blocked();
-    };
-    QueryInstance.prototype.bom = function () {
+    }
+    bom() {
         return (new QueryBuilder(this)).bom();
-    };
-    QueryInstance.prototype.boolAnd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).boolAnd.apply(_a, args);
-    };
-    QueryInstance.prototype.boolean = function () {
+    }
+    boolAnd(...args) {
+        return (new QueryBuilder(this)).boolAnd(...args);
+    }
+    boolean() {
         return (new QueryBuilder(this)).boolean();
-    };
-    QueryInstance.prototype.boolOr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).boolOr.apply(_a, args);
-    };
-    QueryInstance.prototype.both = function () {
+    }
+    boolOr(...args) {
+        return (new QueryBuilder(this)).boolOr(...args);
+    }
+    both() {
         return (new QueryBuilder(this)).both();
-    };
-    QueryInstance.prototype.boundBox = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).boundBox.apply(_a, args);
-    };
-    QueryInstance.prototype.box = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).box.apply(_a, args);
-    };
-    QueryInstance.prototype.breadth = function () {
+    }
+    boundBox(...args) {
+        return (new QueryBuilder(this)).boundBox(...args);
+    }
+    box(...args) {
+        return (new QueryBuilder(this)).box(...args);
+    }
+    breadth() {
         return (new QueryBuilder(this)).breadth();
-    };
-    QueryInstance.prototype.brinDesummarizeRange = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).brinDesummarizeRange.apply(_a, args);
-    };
-    QueryInstance.prototype.brinSummarizeNewValues = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).brinSummarizeNewValues.apply(_a, args);
-    };
-    QueryInstance.prototype.brinSummarizeRange = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).brinSummarizeRange.apply(_a, args);
-    };
-    QueryInstance.prototype.broadcast = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).broadcast.apply(_a, args);
-    };
-    QueryInstance.prototype.btrim = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).btrim.apply(_a, args);
-    };
-    QueryInstance.prototype.by = function () {
+    }
+    brinDesummarizeRange(...args) {
+        return (new QueryBuilder(this)).brinDesummarizeRange(...args);
+    }
+    brinSummarizeNewValues(...args) {
+        return (new QueryBuilder(this)).brinSummarizeNewValues(...args);
+    }
+    brinSummarizeRange(...args) {
+        return (new QueryBuilder(this)).brinSummarizeRange(...args);
+    }
+    broadcast(...args) {
+        return (new QueryBuilder(this)).broadcast(...args);
+    }
+    btrim(...args) {
+        return (new QueryBuilder(this)).btrim(...args);
+    }
+    by() {
         return (new QueryBuilder(this)).by();
-    };
-    QueryInstance.prototype.c = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).c.apply(_a, args);
-    };
-    QueryInstance.prototype.cache = function () {
+    }
+    c(...args) {
+        return (new QueryBuilder(this)).c(...args);
+    }
+    cache() {
         return (new QueryBuilder(this)).cache();
-    };
-    QueryInstance.prototype.call = function () {
+    }
+    call() {
         return (new QueryBuilder(this)).call();
-    };
-    QueryInstance.prototype.called = function () {
+    }
+    called() {
         return (new QueryBuilder(this)).called();
-    };
-    QueryInstance.prototype.cardinality = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cardinality.apply(_a, args);
-    };
-    QueryInstance.prototype.caretAt = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).caretAt.apply(_a, args);
-    };
-    QueryInstance.prototype.cascade = function () {
+    }
+    cardinality(...args) {
+        return (new QueryBuilder(this)).cardinality(...args);
+    }
+    caretAt(...args) {
+        return (new QueryBuilder(this)).caretAt(...args);
+    }
+    cascade() {
         return (new QueryBuilder(this)).cascade();
-    };
-    QueryInstance.prototype.cascaded = function () {
+    }
+    cascaded() {
         return (new QueryBuilder(this)).cascaded();
-    };
-    QueryInstance.prototype.case = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).case.apply(_a, args);
-    };
-    QueryInstance.prototype.casefold = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).casefold.apply(_a, args);
-    };
-    QueryInstance.prototype.cast = function () {
+    }
+    case(...args) {
+        return (new QueryBuilder(this)).case(...args);
+    }
+    casefold(...args) {
+        return (new QueryBuilder(this)).casefold(...args);
+    }
+    cast() {
         return (new QueryBuilder(this)).cast();
-    };
-    QueryInstance.prototype.catalog = function () {
+    }
+    catalog() {
         return (new QueryBuilder(this)).catalog();
-    };
-    QueryInstance.prototype.catalogName = function () {
+    }
+    catalogName() {
         return (new QueryBuilder(this)).catalogName();
-    };
-    QueryInstance.prototype.cbrt = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cbrt.apply(_a, args);
-    };
-    QueryInstance.prototype.ceil = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ceil.apply(_a, args);
-    };
-    QueryInstance.prototype.ceiling = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ceiling.apply(_a, args);
-    };
-    QueryInstance.prototype.center = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).center.apply(_a, args);
-    };
-    QueryInstance.prototype.chain = function () {
+    }
+    cbrt(...args) {
+        return (new QueryBuilder(this)).cbrt(...args);
+    }
+    ceil(...args) {
+        return (new QueryBuilder(this)).ceil(...args);
+    }
+    ceiling(...args) {
+        return (new QueryBuilder(this)).ceiling(...args);
+    }
+    center(...args) {
+        return (new QueryBuilder(this)).center(...args);
+    }
+    chain() {
         return (new QueryBuilder(this)).chain();
-    };
-    QueryInstance.prototype.chaining = function () {
+    }
+    chaining() {
         return (new QueryBuilder(this)).chaining();
-    };
-    QueryInstance.prototype.char = function () {
+    }
+    char() {
         return (new QueryBuilder(this)).char();
-    };
-    QueryInstance.prototype.character = function () {
+    }
+    character() {
         return (new QueryBuilder(this)).character();
-    };
-    QueryInstance.prototype.characteristics = function () {
+    }
+    characteristics() {
         return (new QueryBuilder(this)).characteristics();
-    };
-    QueryInstance.prototype.characterLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).characterLength.apply(_a, args);
-    };
-    QueryInstance.prototype.characters = function () {
+    }
+    characterLength(...args) {
+        return (new QueryBuilder(this)).characterLength(...args);
+    }
+    characters() {
         return (new QueryBuilder(this)).characters();
-    };
-    QueryInstance.prototype.charactersetcatalog = function () {
+    }
+    charactersetcatalog() {
         return (new QueryBuilder(this)).charactersetcatalog();
-    };
-    QueryInstance.prototype.characterSetName = function () {
+    }
+    characterSetName() {
         return (new QueryBuilder(this)).characterSetName();
-    };
-    QueryInstance.prototype.characterSetSchema = function () {
+    }
+    characterSetSchema() {
         return (new QueryBuilder(this)).characterSetSchema();
-    };
-    QueryInstance.prototype.charLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).charLength.apply(_a, args);
-    };
-    QueryInstance.prototype.check = function () {
+    }
+    charLength(...args) {
+        return (new QueryBuilder(this)).charLength(...args);
+    }
+    check() {
         return (new QueryBuilder(this)).check();
-    };
-    QueryInstance.prototype.checkpoint = function () {
+    }
+    checkpoint() {
         return (new QueryBuilder(this)).checkpoint();
-    };
-    QueryInstance.prototype.chr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).chr.apply(_a, args);
-    };
-    QueryInstance.prototype.circle = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).circle.apply(_a, args);
-    };
-    QueryInstance.prototype.class = function () {
+    }
+    chr(...args) {
+        return (new QueryBuilder(this)).chr(...args);
+    }
+    circle(...args) {
+        return (new QueryBuilder(this)).circle(...args);
+    }
+    class() {
         return (new QueryBuilder(this)).class();
-    };
-    QueryInstance.prototype.classifier = function () {
+    }
+    classifier() {
         return (new QueryBuilder(this)).classifier();
-    };
-    QueryInstance.prototype.classOrigin = function () {
+    }
+    classOrigin() {
         return (new QueryBuilder(this)).classOrigin();
-    };
-    QueryInstance.prototype.clob = function () {
+    }
+    clob() {
         return (new QueryBuilder(this)).clob();
-    };
-    QueryInstance.prototype.clockTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).clockTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.close = function () {
+    }
+    clockTimestamp(...args) {
+        return (new QueryBuilder(this)).clockTimestamp(...args);
+    }
+    close() {
         return (new QueryBuilder(this)).close();
-    };
-    QueryInstance.prototype.closestPoint = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).closestPoint.apply(_a, args);
-    };
-    QueryInstance.prototype.cluster = function () {
+    }
+    closestPoint(...args) {
+        return (new QueryBuilder(this)).closestPoint(...args);
+    }
+    cluster() {
         return (new QueryBuilder(this)).cluster();
-    };
-    QueryInstance.prototype.coalesce = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).coalesce.apply(_a, args);
-    };
-    QueryInstance.prototype.cobol = function () {
+    }
+    coalesce(...args) {
+        return (new QueryBuilder(this)).coalesce(...args);
+    }
+    cobol() {
         return (new QueryBuilder(this)).cobol();
-    };
-    QueryInstance.prototype.colDescription = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).colDescription.apply(_a, args);
-    };
-    QueryInstance.prototype.collate = function () {
+    }
+    colDescription(...args) {
+        return (new QueryBuilder(this)).colDescription(...args);
+    }
+    collate() {
         return (new QueryBuilder(this)).collate();
-    };
-    QueryInstance.prototype.collation = function () {
+    }
+    collation() {
         return (new QueryBuilder(this)).collation();
-    };
-    QueryInstance.prototype.collationCatalog = function () {
+    }
+    collationCatalog() {
         return (new QueryBuilder(this)).collationCatalog();
-    };
-    QueryInstance.prototype.collationFor = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).collationFor.apply(_a, args);
-    };
-    QueryInstance.prototype.collationName = function () {
+    }
+    collationFor(...args) {
+        return (new QueryBuilder(this)).collationFor(...args);
+    }
+    collationName() {
         return (new QueryBuilder(this)).collationName();
-    };
-    QueryInstance.prototype.collationSchema = function () {
+    }
+    collationSchema() {
         return (new QueryBuilder(this)).collationSchema();
-    };
-    QueryInstance.prototype.collect = function () {
+    }
+    collect() {
         return (new QueryBuilder(this)).collect();
-    };
-    QueryInstance.prototype.column = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).column.apply(_a, args);
-    };
-    QueryInstance.prototype.columnName = function () {
+    }
+    column(...args) {
+        return (new QueryBuilder(this)).column(...args);
+    }
+    columnName() {
         return (new QueryBuilder(this)).columnName();
-    };
-    QueryInstance.prototype.columns = function () {
+    }
+    columns() {
         return (new QueryBuilder(this)).columns();
-    };
-    QueryInstance.prototype.comma = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).comma.apply(_a, args);
-    };
-    QueryInstance.prototype.commandFunction = function () {
+    }
+    comma(...args) {
+        return (new QueryBuilder(this)).comma(...args);
+    }
+    commandFunction() {
         return (new QueryBuilder(this)).commandFunction();
-    };
-    QueryInstance.prototype.commandfunctioncode = function () {
+    }
+    commandfunctioncode() {
         return (new QueryBuilder(this)).commandfunctioncode();
-    };
-    QueryInstance.prototype.comment = function () {
+    }
+    comment() {
         return (new QueryBuilder(this)).comment();
-    };
-    QueryInstance.prototype.comments = function () {
+    }
+    comments() {
         return (new QueryBuilder(this)).comments();
-    };
-    QueryInstance.prototype.commit = function () {
+    }
+    commit() {
         return (new QueryBuilder(this)).commit();
-    };
-    QueryInstance.prototype.commitPreparedTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).commitPreparedTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.committed = function () {
+    }
+    commitPreparedTransaction(...args) {
+        return (new QueryBuilder(this)).commitPreparedTransaction(...args);
+    }
+    committed() {
         return (new QueryBuilder(this)).committed();
-    };
-    QueryInstance.prototype.commitTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).commitTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.compression = function () {
+    }
+    commitTransaction(...args) {
+        return (new QueryBuilder(this)).commitTransaction(...args);
+    }
+    compression() {
         return (new QueryBuilder(this)).compression();
-    };
-    QueryInstance.prototype.concat = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).concat.apply(_a, args);
-    };
-    QueryInstance.prototype.concatWs = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).concatWs.apply(_a, args);
-    };
-    QueryInstance.prototype.concurrently = function () {
+    }
+    concat(...args) {
+        return (new QueryBuilder(this)).concat(...args);
+    }
+    concatWs(...args) {
+        return (new QueryBuilder(this)).concatWs(...args);
+    }
+    concurrently() {
         return (new QueryBuilder(this)).concurrently();
-    };
-    QueryInstance.prototype.condition = function () {
+    }
+    condition() {
         return (new QueryBuilder(this)).condition();
-    };
-    QueryInstance.prototype.conditional = function () {
+    }
+    conditional() {
         return (new QueryBuilder(this)).conditional();
-    };
-    QueryInstance.prototype.conditionNumber = function () {
+    }
+    conditionNumber() {
         return (new QueryBuilder(this)).conditionNumber();
-    };
-    QueryInstance.prototype.configuration = function () {
+    }
+    configuration() {
         return (new QueryBuilder(this)).configuration();
-    };
-    QueryInstance.prototype.conflict = function () {
+    }
+    conflict() {
         return (new QueryBuilder(this)).conflict();
-    };
-    QueryInstance.prototype.connect = function () {
+    }
+    connect() {
         return (new QueryBuilder(this)).connect();
-    };
-    QueryInstance.prototype.connection = function () {
+    }
+    connection() {
         return (new QueryBuilder(this)).connection();
-    };
-    QueryInstance.prototype.connectionName = function () {
+    }
+    connectionName() {
         return (new QueryBuilder(this)).connectionName();
-    };
-    QueryInstance.prototype.constraint = function () {
+    }
+    constraint() {
         return (new QueryBuilder(this)).constraint();
-    };
-    QueryInstance.prototype.constraintCatalog = function () {
+    }
+    constraintCatalog() {
         return (new QueryBuilder(this)).constraintCatalog();
-    };
-    QueryInstance.prototype.constraintName = function () {
+    }
+    constraintName() {
         return (new QueryBuilder(this)).constraintName();
-    };
-    QueryInstance.prototype.constraints = function () {
+    }
+    constraints() {
         return (new QueryBuilder(this)).constraints();
-    };
-    QueryInstance.prototype.constraintSchema = function () {
+    }
+    constraintSchema() {
         return (new QueryBuilder(this)).constraintSchema();
-    };
-    QueryInstance.prototype.constructorKeyword = function () {
+    }
+    constructorKeyword() {
         return (new QueryBuilder(this)).constructorKeyword();
-    };
-    QueryInstance.prototype.containedBy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).containedBy.apply(_a, args);
-    };
-    QueryInstance.prototype.containment = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).containment.apply(_a, args);
-    };
-    QueryInstance.prototype.contains = function () {
+    }
+    containedBy(...args) {
+        return (new QueryBuilder(this)).containedBy(...args);
+    }
+    containment(...args) {
+        return (new QueryBuilder(this)).containment(...args);
+    }
+    contains() {
         return (new QueryBuilder(this)).contains();
-    };
-    QueryInstance.prototype.content = function () {
+    }
+    content() {
         return (new QueryBuilder(this)).content();
-    };
-    QueryInstance.prototype.continue = function () {
+    }
+    continue() {
         return (new QueryBuilder(this)).continue();
-    };
-    QueryInstance.prototype.control = function () {
+    }
+    control() {
         return (new QueryBuilder(this)).control();
-    };
-    QueryInstance.prototype.conversion = function () {
+    }
+    conversion() {
         return (new QueryBuilder(this)).conversion();
-    };
-    QueryInstance.prototype.convert = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).convert.apply(_a, args);
-    };
-    QueryInstance.prototype.convertFrom = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).convertFrom.apply(_a, args);
-    };
-    QueryInstance.prototype.convertTo = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).convertTo.apply(_a, args);
-    };
-    QueryInstance.prototype.copartition = function () {
+    }
+    convert(...args) {
+        return (new QueryBuilder(this)).convert(...args);
+    }
+    convertFrom(...args) {
+        return (new QueryBuilder(this)).convertFrom(...args);
+    }
+    convertTo(...args) {
+        return (new QueryBuilder(this)).convertTo(...args);
+    }
+    copartition() {
         return (new QueryBuilder(this)).copartition();
-    };
-    QueryInstance.prototype.copy = function () {
+    }
+    copy() {
         return (new QueryBuilder(this)).copy();
-    };
-    QueryInstance.prototype.corr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).corr.apply(_a, args);
-    };
-    QueryInstance.prototype.corresponding = function () {
+    }
+    corr(...args) {
+        return (new QueryBuilder(this)).corr(...args);
+    }
+    corresponding() {
         return (new QueryBuilder(this)).corresponding();
-    };
-    QueryInstance.prototype.cos = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cos.apply(_a, args);
-    };
-    QueryInstance.prototype.cosd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cosd.apply(_a, args);
-    };
-    QueryInstance.prototype.cosh = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cosh.apply(_a, args);
-    };
-    QueryInstance.prototype.cost = function () {
+    }
+    cos(...args) {
+        return (new QueryBuilder(this)).cos(...args);
+    }
+    cosd(...args) {
+        return (new QueryBuilder(this)).cosd(...args);
+    }
+    cosh(...args) {
+        return (new QueryBuilder(this)).cosh(...args);
+    }
+    cost() {
         return (new QueryBuilder(this)).cost();
-    };
-    QueryInstance.prototype.cot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cot.apply(_a, args);
-    };
-    QueryInstance.prototype.cotd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cotd.apply(_a, args);
-    };
-    QueryInstance.prototype.count = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).count.apply(_a, args);
-    };
-    QueryInstance.prototype.covarPop = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).covarPop.apply(_a, args);
-    };
-    QueryInstance.prototype.covarSamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).covarSamp.apply(_a, args);
-    };
-    QueryInstance.prototype.crc32 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).crc32.apply(_a, args);
-    };
-    QueryInstance.prototype.crc32c = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).crc32c.apply(_a, args);
-    };
-    QueryInstance.prototype.create = function () {
+    }
+    cot(...args) {
+        return (new QueryBuilder(this)).cot(...args);
+    }
+    cotd(...args) {
+        return (new QueryBuilder(this)).cotd(...args);
+    }
+    count(...args) {
+        return (new QueryBuilder(this)).count(...args);
+    }
+    covarPop(...args) {
+        return (new QueryBuilder(this)).covarPop(...args);
+    }
+    covarSamp(...args) {
+        return (new QueryBuilder(this)).covarSamp(...args);
+    }
+    crc32(...args) {
+        return (new QueryBuilder(this)).crc32(...args);
+    }
+    crc32c(...args) {
+        return (new QueryBuilder(this)).crc32c(...args);
+    }
+    create() {
         return (new QueryBuilder(this)).create();
-    };
-    QueryInstance.prototype.cross = function () {
+    }
+    cross() {
         return (new QueryBuilder(this)).cross();
-    };
-    QueryInstance.prototype.crosses = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).crosses.apply(_a, args);
-    };
-    QueryInstance.prototype.crossJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).crossJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.crossJoinLateral = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).crossJoinLateral.apply(_a, args);
-    };
-    QueryInstance.prototype.csv = function () {
+    }
+    crosses(...args) {
+        return (new QueryBuilder(this)).crosses(...args);
+    }
+    crossJoin(...args) {
+        return (new QueryBuilder(this)).crossJoin(...args);
+    }
+    crossJoinLateral(...args) {
+        return (new QueryBuilder(this)).crossJoinLateral(...args);
+    }
+    csv() {
         return (new QueryBuilder(this)).csv();
-    };
-    QueryInstance.prototype.cube = function () {
+    }
+    cube() {
         return (new QueryBuilder(this)).cube();
-    };
-    QueryInstance.prototype.cumeDist = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cumeDist.apply(_a, args);
-    };
-    QueryInstance.prototype.current = function () {
+    }
+    cumeDist(...args) {
+        return (new QueryBuilder(this)).cumeDist(...args);
+    }
+    current() {
         return (new QueryBuilder(this)).current();
-    };
-    QueryInstance.prototype.currentCatalog = function () {
+    }
+    currentCatalog() {
         return (new QueryBuilder(this)).currentCatalog();
-    };
-    QueryInstance.prototype.currentDatabase = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentDatabase.apply(_a, args);
-    };
-    QueryInstance.prototype.currentDate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentDate.apply(_a, args);
-    };
-    QueryInstance.prototype.currentdefaulttransformgroup = function () {
+    }
+    currentDatabase(...args) {
+        return (new QueryBuilder(this)).currentDatabase(...args);
+    }
+    currentDate(...args) {
+        return (new QueryBuilder(this)).currentDate(...args);
+    }
+    currentdefaulttransformgroup() {
         return (new QueryBuilder(this)).currentdefaulttransformgroup();
-    };
-    QueryInstance.prototype.currentPath = function () {
+    }
+    currentPath() {
         return (new QueryBuilder(this)).currentPath();
-    };
-    QueryInstance.prototype.currentQuery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentQuery.apply(_a, args);
-    };
-    QueryInstance.prototype.currentRole = function () {
+    }
+    currentQuery(...args) {
+        return (new QueryBuilder(this)).currentQuery(...args);
+    }
+    currentRole() {
         return (new QueryBuilder(this)).currentRole();
-    };
-    QueryInstance.prototype.currentRow = function () {
+    }
+    currentRow() {
         return (new QueryBuilder(this)).currentRow();
-    };
-    QueryInstance.prototype.currentSchema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentSchema.apply(_a, args);
-    };
-    QueryInstance.prototype.currentSchemas = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentSchemas.apply(_a, args);
-    };
-    QueryInstance.prototype.currentSetting = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentSetting.apply(_a, args);
-    };
-    QueryInstance.prototype.currentTime = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentTime.apply(_a, args);
-    };
-    QueryInstance.prototype.currentTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currentTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.currenttransformgroupfortype = function () {
+    }
+    currentSchema(...args) {
+        return (new QueryBuilder(this)).currentSchema(...args);
+    }
+    currentSchemas(...args) {
+        return (new QueryBuilder(this)).currentSchemas(...args);
+    }
+    currentSetting(...args) {
+        return (new QueryBuilder(this)).currentSetting(...args);
+    }
+    currentTime(...args) {
+        return (new QueryBuilder(this)).currentTime(...args);
+    }
+    currentTimestamp(...args) {
+        return (new QueryBuilder(this)).currentTimestamp(...args);
+    }
+    currenttransformgroupfortype() {
         return (new QueryBuilder(this)).currenttransformgroupfortype();
-    };
-    QueryInstance.prototype.currentUser = function () {
+    }
+    currentUser() {
         return (new QueryBuilder(this)).currentUser();
-    };
-    QueryInstance.prototype.currval = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).currval.apply(_a, args);
-    };
-    QueryInstance.prototype.cursor = function () {
+    }
+    currval(...args) {
+        return (new QueryBuilder(this)).currval(...args);
+    }
+    cursor() {
         return (new QueryBuilder(this)).cursor();
-    };
-    QueryInstance.prototype.cursorName = function () {
+    }
+    cursorName() {
         return (new QueryBuilder(this)).cursorName();
-    };
-    QueryInstance.prototype.cursorToXml = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cursorToXml.apply(_a, args);
-    };
-    QueryInstance.prototype.cursorToXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).cursorToXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.cycle = function () {
+    }
+    cursorToXml(...args) {
+        return (new QueryBuilder(this)).cursorToXml(...args);
+    }
+    cursorToXmlschema(...args) {
+        return (new QueryBuilder(this)).cursorToXmlschema(...args);
+    }
+    cycle() {
         return (new QueryBuilder(this)).cycle();
-    };
-    QueryInstance.prototype.data = function () {
+    }
+    data() {
         return (new QueryBuilder(this)).data();
-    };
-    QueryInstance.prototype.database = function () {
+    }
+    database() {
         return (new QueryBuilder(this)).database();
-    };
-    QueryInstance.prototype.databaseToXml = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).databaseToXml.apply(_a, args);
-    };
-    QueryInstance.prototype.databaseToXmlAndXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).databaseToXmlAndXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.databaseToXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).databaseToXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.datalink = function () {
+    }
+    databaseToXml(...args) {
+        return (new QueryBuilder(this)).databaseToXml(...args);
+    }
+    databaseToXmlAndXmlschema(...args) {
+        return (new QueryBuilder(this)).databaseToXmlAndXmlschema(...args);
+    }
+    databaseToXmlschema(...args) {
+        return (new QueryBuilder(this)).databaseToXmlschema(...args);
+    }
+    datalink() {
         return (new QueryBuilder(this)).datalink();
-    };
-    QueryInstance.prototype.date = function () {
+    }
+    date() {
         return (new QueryBuilder(this)).date();
-    };
-    QueryInstance.prototype.dateAdd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).dateAdd.apply(_a, args);
-    };
-    QueryInstance.prototype.dateBin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).dateBin.apply(_a, args);
-    };
-    QueryInstance.prototype.datePart = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).datePart.apply(_a, args);
-    };
-    QueryInstance.prototype.dateSubtract = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).dateSubtract.apply(_a, args);
-    };
-    QueryInstance.prototype.datetimeintervalcode = function () {
+    }
+    dateAdd(...args) {
+        return (new QueryBuilder(this)).dateAdd(...args);
+    }
+    dateBin(...args) {
+        return (new QueryBuilder(this)).dateBin(...args);
+    }
+    datePart(...args) {
+        return (new QueryBuilder(this)).datePart(...args);
+    }
+    dateSubtract(...args) {
+        return (new QueryBuilder(this)).dateSubtract(...args);
+    }
+    datetimeintervalcode() {
         return (new QueryBuilder(this)).datetimeintervalcode();
-    };
-    QueryInstance.prototype.datetimeintervalprecision = function () {
+    }
+    datetimeintervalprecision() {
         return (new QueryBuilder(this)).datetimeintervalprecision();
-    };
-    QueryInstance.prototype.dateTrunc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).dateTrunc.apply(_a, args);
-    };
-    QueryInstance.prototype.day = function () {
+    }
+    dateTrunc(...args) {
+        return (new QueryBuilder(this)).dateTrunc(...args);
+    }
+    day() {
         return (new QueryBuilder(this)).day();
-    };
-    QueryInstance.prototype.db = function () {
+    }
+    db() {
         return (new QueryBuilder(this)).db();
-    };
-    QueryInstance.prototype.deallocate = function () {
+    }
+    deallocate() {
         return (new QueryBuilder(this)).deallocate();
-    };
-    QueryInstance.prototype.dec = function () {
+    }
+    dec() {
         return (new QueryBuilder(this)).dec();
-    };
-    QueryInstance.prototype.decfloat = function () {
+    }
+    decfloat() {
         return (new QueryBuilder(this)).decfloat();
-    };
-    QueryInstance.prototype.decimal = function () {
+    }
+    decimal() {
         return (new QueryBuilder(this)).decimal();
-    };
-    QueryInstance.prototype.declare = function () {
+    }
+    declare() {
         return (new QueryBuilder(this)).declare();
-    };
-    QueryInstance.prototype.decode = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).decode.apply(_a, args);
-    };
-    QueryInstance.prototype.default = function () {
+    }
+    decode(...args) {
+        return (new QueryBuilder(this)).decode(...args);
+    }
+    default() {
         return (new QueryBuilder(this)).default();
-    };
-    QueryInstance.prototype.defaults = function () {
+    }
+    defaults() {
         return (new QueryBuilder(this)).defaults();
-    };
-    QueryInstance.prototype.deferrable = function () {
+    }
+    deferrable() {
         return (new QueryBuilder(this)).deferrable();
-    };
-    QueryInstance.prototype.deferred = function () {
+    }
+    deferred() {
         return (new QueryBuilder(this)).deferred();
-    };
-    QueryInstance.prototype.define = function () {
+    }
+    define() {
         return (new QueryBuilder(this)).define();
-    };
-    QueryInstance.prototype.defined = function () {
+    }
+    defined() {
         return (new QueryBuilder(this)).defined();
-    };
-    QueryInstance.prototype.definer = function () {
+    }
+    definer() {
         return (new QueryBuilder(this)).definer();
-    };
-    QueryInstance.prototype.degree = function () {
+    }
+    degree() {
         return (new QueryBuilder(this)).degree();
-    };
-    QueryInstance.prototype.degrees = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).degrees.apply(_a, args);
-    };
-    QueryInstance.prototype.delete = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).delete.apply(_a, args);
-    };
-    QueryInstance.prototype.delimiter = function () {
+    }
+    degrees(...args) {
+        return (new QueryBuilder(this)).degrees(...args);
+    }
+    delete(...args) {
+        return (new QueryBuilder(this)).delete(...args);
+    }
+    delimiter() {
         return (new QueryBuilder(this)).delimiter();
-    };
-    QueryInstance.prototype.delimiters = function () {
+    }
+    delimiters() {
         return (new QueryBuilder(this)).delimiters();
-    };
-    QueryInstance.prototype.denseRank = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).denseRank.apply(_a, args);
-    };
-    QueryInstance.prototype.depends = function () {
+    }
+    denseRank(...args) {
+        return (new QueryBuilder(this)).denseRank(...args);
+    }
+    depends() {
         return (new QueryBuilder(this)).depends();
-    };
-    QueryInstance.prototype.depth = function () {
+    }
+    depth() {
         return (new QueryBuilder(this)).depth();
-    };
-    QueryInstance.prototype.deref = function () {
+    }
+    deref() {
         return (new QueryBuilder(this)).deref();
-    };
-    QueryInstance.prototype.derived = function () {
+    }
+    derived() {
         return (new QueryBuilder(this)).derived();
-    };
-    QueryInstance.prototype.desc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).desc.apply(_a, args);
-    };
-    QueryInstance.prototype.describe = function () {
+    }
+    desc(...args) {
+        return (new QueryBuilder(this)).desc(...args);
+    }
+    describe() {
         return (new QueryBuilder(this)).describe();
-    };
-    QueryInstance.prototype.descriptor = function () {
+    }
+    descriptor() {
         return (new QueryBuilder(this)).descriptor();
-    };
-    QueryInstance.prototype.detach = function () {
+    }
+    detach() {
         return (new QueryBuilder(this)).detach();
-    };
-    QueryInstance.prototype.deterministic = function () {
+    }
+    deterministic() {
         return (new QueryBuilder(this)).deterministic();
-    };
-    QueryInstance.prototype.diagnostics = function () {
+    }
+    diagnostics() {
         return (new QueryBuilder(this)).diagnostics();
-    };
-    QueryInstance.prototype.diagonal = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).diagonal.apply(_a, args);
-    };
-    QueryInstance.prototype.diameter = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).diameter.apply(_a, args);
-    };
-    QueryInstance.prototype.dictionary = function () {
+    }
+    diagonal(...args) {
+        return (new QueryBuilder(this)).diagonal(...args);
+    }
+    diameter(...args) {
+        return (new QueryBuilder(this)).diameter(...args);
+    }
+    dictionary() {
         return (new QueryBuilder(this)).dictionary();
-    };
-    QueryInstance.prototype.disable = function () {
+    }
+    disable() {
         return (new QueryBuilder(this)).disable();
-    };
-    QueryInstance.prototype.discard = function () {
+    }
+    discard() {
         return (new QueryBuilder(this)).discard();
-    };
-    QueryInstance.prototype.disconnect = function () {
+    }
+    disconnect() {
         return (new QueryBuilder(this)).disconnect();
-    };
-    QueryInstance.prototype.dispatch = function () {
+    }
+    dispatch() {
         return (new QueryBuilder(this)).dispatch();
-    };
-    QueryInstance.prototype.distance = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).distance.apply(_a, args);
-    };
-    QueryInstance.prototype.distinct = function () {
+    }
+    distance(...args) {
+        return (new QueryBuilder(this)).distance(...args);
+    }
+    distinct() {
         return (new QueryBuilder(this)).distinct();
-    };
-    QueryInstance.prototype.div = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).div.apply(_a, args);
-    };
-    QueryInstance.prototype.divide = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).divide.apply(_a, args);
-    };
-    QueryInstance.prototype.dlnewcopy = function () {
+    }
+    div(...args) {
+        return (new QueryBuilder(this)).div(...args);
+    }
+    divide(...args) {
+        return (new QueryBuilder(this)).divide(...args);
+    }
+    dlnewcopy() {
         return (new QueryBuilder(this)).dlnewcopy();
-    };
-    QueryInstance.prototype.dlpreviouscopy = function () {
+    }
+    dlpreviouscopy() {
         return (new QueryBuilder(this)).dlpreviouscopy();
-    };
-    QueryInstance.prototype.dlurlcomplete = function () {
+    }
+    dlurlcomplete() {
         return (new QueryBuilder(this)).dlurlcomplete();
-    };
-    QueryInstance.prototype.dlurlcompleteonly = function () {
+    }
+    dlurlcompleteonly() {
         return (new QueryBuilder(this)).dlurlcompleteonly();
-    };
-    QueryInstance.prototype.dlurlcompletewrite = function () {
+    }
+    dlurlcompletewrite() {
         return (new QueryBuilder(this)).dlurlcompletewrite();
-    };
-    QueryInstance.prototype.dlurlpath = function () {
+    }
+    dlurlpath() {
         return (new QueryBuilder(this)).dlurlpath();
-    };
-    QueryInstance.prototype.dlurlpathonly = function () {
+    }
+    dlurlpathonly() {
         return (new QueryBuilder(this)).dlurlpathonly();
-    };
-    QueryInstance.prototype.dlurlpathwrite = function () {
+    }
+    dlurlpathwrite() {
         return (new QueryBuilder(this)).dlurlpathwrite();
-    };
-    QueryInstance.prototype.dlurlscheme = function () {
+    }
+    dlurlscheme() {
         return (new QueryBuilder(this)).dlurlscheme();
-    };
-    QueryInstance.prototype.dlurlserver = function () {
+    }
+    dlurlserver() {
         return (new QueryBuilder(this)).dlurlserver();
-    };
-    QueryInstance.prototype.dlvalue = function () {
+    }
+    dlvalue() {
         return (new QueryBuilder(this)).dlvalue();
-    };
-    QueryInstance.prototype.do = function () {
+    }
+    do() {
         return (new QueryBuilder(this)).do();
-    };
-    QueryInstance.prototype.document = function () {
+    }
+    document() {
         return (new QueryBuilder(this)).document();
-    };
-    QueryInstance.prototype.domain = function () {
+    }
+    domain() {
         return (new QueryBuilder(this)).domain();
-    };
-    QueryInstance.prototype.doNothing = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).doNothing.apply(_a, args);
-    };
-    QueryInstance.prototype.double = function () {
+    }
+    doNothing(...args) {
+        return (new QueryBuilder(this)).doNothing(...args);
+    }
+    double() {
         return (new QueryBuilder(this)).double();
-    };
-    QueryInstance.prototype.doUpdate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).doUpdate.apply(_a, args);
-    };
-    QueryInstance.prototype.drop = function () {
+    }
+    doUpdate(...args) {
+        return (new QueryBuilder(this)).doUpdate(...args);
+    }
+    drop() {
         return (new QueryBuilder(this)).drop();
-    };
-    QueryInstance.prototype.dynamic = function () {
+    }
+    dynamic() {
         return (new QueryBuilder(this)).dynamic();
-    };
-    QueryInstance.prototype.dynamicFunction = function () {
+    }
+    dynamicFunction() {
         return (new QueryBuilder(this)).dynamicFunction();
-    };
-    QueryInstance.prototype.dynamicfunctioncode = function () {
+    }
+    dynamicfunctioncode() {
         return (new QueryBuilder(this)).dynamicfunctioncode();
-    };
-    QueryInstance.prototype.each = function () {
+    }
+    each() {
         return (new QueryBuilder(this)).each();
-    };
-    QueryInstance.prototype.element = function () {
+    }
+    element() {
         return (new QueryBuilder(this)).element();
-    };
-    QueryInstance.prototype.else = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).else.apply(_a, args);
-    };
-    QueryInstance.prototype.empty = function () {
+    }
+    else(...args) {
+        return (new QueryBuilder(this)).else(...args);
+    }
+    empty() {
         return (new QueryBuilder(this)).empty();
-    };
-    QueryInstance.prototype.enable = function () {
+    }
+    enable() {
         return (new QueryBuilder(this)).enable();
-    };
-    QueryInstance.prototype.encode = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).encode.apply(_a, args);
-    };
-    QueryInstance.prototype.encoding = function () {
+    }
+    encode(...args) {
+        return (new QueryBuilder(this)).encode(...args);
+    }
+    encoding() {
         return (new QueryBuilder(this)).encoding();
-    };
-    QueryInstance.prototype.encrypted = function () {
+    }
+    encrypted() {
         return (new QueryBuilder(this)).encrypted();
-    };
-    QueryInstance.prototype.end = function () {
+    }
+    end() {
         return (new QueryBuilder(this)).end();
-    };
-    QueryInstance.prototype.endExec = function () {
+    }
+    endExec() {
         return (new QueryBuilder(this)).endExec();
-    };
-    QueryInstance.prototype.endFrame = function () {
+    }
+    endFrame() {
         return (new QueryBuilder(this)).endFrame();
-    };
-    QueryInstance.prototype.endPartition = function () {
+    }
+    endPartition() {
         return (new QueryBuilder(this)).endPartition();
-    };
-    QueryInstance.prototype.enforced = function () {
+    }
+    enforced() {
         return (new QueryBuilder(this)).enforced();
-    };
-    QueryInstance.prototype.enum = function () {
+    }
+    enum() {
         return (new QueryBuilder(this)).enum();
-    };
-    QueryInstance.prototype.enumFirst = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).enumFirst.apply(_a, args);
-    };
-    QueryInstance.prototype.enumLast = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).enumLast.apply(_a, args);
-    };
-    QueryInstance.prototype.enumRange = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).enumRange.apply(_a, args);
-    };
-    QueryInstance.prototype.eq = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).eq.apply(_a, args);
-    };
-    QueryInstance.prototype.equals = function () {
+    }
+    enumFirst(...args) {
+        return (new QueryBuilder(this)).enumFirst(...args);
+    }
+    enumLast(...args) {
+        return (new QueryBuilder(this)).enumLast(...args);
+    }
+    enumRange(...args) {
+        return (new QueryBuilder(this)).enumRange(...args);
+    }
+    eq(...args) {
+        return (new QueryBuilder(this)).eq(...args);
+    }
+    equals() {
         return (new QueryBuilder(this)).equals();
-    };
-    QueryInstance.prototype.erf = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).erf.apply(_a, args);
-    };
-    QueryInstance.prototype.erfc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).erfc.apply(_a, args);
-    };
-    QueryInstance.prototype.error = function () {
+    }
+    erf(...args) {
+        return (new QueryBuilder(this)).erf(...args);
+    }
+    erfc(...args) {
+        return (new QueryBuilder(this)).erfc(...args);
+    }
+    error() {
         return (new QueryBuilder(this)).error();
-    };
-    QueryInstance.prototype.escape = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).escape.apply(_a, args);
-    };
-    QueryInstance.prototype.event = function () {
+    }
+    escape(...args) {
+        return (new QueryBuilder(this)).escape(...args);
+    }
+    event() {
         return (new QueryBuilder(this)).event();
-    };
-    QueryInstance.prototype.every = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).every.apply(_a, args);
-    };
-    QueryInstance.prototype.except = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).except.apply(_a, args);
-    };
-    QueryInstance.prototype.exceptAll = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).exceptAll.apply(_a, args);
-    };
-    QueryInstance.prototype.exception = function () {
+    }
+    every(...args) {
+        return (new QueryBuilder(this)).every(...args);
+    }
+    except(...args) {
+        return (new QueryBuilder(this)).except(...args);
+    }
+    exceptAll(...args) {
+        return (new QueryBuilder(this)).exceptAll(...args);
+    }
+    exception() {
         return (new QueryBuilder(this)).exception();
-    };
-    QueryInstance.prototype.exclamation = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).exclamation.apply(_a, args);
-    };
-    QueryInstance.prototype.exclude = function () {
+    }
+    exclamation(...args) {
+        return (new QueryBuilder(this)).exclamation(...args);
+    }
+    exclude() {
         return (new QueryBuilder(this)).exclude();
-    };
-    QueryInstance.prototype.excluding = function () {
+    }
+    excluding() {
         return (new QueryBuilder(this)).excluding();
-    };
-    QueryInstance.prototype.exclusive = function () {
+    }
+    exclusive() {
         return (new QueryBuilder(this)).exclusive();
-    };
-    QueryInstance.prototype.execKeyword = function () {
+    }
+    execKeyword() {
         return (new QueryBuilder(this)).execKeyword();
-    };
-    QueryInstance.prototype.executeKeyword = function () {
+    }
+    executeKeyword() {
         return (new QueryBuilder(this)).executeKeyword();
-    };
-    QueryInstance.prototype.exists = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).exists.apply(_a, args);
-    };
-    QueryInstance.prototype.exp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).exp.apply(_a, args);
-    };
-    QueryInstance.prototype.explain = function () {
+    }
+    exists(...args) {
+        return (new QueryBuilder(this)).exists(...args);
+    }
+    exp(...args) {
+        return (new QueryBuilder(this)).exp(...args);
+    }
+    explain() {
         return (new QueryBuilder(this)).explain();
-    };
-    QueryInstance.prototype.expression = function () {
+    }
+    expression() {
         return (new QueryBuilder(this)).expression();
-    };
-    QueryInstance.prototype.extension = function () {
+    }
+    extension() {
         return (new QueryBuilder(this)).extension();
-    };
-    QueryInstance.prototype.external = function () {
+    }
+    external() {
         return (new QueryBuilder(this)).external();
-    };
-    QueryInstance.prototype.extract = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).extract.apply(_a, args);
-    };
-    QueryInstance.prototype.factorial = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).factorial.apply(_a, args);
-    };
-    QueryInstance.prototype.false = function () {
+    }
+    extract(...args) {
+        return (new QueryBuilder(this)).extract(...args);
+    }
+    factorial(...args) {
+        return (new QueryBuilder(this)).factorial(...args);
+    }
+    false() {
         return (new QueryBuilder(this)).false();
-    };
-    QueryInstance.prototype.family = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).family.apply(_a, args);
-    };
-    QueryInstance.prototype.fetch = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).fetch.apply(_a, args);
-    };
-    QueryInstance.prototype.file = function () {
+    }
+    family(...args) {
+        return (new QueryBuilder(this)).family(...args);
+    }
+    fetch(...args) {
+        return (new QueryBuilder(this)).fetch(...args);
+    }
+    file() {
         return (new QueryBuilder(this)).file();
-    };
-    QueryInstance.prototype.filter = function () {
+    }
+    filter() {
         return (new QueryBuilder(this)).filter();
-    };
-    QueryInstance.prototype.final = function () {
+    }
+    final() {
         return (new QueryBuilder(this)).final();
-    };
-    QueryInstance.prototype.finalize = function () {
+    }
+    finalize() {
         return (new QueryBuilder(this)).finalize();
-    };
-    QueryInstance.prototype.finish = function () {
+    }
+    finish() {
         return (new QueryBuilder(this)).finish();
-    };
-    QueryInstance.prototype.first = function () {
+    }
+    first() {
         return (new QueryBuilder(this)).first();
-    };
-    QueryInstance.prototype.firstValue = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).firstValue.apply(_a, args);
-    };
-    QueryInstance.prototype.flag = function () {
+    }
+    firstValue(...args) {
+        return (new QueryBuilder(this)).firstValue(...args);
+    }
+    flag() {
         return (new QueryBuilder(this)).flag();
-    };
-    QueryInstance.prototype.float = function () {
+    }
+    float() {
         return (new QueryBuilder(this)).float();
-    };
-    QueryInstance.prototype.floor = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).floor.apply(_a, args);
-    };
-    QueryInstance.prototype.following = function () {
+    }
+    floor(...args) {
+        return (new QueryBuilder(this)).floor(...args);
+    }
+    following() {
         return (new QueryBuilder(this)).following();
-    };
-    QueryInstance.prototype.for = function () {
+    }
+    for() {
         return (new QueryBuilder(this)).for();
-    };
-    QueryInstance.prototype.force = function () {
+    }
+    force() {
         return (new QueryBuilder(this)).force();
-    };
-    QueryInstance.prototype.foreign = function () {
+    }
+    foreign() {
         return (new QueryBuilder(this)).foreign();
-    };
-    QueryInstance.prototype.format = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).format.apply(_a, args);
-    };
-    QueryInstance.prototype.formatType = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).formatType.apply(_a, args);
-    };
-    QueryInstance.prototype.fortran = function () {
+    }
+    format(...args) {
+        return (new QueryBuilder(this)).format(...args);
+    }
+    formatType(...args) {
+        return (new QueryBuilder(this)).formatType(...args);
+    }
+    fortran() {
         return (new QueryBuilder(this)).fortran();
-    };
-    QueryInstance.prototype.forward = function () {
+    }
+    forward() {
         return (new QueryBuilder(this)).forward();
-    };
-    QueryInstance.prototype.found = function () {
+    }
+    found() {
         return (new QueryBuilder(this)).found();
-    };
-    QueryInstance.prototype.frameRow = function () {
+    }
+    frameRow() {
         return (new QueryBuilder(this)).frameRow();
-    };
-    QueryInstance.prototype.free = function () {
+    }
+    free() {
         return (new QueryBuilder(this)).free();
-    };
-    QueryInstance.prototype.freeze = function () {
+    }
+    freeze() {
         return (new QueryBuilder(this)).freeze();
-    };
-    QueryInstance.prototype.from = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).from.apply(_a, args);
-    };
-    QueryInstance.prototype.fs = function () {
+    }
+    from(...args) {
+        return (new QueryBuilder(this)).from(...args);
+    }
+    fs() {
         return (new QueryBuilder(this)).fs();
-    };
-    QueryInstance.prototype.fulfill = function () {
+    }
+    fulfill() {
         return (new QueryBuilder(this)).fulfill();
-    };
-    QueryInstance.prototype.full = function () {
+    }
+    full() {
         return (new QueryBuilder(this)).full();
-    };
-    QueryInstance.prototype.fullJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).fullJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.function = function () {
+    }
+    fullJoin(...args) {
+        return (new QueryBuilder(this)).fullJoin(...args);
+    }
+    function() {
         return (new QueryBuilder(this)).function();
-    };
-    QueryInstance.prototype.functions = function () {
+    }
+    functions() {
         return (new QueryBuilder(this)).functions();
-    };
-    QueryInstance.prototype.fusion = function () {
+    }
+    fusion() {
         return (new QueryBuilder(this)).fusion();
-    };
-    QueryInstance.prototype.g = function () {
+    }
+    g() {
         return (new QueryBuilder(this)).g();
-    };
-    QueryInstance.prototype.gamma = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).gamma.apply(_a, args);
-    };
-    QueryInstance.prototype.gcd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).gcd.apply(_a, args);
-    };
-    QueryInstance.prototype.general = function () {
+    }
+    gamma(...args) {
+        return (new QueryBuilder(this)).gamma(...args);
+    }
+    gcd(...args) {
+        return (new QueryBuilder(this)).gcd(...args);
+    }
+    general() {
         return (new QueryBuilder(this)).general();
-    };
-    QueryInstance.prototype.generated = function () {
+    }
+    generated() {
         return (new QueryBuilder(this)).generated();
-    };
-    QueryInstance.prototype.generateSeries = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).generateSeries.apply(_a, args);
-    };
-    QueryInstance.prototype.generateSubscripts = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).generateSubscripts.apply(_a, args);
-    };
-    QueryInstance.prototype.genRandomUuid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).genRandomUuid.apply(_a, args);
-    };
-    QueryInstance.prototype.get = function () {
+    }
+    generateSeries(...args) {
+        return (new QueryBuilder(this)).generateSeries(...args);
+    }
+    generateSubscripts(...args) {
+        return (new QueryBuilder(this)).generateSubscripts(...args);
+    }
+    genRandomUuid(...args) {
+        return (new QueryBuilder(this)).genRandomUuid(...args);
+    }
+    get() {
         return (new QueryBuilder(this)).get();
-    };
-    QueryInstance.prototype.getBit = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).getBit.apply(_a, args);
-    };
-    QueryInstance.prototype.getByte = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).getByte.apply(_a, args);
-    };
-    QueryInstance.prototype.getCurrentTsConfig = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).getCurrentTsConfig.apply(_a, args);
-    };
-    QueryInstance.prototype.ginCleanPendingList = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ginCleanPendingList.apply(_a, args);
-    };
-    QueryInstance.prototype.global = function () {
+    }
+    getBit(...args) {
+        return (new QueryBuilder(this)).getBit(...args);
+    }
+    getByte(...args) {
+        return (new QueryBuilder(this)).getByte(...args);
+    }
+    getCurrentTsConfig(...args) {
+        return (new QueryBuilder(this)).getCurrentTsConfig(...args);
+    }
+    ginCleanPendingList(...args) {
+        return (new QueryBuilder(this)).ginCleanPendingList(...args);
+    }
+    global() {
         return (new QueryBuilder(this)).global();
-    };
-    QueryInstance.prototype.go = function () {
+    }
+    go() {
         return (new QueryBuilder(this)).go();
-    };
-    QueryInstance.prototype.goto = function () {
+    }
+    goto() {
         return (new QueryBuilder(this)).goto();
-    };
-    QueryInstance.prototype.grant = function () {
+    }
+    grant() {
         return (new QueryBuilder(this)).grant();
-    };
-    QueryInstance.prototype.granted = function () {
+    }
+    granted() {
         return (new QueryBuilder(this)).granted();
-    };
-    QueryInstance.prototype.greatest = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).greatest.apply(_a, args);
-    };
-    QueryInstance.prototype.group = function () {
+    }
+    greatest(...args) {
+        return (new QueryBuilder(this)).greatest(...args);
+    }
+    group() {
         return (new QueryBuilder(this)).group();
-    };
-    QueryInstance.prototype.groupBy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).groupBy.apply(_a, args);
-    };
-    QueryInstance.prototype.groupByDistinct = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).groupByDistinct.apply(_a, args);
-    };
-    QueryInstance.prototype.grouping = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).grouping.apply(_a, args);
-    };
-    QueryInstance.prototype.groups = function () {
+    }
+    groupBy(...args) {
+        return (new QueryBuilder(this)).groupBy(...args);
+    }
+    groupByDistinct(...args) {
+        return (new QueryBuilder(this)).groupByDistinct(...args);
+    }
+    grouping(...args) {
+        return (new QueryBuilder(this)).grouping(...args);
+    }
+    groups() {
         return (new QueryBuilder(this)).groups();
-    };
-    QueryInstance.prototype.gt = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).gt.apply(_a, args);
-    };
-    QueryInstance.prototype.gte = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).gte.apply(_a, args);
-    };
-    QueryInstance.prototype.handler = function () {
+    }
+    gt(...args) {
+        return (new QueryBuilder(this)).gt(...args);
+    }
+    gte(...args) {
+        return (new QueryBuilder(this)).gte(...args);
+    }
+    handler() {
         return (new QueryBuilder(this)).handler();
-    };
-    QueryInstance.prototype.hasAnyColumnPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasAnyColumnPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasColumnPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasColumnPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasDatabasePrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasDatabasePrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasForeignDataWrapperPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasForeignDataWrapperPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasFunctionPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasFunctionPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hash = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hash.apply(_a, args);
-    };
-    QueryInstance.prototype.hasLanguagePrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasLanguagePrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasLargeobjectPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasLargeobjectPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasParameterPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasParameterPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasSchemaPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasSchemaPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasSequencePrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasSequencePrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasServerPrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasServerPrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasTablePrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasTablePrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasTablespacePrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasTablespacePrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.hasTypePrivilege = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hasTypePrivilege.apply(_a, args);
-    };
-    QueryInstance.prototype.having = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).having.apply(_a, args);
-    };
-    QueryInstance.prototype.header = function () {
+    }
+    hasAnyColumnPrivilege(...args) {
+        return (new QueryBuilder(this)).hasAnyColumnPrivilege(...args);
+    }
+    hasColumnPrivilege(...args) {
+        return (new QueryBuilder(this)).hasColumnPrivilege(...args);
+    }
+    hasDatabasePrivilege(...args) {
+        return (new QueryBuilder(this)).hasDatabasePrivilege(...args);
+    }
+    hasForeignDataWrapperPrivilege(...args) {
+        return (new QueryBuilder(this)).hasForeignDataWrapperPrivilege(...args);
+    }
+    hasFunctionPrivilege(...args) {
+        return (new QueryBuilder(this)).hasFunctionPrivilege(...args);
+    }
+    hash(...args) {
+        return (new QueryBuilder(this)).hash(...args);
+    }
+    hasLanguagePrivilege(...args) {
+        return (new QueryBuilder(this)).hasLanguagePrivilege(...args);
+    }
+    hasLargeobjectPrivilege(...args) {
+        return (new QueryBuilder(this)).hasLargeobjectPrivilege(...args);
+    }
+    hasParameterPrivilege(...args) {
+        return (new QueryBuilder(this)).hasParameterPrivilege(...args);
+    }
+    hasSchemaPrivilege(...args) {
+        return (new QueryBuilder(this)).hasSchemaPrivilege(...args);
+    }
+    hasSequencePrivilege(...args) {
+        return (new QueryBuilder(this)).hasSequencePrivilege(...args);
+    }
+    hasServerPrivilege(...args) {
+        return (new QueryBuilder(this)).hasServerPrivilege(...args);
+    }
+    hasTablePrivilege(...args) {
+        return (new QueryBuilder(this)).hasTablePrivilege(...args);
+    }
+    hasTablespacePrivilege(...args) {
+        return (new QueryBuilder(this)).hasTablespacePrivilege(...args);
+    }
+    hasTypePrivilege(...args) {
+        return (new QueryBuilder(this)).hasTypePrivilege(...args);
+    }
+    having(...args) {
+        return (new QueryBuilder(this)).having(...args);
+    }
+    header() {
         return (new QueryBuilder(this)).header();
-    };
-    QueryInstance.prototype.height = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).height.apply(_a, args);
-    };
-    QueryInstance.prototype.hex = function () {
+    }
+    height(...args) {
+        return (new QueryBuilder(this)).height(...args);
+    }
+    hex() {
         return (new QueryBuilder(this)).hex();
-    };
-    QueryInstance.prototype.hierarchy = function () {
+    }
+    hierarchy() {
         return (new QueryBuilder(this)).hierarchy();
-    };
-    QueryInstance.prototype.hold = function () {
+    }
+    hold() {
         return (new QueryBuilder(this)).hold();
-    };
-    QueryInstance.prototype.horizontal = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).horizontal.apply(_a, args);
-    };
-    QueryInstance.prototype.host = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).host.apply(_a, args);
-    };
-    QueryInstance.prototype.hostmask = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).hostmask.apply(_a, args);
-    };
-    QueryInstance.prototype.hour = function () {
+    }
+    horizontal(...args) {
+        return (new QueryBuilder(this)).horizontal(...args);
+    }
+    host(...args) {
+        return (new QueryBuilder(this)).host(...args);
+    }
+    hostmask(...args) {
+        return (new QueryBuilder(this)).hostmask(...args);
+    }
+    hour() {
         return (new QueryBuilder(this)).hour();
-    };
-    QueryInstance.prototype.i = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).i.apply(_a, args);
-    };
-    QueryInstance.prototype.icuUnicodeVersion = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).icuUnicodeVersion.apply(_a, args);
-    };
-    QueryInstance.prototype.id = function () {
+    }
+    i(...args) {
+        return (new QueryBuilder(this)).i(...args);
+    }
+    icuUnicodeVersion(...args) {
+        return (new QueryBuilder(this)).icuUnicodeVersion(...args);
+    }
+    id() {
         return (new QueryBuilder(this)).id();
-    };
-    QueryInstance.prototype.identifier = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).identifier.apply(_a, args);
-    };
-    QueryInstance.prototype.identifierArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).identifierArray.apply(_a, args);
-    };
-    QueryInstance.prototype.identity = function () {
+    }
+    identifier(...args) {
+        return (new QueryBuilder(this)).identifier(...args);
+    }
+    identifierArray(...args) {
+        return (new QueryBuilder(this)).identifierArray(...args);
+    }
+    identity() {
         return (new QueryBuilder(this)).identity();
-    };
-    QueryInstance.prototype.if = function () {
+    }
+    if() {
         return (new QueryBuilder(this)).if();
-    };
-    QueryInstance.prototype.ignore = function () {
+    }
+    ignore() {
         return (new QueryBuilder(this)).ignore();
-    };
-    QueryInstance.prototype.ilike = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ilike.apply(_a, args);
-    };
-    QueryInstance.prototype.immediate = function () {
+    }
+    ilike(...args) {
+        return (new QueryBuilder(this)).ilike(...args);
+    }
+    immediate() {
         return (new QueryBuilder(this)).immediate();
-    };
-    QueryInstance.prototype.immediately = function () {
+    }
+    immediately() {
         return (new QueryBuilder(this)).immediately();
-    };
-    QueryInstance.prototype.immutable = function () {
+    }
+    immutable() {
         return (new QueryBuilder(this)).immutable();
-    };
-    QueryInstance.prototype.implementation = function () {
+    }
+    implementation() {
         return (new QueryBuilder(this)).implementation();
-    };
-    QueryInstance.prototype.implicit = function () {
+    }
+    implicit() {
         return (new QueryBuilder(this)).implicit();
-    };
-    QueryInstance.prototype.import = function () {
+    }
+    import() {
         return (new QueryBuilder(this)).import();
-    };
-    QueryInstance.prototype.in = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).in.apply(_a, args);
-    };
-    QueryInstance.prototype.include = function () {
+    }
+    in(...args) {
+        return (new QueryBuilder(this)).in(...args);
+    }
+    include() {
         return (new QueryBuilder(this)).include();
-    };
-    QueryInstance.prototype.including = function () {
+    }
+    including() {
         return (new QueryBuilder(this)).including();
-    };
-    QueryInstance.prototype.increment = function () {
+    }
+    increment() {
         return (new QueryBuilder(this)).increment();
-    };
-    QueryInstance.prototype.indent = function () {
+    }
+    indent() {
         return (new QueryBuilder(this)).indent();
-    };
-    QueryInstance.prototype.index = function () {
+    }
+    index() {
         return (new QueryBuilder(this)).index();
-    };
-    QueryInstance.prototype.indexes = function () {
+    }
+    indexes() {
         return (new QueryBuilder(this)).indexes();
-    };
-    QueryInstance.prototype.indicator = function () {
+    }
+    indicator() {
         return (new QueryBuilder(this)).indicator();
-    };
-    QueryInstance.prototype.inetClientAddr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).inetClientAddr.apply(_a, args);
-    };
-    QueryInstance.prototype.inetClientPort = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).inetClientPort.apply(_a, args);
-    };
-    QueryInstance.prototype.inetMerge = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).inetMerge.apply(_a, args);
-    };
-    QueryInstance.prototype.inetSameFamily = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).inetSameFamily.apply(_a, args);
-    };
-    QueryInstance.prototype.inetServerAddr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).inetServerAddr.apply(_a, args);
-    };
-    QueryInstance.prototype.inetServerPort = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).inetServerPort.apply(_a, args);
-    };
-    QueryInstance.prototype.inherit = function () {
+    }
+    inetClientAddr(...args) {
+        return (new QueryBuilder(this)).inetClientAddr(...args);
+    }
+    inetClientPort(...args) {
+        return (new QueryBuilder(this)).inetClientPort(...args);
+    }
+    inetMerge(...args) {
+        return (new QueryBuilder(this)).inetMerge(...args);
+    }
+    inetSameFamily(...args) {
+        return (new QueryBuilder(this)).inetSameFamily(...args);
+    }
+    inetServerAddr(...args) {
+        return (new QueryBuilder(this)).inetServerAddr(...args);
+    }
+    inetServerPort(...args) {
+        return (new QueryBuilder(this)).inetServerPort(...args);
+    }
+    inherit() {
         return (new QueryBuilder(this)).inherit();
-    };
-    QueryInstance.prototype.inherits = function () {
+    }
+    inherits() {
         return (new QueryBuilder(this)).inherits();
-    };
-    QueryInstance.prototype.initcap = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).initcap.apply(_a, args);
-    };
-    QueryInstance.prototype.initial = function () {
+    }
+    initcap(...args) {
+        return (new QueryBuilder(this)).initcap(...args);
+    }
+    initial() {
         return (new QueryBuilder(this)).initial();
-    };
-    QueryInstance.prototype.initially = function () {
+    }
+    initially() {
         return (new QueryBuilder(this)).initially();
-    };
-    QueryInstance.prototype.inline = function () {
+    }
+    inline() {
         return (new QueryBuilder(this)).inline();
-    };
-    QueryInstance.prototype.inner = function () {
+    }
+    inner() {
         return (new QueryBuilder(this)).inner();
-    };
-    QueryInstance.prototype.innerJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).innerJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.innerJoinLateral = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).innerJoinLateral.apply(_a, args);
-    };
-    QueryInstance.prototype.inout = function () {
+    }
+    innerJoin(...args) {
+        return (new QueryBuilder(this)).innerJoin(...args);
+    }
+    innerJoinLateral(...args) {
+        return (new QueryBuilder(this)).innerJoinLateral(...args);
+    }
+    inout() {
         return (new QueryBuilder(this)).inout();
-    };
-    QueryInstance.prototype.input = function () {
+    }
+    input() {
         return (new QueryBuilder(this)).input();
-    };
-    QueryInstance.prototype.insensitive = function () {
+    }
+    insensitive() {
         return (new QueryBuilder(this)).insensitive();
-    };
-    QueryInstance.prototype.insert = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).insert.apply(_a, args);
-    };
-    QueryInstance.prototype.insertInto = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).insertInto.apply(_a, args);
-    };
-    QueryInstance.prototype.instance = function () {
+    }
+    insert(...args) {
+        return (new QueryBuilder(this)).insert(...args);
+    }
+    insertInto(...args) {
+        return (new QueryBuilder(this)).insertInto(...args);
+    }
+    instance() {
         return (new QueryBuilder(this)).instance();
-    };
-    QueryInstance.prototype.instantiable = function () {
+    }
+    instantiable() {
         return (new QueryBuilder(this)).instantiable();
-    };
-    QueryInstance.prototype.instead = function () {
+    }
+    instead() {
         return (new QueryBuilder(this)).instead();
-    };
-    QueryInstance.prototype.int = function () {
+    }
+    int() {
         return (new QueryBuilder(this)).int();
-    };
-    QueryInstance.prototype.integer = function () {
+    }
+    integer() {
         return (new QueryBuilder(this)).integer();
-    };
-    QueryInstance.prototype.integrity = function () {
+    }
+    integrity() {
         return (new QueryBuilder(this)).integrity();
-    };
-    QueryInstance.prototype.intersect = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).intersect.apply(_a, args);
-    };
-    QueryInstance.prototype.intersectAll = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).intersectAll.apply(_a, args);
-    };
-    QueryInstance.prototype.intersection = function () {
+    }
+    intersect(...args) {
+        return (new QueryBuilder(this)).intersect(...args);
+    }
+    intersectAll(...args) {
+        return (new QueryBuilder(this)).intersectAll(...args);
+    }
+    intersection() {
         return (new QueryBuilder(this)).intersection();
-    };
-    QueryInstance.prototype.interval = function () {
+    }
+    interval() {
         return (new QueryBuilder(this)).interval();
-    };
-    QueryInstance.prototype.into = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).into.apply(_a, args);
-    };
-    QueryInstance.prototype.invoker = function () {
+    }
+    into(...args) {
+        return (new QueryBuilder(this)).into(...args);
+    }
+    invoker() {
         return (new QueryBuilder(this)).invoker();
-    };
-    QueryInstance.prototype.is = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).is.apply(_a, args);
-    };
-    QueryInstance.prototype.isclosed = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).isclosed.apply(_a, args);
-    };
-    QueryInstance.prototype.isempty = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).isempty.apply(_a, args);
-    };
-    QueryInstance.prototype.isfinite = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).isfinite.apply(_a, args);
-    };
-    QueryInstance.prototype.isNot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).isNot.apply(_a, args);
-    };
-    QueryInstance.prototype.isnull = function () {
+    }
+    is(...args) {
+        return (new QueryBuilder(this)).is(...args);
+    }
+    isclosed(...args) {
+        return (new QueryBuilder(this)).isclosed(...args);
+    }
+    isempty(...args) {
+        return (new QueryBuilder(this)).isempty(...args);
+    }
+    isfinite(...args) {
+        return (new QueryBuilder(this)).isfinite(...args);
+    }
+    isNot(...args) {
+        return (new QueryBuilder(this)).isNot(...args);
+    }
+    isnull() {
         return (new QueryBuilder(this)).isnull();
-    };
-    QueryInstance.prototype.isolation = function () {
+    }
+    isolation() {
         return (new QueryBuilder(this)).isolation();
-    };
-    QueryInstance.prototype.isopen = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).isopen.apply(_a, args);
-    };
-    QueryInstance.prototype.isParallel = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).isParallel.apply(_a, args);
-    };
-    QueryInstance.prototype.join = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).join.apply(_a, args);
-    };
-    QueryInstance.prototype.json = function () {
+    }
+    isopen(...args) {
+        return (new QueryBuilder(this)).isopen(...args);
+    }
+    isParallel(...args) {
+        return (new QueryBuilder(this)).isParallel(...args);
+    }
+    join(...args) {
+        return (new QueryBuilder(this)).join(...args);
+    }
+    json() {
         return (new QueryBuilder(this)).json();
-    };
-    QueryInstance.prototype.jsonAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonAggStrict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonAggStrict.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonArray.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonArrayagg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonArrayagg.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonArrayElements = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonArrayElements.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonArrayElementsText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonArrayElementsText.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonArrayLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonArrayLength.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbAggStrict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbAggStrict.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbArrayElements = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbArrayElements.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbArrayElementsText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbArrayElementsText.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbArrayLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbArrayLength.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbBuildArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbBuildArray.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbBuildObject = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbBuildObject.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbEach = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbEach.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbEachText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbEachText.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbExtractPath = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbExtractPath.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbExtractPathText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbExtractPathText.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbInsert = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbInsert.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbObject = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbObject.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbObjectAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbObjectAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbObjectAggStrict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbObjectAggStrict.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbObjectAggUnique = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbObjectAggUnique.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbObjectAggUniqueStrict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbObjectAggUniqueStrict.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbObjectKeys = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbObjectKeys.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathExists = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathExists.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathExistsTz = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathExistsTz.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathMatch = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathMatch.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathMatchTz = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathMatchTz.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathQuery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathQuery.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathQueryArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathQueryArray.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathQueryArrayTz = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathQueryArrayTz.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathQueryFirst = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathQueryFirst.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathQueryFirstTz = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathQueryFirstTz.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPathQueryTz = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPathQueryTz.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPopulateRecord = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPopulateRecord.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPopulateRecordset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPopulateRecordset.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPopulateRecordValid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPopulateRecordValid.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbPretty = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbPretty.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbSet = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbSet.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbSetLax = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbSetLax.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbStripNulls = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbStripNulls.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbToRecord = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbToRecord.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbToRecordset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbToRecordset.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbToTsvector = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbToTsvector.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonbTypeof = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonbTypeof.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonBuildArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonBuildArray.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonBuildObject = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonBuildObject.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonEach = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonEach.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonEachText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonEachText.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonExists = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonExists.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonExtractPath = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonExtractPath.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonExtractPathText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonExtractPathText.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObject = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObject.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObjectagg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObjectagg.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObjectAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObjectAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObjectAggStrict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObjectAggStrict.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObjectAggUnique = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObjectAggUnique.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObjectAggUniqueStrict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObjectAggUniqueStrict.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonObjectKeys = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonObjectKeys.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonPopulateRecord = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonPopulateRecord.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonPopulateRecordset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonPopulateRecordset.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonQuery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonQuery.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonScalar = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonScalar.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonSerialize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonSerialize.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonStripNulls = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonStripNulls.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonTable = function () {
+    }
+    jsonAgg(...args) {
+        return (new QueryBuilder(this)).jsonAgg(...args);
+    }
+    jsonAggStrict(...args) {
+        return (new QueryBuilder(this)).jsonAggStrict(...args);
+    }
+    jsonArray(...args) {
+        return (new QueryBuilder(this)).jsonArray(...args);
+    }
+    jsonArrayagg(...args) {
+        return (new QueryBuilder(this)).jsonArrayagg(...args);
+    }
+    jsonArrayElements(...args) {
+        return (new QueryBuilder(this)).jsonArrayElements(...args);
+    }
+    jsonArrayElementsText(...args) {
+        return (new QueryBuilder(this)).jsonArrayElementsText(...args);
+    }
+    jsonArrayLength(...args) {
+        return (new QueryBuilder(this)).jsonArrayLength(...args);
+    }
+    jsonbAgg(...args) {
+        return (new QueryBuilder(this)).jsonbAgg(...args);
+    }
+    jsonbAggStrict(...args) {
+        return (new QueryBuilder(this)).jsonbAggStrict(...args);
+    }
+    jsonbArrayElements(...args) {
+        return (new QueryBuilder(this)).jsonbArrayElements(...args);
+    }
+    jsonbArrayElementsText(...args) {
+        return (new QueryBuilder(this)).jsonbArrayElementsText(...args);
+    }
+    jsonbArrayLength(...args) {
+        return (new QueryBuilder(this)).jsonbArrayLength(...args);
+    }
+    jsonbBuildArray(...args) {
+        return (new QueryBuilder(this)).jsonbBuildArray(...args);
+    }
+    jsonbBuildObject(...args) {
+        return (new QueryBuilder(this)).jsonbBuildObject(...args);
+    }
+    jsonbEach(...args) {
+        return (new QueryBuilder(this)).jsonbEach(...args);
+    }
+    jsonbEachText(...args) {
+        return (new QueryBuilder(this)).jsonbEachText(...args);
+    }
+    jsonbExtractPath(...args) {
+        return (new QueryBuilder(this)).jsonbExtractPath(...args);
+    }
+    jsonbExtractPathText(...args) {
+        return (new QueryBuilder(this)).jsonbExtractPathText(...args);
+    }
+    jsonbInsert(...args) {
+        return (new QueryBuilder(this)).jsonbInsert(...args);
+    }
+    jsonbObject(...args) {
+        return (new QueryBuilder(this)).jsonbObject(...args);
+    }
+    jsonbObjectAgg(...args) {
+        return (new QueryBuilder(this)).jsonbObjectAgg(...args);
+    }
+    jsonbObjectAggStrict(...args) {
+        return (new QueryBuilder(this)).jsonbObjectAggStrict(...args);
+    }
+    jsonbObjectAggUnique(...args) {
+        return (new QueryBuilder(this)).jsonbObjectAggUnique(...args);
+    }
+    jsonbObjectAggUniqueStrict(...args) {
+        return (new QueryBuilder(this)).jsonbObjectAggUniqueStrict(...args);
+    }
+    jsonbObjectKeys(...args) {
+        return (new QueryBuilder(this)).jsonbObjectKeys(...args);
+    }
+    jsonbPathExists(...args) {
+        return (new QueryBuilder(this)).jsonbPathExists(...args);
+    }
+    jsonbPathExistsTz(...args) {
+        return (new QueryBuilder(this)).jsonbPathExistsTz(...args);
+    }
+    jsonbPathMatch(...args) {
+        return (new QueryBuilder(this)).jsonbPathMatch(...args);
+    }
+    jsonbPathMatchTz(...args) {
+        return (new QueryBuilder(this)).jsonbPathMatchTz(...args);
+    }
+    jsonbPathQuery(...args) {
+        return (new QueryBuilder(this)).jsonbPathQuery(...args);
+    }
+    jsonbPathQueryArray(...args) {
+        return (new QueryBuilder(this)).jsonbPathQueryArray(...args);
+    }
+    jsonbPathQueryArrayTz(...args) {
+        return (new QueryBuilder(this)).jsonbPathQueryArrayTz(...args);
+    }
+    jsonbPathQueryFirst(...args) {
+        return (new QueryBuilder(this)).jsonbPathQueryFirst(...args);
+    }
+    jsonbPathQueryFirstTz(...args) {
+        return (new QueryBuilder(this)).jsonbPathQueryFirstTz(...args);
+    }
+    jsonbPathQueryTz(...args) {
+        return (new QueryBuilder(this)).jsonbPathQueryTz(...args);
+    }
+    jsonbPopulateRecord(...args) {
+        return (new QueryBuilder(this)).jsonbPopulateRecord(...args);
+    }
+    jsonbPopulateRecordset(...args) {
+        return (new QueryBuilder(this)).jsonbPopulateRecordset(...args);
+    }
+    jsonbPopulateRecordValid(...args) {
+        return (new QueryBuilder(this)).jsonbPopulateRecordValid(...args);
+    }
+    jsonbPretty(...args) {
+        return (new QueryBuilder(this)).jsonbPretty(...args);
+    }
+    jsonbSet(...args) {
+        return (new QueryBuilder(this)).jsonbSet(...args);
+    }
+    jsonbSetLax(...args) {
+        return (new QueryBuilder(this)).jsonbSetLax(...args);
+    }
+    jsonbStripNulls(...args) {
+        return (new QueryBuilder(this)).jsonbStripNulls(...args);
+    }
+    jsonbToRecord(...args) {
+        return (new QueryBuilder(this)).jsonbToRecord(...args);
+    }
+    jsonbToRecordset(...args) {
+        return (new QueryBuilder(this)).jsonbToRecordset(...args);
+    }
+    jsonbToTsvector(...args) {
+        return (new QueryBuilder(this)).jsonbToTsvector(...args);
+    }
+    jsonbTypeof(...args) {
+        return (new QueryBuilder(this)).jsonbTypeof(...args);
+    }
+    jsonBuildArray(...args) {
+        return (new QueryBuilder(this)).jsonBuildArray(...args);
+    }
+    jsonBuildObject(...args) {
+        return (new QueryBuilder(this)).jsonBuildObject(...args);
+    }
+    jsonEach(...args) {
+        return (new QueryBuilder(this)).jsonEach(...args);
+    }
+    jsonEachText(...args) {
+        return (new QueryBuilder(this)).jsonEachText(...args);
+    }
+    jsonExists(...args) {
+        return (new QueryBuilder(this)).jsonExists(...args);
+    }
+    jsonExtractPath(...args) {
+        return (new QueryBuilder(this)).jsonExtractPath(...args);
+    }
+    jsonExtractPathText(...args) {
+        return (new QueryBuilder(this)).jsonExtractPathText(...args);
+    }
+    jsonObject(...args) {
+        return (new QueryBuilder(this)).jsonObject(...args);
+    }
+    jsonObjectagg(...args) {
+        return (new QueryBuilder(this)).jsonObjectagg(...args);
+    }
+    jsonObjectAgg(...args) {
+        return (new QueryBuilder(this)).jsonObjectAgg(...args);
+    }
+    jsonObjectAggStrict(...args) {
+        return (new QueryBuilder(this)).jsonObjectAggStrict(...args);
+    }
+    jsonObjectAggUnique(...args) {
+        return (new QueryBuilder(this)).jsonObjectAggUnique(...args);
+    }
+    jsonObjectAggUniqueStrict(...args) {
+        return (new QueryBuilder(this)).jsonObjectAggUniqueStrict(...args);
+    }
+    jsonObjectKeys(...args) {
+        return (new QueryBuilder(this)).jsonObjectKeys(...args);
+    }
+    jsonPopulateRecord(...args) {
+        return (new QueryBuilder(this)).jsonPopulateRecord(...args);
+    }
+    jsonPopulateRecordset(...args) {
+        return (new QueryBuilder(this)).jsonPopulateRecordset(...args);
+    }
+    jsonQuery(...args) {
+        return (new QueryBuilder(this)).jsonQuery(...args);
+    }
+    jsonScalar(...args) {
+        return (new QueryBuilder(this)).jsonScalar(...args);
+    }
+    jsonSerialize(...args) {
+        return (new QueryBuilder(this)).jsonSerialize(...args);
+    }
+    jsonStripNulls(...args) {
+        return (new QueryBuilder(this)).jsonStripNulls(...args);
+    }
+    jsonTable() {
         return (new QueryBuilder(this)).jsonTable();
-    };
-    QueryInstance.prototype.jsonTablePrimitive = function () {
+    }
+    jsonTablePrimitive() {
         return (new QueryBuilder(this)).jsonTablePrimitive();
-    };
-    QueryInstance.prototype.jsonToRecord = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonToRecord.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonToRecordset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonToRecordset.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonToTsvector = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonToTsvector.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonTypeof = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonTypeof.apply(_a, args);
-    };
-    QueryInstance.prototype.jsonValue = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).jsonValue.apply(_a, args);
-    };
-    QueryInstance.prototype.justifyDays = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).justifyDays.apply(_a, args);
-    };
-    QueryInstance.prototype.justifyHours = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).justifyHours.apply(_a, args);
-    };
-    QueryInstance.prototype.justifyInterval = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).justifyInterval.apply(_a, args);
-    };
-    QueryInstance.prototype.k = function () {
+    }
+    jsonToRecord(...args) {
+        return (new QueryBuilder(this)).jsonToRecord(...args);
+    }
+    jsonToRecordset(...args) {
+        return (new QueryBuilder(this)).jsonToRecordset(...args);
+    }
+    jsonToTsvector(...args) {
+        return (new QueryBuilder(this)).jsonToTsvector(...args);
+    }
+    jsonTypeof(...args) {
+        return (new QueryBuilder(this)).jsonTypeof(...args);
+    }
+    jsonValue(...args) {
+        return (new QueryBuilder(this)).jsonValue(...args);
+    }
+    justifyDays(...args) {
+        return (new QueryBuilder(this)).justifyDays(...args);
+    }
+    justifyHours(...args) {
+        return (new QueryBuilder(this)).justifyHours(...args);
+    }
+    justifyInterval(...args) {
+        return (new QueryBuilder(this)).justifyInterval(...args);
+    }
+    k() {
         return (new QueryBuilder(this)).k();
-    };
-    QueryInstance.prototype.keep = function () {
+    }
+    keep() {
         return (new QueryBuilder(this)).keep();
-    };
-    QueryInstance.prototype.key = function () {
+    }
+    key() {
         return (new QueryBuilder(this)).key();
-    };
-    QueryInstance.prototype.keyMember = function () {
+    }
+    keyMember() {
         return (new QueryBuilder(this)).keyMember();
-    };
-    QueryInstance.prototype.keys = function () {
+    }
+    keys() {
         return (new QueryBuilder(this)).keys();
-    };
-    QueryInstance.prototype.keyType = function () {
+    }
+    keyType() {
         return (new QueryBuilder(this)).keyType();
-    };
-    QueryInstance.prototype.l = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).l.apply(_a, args);
-    };
-    QueryInstance.prototype.label = function () {
+    }
+    l(...args) {
+        return (new QueryBuilder(this)).l(...args);
+    }
+    label() {
         return (new QueryBuilder(this)).label();
-    };
-    QueryInstance.prototype.lag = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lag.apply(_a, args);
-    };
-    QueryInstance.prototype.language = function () {
+    }
+    lag(...args) {
+        return (new QueryBuilder(this)).lag(...args);
+    }
+    language() {
         return (new QueryBuilder(this)).language();
-    };
-    QueryInstance.prototype.large = function () {
+    }
+    large() {
         return (new QueryBuilder(this)).large();
-    };
-    QueryInstance.prototype.last = function () {
+    }
+    last() {
         return (new QueryBuilder(this)).last();
-    };
-    QueryInstance.prototype.lastval = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lastval.apply(_a, args);
-    };
-    QueryInstance.prototype.lastValue = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lastValue.apply(_a, args);
-    };
-    QueryInstance.prototype.lateral = function () {
+    }
+    lastval(...args) {
+        return (new QueryBuilder(this)).lastval(...args);
+    }
+    lastValue(...args) {
+        return (new QueryBuilder(this)).lastValue(...args);
+    }
+    lateral() {
         return (new QueryBuilder(this)).lateral();
-    };
-    QueryInstance.prototype.lcm = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lcm.apply(_a, args);
-    };
-    QueryInstance.prototype.lead = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lead.apply(_a, args);
-    };
-    QueryInstance.prototype.leading = function () {
+    }
+    lcm(...args) {
+        return (new QueryBuilder(this)).lcm(...args);
+    }
+    lead(...args) {
+        return (new QueryBuilder(this)).lead(...args);
+    }
+    leading() {
         return (new QueryBuilder(this)).leading();
-    };
-    QueryInstance.prototype.leakproof = function () {
+    }
+    leakproof() {
         return (new QueryBuilder(this)).leakproof();
-    };
-    QueryInstance.prototype.least = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).least.apply(_a, args);
-    };
-    QueryInstance.prototype.left = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).left.apply(_a, args);
-    };
-    QueryInstance.prototype.leftJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).leftJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.leftJoinLateral = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).leftJoinLateral.apply(_a, args);
-    };
-    QueryInstance.prototype.length = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).length.apply(_a, args);
-    };
-    QueryInstance.prototype.level = function () {
+    }
+    least(...args) {
+        return (new QueryBuilder(this)).least(...args);
+    }
+    left(...args) {
+        return (new QueryBuilder(this)).left(...args);
+    }
+    leftJoin(...args) {
+        return (new QueryBuilder(this)).leftJoin(...args);
+    }
+    leftJoinLateral(...args) {
+        return (new QueryBuilder(this)).leftJoinLateral(...args);
+    }
+    length(...args) {
+        return (new QueryBuilder(this)).length(...args);
+    }
+    level() {
         return (new QueryBuilder(this)).level();
-    };
-    QueryInstance.prototype.lgamma = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lgamma.apply(_a, args);
-    };
-    QueryInstance.prototype.library = function () {
+    }
+    lgamma(...args) {
+        return (new QueryBuilder(this)).lgamma(...args);
+    }
+    library() {
         return (new QueryBuilder(this)).library();
-    };
-    QueryInstance.prototype.like = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).like.apply(_a, args);
-    };
-    QueryInstance.prototype.likeRegex = function () {
+    }
+    like(...args) {
+        return (new QueryBuilder(this)).like(...args);
+    }
+    likeRegex() {
         return (new QueryBuilder(this)).likeRegex();
-    };
-    QueryInstance.prototype.limit = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).limit.apply(_a, args);
-    };
-    QueryInstance.prototype.line = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).line.apply(_a, args);
-    };
-    QueryInstance.prototype.link = function () {
+    }
+    limit(...args) {
+        return (new QueryBuilder(this)).limit(...args);
+    }
+    line(...args) {
+        return (new QueryBuilder(this)).line(...args);
+    }
+    link() {
         return (new QueryBuilder(this)).link();
-    };
-    QueryInstance.prototype.listagg = function () {
+    }
+    listagg() {
         return (new QueryBuilder(this)).listagg();
-    };
-    QueryInstance.prototype.listen = function () {
+    }
+    listen() {
         return (new QueryBuilder(this)).listen();
-    };
-    QueryInstance.prototype.literal = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).literal.apply(_a, args);
-    };
-    QueryInstance.prototype.literalArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).literalArray.apply(_a, args);
-    };
-    QueryInstance.prototype.ln = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ln.apply(_a, args);
-    };
-    QueryInstance.prototype.load = function () {
+    }
+    literal(...args) {
+        return (new QueryBuilder(this)).literal(...args);
+    }
+    literalArray(...args) {
+        return (new QueryBuilder(this)).literalArray(...args);
+    }
+    ln(...args) {
+        return (new QueryBuilder(this)).ln(...args);
+    }
+    load() {
         return (new QueryBuilder(this)).load();
-    };
-    QueryInstance.prototype.local = function () {
+    }
+    local() {
         return (new QueryBuilder(this)).local();
-    };
-    QueryInstance.prototype.localtime = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).localtime.apply(_a, args);
-    };
-    QueryInstance.prototype.localtimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).localtimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.location = function () {
+    }
+    localtime(...args) {
+        return (new QueryBuilder(this)).localtime(...args);
+    }
+    localtimestamp(...args) {
+        return (new QueryBuilder(this)).localtimestamp(...args);
+    }
+    location() {
         return (new QueryBuilder(this)).location();
-    };
-    QueryInstance.prototype.locator = function () {
+    }
+    locator() {
         return (new QueryBuilder(this)).locator();
-    };
-    QueryInstance.prototype.lock = function () {
+    }
+    lock() {
         return (new QueryBuilder(this)).lock();
-    };
-    QueryInstance.prototype.locked = function () {
+    }
+    locked() {
         return (new QueryBuilder(this)).locked();
-    };
-    QueryInstance.prototype.log = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).log.apply(_a, args);
-    };
-    QueryInstance.prototype.log10 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).log10.apply(_a, args);
-    };
-    QueryInstance.prototype.logged = function () {
+    }
+    log(...args) {
+        return (new QueryBuilder(this)).log(...args);
+    }
+    log10(...args) {
+        return (new QueryBuilder(this)).log10(...args);
+    }
+    logged() {
         return (new QueryBuilder(this)).logged();
-    };
-    QueryInstance.prototype.lower = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lower.apply(_a, args);
-    };
-    QueryInstance.prototype.lowerInc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lowerInc.apply(_a, args);
-    };
-    QueryInstance.prototype.lowerInf = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lowerInf.apply(_a, args);
-    };
-    QueryInstance.prototype.lpad = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lpad.apply(_a, args);
-    };
-    QueryInstance.prototype.lseg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lseg.apply(_a, args);
-    };
-    QueryInstance.prototype.lt = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lt.apply(_a, args);
-    };
-    QueryInstance.prototype.lte = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).lte.apply(_a, args);
-    };
-    QueryInstance.prototype.ltrim = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ltrim.apply(_a, args);
-    };
-    QueryInstance.prototype.m = function () {
+    }
+    lower(...args) {
+        return (new QueryBuilder(this)).lower(...args);
+    }
+    lowerInc(...args) {
+        return (new QueryBuilder(this)).lowerInc(...args);
+    }
+    lowerInf(...args) {
+        return (new QueryBuilder(this)).lowerInf(...args);
+    }
+    lpad(...args) {
+        return (new QueryBuilder(this)).lpad(...args);
+    }
+    lseg(...args) {
+        return (new QueryBuilder(this)).lseg(...args);
+    }
+    lt(...args) {
+        return (new QueryBuilder(this)).lt(...args);
+    }
+    lte(...args) {
+        return (new QueryBuilder(this)).lte(...args);
+    }
+    ltrim(...args) {
+        return (new QueryBuilder(this)).ltrim(...args);
+    }
+    m() {
         return (new QueryBuilder(this)).m();
-    };
-    QueryInstance.prototype.macaddr8Set7bit = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).macaddr8Set7bit.apply(_a, args);
-    };
-    QueryInstance.prototype.makeaclitem = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).makeaclitem.apply(_a, args);
-    };
-    QueryInstance.prototype.makeDate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).makeDate.apply(_a, args);
-    };
-    QueryInstance.prototype.makeInterval = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).makeInterval.apply(_a, args);
-    };
-    QueryInstance.prototype.makeTime = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).makeTime.apply(_a, args);
-    };
-    QueryInstance.prototype.makeTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).makeTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.makeTimestamptz = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).makeTimestamptz.apply(_a, args);
-    };
-    QueryInstance.prototype.map = function () {
+    }
+    macaddr8Set7bit(...args) {
+        return (new QueryBuilder(this)).macaddr8Set7bit(...args);
+    }
+    makeaclitem(...args) {
+        return (new QueryBuilder(this)).makeaclitem(...args);
+    }
+    makeDate(...args) {
+        return (new QueryBuilder(this)).makeDate(...args);
+    }
+    makeInterval(...args) {
+        return (new QueryBuilder(this)).makeInterval(...args);
+    }
+    makeTime(...args) {
+        return (new QueryBuilder(this)).makeTime(...args);
+    }
+    makeTimestamp(...args) {
+        return (new QueryBuilder(this)).makeTimestamp(...args);
+    }
+    makeTimestamptz(...args) {
+        return (new QueryBuilder(this)).makeTimestamptz(...args);
+    }
+    map() {
         return (new QueryBuilder(this)).map();
-    };
-    QueryInstance.prototype.mapping = function () {
+    }
+    mapping() {
         return (new QueryBuilder(this)).mapping();
-    };
-    QueryInstance.prototype.masklen = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).masklen.apply(_a, args);
-    };
-    QueryInstance.prototype.match = function () {
+    }
+    masklen(...args) {
+        return (new QueryBuilder(this)).masklen(...args);
+    }
+    match() {
         return (new QueryBuilder(this)).match();
-    };
-    QueryInstance.prototype.matched = function () {
+    }
+    matched() {
         return (new QueryBuilder(this)).matched();
-    };
-    QueryInstance.prototype.matches = function () {
+    }
+    matches() {
         return (new QueryBuilder(this)).matches();
-    };
-    QueryInstance.prototype.matchNumber = function () {
+    }
+    matchNumber() {
         return (new QueryBuilder(this)).matchNumber();
-    };
-    QueryInstance.prototype.matchRecognize = function () {
+    }
+    matchRecognize() {
         return (new QueryBuilder(this)).matchRecognize();
-    };
-    QueryInstance.prototype.matchRegex = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).matchRegex.apply(_a, args);
-    };
-    QueryInstance.prototype.matchRegexInsensitive = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).matchRegexInsensitive.apply(_a, args);
-    };
-    QueryInstance.prototype.materialized = function () {
+    }
+    matchRegex(...args) {
+        return (new QueryBuilder(this)).matchRegex(...args);
+    }
+    matchRegexInsensitive(...args) {
+        return (new QueryBuilder(this)).matchRegexInsensitive(...args);
+    }
+    materialized() {
         return (new QueryBuilder(this)).materialized();
-    };
-    QueryInstance.prototype.max = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).max.apply(_a, args);
-    };
-    QueryInstance.prototype.maxvalue = function () {
+    }
+    max(...args) {
+        return (new QueryBuilder(this)).max(...args);
+    }
+    maxvalue() {
         return (new QueryBuilder(this)).maxvalue();
-    };
-    QueryInstance.prototype.md5 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).md5.apply(_a, args);
-    };
-    QueryInstance.prototype.measures = function () {
+    }
+    md5(...args) {
+        return (new QueryBuilder(this)).md5(...args);
+    }
+    measures() {
         return (new QueryBuilder(this)).measures();
-    };
-    QueryInstance.prototype.member = function () {
+    }
+    member() {
         return (new QueryBuilder(this)).member();
-    };
-    QueryInstance.prototype.merge = function () {
+    }
+    merge() {
         return (new QueryBuilder(this)).merge();
-    };
-    QueryInstance.prototype.mergeAction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).mergeAction.apply(_a, args);
-    };
-    QueryInstance.prototype.messageLength = function () {
+    }
+    mergeAction(...args) {
+        return (new QueryBuilder(this)).mergeAction(...args);
+    }
+    messageLength() {
         return (new QueryBuilder(this)).messageLength();
-    };
-    QueryInstance.prototype.messageOctetLength = function () {
+    }
+    messageOctetLength() {
         return (new QueryBuilder(this)).messageOctetLength();
-    };
-    QueryInstance.prototype.messageText = function () {
+    }
+    messageText() {
         return (new QueryBuilder(this)).messageText();
-    };
-    QueryInstance.prototype.method = function () {
+    }
+    method() {
         return (new QueryBuilder(this)).method();
-    };
-    QueryInstance.prototype.middle = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).middle.apply(_a, args);
-    };
-    QueryInstance.prototype.min = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).min.apply(_a, args);
-    };
-    QueryInstance.prototype.minScale = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).minScale.apply(_a, args);
-    };
-    QueryInstance.prototype.minus = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).minus.apply(_a, args);
-    };
-    QueryInstance.prototype.minute = function () {
+    }
+    middle(...args) {
+        return (new QueryBuilder(this)).middle(...args);
+    }
+    min(...args) {
+        return (new QueryBuilder(this)).min(...args);
+    }
+    minScale(...args) {
+        return (new QueryBuilder(this)).minScale(...args);
+    }
+    minus(...args) {
+        return (new QueryBuilder(this)).minus(...args);
+    }
+    minute() {
         return (new QueryBuilder(this)).minute();
-    };
-    QueryInstance.prototype.minvalue = function () {
+    }
+    minvalue() {
         return (new QueryBuilder(this)).minvalue();
-    };
-    QueryInstance.prototype.mod = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).mod.apply(_a, args);
-    };
-    QueryInstance.prototype.mode = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).mode.apply(_a, args);
-    };
-    QueryInstance.prototype.modifies = function () {
+    }
+    mod(...args) {
+        return (new QueryBuilder(this)).mod(...args);
+    }
+    mode(...args) {
+        return (new QueryBuilder(this)).mode(...args);
+    }
+    modifies() {
         return (new QueryBuilder(this)).modifies();
-    };
-    QueryInstance.prototype.module = function () {
+    }
+    module() {
         return (new QueryBuilder(this)).module();
-    };
-    QueryInstance.prototype.modulo = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).modulo.apply(_a, args);
-    };
-    QueryInstance.prototype.month = function () {
+    }
+    modulo(...args) {
+        return (new QueryBuilder(this)).modulo(...args);
+    }
+    month() {
         return (new QueryBuilder(this)).month();
-    };
-    QueryInstance.prototype.more = function () {
+    }
+    more() {
         return (new QueryBuilder(this)).more();
-    };
-    QueryInstance.prototype.move = function () {
+    }
+    move() {
         return (new QueryBuilder(this)).move();
-    };
-    QueryInstance.prototype.multiply = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).multiply.apply(_a, args);
-    };
-    QueryInstance.prototype.multirange = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).multirange.apply(_a, args);
-    };
-    QueryInstance.prototype.multiset = function () {
+    }
+    multiply(...args) {
+        return (new QueryBuilder(this)).multiply(...args);
+    }
+    multirange(...args) {
+        return (new QueryBuilder(this)).multirange(...args);
+    }
+    multiset() {
         return (new QueryBuilder(this)).multiset();
-    };
-    QueryInstance.prototype.mumps = function () {
+    }
+    mumps() {
         return (new QueryBuilder(this)).mumps();
-    };
-    QueryInstance.prototype.mxidAge = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).mxidAge.apply(_a, args);
-    };
-    QueryInstance.prototype.name = function () {
+    }
+    mxidAge(...args) {
+        return (new QueryBuilder(this)).mxidAge(...args);
+    }
+    name() {
         return (new QueryBuilder(this)).name();
-    };
-    QueryInstance.prototype.names = function () {
+    }
+    names() {
         return (new QueryBuilder(this)).names();
-    };
-    QueryInstance.prototype.namespace = function () {
+    }
+    namespace() {
         return (new QueryBuilder(this)).namespace();
-    };
-    QueryInstance.prototype.national = function () {
+    }
+    national() {
         return (new QueryBuilder(this)).national();
-    };
-    QueryInstance.prototype.natural = function () {
+    }
+    natural() {
         return (new QueryBuilder(this)).natural();
-    };
-    QueryInstance.prototype.naturalCrossJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).naturalCrossJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.naturalFullJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).naturalFullJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.naturalInnerJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).naturalInnerJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.naturalJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).naturalJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.naturalLeftJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).naturalLeftJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.naturalRightJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).naturalRightJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.nchar = function () {
+    }
+    naturalCrossJoin(...args) {
+        return (new QueryBuilder(this)).naturalCrossJoin(...args);
+    }
+    naturalFullJoin(...args) {
+        return (new QueryBuilder(this)).naturalFullJoin(...args);
+    }
+    naturalInnerJoin(...args) {
+        return (new QueryBuilder(this)).naturalInnerJoin(...args);
+    }
+    naturalJoin(...args) {
+        return (new QueryBuilder(this)).naturalJoin(...args);
+    }
+    naturalLeftJoin(...args) {
+        return (new QueryBuilder(this)).naturalLeftJoin(...args);
+    }
+    naturalRightJoin(...args) {
+        return (new QueryBuilder(this)).naturalRightJoin(...args);
+    }
+    nchar() {
         return (new QueryBuilder(this)).nchar();
-    };
-    QueryInstance.prototype.nclob = function () {
+    }
+    nclob() {
         return (new QueryBuilder(this)).nclob();
-    };
-    QueryInstance.prototype.ne = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ne.apply(_a, args);
-    };
-    QueryInstance.prototype.nested = function () {
+    }
+    ne(...args) {
+        return (new QueryBuilder(this)).ne(...args);
+    }
+    nested() {
         return (new QueryBuilder(this)).nested();
-    };
-    QueryInstance.prototype.nesting = function () {
+    }
+    nesting() {
         return (new QueryBuilder(this)).nesting();
-    };
-    QueryInstance.prototype.netmask = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).netmask.apply(_a, args);
-    };
-    QueryInstance.prototype.network = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).network.apply(_a, args);
-    };
-    QueryInstance.prototype.new = function () {
+    }
+    netmask(...args) {
+        return (new QueryBuilder(this)).netmask(...args);
+    }
+    network(...args) {
+        return (new QueryBuilder(this)).network(...args);
+    }
+    new() {
         return (new QueryBuilder(this)).new();
-    };
-    QueryInstance.prototype.next = function () {
+    }
+    next() {
         return (new QueryBuilder(this)).next();
-    };
-    QueryInstance.prototype.nextval = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).nextval.apply(_a, args);
-    };
-    QueryInstance.prototype.nfc = function () {
+    }
+    nextval(...args) {
+        return (new QueryBuilder(this)).nextval(...args);
+    }
+    nfc() {
         return (new QueryBuilder(this)).nfc();
-    };
-    QueryInstance.prototype.nfd = function () {
+    }
+    nfd() {
         return (new QueryBuilder(this)).nfd();
-    };
-    QueryInstance.prototype.nfkc = function () {
+    }
+    nfkc() {
         return (new QueryBuilder(this)).nfkc();
-    };
-    QueryInstance.prototype.nfkd = function () {
+    }
+    nfkd() {
         return (new QueryBuilder(this)).nfkd();
-    };
-    QueryInstance.prototype.nil = function () {
+    }
+    nil() {
         return (new QueryBuilder(this)).nil();
-    };
-    QueryInstance.prototype.no = function () {
+    }
+    no() {
         return (new QueryBuilder(this)).no();
-    };
-    QueryInstance.prototype.none = function () {
+    }
+    none() {
         return (new QueryBuilder(this)).none();
-    };
-    QueryInstance.prototype.normalize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).normalize.apply(_a, args);
-    };
-    QueryInstance.prototype.normalized = function () {
+    }
+    normalize(...args) {
+        return (new QueryBuilder(this)).normalize(...args);
+    }
+    normalized() {
         return (new QueryBuilder(this)).normalized();
-    };
-    QueryInstance.prototype.not = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).not.apply(_a, args);
-    };
-    QueryInstance.prototype.notBetween = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notBetween.apply(_a, args);
-    };
-    QueryInstance.prototype.notBetweenSymmetric = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notBetweenSymmetric.apply(_a, args);
-    };
-    QueryInstance.prototype.notEq = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notEq.apply(_a, args);
-    };
-    QueryInstance.prototype.notExists = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notExists.apply(_a, args);
-    };
-    QueryInstance.prototype.notExtendAbove = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notExtendAbove.apply(_a, args);
-    };
-    QueryInstance.prototype.notExtendBelow = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notExtendBelow.apply(_a, args);
-    };
-    QueryInstance.prototype.notExtendLeft = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notExtendLeft.apply(_a, args);
-    };
-    QueryInstance.prototype.notExtendRight = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notExtendRight.apply(_a, args);
-    };
-    QueryInstance.prototype.nothing = function () {
+    }
+    not(...args) {
+        return (new QueryBuilder(this)).not(...args);
+    }
+    notBetween(...args) {
+        return (new QueryBuilder(this)).notBetween(...args);
+    }
+    notBetweenSymmetric(...args) {
+        return (new QueryBuilder(this)).notBetweenSymmetric(...args);
+    }
+    notEq(...args) {
+        return (new QueryBuilder(this)).notEq(...args);
+    }
+    notExists(...args) {
+        return (new QueryBuilder(this)).notExists(...args);
+    }
+    notExtendAbove(...args) {
+        return (new QueryBuilder(this)).notExtendAbove(...args);
+    }
+    notExtendBelow(...args) {
+        return (new QueryBuilder(this)).notExtendBelow(...args);
+    }
+    notExtendLeft(...args) {
+        return (new QueryBuilder(this)).notExtendLeft(...args);
+    }
+    notExtendRight(...args) {
+        return (new QueryBuilder(this)).notExtendRight(...args);
+    }
+    nothing() {
         return (new QueryBuilder(this)).nothing();
-    };
-    QueryInstance.prototype.notify = function () {
+    }
+    notify() {
         return (new QueryBuilder(this)).notify();
-    };
-    QueryInstance.prototype.notIlike = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notIlike.apply(_a, args);
-    };
-    QueryInstance.prototype.notIn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notIn.apply(_a, args);
-    };
-    QueryInstance.prototype.notLike = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notLike.apply(_a, args);
-    };
-    QueryInstance.prototype.notMatchRegex = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notMatchRegex.apply(_a, args);
-    };
-    QueryInstance.prototype.notMatchRegexInsensitive = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notMatchRegexInsensitive.apply(_a, args);
-    };
-    QueryInstance.prototype.notnull = function () {
+    }
+    notIlike(...args) {
+        return (new QueryBuilder(this)).notIlike(...args);
+    }
+    notIn(...args) {
+        return (new QueryBuilder(this)).notIn(...args);
+    }
+    notLike(...args) {
+        return (new QueryBuilder(this)).notLike(...args);
+    }
+    notMatchRegex(...args) {
+        return (new QueryBuilder(this)).notMatchRegex(...args);
+    }
+    notMatchRegexInsensitive(...args) {
+        return (new QueryBuilder(this)).notMatchRegexInsensitive(...args);
+    }
+    notnull() {
         return (new QueryBuilder(this)).notnull();
-    };
-    QueryInstance.prototype.notSimilarTo = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).notSimilarTo.apply(_a, args);
-    };
-    QueryInstance.prototype.now = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).now.apply(_a, args);
-    };
-    QueryInstance.prototype.nowait = function () {
+    }
+    notSimilarTo(...args) {
+        return (new QueryBuilder(this)).notSimilarTo(...args);
+    }
+    now(...args) {
+        return (new QueryBuilder(this)).now(...args);
+    }
+    nowait() {
         return (new QueryBuilder(this)).nowait();
-    };
-    QueryInstance.prototype.npoints = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).npoints.apply(_a, args);
-    };
-    QueryInstance.prototype.nthValue = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).nthValue.apply(_a, args);
-    };
-    QueryInstance.prototype.ntile = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).ntile.apply(_a, args);
-    };
-    QueryInstance.prototype.null = function () {
+    }
+    npoints(...args) {
+        return (new QueryBuilder(this)).npoints(...args);
+    }
+    nthValue(...args) {
+        return (new QueryBuilder(this)).nthValue(...args);
+    }
+    ntile(...args) {
+        return (new QueryBuilder(this)).ntile(...args);
+    }
+    null() {
         return (new QueryBuilder(this)).null();
-    };
-    QueryInstance.prototype.nullable = function () {
+    }
+    nullable() {
         return (new QueryBuilder(this)).nullable();
-    };
-    QueryInstance.prototype.nullif = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).nullif.apply(_a, args);
-    };
-    QueryInstance.prototype.nullOrdering = function () {
+    }
+    nullif(...args) {
+        return (new QueryBuilder(this)).nullif(...args);
+    }
+    nullOrdering() {
         return (new QueryBuilder(this)).nullOrdering();
-    };
-    QueryInstance.prototype.nulls = function () {
+    }
+    nulls() {
         return (new QueryBuilder(this)).nulls();
-    };
-    QueryInstance.prototype.nullsFirst = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).nullsFirst.apply(_a, args);
-    };
-    QueryInstance.prototype.nullsLast = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).nullsLast.apply(_a, args);
-    };
-    QueryInstance.prototype.number = function () {
+    }
+    nullsFirst(...args) {
+        return (new QueryBuilder(this)).nullsFirst(...args);
+    }
+    nullsLast(...args) {
+        return (new QueryBuilder(this)).nullsLast(...args);
+    }
+    number() {
         return (new QueryBuilder(this)).number();
-    };
-    QueryInstance.prototype.numeric = function () {
+    }
+    numeric() {
         return (new QueryBuilder(this)).numeric();
-    };
-    QueryInstance.prototype.numnode = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).numnode.apply(_a, args);
-    };
-    QueryInstance.prototype.objDescription = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).objDescription.apply(_a, args);
-    };
-    QueryInstance.prototype.object = function () {
+    }
+    numnode(...args) {
+        return (new QueryBuilder(this)).numnode(...args);
+    }
+    objDescription(...args) {
+        return (new QueryBuilder(this)).objDescription(...args);
+    }
+    object() {
         return (new QueryBuilder(this)).object();
-    };
-    QueryInstance.prototype.objects = function () {
+    }
+    objects() {
         return (new QueryBuilder(this)).objects();
-    };
-    QueryInstance.prototype.occurrence = function () {
+    }
+    occurrence() {
         return (new QueryBuilder(this)).occurrence();
-    };
-    QueryInstance.prototype.occurrencesRegex = function () {
+    }
+    occurrencesRegex() {
         return (new QueryBuilder(this)).occurrencesRegex();
-    };
-    QueryInstance.prototype.octetLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).octetLength.apply(_a, args);
-    };
-    QueryInstance.prototype.octets = function () {
+    }
+    octetLength(...args) {
+        return (new QueryBuilder(this)).octetLength(...args);
+    }
+    octets() {
         return (new QueryBuilder(this)).octets();
-    };
-    QueryInstance.prototype.of = function () {
+    }
+    of() {
         return (new QueryBuilder(this)).of();
-    };
-    QueryInstance.prototype.off = function () {
+    }
+    off() {
         return (new QueryBuilder(this)).off();
-    };
-    QueryInstance.prototype.offset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).offset.apply(_a, args);
-    };
-    QueryInstance.prototype.oids = function () {
+    }
+    offset(...args) {
+        return (new QueryBuilder(this)).offset(...args);
+    }
+    oids() {
         return (new QueryBuilder(this)).oids();
-    };
-    QueryInstance.prototype.old = function () {
+    }
+    old() {
         return (new QueryBuilder(this)).old();
-    };
-    QueryInstance.prototype.omit = function () {
+    }
+    omit() {
         return (new QueryBuilder(this)).omit();
-    };
-    QueryInstance.prototype.on = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).on.apply(_a, args);
-    };
-    QueryInstance.prototype.onConflict = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).onConflict.apply(_a, args);
-    };
-    QueryInstance.prototype.onConflictDoNothing = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).onConflictDoNothing.apply(_a, args);
-    };
-    QueryInstance.prototype.onConflictDoUpdate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).onConflictDoUpdate.apply(_a, args);
-    };
-    QueryInstance.prototype.onConstraint = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).onConstraint.apply(_a, args);
-    };
-    QueryInstance.prototype.one = function () {
+    }
+    on(...args) {
+        return (new QueryBuilder(this)).on(...args);
+    }
+    onConflict(...args) {
+        return (new QueryBuilder(this)).onConflict(...args);
+    }
+    onConflictDoNothing(...args) {
+        return (new QueryBuilder(this)).onConflictDoNothing(...args);
+    }
+    onConflictDoUpdate(...args) {
+        return (new QueryBuilder(this)).onConflictDoUpdate(...args);
+    }
+    onConstraint(...args) {
+        return (new QueryBuilder(this)).onConstraint(...args);
+    }
+    one() {
         return (new QueryBuilder(this)).one();
-    };
-    QueryInstance.prototype.only = function () {
+    }
+    only() {
         return (new QueryBuilder(this)).only();
-    };
-    QueryInstance.prototype.op = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).op.apply(_a, args);
-    };
-    QueryInstance.prototype.open = function () {
+    }
+    op(...args) {
+        return (new QueryBuilder(this)).op(...args);
+    }
+    open() {
         return (new QueryBuilder(this)).open();
-    };
-    QueryInstance.prototype.operator = function () {
+    }
+    operator() {
         return (new QueryBuilder(this)).operator();
-    };
-    QueryInstance.prototype.option = function () {
+    }
+    option() {
         return (new QueryBuilder(this)).option();
-    };
-    QueryInstance.prototype.options = function () {
+    }
+    options() {
         return (new QueryBuilder(this)).options();
-    };
-    QueryInstance.prototype.or = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).or.apply(_a, args);
-    };
-    QueryInstance.prototype.order = function () {
+    }
+    or(...args) {
+        return (new QueryBuilder(this)).or(...args);
+    }
+    order() {
         return (new QueryBuilder(this)).order();
-    };
-    QueryInstance.prototype.orderBy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).orderBy.apply(_a, args);
-    };
-    QueryInstance.prototype.ordering = function () {
+    }
+    orderBy(...args) {
+        return (new QueryBuilder(this)).orderBy(...args);
+    }
+    ordering() {
         return (new QueryBuilder(this)).ordering();
-    };
-    QueryInstance.prototype.ordinality = function () {
+    }
+    ordinality() {
         return (new QueryBuilder(this)).ordinality();
-    };
-    QueryInstance.prototype.others = function () {
+    }
+    others() {
         return (new QueryBuilder(this)).others();
-    };
-    QueryInstance.prototype.out = function () {
+    }
+    out() {
         return (new QueryBuilder(this)).out();
-    };
-    QueryInstance.prototype.outer = function () {
+    }
+    outer() {
         return (new QueryBuilder(this)).outer();
-    };
-    QueryInstance.prototype.output = function () {
+    }
+    output() {
         return (new QueryBuilder(this)).output();
-    };
-    QueryInstance.prototype.over = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).over.apply(_a, args);
-    };
-    QueryInstance.prototype.overflow = function () {
+    }
+    over(...args) {
+        return (new QueryBuilder(this)).over(...args);
+    }
+    overflow() {
         return (new QueryBuilder(this)).overflow();
-    };
-    QueryInstance.prototype.overlaps = function () {
+    }
+    overlaps() {
         return (new QueryBuilder(this)).overlaps();
-    };
-    QueryInstance.prototype.overlay = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).overlay.apply(_a, args);
-    };
-    QueryInstance.prototype.overriding = function () {
+    }
+    overlay(...args) {
+        return (new QueryBuilder(this)).overlay(...args);
+    }
+    overriding() {
         return (new QueryBuilder(this)).overriding();
-    };
-    QueryInstance.prototype.owned = function () {
+    }
+    owned() {
         return (new QueryBuilder(this)).owned();
-    };
-    QueryInstance.prototype.owner = function () {
+    }
+    owner() {
         return (new QueryBuilder(this)).owner();
-    };
-    QueryInstance.prototype.p = function () {
+    }
+    p() {
         return (new QueryBuilder(this)).p();
-    };
-    QueryInstance.prototype.pad = function () {
+    }
+    pad() {
         return (new QueryBuilder(this)).pad();
-    };
-    QueryInstance.prototype.parallel = function () {
+    }
+    parallel() {
         return (new QueryBuilder(this)).parallel();
-    };
-    QueryInstance.prototype.parameter = function () {
+    }
+    parameter() {
         return (new QueryBuilder(this)).parameter();
-    };
-    QueryInstance.prototype.parameterMode = function () {
+    }
+    parameterMode() {
         return (new QueryBuilder(this)).parameterMode();
-    };
-    QueryInstance.prototype.parameterName = function () {
+    }
+    parameterName() {
         return (new QueryBuilder(this)).parameterName();
-    };
-    QueryInstance.prototype.parameterordinalposition = function () {
+    }
+    parameterordinalposition() {
         return (new QueryBuilder(this)).parameterordinalposition();
-    };
-    QueryInstance.prototype.parameterspecificcatalog = function () {
+    }
+    parameterspecificcatalog() {
         return (new QueryBuilder(this)).parameterspecificcatalog();
-    };
-    QueryInstance.prototype.parameterspecificname = function () {
+    }
+    parameterspecificname() {
         return (new QueryBuilder(this)).parameterspecificname();
-    };
-    QueryInstance.prototype.parameterspecificschema = function () {
+    }
+    parameterspecificschema() {
         return (new QueryBuilder(this)).parameterspecificschema();
-    };
-    QueryInstance.prototype.parseIdent = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).parseIdent.apply(_a, args);
-    };
-    QueryInstance.prototype.parser = function () {
+    }
+    parseIdent(...args) {
+        return (new QueryBuilder(this)).parseIdent(...args);
+    }
+    parser() {
         return (new QueryBuilder(this)).parser();
-    };
-    QueryInstance.prototype.partial = function () {
+    }
+    partial() {
         return (new QueryBuilder(this)).partial();
-    };
-    QueryInstance.prototype.partition = function () {
+    }
+    partition() {
         return (new QueryBuilder(this)).partition();
-    };
-    QueryInstance.prototype.partitionBy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).partitionBy.apply(_a, args);
-    };
-    QueryInstance.prototype.pascal = function () {
+    }
+    partitionBy(...args) {
+        return (new QueryBuilder(this)).partitionBy(...args);
+    }
+    pascal() {
         return (new QueryBuilder(this)).pascal();
-    };
-    QueryInstance.prototype.pass = function () {
+    }
+    pass() {
         return (new QueryBuilder(this)).pass();
-    };
-    QueryInstance.prototype.passing = function () {
+    }
+    passing() {
         return (new QueryBuilder(this)).passing();
-    };
-    QueryInstance.prototype.passthrough = function () {
+    }
+    passthrough() {
         return (new QueryBuilder(this)).passthrough();
-    };
-    QueryInstance.prototype.password = function () {
+    }
+    password() {
         return (new QueryBuilder(this)).password();
-    };
-    QueryInstance.prototype.past = function () {
+    }
+    past() {
         return (new QueryBuilder(this)).past();
-    };
-    QueryInstance.prototype.path = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).path.apply(_a, args);
-    };
-    QueryInstance.prototype.pattern = function () {
+    }
+    path(...args) {
+        return (new QueryBuilder(this)).path(...args);
+    }
+    pattern() {
         return (new QueryBuilder(this)).pattern();
-    };
-    QueryInstance.prototype.pclose = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pclose.apply(_a, args);
-    };
-    QueryInstance.prototype.per = function () {
+    }
+    pclose(...args) {
+        return (new QueryBuilder(this)).pclose(...args);
+    }
+    per() {
         return (new QueryBuilder(this)).per();
-    };
-    QueryInstance.prototype.percent = function () {
+    }
+    percent() {
         return (new QueryBuilder(this)).percent();
-    };
-    QueryInstance.prototype.percentCharacter = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).percentCharacter.apply(_a, args);
-    };
-    QueryInstance.prototype.percentileCont = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).percentileCont.apply(_a, args);
-    };
-    QueryInstance.prototype.percentileDisc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).percentileDisc.apply(_a, args);
-    };
-    QueryInstance.prototype.percentRank = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).percentRank.apply(_a, args);
-    };
-    QueryInstance.prototype.period = function () {
+    }
+    percentCharacter(...args) {
+        return (new QueryBuilder(this)).percentCharacter(...args);
+    }
+    percentileCont(...args) {
+        return (new QueryBuilder(this)).percentileCont(...args);
+    }
+    percentileDisc(...args) {
+        return (new QueryBuilder(this)).percentileDisc(...args);
+    }
+    percentRank(...args) {
+        return (new QueryBuilder(this)).percentRank(...args);
+    }
+    period() {
         return (new QueryBuilder(this)).period();
-    };
-    QueryInstance.prototype.permission = function () {
+    }
+    permission() {
         return (new QueryBuilder(this)).permission();
-    };
-    QueryInstance.prototype.permute = function () {
+    }
+    permute() {
         return (new QueryBuilder(this)).permute();
-    };
-    QueryInstance.prototype.perpendicular = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).perpendicular.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryLock = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryLock.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryLockShared = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryLockShared.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryUnlock = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryUnlock.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryUnlockAll = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryUnlockAll.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryUnlockShared = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryUnlockShared.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryXactLock = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryXactLock.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAdvisoryXactLockShared = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAdvisoryXactLockShared.apply(_a, args);
-    };
-    QueryInstance.prototype.pgAvailableWalSummaries = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgAvailableWalSummaries.apply(_a, args);
-    };
-    QueryInstance.prototype.pgBackendPid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgBackendPid.apply(_a, args);
-    };
-    QueryInstance.prototype.pgBackupStart = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgBackupStart.apply(_a, args);
-    };
-    QueryInstance.prototype.pgBackupStop = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgBackupStop.apply(_a, args);
-    };
-    QueryInstance.prototype.pgBasetype = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgBasetype.apply(_a, args);
-    };
-    QueryInstance.prototype.pgBlockingPids = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgBlockingPids.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCancelBackend = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCancelBackend.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCharToEncoding = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCharToEncoding.apply(_a, args);
-    };
-    QueryInstance.prototype.pgClearAttributeStats = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgClearAttributeStats.apply(_a, args);
-    };
-    QueryInstance.prototype.pgClearRelationStats = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgClearRelationStats.apply(_a, args);
-    };
-    QueryInstance.prototype.pgClientEncoding = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgClientEncoding.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCollationActualVersion = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCollationActualVersion.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCollationIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCollationIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgColumnCompression = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgColumnCompression.apply(_a, args);
-    };
-    QueryInstance.prototype.pgColumnSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgColumnSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgColumnToastChunkId = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgColumnToastChunkId.apply(_a, args);
-    };
-    QueryInstance.prototype.pgConfLoadTime = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgConfLoadTime.apply(_a, args);
-    };
-    QueryInstance.prototype.pgControlCheckpoint = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgControlCheckpoint.apply(_a, args);
-    };
-    QueryInstance.prototype.pgControlInit = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgControlInit.apply(_a, args);
-    };
-    QueryInstance.prototype.pgControlRecovery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgControlRecovery.apply(_a, args);
-    };
-    QueryInstance.prototype.pgControlSystem = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgControlSystem.apply(_a, args);
-    };
-    QueryInstance.prototype.pgConversionIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgConversionIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCopyLogicalReplicationSlot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCopyLogicalReplicationSlot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCopyPhysicalReplicationSlot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCopyPhysicalReplicationSlot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCreateLogicalReplicationSlot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCreateLogicalReplicationSlot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCreatePhysicalReplicationSlot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCreatePhysicalReplicationSlot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCreateRestorePoint = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCreateRestorePoint.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentLogfile = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentLogfile.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentSnapshot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentSnapshot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentWalFlushLsn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentWalFlushLsn.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentWalInsertLsn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentWalInsertLsn.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentWalLsn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentWalLsn.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentXactId = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentXactId.apply(_a, args);
-    };
-    QueryInstance.prototype.pgCurrentXactIdIfAssigned = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgCurrentXactIdIfAssigned.apply(_a, args);
-    };
-    QueryInstance.prototype.pgDatabaseCollationActualVersion = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgDatabaseCollationActualVersion.apply(_a, args);
-    };
-    QueryInstance.prototype.pgDatabaseSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgDatabaseSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgDescribeObject = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgDescribeObject.apply(_a, args);
-    };
-    QueryInstance.prototype.pgDropReplicationSlot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgDropReplicationSlot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgEncodingToChar = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgEncodingToChar.apply(_a, args);
-    };
-    QueryInstance.prototype.pgEventTriggerDdlCommands = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgEventTriggerDdlCommands.apply(_a, args);
-    };
-    QueryInstance.prototype.pgEventTriggerDroppedObjects = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgEventTriggerDroppedObjects.apply(_a, args);
-    };
-    QueryInstance.prototype.pgEventTriggerTableRewriteOid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgEventTriggerTableRewriteOid.apply(_a, args);
-    };
-    QueryInstance.prototype.pgEventTriggerTableRewriteReason = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgEventTriggerTableRewriteReason.apply(_a, args);
-    };
-    QueryInstance.prototype.pgExportSnapshot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgExportSnapshot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgFilenodeRelation = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgFilenodeRelation.apply(_a, args);
-    };
-    QueryInstance.prototype.pgFunctionIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgFunctionIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetAcl = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetAcl.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetCatalogForeignKeys = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetCatalogForeignKeys.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetConstraintdef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetConstraintdef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetExpr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetExpr.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetFunctionArguments = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetFunctionArguments.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetFunctiondef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetFunctiondef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetFunctionIdentityArguments = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetFunctionIdentityArguments.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetFunctionResult = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetFunctionResult.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetIndexdef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetIndexdef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetKeywords = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetKeywords.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetLoadedModules = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetLoadedModules.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetMultixactMembers = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetMultixactMembers.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetObjectAddress = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetObjectAddress.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetPartitionConstraintdef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetPartitionConstraintdef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetPartkeydef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetPartkeydef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetRuledef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetRuledef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetSerialSequence = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetSerialSequence.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetStatisticsobjdef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetStatisticsobjdef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetTriggerdef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetTriggerdef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetUserbyid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetUserbyid.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetViewdef = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetViewdef.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetWalReplayPauseState = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetWalReplayPauseState.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetWalResourceManagers = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetWalResourceManagers.apply(_a, args);
-    };
-    QueryInstance.prototype.pgGetWalSummarizerState = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgGetWalSummarizerState.apply(_a, args);
-    };
-    QueryInstance.prototype.pgHasRole = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgHasRole.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIdentifyObject = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIdentifyObject.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIdentifyObjectAsAddress = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIdentifyObjectAsAddress.apply(_a, args);
-    };
-    QueryInstance.prototype.pgImportSystemCollations = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgImportSystemCollations.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIndexamHasProperty = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIndexamHasProperty.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIndexColumnHasProperty = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIndexColumnHasProperty.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIndexesSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIndexesSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIndexHasProperty = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIndexHasProperty.apply(_a, args);
-    };
-    QueryInstance.prototype.pgInputErrorInfo = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgInputErrorInfo.apply(_a, args);
-    };
-    QueryInstance.prototype.pgInputIsValid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgInputIsValid.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIsInRecovery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIsInRecovery.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIsOtherTempSchema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIsOtherTempSchema.apply(_a, args);
-    };
-    QueryInstance.prototype.pgIsWalReplayPaused = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgIsWalReplayPaused.apply(_a, args);
-    };
-    QueryInstance.prototype.pgJitAvailable = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgJitAvailable.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLastCommittedXact = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLastCommittedXact.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLastWalReceiveLsn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLastWalReceiveLsn.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLastWalReplayLsn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLastWalReplayLsn.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLastXactReplayTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLastXactReplayTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.pgListeningChannels = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgListeningChannels.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogBackendMemoryContexts = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogBackendMemoryContexts.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogicalEmitMessage = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogicalEmitMessage.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogicalSlotGetBinaryChanges = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogicalSlotGetBinaryChanges.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogicalSlotGetChanges = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogicalSlotGetChanges.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogicalSlotPeekBinaryChanges = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogicalSlotPeekBinaryChanges.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogicalSlotPeekChanges = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogicalSlotPeekChanges.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLogStandbySnapshot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLogStandbySnapshot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsArchiveStatusdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsArchiveStatusdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsDir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsDir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsLogdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsLogdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsLogicalmapdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsLogicalmapdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsLogicalsnapdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsLogicalsnapdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsReplslotdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsReplslotdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsSummariesdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsSummariesdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsTmpdir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsTmpdir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgLsWaldir = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgLsWaldir.apply(_a, args);
-    };
-    QueryInstance.prototype.pgMcvListItems = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgMcvListItems.apply(_a, args);
-    };
-    QueryInstance.prototype.pgMyTempSchema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgMyTempSchema.apply(_a, args);
-    };
-    QueryInstance.prototype.pgNotificationQueueUsage = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgNotificationQueueUsage.apply(_a, args);
-    };
-    QueryInstance.prototype.pgNumaAvailable = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgNumaAvailable.apply(_a, args);
-    };
-    QueryInstance.prototype.pgOpclassIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgOpclassIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgOperatorIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgOperatorIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgOpfamilyIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgOpfamilyIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgOptionsToTable = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgOptionsToTable.apply(_a, args);
-    };
-    QueryInstance.prototype.pgPartitionAncestors = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgPartitionAncestors.apply(_a, args);
-    };
-    QueryInstance.prototype.pgPartitionRoot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgPartitionRoot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgPartitionTree = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgPartitionTree.apply(_a, args);
-    };
-    QueryInstance.prototype.pgPostmasterStartTime = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgPostmasterStartTime.apply(_a, args);
-    };
-    QueryInstance.prototype.pgPromote = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgPromote.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReadBinaryFile = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReadBinaryFile.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReadFile = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReadFile.apply(_a, args);
-    };
-    QueryInstance.prototype.pgRelationFilenode = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgRelationFilenode.apply(_a, args);
-    };
-    QueryInstance.prototype.pgRelationFilepath = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgRelationFilepath.apply(_a, args);
-    };
-    QueryInstance.prototype.pgRelationSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgRelationSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReloadConf = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReloadConf.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginAdvance = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginAdvance.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginCreate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginCreate.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginDrop = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginDrop.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginOid = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginOid.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginProgress = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginProgress.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginSessionIsSetup = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginSessionIsSetup.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginSessionProgress = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginSessionProgress.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginSessionReset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginSessionReset.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginSessionSetup = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginSessionSetup.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginXactReset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginXactReset.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationOriginXactSetup = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationOriginXactSetup.apply(_a, args);
-    };
-    QueryInstance.prototype.pgReplicationSlotAdvance = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgReplicationSlotAdvance.apply(_a, args);
-    };
-    QueryInstance.prototype.pgRestoreAttributeStats = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgRestoreAttributeStats.apply(_a, args);
-    };
-    QueryInstance.prototype.pgRestoreRelationStats = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgRestoreRelationStats.apply(_a, args);
-    };
-    QueryInstance.prototype.pgRotateLogfile = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgRotateLogfile.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSafeSnapshotBlockingPids = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSafeSnapshotBlockingPids.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSettingsGetFlags = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSettingsGetFlags.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSizeBytes = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSizeBytes.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSizePretty = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSizePretty.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSleep = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSleep.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSleepFor = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSleepFor.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSleepUntil = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSleepUntil.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSnapshotXip = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSnapshotXip.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSnapshotXmax = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSnapshotXmax.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSnapshotXmin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSnapshotXmin.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSplitWalfileName = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSplitWalfileName.apply(_a, args);
-    };
-    QueryInstance.prototype.pgStatFile = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgStatFile.apply(_a, args);
-    };
-    QueryInstance.prototype.pgStatisticsObjIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgStatisticsObjIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSwitchWal = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSwitchWal.apply(_a, args);
-    };
-    QueryInstance.prototype.pgSyncReplicationSlots = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgSyncReplicationSlots.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTableIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTableIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTableSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTableSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTablespaceDatabases = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTablespaceDatabases.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTablespaceLocation = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTablespaceLocation.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTablespaceSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTablespaceSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTerminateBackend = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTerminateBackend.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTotalRelationSize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTotalRelationSize.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTriggerDepth = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTriggerDepth.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTryAdvisoryLock = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTryAdvisoryLock.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTryAdvisoryLockShared = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTryAdvisoryLockShared.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTryAdvisoryXactLock = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTryAdvisoryXactLock.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTryAdvisoryXactLockShared = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTryAdvisoryXactLockShared.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTsConfigIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTsConfigIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTsDictIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTsDictIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTsParserIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTsParserIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTsTemplateIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTsTemplateIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTypeIsVisible = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTypeIsVisible.apply(_a, args);
-    };
-    QueryInstance.prototype.pgTypeof = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgTypeof.apply(_a, args);
-    };
-    QueryInstance.prototype.pgVisibleInSnapshot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgVisibleInSnapshot.apply(_a, args);
-    };
-    QueryInstance.prototype.pgWalfileName = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgWalfileName.apply(_a, args);
-    };
-    QueryInstance.prototype.pgWalfileNameOffset = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgWalfileNameOffset.apply(_a, args);
-    };
-    QueryInstance.prototype.pgWalLsnDiff = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgWalLsnDiff.apply(_a, args);
-    };
-    QueryInstance.prototype.pgWalReplayPause = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgWalReplayPause.apply(_a, args);
-    };
-    QueryInstance.prototype.pgWalReplayResume = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgWalReplayResume.apply(_a, args);
-    };
-    QueryInstance.prototype.pgWalSummaryContents = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgWalSummaryContents.apply(_a, args);
-    };
-    QueryInstance.prototype.pgXactCommitTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgXactCommitTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.pgXactCommitTimestampOrigin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgXactCommitTimestampOrigin.apply(_a, args);
-    };
-    QueryInstance.prototype.pgXactStatus = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pgXactStatus.apply(_a, args);
-    };
-    QueryInstance.prototype.phrasetoTsquery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).phrasetoTsquery.apply(_a, args);
-    };
-    QueryInstance.prototype.pi = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).pi.apply(_a, args);
-    };
-    QueryInstance.prototype.pipe = function () {
+    }
+    perpendicular(...args) {
+        return (new QueryBuilder(this)).perpendicular(...args);
+    }
+    pgAdvisoryLock(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryLock(...args);
+    }
+    pgAdvisoryLockShared(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryLockShared(...args);
+    }
+    pgAdvisoryUnlock(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryUnlock(...args);
+    }
+    pgAdvisoryUnlockAll(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryUnlockAll(...args);
+    }
+    pgAdvisoryUnlockShared(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryUnlockShared(...args);
+    }
+    pgAdvisoryXactLock(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryXactLock(...args);
+    }
+    pgAdvisoryXactLockShared(...args) {
+        return (new QueryBuilder(this)).pgAdvisoryXactLockShared(...args);
+    }
+    pgAvailableWalSummaries(...args) {
+        return (new QueryBuilder(this)).pgAvailableWalSummaries(...args);
+    }
+    pgBackendPid(...args) {
+        return (new QueryBuilder(this)).pgBackendPid(...args);
+    }
+    pgBackupStart(...args) {
+        return (new QueryBuilder(this)).pgBackupStart(...args);
+    }
+    pgBackupStop(...args) {
+        return (new QueryBuilder(this)).pgBackupStop(...args);
+    }
+    pgBasetype(...args) {
+        return (new QueryBuilder(this)).pgBasetype(...args);
+    }
+    pgBlockingPids(...args) {
+        return (new QueryBuilder(this)).pgBlockingPids(...args);
+    }
+    pgCancelBackend(...args) {
+        return (new QueryBuilder(this)).pgCancelBackend(...args);
+    }
+    pgCharToEncoding(...args) {
+        return (new QueryBuilder(this)).pgCharToEncoding(...args);
+    }
+    pgClearAttributeStats(...args) {
+        return (new QueryBuilder(this)).pgClearAttributeStats(...args);
+    }
+    pgClearRelationStats(...args) {
+        return (new QueryBuilder(this)).pgClearRelationStats(...args);
+    }
+    pgClientEncoding(...args) {
+        return (new QueryBuilder(this)).pgClientEncoding(...args);
+    }
+    pgCollationActualVersion(...args) {
+        return (new QueryBuilder(this)).pgCollationActualVersion(...args);
+    }
+    pgCollationIsVisible(...args) {
+        return (new QueryBuilder(this)).pgCollationIsVisible(...args);
+    }
+    pgColumnCompression(...args) {
+        return (new QueryBuilder(this)).pgColumnCompression(...args);
+    }
+    pgColumnSize(...args) {
+        return (new QueryBuilder(this)).pgColumnSize(...args);
+    }
+    pgColumnToastChunkId(...args) {
+        return (new QueryBuilder(this)).pgColumnToastChunkId(...args);
+    }
+    pgConfLoadTime(...args) {
+        return (new QueryBuilder(this)).pgConfLoadTime(...args);
+    }
+    pgControlCheckpoint(...args) {
+        return (new QueryBuilder(this)).pgControlCheckpoint(...args);
+    }
+    pgControlInit(...args) {
+        return (new QueryBuilder(this)).pgControlInit(...args);
+    }
+    pgControlRecovery(...args) {
+        return (new QueryBuilder(this)).pgControlRecovery(...args);
+    }
+    pgControlSystem(...args) {
+        return (new QueryBuilder(this)).pgControlSystem(...args);
+    }
+    pgConversionIsVisible(...args) {
+        return (new QueryBuilder(this)).pgConversionIsVisible(...args);
+    }
+    pgCopyLogicalReplicationSlot(...args) {
+        return (new QueryBuilder(this)).pgCopyLogicalReplicationSlot(...args);
+    }
+    pgCopyPhysicalReplicationSlot(...args) {
+        return (new QueryBuilder(this)).pgCopyPhysicalReplicationSlot(...args);
+    }
+    pgCreateLogicalReplicationSlot(...args) {
+        return (new QueryBuilder(this)).pgCreateLogicalReplicationSlot(...args);
+    }
+    pgCreatePhysicalReplicationSlot(...args) {
+        return (new QueryBuilder(this)).pgCreatePhysicalReplicationSlot(...args);
+    }
+    pgCreateRestorePoint(...args) {
+        return (new QueryBuilder(this)).pgCreateRestorePoint(...args);
+    }
+    pgCurrentLogfile(...args) {
+        return (new QueryBuilder(this)).pgCurrentLogfile(...args);
+    }
+    pgCurrentSnapshot(...args) {
+        return (new QueryBuilder(this)).pgCurrentSnapshot(...args);
+    }
+    pgCurrentWalFlushLsn(...args) {
+        return (new QueryBuilder(this)).pgCurrentWalFlushLsn(...args);
+    }
+    pgCurrentWalInsertLsn(...args) {
+        return (new QueryBuilder(this)).pgCurrentWalInsertLsn(...args);
+    }
+    pgCurrentWalLsn(...args) {
+        return (new QueryBuilder(this)).pgCurrentWalLsn(...args);
+    }
+    pgCurrentXactId(...args) {
+        return (new QueryBuilder(this)).pgCurrentXactId(...args);
+    }
+    pgCurrentXactIdIfAssigned(...args) {
+        return (new QueryBuilder(this)).pgCurrentXactIdIfAssigned(...args);
+    }
+    pgDatabaseCollationActualVersion(...args) {
+        return (new QueryBuilder(this)).pgDatabaseCollationActualVersion(...args);
+    }
+    pgDatabaseSize(...args) {
+        return (new QueryBuilder(this)).pgDatabaseSize(...args);
+    }
+    pgDescribeObject(...args) {
+        return (new QueryBuilder(this)).pgDescribeObject(...args);
+    }
+    pgDropReplicationSlot(...args) {
+        return (new QueryBuilder(this)).pgDropReplicationSlot(...args);
+    }
+    pgEncodingToChar(...args) {
+        return (new QueryBuilder(this)).pgEncodingToChar(...args);
+    }
+    pgEventTriggerDdlCommands(...args) {
+        return (new QueryBuilder(this)).pgEventTriggerDdlCommands(...args);
+    }
+    pgEventTriggerDroppedObjects(...args) {
+        return (new QueryBuilder(this)).pgEventTriggerDroppedObjects(...args);
+    }
+    pgEventTriggerTableRewriteOid(...args) {
+        return (new QueryBuilder(this)).pgEventTriggerTableRewriteOid(...args);
+    }
+    pgEventTriggerTableRewriteReason(...args) {
+        return (new QueryBuilder(this)).pgEventTriggerTableRewriteReason(...args);
+    }
+    pgExportSnapshot(...args) {
+        return (new QueryBuilder(this)).pgExportSnapshot(...args);
+    }
+    pgFilenodeRelation(...args) {
+        return (new QueryBuilder(this)).pgFilenodeRelation(...args);
+    }
+    pgFunctionIsVisible(...args) {
+        return (new QueryBuilder(this)).pgFunctionIsVisible(...args);
+    }
+    pgGetAcl(...args) {
+        return (new QueryBuilder(this)).pgGetAcl(...args);
+    }
+    pgGetCatalogForeignKeys(...args) {
+        return (new QueryBuilder(this)).pgGetCatalogForeignKeys(...args);
+    }
+    pgGetConstraintdef(...args) {
+        return (new QueryBuilder(this)).pgGetConstraintdef(...args);
+    }
+    pgGetExpr(...args) {
+        return (new QueryBuilder(this)).pgGetExpr(...args);
+    }
+    pgGetFunctionArguments(...args) {
+        return (new QueryBuilder(this)).pgGetFunctionArguments(...args);
+    }
+    pgGetFunctiondef(...args) {
+        return (new QueryBuilder(this)).pgGetFunctiondef(...args);
+    }
+    pgGetFunctionIdentityArguments(...args) {
+        return (new QueryBuilder(this)).pgGetFunctionIdentityArguments(...args);
+    }
+    pgGetFunctionResult(...args) {
+        return (new QueryBuilder(this)).pgGetFunctionResult(...args);
+    }
+    pgGetIndexdef(...args) {
+        return (new QueryBuilder(this)).pgGetIndexdef(...args);
+    }
+    pgGetKeywords(...args) {
+        return (new QueryBuilder(this)).pgGetKeywords(...args);
+    }
+    pgGetLoadedModules(...args) {
+        return (new QueryBuilder(this)).pgGetLoadedModules(...args);
+    }
+    pgGetMultixactMembers(...args) {
+        return (new QueryBuilder(this)).pgGetMultixactMembers(...args);
+    }
+    pgGetObjectAddress(...args) {
+        return (new QueryBuilder(this)).pgGetObjectAddress(...args);
+    }
+    pgGetPartitionConstraintdef(...args) {
+        return (new QueryBuilder(this)).pgGetPartitionConstraintdef(...args);
+    }
+    pgGetPartkeydef(...args) {
+        return (new QueryBuilder(this)).pgGetPartkeydef(...args);
+    }
+    pgGetRuledef(...args) {
+        return (new QueryBuilder(this)).pgGetRuledef(...args);
+    }
+    pgGetSerialSequence(...args) {
+        return (new QueryBuilder(this)).pgGetSerialSequence(...args);
+    }
+    pgGetStatisticsobjdef(...args) {
+        return (new QueryBuilder(this)).pgGetStatisticsobjdef(...args);
+    }
+    pgGetTriggerdef(...args) {
+        return (new QueryBuilder(this)).pgGetTriggerdef(...args);
+    }
+    pgGetUserbyid(...args) {
+        return (new QueryBuilder(this)).pgGetUserbyid(...args);
+    }
+    pgGetViewdef(...args) {
+        return (new QueryBuilder(this)).pgGetViewdef(...args);
+    }
+    pgGetWalReplayPauseState(...args) {
+        return (new QueryBuilder(this)).pgGetWalReplayPauseState(...args);
+    }
+    pgGetWalResourceManagers(...args) {
+        return (new QueryBuilder(this)).pgGetWalResourceManagers(...args);
+    }
+    pgGetWalSummarizerState(...args) {
+        return (new QueryBuilder(this)).pgGetWalSummarizerState(...args);
+    }
+    pgHasRole(...args) {
+        return (new QueryBuilder(this)).pgHasRole(...args);
+    }
+    pgIdentifyObject(...args) {
+        return (new QueryBuilder(this)).pgIdentifyObject(...args);
+    }
+    pgIdentifyObjectAsAddress(...args) {
+        return (new QueryBuilder(this)).pgIdentifyObjectAsAddress(...args);
+    }
+    pgImportSystemCollations(...args) {
+        return (new QueryBuilder(this)).pgImportSystemCollations(...args);
+    }
+    pgIndexamHasProperty(...args) {
+        return (new QueryBuilder(this)).pgIndexamHasProperty(...args);
+    }
+    pgIndexColumnHasProperty(...args) {
+        return (new QueryBuilder(this)).pgIndexColumnHasProperty(...args);
+    }
+    pgIndexesSize(...args) {
+        return (new QueryBuilder(this)).pgIndexesSize(...args);
+    }
+    pgIndexHasProperty(...args) {
+        return (new QueryBuilder(this)).pgIndexHasProperty(...args);
+    }
+    pgInputErrorInfo(...args) {
+        return (new QueryBuilder(this)).pgInputErrorInfo(...args);
+    }
+    pgInputIsValid(...args) {
+        return (new QueryBuilder(this)).pgInputIsValid(...args);
+    }
+    pgIsInRecovery(...args) {
+        return (new QueryBuilder(this)).pgIsInRecovery(...args);
+    }
+    pgIsOtherTempSchema(...args) {
+        return (new QueryBuilder(this)).pgIsOtherTempSchema(...args);
+    }
+    pgIsWalReplayPaused(...args) {
+        return (new QueryBuilder(this)).pgIsWalReplayPaused(...args);
+    }
+    pgJitAvailable(...args) {
+        return (new QueryBuilder(this)).pgJitAvailable(...args);
+    }
+    pgLastCommittedXact(...args) {
+        return (new QueryBuilder(this)).pgLastCommittedXact(...args);
+    }
+    pgLastWalReceiveLsn(...args) {
+        return (new QueryBuilder(this)).pgLastWalReceiveLsn(...args);
+    }
+    pgLastWalReplayLsn(...args) {
+        return (new QueryBuilder(this)).pgLastWalReplayLsn(...args);
+    }
+    pgLastXactReplayTimestamp(...args) {
+        return (new QueryBuilder(this)).pgLastXactReplayTimestamp(...args);
+    }
+    pgListeningChannels(...args) {
+        return (new QueryBuilder(this)).pgListeningChannels(...args);
+    }
+    pgLogBackendMemoryContexts(...args) {
+        return (new QueryBuilder(this)).pgLogBackendMemoryContexts(...args);
+    }
+    pgLogicalEmitMessage(...args) {
+        return (new QueryBuilder(this)).pgLogicalEmitMessage(...args);
+    }
+    pgLogicalSlotGetBinaryChanges(...args) {
+        return (new QueryBuilder(this)).pgLogicalSlotGetBinaryChanges(...args);
+    }
+    pgLogicalSlotGetChanges(...args) {
+        return (new QueryBuilder(this)).pgLogicalSlotGetChanges(...args);
+    }
+    pgLogicalSlotPeekBinaryChanges(...args) {
+        return (new QueryBuilder(this)).pgLogicalSlotPeekBinaryChanges(...args);
+    }
+    pgLogicalSlotPeekChanges(...args) {
+        return (new QueryBuilder(this)).pgLogicalSlotPeekChanges(...args);
+    }
+    pgLogStandbySnapshot(...args) {
+        return (new QueryBuilder(this)).pgLogStandbySnapshot(...args);
+    }
+    pgLsArchiveStatusdir(...args) {
+        return (new QueryBuilder(this)).pgLsArchiveStatusdir(...args);
+    }
+    pgLsDir(...args) {
+        return (new QueryBuilder(this)).pgLsDir(...args);
+    }
+    pgLsLogdir(...args) {
+        return (new QueryBuilder(this)).pgLsLogdir(...args);
+    }
+    pgLsLogicalmapdir(...args) {
+        return (new QueryBuilder(this)).pgLsLogicalmapdir(...args);
+    }
+    pgLsLogicalsnapdir(...args) {
+        return (new QueryBuilder(this)).pgLsLogicalsnapdir(...args);
+    }
+    pgLsReplslotdir(...args) {
+        return (new QueryBuilder(this)).pgLsReplslotdir(...args);
+    }
+    pgLsSummariesdir(...args) {
+        return (new QueryBuilder(this)).pgLsSummariesdir(...args);
+    }
+    pgLsTmpdir(...args) {
+        return (new QueryBuilder(this)).pgLsTmpdir(...args);
+    }
+    pgLsWaldir(...args) {
+        return (new QueryBuilder(this)).pgLsWaldir(...args);
+    }
+    pgMcvListItems(...args) {
+        return (new QueryBuilder(this)).pgMcvListItems(...args);
+    }
+    pgMyTempSchema(...args) {
+        return (new QueryBuilder(this)).pgMyTempSchema(...args);
+    }
+    pgNotificationQueueUsage(...args) {
+        return (new QueryBuilder(this)).pgNotificationQueueUsage(...args);
+    }
+    pgNumaAvailable(...args) {
+        return (new QueryBuilder(this)).pgNumaAvailable(...args);
+    }
+    pgOpclassIsVisible(...args) {
+        return (new QueryBuilder(this)).pgOpclassIsVisible(...args);
+    }
+    pgOperatorIsVisible(...args) {
+        return (new QueryBuilder(this)).pgOperatorIsVisible(...args);
+    }
+    pgOpfamilyIsVisible(...args) {
+        return (new QueryBuilder(this)).pgOpfamilyIsVisible(...args);
+    }
+    pgOptionsToTable(...args) {
+        return (new QueryBuilder(this)).pgOptionsToTable(...args);
+    }
+    pgPartitionAncestors(...args) {
+        return (new QueryBuilder(this)).pgPartitionAncestors(...args);
+    }
+    pgPartitionRoot(...args) {
+        return (new QueryBuilder(this)).pgPartitionRoot(...args);
+    }
+    pgPartitionTree(...args) {
+        return (new QueryBuilder(this)).pgPartitionTree(...args);
+    }
+    pgPostmasterStartTime(...args) {
+        return (new QueryBuilder(this)).pgPostmasterStartTime(...args);
+    }
+    pgPromote(...args) {
+        return (new QueryBuilder(this)).pgPromote(...args);
+    }
+    pgReadBinaryFile(...args) {
+        return (new QueryBuilder(this)).pgReadBinaryFile(...args);
+    }
+    pgReadFile(...args) {
+        return (new QueryBuilder(this)).pgReadFile(...args);
+    }
+    pgRelationFilenode(...args) {
+        return (new QueryBuilder(this)).pgRelationFilenode(...args);
+    }
+    pgRelationFilepath(...args) {
+        return (new QueryBuilder(this)).pgRelationFilepath(...args);
+    }
+    pgRelationSize(...args) {
+        return (new QueryBuilder(this)).pgRelationSize(...args);
+    }
+    pgReloadConf(...args) {
+        return (new QueryBuilder(this)).pgReloadConf(...args);
+    }
+    pgReplicationOriginAdvance(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginAdvance(...args);
+    }
+    pgReplicationOriginCreate(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginCreate(...args);
+    }
+    pgReplicationOriginDrop(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginDrop(...args);
+    }
+    pgReplicationOriginOid(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginOid(...args);
+    }
+    pgReplicationOriginProgress(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginProgress(...args);
+    }
+    pgReplicationOriginSessionIsSetup(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginSessionIsSetup(...args);
+    }
+    pgReplicationOriginSessionProgress(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginSessionProgress(...args);
+    }
+    pgReplicationOriginSessionReset(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginSessionReset(...args);
+    }
+    pgReplicationOriginSessionSetup(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginSessionSetup(...args);
+    }
+    pgReplicationOriginXactReset(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginXactReset(...args);
+    }
+    pgReplicationOriginXactSetup(...args) {
+        return (new QueryBuilder(this)).pgReplicationOriginXactSetup(...args);
+    }
+    pgReplicationSlotAdvance(...args) {
+        return (new QueryBuilder(this)).pgReplicationSlotAdvance(...args);
+    }
+    pgRestoreAttributeStats(...args) {
+        return (new QueryBuilder(this)).pgRestoreAttributeStats(...args);
+    }
+    pgRestoreRelationStats(...args) {
+        return (new QueryBuilder(this)).pgRestoreRelationStats(...args);
+    }
+    pgRotateLogfile(...args) {
+        return (new QueryBuilder(this)).pgRotateLogfile(...args);
+    }
+    pgSafeSnapshotBlockingPids(...args) {
+        return (new QueryBuilder(this)).pgSafeSnapshotBlockingPids(...args);
+    }
+    pgSettingsGetFlags(...args) {
+        return (new QueryBuilder(this)).pgSettingsGetFlags(...args);
+    }
+    pgSizeBytes(...args) {
+        return (new QueryBuilder(this)).pgSizeBytes(...args);
+    }
+    pgSizePretty(...args) {
+        return (new QueryBuilder(this)).pgSizePretty(...args);
+    }
+    pgSleep(...args) {
+        return (new QueryBuilder(this)).pgSleep(...args);
+    }
+    pgSleepFor(...args) {
+        return (new QueryBuilder(this)).pgSleepFor(...args);
+    }
+    pgSleepUntil(...args) {
+        return (new QueryBuilder(this)).pgSleepUntil(...args);
+    }
+    pgSnapshotXip(...args) {
+        return (new QueryBuilder(this)).pgSnapshotXip(...args);
+    }
+    pgSnapshotXmax(...args) {
+        return (new QueryBuilder(this)).pgSnapshotXmax(...args);
+    }
+    pgSnapshotXmin(...args) {
+        return (new QueryBuilder(this)).pgSnapshotXmin(...args);
+    }
+    pgSplitWalfileName(...args) {
+        return (new QueryBuilder(this)).pgSplitWalfileName(...args);
+    }
+    pgStatFile(...args) {
+        return (new QueryBuilder(this)).pgStatFile(...args);
+    }
+    pgStatisticsObjIsVisible(...args) {
+        return (new QueryBuilder(this)).pgStatisticsObjIsVisible(...args);
+    }
+    pgSwitchWal(...args) {
+        return (new QueryBuilder(this)).pgSwitchWal(...args);
+    }
+    pgSyncReplicationSlots(...args) {
+        return (new QueryBuilder(this)).pgSyncReplicationSlots(...args);
+    }
+    pgTableIsVisible(...args) {
+        return (new QueryBuilder(this)).pgTableIsVisible(...args);
+    }
+    pgTableSize(...args) {
+        return (new QueryBuilder(this)).pgTableSize(...args);
+    }
+    pgTablespaceDatabases(...args) {
+        return (new QueryBuilder(this)).pgTablespaceDatabases(...args);
+    }
+    pgTablespaceLocation(...args) {
+        return (new QueryBuilder(this)).pgTablespaceLocation(...args);
+    }
+    pgTablespaceSize(...args) {
+        return (new QueryBuilder(this)).pgTablespaceSize(...args);
+    }
+    pgTerminateBackend(...args) {
+        return (new QueryBuilder(this)).pgTerminateBackend(...args);
+    }
+    pgTotalRelationSize(...args) {
+        return (new QueryBuilder(this)).pgTotalRelationSize(...args);
+    }
+    pgTriggerDepth(...args) {
+        return (new QueryBuilder(this)).pgTriggerDepth(...args);
+    }
+    pgTryAdvisoryLock(...args) {
+        return (new QueryBuilder(this)).pgTryAdvisoryLock(...args);
+    }
+    pgTryAdvisoryLockShared(...args) {
+        return (new QueryBuilder(this)).pgTryAdvisoryLockShared(...args);
+    }
+    pgTryAdvisoryXactLock(...args) {
+        return (new QueryBuilder(this)).pgTryAdvisoryXactLock(...args);
+    }
+    pgTryAdvisoryXactLockShared(...args) {
+        return (new QueryBuilder(this)).pgTryAdvisoryXactLockShared(...args);
+    }
+    pgTsConfigIsVisible(...args) {
+        return (new QueryBuilder(this)).pgTsConfigIsVisible(...args);
+    }
+    pgTsDictIsVisible(...args) {
+        return (new QueryBuilder(this)).pgTsDictIsVisible(...args);
+    }
+    pgTsParserIsVisible(...args) {
+        return (new QueryBuilder(this)).pgTsParserIsVisible(...args);
+    }
+    pgTsTemplateIsVisible(...args) {
+        return (new QueryBuilder(this)).pgTsTemplateIsVisible(...args);
+    }
+    pgTypeIsVisible(...args) {
+        return (new QueryBuilder(this)).pgTypeIsVisible(...args);
+    }
+    pgTypeof(...args) {
+        return (new QueryBuilder(this)).pgTypeof(...args);
+    }
+    pgVisibleInSnapshot(...args) {
+        return (new QueryBuilder(this)).pgVisibleInSnapshot(...args);
+    }
+    pgWalfileName(...args) {
+        return (new QueryBuilder(this)).pgWalfileName(...args);
+    }
+    pgWalfileNameOffset(...args) {
+        return (new QueryBuilder(this)).pgWalfileNameOffset(...args);
+    }
+    pgWalLsnDiff(...args) {
+        return (new QueryBuilder(this)).pgWalLsnDiff(...args);
+    }
+    pgWalReplayPause(...args) {
+        return (new QueryBuilder(this)).pgWalReplayPause(...args);
+    }
+    pgWalReplayResume(...args) {
+        return (new QueryBuilder(this)).pgWalReplayResume(...args);
+    }
+    pgWalSummaryContents(...args) {
+        return (new QueryBuilder(this)).pgWalSummaryContents(...args);
+    }
+    pgXactCommitTimestamp(...args) {
+        return (new QueryBuilder(this)).pgXactCommitTimestamp(...args);
+    }
+    pgXactCommitTimestampOrigin(...args) {
+        return (new QueryBuilder(this)).pgXactCommitTimestampOrigin(...args);
+    }
+    pgXactStatus(...args) {
+        return (new QueryBuilder(this)).pgXactStatus(...args);
+    }
+    phrasetoTsquery(...args) {
+        return (new QueryBuilder(this)).phrasetoTsquery(...args);
+    }
+    pi(...args) {
+        return (new QueryBuilder(this)).pi(...args);
+    }
+    pipe() {
         return (new QueryBuilder(this)).pipe();
-    };
-    QueryInstance.prototype.placing = function () {
+    }
+    placing() {
         return (new QueryBuilder(this)).placing();
-    };
-    QueryInstance.prototype.plaintoTsquery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).plaintoTsquery.apply(_a, args);
-    };
-    QueryInstance.prototype.plan = function () {
+    }
+    plaintoTsquery(...args) {
+        return (new QueryBuilder(this)).plaintoTsquery(...args);
+    }
+    plan() {
         return (new QueryBuilder(this)).plan();
-    };
-    QueryInstance.prototype.plans = function () {
+    }
+    plans() {
         return (new QueryBuilder(this)).plans();
-    };
-    QueryInstance.prototype.pli = function () {
+    }
+    pli() {
         return (new QueryBuilder(this)).pli();
-    };
-    QueryInstance.prototype.plus = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).plus.apply(_a, args);
-    };
-    QueryInstance.prototype.point = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).point.apply(_a, args);
-    };
-    QueryInstance.prototype.policy = function () {
+    }
+    plus(...args) {
+        return (new QueryBuilder(this)).plus(...args);
+    }
+    point(...args) {
+        return (new QueryBuilder(this)).point(...args);
+    }
+    policy() {
         return (new QueryBuilder(this)).policy();
-    };
-    QueryInstance.prototype.polygon = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).polygon.apply(_a, args);
-    };
-    QueryInstance.prototype.popen = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).popen.apply(_a, args);
-    };
-    QueryInstance.prototype.portion = function () {
+    }
+    polygon(...args) {
+        return (new QueryBuilder(this)).polygon(...args);
+    }
+    popen(...args) {
+        return (new QueryBuilder(this)).popen(...args);
+    }
+    portion() {
         return (new QueryBuilder(this)).portion();
-    };
-    QueryInstance.prototype.position = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).position.apply(_a, args);
-    };
-    QueryInstance.prototype.positionRegex = function () {
+    }
+    position(...args) {
+        return (new QueryBuilder(this)).position(...args);
+    }
+    positionRegex() {
         return (new QueryBuilder(this)).positionRegex();
-    };
-    QueryInstance.prototype.power = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).power.apply(_a, args);
-    };
-    QueryInstance.prototype.precedes = function () {
+    }
+    power(...args) {
+        return (new QueryBuilder(this)).power(...args);
+    }
+    precedes() {
         return (new QueryBuilder(this)).precedes();
-    };
-    QueryInstance.prototype.preceding = function () {
+    }
+    preceding() {
         return (new QueryBuilder(this)).preceding();
-    };
-    QueryInstance.prototype.precision = function () {
+    }
+    precision() {
         return (new QueryBuilder(this)).precision();
-    };
-    QueryInstance.prototype.prepare = function () {
+    }
+    prepare() {
         return (new QueryBuilder(this)).prepare();
-    };
-    QueryInstance.prototype.prepared = function () {
+    }
+    prepared() {
         return (new QueryBuilder(this)).prepared();
-    };
-    QueryInstance.prototype.prepareTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).prepareTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.preserve = function () {
+    }
+    prepareTransaction(...args) {
+        return (new QueryBuilder(this)).prepareTransaction(...args);
+    }
+    preserve() {
         return (new QueryBuilder(this)).preserve();
-    };
-    QueryInstance.prototype.prev = function () {
+    }
+    prev() {
         return (new QueryBuilder(this)).prev();
-    };
-    QueryInstance.prototype.primary = function () {
+    }
+    primary() {
         return (new QueryBuilder(this)).primary();
-    };
-    QueryInstance.prototype.prior = function () {
+    }
+    prior() {
         return (new QueryBuilder(this)).prior();
-    };
-    QueryInstance.prototype.private = function () {
+    }
+    private() {
         return (new QueryBuilder(this)).private();
-    };
-    QueryInstance.prototype.privileges = function () {
+    }
+    privileges() {
         return (new QueryBuilder(this)).privileges();
-    };
-    QueryInstance.prototype.procedural = function () {
+    }
+    procedural() {
         return (new QueryBuilder(this)).procedural();
-    };
-    QueryInstance.prototype.procedure = function () {
+    }
+    procedure() {
         return (new QueryBuilder(this)).procedure();
-    };
-    QueryInstance.prototype.procedures = function () {
+    }
+    procedures() {
         return (new QueryBuilder(this)).procedures();
-    };
-    QueryInstance.prototype.program = function () {
+    }
+    program() {
         return (new QueryBuilder(this)).program();
-    };
-    QueryInstance.prototype.prune = function () {
+    }
+    prune() {
         return (new QueryBuilder(this)).prune();
-    };
-    QueryInstance.prototype.ptf = function () {
+    }
+    ptf() {
         return (new QueryBuilder(this)).ptf();
-    };
-    QueryInstance.prototype.public = function () {
+    }
+    public() {
         return (new QueryBuilder(this)).public();
-    };
-    QueryInstance.prototype.publication = function () {
+    }
+    publication() {
         return (new QueryBuilder(this)).publication();
-    };
-    QueryInstance.prototype.queryToXml = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).queryToXml.apply(_a, args);
-    };
-    QueryInstance.prototype.queryToXmlAndXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).queryToXmlAndXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.queryToXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).queryToXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.querytree = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).querytree.apply(_a, args);
-    };
-    QueryInstance.prototype.quote = function () {
+    }
+    queryToXml(...args) {
+        return (new QueryBuilder(this)).queryToXml(...args);
+    }
+    queryToXmlAndXmlschema(...args) {
+        return (new QueryBuilder(this)).queryToXmlAndXmlschema(...args);
+    }
+    queryToXmlschema(...args) {
+        return (new QueryBuilder(this)).queryToXmlschema(...args);
+    }
+    querytree(...args) {
+        return (new QueryBuilder(this)).querytree(...args);
+    }
+    quote() {
         return (new QueryBuilder(this)).quote();
-    };
-    QueryInstance.prototype.quoteIdent = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).quoteIdent.apply(_a, args);
-    };
-    QueryInstance.prototype.quoteLiteral = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).quoteLiteral.apply(_a, args);
-    };
-    QueryInstance.prototype.quoteNullable = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).quoteNullable.apply(_a, args);
-    };
-    QueryInstance.prototype.quotes = function () {
+    }
+    quoteIdent(...args) {
+        return (new QueryBuilder(this)).quoteIdent(...args);
+    }
+    quoteLiteral(...args) {
+        return (new QueryBuilder(this)).quoteLiteral(...args);
+    }
+    quoteNullable(...args) {
+        return (new QueryBuilder(this)).quoteNullable(...args);
+    }
+    quotes() {
         return (new QueryBuilder(this)).quotes();
-    };
-    QueryInstance.prototype.r = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).r.apply(_a, args);
-    };
-    QueryInstance.prototype.radians = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).radians.apply(_a, args);
-    };
-    QueryInstance.prototype.radius = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).radius.apply(_a, args);
-    };
-    QueryInstance.prototype.random = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).random.apply(_a, args);
-    };
-    QueryInstance.prototype.randomNormal = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).randomNormal.apply(_a, args);
-    };
-    QueryInstance.prototype.range = function () {
+    }
+    r(...args) {
+        return (new QueryBuilder(this)).r(...args);
+    }
+    radians(...args) {
+        return (new QueryBuilder(this)).radians(...args);
+    }
+    radius(...args) {
+        return (new QueryBuilder(this)).radius(...args);
+    }
+    random(...args) {
+        return (new QueryBuilder(this)).random(...args);
+    }
+    randomNormal(...args) {
+        return (new QueryBuilder(this)).randomNormal(...args);
+    }
+    range() {
         return (new QueryBuilder(this)).range();
-    };
-    QueryInstance.prototype.rangeAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rangeAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.rangeIntersectAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rangeIntersectAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.rangeMerge = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rangeMerge.apply(_a, args);
-    };
-    QueryInstance.prototype.rank = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rank.apply(_a, args);
-    };
-    QueryInstance.prototype.raw = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).raw.apply(_a, args);
-    };
-    QueryInstance.prototype.rawString = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rawString.apply(_a, args);
-    };
-    QueryInstance.prototype.read = function () {
+    }
+    rangeAgg(...args) {
+        return (new QueryBuilder(this)).rangeAgg(...args);
+    }
+    rangeIntersectAgg(...args) {
+        return (new QueryBuilder(this)).rangeIntersectAgg(...args);
+    }
+    rangeMerge(...args) {
+        return (new QueryBuilder(this)).rangeMerge(...args);
+    }
+    rank(...args) {
+        return (new QueryBuilder(this)).rank(...args);
+    }
+    raw(...args) {
+        return (new QueryBuilder(this)).raw(...args);
+    }
+    rawString(...args) {
+        return (new QueryBuilder(this)).rawString(...args);
+    }
+    read() {
         return (new QueryBuilder(this)).read();
-    };
-    QueryInstance.prototype.reads = function () {
+    }
+    reads() {
         return (new QueryBuilder(this)).reads();
-    };
-    QueryInstance.prototype.real = function () {
+    }
+    real() {
         return (new QueryBuilder(this)).real();
-    };
-    QueryInstance.prototype.reassign = function () {
+    }
+    reassign() {
         return (new QueryBuilder(this)).reassign();
-    };
-    QueryInstance.prototype.recovery = function () {
+    }
+    recovery() {
         return (new QueryBuilder(this)).recovery();
-    };
-    QueryInstance.prototype.recursive = function () {
+    }
+    recursive() {
         return (new QueryBuilder(this)).recursive();
-    };
-    QueryInstance.prototype.ref = function () {
+    }
+    ref() {
         return (new QueryBuilder(this)).ref();
-    };
-    QueryInstance.prototype.references = function () {
+    }
+    references() {
         return (new QueryBuilder(this)).references();
-    };
-    QueryInstance.prototype.referencing = function () {
+    }
+    referencing() {
         return (new QueryBuilder(this)).referencing();
-    };
-    QueryInstance.prototype.refresh = function () {
+    }
+    refresh() {
         return (new QueryBuilder(this)).refresh();
-    };
-    QueryInstance.prototype.regexpCount = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpCount.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpInstr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpInstr.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpLike = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpLike.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpMatch = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpMatch.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpMatches = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpMatches.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpReplace = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpReplace.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpSplitToArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpSplitToArray.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpSplitToTable = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpSplitToTable.apply(_a, args);
-    };
-    QueryInstance.prototype.regexpSubstr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regexpSubstr.apply(_a, args);
-    };
-    QueryInstance.prototype.regrAvgx = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrAvgx.apply(_a, args);
-    };
-    QueryInstance.prototype.regrAvgy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrAvgy.apply(_a, args);
-    };
-    QueryInstance.prototype.regrCount = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrCount.apply(_a, args);
-    };
-    QueryInstance.prototype.regrIntercept = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrIntercept.apply(_a, args);
-    };
-    QueryInstance.prototype.regrR2 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrR2.apply(_a, args);
-    };
-    QueryInstance.prototype.regrSlope = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrSlope.apply(_a, args);
-    };
-    QueryInstance.prototype.regrSxx = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrSxx.apply(_a, args);
-    };
-    QueryInstance.prototype.regrSxy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrSxy.apply(_a, args);
-    };
-    QueryInstance.prototype.regrSyy = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).regrSyy.apply(_a, args);
-    };
-    QueryInstance.prototype.reindex = function () {
+    }
+    regexpCount(...args) {
+        return (new QueryBuilder(this)).regexpCount(...args);
+    }
+    regexpInstr(...args) {
+        return (new QueryBuilder(this)).regexpInstr(...args);
+    }
+    regexpLike(...args) {
+        return (new QueryBuilder(this)).regexpLike(...args);
+    }
+    regexpMatch(...args) {
+        return (new QueryBuilder(this)).regexpMatch(...args);
+    }
+    regexpMatches(...args) {
+        return (new QueryBuilder(this)).regexpMatches(...args);
+    }
+    regexpReplace(...args) {
+        return (new QueryBuilder(this)).regexpReplace(...args);
+    }
+    regexpSplitToArray(...args) {
+        return (new QueryBuilder(this)).regexpSplitToArray(...args);
+    }
+    regexpSplitToTable(...args) {
+        return (new QueryBuilder(this)).regexpSplitToTable(...args);
+    }
+    regexpSubstr(...args) {
+        return (new QueryBuilder(this)).regexpSubstr(...args);
+    }
+    regrAvgx(...args) {
+        return (new QueryBuilder(this)).regrAvgx(...args);
+    }
+    regrAvgy(...args) {
+        return (new QueryBuilder(this)).regrAvgy(...args);
+    }
+    regrCount(...args) {
+        return (new QueryBuilder(this)).regrCount(...args);
+    }
+    regrIntercept(...args) {
+        return (new QueryBuilder(this)).regrIntercept(...args);
+    }
+    regrR2(...args) {
+        return (new QueryBuilder(this)).regrR2(...args);
+    }
+    regrSlope(...args) {
+        return (new QueryBuilder(this)).regrSlope(...args);
+    }
+    regrSxx(...args) {
+        return (new QueryBuilder(this)).regrSxx(...args);
+    }
+    regrSxy(...args) {
+        return (new QueryBuilder(this)).regrSxy(...args);
+    }
+    regrSyy(...args) {
+        return (new QueryBuilder(this)).regrSyy(...args);
+    }
+    reindex() {
         return (new QueryBuilder(this)).reindex();
-    };
-    QueryInstance.prototype.relative = function () {
+    }
+    relative() {
         return (new QueryBuilder(this)).relative();
-    };
-    QueryInstance.prototype.release = function () {
+    }
+    release() {
         return (new QueryBuilder(this)).release();
-    };
-    QueryInstance.prototype.releaseTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).releaseTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.rename = function () {
+    }
+    releaseTransaction(...args) {
+        return (new QueryBuilder(this)).releaseTransaction(...args);
+    }
+    rename() {
         return (new QueryBuilder(this)).rename();
-    };
-    QueryInstance.prototype.repeat = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).repeat.apply(_a, args);
-    };
-    QueryInstance.prototype.repeatable = function () {
+    }
+    repeat(...args) {
+        return (new QueryBuilder(this)).repeat(...args);
+    }
+    repeatable() {
         return (new QueryBuilder(this)).repeatable();
-    };
-    QueryInstance.prototype.replace = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).replace.apply(_a, args);
-    };
-    QueryInstance.prototype.replica = function () {
+    }
+    replace(...args) {
+        return (new QueryBuilder(this)).replace(...args);
+    }
+    replica() {
         return (new QueryBuilder(this)).replica();
-    };
-    QueryInstance.prototype.requiring = function () {
+    }
+    requiring() {
         return (new QueryBuilder(this)).requiring();
-    };
-    QueryInstance.prototype.reset = function () {
+    }
+    reset() {
         return (new QueryBuilder(this)).reset();
-    };
-    QueryInstance.prototype.respect = function () {
+    }
+    respect() {
         return (new QueryBuilder(this)).respect();
-    };
-    QueryInstance.prototype.restart = function () {
+    }
+    restart() {
         return (new QueryBuilder(this)).restart();
-    };
-    QueryInstance.prototype.restore = function () {
+    }
+    restore() {
         return (new QueryBuilder(this)).restore();
-    };
-    QueryInstance.prototype.restrict = function () {
+    }
+    restrict() {
         return (new QueryBuilder(this)).restrict();
-    };
-    QueryInstance.prototype.result = function () {
+    }
+    result() {
         return (new QueryBuilder(this)).result();
-    };
-    QueryInstance.prototype.return = function () {
+    }
+    return() {
         return (new QueryBuilder(this)).return();
-    };
-    QueryInstance.prototype.returnedCardinality = function () {
+    }
+    returnedCardinality() {
         return (new QueryBuilder(this)).returnedCardinality();
-    };
-    QueryInstance.prototype.returnedLength = function () {
+    }
+    returnedLength() {
         return (new QueryBuilder(this)).returnedLength();
-    };
-    QueryInstance.prototype.returnedoctetlength = function () {
+    }
+    returnedoctetlength() {
         return (new QueryBuilder(this)).returnedoctetlength();
-    };
-    QueryInstance.prototype.returnedSqlstate = function () {
+    }
+    returnedSqlstate() {
         return (new QueryBuilder(this)).returnedSqlstate();
-    };
-    QueryInstance.prototype.returning = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).returning.apply(_a, args);
-    };
-    QueryInstance.prototype.returns = function () {
+    }
+    returning(...args) {
+        return (new QueryBuilder(this)).returning(...args);
+    }
+    returns() {
         return (new QueryBuilder(this)).returns();
-    };
-    QueryInstance.prototype.reverse = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).reverse.apply(_a, args);
-    };
-    QueryInstance.prototype.revoke = function () {
+    }
+    reverse(...args) {
+        return (new QueryBuilder(this)).reverse(...args);
+    }
+    revoke() {
         return (new QueryBuilder(this)).revoke();
-    };
-    QueryInstance.prototype.right = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).right.apply(_a, args);
-    };
-    QueryInstance.prototype.rightJoin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rightJoin.apply(_a, args);
-    };
-    QueryInstance.prototype.rightJoinLateral = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rightJoinLateral.apply(_a, args);
-    };
-    QueryInstance.prototype.role = function () {
+    }
+    right(...args) {
+        return (new QueryBuilder(this)).right(...args);
+    }
+    rightJoin(...args) {
+        return (new QueryBuilder(this)).rightJoin(...args);
+    }
+    rightJoinLateral(...args) {
+        return (new QueryBuilder(this)).rightJoinLateral(...args);
+    }
+    role() {
         return (new QueryBuilder(this)).role();
-    };
-    QueryInstance.prototype.rollback = function () {
+    }
+    rollback() {
         return (new QueryBuilder(this)).rollback();
-    };
-    QueryInstance.prototype.rollbackPreparedTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rollbackPreparedTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.rollbackToSavepointTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rollbackToSavepointTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.rollbackTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rollbackTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.rollup = function () {
+    }
+    rollbackPreparedTransaction(...args) {
+        return (new QueryBuilder(this)).rollbackPreparedTransaction(...args);
+    }
+    rollbackToSavepointTransaction(...args) {
+        return (new QueryBuilder(this)).rollbackToSavepointTransaction(...args);
+    }
+    rollbackTransaction(...args) {
+        return (new QueryBuilder(this)).rollbackTransaction(...args);
+    }
+    rollup() {
         return (new QueryBuilder(this)).rollup();
-    };
-    QueryInstance.prototype.round = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).round.apply(_a, args);
-    };
-    QueryInstance.prototype.routine = function () {
+    }
+    round(...args) {
+        return (new QueryBuilder(this)).round(...args);
+    }
+    routine() {
         return (new QueryBuilder(this)).routine();
-    };
-    QueryInstance.prototype.routineCatalog = function () {
+    }
+    routineCatalog() {
         return (new QueryBuilder(this)).routineCatalog();
-    };
-    QueryInstance.prototype.routineName = function () {
+    }
+    routineName() {
         return (new QueryBuilder(this)).routineName();
-    };
-    QueryInstance.prototype.routines = function () {
+    }
+    routines() {
         return (new QueryBuilder(this)).routines();
-    };
-    QueryInstance.prototype.routineSchema = function () {
+    }
+    routineSchema() {
         return (new QueryBuilder(this)).routineSchema();
-    };
-    QueryInstance.prototype.row = function () {
+    }
+    row() {
         return (new QueryBuilder(this)).row();
-    };
-    QueryInstance.prototype.rowCount = function () {
+    }
+    rowCount() {
         return (new QueryBuilder(this)).rowCount();
-    };
-    QueryInstance.prototype.rowNumber = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rowNumber.apply(_a, args);
-    };
-    QueryInstance.prototype.rows = function () {
+    }
+    rowNumber(...args) {
+        return (new QueryBuilder(this)).rowNumber(...args);
+    }
+    rows() {
         return (new QueryBuilder(this)).rows();
-    };
-    QueryInstance.prototype.rowSecurityActive = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rowSecurityActive.apply(_a, args);
-    };
-    QueryInstance.prototype.rowToJson = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rowToJson.apply(_a, args);
-    };
-    QueryInstance.prototype.rpad = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rpad.apply(_a, args);
-    };
-    QueryInstance.prototype.rs = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rs.apply(_a, args);
-    };
-    QueryInstance.prototype.rtrim = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).rtrim.apply(_a, args);
-    };
-    QueryInstance.prototype.rule = function () {
+    }
+    rowSecurityActive(...args) {
+        return (new QueryBuilder(this)).rowSecurityActive(...args);
+    }
+    rowToJson(...args) {
+        return (new QueryBuilder(this)).rowToJson(...args);
+    }
+    rpad(...args) {
+        return (new QueryBuilder(this)).rpad(...args);
+    }
+    rs(...args) {
+        return (new QueryBuilder(this)).rs(...args);
+    }
+    rtrim(...args) {
+        return (new QueryBuilder(this)).rtrim(...args);
+    }
+    rule() {
         return (new QueryBuilder(this)).rule();
-    };
-    QueryInstance.prototype.running = function () {
+    }
+    running() {
         return (new QueryBuilder(this)).running();
-    };
-    QueryInstance.prototype.sameAs = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sameAs.apply(_a, args);
-    };
-    QueryInstance.prototype.savepoint = function () {
+    }
+    sameAs(...args) {
+        return (new QueryBuilder(this)).sameAs(...args);
+    }
+    savepoint() {
         return (new QueryBuilder(this)).savepoint();
-    };
-    QueryInstance.prototype.savepointTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).savepointTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.sc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sc.apply(_a, args);
-    };
-    QueryInstance.prototype.scalar = function () {
+    }
+    savepointTransaction(...args) {
+        return (new QueryBuilder(this)).savepointTransaction(...args);
+    }
+    sc(...args) {
+        return (new QueryBuilder(this)).sc(...args);
+    }
+    scalar() {
         return (new QueryBuilder(this)).scalar();
-    };
-    QueryInstance.prototype.scale = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).scale.apply(_a, args);
-    };
-    QueryInstance.prototype.schema = function () {
+    }
+    scale(...args) {
+        return (new QueryBuilder(this)).scale(...args);
+    }
+    schema() {
         return (new QueryBuilder(this)).schema();
-    };
-    QueryInstance.prototype.schemaCase = function (key, queryBuilder) {
+    }
+    schemaCase(key, queryBuilder) {
         return (new QueryBuilder(this)).schemaCase(key, queryBuilder);
-    };
-    QueryInstance.prototype.schemaName = function () {
+    }
+    schemaName() {
         return (new QueryBuilder(this)).schemaName();
-    };
-    QueryInstance.prototype.schemaParam = function (key) {
+    }
+    schemaParam(key) {
         return (new QueryBuilder(this)).schemaParam(key);
-    };
-    QueryInstance.prototype.schemas = function () {
+    }
+    schemas() {
         return (new QueryBuilder(this)).schemas();
-    };
-    QueryInstance.prototype.schemaToXml = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).schemaToXml.apply(_a, args);
-    };
-    QueryInstance.prototype.schemaToXmlAndXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).schemaToXmlAndXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.schemaToXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).schemaToXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.scope = function () {
+    }
+    schemaToXml(...args) {
+        return (new QueryBuilder(this)).schemaToXml(...args);
+    }
+    schemaToXmlAndXmlschema(...args) {
+        return (new QueryBuilder(this)).schemaToXmlAndXmlschema(...args);
+    }
+    schemaToXmlschema(...args) {
+        return (new QueryBuilder(this)).schemaToXmlschema(...args);
+    }
+    scope() {
         return (new QueryBuilder(this)).scope();
-    };
-    QueryInstance.prototype.scopeCatalog = function () {
+    }
+    scopeCatalog() {
         return (new QueryBuilder(this)).scopeCatalog();
-    };
-    QueryInstance.prototype.scopeName = function () {
+    }
+    scopeName() {
         return (new QueryBuilder(this)).scopeName();
-    };
-    QueryInstance.prototype.scopeSchema = function () {
+    }
+    scopeSchema() {
         return (new QueryBuilder(this)).scopeSchema();
-    };
-    QueryInstance.prototype.scroll = function () {
+    }
+    scroll() {
         return (new QueryBuilder(this)).scroll();
-    };
-    QueryInstance.prototype.search = function () {
+    }
+    search() {
         return (new QueryBuilder(this)).search();
-    };
-    QueryInstance.prototype.second = function () {
+    }
+    second() {
         return (new QueryBuilder(this)).second();
-    };
-    QueryInstance.prototype.section = function () {
+    }
+    section() {
         return (new QueryBuilder(this)).section();
-    };
-    QueryInstance.prototype.security = function () {
+    }
+    security() {
         return (new QueryBuilder(this)).security();
-    };
-    QueryInstance.prototype.seek = function () {
+    }
+    seek() {
         return (new QueryBuilder(this)).seek();
-    };
-    QueryInstance.prototype.select = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).select.apply(_a, args);
-    };
-    QueryInstance.prototype.selectDistinct = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).selectDistinct.apply(_a, args);
-    };
-    QueryInstance.prototype.selectDistinctOn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).selectDistinctOn.apply(_a, args);
-    };
-    QueryInstance.prototype.selective = function () {
+    }
+    select(...args) {
+        return (new QueryBuilder(this)).select(...args);
+    }
+    selectDistinct(...args) {
+        return (new QueryBuilder(this)).selectDistinct(...args);
+    }
+    selectDistinctOn(...args) {
+        return (new QueryBuilder(this)).selectDistinctOn(...args);
+    }
+    selective() {
         return (new QueryBuilder(this)).selective();
-    };
-    QueryInstance.prototype.self = function () {
+    }
+    self() {
         return (new QueryBuilder(this)).self();
-    };
-    QueryInstance.prototype.semantics = function () {
+    }
+    semantics() {
         return (new QueryBuilder(this)).semantics();
-    };
-    QueryInstance.prototype.semicolon = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).semicolon.apply(_a, args);
-    };
-    QueryInstance.prototype.sensitive = function () {
+    }
+    semicolon(...args) {
+        return (new QueryBuilder(this)).semicolon(...args);
+    }
+    sensitive() {
         return (new QueryBuilder(this)).sensitive();
-    };
-    QueryInstance.prototype.sequence = function () {
+    }
+    sequence() {
         return (new QueryBuilder(this)).sequence();
-    };
-    QueryInstance.prototype.sequences = function () {
+    }
+    sequences() {
         return (new QueryBuilder(this)).sequences();
-    };
-    QueryInstance.prototype.serializable = function () {
+    }
+    serializable() {
         return (new QueryBuilder(this)).serializable();
-    };
-    QueryInstance.prototype.server = function () {
+    }
+    server() {
         return (new QueryBuilder(this)).server();
-    };
-    QueryInstance.prototype.serverName = function () {
+    }
+    serverName() {
         return (new QueryBuilder(this)).serverName();
-    };
-    QueryInstance.prototype.session = function () {
+    }
+    session() {
         return (new QueryBuilder(this)).session();
-    };
-    QueryInstance.prototype.sessionUser = function () {
+    }
+    sessionUser() {
         return (new QueryBuilder(this)).sessionUser();
-    };
-    QueryInstance.prototype.set = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).set.apply(_a, args);
-    };
-    QueryInstance.prototype.setBit = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setBit.apply(_a, args);
-    };
-    QueryInstance.prototype.setByte = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setByte.apply(_a, args);
-    };
-    QueryInstance.prototype.setConfig = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setConfig.apply(_a, args);
-    };
-    QueryInstance.prototype.setMasklen = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setMasklen.apply(_a, args);
-    };
-    QueryInstance.prototype.setof = function () {
+    }
+    set(...args) {
+        return (new QueryBuilder(this)).set(...args);
+    }
+    setBit(...args) {
+        return (new QueryBuilder(this)).setBit(...args);
+    }
+    setByte(...args) {
+        return (new QueryBuilder(this)).setByte(...args);
+    }
+    setConfig(...args) {
+        return (new QueryBuilder(this)).setConfig(...args);
+    }
+    setMasklen(...args) {
+        return (new QueryBuilder(this)).setMasklen(...args);
+    }
+    setof() {
         return (new QueryBuilder(this)).setof();
-    };
-    QueryInstance.prototype.setParams = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setParams.apply(_a, args);
-    };
-    QueryInstance.prototype.sets = function () {
+    }
+    setParams(...args) {
+        return (new QueryBuilder(this)).setParams(...args);
+    }
+    sets() {
         return (new QueryBuilder(this)).sets();
-    };
-    QueryInstance.prototype.setseed = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setseed.apply(_a, args);
-    };
-    QueryInstance.prototype.setval = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setval.apply(_a, args);
-    };
-    QueryInstance.prototype.setweight = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).setweight.apply(_a, args);
-    };
-    QueryInstance.prototype.sha224 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sha224.apply(_a, args);
-    };
-    QueryInstance.prototype.sha256 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sha256.apply(_a, args);
-    };
-    QueryInstance.prototype.sha384 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sha384.apply(_a, args);
-    };
-    QueryInstance.prototype.sha512 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sha512.apply(_a, args);
-    };
-    QueryInstance.prototype.share = function () {
+    }
+    setseed(...args) {
+        return (new QueryBuilder(this)).setseed(...args);
+    }
+    setval(...args) {
+        return (new QueryBuilder(this)).setval(...args);
+    }
+    setweight(...args) {
+        return (new QueryBuilder(this)).setweight(...args);
+    }
+    sha224(...args) {
+        return (new QueryBuilder(this)).sha224(...args);
+    }
+    sha256(...args) {
+        return (new QueryBuilder(this)).sha256(...args);
+    }
+    sha384(...args) {
+        return (new QueryBuilder(this)).sha384(...args);
+    }
+    sha512(...args) {
+        return (new QueryBuilder(this)).sha512(...args);
+    }
+    share() {
         return (new QueryBuilder(this)).share();
-    };
-    QueryInstance.prototype.shobjDescription = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).shobjDescription.apply(_a, args);
-    };
-    QueryInstance.prototype.show = function () {
+    }
+    shobjDescription(...args) {
+        return (new QueryBuilder(this)).shobjDescription(...args);
+    }
+    show() {
         return (new QueryBuilder(this)).show();
-    };
-    QueryInstance.prototype.sign = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sign.apply(_a, args);
-    };
-    QueryInstance.prototype.similar = function () {
+    }
+    sign(...args) {
+        return (new QueryBuilder(this)).sign(...args);
+    }
+    similar() {
         return (new QueryBuilder(this)).similar();
-    };
-    QueryInstance.prototype.similarTo = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).similarTo.apply(_a, args);
-    };
-    QueryInstance.prototype.simple = function () {
+    }
+    similarTo(...args) {
+        return (new QueryBuilder(this)).similarTo(...args);
+    }
+    simple() {
         return (new QueryBuilder(this)).simple();
-    };
-    QueryInstance.prototype.sin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sin.apply(_a, args);
-    };
-    QueryInstance.prototype.sind = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sind.apply(_a, args);
-    };
-    QueryInstance.prototype.sinh = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sinh.apply(_a, args);
-    };
-    QueryInstance.prototype.size = function () {
+    }
+    sin(...args) {
+        return (new QueryBuilder(this)).sin(...args);
+    }
+    sind(...args) {
+        return (new QueryBuilder(this)).sind(...args);
+    }
+    sinh(...args) {
+        return (new QueryBuilder(this)).sinh(...args);
+    }
+    size() {
         return (new QueryBuilder(this)).size();
-    };
-    QueryInstance.prototype.skip = function () {
+    }
+    skip() {
         return (new QueryBuilder(this)).skip();
-    };
-    QueryInstance.prototype.slope = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).slope.apply(_a, args);
-    };
-    QueryInstance.prototype.smallint = function () {
+    }
+    slope(...args) {
+        return (new QueryBuilder(this)).slope(...args);
+    }
+    smallint() {
         return (new QueryBuilder(this)).smallint();
-    };
-    QueryInstance.prototype.snapshot = function () {
+    }
+    snapshot() {
         return (new QueryBuilder(this)).snapshot();
-    };
-    QueryInstance.prototype.some = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).some.apply(_a, args);
-    };
-    QueryInstance.prototype.sortDirection = function () {
+    }
+    some(...args) {
+        return (new QueryBuilder(this)).some(...args);
+    }
+    sortDirection() {
         return (new QueryBuilder(this)).sortDirection();
-    };
-    QueryInstance.prototype.source = function () {
+    }
+    source() {
         return (new QueryBuilder(this)).source();
-    };
-    QueryInstance.prototype.space = function () {
+    }
+    space() {
         return (new QueryBuilder(this)).space();
-    };
-    QueryInstance.prototype.specific = function () {
+    }
+    specific() {
         return (new QueryBuilder(this)).specific();
-    };
-    QueryInstance.prototype.specificName = function () {
+    }
+    specificName() {
         return (new QueryBuilder(this)).specificName();
-    };
-    QueryInstance.prototype.specifictype = function () {
+    }
+    specifictype() {
         return (new QueryBuilder(this)).specifictype();
-    };
-    QueryInstance.prototype.splitPart = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).splitPart.apply(_a, args);
-    };
-    QueryInstance.prototype.sql = function () {
+    }
+    splitPart(...args) {
+        return (new QueryBuilder(this)).splitPart(...args);
+    }
+    sql() {
         return (new QueryBuilder(this)).sql();
-    };
-    QueryInstance.prototype.sqlcode = function () {
+    }
+    sqlcode() {
         return (new QueryBuilder(this)).sqlcode();
-    };
-    QueryInstance.prototype.sqlerror = function () {
+    }
+    sqlerror() {
         return (new QueryBuilder(this)).sqlerror();
-    };
-    QueryInstance.prototype.sqlexception = function () {
+    }
+    sqlexception() {
         return (new QueryBuilder(this)).sqlexception();
-    };
-    QueryInstance.prototype.sqlstate = function () {
+    }
+    sqlstate() {
         return (new QueryBuilder(this)).sqlstate();
-    };
-    QueryInstance.prototype.sqlwarning = function () {
+    }
+    sqlwarning() {
         return (new QueryBuilder(this)).sqlwarning();
-    };
-    QueryInstance.prototype.sqrt = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sqrt.apply(_a, args);
-    };
-    QueryInstance.prototype.stable = function () {
+    }
+    sqrt(...args) {
+        return (new QueryBuilder(this)).sqrt(...args);
+    }
+    stable() {
         return (new QueryBuilder(this)).stable();
-    };
-    QueryInstance.prototype.standalone = function () {
+    }
+    standalone() {
         return (new QueryBuilder(this)).standalone();
-    };
-    QueryInstance.prototype.start = function () {
+    }
+    start() {
         return (new QueryBuilder(this)).start();
-    };
-    QueryInstance.prototype.startsWith = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).startsWith.apply(_a, args);
-    };
-    QueryInstance.prototype.startTransaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).startTransaction.apply(_a, args);
-    };
-    QueryInstance.prototype.state = function () {
+    }
+    startsWith(...args) {
+        return (new QueryBuilder(this)).startsWith(...args);
+    }
+    startTransaction(...args) {
+        return (new QueryBuilder(this)).startTransaction(...args);
+    }
+    state() {
         return (new QueryBuilder(this)).state();
-    };
-    QueryInstance.prototype.statement = function () {
+    }
+    statement() {
         return (new QueryBuilder(this)).statement();
-    };
-    QueryInstance.prototype.statementTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).statementTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.static = function () {
+    }
+    statementTimestamp(...args) {
+        return (new QueryBuilder(this)).statementTimestamp(...args);
+    }
+    static() {
         return (new QueryBuilder(this)).static();
-    };
-    QueryInstance.prototype.statistics = function () {
+    }
+    statistics() {
         return (new QueryBuilder(this)).statistics();
-    };
-    QueryInstance.prototype.stddev = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).stddev.apply(_a, args);
-    };
-    QueryInstance.prototype.stddevPop = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).stddevPop.apply(_a, args);
-    };
-    QueryInstance.prototype.stddevSamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).stddevSamp.apply(_a, args);
-    };
-    QueryInstance.prototype.stdin = function () {
+    }
+    stddev(...args) {
+        return (new QueryBuilder(this)).stddev(...args);
+    }
+    stddevPop(...args) {
+        return (new QueryBuilder(this)).stddevPop(...args);
+    }
+    stddevSamp(...args) {
+        return (new QueryBuilder(this)).stddevSamp(...args);
+    }
+    stdin() {
         return (new QueryBuilder(this)).stdin();
-    };
-    QueryInstance.prototype.stdout = function () {
+    }
+    stdout() {
         return (new QueryBuilder(this)).stdout();
-    };
-    QueryInstance.prototype.storage = function () {
+    }
+    storage() {
         return (new QueryBuilder(this)).storage();
-    };
-    QueryInstance.prototype.stored = function () {
+    }
+    stored() {
         return (new QueryBuilder(this)).stored();
-    };
-    QueryInstance.prototype.strict = function () {
+    }
+    strict() {
         return (new QueryBuilder(this)).strict();
-    };
-    QueryInstance.prototype.strictlyAbove = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).strictlyAbove.apply(_a, args);
-    };
-    QueryInstance.prototype.strictlyBelow = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).strictlyBelow.apply(_a, args);
-    };
-    QueryInstance.prototype.string = function () {
+    }
+    strictlyAbove(...args) {
+        return (new QueryBuilder(this)).strictlyAbove(...args);
+    }
+    strictlyBelow(...args) {
+        return (new QueryBuilder(this)).strictlyBelow(...args);
+    }
+    string() {
         return (new QueryBuilder(this)).string();
-    };
-    QueryInstance.prototype.stringAgg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).stringAgg.apply(_a, args);
-    };
-    QueryInstance.prototype.stringToArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).stringToArray.apply(_a, args);
-    };
-    QueryInstance.prototype.stringToTable = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).stringToTable.apply(_a, args);
-    };
-    QueryInstance.prototype.strip = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).strip.apply(_a, args);
-    };
-    QueryInstance.prototype.strpos = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).strpos.apply(_a, args);
-    };
-    QueryInstance.prototype.structure = function () {
+    }
+    stringAgg(...args) {
+        return (new QueryBuilder(this)).stringAgg(...args);
+    }
+    stringToArray(...args) {
+        return (new QueryBuilder(this)).stringToArray(...args);
+    }
+    stringToTable(...args) {
+        return (new QueryBuilder(this)).stringToTable(...args);
+    }
+    strip(...args) {
+        return (new QueryBuilder(this)).strip(...args);
+    }
+    strpos(...args) {
+        return (new QueryBuilder(this)).strpos(...args);
+    }
+    structure() {
         return (new QueryBuilder(this)).structure();
-    };
-    QueryInstance.prototype.style = function () {
+    }
+    style() {
         return (new QueryBuilder(this)).style();
-    };
-    QueryInstance.prototype.sub = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sub.apply(_a, args);
-    };
-    QueryInstance.prototype.subclassOrigin = function () {
+    }
+    sub(...args) {
+        return (new QueryBuilder(this)).sub(...args);
+    }
+    subclassOrigin() {
         return (new QueryBuilder(this)).subclassOrigin();
-    };
-    QueryInstance.prototype.submultiset = function () {
+    }
+    submultiset() {
         return (new QueryBuilder(this)).submultiset();
-    };
-    QueryInstance.prototype.subscription = function () {
+    }
+    subscription() {
         return (new QueryBuilder(this)).subscription();
-    };
-    QueryInstance.prototype.subset = function () {
+    }
+    subset() {
         return (new QueryBuilder(this)).subset();
-    };
-    QueryInstance.prototype.substr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).substr.apply(_a, args);
-    };
-    QueryInstance.prototype.substring = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).substring.apply(_a, args);
-    };
-    QueryInstance.prototype.substringRegex = function () {
+    }
+    substr(...args) {
+        return (new QueryBuilder(this)).substr(...args);
+    }
+    substring(...args) {
+        return (new QueryBuilder(this)).substring(...args);
+    }
+    substringRegex() {
         return (new QueryBuilder(this)).substringRegex();
-    };
-    QueryInstance.prototype.succeeds = function () {
+    }
+    succeeds() {
         return (new QueryBuilder(this)).succeeds();
-    };
-    QueryInstance.prototype.sum = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).sum.apply(_a, args);
-    };
-    QueryInstance.prototype.support = function () {
+    }
+    sum(...args) {
+        return (new QueryBuilder(this)).sum(...args);
+    }
+    support() {
         return (new QueryBuilder(this)).support();
-    };
-    QueryInstance.prototype.suppressRedundantUpdatesTrigger = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).suppressRedundantUpdatesTrigger.apply(_a, args);
-    };
-    QueryInstance.prototype.symmetric = function () {
+    }
+    suppressRedundantUpdatesTrigger(...args) {
+        return (new QueryBuilder(this)).suppressRedundantUpdatesTrigger(...args);
+    }
+    symmetric() {
         return (new QueryBuilder(this)).symmetric();
-    };
-    QueryInstance.prototype.sysid = function () {
+    }
+    sysid() {
         return (new QueryBuilder(this)).sysid();
-    };
-    QueryInstance.prototype.system = function () {
+    }
+    system() {
         return (new QueryBuilder(this)).system();
-    };
-    QueryInstance.prototype.systemTime = function () {
+    }
+    systemTime() {
         return (new QueryBuilder(this)).systemTime();
-    };
-    QueryInstance.prototype.systemUser = function () {
+    }
+    systemUser() {
         return (new QueryBuilder(this)).systemUser();
-    };
-    QueryInstance.prototype.t = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).t.apply(_a, args);
-    };
-    QueryInstance.prototype.table = function () {
+    }
+    t(...args) {
+        return (new QueryBuilder(this)).t(...args);
+    }
+    table() {
         return (new QueryBuilder(this)).table();
-    };
-    QueryInstance.prototype.tableName = function () {
+    }
+    tableName() {
         return (new QueryBuilder(this)).tableName();
-    };
-    QueryInstance.prototype.tables = function () {
+    }
+    tables() {
         return (new QueryBuilder(this)).tables();
-    };
-    QueryInstance.prototype.tablesample = function () {
+    }
+    tablesample() {
         return (new QueryBuilder(this)).tablesample();
-    };
-    QueryInstance.prototype.tablespace = function () {
+    }
+    tablespace() {
         return (new QueryBuilder(this)).tablespace();
-    };
-    QueryInstance.prototype.tableToXml = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tableToXml.apply(_a, args);
-    };
-    QueryInstance.prototype.tableToXmlAndXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tableToXmlAndXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.tableToXmlschema = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tableToXmlschema.apply(_a, args);
-    };
-    QueryInstance.prototype.tan = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tan.apply(_a, args);
-    };
-    QueryInstance.prototype.tand = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tand.apply(_a, args);
-    };
-    QueryInstance.prototype.tanh = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tanh.apply(_a, args);
-    };
-    QueryInstance.prototype.target = function () {
+    }
+    tableToXml(...args) {
+        return (new QueryBuilder(this)).tableToXml(...args);
+    }
+    tableToXmlAndXmlschema(...args) {
+        return (new QueryBuilder(this)).tableToXmlAndXmlschema(...args);
+    }
+    tableToXmlschema(...args) {
+        return (new QueryBuilder(this)).tableToXmlschema(...args);
+    }
+    tan(...args) {
+        return (new QueryBuilder(this)).tan(...args);
+    }
+    tand(...args) {
+        return (new QueryBuilder(this)).tand(...args);
+    }
+    tanh(...args) {
+        return (new QueryBuilder(this)).tanh(...args);
+    }
+    target() {
         return (new QueryBuilder(this)).target();
-    };
-    QueryInstance.prototype.temp = function () {
+    }
+    temp() {
         return (new QueryBuilder(this)).temp();
-    };
-    QueryInstance.prototype.template = function () {
+    }
+    template() {
         return (new QueryBuilder(this)).template();
-    };
-    QueryInstance.prototype.temporary = function () {
+    }
+    temporary() {
         return (new QueryBuilder(this)).temporary();
-    };
-    QueryInstance.prototype.text = function () {
+    }
+    text() {
         return (new QueryBuilder(this)).text();
-    };
-    QueryInstance.prototype.textCat = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).textCat.apply(_a, args);
-    };
-    QueryInstance.prototype.then = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).then.apply(_a, args);
-    };
-    QueryInstance.prototype.through = function () {
+    }
+    textCat(...args) {
+        return (new QueryBuilder(this)).textCat(...args);
+    }
+    then(...args) {
+        return (new QueryBuilder(this)).then(...args);
+    }
+    through() {
         return (new QueryBuilder(this)).through();
-    };
-    QueryInstance.prototype.ties = function () {
+    }
+    ties() {
         return (new QueryBuilder(this)).ties();
-    };
-    QueryInstance.prototype.time = function () {
+    }
+    time() {
         return (new QueryBuilder(this)).time();
-    };
-    QueryInstance.prototype.timeofday = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).timeofday.apply(_a, args);
-    };
-    QueryInstance.prototype.timestamp = function () {
+    }
+    timeofday(...args) {
+        return (new QueryBuilder(this)).timeofday(...args);
+    }
+    timestamp() {
         return (new QueryBuilder(this)).timestamp();
-    };
-    QueryInstance.prototype.timezoneHour = function () {
+    }
+    timezoneHour() {
         return (new QueryBuilder(this)).timezoneHour();
-    };
-    QueryInstance.prototype.timezoneMinute = function () {
+    }
+    timezoneMinute() {
         return (new QueryBuilder(this)).timezoneMinute();
-    };
-    QueryInstance.prototype.to = function () {
+    }
+    to() {
         return (new QueryBuilder(this)).to();
-    };
-    QueryInstance.prototype.toAscii = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toAscii.apply(_a, args);
-    };
-    QueryInstance.prototype.toBin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toBin.apply(_a, args);
-    };
-    QueryInstance.prototype.toChar = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toChar.apply(_a, args);
-    };
-    QueryInstance.prototype.toDate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toDate.apply(_a, args);
-    };
-    QueryInstance.prototype.toHex = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toHex.apply(_a, args);
-    };
-    QueryInstance.prototype.toJson = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toJson.apply(_a, args);
-    };
-    QueryInstance.prototype.toJsonb = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toJsonb.apply(_a, args);
-    };
-    QueryInstance.prototype.token = function () {
+    }
+    toAscii(...args) {
+        return (new QueryBuilder(this)).toAscii(...args);
+    }
+    toBin(...args) {
+        return (new QueryBuilder(this)).toBin(...args);
+    }
+    toChar(...args) {
+        return (new QueryBuilder(this)).toChar(...args);
+    }
+    toDate(...args) {
+        return (new QueryBuilder(this)).toDate(...args);
+    }
+    toHex(...args) {
+        return (new QueryBuilder(this)).toHex(...args);
+    }
+    toJson(...args) {
+        return (new QueryBuilder(this)).toJson(...args);
+    }
+    toJsonb(...args) {
+        return (new QueryBuilder(this)).toJsonb(...args);
+    }
+    token() {
         return (new QueryBuilder(this)).token();
-    };
-    QueryInstance.prototype.toNumber = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toNumber.apply(_a, args);
-    };
-    QueryInstance.prototype.toOct = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toOct.apply(_a, args);
-    };
-    QueryInstance.prototype.topLevelCount = function () {
+    }
+    toNumber(...args) {
+        return (new QueryBuilder(this)).toNumber(...args);
+    }
+    toOct(...args) {
+        return (new QueryBuilder(this)).toOct(...args);
+    }
+    topLevelCount() {
         return (new QueryBuilder(this)).topLevelCount();
-    };
-    QueryInstance.prototype.toRegclass = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegclass.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegcollation = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegcollation.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegnamespace = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegnamespace.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegoper = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegoper.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegoperator = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegoperator.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegproc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegproc.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegprocedure = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegprocedure.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegrole = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegrole.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegtype = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegtype.apply(_a, args);
-    };
-    QueryInstance.prototype.toRegtypemod = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toRegtypemod.apply(_a, args);
-    };
-    QueryInstance.prototype.totalLength = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).totalLength.apply(_a, args);
-    };
-    QueryInstance.prototype.toText = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toText.apply(_a, args);
-    };
-    QueryInstance.prototype.toTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.toTsquery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toTsquery.apply(_a, args);
-    };
-    QueryInstance.prototype.toTsvector = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).toTsvector.apply(_a, args);
-    };
-    QueryInstance.prototype.trailing = function () {
+    }
+    toRegclass(...args) {
+        return (new QueryBuilder(this)).toRegclass(...args);
+    }
+    toRegcollation(...args) {
+        return (new QueryBuilder(this)).toRegcollation(...args);
+    }
+    toRegnamespace(...args) {
+        return (new QueryBuilder(this)).toRegnamespace(...args);
+    }
+    toRegoper(...args) {
+        return (new QueryBuilder(this)).toRegoper(...args);
+    }
+    toRegoperator(...args) {
+        return (new QueryBuilder(this)).toRegoperator(...args);
+    }
+    toRegproc(...args) {
+        return (new QueryBuilder(this)).toRegproc(...args);
+    }
+    toRegprocedure(...args) {
+        return (new QueryBuilder(this)).toRegprocedure(...args);
+    }
+    toRegrole(...args) {
+        return (new QueryBuilder(this)).toRegrole(...args);
+    }
+    toRegtype(...args) {
+        return (new QueryBuilder(this)).toRegtype(...args);
+    }
+    toRegtypemod(...args) {
+        return (new QueryBuilder(this)).toRegtypemod(...args);
+    }
+    totalLength(...args) {
+        return (new QueryBuilder(this)).totalLength(...args);
+    }
+    toText(...args) {
+        return (new QueryBuilder(this)).toText(...args);
+    }
+    toTimestamp(...args) {
+        return (new QueryBuilder(this)).toTimestamp(...args);
+    }
+    toTsquery(...args) {
+        return (new QueryBuilder(this)).toTsquery(...args);
+    }
+    toTsvector(...args) {
+        return (new QueryBuilder(this)).toTsvector(...args);
+    }
+    trailing() {
         return (new QueryBuilder(this)).trailing();
-    };
-    QueryInstance.prototype.transaction = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).transaction.apply(_a, args);
-    };
-    QueryInstance.prototype.transactionActive = function () {
+    }
+    transaction(...args) {
+        return (new QueryBuilder(this)).transaction(...args);
+    }
+    transactionActive() {
         return (new QueryBuilder(this)).transactionActive();
-    };
-    QueryInstance.prototype.transactionscommitted = function () {
+    }
+    transactionscommitted() {
         return (new QueryBuilder(this)).transactionscommitted();
-    };
-    QueryInstance.prototype.transactionsrolledback = function () {
+    }
+    transactionsrolledback() {
         return (new QueryBuilder(this)).transactionsrolledback();
-    };
-    QueryInstance.prototype.transactionTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).transactionTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.transform = function () {
+    }
+    transactionTimestamp(...args) {
+        return (new QueryBuilder(this)).transactionTimestamp(...args);
+    }
+    transform() {
         return (new QueryBuilder(this)).transform();
-    };
-    QueryInstance.prototype.transforms = function () {
+    }
+    transforms() {
         return (new QueryBuilder(this)).transforms();
-    };
-    QueryInstance.prototype.translate = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).translate.apply(_a, args);
-    };
-    QueryInstance.prototype.translateRegex = function () {
+    }
+    translate(...args) {
+        return (new QueryBuilder(this)).translate(...args);
+    }
+    translateRegex() {
         return (new QueryBuilder(this)).translateRegex();
-    };
-    QueryInstance.prototype.translation = function () {
+    }
+    translation() {
         return (new QueryBuilder(this)).translation();
-    };
-    QueryInstance.prototype.treat = function () {
+    }
+    treat() {
         return (new QueryBuilder(this)).treat();
-    };
-    QueryInstance.prototype.trigger = function () {
+    }
+    trigger() {
         return (new QueryBuilder(this)).trigger();
-    };
-    QueryInstance.prototype.triggerCatalog = function () {
+    }
+    triggerCatalog() {
         return (new QueryBuilder(this)).triggerCatalog();
-    };
-    QueryInstance.prototype.triggerName = function () {
+    }
+    triggerName() {
         return (new QueryBuilder(this)).triggerName();
-    };
-    QueryInstance.prototype.triggerSchema = function () {
+    }
+    triggerSchema() {
         return (new QueryBuilder(this)).triggerSchema();
-    };
-    QueryInstance.prototype.trim = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).trim.apply(_a, args);
-    };
-    QueryInstance.prototype.trimArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).trimArray.apply(_a, args);
-    };
-    QueryInstance.prototype.trimScale = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).trimScale.apply(_a, args);
-    };
-    QueryInstance.prototype.true = function () {
+    }
+    trim(...args) {
+        return (new QueryBuilder(this)).trim(...args);
+    }
+    trimArray(...args) {
+        return (new QueryBuilder(this)).trimArray(...args);
+    }
+    trimScale(...args) {
+        return (new QueryBuilder(this)).trimScale(...args);
+    }
+    true() {
         return (new QueryBuilder(this)).true();
-    };
-    QueryInstance.prototype.trunc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).trunc.apply(_a, args);
-    };
-    QueryInstance.prototype.truncate = function () {
+    }
+    trunc(...args) {
+        return (new QueryBuilder(this)).trunc(...args);
+    }
+    truncate() {
         return (new QueryBuilder(this)).truncate();
-    };
-    QueryInstance.prototype.trusted = function () {
+    }
+    trusted() {
         return (new QueryBuilder(this)).trusted();
-    };
-    QueryInstance.prototype.tsDebug = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsDebug.apply(_a, args);
-    };
-    QueryInstance.prototype.tsDelete = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsDelete.apply(_a, args);
-    };
-    QueryInstance.prototype.tsFilter = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsFilter.apply(_a, args);
-    };
-    QueryInstance.prototype.tsHeadline = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsHeadline.apply(_a, args);
-    };
-    QueryInstance.prototype.tsLexize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsLexize.apply(_a, args);
-    };
-    QueryInstance.prototype.tsParse = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsParse.apply(_a, args);
-    };
-    QueryInstance.prototype.tsqueryPhrase = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsqueryPhrase.apply(_a, args);
-    };
-    QueryInstance.prototype.tsRank = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsRank.apply(_a, args);
-    };
-    QueryInstance.prototype.tsRankCd = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsRankCd.apply(_a, args);
-    };
-    QueryInstance.prototype.tsRewrite = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsRewrite.apply(_a, args);
-    };
-    QueryInstance.prototype.tsStat = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsStat.apply(_a, args);
-    };
-    QueryInstance.prototype.tsTokenType = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsTokenType.apply(_a, args);
-    };
-    QueryInstance.prototype.tsvectorToArray = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsvectorToArray.apply(_a, args);
-    };
-    QueryInstance.prototype.tsvectorUpdateTrigger = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsvectorUpdateTrigger.apply(_a, args);
-    };
-    QueryInstance.prototype.tsvectorUpdateTriggerColumn = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).tsvectorUpdateTriggerColumn.apply(_a, args);
-    };
-    QueryInstance.prototype.txidCurrent = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidCurrent.apply(_a, args);
-    };
-    QueryInstance.prototype.txidCurrentIfAssigned = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidCurrentIfAssigned.apply(_a, args);
-    };
-    QueryInstance.prototype.txidCurrentSnapshot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidCurrentSnapshot.apply(_a, args);
-    };
-    QueryInstance.prototype.txidSnapshotXip = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidSnapshotXip.apply(_a, args);
-    };
-    QueryInstance.prototype.txidSnapshotXmax = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidSnapshotXmax.apply(_a, args);
-    };
-    QueryInstance.prototype.txidSnapshotXmin = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidSnapshotXmin.apply(_a, args);
-    };
-    QueryInstance.prototype.txidStatus = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidStatus.apply(_a, args);
-    };
-    QueryInstance.prototype.txidVisibleInSnapshot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).txidVisibleInSnapshot.apply(_a, args);
-    };
-    QueryInstance.prototype.type = function () {
+    }
+    tsDebug(...args) {
+        return (new QueryBuilder(this)).tsDebug(...args);
+    }
+    tsDelete(...args) {
+        return (new QueryBuilder(this)).tsDelete(...args);
+    }
+    tsFilter(...args) {
+        return (new QueryBuilder(this)).tsFilter(...args);
+    }
+    tsHeadline(...args) {
+        return (new QueryBuilder(this)).tsHeadline(...args);
+    }
+    tsLexize(...args) {
+        return (new QueryBuilder(this)).tsLexize(...args);
+    }
+    tsParse(...args) {
+        return (new QueryBuilder(this)).tsParse(...args);
+    }
+    tsqueryPhrase(...args) {
+        return (new QueryBuilder(this)).tsqueryPhrase(...args);
+    }
+    tsRank(...args) {
+        return (new QueryBuilder(this)).tsRank(...args);
+    }
+    tsRankCd(...args) {
+        return (new QueryBuilder(this)).tsRankCd(...args);
+    }
+    tsRewrite(...args) {
+        return (new QueryBuilder(this)).tsRewrite(...args);
+    }
+    tsStat(...args) {
+        return (new QueryBuilder(this)).tsStat(...args);
+    }
+    tsTokenType(...args) {
+        return (new QueryBuilder(this)).tsTokenType(...args);
+    }
+    tsvectorToArray(...args) {
+        return (new QueryBuilder(this)).tsvectorToArray(...args);
+    }
+    tsvectorUpdateTrigger(...args) {
+        return (new QueryBuilder(this)).tsvectorUpdateTrigger(...args);
+    }
+    tsvectorUpdateTriggerColumn(...args) {
+        return (new QueryBuilder(this)).tsvectorUpdateTriggerColumn(...args);
+    }
+    txidCurrent(...args) {
+        return (new QueryBuilder(this)).txidCurrent(...args);
+    }
+    txidCurrentIfAssigned(...args) {
+        return (new QueryBuilder(this)).txidCurrentIfAssigned(...args);
+    }
+    txidCurrentSnapshot(...args) {
+        return (new QueryBuilder(this)).txidCurrentSnapshot(...args);
+    }
+    txidSnapshotXip(...args) {
+        return (new QueryBuilder(this)).txidSnapshotXip(...args);
+    }
+    txidSnapshotXmax(...args) {
+        return (new QueryBuilder(this)).txidSnapshotXmax(...args);
+    }
+    txidSnapshotXmin(...args) {
+        return (new QueryBuilder(this)).txidSnapshotXmin(...args);
+    }
+    txidStatus(...args) {
+        return (new QueryBuilder(this)).txidStatus(...args);
+    }
+    txidVisibleInSnapshot(...args) {
+        return (new QueryBuilder(this)).txidVisibleInSnapshot(...args);
+    }
+    type() {
         return (new QueryBuilder(this)).type();
-    };
-    QueryInstance.prototype.types = function () {
+    }
+    types() {
         return (new QueryBuilder(this)).types();
-    };
-    QueryInstance.prototype.uescape = function () {
+    }
+    uescape() {
         return (new QueryBuilder(this)).uescape();
-    };
-    QueryInstance.prototype.unbounded = function () {
+    }
+    unbounded() {
         return (new QueryBuilder(this)).unbounded();
-    };
-    QueryInstance.prototype.uncommitted = function () {
+    }
+    uncommitted() {
         return (new QueryBuilder(this)).uncommitted();
-    };
-    QueryInstance.prototype.unconditional = function () {
+    }
+    unconditional() {
         return (new QueryBuilder(this)).unconditional();
-    };
-    QueryInstance.prototype.under = function () {
+    }
+    under() {
         return (new QueryBuilder(this)).under();
-    };
-    QueryInstance.prototype.unencrypted = function () {
+    }
+    unencrypted() {
         return (new QueryBuilder(this)).unencrypted();
-    };
-    QueryInstance.prototype.unicodeAssigned = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).unicodeAssigned.apply(_a, args);
-    };
-    QueryInstance.prototype.unicodeVersion = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).unicodeVersion.apply(_a, args);
-    };
-    QueryInstance.prototype.union = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).union.apply(_a, args);
-    };
-    QueryInstance.prototype.unionAll = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).unionAll.apply(_a, args);
-    };
-    QueryInstance.prototype.unique = function () {
+    }
+    unicodeAssigned(...args) {
+        return (new QueryBuilder(this)).unicodeAssigned(...args);
+    }
+    unicodeVersion(...args) {
+        return (new QueryBuilder(this)).unicodeVersion(...args);
+    }
+    union(...args) {
+        return (new QueryBuilder(this)).union(...args);
+    }
+    unionAll(...args) {
+        return (new QueryBuilder(this)).unionAll(...args);
+    }
+    unique() {
         return (new QueryBuilder(this)).unique();
-    };
-    QueryInstance.prototype.unistr = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).unistr.apply(_a, args);
-    };
-    QueryInstance.prototype.unknown = function () {
+    }
+    unistr(...args) {
+        return (new QueryBuilder(this)).unistr(...args);
+    }
+    unknown() {
         return (new QueryBuilder(this)).unknown();
-    };
-    QueryInstance.prototype.unlink = function () {
+    }
+    unlink() {
         return (new QueryBuilder(this)).unlink();
-    };
-    QueryInstance.prototype.unlisten = function () {
+    }
+    unlisten() {
         return (new QueryBuilder(this)).unlisten();
-    };
-    QueryInstance.prototype.unlogged = function () {
+    }
+    unlogged() {
         return (new QueryBuilder(this)).unlogged();
-    };
-    QueryInstance.prototype.unmatched = function () {
+    }
+    unmatched() {
         return (new QueryBuilder(this)).unmatched();
-    };
-    QueryInstance.prototype.unnamed = function () {
+    }
+    unnamed() {
         return (new QueryBuilder(this)).unnamed();
-    };
-    QueryInstance.prototype.unnest = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).unnest.apply(_a, args);
-    };
-    QueryInstance.prototype.until = function () {
+    }
+    unnest(...args) {
+        return (new QueryBuilder(this)).unnest(...args);
+    }
+    until() {
         return (new QueryBuilder(this)).until();
-    };
-    QueryInstance.prototype.untyped = function () {
+    }
+    untyped() {
         return (new QueryBuilder(this)).untyped();
-    };
-    QueryInstance.prototype.update = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).update.apply(_a, args);
-    };
-    QueryInstance.prototype.upper = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).upper.apply(_a, args);
-    };
-    QueryInstance.prototype.upperInc = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).upperInc.apply(_a, args);
-    };
-    QueryInstance.prototype.upperInf = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).upperInf.apply(_a, args);
-    };
-    QueryInstance.prototype.uri = function () {
+    }
+    update(...args) {
+        return (new QueryBuilder(this)).update(...args);
+    }
+    upper(...args) {
+        return (new QueryBuilder(this)).upper(...args);
+    }
+    upperInc(...args) {
+        return (new QueryBuilder(this)).upperInc(...args);
+    }
+    upperInf(...args) {
+        return (new QueryBuilder(this)).upperInf(...args);
+    }
+    uri() {
         return (new QueryBuilder(this)).uri();
-    };
-    QueryInstance.prototype.usage = function () {
+    }
+    usage() {
         return (new QueryBuilder(this)).usage();
-    };
-    QueryInstance.prototype.user = function () {
+    }
+    user() {
         return (new QueryBuilder(this)).user();
-    };
-    QueryInstance.prototype.userdefinedtypecatalog = function () {
+    }
+    userdefinedtypecatalog() {
         return (new QueryBuilder(this)).userdefinedtypecatalog();
-    };
-    QueryInstance.prototype.userdefinedtypecode = function () {
+    }
+    userdefinedtypecode() {
         return (new QueryBuilder(this)).userdefinedtypecode();
-    };
-    QueryInstance.prototype.userdefinedtypename = function () {
+    }
+    userdefinedtypename() {
         return (new QueryBuilder(this)).userdefinedtypename();
-    };
-    QueryInstance.prototype.userdefinedtypeschema = function () {
+    }
+    userdefinedtypeschema() {
         return (new QueryBuilder(this)).userdefinedtypeschema();
-    };
-    QueryInstance.prototype.using = function () {
+    }
+    using() {
         return (new QueryBuilder(this)).using();
-    };
-    QueryInstance.prototype.utf16 = function () {
+    }
+    utf16() {
         return (new QueryBuilder(this)).utf16();
-    };
-    QueryInstance.prototype.utf32 = function () {
+    }
+    utf32() {
         return (new QueryBuilder(this)).utf32();
-    };
-    QueryInstance.prototype.utf8 = function () {
+    }
+    utf8() {
         return (new QueryBuilder(this)).utf8();
-    };
-    QueryInstance.prototype.uuidExtractTimestamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).uuidExtractTimestamp.apply(_a, args);
-    };
-    QueryInstance.prototype.uuidExtractVersion = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).uuidExtractVersion.apply(_a, args);
-    };
-    QueryInstance.prototype.uuidv4 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).uuidv4.apply(_a, args);
-    };
-    QueryInstance.prototype.uuidv7 = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).uuidv7.apply(_a, args);
-    };
-    QueryInstance.prototype.v = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).v.apply(_a, args);
-    };
-    QueryInstance.prototype.vacuum = function () {
+    }
+    uuidExtractTimestamp(...args) {
+        return (new QueryBuilder(this)).uuidExtractTimestamp(...args);
+    }
+    uuidExtractVersion(...args) {
+        return (new QueryBuilder(this)).uuidExtractVersion(...args);
+    }
+    uuidv4(...args) {
+        return (new QueryBuilder(this)).uuidv4(...args);
+    }
+    uuidv7(...args) {
+        return (new QueryBuilder(this)).uuidv7(...args);
+    }
+    v(...args) {
+        return (new QueryBuilder(this)).v(...args);
+    }
+    vacuum() {
         return (new QueryBuilder(this)).vacuum();
-    };
-    QueryInstance.prototype.valid = function () {
+    }
+    valid() {
         return (new QueryBuilder(this)).valid();
-    };
-    QueryInstance.prototype.validate = function () {
+    }
+    validate() {
         return (new QueryBuilder(this)).validate();
-    };
-    QueryInstance.prototype.validator = function () {
+    }
+    validator() {
         return (new QueryBuilder(this)).validator();
-    };
-    QueryInstance.prototype.value = function () {
+    }
+    value() {
         return (new QueryBuilder(this)).value();
-    };
-    QueryInstance.prototype.valueOfKeyword = function () {
+    }
+    valueOfKeyword() {
         return (new QueryBuilder(this)).valueOfKeyword();
-    };
-    QueryInstance.prototype.values = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).values.apply(_a, args);
-    };
-    QueryInstance.prototype.varbinary = function () {
+    }
+    values(...args) {
+        return (new QueryBuilder(this)).values(...args);
+    }
+    varbinary() {
         return (new QueryBuilder(this)).varbinary();
-    };
-    QueryInstance.prototype.varchar = function () {
+    }
+    varchar() {
         return (new QueryBuilder(this)).varchar();
-    };
-    QueryInstance.prototype.variadic = function () {
+    }
+    variadic() {
         return (new QueryBuilder(this)).variadic();
-    };
-    QueryInstance.prototype.variance = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).variance.apply(_a, args);
-    };
-    QueryInstance.prototype.varPop = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).varPop.apply(_a, args);
-    };
-    QueryInstance.prototype.varSamp = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).varSamp.apply(_a, args);
-    };
-    QueryInstance.prototype.varying = function () {
+    }
+    variance(...args) {
+        return (new QueryBuilder(this)).variance(...args);
+    }
+    varPop(...args) {
+        return (new QueryBuilder(this)).varPop(...args);
+    }
+    varSamp(...args) {
+        return (new QueryBuilder(this)).varSamp(...args);
+    }
+    varying() {
         return (new QueryBuilder(this)).varying();
-    };
-    QueryInstance.prototype.verbose = function () {
+    }
+    verbose() {
         return (new QueryBuilder(this)).verbose();
-    };
-    QueryInstance.prototype.version = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).version.apply(_a, args);
-    };
-    QueryInstance.prototype.versioning = function () {
+    }
+    version(...args) {
+        return (new QueryBuilder(this)).version(...args);
+    }
+    versioning() {
         return (new QueryBuilder(this)).versioning();
-    };
-    QueryInstance.prototype.vertical = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).vertical.apply(_a, args);
-    };
-    QueryInstance.prototype.view = function () {
+    }
+    vertical(...args) {
+        return (new QueryBuilder(this)).vertical(...args);
+    }
+    view() {
         return (new QueryBuilder(this)).view();
-    };
-    QueryInstance.prototype.views = function () {
+    }
+    views() {
         return (new QueryBuilder(this)).views();
-    };
-    QueryInstance.prototype.virtual = function () {
+    }
+    virtual() {
         return (new QueryBuilder(this)).virtual();
-    };
-    QueryInstance.prototype.volatile = function () {
+    }
+    volatile() {
         return (new QueryBuilder(this)).volatile();
-    };
-    QueryInstance.prototype.websearchToTsquery = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).websearchToTsquery.apply(_a, args);
-    };
-    QueryInstance.prototype.when = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).when.apply(_a, args);
-    };
-    QueryInstance.prototype.whenever = function () {
+    }
+    websearchToTsquery(...args) {
+        return (new QueryBuilder(this)).websearchToTsquery(...args);
+    }
+    when(...args) {
+        return (new QueryBuilder(this)).when(...args);
+    }
+    whenever() {
         return (new QueryBuilder(this)).whenever();
-    };
-    QueryInstance.prototype.where = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).where.apply(_a, args);
-    };
-    QueryInstance.prototype.whitespace = function () {
+    }
+    where(...args) {
+        return (new QueryBuilder(this)).where(...args);
+    }
+    whitespace() {
         return (new QueryBuilder(this)).whitespace();
-    };
-    QueryInstance.prototype.width = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).width.apply(_a, args);
-    };
-    QueryInstance.prototype.widthBucket = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).widthBucket.apply(_a, args);
-    };
-    QueryInstance.prototype.window = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).window.apply(_a, args);
-    };
-    QueryInstance.prototype.with = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).with.apply(_a, args);
-    };
-    QueryInstance.prototype.within = function () {
+    }
+    width(...args) {
+        return (new QueryBuilder(this)).width(...args);
+    }
+    widthBucket(...args) {
+        return (new QueryBuilder(this)).widthBucket(...args);
+    }
+    window(...args) {
+        return (new QueryBuilder(this)).window(...args);
+    }
+    with(...args) {
+        return (new QueryBuilder(this)).with(...args);
+    }
+    within() {
         return (new QueryBuilder(this)).within();
-    };
-    QueryInstance.prototype.without = function () {
+    }
+    without() {
         return (new QueryBuilder(this)).without();
-    };
-    QueryInstance.prototype.withTies = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).withTies.apply(_a, args);
-    };
-    QueryInstance.prototype.work = function () {
+    }
+    withTies(...args) {
+        return (new QueryBuilder(this)).withTies(...args);
+    }
+    work() {
         return (new QueryBuilder(this)).work();
-    };
-    QueryInstance.prototype.wrapper = function () {
+    }
+    wrapper() {
         return (new QueryBuilder(this)).wrapper();
-    };
-    QueryInstance.prototype.write = function () {
+    }
+    write() {
         return (new QueryBuilder(this)).write();
-    };
-    QueryInstance.prototype.xml = function () {
+    }
+    xml() {
         return (new QueryBuilder(this)).xml();
-    };
-    QueryInstance.prototype.xmlagg = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlagg.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlattributes = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlattributes.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlbinary = function () {
+    }
+    xmlagg(...args) {
+        return (new QueryBuilder(this)).xmlagg(...args);
+    }
+    xmlattributes(...args) {
+        return (new QueryBuilder(this)).xmlattributes(...args);
+    }
+    xmlbinary() {
         return (new QueryBuilder(this)).xmlbinary();
-    };
-    QueryInstance.prototype.xmlcast = function () {
+    }
+    xmlcast() {
         return (new QueryBuilder(this)).xmlcast();
-    };
-    QueryInstance.prototype.xmlcomment = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlcomment.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlconcat = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlconcat.apply(_a, args);
-    };
-    QueryInstance.prototype.xmldeclaration = function () {
+    }
+    xmlcomment(...args) {
+        return (new QueryBuilder(this)).xmlcomment(...args);
+    }
+    xmlconcat(...args) {
+        return (new QueryBuilder(this)).xmlconcat(...args);
+    }
+    xmldeclaration() {
         return (new QueryBuilder(this)).xmldeclaration();
-    };
-    QueryInstance.prototype.xmldocument = function () {
+    }
+    xmldocument() {
         return (new QueryBuilder(this)).xmldocument();
-    };
-    QueryInstance.prototype.xmlelement = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlelement.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlexists = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlexists.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlforest = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlforest.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlIsWellFormed = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlIsWellFormed.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlIsWellFormedContent = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlIsWellFormedContent.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlIsWellFormedDocument = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlIsWellFormedDocument.apply(_a, args);
-    };
-    QueryInstance.prototype.xmliterate = function () {
+    }
+    xmlelement(...args) {
+        return (new QueryBuilder(this)).xmlelement(...args);
+    }
+    xmlexists(...args) {
+        return (new QueryBuilder(this)).xmlexists(...args);
+    }
+    xmlforest(...args) {
+        return (new QueryBuilder(this)).xmlforest(...args);
+    }
+    xmlIsWellFormed(...args) {
+        return (new QueryBuilder(this)).xmlIsWellFormed(...args);
+    }
+    xmlIsWellFormedContent(...args) {
+        return (new QueryBuilder(this)).xmlIsWellFormedContent(...args);
+    }
+    xmlIsWellFormedDocument(...args) {
+        return (new QueryBuilder(this)).xmlIsWellFormedDocument(...args);
+    }
+    xmliterate() {
         return (new QueryBuilder(this)).xmliterate();
-    };
-    QueryInstance.prototype.xmlnamespaces = function () {
+    }
+    xmlnamespaces() {
         return (new QueryBuilder(this)).xmlnamespaces();
-    };
-    QueryInstance.prototype.xmlparse = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlparse.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlpi = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlpi.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlquery = function () {
+    }
+    xmlparse(...args) {
+        return (new QueryBuilder(this)).xmlparse(...args);
+    }
+    xmlpi(...args) {
+        return (new QueryBuilder(this)).xmlpi(...args);
+    }
+    xmlquery() {
         return (new QueryBuilder(this)).xmlquery();
-    };
-    QueryInstance.prototype.xmlroot = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlroot.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlschema = function () {
+    }
+    xmlroot(...args) {
+        return (new QueryBuilder(this)).xmlroot(...args);
+    }
+    xmlschema() {
         return (new QueryBuilder(this)).xmlschema();
-    };
-    QueryInstance.prototype.xmlserialize = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmlserialize.apply(_a, args);
-    };
-    QueryInstance.prototype.xmltable = function () {
+    }
+    xmlserialize(...args) {
+        return (new QueryBuilder(this)).xmlserialize(...args);
+    }
+    xmltable() {
         return (new QueryBuilder(this)).xmltable();
-    };
-    QueryInstance.prototype.xmltext = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xmltext.apply(_a, args);
-    };
-    QueryInstance.prototype.xmlvalidate = function () {
+    }
+    xmltext(...args) {
+        return (new QueryBuilder(this)).xmltext(...args);
+    }
+    xmlvalidate() {
         return (new QueryBuilder(this)).xmlvalidate();
-    };
-    QueryInstance.prototype.xpath = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xpath.apply(_a, args);
-    };
-    QueryInstance.prototype.xpathExists = function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return (_a = (new QueryBuilder(this))).xpathExists.apply(_a, args);
-    };
-    QueryInstance.prototype.year = function () {
+    }
+    xpath(...args) {
+        return (new QueryBuilder(this)).xpath(...args);
+    }
+    xpathExists(...args) {
+        return (new QueryBuilder(this)).xpathExists(...args);
+    }
+    year() {
         return (new QueryBuilder(this)).year();
-    };
-    QueryInstance.prototype.yes = function () {
+    }
+    yes() {
         return (new QueryBuilder(this)).yes();
-    };
-    QueryInstance.prototype.zone = function () {
+    }
+    zone() {
         return (new QueryBuilder(this)).zone();
-    };
-    return QueryInstance;
-}());
-export { QueryInstance };
+    }
+}

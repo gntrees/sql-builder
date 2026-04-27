@@ -1,11 +1,16 @@
-import type { RequiredDBInstance } from "../types";
+import type { RequiredDBInstance } from "../query-builder.types";
 import { QueryBuilder } from "../query-builder";
 import { BaseRawQueryBuilder } from "../base-raw-query-builder";
 import { OverrideQueryBuilder } from "../override-query-builder";
-import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param";
+import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param.types";
 export declare class QueryInstance {
     protected dbInstance: RequiredDBInstance;
+    protected varableName: string | undefined;
     constructor(dbInstance: RequiredDBInstance);
+    setFormatParamHandler(formatParamHandler: RequiredDBInstance["formatParamHandler"]): this;
+    setExecutionHandler(execHandler: RequiredDBInstance["execHandler"]): this;
+    setVariableName(name: string): this;
+    getVariableName(): string | undefined;
     getDbInstance(): RequiredDBInstance;
     a(): QueryBuilder;
     abbrev<TArgs extends Parameters<OverrideQueryBuilder["abbrev"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
@@ -1185,7 +1190,7 @@ export declare class QueryInstance {
     scalar(): QueryBuilder;
     scale<TArgs extends Parameters<OverrideQueryBuilder["scale"]>>(...args: TArgs): ApplyInferredBuilderParams<QueryBuilder, InferSchemaParamsFromArgs<TArgs>>;
     schema(): QueryBuilder;
-    schemaCase<TKey extends string, TCaseQuery extends QueryBuilder>(key: TKey, queryBuilder: TCaseQuery): import("../sql-param").WithBuilderParams<QueryBuilder, Omit<{}, TKey_1> & import("../sql-param").InferSchemaCase<TKey, TCaseQuery> extends infer T ? { [K in keyof T]: T[K]; } : never>;
+    schemaCase<TKey extends string, TCaseQuery extends QueryBuilder>(key: TKey, queryBuilder: TCaseQuery): import("../sql-param.types").WithBuilderParams<QueryBuilder, Omit<{}, TKey_1> & import("../sql-param.types").InferSchemaCase<TKey, TCaseQuery> extends infer T ? { [K in keyof T]: T[K]; } : never>;
     schemaName(): QueryBuilder;
     schemaParam<TKey extends string>(key: TKey): import("../sql-param").SqlSchemaParam<TKey, never>;
     schemas(): QueryBuilder;

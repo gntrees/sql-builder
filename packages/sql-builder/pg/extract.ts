@@ -37,6 +37,91 @@ function extractMethodNamesFromFile(filePath: string, className: string): string
   return methods;
 }
 
+function extractMethodRestParamNamesFromFile(filePath: string, className: string): Record<string, string> {
+  const sourceCode = fs.readFileSync(filePath, 'utf-8');
+  const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
+  const methodParamNames: Record<string, string> = {};
+
+  function visit(node: ts.Node): void {
+    if (ts.isClassDeclaration(node) && node.name?.getText() === className) {
+      node.members.forEach((member) => {
+        if (
+          ts.isMethodDeclaration(member) &&
+          member.name &&
+          !hasVisibilityModifier(member) &&
+          member.name.getText() !== 'constructor'
+        ) {
+          const methodName = member.name.getText();
+          const firstParameter = member.parameters[0];
+          if (member.parameters.length === 1 && firstParameter && ts.isIdentifier(firstParameter.name)) {
+            methodParamNames[methodName] = firstParameter.name.text;
+          }
+        }
+      });
+    }
+    ts.forEachChild(node, visit);
+  }
+
+  visit(sourceFile);
+  return methodParamNames;
+}
+
+type MethodSignatureMeta = {
+  argName: string;
+  tupleType: string;
+  typeParams: string;
+};
+
+function extractMethodSignatureMetaFromFile(filePath: string, className: string): Record<string, MethodSignatureMeta> {
+  const sourceCode = fs.readFileSync(filePath, 'utf-8');
+  const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
+  const methodMeta: Record<string, MethodSignatureMeta> = {};
+
+  const toTupleParamText = (param: ts.ParameterDeclaration): string => {
+    const name = param.name.getText();
+    const typeText = param.type ? param.type.getText() : 'any';
+    if (param.dotDotDotToken) {
+      return `...${name}: ${typeText}`;
+    }
+    if (param.questionToken || param.initializer) {
+      return `${name}?: ${typeText}`;
+    }
+    return `${name}: ${typeText}`;
+  };
+
+  function visit(node: ts.Node): void {
+    if (ts.isClassDeclaration(node) && node.name?.getText() === className) {
+      node.members.forEach((member) => {
+        if (
+          ts.isMethodDeclaration(member) &&
+          member.name &&
+          !hasVisibilityModifier(member) &&
+          member.name.getText() !== 'constructor'
+        ) {
+          const methodName = member.name.getText();
+          const firstParameter = member.parameters[0];
+          const argName = member.parameters.length === 1 && firstParameter && ts.isIdentifier(firstParameter.name)
+            ? firstParameter.name.text
+            : 'args';
+          const tupleType = `[${member.parameters.map(toTupleParamText).join(', ')}]`;
+          const typeParams = member.typeParameters && member.typeParameters.length > 0
+            ? `<${member.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>`
+            : '';
+          methodMeta[methodName] = {
+            argName,
+            tupleType,
+            typeParams,
+          };
+        }
+      });
+    }
+    ts.forEachChild(node, visit);
+  }
+
+  visit(sourceFile);
+  return methodMeta;
+}
+
 function hasVisibilityModifier(node: ts.MethodDeclaration): boolean {
   return node.modifiers?.some(
     (mod) =>
@@ -106,6 +191,57 @@ function getOverrideMethods(): string[] {
   return [...overrideMethods, ...parentMethods];
 }
 
+function getOverrideMethodParamNames(): Record<string, string> {
+  const ownParamNames = extractMethodRestParamNamesFromFile(
+    path.join(__dirname, 'override-query-builder.ts'),
+    'OverrideQueryBuilder'
+  );
+
+  const parentFiles = [
+    { file: './generated/override-all-functions.ts', class: 'AllFunctionBuilder' },
+    { file: 'override-operator-functions.ts', class: 'OperatorFunctionBuilder' },
+  ];
+
+  const parentParamNames = parentFiles.reduce<Record<string, string>>((acc, { file, class: className }) => {
+    const names = extractMethodRestParamNamesFromFile(path.join(__dirname, file), className);
+    return { ...acc, ...names };
+  }, {});
+
+  return {
+    ...parentParamNames,
+    ...ownParamNames,
+  };
+}
+
+function mergeTypeParamsWithWrapper(typeParams: string): string {
+  if (!typeParams) {
+    return '<__TThis extends this>';
+  }
+  return `${typeParams.slice(0, -1)}, __TThis extends this>`;
+}
+
+function getOverrideMethodSignatureMeta(): Record<string, MethodSignatureMeta> {
+  const ownMeta = extractMethodSignatureMetaFromFile(
+    path.join(__dirname, 'override-query-builder.ts'),
+    'OverrideQueryBuilder'
+  );
+
+  const parentFiles = [
+    { file: './generated/override-all-functions.ts', class: 'AllFunctionBuilder' },
+    { file: 'override-operator-functions.ts', class: 'OperatorFunctionBuilder' },
+  ];
+
+  const parentMeta = parentFiles.reduce<Record<string, MethodSignatureMeta>>((acc, { file, class: className }) => {
+    const meta = extractMethodSignatureMetaFromFile(path.join(__dirname, file), className);
+    return { ...acc, ...meta };
+  }, {});
+
+  return {
+    ...parentMeta,
+    ...ownMeta,
+  };
+}
+
 function generateBaseQueryBuilder(): string {
   const methods = keywordsExtracted
     .map(
@@ -125,6 +261,8 @@ export class BaseQueryBuilder extends BaseRawQueryBuilder {${methods}
 function generateSchemaOverrider(): string {
   const baseRawMethods = getBaseRawQueryBuilderMethods();
   const overrideMethods = getOverrideMethods();
+  const overrideMethodParamNames = getOverrideMethodParamNames();
+  const overrideMethodSignatureMeta = getOverrideMethodSignatureMeta();
   const keywordMethods = keywordsExtracted.map((keyword) => getKeywordName(keyword.key));
 
   const methodSet = new Set<string>([...baseRawMethods, ...overrideMethods, ...keywordMethods]);
@@ -185,6 +323,8 @@ import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from 
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;
+  protected uniqueId: string = Math.random().toString(36).substring(2, 10);
+  protected varableName: string | undefined = undefined;
   constructor(dbInstance: RequiredDBInstance) {
     this.dbInstance = dbInstance;
   }
@@ -194,12 +334,21 @@ export class QueryInstance {
     this.dbInstance.formatParamHandler = formatParamHandler;
     return this;
   }
-
   setExecutionHandler(
     execHandler: RequiredDBInstance["execHandler"],
   ): this {
     this.dbInstance.execHandler = execHandler;
     return this;
+  }
+  setVariableName(name: string): this {
+    this.varableName = name;
+    return this;
+  }
+  getVariableName(): string | undefined {
+    return this.varableName;
+  }
+  getUniqueId(): string {
+    return this.uniqueId;
   }
   getDbInstance() {
     return this.dbInstance;
@@ -234,14 +383,13 @@ function generateOverrideAllFunctions(): string {
     const isKeepAsFunction = keepAsFunctionsCamel.includes(methodName);
     const overrideKeyword = needsOverride ? 'override ' : '';
 
-    const methodBody = `    ${overrideKeyword}${methodName}(...params: Statement[]) {${needsOverride && !isKeepAsFunction
-        ? '\n        if (params.length == 0) {\n            return super.' +
-        methodName +
-        '();\n        }'
-        : ''
+    const methodBody = `    ${overrideKeyword}${methodName}(...params: Statement[]) {${needsOverride && !isKeepAsFunction? '\n      if (params.length == 0) {\n            return super.' +
+      methodName +
+      '();\n      }'
+      : ''
       }
-          return super.pushFunction({ name: "${func.name}", args: [{ name: "params", variadic: true }], format: "${func.format}" }, ...params);
-          }`;
+      return super.pushFunction({ name: "${func.name}", args: [{ name: "params", variadic: true }], format: "${func.format}" }, ...params);
+    }`;
 
     generatedMethods.push(methodBody);
   }

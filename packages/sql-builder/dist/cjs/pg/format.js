@@ -1,8 +1,4 @@
 "use strict";
-/*
- * Browser-safe port of node-pg-format (MIT)
- * Source: https://github.com/cphillips/node-pg-format
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.quoteIdent = quoteIdent;
 exports.quoteLiteral = quoteLiteral;
@@ -10,6 +6,10 @@ exports.quoteString = quoteString;
 exports.config = config;
 exports.formatWithArray = formatWithArray;
 exports.format = format;
+/*
+ * Browser-safe port of node-pg-format (MIT)
+ * Source: https://github.com/cphillips/node-pg-format
+ */
 const fmtPattern = {
     ident: "I",
     literal: "L",

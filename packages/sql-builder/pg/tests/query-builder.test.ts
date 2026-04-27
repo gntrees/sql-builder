@@ -829,35 +829,4 @@ describe("validate()", () => {
             builder.execute(),
         ).rejects.toThrow();
     });
-
-    it("supports sqlSchema validate and execute(meta)", async () => {
-        const execMetaList: unknown[] = [];
-        const qValidate = sqlBuilder()
-            .setFormatParamHandler("pg")
-            .setExecutionHandler(async ({ meta }) => {
-                execMetaList.push(meta);
-                return [{ name: "Magma", age: 18 }];
-            });
-
-        const sch = sqlSchema().setQuery(
-            "getMagma",
-            sqlSchema()
-                .set
-                .query(
-                    qValidate
-                        .select("*")
-                        .from(qValidate.t("users")),
-                )
-                .validation(
-                    z.array(z.object({
-                        name: z.string(),
-                        age: z.number(),
-                    })),
-                ),
-        );
-
-        const result = await sch.query("getMagma").execute({ requestId: "schema-1" });
-        expect(result).toEqual([{ name: "Magma", age: 18 }]);
-        expect(execMetaList).toEqual([{ requestId: "schema-1" }]);
-    });
 });

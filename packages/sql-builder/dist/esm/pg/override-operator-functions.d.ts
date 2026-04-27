@@ -1,5 +1,5 @@
+import type { Statement } from "./core-query-builder.types";
 import { AllFunctionBuilder } from "./generated/override-all-functions";
-import type { Statement } from "./types";
 export declare class OperatorFunctionBuilder extends AllFunctionBuilder {
     eq(val1?: Statement, val2?: Statement): this;
     ne(val1?: Statement, val2?: Statement): this;

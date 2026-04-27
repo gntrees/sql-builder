@@ -1,40 +1,12 @@
-import { ParameterType } from "./base-raw-query-builder";
 import type { QueryInstance } from "./generated/query-instance";
-import type { PGFunction } from "./postgres-functions-list";
+import type { PGFunction } from "./postgres-functions-list.types";
 import { QueryBuilder } from "./query-builder";
-import type { AllPossibleFunctionParamType, ParameterValueType, QueryType, Statement } from "./types";
+import { type AllPossibleFunctionParamType, type InstanceStructureNode, type ParameterValueType, type RuntimeParams, type Statement, ParameterType } from "./core-query-builder.types";
 import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
 import type { FunctionListType } from "./function-list-type";
-import { SqlSchemaParam, type SqlSchemaParamType } from "./sql-param";
-type InstanceStructureSerializableValue = string | number | boolean | null | undefined | {
-    kind: "query-builder";
-    value: InstanceStructureNode[];
-} | {
-    kind: "identifier";
-    value: string;
-} | {
-    kind: "schema-param";
-    value: {
-        key: string;
-        types: ("number" | "boolean" | "string" | "null")[];
-        hasDefault: boolean;
-        defaultValue?: string | number | boolean | null;
-    };
-} | {
-    kind: "array";
-    value: InstanceStructureSerializableValue[];
-} | {
-    kind: "object";
-    value: Record<string, InstanceStructureSerializableValue>;
-};
-type InstanceStructureNode = {
-    name: string;
-    args: InstanceStructureSerializableValue[];
-};
-type PrimitiveSchemaParam = string | number | boolean | null;
-interface RuntimeParams {
-    [key: SqlSchemaParam['key']]: PrimitiveSchemaParam | RuntimeParams;
-}
+import { type SqlSchemaParamType } from "./sql-param.types";
+import type { QueryType } from "./query-builder.types";
+import { SqlSchemaParam } from "./sql-param";
 export declare class CoreQueryBuilder {
     protected query: QueryType;
     protected schemaQueryBuilder: FunctionListType[];
@@ -46,6 +18,8 @@ export declare class CoreQueryBuilder {
     constructor(queryInstance?: QueryInstance);
     getTokens(): QueryType['sql'];
     setTokens(tokens: QueryType['sql']): this;
+    setVariableName(name: string): this;
+    getVariableName(): string | undefined;
     getSchema(): FunctionListType[];
     protected getInstanceStructure(): InstanceStructureNode[];
     protected getRuntimeParams(): RuntimeParams;
@@ -83,4 +57,3 @@ export declare class CoreQueryBuilder {
     protected pushFunction(func: PGFunction, ...runtimeArgs: Statement[]): this;
     protected resolveSqlSchemaParamValue(param: SqlSchemaParam<SqlSchemaParam['key'], SqlSchemaParamType>): ParameterValueType | undefined;
 }
-export {};

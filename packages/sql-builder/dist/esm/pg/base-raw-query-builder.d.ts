@@ -1,15 +1,8 @@
 import { CoreQueryBuilder } from './core-query-builder';
 import { QueryBuilder } from './query-builder';
-import type { ExtractBuilderParams, InferSchemaCase, MergeBuilderParams, Simplify, SqlSchemaParam, WithBuilderParams } from './sql-param';
-import { type OperatorType, type ParameterDataType, type ParameterValueType, type Statement } from './types';
-export declare class ParameterType {
-    value: ParameterValueType;
-    type: ParameterDataType;
-    constructor({ value, type, }: {
-        value: ParameterValueType;
-        type: ParameterDataType;
-    });
-}
+import type { ExtractBuilderParams, InferSchemaCase, MergeBuilderParams, Simplify, WithBuilderParams } from './sql-param.types';
+import { type OperatorType, type Statement } from './core-query-builder.types';
+import type { SqlSchemaParam } from './sql-param';
 export declare class BaseRawQueryBuilder extends CoreQueryBuilder {
     raw(strings: TemplateStringsArray, ...values: Statement[]): this;
     literal(value: Statement): this;

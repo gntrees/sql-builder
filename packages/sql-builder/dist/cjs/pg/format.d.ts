@@ -1,11 +1,4 @@
-export type FormatConfig = {
-    pattern?: {
-        ident?: string;
-        literal?: string;
-        string?: string;
-    };
-};
-type FormatValue = string | number | boolean | null | undefined | bigint | Date | Uint8Array | Record<string, unknown> | Array<unknown>;
+import type { FormatConfig, FormatValue } from "./format.types";
 export declare function quoteIdent(value: unknown): string;
 export declare function quoteLiteral(value: unknown): string;
 export declare function quoteString(value: unknown): string;

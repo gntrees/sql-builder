@@ -4,8 +4,24 @@ exports.QueryInstance = void 0;
 const query_builder_1 = require("../query-builder");
 class QueryInstance {
     dbInstance;
+    varableName = undefined;
     constructor(dbInstance) {
         this.dbInstance = dbInstance;
+    }
+    setFormatParamHandler(formatParamHandler) {
+        this.dbInstance.formatParamHandler = formatParamHandler;
+        return this;
+    }
+    setExecutionHandler(execHandler) {
+        this.dbInstance.execHandler = execHandler;
+        return this;
+    }
+    setVariableName(name) {
+        this.varableName = name;
+        return this;
+    }
+    getVariableName() {
+        return this.varableName;
     }
     getDbInstance() {
         return this.dbInstance;

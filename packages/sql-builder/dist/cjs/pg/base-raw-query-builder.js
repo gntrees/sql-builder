@@ -1,20 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseRawQueryBuilder = exports.ParameterType = void 0;
+exports.BaseRawQueryBuilder = void 0;
 const core_query_builder_1 = require("./core-query-builder");
-const types_1 = require("./types");
-class ParameterType {
-    value;
-    type;
-    constructor({ value, type, }) {
-        this.value = value;
-        this.type = type;
-    }
-}
-exports.ParameterType = ParameterType;
+const core_query_builder_types_1 = require("./core-query-builder.types");
 class BaseRawQueryBuilder extends core_query_builder_1.CoreQueryBuilder {
     raw(strings, ...values) {
-        // console.log("strings:",strings.map(i=>String(i)),strings[1], values[0]);
         this.resolveSchemaParam("template-literal", "raw", strings.reduce((acc, str, i) => {
             return [...acc, str, values[i]];
         }, []));
@@ -146,7 +136,7 @@ class BaseRawQueryBuilder extends core_query_builder_1.CoreQueryBuilder {
         return this.endClass();
     }
     isOperatorType(value) {
-        return types_1.OPERATORS.map(i => i.toLowerCase()).includes(value.toLowerCase());
+        return core_query_builder_types_1.OPERATORS.map(i => i.toLowerCase()).includes(value.toLowerCase());
     }
     // special for params feature
     schemaParam(key) {

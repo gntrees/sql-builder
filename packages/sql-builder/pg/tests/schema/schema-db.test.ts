@@ -17,7 +17,7 @@ import { write } from "bun";
 const connectionUrl =
     "postgresql://gntrees_ui_admin:cuanBanyak20Triliun@localhost:5432/gntrees_ui";
 
-const q = sqlBuilder(connectionUrl)
+const q = sqlBuilder()
     .setFormatParamHandler("pg")
     .setExecutionHandler(async ({ sql, parameters }) => {
         if (typeof connectionUrl !== "string") {

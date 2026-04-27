@@ -1,10 +1,4 @@
-export type PGFunction = {
-    name: string;
-    args: {
-        name: string;
-        variadic?: boolean;
-    }[];
-    format: "COERCE_EXPLICIT_CALL" | "COERCE_EXPLICIT_CAST";
-};
+import type { PGFunction } from "./postgres-functions-list.types";
+export type { PGFunction } from "./postgres-functions-list.types";
 declare const pgFunctionList: PGFunction[];
 export default pgFunctionList;

@@ -1,5 +1,5 @@
+import type { Statement } from "./core-query-builder.types";
 import { OperatorFunctionBuilder } from "./override-operator-functions";
-import type { Statement } from "./types";
 export declare class OverrideQueryBuilder extends OperatorFunctionBuilder {
     escape(value?: Statement): this;
     semicolon(): this;

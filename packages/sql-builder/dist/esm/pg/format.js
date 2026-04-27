@@ -2,13 +2,13 @@
  * Browser-safe port of node-pg-format (MIT)
  * Source: https://github.com/cphillips/node-pg-format
  */
-var fmtPattern = {
+const fmtPattern = {
     ident: "I",
     literal: "L",
     string: "s",
 };
 // PostgreSQL reserved words (copied from node-pg-format reserved.js)
-var RESERVED_WORDS = {
+const RESERVED_WORDS = {
     AES128: true,
     AES256: true,
     ALL: true,
@@ -171,9 +171,9 @@ function isReserved(value) {
     return Boolean(RESERVED_WORDS[value.toUpperCase()]);
 }
 function arrayToList(useSpace, array, formatter) {
-    var sql = "";
+    let sql = "";
     sql += useSpace ? " (" : "(";
-    for (var i = 0; i < array.length; i += 1) {
+    for (let i = 0; i < array.length; i += 1) {
         sql += (i === 0 ? "" : ", ") + formatter(array[i]);
     }
     sql += ")";
@@ -183,8 +183,8 @@ function isBinary(value) {
     return typeof Uint8Array !== "undefined" && value instanceof Uint8Array;
 }
 function toHex(bytes) {
-    var result = "";
-    for (var i = 0; i < bytes.length; i += 1) {
+    let result = "";
+    for (let i = 0; i < bytes.length; i += 1) {
         result += bytes[i].toString(16).padStart(2, "0");
     }
     return result;
@@ -206,8 +206,8 @@ export function quoteIdent(value) {
         throw new Error("SQL identifier cannot be a buffer");
     }
     if (Array.isArray(value)) {
-        var temp = [];
-        for (var i = 0; i < value.length; i += 1) {
+        const temp = [];
+        for (let i = 0; i < value.length; i += 1) {
             if (Array.isArray(value[i])) {
                 throw new Error("Nested array to grouped list conversion is not supported for SQL identifier");
             }
@@ -218,26 +218,26 @@ export function quoteIdent(value) {
     if (value === Object(value)) {
         throw new Error("SQL identifier cannot be an object");
     }
-    var ident = value.toString().slice(0);
+    const ident = value.toString().slice(0);
     if (/^[a-z_][a-z0-9_$.]*$/.test(ident) && isReserved(ident) === false) {
         // cek jika ada titik maka harus di quote
-        var parts = ident.split(".");
+        const parts = ident.split(".");
         if (parts.length > 1) {
-            return parts.map(function (part) { return quoteIdent(part); }).join(".");
+            return parts.map((part) => quoteIdent(part)).join(".");
         }
         // return ident;
     }
-    var quoted = '"';
-    for (var i = 0; i < ident.length; i += 1) {
-        var c = ident[i];
+    let quoted = '"';
+    for (let i = 0; i < ident.length; i += 1) {
+        const c = ident[i];
         quoted += c === '"' ? c + c : c;
     }
     quoted += '"';
     return quoted;
 }
 export function quoteLiteral(value) {
-    var literal = "";
-    var explicitCast = null;
+    let literal = "";
+    let explicitCast = null;
     if (value === undefined || value === null) {
         return "NULL";
     }
@@ -269,8 +269,8 @@ export function quoteLiteral(value) {
         return "E'\\x" + toHex(value) + "'";
     }
     if (Array.isArray(value)) {
-        var temp = [];
-        for (var i = 0; i < value.length; i += 1) {
+        const temp = [];
+        for (let i = 0; i < value.length; i += 1) {
             if (Array.isArray(value[i])) {
                 temp.push(arrayToList(i !== 0, value[i], quoteLiteral));
             }
@@ -287,10 +287,10 @@ export function quoteLiteral(value) {
     else {
         literal = value.toString().slice(0);
     }
-    var hasBackslash = false;
-    var quoted = "'";
-    for (var i = 0; i < literal.length; i += 1) {
-        var c = literal[i];
+    let hasBackslash = false;
+    let quoted = "'";
+    for (let i = 0; i < literal.length; i += 1) {
+        const c = literal[i];
         if (c === "'") {
             quoted += c + c;
         }
@@ -328,8 +328,8 @@ export function quoteString(value) {
         return "\\x" + toHex(value);
     }
     if (Array.isArray(value)) {
-        var temp = [];
-        for (var i = 0; i < value.length; i += 1) {
+        const temp = [];
+        for (let i = 0; i < value.length; i += 1) {
             if (value[i] !== null && value[i] !== undefined) {
                 if (Array.isArray(value[i])) {
                     temp.push(arrayToList(i !== 0, value[i], quoteString));
@@ -350,7 +350,7 @@ export function config(cfg) {
     fmtPattern.ident = "I";
     fmtPattern.literal = "L";
     fmtPattern.string = "s";
-    if (cfg === null || cfg === void 0 ? void 0 : cfg.pattern) {
+    if (cfg?.pattern) {
         if (cfg.pattern.ident) {
             fmtPattern.ident = cfg.pattern.ident;
         }
@@ -363,20 +363,20 @@ export function config(cfg) {
     }
 }
 export function formatWithArray(fmt, parameters) {
-    var index = 0;
-    var params = parameters;
-    var reText = "%(%|(\\d+\\$)?[";
+    let index = 0;
+    let params = parameters;
+    let reText = "%(%|(\\d+\\$)?[";
     reText += fmtPattern.ident;
     reText += fmtPattern.literal;
     reText += fmtPattern.string;
     reText += "])";
-    var re = new RegExp(reText, "g");
-    return fmt.replace(re, function (_, type) {
+    const re = new RegExp(reText, "g");
+    return fmt.replace(re, (_, type) => {
         if (type === "%") {
             return "%";
         }
-        var position = index;
-        var tokens = type.split("$");
+        let position = index;
+        const tokens = type.split("$");
         if (tokens.length > 1) {
             position = parseInt(tokens[0], 10) - 1;
             type = tokens[1];
@@ -400,18 +400,14 @@ export function formatWithArray(fmt, parameters) {
         return "";
     });
 }
-export function format(fmt) {
-    var args = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        args[_i - 1] = arguments[_i];
-    }
+export function format(fmt, ...args) {
     return formatWithArray(fmt, args);
 }
 export default {
-    config: config,
-    format: format,
-    formatWithArray: formatWithArray,
-    quoteIdent: quoteIdent,
-    quoteLiteral: quoteLiteral,
-    quoteString: quoteString,
+    config,
+    format,
+    formatWithArray,
+    quoteIdent,
+    quoteLiteral,
+    quoteString,
 };

@@ -44,6 +44,17 @@ export class CoreQueryBuilder {
         return this;
     }
 
+    setVariableName(name: string): this {
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        this.queryInstance.setVariableName(name);
+        return this;
+    }
+
+    getVariableName(): string | undefined {
+        if (!this.queryInstance) throw new Error("QueryInstance is required for this operation");
+        return this.queryInstance.getVariableName();
+    }
+
     getSchema(): FunctionListType[] {
         return this.schemaQueryBuilder;
     }

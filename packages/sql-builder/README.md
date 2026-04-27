@@ -20,6 +20,8 @@ bun install
 
 ### Basic Usage
 
+`sqlBuilder()` no longer accepts a database URL and does not ship with a built-in PostgreSQL client. You must provide your own execution handler.
+
 ```typescript
 import { sqlBuilder } from '@gntrees/sql-builder/pg';
 

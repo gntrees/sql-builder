@@ -1,7 +1,8 @@
 import { SchemaOverrider } from "./generated/schema-overrider";
-import type { InferValidationOutput, StandardSchemaLike } from "./db-instance.types";
 import type {
   ExtractValidationSchema,
+  InferValidationOutput,
+  StandardSchemaLike,
   ValidationSchemaCarrier,
 } from "./query-builder.types";
 

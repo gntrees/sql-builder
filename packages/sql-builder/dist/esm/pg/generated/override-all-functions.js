@@ -1,5076 +1,2374 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 // AUTO-GENERATED - DO NOT EDIT.
 import { BaseQueryBuilder } from "./base-query-builder";
-var AllFunctionBuilder = /** @class */ (function (_super) {
-    __extends(AllFunctionBuilder, _super);
-    function AllFunctionBuilder() {
-        return _super !== null && _super.apply(this, arguments) || this;
+export class AllFunctionBuilder extends BaseQueryBuilder {
+    abbrev(...params) {
+        return super.pushFunction({ name: "ABBREV", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
     }
-    AllFunctionBuilder.prototype.abbrev = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ABBREV", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.abs = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.abs.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ABS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.acldefault = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ACLDEFAULT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.aclexplode = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ACLEXPLODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.acos = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.acos.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ACOS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.acosd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ACOSD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.acosh = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ACOSH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.age = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "AGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.anyValue = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.anyValue.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ANY_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.area = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "AREA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.arrayAgg.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayAppend = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_APPEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayCat = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_CAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayDims = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_DIMS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayFill = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_FILL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayLower = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_LOWER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayNdims = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_NDIMS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayPosition = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_POSITION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayPositions = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_POSITIONS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayPrepend = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_PREPEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayRemove = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_REMOVE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayReplace = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_REPLACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayReverse = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_REVERSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arraySample = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_SAMPLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayShuffle = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_SHUFFLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arraySort = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_SORT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayToJson = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_TO_JSON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayToString = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_TO_STRING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayToTsvector = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.arrayUpper = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ARRAY_UPPER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ascii = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ASCII", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.asin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.asin.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ASIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.asind = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ASIND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.asinh = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ASINH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.atan = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.atan.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ATAN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.atan2 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ATAN2", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.atan2d = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ATAN2D", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.atand = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ATAND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.atanh = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ATANH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.avg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.avg.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "AVG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.bitAnd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BIT_AND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.bitCount = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BIT_COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.bitLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.bitLength.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BIT_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.bitOr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BIT_OR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.bitXor = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BIT_XOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.boolAnd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BOOL_AND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.boolOr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BOOL_OR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.boundBox = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BOUND_BOX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.box = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BOX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.brinDesummarizeRange = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BRIN_DESUMMARIZE_RANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.brinSummarizeNewValues = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BRIN_SUMMARIZE_NEW_VALUES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.brinSummarizeRange = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BRIN_SUMMARIZE_RANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.broadcast = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BROADCAST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.btrim = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.btrim.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "BTRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cardinality = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.cardinality.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CARDINALITY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.casefold = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CASEFOLD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cbrt = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CBRT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ceil = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.ceil.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CEIL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ceiling = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.ceiling.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CEILING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.center = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CENTER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.characterLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.characterLength.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CHARACTER_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.charLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.charLength.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CHAR_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.chr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CHR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.circle = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CIRCLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.clockTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CLOCK_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.coalesce = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.coalesce.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COALESCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.colDescription = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COL_DESCRIPTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.collationFor = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COLLATION_FOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.concat = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CONCAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.concatWs = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CONCAT_WS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.convert = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.convert.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CONVERT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.convertFrom = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CONVERT_FROM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.convertTo = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CONVERT_TO", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.corr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.corr.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CORR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cos = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.cos.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cosd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COSD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cosh = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.cosh.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COSH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cotd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COTD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.count = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.count.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.covarPop = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.covarPop.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COVAR_POP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.covarSamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.covarSamp.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "COVAR_SAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.crc32 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CRC32", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.crc32c = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CRC32C", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cumeDist = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.cumeDist.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CUME_DIST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentDatabase = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_DATABASE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentDate = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.currentDate.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_DATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentQuery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_QUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentSchema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.currentSchema.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_SCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentSchemas = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_SCHEMAS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentSetting = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_SETTING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentTime = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.currentTime.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currentTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.currentTimestamp.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRENT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.currval = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURRVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cursorToXml = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURSOR_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.cursorToXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "CURSOR_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.databaseToXml = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATABASE_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.databaseToXmlAndXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATABASE_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.databaseToXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATABASE_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.dateAdd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATE_ADD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.dateBin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATE_BIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.datePart = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATE_PART", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.dateSubtract = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATE_SUBTRACT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.dateTrunc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DATE_TRUNC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.decode = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DECODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.degrees = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DEGREES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.denseRank = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.denseRank.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DENSE_RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.diagonal = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DIAGONAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.diameter = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DIAMETER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.div = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "DIV", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.encode = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ENCODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.enumFirst = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ENUM_FIRST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.enumLast = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ENUM_LAST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.enumRange = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ENUM_RANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.erf = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ERF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.erfc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ERFC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.every = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.every.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "EVERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.exp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.exp.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "EXP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.extract = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.extract.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "EXTRACT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.factorial = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "FACTORIAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.family = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.family.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "FAMILY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.firstValue = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.firstValue.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "FIRST_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.floor = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.floor.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "FLOOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.format = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.format.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "FORMAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.formatType = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "FORMAT_TYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.gamma = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GAMMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.gcd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GCD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.generateSeries = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GENERATE_SERIES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.generateSubscripts = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GENERATE_SUBSCRIPTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.genRandomUuid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GEN_RANDOM_UUID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.getBit = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GET_BIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.getByte = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GET_BYTE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.getCurrentTsConfig = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GET_CURRENT_TS_CONFIG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ginCleanPendingList = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GIN_CLEAN_PENDING_LIST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.greatest = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.greatest.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GREATEST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.grouping = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.grouping.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "GROUPING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasAnyColumnPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_ANY_COLUMN_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasColumnPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_COLUMN_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasDatabasePrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_DATABASE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasForeignDataWrapperPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_FOREIGN_DATA_WRAPPER_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasFunctionPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_FUNCTION_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasLanguagePrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_LANGUAGE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasLargeobjectPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_LARGEOBJECT_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasParameterPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_PARAMETER_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasSchemaPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_SCHEMA_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasSequencePrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_SEQUENCE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasServerPrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_SERVER_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasTablePrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_TABLE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasTablespacePrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_TABLESPACE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hasTypePrivilege = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HAS_TYPE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.height = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HEIGHT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.host = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HOST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.hostmask = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "HOSTMASK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.icuUnicodeVersion = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ICU_UNICODE_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.inetClientAddr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INET_CLIENT_ADDR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.inetClientPort = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INET_CLIENT_PORT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.inetMerge = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INET_MERGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.inetSameFamily = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INET_SAME_FAMILY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.inetServerAddr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INET_SERVER_ADDR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.inetServerPort = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INET_SERVER_PORT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.initcap = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "INITCAP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.isclosed = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ISCLOSED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.isempty = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ISEMPTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.isfinite = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ISFINITE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.isopen = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ISOPEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonAggStrict = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonArray.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonArrayagg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonArrayagg.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_ARRAYAGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonArrayElements = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_ARRAY_ELEMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonArrayElementsText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_ARRAY_ELEMENTS_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonArrayLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_ARRAY_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbAggStrict = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbArrayElements = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_ARRAY_ELEMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbArrayElementsText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_ARRAY_ELEMENTS_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbArrayLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_ARRAY_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbBuildArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_BUILD_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbBuildObject = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_BUILD_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbEach = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_EACH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbEachText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_EACH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbExtractPath = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_EXTRACT_PATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbExtractPathText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_EXTRACT_PATH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbInsert = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_INSERT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbObject = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbObjectAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_OBJECT_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbObjectAggStrict = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_OBJECT_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbObjectAggUnique = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_OBJECT_AGG_UNIQUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbObjectAggUniqueStrict = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_OBJECT_AGG_UNIQUE_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbObjectKeys = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_OBJECT_KEYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathExists = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_EXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathExistsTz = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_EXISTS_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathMatch = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_MATCH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathMatchTz = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_MATCH_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathQuery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_QUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathQueryArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_QUERY_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathQueryArrayTz = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_QUERY_ARRAY_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathQueryFirst = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_QUERY_FIRST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathQueryFirstTz = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_QUERY_FIRST_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPathQueryTz = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PATH_QUERY_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPopulateRecord = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_POPULATE_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPopulateRecordset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_POPULATE_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPopulateRecordValid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_POPULATE_RECORD_VALID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbPretty = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_PRETTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbSet = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_SET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbSetLax = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_SET_LAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbStripNulls = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_STRIP_NULLS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbToRecord = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_TO_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbToRecordset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_TO_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbToTsvector = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonbTypeof = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSONB_TYPEOF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonBuildArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_BUILD_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonBuildObject = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_BUILD_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonEach = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_EACH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonEachText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_EACH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonExists = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonExists.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_EXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonExtractPath = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_EXTRACT_PATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonExtractPathText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_EXTRACT_PATH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObject = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonObject.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObjectagg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonObjectagg.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECTAGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObjectAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECT_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObjectAggStrict = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECT_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObjectAggUnique = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECT_AGG_UNIQUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObjectAggUniqueStrict = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECT_AGG_UNIQUE_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonObjectKeys = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_OBJECT_KEYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonPopulateRecord = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_POPULATE_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonPopulateRecordset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_POPULATE_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonQuery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonQuery.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_QUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonScalar = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonScalar.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_SCALAR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonSerialize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonSerialize.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_SERIALIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonStripNulls = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_STRIP_NULLS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonToRecord = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_TO_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonToRecordset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_TO_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonToTsvector = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonTypeof = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_TYPEOF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.jsonValue = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.jsonValue.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JSON_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.justifyDays = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JUSTIFY_DAYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.justifyHours = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JUSTIFY_HOURS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.justifyInterval = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "JUSTIFY_INTERVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lag = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.lag.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LAG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lastval = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LASTVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lastValue = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.lastValue.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LAST_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lcm = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LCM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lead = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.lead.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LEAD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.least = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.least.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LEAST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.left = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.left.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LEFT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.length = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.length.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lgamma = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LGAMMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.line = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LINE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ln = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.ln.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.localtime = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.localtime.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOCALTIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.localtimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.localtimestamp.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOCALTIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.log = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.log.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.log10 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.log10.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOG10", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lower = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.lower.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOWER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lowerInc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOWER_INC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lowerInf = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LOWER_INF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lpad = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.lpad.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LPAD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.lseg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LSEG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ltrim = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.ltrim.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "LTRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.macaddr8Set7bit = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MACADDR8_SET7BIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.makeaclitem = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAKEACLITEM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.makeDate = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAKE_DATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.makeInterval = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAKE_INTERVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.makeTime = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAKE_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.makeTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAKE_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.makeTimestamptz = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAKE_TIMESTAMPTZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.masklen = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MASKLEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.max = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.max.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.md5 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MD5", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.mergeAction = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MERGE_ACTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.min = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.min.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.minScale = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MIN_SCALE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.mod = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.mod.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MOD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.mode = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.mode.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.multirange = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MULTIRANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.mxidAge = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "MXID_AGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.netmask = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NETMASK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.network = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NETWORK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.nextval = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NEXTVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.normalize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.normalize.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NORMALIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.now = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NOW", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.npoints = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NPOINTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.nthValue = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.nthValue.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NTH_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.ntile = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.ntile.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NTILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.nullif = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.nullif.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NULLIF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.numnode = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "NUMNODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.objDescription = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "OBJ_DESCRIPTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.octetLength = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.octetLength.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "OCTET_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.overlay = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.overlay.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "OVERLAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.parseIdent = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PARSE_IDENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.path = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.path.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pclose = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PCLOSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.percentileCont = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.percentileCont.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PERCENTILE_CONT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.percentileDisc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.percentileDisc.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PERCENTILE_DISC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.percentRank = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.percentRank.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PERCENT_RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryLock = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryLockShared = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryUnlock = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_UNLOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryUnlockAll = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_UNLOCK_ALL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryUnlockShared = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_UNLOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryXactLock = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_XACT_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAdvisoryXactLockShared = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgAvailableWalSummaries = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_AVAILABLE_WAL_SUMMARIES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgBackendPid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_BACKEND_PID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgBackupStart = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_BACKUP_START", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgBackupStop = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_BACKUP_STOP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgBasetype = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_BASETYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgBlockingPids = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_BLOCKING_PIDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCancelBackend = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CANCEL_BACKEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCharToEncoding = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CHAR_TO_ENCODING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgClearAttributeStats = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CLEAR_ATTRIBUTE_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgClearRelationStats = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CLEAR_RELATION_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgClientEncoding = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CLIENT_ENCODING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCollationActualVersion = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COLLATION_ACTUAL_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCollationIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COLLATION_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgColumnCompression = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COLUMN_COMPRESSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgColumnSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COLUMN_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgColumnToastChunkId = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COLUMN_TOAST_CHUNK_ID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgConfLoadTime = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CONF_LOAD_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgControlCheckpoint = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CONTROL_CHECKPOINT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgControlInit = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CONTROL_INIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgControlRecovery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CONTROL_RECOVERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgControlSystem = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CONTROL_SYSTEM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgConversionIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CONVERSION_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCopyLogicalReplicationSlot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COPY_LOGICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCopyPhysicalReplicationSlot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_COPY_PHYSICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCreateLogicalReplicationSlot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CREATE_LOGICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCreatePhysicalReplicationSlot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CREATE_PHYSICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCreateRestorePoint = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CREATE_RESTORE_POINT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentLogfile = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_LOGFILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentSnapshot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentWalFlushLsn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_WAL_FLUSH_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentWalInsertLsn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_WAL_INSERT_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentWalLsn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_WAL_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentXactId = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_XACT_ID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgCurrentXactIdIfAssigned = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_CURRENT_XACT_ID_IF_ASSIGNED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgDatabaseCollationActualVersion = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_DATABASE_COLLATION_ACTUAL_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgDatabaseSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_DATABASE_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgDescribeObject = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_DESCRIBE_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgDropReplicationSlot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_DROP_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgEncodingToChar = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ENCODING_TO_CHAR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgEventTriggerDdlCommands = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_EVENT_TRIGGER_DDL_COMMANDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgEventTriggerDroppedObjects = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_EVENT_TRIGGER_DROPPED_OBJECTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgEventTriggerTableRewriteOid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_EVENT_TRIGGER_TABLE_REWRITE_OID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgEventTriggerTableRewriteReason = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_EVENT_TRIGGER_TABLE_REWRITE_REASON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgExportSnapshot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_EXPORT_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgFilenodeRelation = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_FILENODE_RELATION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgFunctionIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_FUNCTION_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetAcl = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_ACL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetCatalogForeignKeys = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_CATALOG_FOREIGN_KEYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetConstraintdef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_CONSTRAINTDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetExpr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_EXPR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetFunctionArguments = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_FUNCTION_ARGUMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetFunctiondef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_FUNCTIONDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetFunctionIdentityArguments = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_FUNCTION_IDENTITY_ARGUMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetFunctionResult = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_FUNCTION_RESULT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetIndexdef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_INDEXDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetKeywords = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_KEYWORDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetLoadedModules = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_LOADED_MODULES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetMultixactMembers = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_MULTIXACT_MEMBERS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetObjectAddress = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_OBJECT_ADDRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetPartitionConstraintdef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_PARTITION_CONSTRAINTDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetPartkeydef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_PARTKEYDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetRuledef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_RULEDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetSerialSequence = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_SERIAL_SEQUENCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetStatisticsobjdef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_STATISTICSOBJDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetTriggerdef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_TRIGGERDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetUserbyid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_USERBYID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetViewdef = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_VIEWDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetWalReplayPauseState = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_WAL_REPLAY_PAUSE_STATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetWalResourceManagers = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_WAL_RESOURCE_MANAGERS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgGetWalSummarizerState = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_GET_WAL_SUMMARIZER_STATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgHasRole = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_HAS_ROLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIdentifyObject = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_IDENTIFY_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIdentifyObjectAsAddress = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_IDENTIFY_OBJECT_AS_ADDRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgImportSystemCollations = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_IMPORT_SYSTEM_COLLATIONS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIndexamHasProperty = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_INDEXAM_HAS_PROPERTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIndexColumnHasProperty = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_INDEX_COLUMN_HAS_PROPERTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIndexesSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_INDEXES_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIndexHasProperty = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_INDEX_HAS_PROPERTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgInputErrorInfo = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_INPUT_ERROR_INFO", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgInputIsValid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_INPUT_IS_VALID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIsInRecovery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_IS_IN_RECOVERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIsOtherTempSchema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_IS_OTHER_TEMP_SCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgIsWalReplayPaused = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_IS_WAL_REPLAY_PAUSED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgJitAvailable = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_JIT_AVAILABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLastCommittedXact = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LAST_COMMITTED_XACT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLastWalReceiveLsn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LAST_WAL_RECEIVE_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLastWalReplayLsn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LAST_WAL_REPLAY_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLastXactReplayTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LAST_XACT_REPLAY_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgListeningChannels = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LISTENING_CHANNELS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogBackendMemoryContexts = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOG_BACKEND_MEMORY_CONTEXTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogicalEmitMessage = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOGICAL_EMIT_MESSAGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogicalSlotGetBinaryChanges = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOGICAL_SLOT_GET_BINARY_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogicalSlotGetChanges = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOGICAL_SLOT_GET_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogicalSlotPeekBinaryChanges = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOGICAL_SLOT_PEEK_BINARY_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogicalSlotPeekChanges = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOGICAL_SLOT_PEEK_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLogStandbySnapshot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LOG_STANDBY_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsArchiveStatusdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_ARCHIVE_STATUSDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsDir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_DIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsLogdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_LOGDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsLogicalmapdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_LOGICALMAPDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsLogicalsnapdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_LOGICALSNAPDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsReplslotdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_REPLSLOTDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsSummariesdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_SUMMARIESDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsTmpdir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_TMPDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgLsWaldir = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_LS_WALDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgMcvListItems = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_MCV_LIST_ITEMS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgMyTempSchema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_MY_TEMP_SCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgNotificationQueueUsage = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_NOTIFICATION_QUEUE_USAGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgNumaAvailable = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_NUMA_AVAILABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgOpclassIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_OPCLASS_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgOperatorIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_OPERATOR_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgOpfamilyIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_OPFAMILY_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgOptionsToTable = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_OPTIONS_TO_TABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgPartitionAncestors = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_PARTITION_ANCESTORS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgPartitionRoot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_PARTITION_ROOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgPartitionTree = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_PARTITION_TREE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgPostmasterStartTime = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_POSTMASTER_START_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgPromote = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_PROMOTE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReadBinaryFile = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_READ_BINARY_FILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReadFile = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_READ_FILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgRelationFilenode = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_RELATION_FILENODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgRelationFilepath = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_RELATION_FILEPATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgRelationSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_RELATION_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReloadConf = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_RELOAD_CONF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginAdvance = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_ADVANCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginCreate = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_CREATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginDrop = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_DROP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginOid = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_OID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginProgress = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_PROGRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginSessionIsSetup = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_SESSION_IS_SETUP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginSessionProgress = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_SESSION_PROGRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginSessionReset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_SESSION_RESET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginSessionSetup = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_SESSION_SETUP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginXactReset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_XACT_RESET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationOriginXactSetup = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_ORIGIN_XACT_SETUP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgReplicationSlotAdvance = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_REPLICATION_SLOT_ADVANCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgRestoreAttributeStats = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_RESTORE_ATTRIBUTE_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgRestoreRelationStats = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_RESTORE_RELATION_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgRotateLogfile = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_ROTATE_LOGFILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSafeSnapshotBlockingPids = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SAFE_SNAPSHOT_BLOCKING_PIDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSettingsGetFlags = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SETTINGS_GET_FLAGS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSizeBytes = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SIZE_BYTES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSizePretty = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SIZE_PRETTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSleep = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SLEEP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSleepFor = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SLEEP_FOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSleepUntil = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SLEEP_UNTIL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSnapshotXip = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SNAPSHOT_XIP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSnapshotXmax = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SNAPSHOT_XMAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSnapshotXmin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SNAPSHOT_XMIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSplitWalfileName = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SPLIT_WALFILE_NAME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgStatFile = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_STAT_FILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgStatisticsObjIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_STATISTICS_OBJ_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSwitchWal = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SWITCH_WAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgSyncReplicationSlots = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_SYNC_REPLICATION_SLOTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTableIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TABLE_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTableSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TABLE_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTablespaceDatabases = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TABLESPACE_DATABASES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTablespaceLocation = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TABLESPACE_LOCATION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTablespaceSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TABLESPACE_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTerminateBackend = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TERMINATE_BACKEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTotalRelationSize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TOTAL_RELATION_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTriggerDepth = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TRIGGER_DEPTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTryAdvisoryLock = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TRY_ADVISORY_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTryAdvisoryLockShared = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TRY_ADVISORY_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTryAdvisoryXactLock = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TRY_ADVISORY_XACT_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTryAdvisoryXactLockShared = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TRY_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTsConfigIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TS_CONFIG_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTsDictIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TS_DICT_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTsParserIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TS_PARSER_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTsTemplateIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TS_TEMPLATE_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTypeIsVisible = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TYPE_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgTypeof = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_TYPEOF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgVisibleInSnapshot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_VISIBLE_IN_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgWalfileName = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_WALFILE_NAME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgWalfileNameOffset = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_WALFILE_NAME_OFFSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgWalLsnDiff = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_WAL_LSN_DIFF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgWalReplayPause = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_WAL_REPLAY_PAUSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgWalReplayResume = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_WAL_REPLAY_RESUME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgWalSummaryContents = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_WAL_SUMMARY_CONTENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgXactCommitTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_XACT_COMMIT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgXactCommitTimestampOrigin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_XACT_COMMIT_TIMESTAMP_ORIGIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pgXactStatus = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PG_XACT_STATUS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.phrasetoTsquery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PHRASETO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.pi = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PI", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.plaintoTsquery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "PLAINTO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.point = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "POINT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.polygon = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "POLYGON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.popen = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "POPEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.position = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.position.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "POSITION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.power = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.power.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "POWER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.queryToXml = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUERY_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.queryToXmlAndXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUERY_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.queryToXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUERY_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.querytree = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUERYTREE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.quoteIdent = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUOTE_IDENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.quoteLiteral = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUOTE_LITERAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.quoteNullable = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "QUOTE_NULLABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.radians = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RADIANS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.radius = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RADIUS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.random = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RANDOM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.randomNormal = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RANDOM_NORMAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rangeAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RANGE_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rangeIntersectAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RANGE_INTERSECT_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rangeMerge = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RANGE_MERGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rank = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.rank.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpCount = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpInstr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_INSTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpLike = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_LIKE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpMatch = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_MATCH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpMatches = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_MATCHES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpReplace = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_REPLACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpSplitToArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_SPLIT_TO_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpSplitToTable = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_SPLIT_TO_TABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regexpSubstr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGEXP_SUBSTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrAvgx = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrAvgx.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_AVGX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrAvgy = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrAvgy.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_AVGY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrCount = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrCount.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrIntercept = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrIntercept.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_INTERCEPT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrR2 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrR2.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_R2", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrSlope = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrSlope.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_SLOPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrSxx = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrSxx.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_SXX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrSxy = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrSxy.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_SXY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.regrSyy = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.regrSyy.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REGR_SYY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.repeat = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REPEAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.replace = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.replace.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REPLACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.reverse = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "REVERSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.right = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.right.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RIGHT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.round = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ROUND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rowNumber = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ROW_NUMBER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rowSecurityActive = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ROW_SECURITY_ACTIVE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rowToJson = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "ROW_TO_JSON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rpad = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.rpad.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RPAD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.rtrim = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.rtrim.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "RTRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.scale = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.scale.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SCALE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.schemaToXml = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SCHEMA_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.schemaToXmlAndXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SCHEMA_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.schemaToXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SCHEMA_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setBit = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SET_BIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setByte = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SET_BYTE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setConfig = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SET_CONFIG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setMasklen = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SET_MASKLEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setseed = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SETSEED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setval = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SETVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.setweight = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SETWEIGHT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sha224 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SHA224", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sha256 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SHA256", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sha384 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SHA384", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sha512 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SHA512", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.shobjDescription = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SHOBJ_DESCRIPTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sign = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SIGN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.sin.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sind = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SIND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sinh = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.sinh.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SINH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.slope = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SLOPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.splitPart = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SPLIT_PART", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sqrt = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.sqrt.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SQRT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.startsWith = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STARTS_WITH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.statementTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STATEMENT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.stddev = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STDDEV", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.stddevPop = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.stddevPop.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STDDEV_POP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.stddevSamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.stddevSamp.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STDDEV_SAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.stringAgg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STRING_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.stringToArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STRING_TO_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.stringToTable = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STRING_TO_TABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.strip = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.strip.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STRIP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.strpos = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "STRPOS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.substr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SUBSTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.substring = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.substring.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SUBSTRING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.sum = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.sum.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SUM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.suppressRedundantUpdatesTrigger = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "SUPPRESS_REDUNDANT_UPDATES_TRIGGER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tableToXml = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TABLE_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tableToXmlAndXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TABLE_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tableToXmlschema = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TABLE_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tan = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.tan.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TAN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tand = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TAND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tanh = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.tanh.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TANH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.timeofday = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TIMEOFDAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toAscii = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_ASCII", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toBin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_BIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toChar = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_CHAR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toDate = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_DATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toHex = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_HEX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toJson = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_JSON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toJsonb = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_JSONB", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toNumber = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_NUMBER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toOct = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_OCT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegclass = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGCLASS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegcollation = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGCOLLATION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegnamespace = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGNAMESPACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegoper = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGOPER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegoperator = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGOPERATOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegproc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGPROC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegprocedure = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGPROCEDURE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegrole = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGROLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegtype = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGTYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toRegtypemod = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_REGTYPEMOD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toText = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CAST" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toTsquery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.toTsvector = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.transactionTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TRANSACTION_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.translate = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.translate.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TRANSLATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.trim = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.trim.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.trimArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.trimArray.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TRIM_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.trimScale = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TRIM_SCALE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.trunc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TRUNC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsDebug = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_DEBUG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsDelete = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_DELETE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsFilter = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_FILTER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsHeadline = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_HEADLINE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsLexize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_LEXIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsParse = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_PARSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsqueryPhrase = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TSQUERY_PHRASE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsRank = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsRankCd = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_RANK_CD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsRewrite = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_REWRITE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsStat = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_STAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsTokenType = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TS_TOKEN_TYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsvectorToArray = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TSVECTOR_TO_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsvectorUpdateTrigger = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TSVECTOR_UPDATE_TRIGGER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.tsvectorUpdateTriggerColumn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TSVECTOR_UPDATE_TRIGGER_COLUMN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidCurrent = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_CURRENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidCurrentIfAssigned = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_CURRENT_IF_ASSIGNED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidCurrentSnapshot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_CURRENT_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidSnapshotXip = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_SNAPSHOT_XIP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidSnapshotXmax = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_SNAPSHOT_XMAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidSnapshotXmin = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_SNAPSHOT_XMIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidStatus = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_STATUS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.txidVisibleInSnapshot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "TXID_VISIBLE_IN_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.unicodeAssigned = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UNICODE_ASSIGNED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.unicodeVersion = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UNICODE_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.unistr = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UNISTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.unnest = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.unnest.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UNNEST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.upper = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.upper.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UPPER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.upperInc = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UPPER_INC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.upperInf = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UPPER_INF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.uuidExtractTimestamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UUID_EXTRACT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.uuidExtractVersion = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UUID_EXTRACT_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.uuidv4 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UUIDV4", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.uuidv7 = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "UUIDV7", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.variance = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "VARIANCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.varPop = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.varPop.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "VAR_POP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.varSamp = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.varSamp.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "VAR_SAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.version = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.version.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.websearchToTsquery = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "WEBSEARCH_TO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.width = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "WIDTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.widthBucket = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.widthBucket.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "WIDTH_BUCKET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlagg = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlagg.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLAGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlattributes = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlattributes.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLATTRIBUTES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlcomment = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlcomment.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLCOMMENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlconcat = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlconcat.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLCONCAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlelement = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlelement.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLELEMENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlexists = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlexists.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLEXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlforest = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlforest.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLFOREST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlIsWellFormed = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XML_IS_WELL_FORMED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlIsWellFormedContent = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XML_IS_WELL_FORMED_CONTENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlIsWellFormedDocument = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XML_IS_WELL_FORMED_DOCUMENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlparse = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlparse.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLPARSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlpi = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlpi.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLPI", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlroot = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlroot.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLROOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmlserialize = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmlserialize.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLSERIALIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xmltext = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        if (params.length == 0) {
-            return _super.prototype.xmltext.call(this);
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XMLTEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xpath = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XPATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    AllFunctionBuilder.prototype.xpathExists = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return _super.prototype.pushFunction.apply(this, __spreadArray([{ name: "XPATH_EXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }], params, false));
-    };
-    return AllFunctionBuilder;
-}(BaseQueryBuilder));
-export { AllFunctionBuilder };
+    abs(...params) {
+        if (params.length == 0) {
+            return super.abs();
+        }
+        return super.pushFunction({ name: "ABS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    acldefault(...params) {
+        return super.pushFunction({ name: "ACLDEFAULT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    aclexplode(...params) {
+        return super.pushFunction({ name: "ACLEXPLODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    acos(...params) {
+        if (params.length == 0) {
+            return super.acos();
+        }
+        return super.pushFunction({ name: "ACOS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    acosd(...params) {
+        return super.pushFunction({ name: "ACOSD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    acosh(...params) {
+        return super.pushFunction({ name: "ACOSH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    age(...params) {
+        return super.pushFunction({ name: "AGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    anyValue(...params) {
+        if (params.length == 0) {
+            return super.anyValue();
+        }
+        return super.pushFunction({ name: "ANY_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    area(...params) {
+        return super.pushFunction({ name: "AREA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayAgg(...params) {
+        if (params.length == 0) {
+            return super.arrayAgg();
+        }
+        return super.pushFunction({ name: "ARRAY_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayAppend(...params) {
+        return super.pushFunction({ name: "ARRAY_APPEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayCat(...params) {
+        return super.pushFunction({ name: "ARRAY_CAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayDims(...params) {
+        return super.pushFunction({ name: "ARRAY_DIMS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayFill(...params) {
+        return super.pushFunction({ name: "ARRAY_FILL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayLength(...params) {
+        return super.pushFunction({ name: "ARRAY_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayLower(...params) {
+        return super.pushFunction({ name: "ARRAY_LOWER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayNdims(...params) {
+        return super.pushFunction({ name: "ARRAY_NDIMS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayPosition(...params) {
+        return super.pushFunction({ name: "ARRAY_POSITION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayPositions(...params) {
+        return super.pushFunction({ name: "ARRAY_POSITIONS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayPrepend(...params) {
+        return super.pushFunction({ name: "ARRAY_PREPEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayRemove(...params) {
+        return super.pushFunction({ name: "ARRAY_REMOVE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayReplace(...params) {
+        return super.pushFunction({ name: "ARRAY_REPLACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayReverse(...params) {
+        return super.pushFunction({ name: "ARRAY_REVERSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arraySample(...params) {
+        return super.pushFunction({ name: "ARRAY_SAMPLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayShuffle(...params) {
+        return super.pushFunction({ name: "ARRAY_SHUFFLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arraySort(...params) {
+        return super.pushFunction({ name: "ARRAY_SORT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayToJson(...params) {
+        return super.pushFunction({ name: "ARRAY_TO_JSON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayToString(...params) {
+        return super.pushFunction({ name: "ARRAY_TO_STRING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayToTsvector(...params) {
+        return super.pushFunction({ name: "ARRAY_TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    arrayUpper(...params) {
+        return super.pushFunction({ name: "ARRAY_UPPER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ascii(...params) {
+        return super.pushFunction({ name: "ASCII", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    asin(...params) {
+        if (params.length == 0) {
+            return super.asin();
+        }
+        return super.pushFunction({ name: "ASIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    asind(...params) {
+        return super.pushFunction({ name: "ASIND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    asinh(...params) {
+        return super.pushFunction({ name: "ASINH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    atan(...params) {
+        if (params.length == 0) {
+            return super.atan();
+        }
+        return super.pushFunction({ name: "ATAN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    atan2(...params) {
+        return super.pushFunction({ name: "ATAN2", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    atan2d(...params) {
+        return super.pushFunction({ name: "ATAN2D", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    atand(...params) {
+        return super.pushFunction({ name: "ATAND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    atanh(...params) {
+        return super.pushFunction({ name: "ATANH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    avg(...params) {
+        if (params.length == 0) {
+            return super.avg();
+        }
+        return super.pushFunction({ name: "AVG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    bitAnd(...params) {
+        return super.pushFunction({ name: "BIT_AND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    bitCount(...params) {
+        return super.pushFunction({ name: "BIT_COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    bitLength(...params) {
+        if (params.length == 0) {
+            return super.bitLength();
+        }
+        return super.pushFunction({ name: "BIT_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    bitOr(...params) {
+        return super.pushFunction({ name: "BIT_OR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    bitXor(...params) {
+        return super.pushFunction({ name: "BIT_XOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    boolAnd(...params) {
+        return super.pushFunction({ name: "BOOL_AND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    boolOr(...params) {
+        return super.pushFunction({ name: "BOOL_OR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    boundBox(...params) {
+        return super.pushFunction({ name: "BOUND_BOX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    box(...params) {
+        return super.pushFunction({ name: "BOX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    brinDesummarizeRange(...params) {
+        return super.pushFunction({ name: "BRIN_DESUMMARIZE_RANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    brinSummarizeNewValues(...params) {
+        return super.pushFunction({ name: "BRIN_SUMMARIZE_NEW_VALUES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    brinSummarizeRange(...params) {
+        return super.pushFunction({ name: "BRIN_SUMMARIZE_RANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    broadcast(...params) {
+        return super.pushFunction({ name: "BROADCAST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    btrim(...params) {
+        if (params.length == 0) {
+            return super.btrim();
+        }
+        return super.pushFunction({ name: "BTRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cardinality(...params) {
+        if (params.length == 0) {
+            return super.cardinality();
+        }
+        return super.pushFunction({ name: "CARDINALITY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    casefold(...params) {
+        return super.pushFunction({ name: "CASEFOLD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cbrt(...params) {
+        return super.pushFunction({ name: "CBRT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ceil(...params) {
+        if (params.length == 0) {
+            return super.ceil();
+        }
+        return super.pushFunction({ name: "CEIL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ceiling(...params) {
+        if (params.length == 0) {
+            return super.ceiling();
+        }
+        return super.pushFunction({ name: "CEILING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    center(...params) {
+        return super.pushFunction({ name: "CENTER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    characterLength(...params) {
+        if (params.length == 0) {
+            return super.characterLength();
+        }
+        return super.pushFunction({ name: "CHARACTER_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    charLength(...params) {
+        if (params.length == 0) {
+            return super.charLength();
+        }
+        return super.pushFunction({ name: "CHAR_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    chr(...params) {
+        return super.pushFunction({ name: "CHR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    circle(...params) {
+        return super.pushFunction({ name: "CIRCLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    clockTimestamp(...params) {
+        return super.pushFunction({ name: "CLOCK_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    coalesce(...params) {
+        if (params.length == 0) {
+            return super.coalesce();
+        }
+        return super.pushFunction({ name: "COALESCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    colDescription(...params) {
+        return super.pushFunction({ name: "COL_DESCRIPTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    collationFor(...params) {
+        return super.pushFunction({ name: "COLLATION_FOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    concat(...params) {
+        return super.pushFunction({ name: "CONCAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    concatWs(...params) {
+        return super.pushFunction({ name: "CONCAT_WS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    convert(...params) {
+        if (params.length == 0) {
+            return super.convert();
+        }
+        return super.pushFunction({ name: "CONVERT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    convertFrom(...params) {
+        return super.pushFunction({ name: "CONVERT_FROM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    convertTo(...params) {
+        return super.pushFunction({ name: "CONVERT_TO", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    corr(...params) {
+        if (params.length == 0) {
+            return super.corr();
+        }
+        return super.pushFunction({ name: "CORR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cos(...params) {
+        if (params.length == 0) {
+            return super.cos();
+        }
+        return super.pushFunction({ name: "COS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cosd(...params) {
+        return super.pushFunction({ name: "COSD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cosh(...params) {
+        if (params.length == 0) {
+            return super.cosh();
+        }
+        return super.pushFunction({ name: "COSH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cot(...params) {
+        return super.pushFunction({ name: "COT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cotd(...params) {
+        return super.pushFunction({ name: "COTD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    count(...params) {
+        if (params.length == 0) {
+            return super.count();
+        }
+        return super.pushFunction({ name: "COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    covarPop(...params) {
+        if (params.length == 0) {
+            return super.covarPop();
+        }
+        return super.pushFunction({ name: "COVAR_POP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    covarSamp(...params) {
+        if (params.length == 0) {
+            return super.covarSamp();
+        }
+        return super.pushFunction({ name: "COVAR_SAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    crc32(...params) {
+        return super.pushFunction({ name: "CRC32", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    crc32c(...params) {
+        return super.pushFunction({ name: "CRC32C", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cumeDist(...params) {
+        if (params.length == 0) {
+            return super.cumeDist();
+        }
+        return super.pushFunction({ name: "CUME_DIST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentDatabase(...params) {
+        return super.pushFunction({ name: "CURRENT_DATABASE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentDate(...params) {
+        if (params.length == 0) {
+            return super.currentDate();
+        }
+        return super.pushFunction({ name: "CURRENT_DATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentQuery(...params) {
+        return super.pushFunction({ name: "CURRENT_QUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentSchema(...params) {
+        if (params.length == 0) {
+            return super.currentSchema();
+        }
+        return super.pushFunction({ name: "CURRENT_SCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentSchemas(...params) {
+        return super.pushFunction({ name: "CURRENT_SCHEMAS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentSetting(...params) {
+        return super.pushFunction({ name: "CURRENT_SETTING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentTime(...params) {
+        if (params.length == 0) {
+            return super.currentTime();
+        }
+        return super.pushFunction({ name: "CURRENT_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currentTimestamp(...params) {
+        if (params.length == 0) {
+            return super.currentTimestamp();
+        }
+        return super.pushFunction({ name: "CURRENT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    currval(...params) {
+        return super.pushFunction({ name: "CURRVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cursorToXml(...params) {
+        return super.pushFunction({ name: "CURSOR_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    cursorToXmlschema(...params) {
+        return super.pushFunction({ name: "CURSOR_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    databaseToXml(...params) {
+        return super.pushFunction({ name: "DATABASE_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    databaseToXmlAndXmlschema(...params) {
+        return super.pushFunction({ name: "DATABASE_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    databaseToXmlschema(...params) {
+        return super.pushFunction({ name: "DATABASE_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    dateAdd(...params) {
+        return super.pushFunction({ name: "DATE_ADD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    dateBin(...params) {
+        return super.pushFunction({ name: "DATE_BIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    datePart(...params) {
+        return super.pushFunction({ name: "DATE_PART", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    dateSubtract(...params) {
+        return super.pushFunction({ name: "DATE_SUBTRACT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    dateTrunc(...params) {
+        return super.pushFunction({ name: "DATE_TRUNC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    decode(...params) {
+        return super.pushFunction({ name: "DECODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    degrees(...params) {
+        return super.pushFunction({ name: "DEGREES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    denseRank(...params) {
+        if (params.length == 0) {
+            return super.denseRank();
+        }
+        return super.pushFunction({ name: "DENSE_RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    diagonal(...params) {
+        return super.pushFunction({ name: "DIAGONAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    diameter(...params) {
+        return super.pushFunction({ name: "DIAMETER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    div(...params) {
+        return super.pushFunction({ name: "DIV", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    encode(...params) {
+        return super.pushFunction({ name: "ENCODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    enumFirst(...params) {
+        return super.pushFunction({ name: "ENUM_FIRST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    enumLast(...params) {
+        return super.pushFunction({ name: "ENUM_LAST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    enumRange(...params) {
+        return super.pushFunction({ name: "ENUM_RANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    erf(...params) {
+        return super.pushFunction({ name: "ERF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    erfc(...params) {
+        return super.pushFunction({ name: "ERFC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    every(...params) {
+        if (params.length == 0) {
+            return super.every();
+        }
+        return super.pushFunction({ name: "EVERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    exp(...params) {
+        if (params.length == 0) {
+            return super.exp();
+        }
+        return super.pushFunction({ name: "EXP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    extract(...params) {
+        if (params.length == 0) {
+            return super.extract();
+        }
+        return super.pushFunction({ name: "EXTRACT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    factorial(...params) {
+        return super.pushFunction({ name: "FACTORIAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    family(...params) {
+        if (params.length == 0) {
+            return super.family();
+        }
+        return super.pushFunction({ name: "FAMILY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    firstValue(...params) {
+        if (params.length == 0) {
+            return super.firstValue();
+        }
+        return super.pushFunction({ name: "FIRST_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    floor(...params) {
+        if (params.length == 0) {
+            return super.floor();
+        }
+        return super.pushFunction({ name: "FLOOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    format(...params) {
+        if (params.length == 0) {
+            return super.format();
+        }
+        return super.pushFunction({ name: "FORMAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    formatType(...params) {
+        return super.pushFunction({ name: "FORMAT_TYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    gamma(...params) {
+        return super.pushFunction({ name: "GAMMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    gcd(...params) {
+        return super.pushFunction({ name: "GCD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    generateSeries(...params) {
+        return super.pushFunction({ name: "GENERATE_SERIES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    generateSubscripts(...params) {
+        return super.pushFunction({ name: "GENERATE_SUBSCRIPTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    genRandomUuid(...params) {
+        return super.pushFunction({ name: "GEN_RANDOM_UUID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    getBit(...params) {
+        return super.pushFunction({ name: "GET_BIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    getByte(...params) {
+        return super.pushFunction({ name: "GET_BYTE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    getCurrentTsConfig(...params) {
+        return super.pushFunction({ name: "GET_CURRENT_TS_CONFIG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ginCleanPendingList(...params) {
+        return super.pushFunction({ name: "GIN_CLEAN_PENDING_LIST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    greatest(...params) {
+        if (params.length == 0) {
+            return super.greatest();
+        }
+        return super.pushFunction({ name: "GREATEST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    grouping(...params) {
+        if (params.length == 0) {
+            return super.grouping();
+        }
+        return super.pushFunction({ name: "GROUPING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasAnyColumnPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_ANY_COLUMN_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasColumnPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_COLUMN_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasDatabasePrivilege(...params) {
+        return super.pushFunction({ name: "HAS_DATABASE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasForeignDataWrapperPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_FOREIGN_DATA_WRAPPER_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasFunctionPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_FUNCTION_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasLanguagePrivilege(...params) {
+        return super.pushFunction({ name: "HAS_LANGUAGE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasLargeobjectPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_LARGEOBJECT_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasParameterPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_PARAMETER_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasSchemaPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_SCHEMA_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasSequencePrivilege(...params) {
+        return super.pushFunction({ name: "HAS_SEQUENCE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasServerPrivilege(...params) {
+        return super.pushFunction({ name: "HAS_SERVER_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasTablePrivilege(...params) {
+        return super.pushFunction({ name: "HAS_TABLE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasTablespacePrivilege(...params) {
+        return super.pushFunction({ name: "HAS_TABLESPACE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hasTypePrivilege(...params) {
+        return super.pushFunction({ name: "HAS_TYPE_PRIVILEGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    height(...params) {
+        return super.pushFunction({ name: "HEIGHT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    host(...params) {
+        return super.pushFunction({ name: "HOST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    hostmask(...params) {
+        return super.pushFunction({ name: "HOSTMASK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    icuUnicodeVersion(...params) {
+        return super.pushFunction({ name: "ICU_UNICODE_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    inetClientAddr(...params) {
+        return super.pushFunction({ name: "INET_CLIENT_ADDR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    inetClientPort(...params) {
+        return super.pushFunction({ name: "INET_CLIENT_PORT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    inetMerge(...params) {
+        return super.pushFunction({ name: "INET_MERGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    inetSameFamily(...params) {
+        return super.pushFunction({ name: "INET_SAME_FAMILY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    inetServerAddr(...params) {
+        return super.pushFunction({ name: "INET_SERVER_ADDR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    inetServerPort(...params) {
+        return super.pushFunction({ name: "INET_SERVER_PORT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    initcap(...params) {
+        return super.pushFunction({ name: "INITCAP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    isclosed(...params) {
+        return super.pushFunction({ name: "ISCLOSED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    isempty(...params) {
+        return super.pushFunction({ name: "ISEMPTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    isfinite(...params) {
+        return super.pushFunction({ name: "ISFINITE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    isopen(...params) {
+        return super.pushFunction({ name: "ISOPEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonAgg(...params) {
+        return super.pushFunction({ name: "JSON_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonAggStrict(...params) {
+        return super.pushFunction({ name: "JSON_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonArray(...params) {
+        if (params.length == 0) {
+            return super.jsonArray();
+        }
+        return super.pushFunction({ name: "JSON_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonArrayagg(...params) {
+        if (params.length == 0) {
+            return super.jsonArrayagg();
+        }
+        return super.pushFunction({ name: "JSON_ARRAYAGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonArrayElements(...params) {
+        return super.pushFunction({ name: "JSON_ARRAY_ELEMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonArrayElementsText(...params) {
+        return super.pushFunction({ name: "JSON_ARRAY_ELEMENTS_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonArrayLength(...params) {
+        return super.pushFunction({ name: "JSON_ARRAY_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbAgg(...params) {
+        return super.pushFunction({ name: "JSONB_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbAggStrict(...params) {
+        return super.pushFunction({ name: "JSONB_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbArrayElements(...params) {
+        return super.pushFunction({ name: "JSONB_ARRAY_ELEMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbArrayElementsText(...params) {
+        return super.pushFunction({ name: "JSONB_ARRAY_ELEMENTS_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbArrayLength(...params) {
+        return super.pushFunction({ name: "JSONB_ARRAY_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbBuildArray(...params) {
+        return super.pushFunction({ name: "JSONB_BUILD_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbBuildObject(...params) {
+        return super.pushFunction({ name: "JSONB_BUILD_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbEach(...params) {
+        return super.pushFunction({ name: "JSONB_EACH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbEachText(...params) {
+        return super.pushFunction({ name: "JSONB_EACH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbExtractPath(...params) {
+        return super.pushFunction({ name: "JSONB_EXTRACT_PATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbExtractPathText(...params) {
+        return super.pushFunction({ name: "JSONB_EXTRACT_PATH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbInsert(...params) {
+        return super.pushFunction({ name: "JSONB_INSERT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbObject(...params) {
+        return super.pushFunction({ name: "JSONB_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbObjectAgg(...params) {
+        return super.pushFunction({ name: "JSONB_OBJECT_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbObjectAggStrict(...params) {
+        return super.pushFunction({ name: "JSONB_OBJECT_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbObjectAggUnique(...params) {
+        return super.pushFunction({ name: "JSONB_OBJECT_AGG_UNIQUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbObjectAggUniqueStrict(...params) {
+        return super.pushFunction({ name: "JSONB_OBJECT_AGG_UNIQUE_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbObjectKeys(...params) {
+        return super.pushFunction({ name: "JSONB_OBJECT_KEYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathExists(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_EXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathExistsTz(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_EXISTS_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathMatch(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_MATCH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathMatchTz(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_MATCH_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathQuery(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_QUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathQueryArray(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_QUERY_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathQueryArrayTz(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_QUERY_ARRAY_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathQueryFirst(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_QUERY_FIRST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathQueryFirstTz(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_QUERY_FIRST_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPathQueryTz(...params) {
+        return super.pushFunction({ name: "JSONB_PATH_QUERY_TZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPopulateRecord(...params) {
+        return super.pushFunction({ name: "JSONB_POPULATE_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPopulateRecordset(...params) {
+        return super.pushFunction({ name: "JSONB_POPULATE_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPopulateRecordValid(...params) {
+        return super.pushFunction({ name: "JSONB_POPULATE_RECORD_VALID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbPretty(...params) {
+        return super.pushFunction({ name: "JSONB_PRETTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbSet(...params) {
+        return super.pushFunction({ name: "JSONB_SET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbSetLax(...params) {
+        return super.pushFunction({ name: "JSONB_SET_LAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbStripNulls(...params) {
+        return super.pushFunction({ name: "JSONB_STRIP_NULLS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbToRecord(...params) {
+        return super.pushFunction({ name: "JSONB_TO_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbToRecordset(...params) {
+        return super.pushFunction({ name: "JSONB_TO_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbToTsvector(...params) {
+        return super.pushFunction({ name: "JSONB_TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonbTypeof(...params) {
+        return super.pushFunction({ name: "JSONB_TYPEOF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonBuildArray(...params) {
+        return super.pushFunction({ name: "JSON_BUILD_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonBuildObject(...params) {
+        return super.pushFunction({ name: "JSON_BUILD_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonEach(...params) {
+        return super.pushFunction({ name: "JSON_EACH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonEachText(...params) {
+        return super.pushFunction({ name: "JSON_EACH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonExists(...params) {
+        if (params.length == 0) {
+            return super.jsonExists();
+        }
+        return super.pushFunction({ name: "JSON_EXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonExtractPath(...params) {
+        return super.pushFunction({ name: "JSON_EXTRACT_PATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonExtractPathText(...params) {
+        return super.pushFunction({ name: "JSON_EXTRACT_PATH_TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObject(...params) {
+        if (params.length == 0) {
+            return super.jsonObject();
+        }
+        return super.pushFunction({ name: "JSON_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObjectagg(...params) {
+        if (params.length == 0) {
+            return super.jsonObjectagg();
+        }
+        return super.pushFunction({ name: "JSON_OBJECTAGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObjectAgg(...params) {
+        return super.pushFunction({ name: "JSON_OBJECT_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObjectAggStrict(...params) {
+        return super.pushFunction({ name: "JSON_OBJECT_AGG_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObjectAggUnique(...params) {
+        return super.pushFunction({ name: "JSON_OBJECT_AGG_UNIQUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObjectAggUniqueStrict(...params) {
+        return super.pushFunction({ name: "JSON_OBJECT_AGG_UNIQUE_STRICT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonObjectKeys(...params) {
+        return super.pushFunction({ name: "JSON_OBJECT_KEYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonPopulateRecord(...params) {
+        return super.pushFunction({ name: "JSON_POPULATE_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonPopulateRecordset(...params) {
+        return super.pushFunction({ name: "JSON_POPULATE_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonQuery(...params) {
+        if (params.length == 0) {
+            return super.jsonQuery();
+        }
+        return super.pushFunction({ name: "JSON_QUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonScalar(...params) {
+        if (params.length == 0) {
+            return super.jsonScalar();
+        }
+        return super.pushFunction({ name: "JSON_SCALAR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonSerialize(...params) {
+        if (params.length == 0) {
+            return super.jsonSerialize();
+        }
+        return super.pushFunction({ name: "JSON_SERIALIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonStripNulls(...params) {
+        return super.pushFunction({ name: "JSON_STRIP_NULLS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonToRecord(...params) {
+        return super.pushFunction({ name: "JSON_TO_RECORD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonToRecordset(...params) {
+        return super.pushFunction({ name: "JSON_TO_RECORDSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonToTsvector(...params) {
+        return super.pushFunction({ name: "JSON_TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonTypeof(...params) {
+        return super.pushFunction({ name: "JSON_TYPEOF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    jsonValue(...params) {
+        if (params.length == 0) {
+            return super.jsonValue();
+        }
+        return super.pushFunction({ name: "JSON_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    justifyDays(...params) {
+        return super.pushFunction({ name: "JUSTIFY_DAYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    justifyHours(...params) {
+        return super.pushFunction({ name: "JUSTIFY_HOURS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    justifyInterval(...params) {
+        return super.pushFunction({ name: "JUSTIFY_INTERVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lag(...params) {
+        if (params.length == 0) {
+            return super.lag();
+        }
+        return super.pushFunction({ name: "LAG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lastval(...params) {
+        return super.pushFunction({ name: "LASTVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lastValue(...params) {
+        if (params.length == 0) {
+            return super.lastValue();
+        }
+        return super.pushFunction({ name: "LAST_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lcm(...params) {
+        return super.pushFunction({ name: "LCM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lead(...params) {
+        if (params.length == 0) {
+            return super.lead();
+        }
+        return super.pushFunction({ name: "LEAD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    least(...params) {
+        if (params.length == 0) {
+            return super.least();
+        }
+        return super.pushFunction({ name: "LEAST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    left(...params) {
+        if (params.length == 0) {
+            return super.left();
+        }
+        return super.pushFunction({ name: "LEFT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    length(...params) {
+        if (params.length == 0) {
+            return super.length();
+        }
+        return super.pushFunction({ name: "LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lgamma(...params) {
+        return super.pushFunction({ name: "LGAMMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    line(...params) {
+        return super.pushFunction({ name: "LINE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ln(...params) {
+        if (params.length == 0) {
+            return super.ln();
+        }
+        return super.pushFunction({ name: "LN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    localtime(...params) {
+        if (params.length == 0) {
+            return super.localtime();
+        }
+        return super.pushFunction({ name: "LOCALTIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    localtimestamp(...params) {
+        if (params.length == 0) {
+            return super.localtimestamp();
+        }
+        return super.pushFunction({ name: "LOCALTIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    log(...params) {
+        if (params.length == 0) {
+            return super.log();
+        }
+        return super.pushFunction({ name: "LOG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    log10(...params) {
+        if (params.length == 0) {
+            return super.log10();
+        }
+        return super.pushFunction({ name: "LOG10", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lower(...params) {
+        if (params.length == 0) {
+            return super.lower();
+        }
+        return super.pushFunction({ name: "LOWER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lowerInc(...params) {
+        return super.pushFunction({ name: "LOWER_INC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lowerInf(...params) {
+        return super.pushFunction({ name: "LOWER_INF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lpad(...params) {
+        if (params.length == 0) {
+            return super.lpad();
+        }
+        return super.pushFunction({ name: "LPAD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    lseg(...params) {
+        return super.pushFunction({ name: "LSEG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ltrim(...params) {
+        if (params.length == 0) {
+            return super.ltrim();
+        }
+        return super.pushFunction({ name: "LTRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    macaddr8Set7bit(...params) {
+        return super.pushFunction({ name: "MACADDR8_SET7BIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    makeaclitem(...params) {
+        return super.pushFunction({ name: "MAKEACLITEM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    makeDate(...params) {
+        return super.pushFunction({ name: "MAKE_DATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    makeInterval(...params) {
+        return super.pushFunction({ name: "MAKE_INTERVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    makeTime(...params) {
+        return super.pushFunction({ name: "MAKE_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    makeTimestamp(...params) {
+        return super.pushFunction({ name: "MAKE_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    makeTimestamptz(...params) {
+        return super.pushFunction({ name: "MAKE_TIMESTAMPTZ", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    masklen(...params) {
+        return super.pushFunction({ name: "MASKLEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    max(...params) {
+        if (params.length == 0) {
+            return super.max();
+        }
+        return super.pushFunction({ name: "MAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    md5(...params) {
+        return super.pushFunction({ name: "MD5", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    mergeAction(...params) {
+        return super.pushFunction({ name: "MERGE_ACTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    min(...params) {
+        if (params.length == 0) {
+            return super.min();
+        }
+        return super.pushFunction({ name: "MIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    minScale(...params) {
+        return super.pushFunction({ name: "MIN_SCALE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    mod(...params) {
+        if (params.length == 0) {
+            return super.mod();
+        }
+        return super.pushFunction({ name: "MOD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    mode(...params) {
+        if (params.length == 0) {
+            return super.mode();
+        }
+        return super.pushFunction({ name: "MODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    multirange(...params) {
+        return super.pushFunction({ name: "MULTIRANGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    mxidAge(...params) {
+        return super.pushFunction({ name: "MXID_AGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    netmask(...params) {
+        return super.pushFunction({ name: "NETMASK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    network(...params) {
+        return super.pushFunction({ name: "NETWORK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    nextval(...params) {
+        return super.pushFunction({ name: "NEXTVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    normalize(...params) {
+        if (params.length == 0) {
+            return super.normalize();
+        }
+        return super.pushFunction({ name: "NORMALIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    now(...params) {
+        return super.pushFunction({ name: "NOW", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    npoints(...params) {
+        return super.pushFunction({ name: "NPOINTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    nthValue(...params) {
+        if (params.length == 0) {
+            return super.nthValue();
+        }
+        return super.pushFunction({ name: "NTH_VALUE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    ntile(...params) {
+        if (params.length == 0) {
+            return super.ntile();
+        }
+        return super.pushFunction({ name: "NTILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    nullif(...params) {
+        if (params.length == 0) {
+            return super.nullif();
+        }
+        return super.pushFunction({ name: "NULLIF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    numnode(...params) {
+        return super.pushFunction({ name: "NUMNODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    objDescription(...params) {
+        return super.pushFunction({ name: "OBJ_DESCRIPTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    octetLength(...params) {
+        if (params.length == 0) {
+            return super.octetLength();
+        }
+        return super.pushFunction({ name: "OCTET_LENGTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    overlay(...params) {
+        if (params.length == 0) {
+            return super.overlay();
+        }
+        return super.pushFunction({ name: "OVERLAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    parseIdent(...params) {
+        return super.pushFunction({ name: "PARSE_IDENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    path(...params) {
+        if (params.length == 0) {
+            return super.path();
+        }
+        return super.pushFunction({ name: "PATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pclose(...params) {
+        return super.pushFunction({ name: "PCLOSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    percentileCont(...params) {
+        if (params.length == 0) {
+            return super.percentileCont();
+        }
+        return super.pushFunction({ name: "PERCENTILE_CONT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    percentileDisc(...params) {
+        if (params.length == 0) {
+            return super.percentileDisc();
+        }
+        return super.pushFunction({ name: "PERCENTILE_DISC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    percentRank(...params) {
+        if (params.length == 0) {
+            return super.percentRank();
+        }
+        return super.pushFunction({ name: "PERCENT_RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryLock(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryLockShared(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryUnlock(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_UNLOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryUnlockAll(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_UNLOCK_ALL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryUnlockShared(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_UNLOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryXactLock(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_XACT_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAdvisoryXactLockShared(...params) {
+        return super.pushFunction({ name: "PG_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgAvailableWalSummaries(...params) {
+        return super.pushFunction({ name: "PG_AVAILABLE_WAL_SUMMARIES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgBackendPid(...params) {
+        return super.pushFunction({ name: "PG_BACKEND_PID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgBackupStart(...params) {
+        return super.pushFunction({ name: "PG_BACKUP_START", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgBackupStop(...params) {
+        return super.pushFunction({ name: "PG_BACKUP_STOP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgBasetype(...params) {
+        return super.pushFunction({ name: "PG_BASETYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgBlockingPids(...params) {
+        return super.pushFunction({ name: "PG_BLOCKING_PIDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCancelBackend(...params) {
+        return super.pushFunction({ name: "PG_CANCEL_BACKEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCharToEncoding(...params) {
+        return super.pushFunction({ name: "PG_CHAR_TO_ENCODING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgClearAttributeStats(...params) {
+        return super.pushFunction({ name: "PG_CLEAR_ATTRIBUTE_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgClearRelationStats(...params) {
+        return super.pushFunction({ name: "PG_CLEAR_RELATION_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgClientEncoding(...params) {
+        return super.pushFunction({ name: "PG_CLIENT_ENCODING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCollationActualVersion(...params) {
+        return super.pushFunction({ name: "PG_COLLATION_ACTUAL_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCollationIsVisible(...params) {
+        return super.pushFunction({ name: "PG_COLLATION_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgColumnCompression(...params) {
+        return super.pushFunction({ name: "PG_COLUMN_COMPRESSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgColumnSize(...params) {
+        return super.pushFunction({ name: "PG_COLUMN_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgColumnToastChunkId(...params) {
+        return super.pushFunction({ name: "PG_COLUMN_TOAST_CHUNK_ID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgConfLoadTime(...params) {
+        return super.pushFunction({ name: "PG_CONF_LOAD_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgControlCheckpoint(...params) {
+        return super.pushFunction({ name: "PG_CONTROL_CHECKPOINT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgControlInit(...params) {
+        return super.pushFunction({ name: "PG_CONTROL_INIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgControlRecovery(...params) {
+        return super.pushFunction({ name: "PG_CONTROL_RECOVERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgControlSystem(...params) {
+        return super.pushFunction({ name: "PG_CONTROL_SYSTEM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgConversionIsVisible(...params) {
+        return super.pushFunction({ name: "PG_CONVERSION_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCopyLogicalReplicationSlot(...params) {
+        return super.pushFunction({ name: "PG_COPY_LOGICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCopyPhysicalReplicationSlot(...params) {
+        return super.pushFunction({ name: "PG_COPY_PHYSICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCreateLogicalReplicationSlot(...params) {
+        return super.pushFunction({ name: "PG_CREATE_LOGICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCreatePhysicalReplicationSlot(...params) {
+        return super.pushFunction({ name: "PG_CREATE_PHYSICAL_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCreateRestorePoint(...params) {
+        return super.pushFunction({ name: "PG_CREATE_RESTORE_POINT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentLogfile(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_LOGFILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentSnapshot(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentWalFlushLsn(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_WAL_FLUSH_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentWalInsertLsn(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_WAL_INSERT_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentWalLsn(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_WAL_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentXactId(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_XACT_ID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgCurrentXactIdIfAssigned(...params) {
+        return super.pushFunction({ name: "PG_CURRENT_XACT_ID_IF_ASSIGNED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgDatabaseCollationActualVersion(...params) {
+        return super.pushFunction({ name: "PG_DATABASE_COLLATION_ACTUAL_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgDatabaseSize(...params) {
+        return super.pushFunction({ name: "PG_DATABASE_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgDescribeObject(...params) {
+        return super.pushFunction({ name: "PG_DESCRIBE_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgDropReplicationSlot(...params) {
+        return super.pushFunction({ name: "PG_DROP_REPLICATION_SLOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgEncodingToChar(...params) {
+        return super.pushFunction({ name: "PG_ENCODING_TO_CHAR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgEventTriggerDdlCommands(...params) {
+        return super.pushFunction({ name: "PG_EVENT_TRIGGER_DDL_COMMANDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgEventTriggerDroppedObjects(...params) {
+        return super.pushFunction({ name: "PG_EVENT_TRIGGER_DROPPED_OBJECTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgEventTriggerTableRewriteOid(...params) {
+        return super.pushFunction({ name: "PG_EVENT_TRIGGER_TABLE_REWRITE_OID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgEventTriggerTableRewriteReason(...params) {
+        return super.pushFunction({ name: "PG_EVENT_TRIGGER_TABLE_REWRITE_REASON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgExportSnapshot(...params) {
+        return super.pushFunction({ name: "PG_EXPORT_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgFilenodeRelation(...params) {
+        return super.pushFunction({ name: "PG_FILENODE_RELATION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgFunctionIsVisible(...params) {
+        return super.pushFunction({ name: "PG_FUNCTION_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetAcl(...params) {
+        return super.pushFunction({ name: "PG_GET_ACL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetCatalogForeignKeys(...params) {
+        return super.pushFunction({ name: "PG_GET_CATALOG_FOREIGN_KEYS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetConstraintdef(...params) {
+        return super.pushFunction({ name: "PG_GET_CONSTRAINTDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetExpr(...params) {
+        return super.pushFunction({ name: "PG_GET_EXPR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetFunctionArguments(...params) {
+        return super.pushFunction({ name: "PG_GET_FUNCTION_ARGUMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetFunctiondef(...params) {
+        return super.pushFunction({ name: "PG_GET_FUNCTIONDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetFunctionIdentityArguments(...params) {
+        return super.pushFunction({ name: "PG_GET_FUNCTION_IDENTITY_ARGUMENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetFunctionResult(...params) {
+        return super.pushFunction({ name: "PG_GET_FUNCTION_RESULT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetIndexdef(...params) {
+        return super.pushFunction({ name: "PG_GET_INDEXDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetKeywords(...params) {
+        return super.pushFunction({ name: "PG_GET_KEYWORDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetLoadedModules(...params) {
+        return super.pushFunction({ name: "PG_GET_LOADED_MODULES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetMultixactMembers(...params) {
+        return super.pushFunction({ name: "PG_GET_MULTIXACT_MEMBERS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetObjectAddress(...params) {
+        return super.pushFunction({ name: "PG_GET_OBJECT_ADDRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetPartitionConstraintdef(...params) {
+        return super.pushFunction({ name: "PG_GET_PARTITION_CONSTRAINTDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetPartkeydef(...params) {
+        return super.pushFunction({ name: "PG_GET_PARTKEYDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetRuledef(...params) {
+        return super.pushFunction({ name: "PG_GET_RULEDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetSerialSequence(...params) {
+        return super.pushFunction({ name: "PG_GET_SERIAL_SEQUENCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetStatisticsobjdef(...params) {
+        return super.pushFunction({ name: "PG_GET_STATISTICSOBJDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetTriggerdef(...params) {
+        return super.pushFunction({ name: "PG_GET_TRIGGERDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetUserbyid(...params) {
+        return super.pushFunction({ name: "PG_GET_USERBYID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetViewdef(...params) {
+        return super.pushFunction({ name: "PG_GET_VIEWDEF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetWalReplayPauseState(...params) {
+        return super.pushFunction({ name: "PG_GET_WAL_REPLAY_PAUSE_STATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetWalResourceManagers(...params) {
+        return super.pushFunction({ name: "PG_GET_WAL_RESOURCE_MANAGERS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgGetWalSummarizerState(...params) {
+        return super.pushFunction({ name: "PG_GET_WAL_SUMMARIZER_STATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgHasRole(...params) {
+        return super.pushFunction({ name: "PG_HAS_ROLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIdentifyObject(...params) {
+        return super.pushFunction({ name: "PG_IDENTIFY_OBJECT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIdentifyObjectAsAddress(...params) {
+        return super.pushFunction({ name: "PG_IDENTIFY_OBJECT_AS_ADDRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgImportSystemCollations(...params) {
+        return super.pushFunction({ name: "PG_IMPORT_SYSTEM_COLLATIONS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIndexamHasProperty(...params) {
+        return super.pushFunction({ name: "PG_INDEXAM_HAS_PROPERTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIndexColumnHasProperty(...params) {
+        return super.pushFunction({ name: "PG_INDEX_COLUMN_HAS_PROPERTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIndexesSize(...params) {
+        return super.pushFunction({ name: "PG_INDEXES_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIndexHasProperty(...params) {
+        return super.pushFunction({ name: "PG_INDEX_HAS_PROPERTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgInputErrorInfo(...params) {
+        return super.pushFunction({ name: "PG_INPUT_ERROR_INFO", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgInputIsValid(...params) {
+        return super.pushFunction({ name: "PG_INPUT_IS_VALID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIsInRecovery(...params) {
+        return super.pushFunction({ name: "PG_IS_IN_RECOVERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIsOtherTempSchema(...params) {
+        return super.pushFunction({ name: "PG_IS_OTHER_TEMP_SCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgIsWalReplayPaused(...params) {
+        return super.pushFunction({ name: "PG_IS_WAL_REPLAY_PAUSED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgJitAvailable(...params) {
+        return super.pushFunction({ name: "PG_JIT_AVAILABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLastCommittedXact(...params) {
+        return super.pushFunction({ name: "PG_LAST_COMMITTED_XACT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLastWalReceiveLsn(...params) {
+        return super.pushFunction({ name: "PG_LAST_WAL_RECEIVE_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLastWalReplayLsn(...params) {
+        return super.pushFunction({ name: "PG_LAST_WAL_REPLAY_LSN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLastXactReplayTimestamp(...params) {
+        return super.pushFunction({ name: "PG_LAST_XACT_REPLAY_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgListeningChannels(...params) {
+        return super.pushFunction({ name: "PG_LISTENING_CHANNELS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogBackendMemoryContexts(...params) {
+        return super.pushFunction({ name: "PG_LOG_BACKEND_MEMORY_CONTEXTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogicalEmitMessage(...params) {
+        return super.pushFunction({ name: "PG_LOGICAL_EMIT_MESSAGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogicalSlotGetBinaryChanges(...params) {
+        return super.pushFunction({ name: "PG_LOGICAL_SLOT_GET_BINARY_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogicalSlotGetChanges(...params) {
+        return super.pushFunction({ name: "PG_LOGICAL_SLOT_GET_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogicalSlotPeekBinaryChanges(...params) {
+        return super.pushFunction({ name: "PG_LOGICAL_SLOT_PEEK_BINARY_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogicalSlotPeekChanges(...params) {
+        return super.pushFunction({ name: "PG_LOGICAL_SLOT_PEEK_CHANGES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLogStandbySnapshot(...params) {
+        return super.pushFunction({ name: "PG_LOG_STANDBY_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsArchiveStatusdir(...params) {
+        return super.pushFunction({ name: "PG_LS_ARCHIVE_STATUSDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsDir(...params) {
+        return super.pushFunction({ name: "PG_LS_DIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsLogdir(...params) {
+        return super.pushFunction({ name: "PG_LS_LOGDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsLogicalmapdir(...params) {
+        return super.pushFunction({ name: "PG_LS_LOGICALMAPDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsLogicalsnapdir(...params) {
+        return super.pushFunction({ name: "PG_LS_LOGICALSNAPDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsReplslotdir(...params) {
+        return super.pushFunction({ name: "PG_LS_REPLSLOTDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsSummariesdir(...params) {
+        return super.pushFunction({ name: "PG_LS_SUMMARIESDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsTmpdir(...params) {
+        return super.pushFunction({ name: "PG_LS_TMPDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgLsWaldir(...params) {
+        return super.pushFunction({ name: "PG_LS_WALDIR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgMcvListItems(...params) {
+        return super.pushFunction({ name: "PG_MCV_LIST_ITEMS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgMyTempSchema(...params) {
+        return super.pushFunction({ name: "PG_MY_TEMP_SCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgNotificationQueueUsage(...params) {
+        return super.pushFunction({ name: "PG_NOTIFICATION_QUEUE_USAGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgNumaAvailable(...params) {
+        return super.pushFunction({ name: "PG_NUMA_AVAILABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgOpclassIsVisible(...params) {
+        return super.pushFunction({ name: "PG_OPCLASS_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgOperatorIsVisible(...params) {
+        return super.pushFunction({ name: "PG_OPERATOR_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgOpfamilyIsVisible(...params) {
+        return super.pushFunction({ name: "PG_OPFAMILY_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgOptionsToTable(...params) {
+        return super.pushFunction({ name: "PG_OPTIONS_TO_TABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgPartitionAncestors(...params) {
+        return super.pushFunction({ name: "PG_PARTITION_ANCESTORS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgPartitionRoot(...params) {
+        return super.pushFunction({ name: "PG_PARTITION_ROOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgPartitionTree(...params) {
+        return super.pushFunction({ name: "PG_PARTITION_TREE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgPostmasterStartTime(...params) {
+        return super.pushFunction({ name: "PG_POSTMASTER_START_TIME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgPromote(...params) {
+        return super.pushFunction({ name: "PG_PROMOTE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReadBinaryFile(...params) {
+        return super.pushFunction({ name: "PG_READ_BINARY_FILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReadFile(...params) {
+        return super.pushFunction({ name: "PG_READ_FILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgRelationFilenode(...params) {
+        return super.pushFunction({ name: "PG_RELATION_FILENODE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgRelationFilepath(...params) {
+        return super.pushFunction({ name: "PG_RELATION_FILEPATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgRelationSize(...params) {
+        return super.pushFunction({ name: "PG_RELATION_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReloadConf(...params) {
+        return super.pushFunction({ name: "PG_RELOAD_CONF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginAdvance(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_ADVANCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginCreate(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_CREATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginDrop(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_DROP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginOid(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_OID", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginProgress(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_PROGRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginSessionIsSetup(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_SESSION_IS_SETUP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginSessionProgress(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_SESSION_PROGRESS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginSessionReset(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_SESSION_RESET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginSessionSetup(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_SESSION_SETUP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginXactReset(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_XACT_RESET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationOriginXactSetup(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_ORIGIN_XACT_SETUP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgReplicationSlotAdvance(...params) {
+        return super.pushFunction({ name: "PG_REPLICATION_SLOT_ADVANCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgRestoreAttributeStats(...params) {
+        return super.pushFunction({ name: "PG_RESTORE_ATTRIBUTE_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgRestoreRelationStats(...params) {
+        return super.pushFunction({ name: "PG_RESTORE_RELATION_STATS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgRotateLogfile(...params) {
+        return super.pushFunction({ name: "PG_ROTATE_LOGFILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSafeSnapshotBlockingPids(...params) {
+        return super.pushFunction({ name: "PG_SAFE_SNAPSHOT_BLOCKING_PIDS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSettingsGetFlags(...params) {
+        return super.pushFunction({ name: "PG_SETTINGS_GET_FLAGS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSizeBytes(...params) {
+        return super.pushFunction({ name: "PG_SIZE_BYTES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSizePretty(...params) {
+        return super.pushFunction({ name: "PG_SIZE_PRETTY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSleep(...params) {
+        return super.pushFunction({ name: "PG_SLEEP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSleepFor(...params) {
+        return super.pushFunction({ name: "PG_SLEEP_FOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSleepUntil(...params) {
+        return super.pushFunction({ name: "PG_SLEEP_UNTIL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSnapshotXip(...params) {
+        return super.pushFunction({ name: "PG_SNAPSHOT_XIP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSnapshotXmax(...params) {
+        return super.pushFunction({ name: "PG_SNAPSHOT_XMAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSnapshotXmin(...params) {
+        return super.pushFunction({ name: "PG_SNAPSHOT_XMIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSplitWalfileName(...params) {
+        return super.pushFunction({ name: "PG_SPLIT_WALFILE_NAME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgStatFile(...params) {
+        return super.pushFunction({ name: "PG_STAT_FILE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgStatisticsObjIsVisible(...params) {
+        return super.pushFunction({ name: "PG_STATISTICS_OBJ_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSwitchWal(...params) {
+        return super.pushFunction({ name: "PG_SWITCH_WAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgSyncReplicationSlots(...params) {
+        return super.pushFunction({ name: "PG_SYNC_REPLICATION_SLOTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTableIsVisible(...params) {
+        return super.pushFunction({ name: "PG_TABLE_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTableSize(...params) {
+        return super.pushFunction({ name: "PG_TABLE_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTablespaceDatabases(...params) {
+        return super.pushFunction({ name: "PG_TABLESPACE_DATABASES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTablespaceLocation(...params) {
+        return super.pushFunction({ name: "PG_TABLESPACE_LOCATION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTablespaceSize(...params) {
+        return super.pushFunction({ name: "PG_TABLESPACE_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTerminateBackend(...params) {
+        return super.pushFunction({ name: "PG_TERMINATE_BACKEND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTotalRelationSize(...params) {
+        return super.pushFunction({ name: "PG_TOTAL_RELATION_SIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTriggerDepth(...params) {
+        return super.pushFunction({ name: "PG_TRIGGER_DEPTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTryAdvisoryLock(...params) {
+        return super.pushFunction({ name: "PG_TRY_ADVISORY_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTryAdvisoryLockShared(...params) {
+        return super.pushFunction({ name: "PG_TRY_ADVISORY_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTryAdvisoryXactLock(...params) {
+        return super.pushFunction({ name: "PG_TRY_ADVISORY_XACT_LOCK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTryAdvisoryXactLockShared(...params) {
+        return super.pushFunction({ name: "PG_TRY_ADVISORY_XACT_LOCK_SHARED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTsConfigIsVisible(...params) {
+        return super.pushFunction({ name: "PG_TS_CONFIG_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTsDictIsVisible(...params) {
+        return super.pushFunction({ name: "PG_TS_DICT_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTsParserIsVisible(...params) {
+        return super.pushFunction({ name: "PG_TS_PARSER_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTsTemplateIsVisible(...params) {
+        return super.pushFunction({ name: "PG_TS_TEMPLATE_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTypeIsVisible(...params) {
+        return super.pushFunction({ name: "PG_TYPE_IS_VISIBLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgTypeof(...params) {
+        return super.pushFunction({ name: "PG_TYPEOF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgVisibleInSnapshot(...params) {
+        return super.pushFunction({ name: "PG_VISIBLE_IN_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgWalfileName(...params) {
+        return super.pushFunction({ name: "PG_WALFILE_NAME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgWalfileNameOffset(...params) {
+        return super.pushFunction({ name: "PG_WALFILE_NAME_OFFSET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgWalLsnDiff(...params) {
+        return super.pushFunction({ name: "PG_WAL_LSN_DIFF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgWalReplayPause(...params) {
+        return super.pushFunction({ name: "PG_WAL_REPLAY_PAUSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgWalReplayResume(...params) {
+        return super.pushFunction({ name: "PG_WAL_REPLAY_RESUME", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgWalSummaryContents(...params) {
+        return super.pushFunction({ name: "PG_WAL_SUMMARY_CONTENTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgXactCommitTimestamp(...params) {
+        return super.pushFunction({ name: "PG_XACT_COMMIT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgXactCommitTimestampOrigin(...params) {
+        return super.pushFunction({ name: "PG_XACT_COMMIT_TIMESTAMP_ORIGIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pgXactStatus(...params) {
+        return super.pushFunction({ name: "PG_XACT_STATUS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    phrasetoTsquery(...params) {
+        return super.pushFunction({ name: "PHRASETO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    pi(...params) {
+        return super.pushFunction({ name: "PI", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    plaintoTsquery(...params) {
+        return super.pushFunction({ name: "PLAINTO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    point(...params) {
+        return super.pushFunction({ name: "POINT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    polygon(...params) {
+        return super.pushFunction({ name: "POLYGON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    popen(...params) {
+        return super.pushFunction({ name: "POPEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    position(...params) {
+        if (params.length == 0) {
+            return super.position();
+        }
+        return super.pushFunction({ name: "POSITION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    power(...params) {
+        if (params.length == 0) {
+            return super.power();
+        }
+        return super.pushFunction({ name: "POWER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    queryToXml(...params) {
+        return super.pushFunction({ name: "QUERY_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    queryToXmlAndXmlschema(...params) {
+        return super.pushFunction({ name: "QUERY_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    queryToXmlschema(...params) {
+        return super.pushFunction({ name: "QUERY_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    querytree(...params) {
+        return super.pushFunction({ name: "QUERYTREE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    quoteIdent(...params) {
+        return super.pushFunction({ name: "QUOTE_IDENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    quoteLiteral(...params) {
+        return super.pushFunction({ name: "QUOTE_LITERAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    quoteNullable(...params) {
+        return super.pushFunction({ name: "QUOTE_NULLABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    radians(...params) {
+        return super.pushFunction({ name: "RADIANS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    radius(...params) {
+        return super.pushFunction({ name: "RADIUS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    random(...params) {
+        return super.pushFunction({ name: "RANDOM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    randomNormal(...params) {
+        return super.pushFunction({ name: "RANDOM_NORMAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rangeAgg(...params) {
+        return super.pushFunction({ name: "RANGE_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rangeIntersectAgg(...params) {
+        return super.pushFunction({ name: "RANGE_INTERSECT_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rangeMerge(...params) {
+        return super.pushFunction({ name: "RANGE_MERGE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rank(...params) {
+        if (params.length == 0) {
+            return super.rank();
+        }
+        return super.pushFunction({ name: "RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpCount(...params) {
+        return super.pushFunction({ name: "REGEXP_COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpInstr(...params) {
+        return super.pushFunction({ name: "REGEXP_INSTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpLike(...params) {
+        return super.pushFunction({ name: "REGEXP_LIKE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpMatch(...params) {
+        return super.pushFunction({ name: "REGEXP_MATCH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpMatches(...params) {
+        return super.pushFunction({ name: "REGEXP_MATCHES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpReplace(...params) {
+        return super.pushFunction({ name: "REGEXP_REPLACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpSplitToArray(...params) {
+        return super.pushFunction({ name: "REGEXP_SPLIT_TO_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpSplitToTable(...params) {
+        return super.pushFunction({ name: "REGEXP_SPLIT_TO_TABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regexpSubstr(...params) {
+        return super.pushFunction({ name: "REGEXP_SUBSTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrAvgx(...params) {
+        if (params.length == 0) {
+            return super.regrAvgx();
+        }
+        return super.pushFunction({ name: "REGR_AVGX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrAvgy(...params) {
+        if (params.length == 0) {
+            return super.regrAvgy();
+        }
+        return super.pushFunction({ name: "REGR_AVGY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrCount(...params) {
+        if (params.length == 0) {
+            return super.regrCount();
+        }
+        return super.pushFunction({ name: "REGR_COUNT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrIntercept(...params) {
+        if (params.length == 0) {
+            return super.regrIntercept();
+        }
+        return super.pushFunction({ name: "REGR_INTERCEPT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrR2(...params) {
+        if (params.length == 0) {
+            return super.regrR2();
+        }
+        return super.pushFunction({ name: "REGR_R2", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrSlope(...params) {
+        if (params.length == 0) {
+            return super.regrSlope();
+        }
+        return super.pushFunction({ name: "REGR_SLOPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrSxx(...params) {
+        if (params.length == 0) {
+            return super.regrSxx();
+        }
+        return super.pushFunction({ name: "REGR_SXX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrSxy(...params) {
+        if (params.length == 0) {
+            return super.regrSxy();
+        }
+        return super.pushFunction({ name: "REGR_SXY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    regrSyy(...params) {
+        if (params.length == 0) {
+            return super.regrSyy();
+        }
+        return super.pushFunction({ name: "REGR_SYY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    repeat(...params) {
+        return super.pushFunction({ name: "REPEAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    replace(...params) {
+        if (params.length == 0) {
+            return super.replace();
+        }
+        return super.pushFunction({ name: "REPLACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    reverse(...params) {
+        return super.pushFunction({ name: "REVERSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    right(...params) {
+        if (params.length == 0) {
+            return super.right();
+        }
+        return super.pushFunction({ name: "RIGHT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    round(...params) {
+        return super.pushFunction({ name: "ROUND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rowNumber(...params) {
+        return super.pushFunction({ name: "ROW_NUMBER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rowSecurityActive(...params) {
+        return super.pushFunction({ name: "ROW_SECURITY_ACTIVE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rowToJson(...params) {
+        return super.pushFunction({ name: "ROW_TO_JSON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rpad(...params) {
+        if (params.length == 0) {
+            return super.rpad();
+        }
+        return super.pushFunction({ name: "RPAD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    rtrim(...params) {
+        if (params.length == 0) {
+            return super.rtrim();
+        }
+        return super.pushFunction({ name: "RTRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    scale(...params) {
+        if (params.length == 0) {
+            return super.scale();
+        }
+        return super.pushFunction({ name: "SCALE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    schemaToXml(...params) {
+        return super.pushFunction({ name: "SCHEMA_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    schemaToXmlAndXmlschema(...params) {
+        return super.pushFunction({ name: "SCHEMA_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    schemaToXmlschema(...params) {
+        return super.pushFunction({ name: "SCHEMA_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setBit(...params) {
+        return super.pushFunction({ name: "SET_BIT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setByte(...params) {
+        return super.pushFunction({ name: "SET_BYTE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setConfig(...params) {
+        return super.pushFunction({ name: "SET_CONFIG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setMasklen(...params) {
+        return super.pushFunction({ name: "SET_MASKLEN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setseed(...params) {
+        return super.pushFunction({ name: "SETSEED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setval(...params) {
+        return super.pushFunction({ name: "SETVAL", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    setweight(...params) {
+        return super.pushFunction({ name: "SETWEIGHT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sha224(...params) {
+        return super.pushFunction({ name: "SHA224", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sha256(...params) {
+        return super.pushFunction({ name: "SHA256", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sha384(...params) {
+        return super.pushFunction({ name: "SHA384", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sha512(...params) {
+        return super.pushFunction({ name: "SHA512", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    shobjDescription(...params) {
+        return super.pushFunction({ name: "SHOBJ_DESCRIPTION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sign(...params) {
+        return super.pushFunction({ name: "SIGN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sin(...params) {
+        if (params.length == 0) {
+            return super.sin();
+        }
+        return super.pushFunction({ name: "SIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sind(...params) {
+        return super.pushFunction({ name: "SIND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sinh(...params) {
+        if (params.length == 0) {
+            return super.sinh();
+        }
+        return super.pushFunction({ name: "SINH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    slope(...params) {
+        return super.pushFunction({ name: "SLOPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    splitPart(...params) {
+        return super.pushFunction({ name: "SPLIT_PART", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sqrt(...params) {
+        if (params.length == 0) {
+            return super.sqrt();
+        }
+        return super.pushFunction({ name: "SQRT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    startsWith(...params) {
+        return super.pushFunction({ name: "STARTS_WITH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    statementTimestamp(...params) {
+        return super.pushFunction({ name: "STATEMENT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    stddev(...params) {
+        return super.pushFunction({ name: "STDDEV", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    stddevPop(...params) {
+        if (params.length == 0) {
+            return super.stddevPop();
+        }
+        return super.pushFunction({ name: "STDDEV_POP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    stddevSamp(...params) {
+        if (params.length == 0) {
+            return super.stddevSamp();
+        }
+        return super.pushFunction({ name: "STDDEV_SAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    stringAgg(...params) {
+        return super.pushFunction({ name: "STRING_AGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    stringToArray(...params) {
+        return super.pushFunction({ name: "STRING_TO_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    stringToTable(...params) {
+        return super.pushFunction({ name: "STRING_TO_TABLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    strip(...params) {
+        if (params.length == 0) {
+            return super.strip();
+        }
+        return super.pushFunction({ name: "STRIP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    strpos(...params) {
+        return super.pushFunction({ name: "STRPOS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    substr(...params) {
+        return super.pushFunction({ name: "SUBSTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    substring(...params) {
+        if (params.length == 0) {
+            return super.substring();
+        }
+        return super.pushFunction({ name: "SUBSTRING", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    sum(...params) {
+        if (params.length == 0) {
+            return super.sum();
+        }
+        return super.pushFunction({ name: "SUM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    suppressRedundantUpdatesTrigger(...params) {
+        return super.pushFunction({ name: "SUPPRESS_REDUNDANT_UPDATES_TRIGGER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tableToXml(...params) {
+        return super.pushFunction({ name: "TABLE_TO_XML", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tableToXmlAndXmlschema(...params) {
+        return super.pushFunction({ name: "TABLE_TO_XML_AND_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tableToXmlschema(...params) {
+        return super.pushFunction({ name: "TABLE_TO_XMLSCHEMA", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tan(...params) {
+        if (params.length == 0) {
+            return super.tan();
+        }
+        return super.pushFunction({ name: "TAN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tand(...params) {
+        return super.pushFunction({ name: "TAND", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tanh(...params) {
+        if (params.length == 0) {
+            return super.tanh();
+        }
+        return super.pushFunction({ name: "TANH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    timeofday(...params) {
+        return super.pushFunction({ name: "TIMEOFDAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toAscii(...params) {
+        return super.pushFunction({ name: "TO_ASCII", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toBin(...params) {
+        return super.pushFunction({ name: "TO_BIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toChar(...params) {
+        return super.pushFunction({ name: "TO_CHAR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toDate(...params) {
+        return super.pushFunction({ name: "TO_DATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toHex(...params) {
+        return super.pushFunction({ name: "TO_HEX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toJson(...params) {
+        return super.pushFunction({ name: "TO_JSON", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toJsonb(...params) {
+        return super.pushFunction({ name: "TO_JSONB", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toNumber(...params) {
+        return super.pushFunction({ name: "TO_NUMBER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toOct(...params) {
+        return super.pushFunction({ name: "TO_OCT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegclass(...params) {
+        return super.pushFunction({ name: "TO_REGCLASS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegcollation(...params) {
+        return super.pushFunction({ name: "TO_REGCOLLATION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegnamespace(...params) {
+        return super.pushFunction({ name: "TO_REGNAMESPACE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegoper(...params) {
+        return super.pushFunction({ name: "TO_REGOPER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegoperator(...params) {
+        return super.pushFunction({ name: "TO_REGOPERATOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegproc(...params) {
+        return super.pushFunction({ name: "TO_REGPROC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegprocedure(...params) {
+        return super.pushFunction({ name: "TO_REGPROCEDURE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegrole(...params) {
+        return super.pushFunction({ name: "TO_REGROLE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegtype(...params) {
+        return super.pushFunction({ name: "TO_REGTYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toRegtypemod(...params) {
+        return super.pushFunction({ name: "TO_REGTYPEMOD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toText(...params) {
+        return super.pushFunction({ name: "TEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CAST" }, ...params);
+    }
+    toTimestamp(...params) {
+        return super.pushFunction({ name: "TO_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toTsquery(...params) {
+        return super.pushFunction({ name: "TO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    toTsvector(...params) {
+        return super.pushFunction({ name: "TO_TSVECTOR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    transactionTimestamp(...params) {
+        return super.pushFunction({ name: "TRANSACTION_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    translate(...params) {
+        if (params.length == 0) {
+            return super.translate();
+        }
+        return super.pushFunction({ name: "TRANSLATE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    trim(...params) {
+        if (params.length == 0) {
+            return super.trim();
+        }
+        return super.pushFunction({ name: "TRIM", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    trimArray(...params) {
+        if (params.length == 0) {
+            return super.trimArray();
+        }
+        return super.pushFunction({ name: "TRIM_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    trimScale(...params) {
+        return super.pushFunction({ name: "TRIM_SCALE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    trunc(...params) {
+        return super.pushFunction({ name: "TRUNC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsDebug(...params) {
+        return super.pushFunction({ name: "TS_DEBUG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsDelete(...params) {
+        return super.pushFunction({ name: "TS_DELETE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsFilter(...params) {
+        return super.pushFunction({ name: "TS_FILTER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsHeadline(...params) {
+        return super.pushFunction({ name: "TS_HEADLINE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsLexize(...params) {
+        return super.pushFunction({ name: "TS_LEXIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsParse(...params) {
+        return super.pushFunction({ name: "TS_PARSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsqueryPhrase(...params) {
+        return super.pushFunction({ name: "TSQUERY_PHRASE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsRank(...params) {
+        return super.pushFunction({ name: "TS_RANK", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsRankCd(...params) {
+        return super.pushFunction({ name: "TS_RANK_CD", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsRewrite(...params) {
+        return super.pushFunction({ name: "TS_REWRITE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsStat(...params) {
+        return super.pushFunction({ name: "TS_STAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsTokenType(...params) {
+        return super.pushFunction({ name: "TS_TOKEN_TYPE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsvectorToArray(...params) {
+        return super.pushFunction({ name: "TSVECTOR_TO_ARRAY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsvectorUpdateTrigger(...params) {
+        return super.pushFunction({ name: "TSVECTOR_UPDATE_TRIGGER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    tsvectorUpdateTriggerColumn(...params) {
+        return super.pushFunction({ name: "TSVECTOR_UPDATE_TRIGGER_COLUMN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidCurrent(...params) {
+        return super.pushFunction({ name: "TXID_CURRENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidCurrentIfAssigned(...params) {
+        return super.pushFunction({ name: "TXID_CURRENT_IF_ASSIGNED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidCurrentSnapshot(...params) {
+        return super.pushFunction({ name: "TXID_CURRENT_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidSnapshotXip(...params) {
+        return super.pushFunction({ name: "TXID_SNAPSHOT_XIP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidSnapshotXmax(...params) {
+        return super.pushFunction({ name: "TXID_SNAPSHOT_XMAX", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidSnapshotXmin(...params) {
+        return super.pushFunction({ name: "TXID_SNAPSHOT_XMIN", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidStatus(...params) {
+        return super.pushFunction({ name: "TXID_STATUS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    txidVisibleInSnapshot(...params) {
+        return super.pushFunction({ name: "TXID_VISIBLE_IN_SNAPSHOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    unicodeAssigned(...params) {
+        return super.pushFunction({ name: "UNICODE_ASSIGNED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    unicodeVersion(...params) {
+        return super.pushFunction({ name: "UNICODE_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    unistr(...params) {
+        return super.pushFunction({ name: "UNISTR", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    unnest(...params) {
+        if (params.length == 0) {
+            return super.unnest();
+        }
+        return super.pushFunction({ name: "UNNEST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    upper(...params) {
+        if (params.length == 0) {
+            return super.upper();
+        }
+        return super.pushFunction({ name: "UPPER", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    upperInc(...params) {
+        return super.pushFunction({ name: "UPPER_INC", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    upperInf(...params) {
+        return super.pushFunction({ name: "UPPER_INF", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    uuidExtractTimestamp(...params) {
+        return super.pushFunction({ name: "UUID_EXTRACT_TIMESTAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    uuidExtractVersion(...params) {
+        return super.pushFunction({ name: "UUID_EXTRACT_VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    uuidv4(...params) {
+        return super.pushFunction({ name: "UUIDV4", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    uuidv7(...params) {
+        return super.pushFunction({ name: "UUIDV7", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    variance(...params) {
+        return super.pushFunction({ name: "VARIANCE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    varPop(...params) {
+        if (params.length == 0) {
+            return super.varPop();
+        }
+        return super.pushFunction({ name: "VAR_POP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    varSamp(...params) {
+        if (params.length == 0) {
+            return super.varSamp();
+        }
+        return super.pushFunction({ name: "VAR_SAMP", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    version(...params) {
+        if (params.length == 0) {
+            return super.version();
+        }
+        return super.pushFunction({ name: "VERSION", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    websearchToTsquery(...params) {
+        return super.pushFunction({ name: "WEBSEARCH_TO_TSQUERY", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    width(...params) {
+        return super.pushFunction({ name: "WIDTH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    widthBucket(...params) {
+        if (params.length == 0) {
+            return super.widthBucket();
+        }
+        return super.pushFunction({ name: "WIDTH_BUCKET", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlagg(...params) {
+        if (params.length == 0) {
+            return super.xmlagg();
+        }
+        return super.pushFunction({ name: "XMLAGG", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlattributes(...params) {
+        if (params.length == 0) {
+            return super.xmlattributes();
+        }
+        return super.pushFunction({ name: "XMLATTRIBUTES", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlcomment(...params) {
+        if (params.length == 0) {
+            return super.xmlcomment();
+        }
+        return super.pushFunction({ name: "XMLCOMMENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlconcat(...params) {
+        if (params.length == 0) {
+            return super.xmlconcat();
+        }
+        return super.pushFunction({ name: "XMLCONCAT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlelement(...params) {
+        if (params.length == 0) {
+            return super.xmlelement();
+        }
+        return super.pushFunction({ name: "XMLELEMENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlexists(...params) {
+        if (params.length == 0) {
+            return super.xmlexists();
+        }
+        return super.pushFunction({ name: "XMLEXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlforest(...params) {
+        if (params.length == 0) {
+            return super.xmlforest();
+        }
+        return super.pushFunction({ name: "XMLFOREST", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlIsWellFormed(...params) {
+        return super.pushFunction({ name: "XML_IS_WELL_FORMED", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlIsWellFormedContent(...params) {
+        return super.pushFunction({ name: "XML_IS_WELL_FORMED_CONTENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlIsWellFormedDocument(...params) {
+        return super.pushFunction({ name: "XML_IS_WELL_FORMED_DOCUMENT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlparse(...params) {
+        if (params.length == 0) {
+            return super.xmlparse();
+        }
+        return super.pushFunction({ name: "XMLPARSE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlpi(...params) {
+        if (params.length == 0) {
+            return super.xmlpi();
+        }
+        return super.pushFunction({ name: "XMLPI", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlroot(...params) {
+        if (params.length == 0) {
+            return super.xmlroot();
+        }
+        return super.pushFunction({ name: "XMLROOT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmlserialize(...params) {
+        if (params.length == 0) {
+            return super.xmlserialize();
+        }
+        return super.pushFunction({ name: "XMLSERIALIZE", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xmltext(...params) {
+        if (params.length == 0) {
+            return super.xmltext();
+        }
+        return super.pushFunction({ name: "XMLTEXT", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xpath(...params) {
+        return super.pushFunction({ name: "XPATH", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+    xpathExists(...params) {
+        return super.pushFunction({ name: "XPATH_EXISTS", args: [{ name: "params", variadic: true }], format: "COERCE_EXPLICIT_CALL" }, ...params);
+    }
+}

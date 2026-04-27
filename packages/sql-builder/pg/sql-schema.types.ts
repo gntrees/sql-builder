@@ -9,7 +9,6 @@ export type ExtractSchema<TSchemaQueryBuilder> = TSchemaQueryBuilder extends Val
   : undefined;
 
 export type SQLSchemaJSONType = {
-  variableNames: string | null;
   sql: Record<
     string,
     {

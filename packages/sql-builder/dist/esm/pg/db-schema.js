@@ -1,24 +1,24 @@
-var DBSchema = /** @class */ (function () {
-    function DBSchema(dbSchemaName) {
+export class DBSchema {
+    dbSchemaName;
+    constructor(dbSchemaName) {
         this.dbSchemaName = dbSchemaName;
     }
-    return DBSchema;
-}());
-export { DBSchema };
-var TableSchema = /** @class */ (function () {
-    function TableSchema(dbSchema, tableSchemaName) {
+}
+export class TableSchema {
+    dbSchema;
+    tableSchemaName;
+    constructor(dbSchema, tableSchemaName) {
         this.dbSchema = dbSchema;
         this.tableSchemaName = tableSchemaName;
     }
-    return TableSchema;
-}());
-export { TableSchema };
-var ColumnSchema = /** @class */ (function () {
-    function ColumnSchema(dbSchema, tableSchema, columnSchemaName) {
+}
+export class ColumnSchema {
+    dbSchema;
+    tableSchema;
+    columnSchemaName;
+    constructor(dbSchema, tableSchema, columnSchemaName) {
         this.dbSchema = dbSchema;
         this.tableSchema = tableSchema;
         this.columnSchemaName = columnSchemaName;
     }
-    return ColumnSchema;
-}());
-export { ColumnSchema };
+}

@@ -1,24 +1,13 @@
 import type { QueryBuilder } from "./query-builder";
-import type { InferValidationOutput, StandardSchemaLike } from "./types";
-type ValidationSchemaHolder<TSchema> = {
-    validationSchema?: TSchema;
-};
-type ExtractSchema<TSchemaQueryBuilder> = TSchemaQueryBuilder extends ValidationSchemaHolder<infer TSchema> ? TSchema : undefined;
-type SQLSchemaJSONType = {
-    variableNames: string | null;
-    sql: Record<string, {
-        query: ReturnType<QueryBuilder["getSchema"]>;
-        tags: string[];
-        tokens: ReturnType<QueryBuilder["getTokens"]>;
-    }>;
-};
+import type { InferValidationOutput, StandardSchemaLike } from "./query-builder.types";
+import type { ExtractSchema, SQLSchemaJSONType, ValidationSchemaHolder } from "./sql-schema.types";
 export declare class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder<any>> = {}> {
     protected schema: SQLSchemaJSONType;
-    constructor(variableNames?: SQLSchemaJSONType['variableNames']);
     setQuery<K extends string, V extends SqlSchemaQueryBuilder<any>>(name: K, sqlSchemaQueryBuilder: V): SqlSchema<T & Record<K, V>>;
     set: {
         query: <TQueryBuilder extends QueryBuilder>(query: TQueryBuilder) => SqlSchemaQueryBuilder<TQueryBuilder>;
     };
+    createSqlBuilder(key: string, variableName?: string): void;
     query<K extends keyof T>(key: K): T[K];
     getJSON(): SQLSchemaJSONType;
 }
@@ -34,4 +23,4 @@ export declare class SqlSchemaQueryBuilder<TQueryBuilder extends QueryBuilder = 
     validation<TSchema extends StandardSchemaLike>(schema: TSchema): this & ValidationSchemaHolder<TSchema>;
     setParams(...params: Parameters<TQueryBuilder["setParams"]>): this & ValidationSchemaHolder<ExtractSchema<this>>;
 }
-export {};
+export declare function sqlSchema(): SqlSchema<{}>;

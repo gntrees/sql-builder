@@ -22,11 +22,6 @@
       "import": "./dist/esm/pg/format.js",
       "require": "./dist/cjs/pg/format.js"
     },
-    "./pg/builder": {
-      "types": "./dist/cjs/pg/builder.d.ts",
-      "import": "./dist/esm/pg/builder.js",
-      "require": "./dist/cjs/pg/builder.js"
-    },
     "./pg/functions": {
       "types": "./dist/cjs/pg/functions.d.ts",
       "import": "./dist/esm/pg/functions.js",
@@ -60,6 +55,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.16.0",
+    "pg": "^8.16.3",
     "pgsql-parser": "^17.9.1",
     "typescript": "^5.9.3",
     "zod": "^3.23.8"
@@ -69,8 +65,7 @@
   },
   "private": false,
   "dependencies": {
-    "@standard-schema/spec": "^1.1.0",
-    "pg": "^8.16.3"
+    "@standard-schema/spec": "^1.1.0"
   },
   "scripts": {
     "prebuild": "node scripts/sync.mjs && node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",

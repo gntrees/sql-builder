@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CoreQueryBuilder = void 0;
 const format_1 = require("./format");
-const base_raw_query_builder_1 = require("./base-raw-query-builder");
 const query_builder_1 = require("./query-builder");
+const core_query_builder_types_1 = require("./core-query-builder.types");
 const db_schema_1 = require("./db-schema");
 const sql_param_1 = require("./sql-param");
 // Core query builder state and orchestration.
@@ -25,6 +25,17 @@ class CoreQueryBuilder {
     setTokens(tokens) {
         this.query.sql = tokens;
         return this;
+    }
+    setVariableName(name) {
+        if (!this.queryInstance)
+            throw new Error("QueryInstance is required for this operation");
+        this.queryInstance.setVariableName(name);
+        return this;
+    }
+    getVariableName() {
+        if (!this.queryInstance)
+            throw new Error("QueryInstance is required for this operation");
+        return this.queryInstance.getVariableName();
     }
     getSchema() {
         return this.schemaQueryBuilder;
@@ -339,7 +350,7 @@ class CoreQueryBuilder {
             let literalIndex = 0;
             const sqlParams = [];
             const sqlTokens = joinSqlTokens(this.query.sql.map((item) => {
-                if (item instanceof base_raw_query_builder_1.ParameterType) {
+                if (item instanceof core_query_builder_types_1.ParameterType) {
                     switch (item.type) {
                         case "literal":
                             literalIndex += 1;
@@ -357,13 +368,14 @@ class CoreQueryBuilder {
                             return "";
                     }
                 }
-                return item.trim();
+                else
+                    return item.trim();
             }));
             return (0, format_1.format)(sqlTokens, ...sqlParams);
         }
         let paramIndex = 0;
         return joinSqlTokens(this.query.sql.map((item) => {
-            if (item instanceof base_raw_query_builder_1.ParameterType) {
+            if (item instanceof core_query_builder_types_1.ParameterType) {
                 paramIndex += 1;
                 return formatPgParameterToken(item, paramIndex);
             }
@@ -377,7 +389,7 @@ class CoreQueryBuilder {
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         const onlyLiterals = formatParamHandler === "pg";
         return this.query.sql
-            .filter((item) => item instanceof base_raw_query_builder_1.ParameterType && (!onlyLiterals || item.type === "literal"))
+            .filter((item) => item instanceof core_query_builder_types_1.ParameterType && (!onlyLiterals || item.type === "literal"))
             .map((item) => item.value);
     }
     getSqlWithParametersCore() {
@@ -387,7 +399,7 @@ class CoreQueryBuilder {
         const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         if (formatParamHandler === "pg") {
             return joinSqlTokens(this.query.sql.map((item) => {
-                if (item instanceof base_raw_query_builder_1.ParameterType) {
+                if (item instanceof core_query_builder_types_1.ParameterType) {
                     return formatPgParameterWithValue(item);
                 }
                 return item.trim();
@@ -395,7 +407,7 @@ class CoreQueryBuilder {
         }
         let paramIndex = 0;
         return joinSqlTokens(this.query.sql.map((item) => {
-            if (item instanceof base_raw_query_builder_1.ParameterType) {
+            if (item instanceof core_query_builder_types_1.ParameterType) {
                 paramIndex += 1;
                 return toSqlWithParameters(formatParamHandler, item, paramIndex);
             }
@@ -519,25 +531,25 @@ class CoreQueryBuilder {
     }
     // Token creation helpers.
     createLiteralParameter(value) {
-        return new base_raw_query_builder_1.ParameterType({
+        return new core_query_builder_types_1.ParameterType({
             value,
             type: "literal",
         });
     }
     createIdentifierParameter(value) {
-        return new base_raw_query_builder_1.ParameterType({
+        return new core_query_builder_types_1.ParameterType({
             value,
             type: "identifier",
         });
     }
     createStringParameter(value) {
-        return new base_raw_query_builder_1.ParameterType({
+        return new core_query_builder_types_1.ParameterType({
             value,
             type: "string",
         });
     }
     createPercentParameter() {
-        return new base_raw_query_builder_1.ParameterType({
+        return new core_query_builder_types_1.ParameterType({
             value: '%',
             type: "percent",
         });
@@ -724,7 +736,7 @@ function shouldInsertSpace(prev, next) {
 }
 // SQL formatting helpers.
 function toSql(formatParamHandler, item, index) {
-    if (item instanceof base_raw_query_builder_1.ParameterType) {
+    if (item instanceof core_query_builder_types_1.ParameterType) {
         return formatParameterToken(formatParamHandler, item, index);
     }
     else {
@@ -732,7 +744,7 @@ function toSql(formatParamHandler, item, index) {
     }
 }
 function toSqlWithParameters(formatParamHandler, item, index) {
-    if (item instanceof base_raw_query_builder_1.ParameterType) {
+    if (item instanceof core_query_builder_types_1.ParameterType) {
         if (item.type === "literal") {
             return formatLiteralWithParameters(formatParamHandler, item, index);
         }

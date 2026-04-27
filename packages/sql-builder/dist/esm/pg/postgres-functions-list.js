@@ -1,4 +1,4 @@
-var pgFunctionList = [
+const pgFunctionList = [
     // ==================== Mathematical Functions ====================
     { name: "ABS", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },
     { name: "CBRT", args: [{ name: "value" }], format: "COERCE_EXPLICIT_CALL" },

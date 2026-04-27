@@ -1,5 +1,5 @@
 import { OverrideQueryBuilder } from "../override-query-builder";
-import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param";
+import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from "../sql-param.types";
 export declare class SchemaOverrider extends OverrideQueryBuilder {
     a<TThis extends this, TArgs extends Parameters<OverrideQueryBuilder["a"]>>(this: TThis, ...args: TArgs): ApplyInferredBuilderParams<TThis, InferSchemaParamsFromArgs<TArgs>>;
     abbrev<TThis extends this, TArgs extends Parameters<OverrideQueryBuilder["abbrev"]>>(this: TThis, ...args: TArgs): ApplyInferredBuilderParams<TThis, InferSchemaParamsFromArgs<TArgs>>;

@@ -8,12 +8,8 @@ import type {
 
 export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder<any>> = {}> {
     protected schema: SQLSchemaJSONType = { 
-        variableNames: null,
         sql :{}
     };
-    constructor(variableNames?: SQLSchemaJSONType['variableNames']) {
-        this.schema.variableNames = variableNames?.replaceAll(/\s/g, "") || null;
-    }
     setQuery<K extends string, V extends SqlSchemaQueryBuilder<any>>(
         name: K,
         sqlSchemaQueryBuilder: V
@@ -29,6 +25,9 @@ export class SqlSchema<T extends Record<string, SqlSchemaQueryBuilder<any>> = {}
         query: <TQueryBuilder extends QueryBuilder>(query: TQueryBuilder) => {
             return new SqlSchemaQueryBuilder(query);
         },
+    }
+    createSqlBuilder(key:string, variableName?:string) {
+
     }
     query<K extends keyof T>(key: K): T[K] {
         const sqlSchemaQueryBuilder = this.schema.sql[key as string];

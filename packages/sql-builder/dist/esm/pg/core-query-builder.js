@@ -1,148 +1,137 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 import { format } from "./format";
-import { ParameterType } from "./base-raw-query-builder";
 import { QueryBuilder } from "./query-builder";
+import { ParameterType, } from "./core-query-builder.types";
 import { ColumnSchema, DBSchema, TableSchema } from "./db-schema";
-import { SqlSchemaParam, SqlSchemaParamCase } from "./sql-param";
+import { SqlSchemaParamCase, SqlSchemaParam } from "./sql-param";
 // Core query builder state and orchestration.
-var CoreQueryBuilder = /** @class */ (function () {
-    function CoreQueryBuilder(queryInstance) {
-        this.query = { sql: [] };
-        this.schemaQueryBuilder = [];
-        this.instanceStructure = [];
-        this.callLevel = 0;
-        this.runtimeParams = {};
-        this.isRebuilding = false;
+export class CoreQueryBuilder {
+    query = { sql: [] };
+    schemaQueryBuilder = [];
+    instanceStructure = [];
+    callLevel = 0;
+    queryInstance;
+    runtimeParams = {};
+    isRebuilding = false;
+    constructor(queryInstance) {
         this.queryInstance = queryInstance;
     }
     // Basic getters/setters and lifecycle.
-    CoreQueryBuilder.prototype.getTokens = function () {
+    getTokens() {
         return this.query.sql;
-    };
-    CoreQueryBuilder.prototype.setTokens = function (tokens) {
+    }
+    setTokens(tokens) {
         this.query.sql = tokens;
         return this;
-    };
-    CoreQueryBuilder.prototype.getSchema = function () {
+    }
+    setVariableName(name) {
+        if (!this.queryInstance)
+            throw new Error("QueryInstance is required for this operation");
+        this.queryInstance.setVariableName(name);
+        return this;
+    }
+    getVariableName() {
+        if (!this.queryInstance)
+            throw new Error("QueryInstance is required for this operation");
+        return this.queryInstance.getVariableName();
+    }
+    getSchema() {
         return this.schemaQueryBuilder;
-    };
-    CoreQueryBuilder.prototype.getInstanceStructure = function () {
+    }
+    getInstanceStructure() {
         return cloneInstanceStructure(this.instanceStructure);
-    };
-    CoreQueryBuilder.prototype.getRuntimeParams = function () {
+    }
+    getRuntimeParams() {
         return this.runtimeParams;
-    };
+    }
     // still prototype
-    CoreQueryBuilder.prototype.schemaParamCore = function (key) {
+    schemaParamCore(key) {
         this.endClass();
         return new SqlSchemaParam(key);
-    };
+    }
     // still prototype
-    CoreQueryBuilder.prototype.schemaCaseCore = function (key, queryBuilder) {
-        var _a, _b;
+    schemaCaseCore(key, queryBuilder) {
         this.resolveSchemaParam("function", "schemaCase", [key, queryBuilder]);
-        var runtimeValue = this.runtimeParams[key];
+        const runtimeValue = this.runtimeParams[key];
         if (runtimeValue === undefined || runtimeValue === false) {
             return this.endClass();
         }
         if (runtimeValue === true) {
             queryBuilder.setParams({});
-            (_a = this.query.sql).push.apply(_a, queryBuilder.getTokens());
+            this.query.sql.push(...queryBuilder.getTokens());
             return this.endClass();
         }
         if (isPlainObject(runtimeValue)) {
-            var schemaCase = new SqlSchemaParamCase(key, {
-                setParams: function (params) { return queryBuilder.setParams(params); },
-                getTokens: function () { return queryBuilder.getTokens(); },
+            const schemaCase = new SqlSchemaParamCase(key, {
+                setParams: (params) => queryBuilder.setParams(params),
+                getTokens: () => queryBuilder.getTokens(),
             });
             schemaCase.setParams(runtimeValue);
-            var caseTokens = schemaCase.getQueryBuilder().getTokens();
-            (_b = this.query.sql).push.apply(_b, caseTokens);
+            const caseTokens = schemaCase.getQueryBuilder().getTokens();
+            this.query.sql.push(...caseTokens);
             return this.endClass();
         }
-        throw new Error("Invalid schemaCase value for '".concat(key, "'. Expected boolean or object, got ").concat(describeValueType(runtimeValue), "."));
-    };
+        throw new Error(`Invalid schemaCase value for '${key}'. Expected boolean or object, got ${describeValueType(runtimeValue)}.`);
+    }
     // still prototype
-    CoreQueryBuilder.prototype.setParamsCore = function (params) {
+    setParamsCore(params) {
         if (!isPlainObject(params)) {
-            throw new Error("setParams expects an object, got ".concat(describeValueType(params), "."));
+            throw new Error(`setParams expects an object, got ${describeValueType(params)}.`);
         }
-        this.runtimeParams = __assign({}, params);
+        this.runtimeParams = { ...params };
         if (!this.isRebuilding) {
             this.rebuild();
         }
         return this.endClass();
-    };
-    CoreQueryBuilder.prototype.setInstanceStructure = function (structure) {
+    }
+    setInstanceStructure(structure) {
         this.instanceStructure = cloneInstanceStructure(structure);
         return this;
-    };
-    CoreQueryBuilder.prototype.rebuild = function () {
-        var _this = this;
-        var structure = this.getInstanceStructure();
+    }
+    rebuild() {
+        const structure = this.getInstanceStructure();
         this.query.sql = [];
         this.isRebuilding = true;
         try {
-            structure.forEach(function (node) { return _this.replayInstanceNode(node); });
+            structure.forEach((node) => this.replayInstanceNode(node));
         }
         finally {
             this.isRebuilding = false;
         }
         return this;
-    };
-    CoreQueryBuilder.prototype.startClass = function () {
+    }
+    startClass() {
         this.callLevel += 1;
         return this;
-    };
-    CoreQueryBuilder.prototype.endClass = function () {
+    }
+    endClass() {
         this.callLevel = Math.max(0, this.callLevel - 1);
         return this;
-    };
+    }
     // Schema type guards and normalization.
-    CoreQueryBuilder.prototype.isColumnSchema = function (value) {
+    isColumnSchema(value) {
         return value instanceof ColumnSchema;
-    };
-    CoreQueryBuilder.prototype.isTableSchema = function (value) {
+    }
+    isTableSchema(value) {
         return value instanceof TableSchema;
-    };
-    CoreQueryBuilder.prototype.isDbSchema = function (value) {
+    }
+    isDbSchema(value) {
         return value instanceof DBSchema;
-    };
-    CoreQueryBuilder.prototype.isSchemaObject = function (value) {
+    }
+    isSchemaObject(value) {
         return this.isColumnSchema(value) || this.isTableSchema(value) || this.isDbSchema(value);
-    };
-    CoreQueryBuilder.prototype.getSchemaIdentifier = function (value) {
+    }
+    getSchemaIdentifier(value) {
         if (this.isColumnSchema(value)) {
-            return "".concat(value.tableSchema.tableSchemaName, ".").concat(value.columnSchemaName);
+            return `${value.tableSchema.tableSchemaName}.${value.columnSchemaName}`;
         }
         if (this.isTableSchema(value)) {
             return value.tableSchemaName;
         }
         return value.dbSchemaName;
-    };
-    CoreQueryBuilder.prototype.normalizeSchemaParam = function (paramRaw, type) {
-        var _this = this;
-        var paramsArray = Array.isArray(paramRaw) ? paramRaw : [paramRaw];
-        var normalizeSingleParam = function (param) {
+    }
+    normalizeSchemaParam(paramRaw, type) {
+        const paramsArray = Array.isArray(paramRaw) ? paramRaw : [paramRaw];
+        const normalizeSingleParam = (param) => {
             if (isPrimitiveSchemaParam(param)) {
                 return {
                     paramType: getPrimitiveSchemaParamType(param),
@@ -162,15 +151,15 @@ var CoreQueryBuilder = /** @class */ (function () {
                     arguments: [],
                 };
             }
-            if (_this.isSchemaObject(param)) {
+            if (this.isSchemaObject(param)) {
                 return {
                     paramType: "string",
-                    name: _this.getSchemaIdentifier(param),
+                    name: this.getSchemaIdentifier(param),
                     arguments: [],
                 };
             }
             if (Array.isArray(param)) {
-                return { paramType: "array", name: _this.normalizeSchemaParam(param, type), arguments: [] };
+                return { paramType: "array", name: this.normalizeSchemaParam(param, type), arguments: [] };
             }
             if (param instanceof QueryBuilder) {
                 return [param.getSchema()];
@@ -179,20 +168,17 @@ var CoreQueryBuilder = /** @class */ (function () {
                 return {
                     paramType: "object",
                     arguments: [],
-                    name: Object.entries(param).map(function (_a) {
-                        var key = _a[0], value = _a[1];
-                        return ({
-                            name: key,
-                            arguments: _this.normalizeSchemaParam(value, type),
-                            paramType: Array.isArray(value) ? "array" : typeof value === "object" ? "object" : typeof value === "string" ? "string" : typeof value === "number" ? "number" : typeof value === "boolean" ? "boolean" : "null"
-                        });
-                    })
+                    name: Object.entries(param).map(([key, value]) => ({
+                        name: key,
+                        arguments: this.normalizeSchemaParam(value, type),
+                        paramType: Array.isArray(value) ? "array" : typeof value === "object" ? "object" : typeof value === "string" ? "string" : typeof value === "number" ? "number" : typeof value === "boolean" ? "boolean" : "null"
+                    }))
                 };
             }
         };
         return paramsArray.map(normalizeSingleParam);
-    };
-    CoreQueryBuilder.prototype.registerSchemaCall = function (name, params, schema) {
+    }
+    registerSchemaCall(name, params, schema) {
         if (name === "setParams") {
             return schema;
         }
@@ -201,50 +187,47 @@ var CoreQueryBuilder = /** @class */ (function () {
             this.schemaQueryBuilder.push(schema);
         }
         return schema;
-    };
-    CoreQueryBuilder.prototype.resolveSchemaParam = function (type, name, params) {
-        var _this = this;
+    }
+    resolveSchemaParam(type, name, params) {
         this.startClass();
         if (this.callLevel > 1) {
             return {
                 paramType: type,
-                name: name,
+                name,
                 arguments: []
             };
         }
         if (type === "template-literal") {
-            var arrayParams = Array.isArray(params) ? params : [params];
-            var normalizedParams = arrayParams.map(function (param, i) {
+            const arrayParams = Array.isArray(params) ? params : [params];
+            const normalizedParams = arrayParams.map((param, i) => {
                 // jika ganjil maka string jika genap maka normalize
                 if (i % 2 === 0) {
                     return param;
                 }
                 else {
-                    return _this.normalizeSchemaParam(param, type);
+                    return this.normalizeSchemaParam(param, type);
                 }
             });
-            var schema_1 = {
+            const schema = {
                 paramType: type,
-                name: name,
+                name,
                 arguments: normalizedParams
             };
-            return this.registerSchemaCall(name, params, schema_1);
+            return this.registerSchemaCall(name, params, schema);
         }
-        var schema = { paramType: type, name: name, arguments: this.normalizeSchemaParam(params, type) };
+        const schema = { paramType: type, name: name, arguments: this.normalizeSchemaParam(params, type) };
         return this.registerSchemaCall(name, params, schema);
-    };
+    }
     // Instance structure capture, serialization, and replay.
-    CoreQueryBuilder.prototype.captureInstanceStructure = function (name, params) {
-        var _this = this;
+    captureInstanceStructure(name, params) {
         if (this.isRebuilding) {
             return;
         }
-        var normalizedArgs = (Array.isArray(params) ? params : [params])
-            .map(function (arg) { return _this.serializeInstanceValue(arg); });
+        const normalizedArgs = (Array.isArray(params) ? params : [params])
+            .map((arg) => this.serializeInstanceValue(arg));
         this.instanceStructure.push({ name: String(name), args: normalizedArgs });
-    };
-    CoreQueryBuilder.prototype.serializeInstanceValue = function (value) {
-        var _this = this;
+    }
+    serializeInstanceValue(value) {
         if (isSerializablePrimitive(value)) {
             return value;
         }
@@ -274,14 +257,13 @@ var CoreQueryBuilder = /** @class */ (function () {
         if (Array.isArray(value)) {
             return {
                 kind: "array",
-                value: value.map(function (item) { return _this.serializeInstanceValue(item); }),
+                value: value.map((item) => this.serializeInstanceValue(item)),
             };
         }
         if (typeof value === "object") {
-            var entries = Object.entries(value)
-                .reduce(function (acc, _a) {
-                var key = _a[0], val = _a[1];
-                acc[key] = _this.serializeInstanceValue(val);
+            const entries = Object.entries(value)
+                .reduce((acc, [key, val]) => {
+                acc[key] = this.serializeInstanceValue(val);
                 return acc;
             }, {});
             return {
@@ -290,31 +272,30 @@ var CoreQueryBuilder = /** @class */ (function () {
             };
         }
         return String(value);
-    };
-    CoreQueryBuilder.prototype.deserializeInstanceValue = function (value) {
-        var _this = this;
+    }
+    deserializeInstanceValue(value) {
         if (isSerializablePrimitive(value)) {
             return value;
         }
         if (value.kind === "schema-param") {
-            var schemaParam_1 = new SqlSchemaParam(value.value.key);
-            value.value.types.forEach(function (type) {
+            const schemaParam = new SqlSchemaParam(value.value.key);
+            value.value.types.forEach((type) => {
                 if (type === "number")
-                    schemaParam_1.number();
+                    schemaParam.number();
                 if (type === "boolean")
-                    schemaParam_1.boolean();
+                    schemaParam.boolean();
                 if (type === "string")
-                    schemaParam_1.string();
+                    schemaParam.string();
                 if (type === "null")
-                    schemaParam_1.nullable();
+                    schemaParam.nullable();
             });
             if (value.value.hasDefault) {
-                schemaParam_1.default(value.value.defaultValue);
+                schemaParam.default(value.value.defaultValue);
             }
-            return schemaParam_1;
+            return schemaParam;
         }
         if (value.kind === "query-builder") {
-            var nested = new QueryBuilder(this.queryInstance);
+            const nested = new QueryBuilder(this.queryInstance);
             nested.setInstanceStructure(value.value);
             nested.rebuild();
             return nested;
@@ -323,116 +304,115 @@ var CoreQueryBuilder = /** @class */ (function () {
             return new QueryBuilder(this.queryInstance).i(value.value);
         }
         if (value.kind === "array") {
-            return value.value.map(function (item) { return _this.deserializeInstanceValue(item); });
+            return value.value.map((item) => this.deserializeInstanceValue(item));
         }
-        return Object.entries(value.value).reduce(function (acc, _a) {
-            var key = _a[0], val = _a[1];
-            acc[key] = _this.deserializeInstanceValue(val);
+        return Object.entries(value.value).reduce((acc, [key, val]) => {
+            acc[key] = this.deserializeInstanceValue(val);
             return acc;
         }, {});
-    };
-    CoreQueryBuilder.prototype.replayInstanceNode = function (node) {
-        var _this = this;
-        var target = this[node.name];
+    }
+    replayInstanceNode(node) {
+        const target = this[node.name];
         if (typeof target !== "function") {
-            throw new Error("Cannot rebuild query: method '".concat(node.name, "' is not available"));
+            throw new Error(`Cannot rebuild query: method '${node.name}' is not available`);
         }
         if (node.name === "raw" || node.name === "r") {
             // console.log(node.args.map((i)=>String(i)));
-            var templateFlat = node.args.map(function (arg) { return _this.deserializeInstanceValue(arg); });
-            var strings_1 = [];
-            var values_1 = [];
-            templateFlat.forEach(function (item, index) {
+            const templateFlat = node.args.map((arg) => this.deserializeInstanceValue(arg));
+            const strings = [];
+            const values = [];
+            templateFlat.forEach((item, index) => {
                 if (index % 2 === 0) {
-                    strings_1.push(String(item !== null && item !== void 0 ? item : ""));
+                    strings.push(String(item ?? ""));
                 }
                 else {
-                    values_1.push(item);
+                    values.push(item);
                 }
             });
-            var templateStrings = strings_1;
-            templateStrings.raw = __spreadArray([], templateStrings, true);
-            target.apply(this, __spreadArray([templateStrings], values_1, true));
+            const templateStrings = strings;
+            templateStrings.raw = [...templateStrings];
+            target.apply(this, [templateStrings, ...values]);
             return;
         }
-        var args = node.args.map(function (arg) { return _this.deserializeInstanceValue(arg); });
+        const args = node.args.map((arg) => this.deserializeInstanceValue(arg));
         target.apply(this, args);
-    };
+    }
     // SQL rendering and parameter extraction.
-    CoreQueryBuilder.prototype.getSqlCore = function () {
+    getSqlCore() {
         if (!this.queryInstance)
             throw new Error("QueryInstance is required for this operation");
-        var queryInstance = this.queryInstance;
-        var formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
+        const queryInstance = this.queryInstance;
+        const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         if (formatParamHandler === "pg") {
-            var literalIndex_1 = 0;
-            var sqlParams_1 = [];
-            var sqlTokens = joinSqlTokens(this.query.sql.map(function (item) {
+            let literalIndex = 0;
+            const sqlParams = [];
+            const sqlTokens = joinSqlTokens(this.query.sql.map((item) => {
                 if (item instanceof ParameterType) {
                     switch (item.type) {
                         case "literal":
-                            literalIndex_1 += 1;
-                            return "$".concat(literalIndex_1);
+                            literalIndex += 1;
+                            return `$${literalIndex}`;
                         case "identifier":
-                            sqlParams_1.push(item.value);
+                            sqlParams.push(item.value);
                             return "%I";
                         case "percent":
-                            sqlParams_1.push(item.value);
+                            sqlParams.push(item.value);
                             return "%%";
                         case "string":
-                            sqlParams_1.push(item.value);
+                            sqlParams.push(item.value);
                             return "%s";
                         default:
                             return "";
                     }
                 }
-                return item.trim();
+                else
+                    return item.trim();
             }));
-            return format.apply(void 0, __spreadArray([sqlTokens], sqlParams_1, false));
+            return format(sqlTokens, ...sqlParams);
         }
-        var paramIndex = 0;
-        return joinSqlTokens(this.query.sql.map(function (item) {
+        let paramIndex = 0;
+        return joinSqlTokens(this.query.sql.map((item) => {
             if (item instanceof ParameterType) {
                 paramIndex += 1;
                 return formatPgParameterToken(item, paramIndex);
             }
             return item;
         }));
-    };
-    CoreQueryBuilder.prototype.getSqlParametersCore = function () {
+    }
+    getSqlParametersCore() {
         if (!this.queryInstance)
             throw new Error("QueryInstance is required for this operation");
-        var queryInstance = this.queryInstance;
-        var formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
-        var onlyLiterals = formatParamHandler === "pg";
+        const queryInstance = this.queryInstance;
+        const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
+        const onlyLiterals = formatParamHandler === "pg";
         return this.query.sql
-            .filter(function (item) { return item instanceof ParameterType && (!onlyLiterals || item.type === "literal"); })
-            .map(function (item) { return item.value; });
-    };
-    CoreQueryBuilder.prototype.getSqlWithParametersCore = function () {
+            .filter((item) => item instanceof ParameterType && (!onlyLiterals || item.type === "literal"))
+            .map((item) => item.value);
+    }
+    getSqlWithParametersCore() {
         if (!this.queryInstance)
             throw new Error("QueryInstance is required for this operation");
-        var queryInstance = this.queryInstance;
-        var formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
+        const queryInstance = this.queryInstance;
+        const formatParamHandler = queryInstance.getDbInstance().formatParamHandler;
         if (formatParamHandler === "pg") {
-            return joinSqlTokens(this.query.sql.map(function (item) {
+            return joinSqlTokens(this.query.sql.map((item) => {
                 if (item instanceof ParameterType) {
                     return formatPgParameterWithValue(item);
                 }
                 return item.trim();
             }));
         }
-        var paramIndex = 0;
-        return joinSqlTokens(this.query.sql.map(function (item) {
+        let paramIndex = 0;
+        return joinSqlTokens(this.query.sql.map((item) => {
             if (item instanceof ParameterType) {
                 paramIndex += 1;
                 return toSqlWithParameters(formatParamHandler, item, paramIndex);
             }
             return item;
         }));
-    };
+    }
     // Statement resolution helpers.
-    CoreQueryBuilder.prototype.resolveStatement = function (item) {
+    resolveStatement(item) {
         if (item == "*") {
             return ["*"];
         }
@@ -443,14 +423,14 @@ var CoreQueryBuilder = /** @class */ (function () {
             return [this.createLiteralParameter(null)];
         }
         if (item instanceof SqlSchemaParam) {
-            var resolvedValue = this.resolveSqlSchemaParamValue(item);
+            const resolvedValue = this.resolveSqlSchemaParamValue(item);
             if (resolvedValue === undefined) {
                 return [];
             }
             return [this.createLiteralParameter(resolvedValue)];
         }
         if (this.isColumnSchema(item)) {
-            return [this.createIdentifierParameter("".concat(item.tableSchema.tableSchemaName, ".").concat(item.columnSchemaName))];
+            return [this.createIdentifierParameter(`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`)];
         }
         if (this.isTableSchema(item)) {
             return [this.createIdentifierParameter(item.tableSchemaName)];
@@ -468,27 +448,26 @@ var CoreQueryBuilder = /** @class */ (function () {
             return [this.createLiteralParameter(item)];
         }
         return [this.createLiteralParameter(String(item))];
-    };
-    CoreQueryBuilder.prototype.resolveStatements = function (values) {
-        var _this = this;
-        return values.map(function (item) { return _this.resolveStatement(item); });
-    };
-    CoreQueryBuilder.prototype.resolveIdentifierStatement = function (item) {
+    }
+    resolveStatements(values) {
+        return values.map((item) => this.resolveStatement(item));
+    }
+    resolveIdentifierStatement(item) {
         if (item === undefined || item === null || item === "") {
             return [];
         }
         if (item instanceof SqlSchemaParam) {
-            var resolvedValue = this.resolveSqlSchemaParamValue(item);
+            const resolvedValue = this.resolveSqlSchemaParamValue(item);
             if (resolvedValue === undefined) {
                 return [];
             }
             if (resolvedValue === null) {
-                throw new Error("SqlSchemaParam '".concat(item.getKey(), "' cannot resolve to null for identifier statement."));
+                throw new Error(`SqlSchemaParam '${item.getKey()}' cannot resolve to null for identifier statement.`);
             }
             return [this.createIdentifierParameter(resolvedValue)];
         }
         if (this.isColumnSchema(item)) {
-            return [this.createIdentifierParameter("".concat(item.tableSchema.tableSchemaName, ".").concat(item.columnSchemaName))];
+            return [this.createIdentifierParameter(`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`)];
         }
         if (this.isTableSchema(item)) {
             return [this.createIdentifierParameter(item.tableSchemaName)];
@@ -512,23 +491,23 @@ var CoreQueryBuilder = /** @class */ (function () {
             return item.getTokens();
         }
         return [this.createIdentifierParameter(String(item))];
-    };
-    CoreQueryBuilder.prototype.resolveStringStatement = function (item) {
+    }
+    resolveStringStatement(item) {
         if (item === undefined || item === null || item === "") {
             return [];
         }
         if (item instanceof SqlSchemaParam) {
-            var resolvedValue = this.resolveSqlSchemaParamValue(item);
+            const resolvedValue = this.resolveSqlSchemaParamValue(item);
             if (resolvedValue === undefined) {
                 return [];
             }
             if (resolvedValue === null) {
-                throw new Error("SqlSchemaParam '".concat(item.getKey(), "' cannot resolve to null for string statement."));
+                throw new Error(`SqlSchemaParam '${item.getKey()}' cannot resolve to null for string statement.`);
             }
             return [String(resolvedValue)];
         }
         if (this.isColumnSchema(item)) {
-            return ["".concat(item.tableSchema.tableSchemaName, ".").concat(item.columnSchemaName)];
+            return [`${item.tableSchema.tableSchemaName}.${item.columnSchemaName}`];
         }
         if (this.isTableSchema(item)) {
             return [item.tableSchemaName];
@@ -545,84 +524,76 @@ var CoreQueryBuilder = /** @class */ (function () {
             }
             return item.getTokens();
         }
-        throw new Error("Unsupported string statement type: ".concat(typeof item));
-    };
+        throw new Error(`Unsupported string statement type: ${typeof item}`);
+    }
     // Token creation helpers.
-    CoreQueryBuilder.prototype.createLiteralParameter = function (value) {
+    createLiteralParameter(value) {
         return new ParameterType({
-            value: value,
+            value,
             type: "literal",
         });
-    };
-    CoreQueryBuilder.prototype.createIdentifierParameter = function (value) {
+    }
+    createIdentifierParameter(value) {
         return new ParameterType({
-            value: value,
+            value,
             type: "identifier",
         });
-    };
-    CoreQueryBuilder.prototype.createStringParameter = function (value) {
+    }
+    createStringParameter(value) {
         return new ParameterType({
-            value: value,
+            value,
             type: "string",
         });
-    };
-    CoreQueryBuilder.prototype.createPercentParameter = function () {
+    }
+    createPercentParameter() {
         return new ParameterType({
             value: '%',
             type: "percent",
         });
-    };
+    }
     // SQL token composition helpers.
-    CoreQueryBuilder.prototype.pushSeparatedTokens = function (tokensList, separator) {
-        var _a;
-        var hasTokens = false;
-        for (var _i = 0, tokensList_1 = tokensList; _i < tokensList_1.length; _i++) {
-            var tokens = tokensList_1[_i];
+    pushSeparatedTokens(tokensList, separator) {
+        let hasTokens = false;
+        for (const tokens of tokensList) {
             if (tokens.length === 0) {
                 continue;
             }
             if (hasTokens) {
                 this.query.sql.push(separator);
             }
-            (_a = this.query.sql).push.apply(_a, tokens);
+            this.query.sql.push(...tokens);
             hasTokens = true;
         }
-    };
-    CoreQueryBuilder.prototype.pushFunction = function (func) {
-        var _a;
-        var _this = this;
-        var runtimeArgs = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            runtimeArgs[_i - 1] = arguments[_i];
-        }
+    }
+    pushFunction(func, ...runtimeArgs) {
         if (func.format === "COERCE_EXPLICIT_CAST") {
-            var arg = runtimeArgs[0];
+            const arg = runtimeArgs[0];
             if (arg === undefined || arg === null || arg === "") {
                 return this;
             }
-            var resolvedArg = this.resolveStatement(arg);
+            const resolvedArg = this.resolveStatement(arg);
             if (resolvedArg.length === 0) {
                 return this;
             }
             this.query.sql.push("CAST(");
-            (_a = this.query.sql).push.apply(_a, resolvedArg);
+            this.query.sql.push(...resolvedArg);
             this.query.sql.push(" AS ");
             this.query.sql.push(func.name);
             this.query.sql.push(")");
         }
         else {
             this.query.sql.push(func.name + "(");
-            var filteredArgs = runtimeArgs.filter(function (arg) { return arg !== undefined && arg !== ""; });
-            var resolvedArgs = filteredArgs.map(function (arg) { return _this.resolveStatement(arg); });
+            const filteredArgs = runtimeArgs.filter(arg => arg !== undefined && arg !== "");
+            const resolvedArgs = filteredArgs.map(arg => this.resolveStatement(arg));
             this.pushSeparatedTokens(resolvedArgs, ",");
             this.query.sql.push(")");
         }
         return this;
-    };
-    CoreQueryBuilder.prototype.resolveSqlSchemaParamValue = function (param) {
-        var key = param.getKey();
-        var hasRuntimeValue = Object.prototype.hasOwnProperty.call(this.runtimeParams, key);
-        var value = hasRuntimeValue
+    }
+    resolveSqlSchemaParamValue(param) {
+        const key = param.getKey();
+        const hasRuntimeValue = Object.prototype.hasOwnProperty.call(this.runtimeParams, key);
+        const value = hasRuntimeValue
             ? this.runtimeParams[key]
             : param.hasDefault()
                 ? param.getDefaultValue()
@@ -631,24 +602,22 @@ var CoreQueryBuilder = /** @class */ (function () {
             return undefined;
         }
         if (value !== null && typeof value !== "string" && typeof value !== "number" && typeof value !== "boolean") {
-            throw new Error("SqlSchemaParam '".concat(key, "' must resolve to string | number | boolean | null, got ").concat(describeValueType(value), "."));
+            throw new Error(`SqlSchemaParam '${key}' must resolve to string | number | boolean | null, got ${describeValueType(value)}.`);
         }
-        var scalarValue = value;
-        var expectedTypes = param.getTypes();
+        const scalarValue = value;
+        const expectedTypes = param.getTypes();
         if (expectedTypes.length === 0) {
             return scalarValue;
         }
-        var resolvedType = scalarValue === null
+        const resolvedType = scalarValue === null
             ? "null"
             : typeof scalarValue;
         if (!expectedTypes.includes(resolvedType)) {
-            throw new Error("Invalid value for SqlSchemaParam '".concat(key, "'. Expected ").concat(expectedTypes.join(" | "), ", got ").concat(resolvedType, "."));
+            throw new Error(`Invalid value for SqlSchemaParam '${key}'. Expected ${expectedTypes.join(" | ")}, got ${resolvedType}.`);
         }
         return scalarValue;
-    };
-    return CoreQueryBuilder;
-}());
-export { CoreQueryBuilder };
+    }
+}
 // Primitive and schema parameter helpers.
 function isSerializablePrimitive(value) {
     return value === undefined || value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean";
@@ -670,10 +639,10 @@ function getPrimitiveSchemaParamType(value) {
 }
 // Instance structure cloning helpers.
 function cloneInstanceStructure(structure) {
-    return structure.map(function (node) { return ({
+    return structure.map((node) => ({
         name: node.name,
         args: node.args.map(cloneInstanceValue),
-    }); });
+    }));
 }
 function cloneInstanceValue(value) {
     if (isSerializablePrimitive(value)) {
@@ -696,7 +665,7 @@ function cloneInstanceValue(value) {
             kind: "schema-param",
             value: {
                 key: value.value.key,
-                types: __spreadArray([], value.value.types, true),
+                types: [...value.value.types],
                 hasDefault: value.value.hasDefault,
                 defaultValue: value.value.defaultValue,
             },
@@ -710,8 +679,7 @@ function cloneInstanceValue(value) {
     }
     return {
         kind: "object",
-        value: Object.entries(value.value).reduce(function (acc, _a) {
-            var key = _a[0], val = _a[1];
+        value: Object.entries(value.value).reduce((acc, [key, val]) => {
             acc[key] = cloneInstanceValue(val);
             return acc;
         }, {}),
@@ -731,10 +699,8 @@ function describeValueType(value) {
 }
 // SQL token spacing helper.
 function joinSqlTokens(tokens) {
-    var _a;
-    var spacedTokens = [];
-    for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
-        var token = tokens_1[_i];
+    const spacedTokens = [];
+    for (const token of tokens) {
         if (!token) {
             continue;
         }
@@ -742,7 +708,7 @@ function joinSqlTokens(tokens) {
             spacedTokens.push(token);
             continue;
         }
-        var prev = (_a = spacedTokens[spacedTokens.length - 1]) !== null && _a !== void 0 ? _a : "";
+        const prev = spacedTokens[spacedTokens.length - 1] ?? "";
         if (shouldInsertSpace(prev, token)) {
             spacedTokens.push(" ");
         }
@@ -751,8 +717,8 @@ function joinSqlTokens(tokens) {
     return spacedTokens.join("").trim();
 }
 function shouldInsertSpace(prev, next) {
-    var noSpaceBefore = new Set([",", ")", ".", ";"]);
-    var noSpaceAfter = new Set(["(", "."]);
+    const noSpaceBefore = new Set([",", ")", ".", ";"]);
+    const noSpaceAfter = new Set(["(", "."]);
     if (prev.endsWith("(")) {
         return false;
     }
@@ -784,7 +750,7 @@ function toSqlWithParameters(formatParamHandler, item, index) {
 }
 function formatPgParameterToken(item, literalIndex) {
     if (item.type === "literal") {
-        return "$".concat(literalIndex);
+        return `$${literalIndex}`;
     }
     if (item.type === "identifier") {
         return format("%I", item.value);
@@ -824,7 +790,7 @@ function formatParameterToken(formatParamHandler, item, index) {
     }
     if (typeof formatParamHandler === "function") {
         return formatParamHandler({
-            index: index,
+            index,
             value: item.value,
             type: item.type,
         });
@@ -855,7 +821,7 @@ function formatLiteralWithParameters(formatParamHandler, item, index) {
     }
     if (typeof formatParamHandler === "function") {
         return formatParamHandler({
-            index: index,
+            index,
             value: item.value,
             type: item.type,
         });

@@ -1,14 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SqlSchemaQueryBuilder = exports.SqlSchema = void 0;
+exports.sqlSchema = sqlSchema;
 class SqlSchema {
     schema = {
-        variableNames: null,
         sql: {}
     };
-    constructor(variableNames) {
-        this.schema.variableNames = variableNames?.replaceAll(/\s/g, "") || null;
-    }
     setQuery(name, sqlSchemaQueryBuilder) {
         this.schema.sql[name] = {
             query: sqlSchemaQueryBuilder.getSqlBuilder().getSchema(),
@@ -22,6 +19,8 @@ class SqlSchema {
             return new SqlSchemaQueryBuilder(query);
         },
     };
+    createSqlBuilder(key, variableName) {
+    }
     query(key) {
         const sqlSchemaQueryBuilder = this.schema.sql[key];
         if (!sqlSchemaQueryBuilder)
@@ -66,3 +65,6 @@ class SqlSchemaQueryBuilder {
     }
 }
 exports.SqlSchemaQueryBuilder = SqlSchemaQueryBuilder;
+function sqlSchema() {
+    return new SqlSchema();
+}

@@ -1,8 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.OPERATORS = void 0;
-// Single source of truth for SQL operators
-exports.OPERATORS = [
+export const OPERATORS = [
     "=", "<>", "!=", "<", ">", "<=", ">=", "!", "~", "~*", "!~", "!~*",
     "&", "|", "^", "<<", "<<=", ">>", ">>=", "&&", "||", "@", "#", "?",
     "+", "-", "*", "/", "%", "OR", "AND", "IS", "IS NOT",
@@ -10,8 +6,15 @@ exports.OPERATORS = [
     "^@", "ANY", "ALL", "DISTINCT", "NOT_DISTINCT", "NULLIF", "IN",
     "SIMILAR", "BETWEEN", "NOT_BETWEEN", "BETWEEN_SYM", "NOT_BETWEEN_SYM",
     "@-@", "@@", "##", "<->", "@>", "<@", "&<", "&>", "<<|",
-    "|>>", "&<|", "|&>", "<^", ">^", "?#", "?-", "?|", "?-|", "?||", "~="
+    "|>>", "&<|", "|&>", "<^", ">^", "?#", "?-", "?|", "?-|", "?||", "~=",
 ];
-// ParameterType | 
-// export type StatementArrayValue<T> = Array<T | StatementArrayValue<T>>;
-// export type IdentifierInput = Statement | Record<string, Statement>;
+export class ParameterType {
+    value;
+    type;
+    constructor({ value, type, }) {
+        this.value = value;
+        this.type = type;
+    }
+}
+import functionList from "./generated/function-list.json";
+export { functionList };

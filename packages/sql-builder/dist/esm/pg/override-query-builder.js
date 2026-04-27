@@ -1,339 +1,278 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 import { OperatorFunctionBuilder } from "./override-operator-functions";
 import { QueryBuilder } from "./query-builder";
-var OverrideQueryBuilder = /** @class */ (function (_super) {
-    __extends(OverrideQueryBuilder, _super);
-    function OverrideQueryBuilder() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
+export class OverrideQueryBuilder extends OperatorFunctionBuilder {
     // rest
-    OverrideQueryBuilder.prototype.escape = function (value) {
-        var _a;
+    escape(value) {
         if (value === undefined) {
-            return _super.prototype.escape.call(this);
+            return super.escape();
         }
         this.query.sql.push("ESCAPE");
-        var resolvedEscape = _super.prototype.resolveStatement.call(this, value);
+        const resolvedEscape = super.resolveStatement(value);
         if (resolvedEscape.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolvedEscape);
+            this.query.sql.push(...resolvedEscape);
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.semicolon = function () {
+    }
+    semicolon() {
         this.query.sql.push(";");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.sc = function () {
+    }
+    sc() {
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.beginTransaction = function () {
+    }
+    beginTransaction() {
         this.begin().semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.commitTransaction = function () {
+    }
+    commitTransaction() {
         this.commit().semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.rollbackTransaction = function () {
+    }
+    rollbackTransaction() {
         this.rollback().semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.savepointTransaction = function (name) {
-        var _a;
-        _super.prototype.savepoint.call(this);
-        var resolvedName = _super.prototype.resolveStatement.call(this, name);
+    }
+    savepointTransaction(name) {
+        super.savepoint();
+        const resolvedName = super.resolveStatement(name);
         if (resolvedName.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolvedName);
+            this.query.sql.push(...resolvedName);
         }
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.startTransaction = function () {
+    }
+    startTransaction() {
         this.start().semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.prepareTransaction = function (name) {
-        var _a;
-        _super.prototype.prepare.call(this);
-        _super.prototype.transaction.call(this);
+    }
+    prepareTransaction(name) {
+        super.prepare();
+        super.transaction();
         if (name !== undefined) {
-            var resolvedName = _super.prototype.resolveStatement.call(this, name);
+            const resolvedName = super.resolveStatement(name);
             if (resolvedName.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedName);
+                this.query.sql.push(...resolvedName);
             }
         }
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.commitPreparedTransaction = function (name) {
-        var _a;
-        _super.prototype.commit.call(this);
-        _super.prototype.prepared.call(this);
+    }
+    commitPreparedTransaction(name) {
+        super.commit();
+        super.prepared();
         if (name !== undefined) {
-            var resolvedName = _super.prototype.resolveStatement.call(this, name);
+            const resolvedName = super.resolveStatement(name);
             if (resolvedName.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedName);
+                this.query.sql.push(...resolvedName);
             }
         }
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.rollbackPreparedTransaction = function (name) {
-        var _a;
-        _super.prototype.rollback.call(this);
-        _super.prototype.prepared.call(this);
+    }
+    rollbackPreparedTransaction(name) {
+        super.rollback();
+        super.prepared();
         if (name !== undefined) {
-            var resolvedName = _super.prototype.resolveStatement.call(this, name);
+            const resolvedName = super.resolveStatement(name);
             if (resolvedName.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedName);
+                this.query.sql.push(...resolvedName);
             }
         }
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.rollbackToSavepointTransaction = function (name) {
-        var _a;
-        _super.prototype.rollback.call(this);
-        _super.prototype.to.call(this);
-        _super.prototype.savepoint.call(this);
+    }
+    rollbackToSavepointTransaction(name) {
+        super.rollback();
+        super.to();
+        super.savepoint();
         if (name !== undefined) {
-            var resolvedName = _super.prototype.resolveStatement.call(this, name);
+            const resolvedName = super.resolveStatement(name);
             if (resolvedName.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedName);
+                this.query.sql.push(...resolvedName);
             }
         }
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.releaseTransaction = function (name) {
-        var _a;
-        _super.prototype.release.call(this);
-        _super.prototype.savepoint.call(this);
+    }
+    releaseTransaction(name) {
+        super.release();
+        super.savepoint();
         if (name !== undefined) {
-            var resolvedName = _super.prototype.resolveStatement.call(this, name);
+            const resolvedName = super.resolveStatement(name);
             if (resolvedName.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedName);
+                this.query.sql.push(...resolvedName);
             }
         }
         this.semicolon();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.transaction = function () {
-        var _this = this;
-        var transaction = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            transaction[_i] = arguments[_i];
-        }
+    }
+    transaction(...transaction) {
         if (transaction.length === 0) {
-            return _super.prototype.transaction.call(this);
+            return super.transaction();
         }
         this.beginTransaction();
-        var resolvedStatements = _super.prototype.resolveStatements.call(this, transaction)
-            .filter(function (tokens) { return tokens.length > 0; });
-        resolvedStatements.forEach(function (tokens) {
-            var _a;
-            (_a = _this.query.sql).push.apply(_a, tokens);
-            var lastToken = tokens[tokens.length - 1];
+        const resolvedStatements = super
+            .resolveStatements(transaction)
+            .filter((tokens) => tokens.length > 0);
+        resolvedStatements.forEach((tokens) => {
+            this.query.sql.push(...tokens);
+            const lastToken = tokens[tokens.length - 1];
             if (lastToken !== ";") {
-                _this.semicolon();
+                this.semicolon();
             }
         });
         this.commitTransaction();
         return this.endClass();
-    };
+    }
     // Queries
-    OverrideQueryBuilder.prototype.select = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
-        _super.prototype.select.call(this);
+    select(...cols) {
+        super.select();
         if (cols.length === 0) {
             return this.endClass();
         }
-        var columns = [];
-        cols.forEach(function (item) {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !_super.prototype.isSchemaObject.call(_this, item)) {
-                var entries = Object.entries(item);
-                entries.forEach(function (_a) {
-                    var alias = _a[0], column = _a[1];
-                    var tokens = [];
-                    var resolvedColumn = _super.prototype.resolveStatement.call(_this, column);
-                    var resolvedAlias = _super.prototype.resolveIdentifierStatement.call(_this, alias);
+        const columns = [];
+        cols.forEach((item) => {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
+                const entries = Object.entries(item);
+                entries.forEach(([alias, column]) => {
+                    const tokens = [];
+                    const resolvedColumn = super.resolveStatement(column);
+                    const resolvedAlias = super.resolveIdentifierStatement(alias);
                     if (resolvedColumn.length === 0) {
                         return;
                     }
-                    tokens.push.apply(tokens, resolvedColumn);
+                    tokens.push(...resolvedColumn);
                     if (resolvedAlias.length > 0) {
-                        tokens.push.apply(tokens, __spreadArray(["AS"], resolvedAlias, false));
+                        tokens.push("AS", ...resolvedAlias);
                     }
                     columns.push(tokens);
                 });
             }
             else {
-                var resolved = _super.prototype.resolveStatement.call(_this, item);
+                const resolved = super.resolveStatement(item);
                 columns.push(resolved);
             }
         });
-        _super.prototype.pushSeparatedTokens.call(this, columns, ",");
+        super.pushSeparatedTokens(columns, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.selectDistinct = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
-        _super.prototype.select.call(this);
-        _super.prototype.distinct.call(this);
+    }
+    selectDistinct(...cols) {
+        super.select();
+        super.distinct();
         if (cols.length === 0) {
             return this.endClass();
         }
-        var columns = [];
-        cols.forEach(function (item) {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !_super.prototype.isSchemaObject.call(_this, item)) {
-                var entries = Object.entries(item);
-                entries.forEach(function (_a) {
-                    var alias = _a[0], column = _a[1];
-                    var tokens = [];
-                    var resolvedColumn = _super.prototype.resolveStatement.call(_this, column);
-                    var resolvedAlias = _super.prototype.resolveIdentifierStatement.call(_this, alias);
+        const columns = [];
+        cols.forEach((item) => {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
+                const entries = Object.entries(item);
+                entries.forEach(([alias, column]) => {
+                    const tokens = [];
+                    const resolvedColumn = super.resolveStatement(column);
+                    const resolvedAlias = super.resolveIdentifierStatement(alias);
                     if (resolvedColumn.length === 0) {
                         return;
                     }
-                    tokens.push.apply(tokens, resolvedColumn);
+                    tokens.push(...resolvedColumn);
                     if (resolvedAlias.length > 0) {
-                        tokens.push.apply(tokens, __spreadArray(["AS"], resolvedAlias, false));
+                        tokens.push("AS", ...resolvedAlias);
                     }
                     columns.push(tokens);
                 });
             }
             else {
-                var resolved = _super.prototype.resolveStatement.call(_this, item);
+                const resolved = super.resolveStatement(item);
                 columns.push(resolved);
             }
         });
-        _super.prototype.pushSeparatedTokens.call(this, columns, ",");
+        super.pushSeparatedTokens(columns, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.selectDistinctOn = function (on, cols) {
-        var _this = this;
-        _super.prototype.select.call(this);
-        _super.prototype.distinct.call(this);
+    }
+    selectDistinctOn(on, cols) {
+        super.select();
+        super.distinct();
         if (on !== undefined && on.length > 0) {
-            _super.prototype.on.call(this);
+            super.on();
             this.query.sql.push("(");
-            var resolvedOn = on.map(function (item) { return _super.prototype.resolveIdentifierStatement.call(_this, item); });
-            _super.prototype.pushSeparatedTokens.call(this, resolvedOn, ",");
+            const resolvedOn = on.map((item) => super.resolveIdentifierStatement(item));
+            super.pushSeparatedTokens(resolvedOn, ",");
             this.query.sql.push(")");
         }
         if (cols == undefined || cols.length === 0) {
             return this.endClass();
         }
-        var columns = [];
-        cols.forEach(function (item) {
-            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !_super.prototype.isSchemaObject.call(_this, item)) {
-                var entries = Object.entries(item);
-                entries.forEach(function (_a) {
-                    var alias = _a[0], column = _a[1];
-                    var tokens = [];
-                    var resolvedColumn = _super.prototype.resolveStatement.call(_this, column);
-                    var resolvedAlias = _super.prototype.resolveIdentifierStatement.call(_this, alias);
+        const columns = [];
+        cols.forEach((item) => {
+            if (item && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
+                const entries = Object.entries(item);
+                entries.forEach(([alias, column]) => {
+                    const tokens = [];
+                    const resolvedColumn = super.resolveStatement(column);
+                    const resolvedAlias = super.resolveIdentifierStatement(alias);
                     if (resolvedColumn.length === 0) {
                         return;
                     }
-                    tokens.push.apply(tokens, resolvedColumn);
+                    tokens.push(...resolvedColumn);
                     if (resolvedAlias.length > 0) {
-                        tokens.push.apply(tokens, __spreadArray(["AS"], resolvedAlias, false));
+                        tokens.push("AS", ...resolvedAlias);
                     }
                     columns.push(tokens);
                 });
             }
             else {
-                var resolved = _super.prototype.resolveStatement.call(_this, item);
+                const resolved = super.resolveStatement(item);
                 columns.push(resolved);
             }
         });
-        _super.prototype.pushSeparatedTokens.call(this, columns, ",");
+        super.pushSeparatedTokens(columns, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.insertInto = function (table, cols) {
-        var _a;
-        _super.prototype.insert.call(this);
-        _super.prototype.into.call(this);
+    }
+    insertInto(table, cols) {
+        super.insert();
+        super.into();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (!cols || cols.length === 0) {
             return this.endClass();
         }
-        var resolvedColumns = _super.prototype.resolveStatements.call(this, cols);
+        const resolvedColumns = super.resolveStatements(cols);
         if (resolvedColumns.length > 0) {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+            super.pushSeparatedTokens(resolvedColumns, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.values = function () {
-        var _this = this;
-        var values = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            values[_i] = arguments[_i];
-        }
+    }
+    values(...values) {
         if (values.length === 0) {
-            _super.prototype.values.call(this);
+            super.values();
             return this.endClass();
         }
         this.query.sql.push("VALUES");
-        var haveDeepArray = values.some(function (item) { return Array.isArray(item); });
-        var resolveArrayValue = function (item) {
-            var _a;
+        let haveDeepArray = values.some((item) => Array.isArray(item));
+        const resolveArrayValue = (item) => {
             if (Array.isArray(item)) {
-                var resolvedItems = item.map(function (subItem) { return _super.prototype.resolveStatement.call(_this, subItem); });
-                _this.query.sql.push("(");
-                _super.prototype.pushSeparatedTokens.call(_this, resolvedItems, ",");
-                _this.query.sql.push(")");
+                const resolvedItems = item.map((subItem) => super.resolveStatement(subItem));
+                this.query.sql.push("(");
+                super.pushSeparatedTokens(resolvedItems, ",");
+                this.query.sql.push(")");
             }
             else {
-                var resolved = _super.prototype.resolveStatement.call(_this, item);
-                (_a = _this.query.sql).push.apply(_a, resolved);
+                const resolved = super.resolveStatement(item);
+                this.query.sql.push(...resolved);
             }
         };
         if (!haveDeepArray)
             this.query.sql.push("(");
-        values.forEach(function (item, i) {
+        values.forEach((item, i) => {
             resolveArrayValue(item);
             if (i < values.length - 1) {
-                _this.query.sql.push(",");
+                this.query.sql.push(",");
             }
         });
         if (!haveDeepArray)
@@ -358,1450 +297,1232 @@ var OverrideQueryBuilder = /** @class */ (function (_super) {
         //     // this.query.sql.push(")");
         // });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.insert = function (table, values) {
-        var _a;
-        var _this = this;
-        var _b;
-        _super.prototype.insert.call(this);
+    }
+    insert(table, values) {
+        super.insert();
         if (table === undefined || table === null) {
             return this.endClass();
         }
-        _super.prototype.into.call(this);
-        var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+        super.into();
+        const resolvedTable = super.resolveStatement(table);
         if (resolvedTable.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolvedTable);
+            this.query.sql.push(...resolvedTable);
         }
-        var rows = values === undefined ? [] : (Array.isArray(values) ? values : [values]);
+        const rows = values === undefined ? [] : (Array.isArray(values) ? values : [values]);
         if (rows.length === 0) {
             return this.endClass();
         }
-        var columnNames = Object.keys((_b = rows[0]) !== null && _b !== void 0 ? _b : {});
-        var columnSet = new Set(columnNames);
-        rows.forEach(function (row, index) {
-            var keys = Object.keys(row);
+        const columnNames = Object.keys(rows[0] ?? {});
+        const columnSet = new Set(columnNames);
+        rows.forEach((row, index) => {
+            const keys = Object.keys(row);
             if (keys.length !== columnNames.length) {
-                throw new Error("Insert values keys mismatch at row ".concat(index + 1, "."));
+                throw new Error(`Insert values keys mismatch at row ${index + 1}.`);
             }
-            keys.forEach(function (key) {
+            keys.forEach((key) => {
                 if (!columnSet.has(key)) {
-                    throw new Error("Insert values keys mismatch at row ".concat(index + 1, "."));
+                    throw new Error(`Insert values keys mismatch at row ${index + 1}.`);
                 }
             });
         });
         if (columnNames.length > 0) {
-            var resolvedColumns = columnNames.map(function (item) { return _super.prototype.resolveIdentifierStatement.call(_this, item); });
+            const resolvedColumns = columnNames.map((item) => super.resolveIdentifierStatement(item));
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+            super.pushSeparatedTokens(resolvedColumns, ",");
             this.query.sql.push(")");
         }
         this.query.sql.push("VALUES");
-        rows.forEach(function (row, rowIndex) {
+        rows.forEach((row, rowIndex) => {
             if (rowIndex > 0) {
-                _this.query.sql.push(",");
+                this.query.sql.push(",");
             }
-            var resolvedRow = columnNames.map(function (column) { return row[column]; })
-                .map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-            _this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(_this, resolvedRow, ",");
-            _this.query.sql.push(")");
+            const resolvedRow = columnNames.map((column) => row[column])
+                .map((item) => super.resolveStatement(item));
+            this.query.sql.push("(");
+            super.pushSeparatedTokens(resolvedRow, ",");
+            this.query.sql.push(")");
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.update = function (table) {
-        var _a;
-        _super.prototype.update.call(this);
+    }
+    update(table) {
+        super.update();
         if (table === undefined || table === null) {
             return this.endClass();
         }
-        var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+        const resolvedTable = super.resolveStatement(table);
         if (resolvedTable.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolvedTable);
+            this.query.sql.push(...resolvedTable);
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.delete = function (table) {
-        var _a;
-        _super.prototype.delete.call(this);
+    }
+    delete(table) {
+        super.delete();
         if (table === undefined || table === null) {
             return this.endClass();
         }
-        _super.prototype.from.call(this);
-        var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+        super.from();
+        const resolvedTable = super.resolveStatement(table);
         if (resolvedTable.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolvedTable);
+            this.query.sql.push(...resolvedTable);
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.set = function () {
-        var _this = this;
-        var set = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            set[_i] = arguments[_i];
-        }
-        _super.prototype.set.call(this);
+    }
+    set(...set) {
+        super.set();
         if (set === undefined || set.length === 0) {
             return this.endClass();
         }
-        var hasAssignments = false;
-        set.forEach(function (item) {
-            var _a;
-            if (item !== null && typeof item === "object" && !(item instanceof QueryBuilder) && !_super.prototype.isSchemaObject.call(_this, item)) {
-                var entries = Object.entries(item);
-                entries.forEach(function (_a) {
-                    var _b;
-                    var column = _a[0], value = _a[1];
-                    var resolvedColumn = _super.prototype.resolveIdentifierStatement.call(_this, column);
-                    var resolvedValue = _super.prototype.resolveStatement.call(_this, value);
+        let hasAssignments = false;
+        set.forEach((item) => {
+            if (item !== null && typeof item === "object" && !(item instanceof QueryBuilder) && !super.isSchemaObject(item)) {
+                const entries = Object.entries(item);
+                entries.forEach(([column, value]) => {
+                    const resolvedColumn = super.resolveIdentifierStatement(column);
+                    const resolvedValue = super.resolveStatement(value);
                     if (resolvedColumn.length === 0 || resolvedValue.length === 0) {
                         return;
                     }
                     if (hasAssignments) {
-                        _this.query.sql.push(",");
+                        this.query.sql.push(",");
                     }
-                    (_b = _this.query.sql).push.apply(_b, __spreadArray(__spreadArray(__spreadArray([], resolvedColumn, false), ["="], false), resolvedValue, false));
+                    this.query.sql.push(...resolvedColumn, "=", ...resolvedValue);
                     hasAssignments = true;
                 });
             }
             else {
-                var resolvedSet = _super.prototype.resolveStatement.call(_this, item);
+                const resolvedSet = super.resolveStatement(item);
                 if (resolvedSet.length > 0) {
                     if (hasAssignments) {
-                        _this.query.sql.push(",");
+                        this.query.sql.push(",");
                     }
-                    (_a = _this.query.sql).push.apply(_a, resolvedSet);
+                    this.query.sql.push(...resolvedSet);
                     hasAssignments = true;
                 }
             }
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.onConflict = function (target, where) {
-        var _a, _b;
-        var _this = this;
-        _super.prototype.on.call(this);
-        _super.prototype.conflict.call(this);
+    }
+    onConflict(target, where) {
+        super.on();
+        super.conflict();
         if (target !== undefined && target !== null) {
             if (Array.isArray(target)) {
-                var resolvedTarget = target.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
+                const resolvedTarget = target.map((item) => super.resolveStatement(item));
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
-                    _super.prototype.pushSeparatedTokens.call(this, resolvedTarget, ",");
+                    super.pushSeparatedTokens(resolvedTarget, ",");
                     this.query.sql.push(")");
                 }
             }
             else {
-                var resolvedTarget = _super.prototype.resolveStatement.call(this, target);
+                const resolvedTarget = super.resolveStatement(target);
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
-                    (_a = this.query.sql).push.apply(_a, resolvedTarget);
+                    this.query.sql.push(...resolvedTarget);
                     this.query.sql.push(")");
                 }
             }
         }
         if (where) {
-            _super.prototype.where.call(this);
-            var resolvedWhere = _super.prototype.resolveStatement.call(this, where);
+            super.where();
+            const resolvedWhere = super.resolveStatement(where);
             if (resolvedWhere.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedWhere);
+                this.query.sql.push(...resolvedWhere);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.onConstraint = function (constraintName) {
-        var _a;
-        _super.prototype.on.call(this);
-        _super.prototype.constraint.call(this);
+    }
+    onConstraint(constraintName) {
+        super.on();
+        super.constraint();
         if (constraintName !== undefined && constraintName !== null) {
-            var resolvedConstraint = _super.prototype.resolveStatement.call(this, constraintName);
+            const resolvedConstraint = super.resolveStatement(constraintName);
             if (resolvedConstraint.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedConstraint);
+                this.query.sql.push(...resolvedConstraint);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.on = function () {
-        var _this = this;
-        var param = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            param[_i] = arguments[_i];
-        }
-        _super.prototype.on.call(this);
+    }
+    on(...param) {
+        super.on();
         if (param.length === 0) {
             return this.endClass();
         }
-        var resolved = _super.prototype.resolveStatements.call(this, param).filter(function (tokens) { return tokens.length > 0; });
+        const resolved = super.resolveStatements(param).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
-        resolved.forEach(function (tokens) {
-            var _a;
-            (_a = _this.query.sql).push.apply(_a, tokens);
+        resolved.forEach((tokens) => {
+            this.query.sql.push(...tokens);
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.doUpdate = function (set, where) {
-        var _a;
-        var _this = this;
-        _super.prototype.do.call(this);
-        _super.prototype.update.call(this);
+    }
+    doUpdate(set, where) {
+        super.do();
+        super.update();
         if (set !== undefined) {
-            _super.prototype.set.call(this);
-            var setEntries = Array.isArray(set) ? set : [set];
-            var hasAssignments_1 = false;
-            setEntries.forEach(function (entry) {
-                Object.entries(entry).forEach(function (_a) {
-                    var _b;
-                    var column = _a[0], value = _a[1];
-                    var resolvedColumn = _super.prototype.resolveIdentifierStatement.call(_this, column);
-                    var resolvedValue = _super.prototype.resolveStatement.call(_this, value);
+            super.set();
+            const setEntries = Array.isArray(set) ? set : [set];
+            let hasAssignments = false;
+            setEntries.forEach((entry) => {
+                Object.entries(entry).forEach(([column, value]) => {
+                    const resolvedColumn = super.resolveIdentifierStatement(column);
+                    const resolvedValue = super.resolveStatement(value);
                     if (resolvedColumn.length === 0 || resolvedValue.length === 0) {
                         return;
                     }
-                    if (hasAssignments_1) {
-                        _this.query.sql.push(",");
+                    if (hasAssignments) {
+                        this.query.sql.push(",");
                     }
-                    (_b = _this.query.sql).push.apply(_b, __spreadArray(__spreadArray(__spreadArray([], resolvedColumn, false), ["="], false), resolvedValue, false));
-                    hasAssignments_1 = true;
+                    this.query.sql.push(...resolvedColumn, "=", ...resolvedValue);
+                    hasAssignments = true;
                 });
             });
         }
         if (where) {
-            _super.prototype.where.call(this);
-            var resolvedWhere = _super.prototype.resolveStatement.call(this, where);
+            super.where();
+            const resolvedWhere = super.resolveStatement(where);
             if (resolvedWhere.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedWhere);
+                this.query.sql.push(...resolvedWhere);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.doNothing = function () {
-        _super.prototype.do.call(this);
-        _super.prototype.nothing.call(this);
+    }
+    doNothing() {
+        super.do();
+        super.nothing();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.onConflictDoNothing = function (options) {
-        var _a, _b;
-        var _this = this;
-        _super.prototype.on.call(this);
-        _super.prototype.conflict.call(this);
-        if ((options === null || options === void 0 ? void 0 : options.target) !== undefined && (options === null || options === void 0 ? void 0 : options.target) !== null) {
+    }
+    onConflictDoNothing(options) {
+        super.on();
+        super.conflict();
+        if (options?.target !== undefined && options?.target !== null) {
             if (Array.isArray(options.target)) {
-                var resolvedTarget = options.target.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
+                const resolvedTarget = options.target.map((item) => super.resolveStatement(item));
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
-                    _super.prototype.pushSeparatedTokens.call(this, resolvedTarget, ",");
+                    super.pushSeparatedTokens(resolvedTarget, ",");
                     this.query.sql.push(")");
                 }
             }
             else {
-                var resolvedTarget = _super.prototype.resolveStatement.call(this, options.target);
+                const resolvedTarget = super.resolveStatement(options.target);
                 if (resolvedTarget.length > 0) {
-                    (_a = this.query.sql).push.apply(_a, resolvedTarget);
+                    this.query.sql.push(...resolvedTarget);
                 }
             }
         }
-        if (options === null || options === void 0 ? void 0 : options.targetWhere) {
-            _super.prototype.where.call(this);
-            var resolvedTargetWhere = _super.prototype.resolveStatement.call(this, options.targetWhere);
+        if (options?.targetWhere) {
+            super.where();
+            const resolvedTargetWhere = super.resolveStatement(options.targetWhere);
             if (resolvedTargetWhere.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedTargetWhere);
+                this.query.sql.push(...resolvedTargetWhere);
             }
         }
-        _super.prototype.do.call(this);
-        _super.prototype.nothing.call(this);
+        super.do();
+        super.nothing();
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.onConflictDoUpdate = function (options) {
-        var _a, _b, _c;
-        var _this = this;
-        _super.prototype.on.call(this);
-        _super.prototype.conflict.call(this);
-        if ((options === null || options === void 0 ? void 0 : options.target) !== undefined && (options === null || options === void 0 ? void 0 : options.target) !== null) {
+    }
+    onConflictDoUpdate(options) {
+        super.on();
+        super.conflict();
+        if (options?.target !== undefined && options?.target !== null) {
             if (Array.isArray(options.target)) {
-                var resolvedTarget = options.target.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
+                const resolvedTarget = options.target.map((item) => super.resolveStatement(item));
                 if (resolvedTarget.length > 0) {
                     this.query.sql.push("(");
-                    _super.prototype.pushSeparatedTokens.call(this, resolvedTarget, ",");
+                    super.pushSeparatedTokens(resolvedTarget, ",");
                     this.query.sql.push(")");
                 }
             }
             else {
-                var resolvedTarget = _super.prototype.resolveStatement.call(this, options.target);
+                const resolvedTarget = super.resolveStatement(options.target);
                 if (resolvedTarget.length > 0) {
-                    (_a = this.query.sql).push.apply(_a, resolvedTarget);
+                    this.query.sql.push(...resolvedTarget);
                 }
             }
         }
-        if (options === null || options === void 0 ? void 0 : options.targetWhere) {
-            _super.prototype.where.call(this);
-            var resolvedTargetWhere = _super.prototype.resolveStatement.call(this, options.targetWhere);
+        if (options?.targetWhere) {
+            super.where();
+            const resolvedTargetWhere = super.resolveStatement(options.targetWhere);
             if (resolvedTargetWhere.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedTargetWhere);
+                this.query.sql.push(...resolvedTargetWhere);
             }
         }
-        _super.prototype.do.call(this);
-        _super.prototype.update.call(this);
-        _super.prototype.set.call(this);
-        var setEntries = (options === null || options === void 0 ? void 0 : options.set) === undefined
+        super.do();
+        super.update();
+        super.set();
+        const setEntries = options?.set === undefined
             ? []
             : Array.isArray(options.set)
                 ? options.set
                 : [options.set];
-        var hasAssignments = false;
-        setEntries.forEach(function (entry) {
-            Object.entries(entry).forEach(function (_a) {
-                var _b;
-                var column = _a[0], value = _a[1];
-                var resolvedColumn = _super.prototype.resolveIdentifierStatement.call(_this, column);
-                var resolvedValue = _super.prototype.resolveStatement.call(_this, value);
+        let hasAssignments = false;
+        setEntries.forEach((entry) => {
+            Object.entries(entry).forEach(([column, value]) => {
+                const resolvedColumn = super.resolveIdentifierStatement(column);
+                const resolvedValue = super.resolveStatement(value);
                 if (resolvedColumn.length === 0 || resolvedValue.length === 0) {
                     return;
                 }
                 if (hasAssignments) {
-                    _this.query.sql.push(",");
+                    this.query.sql.push(",");
                 }
-                (_b = _this.query.sql).push.apply(_b, __spreadArray(__spreadArray(__spreadArray([], resolvedColumn, false), ["="], false), resolvedValue, false));
+                this.query.sql.push(...resolvedColumn, "=", ...resolvedValue);
                 hasAssignments = true;
             });
         });
-        if (options === null || options === void 0 ? void 0 : options.setWhere) {
-            _super.prototype.where.call(this);
-            var resolvedSetWhere = _super.prototype.resolveStatement.call(this, options.setWhere);
+        if (options?.setWhere) {
+            super.where();
+            const resolvedSetWhere = super.resolveStatement(options.setWhere);
             if (resolvedSetWhere.length > 0) {
-                (_c = this.query.sql).push.apply(_c, resolvedSetWhere);
+                this.query.sql.push(...resolvedSetWhere);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.case = function (caseExpr) {
-        var _a;
-        _super.prototype.case.call(this);
+    }
+    case(caseExpr) {
+        super.case();
         if (caseExpr) {
-            var resolvedExpr = _super.prototype.resolveStatement.call(this, caseExpr);
+            const resolvedExpr = super.resolveStatement(caseExpr);
             if (resolvedExpr.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedExpr);
+                this.query.sql.push(...resolvedExpr);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.when = function (condition) {
-        var _a;
-        _super.prototype.when.call(this);
+    }
+    when(condition) {
+        super.when();
         if (condition) {
-            var resolvedCondition = _super.prototype.resolveStatement.call(this, condition);
+            const resolvedCondition = super.resolveStatement(condition);
             if (resolvedCondition.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedCondition);
+                this.query.sql.push(...resolvedCondition);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.then = function (value) {
-        var _a;
-        _super.prototype.then.call(this);
+    }
+    then(value) {
+        super.then();
         if (value) {
-            var resolvedValue = _super.prototype.resolveStatement.call(this, value);
+            const resolvedValue = super.resolveStatement(value);
             if (resolvedValue.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedValue);
+                this.query.sql.push(...resolvedValue);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.else = function (value) {
-        var _a;
-        _super.prototype.else.call(this);
+    }
+    else(value) {
+        super.else();
         if (value) {
-            var resolvedValue = _super.prototype.resolveStatement.call(this, value);
+            const resolvedValue = super.resolveStatement(value);
             if (resolvedValue.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedValue);
+                this.query.sql.push(...resolvedValue);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.asc = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
+    }
+    asc(...cols) {
         if (cols.length === 0) {
-            _super.prototype.asc.call(this);
+            super.asc();
             return this.endClass();
         }
-        var resolvedColumns = cols.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        var hasTokens = false;
-        resolvedColumns.forEach(function (tokens) {
-            var _a;
+        const resolvedColumns = cols.map((item) => super.resolveStatement(item));
+        let hasTokens = false;
+        resolvedColumns.forEach((tokens) => {
             if (tokens.length === 0) {
                 return;
             }
             if (hasTokens) {
-                _this.query.sql.push(",");
+                this.query.sql.push(",");
             }
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray([], tokens, false), ["ASC"], false));
+            this.query.sql.push(...tokens, "ASC");
             hasTokens = true;
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.desc = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
+    }
+    desc(...cols) {
         if (cols.length === 0) {
-            _super.prototype.desc.call(this);
+            super.desc();
             return this.endClass();
         }
-        var resolvedColumns = cols.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        var hasTokens = false;
-        resolvedColumns.forEach(function (tokens) {
-            var _a;
+        const resolvedColumns = cols.map((item) => super.resolveStatement(item));
+        let hasTokens = false;
+        resolvedColumns.forEach((tokens) => {
             if (tokens.length === 0) {
                 return;
             }
             if (hasTokens) {
-                _this.query.sql.push(",");
+                this.query.sql.push(",");
             }
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray([], tokens, false), ["DESC"], false));
+            this.query.sql.push(...tokens, "DESC");
             hasTokens = true;
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.nullsFirst = function () {
+    }
+    nullsFirst() {
         this.query.sql.push("NULLS", "FIRST");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.nullsLast = function () {
+    }
+    nullsLast() {
         this.query.sql.push("NULLS", "LAST");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.as = function (alias) {
-        var _a;
-        _super.prototype.as.call(this);
+    }
+    as(alias) {
+        super.as();
         if (alias !== undefined && alias !== null) {
-            var resolvedAlias = _super.prototype.resolveIdentifierStatement.call(this, alias);
+            const resolvedAlias = super.resolveIdentifierStatement(alias);
             if (resolvedAlias.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedAlias);
+                this.query.sql.push(...resolvedAlias);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.sub = function () {
-        var query = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            query[_i] = arguments[_i];
-        }
+    }
+    sub(...query) {
         this.query.sql.push("(");
         if (query.length > 0) {
-            var resolved = _super.prototype.resolveStatements.call(this, query);
+            const resolved = super.resolveStatements(query);
             if (resolved.length > 0) {
-                _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+                super.pushSeparatedTokens(resolved, ",");
             }
         }
         this.query.sql.push(")");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.from = function () {
-        var _this = this;
-        var tables = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            tables[_i] = arguments[_i];
-        }
-        _super.prototype.from.call(this);
+    }
+    from(...tables) {
+        super.from();
         if (tables.length === 0) {
             return this.endClass();
         }
-        var resolvedTables = tables.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        _super.prototype.pushSeparatedTokens.call(this, resolvedTables, ",");
+        const resolvedTables = tables.map((item) => super.resolveStatement(item));
+        super.pushSeparatedTokens(resolvedTables, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.leftJoin = function (table, on) {
-        var _a, _b;
-        _super.prototype.left.call(this);
-        _super.prototype.join.call(this);
+    }
+    leftJoin(table, on) {
+        super.left();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.leftJoinLateral = function (table, on) {
-        var _a, _b;
-        _super.prototype.left.call(this);
-        _super.prototype.join.call(this);
-        _super.prototype.lateral.call(this);
+    }
+    leftJoinLateral(table, on) {
+        super.left();
+        super.join();
+        super.lateral();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.innerJoin = function (table, on) {
-        var _a, _b;
-        _super.prototype.inner.call(this);
-        _super.prototype.join.call(this);
+    }
+    innerJoin(table, on) {
+        super.inner();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.rightJoin = function (table, on) {
-        var _a, _b;
-        _super.prototype.right.call(this);
-        _super.prototype.join.call(this);
+    }
+    rightJoin(table, on) {
+        super.right();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.innerJoinLateral = function (table, on) {
-        var _a, _b;
-        _super.prototype.inner.call(this);
-        _super.prototype.join.call(this);
-        _super.prototype.lateral.call(this);
+    }
+    innerJoinLateral(table, on) {
+        super.inner();
+        super.join();
+        super.lateral();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.fullJoin = function (table, on) {
-        var _a, _b;
-        _super.prototype.full.call(this);
-        _super.prototype.join.call(this);
+    }
+    fullJoin(table, on) {
+        super.full();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.rightJoinLateral = function (table, on) {
-        var _a, _b;
-        _super.prototype.right.call(this);
-        _super.prototype.join.call(this);
-        _super.prototype.lateral.call(this);
+    }
+    rightJoinLateral(table, on) {
+        super.right();
+        super.join();
+        super.lateral();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.crossJoin = function (table) {
-        var _a;
-        _super.prototype.cross.call(this);
-        _super.prototype.join.call(this);
+    }
+    crossJoin(table) {
+        super.cross();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.crossJoinLateral = function (table) {
-        var _a;
-        _super.prototype.cross.call(this);
-        _super.prototype.join.call(this);
-        _super.prototype.lateral.call(this);
+    }
+    crossJoinLateral(table) {
+        super.cross();
+        super.join();
+        super.lateral();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.join = function (table, on) {
-        var _a, _b;
-        _super.prototype.join.call(this);
+    }
+    join(table, on) {
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (on) {
-            _super.prototype.on.call(this);
-            var resolvedOn = _super.prototype.resolveStatement.call(this, on);
+            super.on();
+            const resolvedOn = super.resolveStatement(on);
             if (resolvedOn.length > 0) {
-                (_b = this.query.sql).push.apply(_b, resolvedOn);
+                this.query.sql.push(...resolvedOn);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.naturalJoin = function (table) {
-        var _a;
-        _super.prototype.natural.call(this);
-        _super.prototype.join.call(this);
+    }
+    naturalJoin(table) {
+        super.natural();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.naturalLeftJoin = function (table) {
-        var _a;
-        _super.prototype.natural.call(this);
-        _super.prototype.left.call(this);
-        _super.prototype.join.call(this);
+    }
+    naturalLeftJoin(table) {
+        super.natural();
+        super.left();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.naturalRightJoin = function (table) {
-        var _a;
-        _super.prototype.natural.call(this);
-        _super.prototype.right.call(this);
-        _super.prototype.join.call(this);
+    }
+    naturalRightJoin(table) {
+        super.natural();
+        super.right();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.naturalInnerJoin = function (table) {
-        var _a;
-        _super.prototype.natural.call(this);
-        _super.prototype.inner.call(this);
-        _super.prototype.join.call(this);
+    }
+    naturalInnerJoin(table) {
+        super.natural();
+        super.inner();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.naturalFullJoin = function (table) {
-        var _a;
-        _super.prototype.natural.call(this);
-        _super.prototype.full.call(this);
-        _super.prototype.join.call(this);
+    }
+    naturalFullJoin(table) {
+        super.natural();
+        super.full();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.naturalCrossJoin = function (table) {
-        var _a;
-        _super.prototype.natural.call(this);
-        _super.prototype.cross.call(this);
-        _super.prototype.join.call(this);
+    }
+    naturalCrossJoin(table) {
+        super.natural();
+        super.cross();
+        super.join();
         if (table !== undefined) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, table);
+            const resolvedTable = super.resolveStatement(table);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.groupBy = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
-        _super.prototype.group.call(this);
-        _super.prototype.by.call(this);
+    }
+    groupBy(...cols) {
+        super.group();
+        super.by();
         if (cols.length === 0) {
             return this.endClass();
         }
-        var resolvedColumns = cols.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+        const resolvedColumns = cols.map((item) => super.resolveStatement(item));
+        super.pushSeparatedTokens(resolvedColumns, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.having = function (condition) {
-        var _a;
-        _super.prototype.having.call(this);
+    }
+    having(condition) {
+        super.having();
         if (condition === undefined || condition === null) {
             return this.endClass();
         }
-        var resolvedCondition = _super.prototype.resolveStatement.call(this, condition);
+        const resolvedCondition = super.resolveStatement(condition);
         if (resolvedCondition.length === 0) {
             return this.endClass();
         }
-        (_a = this.query.sql).push.apply(_a, resolvedCondition);
+        this.query.sql.push(...resolvedCondition);
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.union = function () {
-        var _a;
-        var _this = this;
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
+    }
+    union(...queries) {
         if (queries.length === 0) {
-            _super.prototype.union.call(this);
+            super.union();
             return this.endClass();
         }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length === 0) {
-            var baseQuery = resolvedQueries[0];
+            const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-                (_a = this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], baseQuery, false), [")"], false));
+                this.query.sql.push("(", ...baseQuery, ")");
             }
-            resolvedQueries.slice(1).forEach(function (tokens) {
-                var _a;
-                _super.prototype.union.call(_this);
+            resolvedQueries.slice(1).forEach((tokens) => {
+                super.union();
                 if (tokens) {
-                    (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+                    this.query.sql.push("(", ...tokens, ")");
                 }
             });
             return this.endClass();
         }
-        resolvedQueries.forEach(function (tokens) {
-            var _a;
-            _super.prototype.union.call(_this);
+        resolvedQueries.forEach((tokens) => {
+            super.union();
             if (tokens) {
-                (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+                this.query.sql.push("(", ...tokens, ")");
             }
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.unionAll = function () {
-        var _a;
-        var _this = this;
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
+    }
+    unionAll(...queries) {
         if (queries.length === 0) {
-            _super.prototype.union.call(this);
-            _super.prototype.all.call(this);
+            super.union();
+            super.all();
             return this.endClass();
         }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length === 0) {
-            var baseQuery = resolvedQueries[0];
+            const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-                (_a = this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], baseQuery, false), [")"], false));
+                this.query.sql.push("(", ...baseQuery, ")");
             }
-            resolvedQueries.slice(1).forEach(function (tokens) {
-                var _a;
-                _super.prototype.union.call(_this);
-                _super.prototype.all.call(_this);
-                (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+            resolvedQueries.slice(1).forEach((tokens) => {
+                super.union();
+                super.all();
+                this.query.sql.push("(", ...tokens, ")");
             });
             return this.endClass();
         }
-        resolvedQueries.forEach(function (tokens) {
-            var _a;
-            _super.prototype.union.call(_this);
-            _super.prototype.all.call(_this);
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+        resolvedQueries.forEach((tokens) => {
+            super.union();
+            super.all();
+            this.query.sql.push("(", ...tokens, ")");
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.intersect = function () {
-        var _a;
-        var _this = this;
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
+    }
+    intersect(...queries) {
         if (queries.length === 0) {
-            _super.prototype.intersect.call(this);
+            super.intersect();
             return this.endClass();
         }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length === 0) {
-            var baseQuery = resolvedQueries[0];
+            const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-                (_a = this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], baseQuery, false), [")"], false));
+                this.query.sql.push("(", ...baseQuery, ")");
             }
-            resolvedQueries.slice(1).forEach(function (tokens) {
-                var _a;
-                _super.prototype.intersect.call(_this);
-                (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+            resolvedQueries.slice(1).forEach((tokens) => {
+                super.intersect();
+                this.query.sql.push("(", ...tokens, ")");
             });
             return this.endClass();
         }
-        resolvedQueries.forEach(function (tokens) {
-            var _a;
-            _super.prototype.intersect.call(_this);
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+        resolvedQueries.forEach((tokens) => {
+            super.intersect();
+            this.query.sql.push("(", ...tokens, ")");
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.intersectAll = function () {
-        var _a;
-        var _this = this;
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
+    }
+    intersectAll(...queries) {
         if (queries.length === 0) {
-            _super.prototype.intersect.call(this);
-            _super.prototype.all.call(this);
+            super.intersect();
+            super.all();
             return this.endClass();
         }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length === 0) {
-            var baseQuery = resolvedQueries[0];
+            const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-                (_a = this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], baseQuery, false), [")"], false));
+                this.query.sql.push("(", ...baseQuery, ")");
             }
-            resolvedQueries.slice(1).forEach(function (tokens) {
-                var _a;
-                _super.prototype.intersect.call(_this);
-                _super.prototype.all.call(_this);
-                (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+            resolvedQueries.slice(1).forEach((tokens) => {
+                super.intersect();
+                super.all();
+                this.query.sql.push("(", ...tokens, ")");
             });
             return this.endClass();
         }
-        resolvedQueries.forEach(function (tokens) {
-            var _a;
-            _super.prototype.intersect.call(_this);
-            _super.prototype.all.call(_this);
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+        resolvedQueries.forEach((tokens) => {
+            super.intersect();
+            super.all();
+            this.query.sql.push("(", ...tokens, ")");
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.except = function () {
-        var _a;
-        var _this = this;
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
+    }
+    except(...queries) {
         if (queries.length === 0) {
-            _super.prototype.except.call(this);
+            super.except();
             return this.endClass();
         }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length === 0) {
-            var baseQuery = resolvedQueries[0];
+            const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-                (_a = this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], baseQuery, false), [")"], false));
+                this.query.sql.push("(", ...baseQuery, ")");
             }
-            resolvedQueries.slice(1).forEach(function (tokens) {
-                var _a;
-                _super.prototype.except.call(_this);
-                (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+            resolvedQueries.slice(1).forEach((tokens) => {
+                super.except();
+                this.query.sql.push("(", ...tokens, ")");
             });
             return this.endClass();
         }
-        resolvedQueries.forEach(function (tokens) {
-            var _a;
-            _super.prototype.except.call(_this);
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+        resolvedQueries.forEach((tokens) => {
+            super.except();
+            this.query.sql.push("(", ...tokens, ")");
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.exceptAll = function () {
-        var _a;
-        var _this = this;
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
+    }
+    exceptAll(...queries) {
         if (queries.length === 0) {
-            _super.prototype.except.call(this);
-            _super.prototype.all.call(this);
+            super.except();
+            super.all();
             return this.endClass();
         }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length === 0) {
-            var baseQuery = resolvedQueries[0];
+            const baseQuery = resolvedQueries[0];
             if (baseQuery) {
-                (_a = this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], baseQuery, false), [")"], false));
+                this.query.sql.push("(", ...baseQuery, ")");
             }
-            resolvedQueries.slice(1).forEach(function (tokens) {
-                var _a;
-                _super.prototype.except.call(_this);
-                _super.prototype.all.call(_this);
-                (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+            resolvedQueries.slice(1).forEach((tokens) => {
+                super.except();
+                super.all();
+                this.query.sql.push("(", ...tokens, ")");
             });
             return this.endClass();
         }
-        resolvedQueries.forEach(function (tokens) {
-            var _a;
-            _super.prototype.except.call(_this);
-            _super.prototype.all.call(_this);
-            (_a = _this.query.sql).push.apply(_a, __spreadArray(__spreadArray(["("], tokens, false), [")"], false));
+        resolvedQueries.forEach((tokens) => {
+            super.except();
+            super.all();
+            this.query.sql.push("(", ...tokens, ")");
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.with = function (cteName, subQuery) {
-        var _a, _b;
-        _super.prototype.with.call(this);
+    }
+    with(cteName, subQuery) {
+        super.with();
         if (cteName !== undefined && cteName !== null) {
-            var resolvedCteName = _super.prototype.resolveStatement.call(this, cteName);
+            const resolvedCteName = super.resolveStatement(cteName);
             if (resolvedCteName.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedCteName);
+                this.query.sql.push(...resolvedCteName);
             }
         }
         if (subQuery) {
-            var resolvedSubQuery = _super.prototype.resolveStatement.call(this, subQuery);
+            const resolvedSubQuery = super.resolveStatement(subQuery);
             if (resolvedSubQuery.length > 0) {
-                (_b = this.query.sql).push.apply(_b, __spreadArray(__spreadArray(["AS", "("], resolvedSubQuery, false), [")"], false));
+                this.query.sql.push("AS", "(", ...resolvedSubQuery, ")");
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.where = function (condition) {
-        var _a;
-        _super.prototype.where.call(this);
+    }
+    where(condition) {
+        super.where();
         if (condition === undefined || condition === null) {
             return this.endClass();
         }
-        var resolvedCondition = _super.prototype.resolveStatement.call(this, condition);
+        const resolvedCondition = super.resolveStatement(condition);
         if (resolvedCondition.length === 0) {
             return this.endClass();
         }
-        (_a = this.query.sql).push.apply(_a, resolvedCondition);
+        this.query.sql.push(...resolvedCondition);
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.and = function () {
-        var _this = this;
-        var values = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            values[_i] = arguments[_i];
-        }
+    }
+    and(...values) {
         if (values.length === 0) {
-            _super.prototype.and.call(this);
+            super.and();
             return this.endClass();
         }
-        var resolvedValues = _super.prototype.resolveStatements.call(this, values).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedValues = super.resolveStatements(values).filter((tokens) => tokens.length > 0);
         if (resolvedValues.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length > 0) {
             this.query.sql.push("AND");
         }
-        resolvedValues.forEach(function (tokens, index) {
-            var _a;
+        resolvedValues.forEach((tokens, index) => {
             if (index > 0) {
-                _this.query.sql.push("AND");
+                this.query.sql.push("AND");
             }
-            (_a = _this.query.sql).push.apply(_a, tokens);
+            this.query.sql.push(...tokens);
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.or = function () {
-        var _this = this;
-        var values = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            values[_i] = arguments[_i];
-        }
+    }
+    or(...values) {
         if (values.length === 0) {
-            _super.prototype.or.call(this);
+            super.or();
             return this.endClass();
         }
-        var resolvedValues = _super.prototype.resolveStatements.call(this, values).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedValues = super.resolveStatements(values).filter((tokens) => tokens.length > 0);
         if (resolvedValues.length === 0) {
             return this.endClass();
         }
         if (this.query.sql.length > 0) {
             this.query.sql.push("OR");
         }
-        resolvedValues.forEach(function (tokens, index) {
-            var _a;
+        resolvedValues.forEach((tokens, index) => {
             if (index > 0) {
-                _this.query.sql.push("OR");
+                this.query.sql.push("OR");
             }
-            (_a = _this.query.sql).push.apply(_a, tokens);
+            this.query.sql.push(...tokens);
         });
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.not = function () {
-        var _a;
-        var _this = this;
-        var values = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            values[_i] = arguments[_i];
-        }
+    }
+    not(...values) {
         if (values.length === 0) {
-            _super.prototype.not.call(this);
+            super.not();
             return this.endClass();
         }
-        var resolvedValues = _super.prototype.resolveStatements.call(this, values).filter(function (tokens) { return tokens.length > 0; });
+        const resolvedValues = super.resolveStatements(values).filter((tokens) => tokens.length > 0);
         if (resolvedValues.length === 0) {
             return this.endClass();
         }
         this.query.sql.push("NOT");
         if (resolvedValues.length === 1 && resolvedValues[0]) {
-            (_a = this.query.sql).push.apply(_a, resolvedValues[0]);
+            this.query.sql.push(...resolvedValues[0]);
         }
         else {
             this.query.sql.push("(");
-            resolvedValues.forEach(function (tokens, index) {
-                var _a;
+            resolvedValues.forEach((tokens, index) => {
                 if (index > 0) {
-                    _this.query.sql.push(",");
+                    this.query.sql.push(",");
                 }
-                (_a = _this.query.sql).push.apply(_a, tokens);
+                this.query.sql.push(...tokens);
             });
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.comma = function () {
-        var queries = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            queries[_i] = arguments[_i];
-        }
-        var resolvedQueries = _super.prototype.resolveStatements.call(this, queries).filter(function (tokens) { return tokens.length > 0; });
+    }
+    comma(...queries) {
+        const resolvedQueries = super.resolveStatements(queries).filter((tokens) => tokens.length > 0);
         if (resolvedQueries.length === 0) {
             return this.endClass();
         }
-        _super.prototype.pushSeparatedTokens.call(this, resolvedQueries, ",");
+        super.pushSeparatedTokens(resolvedQueries, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.orderBy = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
-        _super.prototype.order.call(this);
-        _super.prototype.by.call(this);
+    }
+    orderBy(...cols) {
+        super.order();
+        super.by();
         if (cols.length === 0) {
             return this.endClass();
         }
-        var resolvedColumns = cols.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+        const resolvedColumns = cols.map((item) => super.resolveStatement(item));
+        super.pushSeparatedTokens(resolvedColumns, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.returning = function (col) {
-        var _a;
-        _super.prototype.returning.call(this);
+    }
+    returning(col) {
+        super.returning();
         if (col === undefined || col === null) {
             return this.endClass();
         }
-        var resolvedColumn = _super.prototype.resolveStatement.call(this, col);
+        const resolvedColumn = super.resolveStatement(col);
         if (resolvedColumn.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolvedColumn);
+            this.query.sql.push(...resolvedColumn);
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.limit = function (value) {
-        var _a;
-        _super.prototype.limit.call(this);
+    }
+    limit(value) {
+        super.limit();
         if (value === undefined || value === null) {
             return this.endClass();
         }
-        var resolvedLimit = _super.prototype.resolveStatement.call(this, value);
+        const resolvedLimit = super.resolveStatement(value);
         if (resolvedLimit.length === 0) {
             return this.endClass();
         }
-        (_a = this.query.sql).push.apply(_a, resolvedLimit);
+        this.query.sql.push(...resolvedLimit);
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.offset = function (value) {
-        var _a;
-        _super.prototype.offset.call(this);
+    }
+    offset(value) {
+        super.offset();
         if (value === undefined || value === null) {
             return this.endClass();
         }
-        var resolvedOffset = _super.prototype.resolveStatement.call(this, value);
+        const resolvedOffset = super.resolveStatement(value);
         if (resolvedOffset.length === 0) {
             return this.endClass();
         }
-        (_a = this.query.sql).push.apply(_a, resolvedOffset);
+        this.query.sql.push(...resolvedOffset);
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.fetch = function (count, mode, withTies) {
-        var _a;
-        if (mode === void 0) { mode = "first"; }
-        if (withTies === void 0) { withTies = false; }
-        _super.prototype.fetch.call(this);
+    }
+    fetch(count, mode = "first", withTies = false) {
+        super.fetch();
         if (count !== undefined && count !== null) {
             this.query.sql.push(mode.toUpperCase());
-            var resolvedCount = _super.prototype.resolveStatement.call(this, count);
+            const resolvedCount = super.resolveStatement(count);
             if (resolvedCount.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedCount);
+                this.query.sql.push(...resolvedCount);
             }
-            var rowKeyword = typeof count === "number" && count === 1 ? "ROW" : "ROWS";
+            const rowKeyword = typeof count === "number" && count === 1 ? "ROW" : "ROWS";
             this.query.sql.push(rowKeyword, withTies ? "WITH" : "ONLY");
             if (withTies) {
                 this.query.sql.push("TIES");
             }
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.withTies = function () {
+    }
+    withTies() {
         this.query.sql.push("WITH", "TIES");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.t = function (table) {
-        var _a;
+    }
+    t(table) {
         if (!table) {
-            _super.prototype.t.call(this);
+            super.t();
             return this.endClass();
         }
         if (typeof table === "string") {
             this.i(table);
             return this.endClass();
         }
-        var resolved = _super.prototype.resolveIdentifierStatement.call(this, table);
+        const resolved = super.resolveIdentifierStatement(table);
         if (resolved.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolved);
+            this.query.sql.push(...resolved);
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.column = function (column) {
-        var _a;
+    }
+    column(column) {
         if (!column) {
-            _super.prototype.column.call(this);
+            super.column();
             return this.endClass();
         }
         if (typeof column === "string") {
             this.i(column);
             return this.endClass();
         }
-        var resolved = _super.prototype.resolveIdentifierStatement.call(this, column);
+        const resolved = super.resolveIdentifierStatement(column);
         if (resolved.length > 0) {
-            (_a = this.query.sql).push.apply(_a, resolved);
+            this.query.sql.push(...resolved);
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.c = function (column) {
+    }
+    c(column) {
         if (!column) {
-            _super.prototype.c.call(this);
+            super.c();
             return this.endClass();
         }
         else {
             this.column(column);
             return this.endClass();
         }
-    };
-    OverrideQueryBuilder.prototype.into = function (tableName, columns) {
-        var _a;
-        var _this = this;
+    }
+    into(tableName, columns) {
         this.query.sql.push("INTO");
         if (tableName !== undefined && tableName !== null) {
-            var resolvedTable = _super.prototype.resolveStatement.call(this, tableName);
+            const resolvedTable = super.resolveStatement(tableName);
             if (resolvedTable.length > 0) {
-                (_a = this.query.sql).push.apply(_a, resolvedTable);
+                this.query.sql.push(...resolvedTable);
             }
         }
         if (columns && columns.length > 0) {
-            var resolvedColumns = columns.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
+            const resolvedColumns = columns.map((item) => super.resolveStatement(item));
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+            super.pushSeparatedTokens(resolvedColumns, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.groupByDistinct = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
-        _super.prototype.group.call(this);
-        _super.prototype.by.call(this);
+    }
+    groupByDistinct(...cols) {
+        super.group();
+        super.by();
         this.query.sql.push("DISTINCT");
         if (cols.length === 0) {
             return this.endClass();
         }
-        var resolvedColumns = cols.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+        const resolvedColumns = cols.map((item) => super.resolveStatement(item));
+        super.pushSeparatedTokens(resolvedColumns, ",");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.window = function () {
-        var param = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            param[_i] = arguments[_i];
-        }
-        _super.prototype.window.call(this);
+    }
+    window(...param) {
+        super.window();
         if (param.length === 0) {
             return this.endClass();
         }
-        var resolved = _super.prototype.resolveStatements.call(this, param);
+        const resolved = super.resolveStatements(param);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
         }
         return this.endClass();
-    };
+    }
     // subquery operators (support multiple params)
-    OverrideQueryBuilder.prototype.exists = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    exists(...params) {
         if (params.length === 0) {
-            _super.prototype.exists.call(this);
+            super.exists();
             return this.endClass();
         }
-        _super.prototype.exists.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.exists();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.notExists = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    }
+    notExists(...params) {
         if (params.length === 0) {
-            _super.prototype.not.call(this);
-            _super.prototype.exists.call(this);
+            super.not();
+            super.exists();
             return this.endClass();
         }
-        _super.prototype.not.call(this);
-        _super.prototype.exists.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.not();
+        super.exists();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.in = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    }
+    in(...params) {
         if (params.length === 0) {
-            _super.prototype.in.call(this);
+            super.in();
             return this.endClass();
         }
-        _super.prototype.in.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.in();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.notIn = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    }
+    notIn(...params) {
         if (params.length === 0) {
-            _super.prototype.not.call(this);
-            _super.prototype.in.call(this);
+            super.not();
+            super.in();
             return this.endClass();
         }
-        _super.prototype.not.call(this);
-        _super.prototype.in.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.not();
+        super.in();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.any = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    }
+    any(...params) {
         if (params.length === 0) {
-            _super.prototype.any.call(this);
+            super.any();
             return this.endClass();
         }
-        _super.prototype.any.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.any();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.all = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    }
+    all(...params) {
         if (params.length === 0) {
-            _super.prototype.all.call(this);
+            super.all();
             return this.endClass();
         }
-        _super.prototype.all.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.all();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.some = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
+    }
+    some(...params) {
         if (params.length === 0) {
-            _super.prototype.some.call(this);
+            super.some();
             return this.endClass();
         }
-        _super.prototype.some.call(this);
-        var resolved = _super.prototype.resolveStatements.call(this, params).filter(function (tokens) { return tokens.length > 0; });
+        super.some();
+        const resolved = super.resolveStatements(params).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             return this.endClass();
         }
         else {
             this.query.sql.push("(");
-            _super.prototype.pushSeparatedTokens.call(this, resolved, ",");
+            super.pushSeparatedTokens(resolved, ",");
             this.query.sql.push(")");
         }
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.over = function () {
-        var _this = this;
-        var param = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            param[_i] = arguments[_i];
-        }
+    }
+    over(...param) {
         if (param.length === 0) {
             this.query.sql.push("OVER");
             return this.endClass();
         }
-        var resolved = _super.prototype.resolveStatements.call(this, param).filter(function (tokens) { return tokens.length > 0; });
+        const resolved = super.resolveStatements(param).filter((tokens) => tokens.length > 0);
         if (resolved.length === 0) {
             this.query.sql.push("OVER");
             return this.endClass();
         }
         this.query.sql.push("OVER", "(");
-        resolved.forEach(function (tokens) {
-            var _a;
-            (_a = _this.query.sql).push.apply(_a, tokens);
+        resolved.forEach((tokens) => {
+            this.query.sql.push(...tokens);
         });
         this.query.sql.push(")");
         return this.endClass();
-    };
-    OverrideQueryBuilder.prototype.partitionBy = function () {
-        var _this = this;
-        var cols = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            cols[_i] = arguments[_i];
-        }
+    }
+    partitionBy(...cols) {
         this.query.sql.push("PARTITION", "BY");
         if (cols.length === 0) {
             return this.endClass();
         }
-        var resolvedColumns = cols.map(function (item) { return _super.prototype.resolveStatement.call(_this, item); });
-        _super.prototype.pushSeparatedTokens.call(this, resolvedColumns, ",");
+        const resolvedColumns = cols.map((item) => super.resolveStatement(item));
+        super.pushSeparatedTokens(resolvedColumns, ",");
         return this.endClass();
-    };
-    return OverrideQueryBuilder;
-}(OperatorFunctionBuilder));
-export { OverrideQueryBuilder };
+    }
+}

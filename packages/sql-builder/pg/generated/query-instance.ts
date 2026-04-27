@@ -7,6 +7,7 @@ import { type ApplyInferredBuilderParams, type InferSchemaParamsFromArgs } from 
 
 export class QueryInstance {
   protected dbInstance: RequiredDBInstance;
+  protected varableName: string | undefined = undefined;
   constructor(dbInstance: RequiredDBInstance) {
     this.dbInstance = dbInstance;
   }
@@ -16,12 +17,18 @@ export class QueryInstance {
     this.dbInstance.formatParamHandler = formatParamHandler;
     return this;
   }
-
   setExecutionHandler(
     execHandler: RequiredDBInstance["execHandler"],
   ): this {
     this.dbInstance.execHandler = execHandler;
     return this;
+  }
+  setVariableName(name: string): this {
+    this.varableName = name;
+    return this;
+  }
+  getVariableName(): string | undefined {
+    return this.varableName;
   }
   getDbInstance() {
     return this.dbInstance;

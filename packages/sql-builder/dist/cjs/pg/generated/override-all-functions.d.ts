@@ -1,5 +1,5 @@
 import { BaseQueryBuilder } from "./base-query-builder";
-import type { Statement } from "../types";
+import type { Statement } from "../core-query-builder.types";
 export declare class AllFunctionBuilder extends BaseQueryBuilder {
     abbrev(...params: Statement[]): this;
     abs(...params: Statement[]): this;
