@@ -1,0 +1,18 @@
+{
+  "name": "@gntrees/sql-builder",
+  "version": "0.0.1",
+  "description": "Multi-language SQL query builder generated from a gntrees project definition.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "generate": "bun src/generate.ts",
+    "test": "bun test tests/ --parallel=1"
+  },
+  "dependencies": {
+    "@gntrees/method-chain": "^0.0.6"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  }
+}
