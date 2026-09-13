@@ -1,1 +1,0 @@
-SELECT * FROM users WHERE (SELECT id FROM users WHERE id = 1) = 1

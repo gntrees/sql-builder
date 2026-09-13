@@ -1,1 +1,0 @@
-SELECT *, test_column, users.id, haha AS test, users.name AS another, custom_alias AS alias, NOW() AS expression FROM users WHERE users.is_active = true ORDER BY users.created_at

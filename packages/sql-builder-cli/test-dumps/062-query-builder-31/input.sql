@@ -1,1 +1,0 @@
-SELECT users.id, user_orders.count FROM users INNER JOIN LATERAL (SELECT orders.user_id, COUNT(*) FROM orders WHERE orders.user_id = users.id GROUP BY orders.user_id) AS user_orders ON TRUE

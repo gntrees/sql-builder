@@ -1,1 +1,0 @@
-SELECT users.id FROM users NATURAL FULL JOIN profiles

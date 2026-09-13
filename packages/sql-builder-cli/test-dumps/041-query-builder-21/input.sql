@@ -1,1 +1,0 @@
-UPDATE users SET cities.name = 'New York', updated_at = NOW() FROM cities WHERE users.city_id = cities.id
