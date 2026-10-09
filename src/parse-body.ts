@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -214,6 +214,16 @@ const goBridge = [
     `return ltMap("sql", ltTrim(sql), "sqlWithParam", ltTrim(wsql), "param", ltParams(params))`,
 ];
 
+// C# has a universal type (`object`) and closures capture by reference (no
+// boxing). Local functions live in `__fns` (C# rejects forward references to
+// locals). `params`/`base` are C# keywords, so the emitter writes them as
+// verbatim identifiers (`@params`, `@base`).
+const csharpPreamble =
+    "object root = this.GetSchema();\nDictionary<string, Func<object[], object>> __fns = new Dictionary<string, Func<object[], object>>();";
+const csharpBridge = [
+    `return LT.Map("sql", LT.Trim(sql), "sqlWithParam", LT.Trim(wsql), "param", LT.Params(@params));`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
@@ -224,14 +234,15 @@ function buildParser(): LT {
         ruby: [rubyPreamble],
         java: [javaPreamble],
         go: [goPreamble],
+        csharp: [csharpPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -923,6 +934,7 @@ const parserChain = buildParser().addStatements({
     ruby: rubyBridge,
     java: javaBridge,
     go: goBridge,
+    csharp: csharpBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
@@ -933,4 +945,5 @@ export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     ruby: rubyEmitter,
     java: javaEmitter,
     go: goEmitter,
+    csharp: csharpEmitter,
 });

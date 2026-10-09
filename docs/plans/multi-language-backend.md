@@ -1056,3 +1056,74 @@ urutannya deterministik.
 | Java | ✅ | ✅ | ✅ |
 | Go | ✅ | ✅ | ✅ |
 | Rust | ✅ | — | — |
+
+## 31. Fase 14 — C# end-to-end (**Gelombang 2 selesai**)
+
+C# adalah bahasa ketiga Gelombang 2. Toolchain: image Docker `mcr.microsoft.com/dotnet/sdk`
+**terlalu lambat** untuk di-pull (timeout ~30 menit), jadi .NET SDK 8.0.404 dipasang **lokal**
+dari CDN Azure (`builds.dotnet.microsoft.com`, ~530 KB/s) dan dijalankan langsung dengan `dotnet`.
+
+**C# ≈ Java, tapi lebih ringan.** Punya `object` (tak butuh enum `Value`), dan closure menangkap
+variabel *by reference* (seperti Go) sehingga **tak butuh boxing** — cukup `__fns` untuk forward
+reference (C# juga menolak rujukan lokal ke depan).
+
+**Friksi baru yang khas C#:**
+
+1. **Nama anggota hasil generate menutupi kelas runtime.** Proyek sql-builder punya predikat `lt`
+   → method `SqlBuilder.Lt(...)`. Di dalam kelas itu, `Lt.Get(...)` diresolusi ke **method** `Lt`,
+   bukan kelas runtime → `CS0119`. Perbaikan: kelas runtime dinamai **`LT`** (C# case-sensitive,
+   jadi `LT` ≠ `Lt`). Ini kelas friksi baru: *nama method yang di-generate bisa menutupi kelas
+   runtime*.
+2. **`params object[]` ≠ `List<object>`.** `Lt.AsList`/`Lt.Items` harus menangani `object[]` juga,
+   kalau tidak `copies` (dari `params`) dianggap kosong.
+3. **Variabel yang bertabrakan dengan keyword C#.** `params` dan `base` (dipakai `parse-body`)
+   di-*emit* sebagai identifier verbatim (`@params`, `@base`).
+
+**Artefak method-chain (branch `multi-language-backend`):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/lingua-tungga/lingua-tungga-csharp-emitter.ts` | ~200 | emitter C# (keyword escaping, `LT.*`) |
+| `core/base/csharp/lt.cs` | ~480 | runtime `LT` + `LtObject` terurut + `LT.Json` |
+| `core/base/csharp/base-utils.cs` | ~300 | port runtime method-chain |
+| `core/base/csharp/base-types.cs` | ~10 | `interface IStructure` |
+| `core/core-csharp.ts` | ~300 | generator `generateProject` |
+| `core/backends/csharp.ts` | ~25 | entri backend |
+| `tests/csharp-e2e.test.ts` | ~150 | gate LT→C# (run == TS) |
+| `tests/csharp-backend.test.ts` | ~230 | parity schema/property/copy/customFunction |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `csharp gate`: LT→C# run == TS (`ABC42`) | **identik** |
+| `csharp backend`: schema/property/`McCopy()`/customFunction == TS | **identik** |
+| `csharp parse` (sql-builder): `parse()` C# == TS (9 kasus) | **identik** |
+| `dotnet build` modul hasil generate | **Build succeeded (0 error)** |
+| method-chain `bun test tests/` | **216 pass, 0 fail** |
+| sql-builder `bun test --parallel=1` | **105 pass, 53 skip, 0 fail** |
+| `bunx tsc --noEmit` | bersih |
+
+**Catatan API C#:** `parse()` mengembalikan `object`; objek argumen dibangun dengan `LT.Obj(...)`;
+`parse()` memakai `LT.Json` (runtime) untuk serialisasi terurut.
+
+**Biaya terukur C#:** emitter ~200 + runtime ~480 + base-utils ~300 + generator ~300 + backend 25
+≈ **~1.305 LOC** — tanpa enum `Value`, tanpa ownership.
+
+**Status Gelombang 2: SELESAI** (Java, Go, C# semuanya end-to-end & terverifikasi). Berikutnya:
+Gelombang 3 (Rust, C++) yang butuh enum `Value` + ownership + perubahan algoritma.
+
+**Status akhir `parse` dari satu sumber `src/parse-body.ts`:**
+
+| Bahasa | Emitter | Backend | `parse` jalan |
+|---|---|---|---|
+| TypeScript | ✅ | ✅ | ✅ |
+| C | ✅ | ✅ | ✅ |
+| Python | ✅ | ✅ | ✅ |
+| JavaScript | ✅ | ✅ | ✅ |
+| Ruby | ✅ | ✅ | ✅ |
+| PHP | ✅ | ✅ | ✅ |
+| Java | ✅ | ✅ | ✅ |
+| Go | ✅ | ✅ | ✅ |
+| C# | ✅ | ✅ | ✅ |
+| Rust | ✅ | — | — |

@@ -114,6 +114,7 @@ typedef struct ParseResult {
             ruby: "# parse() returns { \"sql\" => String, \"sqlWithParam\" => String, \"param\" => Array }",
             java: "// parse() returns a Map<String, Object>: { \"sql\": String, \"sqlWithParam\": String, \"param\": List }",
             go: "// parse() returns a map[string]any: {\"sql\": string, \"sqlWithParam\": string, \"param\": []any}",
+            csharp: "// parse() returns an LtObject: { \"sql\": string, \"sqlWithParam\": string, \"param\": List<object> }",
         },
         definitions: [
             {
@@ -182,6 +183,7 @@ typedef struct ParseResult {
                                     ruby: sqlBuilderParseBody.ruby!,
                                     java: sqlBuilderParseBody.java!,
                                     go: sqlBuilderParseBody.go!,
+                                    csharp: sqlBuilderParseBody.csharp!,
                                 },
                                 return: {
                                     typescript: "ParseResult",
@@ -192,6 +194,7 @@ typedef struct ParseResult {
                                     ruby: "Hash",
                                     java: "Map<String, Object>",
                                     go: "any",
+                                    csharp: "object",
                                 },
                             },
                         },
@@ -210,6 +213,6 @@ typedef struct ParseResult {
 };
 
 export const sqlBuilderConfig: ConfigType = {
-    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go"],
+    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp"],
     folderName: "generated",
 };
