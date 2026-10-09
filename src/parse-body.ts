@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter, rustEmitter, cppEmitter, kotlinEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter, rustEmitter, cppEmitter, kotlinEmitter, swiftEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -250,6 +250,15 @@ const kotlinBridge = [
     `return Lt.map(listOf("sql" to Lt.trim(sql), "sqlWithParam" to Lt.trim(wsql), "param" to Lt.params(params)))`,
 ];
 
+// Swift has a universal top type (`Any?`) and closures capture (and may mutate)
+// outer `var`s, so it uses the Go/C#/C++/Kotlin recipe: real `var`s plus a shared
+// `__fns` table.
+const swiftPreamble =
+    "let root: Any? = self.getSchema()\nvar __fns: [String: ([Any?]) -> Any?] = [:]";
+const swiftBridge = [
+    `return Lt.map([("sql", Lt.trim(sql)), ("sqlWithParam", Lt.trim(wsql)), ("param", Lt.params(params))])`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
@@ -264,14 +273,15 @@ function buildParser(): LT {
         rust: [rustPreamble],
         cpp: [cppPreamble],
         kotlin: [kotlinPreamble],
+        swift: [swiftPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()", rust: "lt::list_new()", cpp: "lt::list_new()", kotlin: "Lt.listNew()" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()", swift: "Lt.bufNew()" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()", swift: "Lt.bufNew()" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()", rust: "lt::list_new()", cpp: "lt::list_new()", kotlin: "Lt.listNew()", swift: "Lt.listNew()" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -967,6 +977,7 @@ const parserChain = buildParser().addStatements({
     rust: rustBridge,
     cpp: cppBridge,
     kotlin: kotlinBridge,
+    swift: swiftBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
@@ -981,4 +992,5 @@ export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     rust: rustEmitter,
     cpp: cppEmitter,
     kotlin: kotlinEmitter,
+    swift: swiftEmitter,
 });

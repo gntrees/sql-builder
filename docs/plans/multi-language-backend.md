@@ -1129,6 +1129,7 @@ Gelombang 3 (Rust, C++) yang butuh enum `Value` + ownership + perubahan algoritm
 | Rust | ✅ | minimal¹ | ✅ |
 | C++ | ✅ | minimal¹ | ✅ |
 | Kotlin | ✅ | minimal¹ | ✅ |
+| Swift | ✅ | minimal¹ | ✅ |
 
 ¹ Rust/C++ memakai model host *minimal* (harness JSON di `tests/rust-parse.test.ts` dan
 `tests/cpp-parse.test.ts`), bukan backend `generateProject` penuh — fokus custom function.
@@ -1265,3 +1266,43 @@ Ruby, Java, Go, C#, Rust, Kotlin.
 
 **Berikutnya (bila diminta):** Swift (butuh toolchain Linux), backend `generateProject` penuh untuk
 Rust/C++/Kotlin, atau bahasa lain.
+
+## 35. Fase 18 — Swift end-to-end untuk `parse` (bahasa #13)
+
+Swift punya top type universal (`Any?`) dan closure menangkap (serta boleh memutasi) `var` luar
+by-reference, jadi Swift memakai resep **Gelombang 2 (Go/C#/C++/Kotlin)**:
+
+- Variabel = `var x: Any?`; closure menangkap `var` via heap cell → mutasi buffer luar (`pushSql`)
+  jalan.
+- Fungsi lokal di tabel `__fns` (`[String: ([Any?]) -> Any?]`).
+- **Objek = `LtMap` buatan** (Swift `Dictionary` tidak terurut) agar output deterministik.
+- Runtime **bebas Foundation** (menghindari bridging `NSNumber`; harness membaca schema lewat
+  `CommandLine.arguments`, bukan file).
+
+**Toolchain:** Swift tidak ada di image. Diunduh toolchain Linux (`swift-6.0.3-RELEASE-ubuntu24.04`,
+783MB) dari download.swift.org (~900KB/s) ke `/tmp/swift`. Catatan: Swift di Linux **tidak
+auto-link libm** → runtime dihindari memanggil fungsi libm (mis. `.rounded()`, `abs`) demi kompilasi.
+
+**Artefak (branch `multi-language-backend`):**
+
+- `core/lingua-tungga/lingua-tungga-swift-emitter.ts` — emitter Swift.
+- `core/base/swift/lt.swift` — runtime + `LtMap` (terkirim sebagai `dist/base/swift/lt.swift`).
+- sql-builder `src/parse-body.ts` — `swiftPreamble`/`swiftBridge` + entri `swift` di 6 record.
+- sql-builder `tests/swift-parse.test.ts` — gate end-to-end (schema JSON via argv → Swift `parse`).
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `swift gate` (method-chain, rekursi + mutable capture) | **`ABC32142`** == TS |
+| `swift parse` (sql-builder): `parse()` Swift == TS (9 kasus) | **identik** |
+| `swiftc -O` kompilasi | **status 0** |
+| `bunx tsc --noEmit` (kedua repo) | bersih |
+
+**Biaya terukur Swift:** emitter ~200 + runtime `lt.swift` ~360 ≈ **~560 LOC**.
+
+**Status `parse` dari satu sumber `src/parse-body.ts`: 13 bahasa** — TS, C, C++, Python, JS, PHP,
+Ruby, Java, Go, C#, Rust, Kotlin, Swift.
+
+**Berikutnya (bila diminta):** backend `generateProject` penuh untuk Rust/C++/Kotlin/Swift, atau
+bahasa lain (mis. Dart/Scala).
