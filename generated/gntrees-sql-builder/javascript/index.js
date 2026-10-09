@@ -2809,7 +2809,6 @@ function renderNodes(nodes, mode) {
     }
     return null;
   }
-  return null;
 }
 renderNodes(root["schema"]["chain"]["chain"]["values"], 0);
 sql = sql.join("");

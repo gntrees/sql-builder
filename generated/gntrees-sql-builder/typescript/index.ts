@@ -5728,7 +5728,6 @@ export class SqlBuilder {
         }
         return null;
       }
-      return null;
     }
     renderNodes(root["schema"]["chain"]["chain"]["values"], 0);
     sql = sql.join("");

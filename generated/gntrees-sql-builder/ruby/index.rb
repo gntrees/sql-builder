@@ -2756,7 +2756,6 @@ class SqlBuilder
         end
         return nil
       end
-      return nil
     }
     define_singleton_method(:renderNodes, renderNodes)
     renderNodes(lt_get(lt_get(lt_get(lt_get(root, "schema"), "chain"), "chain"), "values"), 0)

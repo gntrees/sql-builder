@@ -5390,7 +5390,6 @@ ArgumentValue renderNodes(ArgumentValue nodes, ArgumentValue mode) {
     }
     return null();
   }
-  return null();
 }
 renderNodes(lt_get(lt_get(lt_get(lt_get(root, v("schema")), v("chain")), v("chain")), v("values")), v(0));
 sql = lt_buf_str(sql);

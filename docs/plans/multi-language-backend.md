@@ -893,3 +893,88 @@ dan `map<T>` (kalau tidak: "matches multiple types in the union").
 **Pelajaran:** biaya per bahasa **bukan** sekadar "dinamis vs statis". PHP (dinamis) lebih mahal dari Ruby
 karena semantik scope-nya memaksa perluasan algoritma. Urutan realistis: **Python/JS/Ruby (paling murah) →
 PHP → bahasa statis**. Emitter Go/Rust sudah ada untuk Gelombang berikutnya.
+
+## 29. Fase 12 — Gelombang 2 dimulai: Java end-to-end (**statis GC, tanpa `Value` enum**)
+
+Gelombang 2 = bahasa statis ber-GC (Go, Java, C#). Java dikerjakan lebih dulu karena toolchain-nya
+tersedia lokal (`javac` 17), sehingga verifikasi tidak bergantung jaringan/Docker.
+
+**Temuan kunci — "statis" ≠ "butuh enum `Value`".**
+Rust butuh enum `Value` + model ownership karena **tidak** punya tipe dinamis. Tetapi Go/Java/C#
+semuanya punya *top type* (`any`/`Object`). Jadi untuk bahasa-bahasa ini, "LT Value" cukup `Object`
+(skema = `Map<String,Object>` / `List<Object>` / `String` / `Double` / `Boolean` / `null`) dan
+runtime-nya sekadar helper statis. Ini menurunkan biaya Gelombang 2 mendekati bahasa dinamis, jauh di
+bawah perkiraan §18.
+
+**Dua masalah khas Java (bukan milik Rust/Python) — keduanya di emitter, tanpa mengubah algoritma:**
+
+1. **Lexical capture.** Local function LT menangkap dan *memutasi* variabel luar, sedangkan lambda
+   Java hanya boleh menangkap variabel *effectively final*. Solusi: **setiap variabel LT di-`box`** ke
+   array satu-elemen (`Object[] sql = new Object[]{ ... }`); baca → `sql[0]`, tulis → `sql[0] = ...`.
+   Referensi holder tidak pernah berubah, sehingga lambda bisa menangkapnya dan tetap memutasi isinya.
+2. **Forward reference.** Local function LT boleh saling memanggil sebelum definisi teksnya (dan
+   rekursif); Java melarang merujuk variabel lokal yang belum dideklarasikan. Solusi: local function
+   disimpan di satu `Map<String, Lt.Fn> __fns` yang dideklarasikan program LT di preamble. Lookup
+   terjadi saat pemanggilan, jadi urutan dan rekursi aman.
+
+**Artefak method-chain (branch `multi-language-backend`):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/lingua-tungga/lingua-tungga-java-emitter.ts` | ~175 | emitter Java (boxing + `__fns` + `Lt.*`) |
+| `core/base/java/lt.java` | ~330 | runtime `Lt` berbasis `Object` + `interface Fn` |
+| `core/base/java/base-utils.java` | ~330 | port runtime method-chain (Map/List) |
+| `core/base/java/base-types.java` | ~10 | `interface Structure` |
+| `core/core-java.ts` | ~300 | generator `generateProject` |
+| `core/backends/java.ts` | ~25 | entri backend |
+| `tests/java-e2e.test.ts` | ~140 | gate LT→Java (compile+run == TS) |
+| `tests/java-backend.test.ts` | ~230 | parity schema/property/copy/customFunction |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `java gate`: LT→Java compile + run == TS (`ABC42`) | **identik** |
+| `java backend`: schema/property/`copy()`/customFunction == TS | **identik** |
+| `java parse` (sql-builder): `parse()` Java == TS (9 kasus) | **identik** |
+| method-chain `bun test tests/` | **212 pass, 0 fail** |
+| sql-builder `bun test --parallel=1` | **103 pass, 53 skip, 0 fail** |
+| `bunx tsc --noEmit` | bersih |
+
+**Friksi baru (dan perbaikannya):**
+
+1. **`and`/`or`/`not` harus `boolean`.** Di TS `(a || b)` bisa langsung dipakai di `if`; di Java
+   `Object` tidak. Runtime Java mengembalikan `boolean` (aman karena LT hanya memakainya sebagai
+   kondisi). Emitter lain tidak terpengaruh.
+2. **Nested `forEach` tidak boleh menamai variabel lokal sama.** Java melarang *shadowing* variabel
+   lokal blok luar (beda dari C). Temporer loop dinamai per variabel (`__arr_<name>` / `__i_<name>`).
+3. **`else` boleh di baris baru setelah `}`** — jadi `if {...}` lalu `else {...}` (dua push terpisah)
+   tetap valid, seperti TS/C.
+4. **Kode mati ditolak Java.** `renderNodes` di `parse-body.ts` punya `returnRaw(NULL_EXPR())` setelah
+   `if/else` yang kedua cabangnya sudah `return` → *unreachable statement* di Java. Ini kode mati di
+   **semua** bahasa; `returnRaw` terakhir dihapus (satu baris) — perilaku identik, output TS/C berubah
+   hanya karena satu `return null;` mati hilang. Ini mengubah invariant dev "byte-for-byte TS/C",
+   tetapi semua tes hasil-parse lintas bahasa tetap lolos.
+5. **`Lt.java` dikirim sebagai `extraFiles`** seperti `lt.py`/`lt.rb`; `index.java` berisi kelas
+   package-private (tanpa kelas `public`) sehingga nama file tak harus sama dengan kelas.
+
+**Biaya terukur Java:** emitter ~175 + runtime ~330 + base-utils ~330 + generator ~300 + backend 25
+≈ **~1.160 LOC** — tanpa enum `Value`, tanpa ownership, tanpa perubahan algoritma (kecuali satu
+penghapusan kode mati di sumber LT). Bandingkan Rust (~663 + ~3.000 model).
+
+**Status Gelombang 2:** Java **selesai & terverifikasi end-to-end**. Berikutnya: **Go** (emitter sudah
+ada, tinggal runtime + backend; butuh toolchain/Docker) dan **C#** (perlu runtime + backend; butuh
+`.NET`/Docker).
+
+**Status akhir `parse` dari satu sumber `src/parse-body.ts`:**
+
+| Bahasa | Emitter | Backend | `parse` jalan |
+|---|---|---|---|
+| TypeScript | ✅ | ✅ | ✅ |
+| C | ✅ | ✅ | ✅ |
+| Python | ✅ | ✅ | ✅ |
+| JavaScript | ✅ | ✅ | ✅ |
+| Ruby | ✅ | ✅ | ✅ |
+| PHP | ✅ | ✅ | ✅ |
+| Java | ✅ | ✅ | ✅ |
+| Go / Rust | ✅ | — | — |

@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -196,6 +196,16 @@ const rubyBridge = [
     `return { "sql" => sql.strip, "sqlWithParam" => wsql.strip, "param" => params.map { |p| (p["string"] || p["number"] || p["boolean"] || { "value" => nil })["value"] } }`,
 ];
 
+// Java is static but has `Object`, so the host is a Map/List graph. LT variables
+// are boxed in one-element holders (so the local-function lambdas can capture and
+// mutate them) and local functions live in `__fns` (so forward/self references are
+// allowed). `root` is boxed too, because `ref("root")` renders as `root[0]`.
+const javaPreamble =
+    "Object[] root = new Object[]{ this.getSchema() };\nMap<String, Lt.Fn> __fns = new LinkedHashMap<>();";
+const javaBridge = [
+    `return Lt.map("sql", Lt.trim(sql[0]), "sqlWithParam", Lt.trim(wsql[0]), "param", Lt.params(params[0]));`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
@@ -204,14 +214,15 @@ function buildParser(): LT {
         javascript: ["const root = this.getSchema();"],
         php: [phpPreamble],
         ruby: [rubyPreamble],
+        java: [javaPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -884,8 +895,7 @@ function buildParser(): LT {
             .addVariable("hasLeft", false)
             .addVariable("base", "")
             .if(valEq(ref("mode"), 0), chainBody())
-            .else(predicateBody())
-            .returnRaw(NULL_EXPR()));
+            .else(predicateBody()));
 
     c = callStmt(c, "renderNodes", [member(ref("root"), "schema.chain.chain.values"), 0]);
     c = c.setVariable("sql", bufStr("sql"))
@@ -902,6 +912,7 @@ const parserChain = buildParser().addStatements({
     javascript: [tsBridge],
     php: phpBridge,
     ruby: rubyBridge,
+    java: javaBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
@@ -910,4 +921,5 @@ export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     javascript: jsEmitter,
     php: phpEmitter,
     ruby: rubyEmitter,
+    java: javaEmitter,
 });

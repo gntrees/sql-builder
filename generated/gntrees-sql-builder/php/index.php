@@ -3104,7 +3104,6 @@ class SqlBuilder
             }
             return null;
           }
-          return null;
         };
         $renderNodes(lt_get(lt_get(lt_get(lt_get($root, 'schema'), 'chain'), 'chain'), 'values'), 0);
         $sql = lt_buf_str($sql);

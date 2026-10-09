@@ -2633,7 +2633,6 @@ class SqlBuilder(object):
                       else:
                           raise Exception(lt.to_string("sql-builder parse: unsupported predicate"))
               return None
-          return None
         renderNodes(lt.get(lt.get(lt.get(lt.get(root, "schema"), "chain"), "chain"), "values"), 0)
         sql = lt.buf_str(sql)
         wsql = lt.buf_str(wsql)

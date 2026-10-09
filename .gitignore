@@ -39,3 +39,9 @@ docker-compose.override.yml
 
 __pycache__/
 *.pyc
+
+# java build artifacts
+*.class
+
+# transient staging for cross-repo file copies
+.staging/
