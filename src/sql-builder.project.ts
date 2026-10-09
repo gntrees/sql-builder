@@ -110,6 +110,8 @@ typedef struct ParseResult {
 } ParseResult;`,
             python: "# parse() returns a dict: { \"sql\": str, \"sqlWithParam\": str, \"param\": list }",
             javascript: "// parse() returns { sql: string, sqlWithParam: string, param: (string|number|boolean|null)[] }",
+            php: "// parse() returns [\"sql\" => string, \"sqlWithParam\" => string, \"param\" => array]",
+            ruby: "# parse() returns { \"sql\" => String, \"sqlWithParam\" => String, \"param\" => Array }",
         },
         definitions: [
             {
@@ -174,12 +176,16 @@ typedef struct ParseResult {
                                     c: sqlBuilderParseBody.c!,
                                     python: sqlBuilderParseBody.python!,
                                     javascript: sqlBuilderParseBody.javascript!,
+                                    php: sqlBuilderParseBody.php!,
+                                    ruby: sqlBuilderParseBody.ruby!,
                                 },
                                 return: {
                                     typescript: "ParseResult",
                                     c: "ParseResult",
                                     python: "dict",
                                     javascript: "object",
+                                    php: "array",
+                                    ruby: "Hash",
                                 },
                             },
                         },
@@ -198,6 +204,6 @@ typedef struct ParseResult {
 };
 
 export const sqlBuilderConfig: ConfigType = {
-    languages: ["typescript", "c", "python", "javascript"],
+    languages: ["typescript", "c", "python", "javascript", "php", "ruby"],
     folderName: "generated",
 };

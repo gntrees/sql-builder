@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -186,20 +186,32 @@ const pythonBridge = [
     `return {"sql": sql.strip(), "sqlWithParam": wsql.strip(), "param": [_param(p) for p in params]}`,
 ];
 
+const phpPreamble = "$root = $this->getSchema();";
+const phpBridge = [
+    `return ["sql" => trim($sql), "sqlWithParam" => trim($wsql), "param" => array_map(function ($p) { return $p["string"]["value"] ?? $p["number"]["value"] ?? $p["boolean"]["value"] ?? null; }, $params)];`,
+];
+
+const rubyPreamble = "root = get_schema";
+const rubyBridge = [
+    `return { "sql" => sql.strip, "sqlWithParam" => wsql.strip, "param" => params.map { |p| (p["string"] || p["number"] || p["boolean"] || { "value" => nil })["value"] } }`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
         c: [cPreamble],
         python: [pythonPreamble],
         javascript: ["const root = this.getSchema();"],
+        php: [phpPreamble],
+        ruby: [rubyPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -888,10 +900,14 @@ const parserChain = buildParser().addStatements({
     python: pythonBridge,
     // The TS bridge is already valid JavaScript (no type annotations).
     javascript: [tsBridge],
+    php: phpBridge,
+    ruby: rubyBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     ...createEmitters(),
     python: pythonEmitter,
     javascript: jsEmitter,
+    php: phpEmitter,
+    ruby: rubyEmitter,
 });

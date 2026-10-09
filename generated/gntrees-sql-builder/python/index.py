@@ -786,28 +786,28 @@ class SqlBuilder(object):
         subAlias = ""
         withFirst = True
         def normName(n):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName
           return n.replace("-", "").lower()
         def pushSql(text):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql
           sql = (sql + [" "])
           sql = (sql + [text])
           return None
         def pushW(text):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW
           wsql = (wsql + [" "])
           wsql = (wsql + [text])
           return None
         def asString(arg):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString
           return lt.get(lt.get(arg, "string"), "value")
         def identStr(name):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr
           escapedName = name.replace(quote, (quote + quote))
           qualifiedName = escapedName.replace(".", (quote + ("." + quote)))
           return (quote + (qualifiedName + quote))
         def literalOf(arg):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf
           outLiteral = ""
           if lt.truthy(lt.has(arg, "string")):
               outLiteral = ("'" + (asString(arg).replace("'", "''") + "'"))
@@ -822,7 +822,7 @@ class SqlBuilder(object):
               outLiteral = "NULL"
           return outLiteral
         def opOf(n):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf
           o = ""
           if n == "eq":
               o = "="
@@ -843,12 +843,12 @@ class SqlBuilder(object):
                   o = "LIKE"
           return o
         def itemsOf(arg):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf
           if lt.truthy(lt.has(arg, "array")):
               return lt.get(lt.get(arg, "array"), "value")
           return ([] + [arg])
         def isRef(chainValues):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef
           tmpRef = ""
           if (len(chainValues) == 1) and lt.truthy(lt.has(lt.get(chainValues, 0), "functionCall")):
               firstName = lt.get(lt.get(lt.get(chainValues, 0), "functionCall"), "name")
@@ -856,7 +856,7 @@ class SqlBuilder(object):
                   tmpRef = asString(lt.get(lt.get(lt.get(lt.get(lt.get(chainValues, 0), "functionCall"), "arguments"), 0), "argument"))
           return tmpRef
         def emitParam(arg):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam
           params = (params + [arg])
           if dialect == "postgres":
               tmp = ("$" + lt.to_string(len(params)))
@@ -867,13 +867,13 @@ class SqlBuilder(object):
           pushW(tmp2)
           return None
         def emitIdent(name):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent
           tmp = identStr(name)
           pushSql(tmp)
           pushW(tmp)
           return None
         def emitRaw(node):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw
           if len(sql) != 0:
               sql = (sql + [" "])
               wsql = (wsql + [" "])
@@ -907,7 +907,7 @@ class SqlBuilder(object):
                   wsql = (wsql + [tmp2])
           return None
         def conflictTarget(arg):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw, conflictTarget
           ct = "()"
           if lt.truthy(lt.has(arg, "chain")):
               tmpRef = isRef(lt.get(lt.get(arg, "chain"), "values"))
@@ -917,13 +917,13 @@ class SqlBuilder(object):
               ct = ("(" + (identStr(asString(arg)) + ")"))
           return ct
         def firstKind(chainValues):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw, conflictTarget, firstKind
           kind = ""
           if (len(chainValues) != 0) and lt.truthy(lt.has(lt.get(chainValues, 0), "functionCall")):
               kind = normName(lt.get(lt.get(lt.get(chainValues, 0), "functionCall"), "name"))
           return kind
         def emitOrderItem(item):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw, conflictTarget, firstKind, emitOrderItem
           dir = ""
           ordName = ""
           if lt.truthy(lt.has(item, "chain")):
@@ -941,7 +941,7 @@ class SqlBuilder(object):
               orderW = (orderW + (tmp + dir))
           return None
         def emitOrderList(arg):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw, conflictTarget, firstKind, emitOrderItem, emitOrderList
           firstOrder = True
           for item in itemsOf(arg):
               if firstOrder == False:
@@ -951,7 +951,7 @@ class SqlBuilder(object):
               emitOrderItem(item)
           return None
         def flushOrder():
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw, conflictTarget, firstKind, emitOrderItem, emitOrderList, flushOrder
           if lt.truthy(hasOrder):
               pushSql("ORDER")
               pushSql("BY")
@@ -977,7 +977,7 @@ class SqlBuilder(object):
         else:
             quote = "\""
         def renderNodes(nodes, mode):
-          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst
+          nonlocal dialect, quote, sql, wsql, params, orderSql, orderW, hasOrder, tmp, tmp2, tmpRef, subAlias, withFirst, normName, pushSql, pushW, asString, identStr, literalOf, opOf, itemsOf, isRef, emitParam, emitIdent, emitRaw, conflictTarget, firstKind, emitOrderItem, emitOrderList, flushOrder, renderNodes
           savedSql = ""
           savedW = ""
           savedOrderSql = ""
