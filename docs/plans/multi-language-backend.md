@@ -845,3 +845,51 @@ record variabel (`[]`), dan bridge (memakai ulang `tsBridge` — sudah JS valid)
 
 **Status akhir:** `parse` berjalan untuk **TypeScript, C, Python, JavaScript** dari satu sumber
 (`src/parse-body.ts`). Backend penuh: TS, C, Python, JS. Emitter siap (belum backend): Go, Rust, PHP, Ruby.
+
+## 28. Fase 11 — PHP + Ruby end-to-end: **Gelombang 1 selesai**
+
+Backend PHP dan Ruby, lalu `parse` di-wire untuk keduanya.
+
+**Backend (method-chain):**
+
+| Bahasa | Generator | Runtime | Backend |
+|---|---|---|---|
+| PHP | `core-php.ts` | `base/php/{base-types,base-utils,lt}.php` | `backends/php.ts` |
+| Ruby | `core-ruby.ts` (350) | `base/ruby/{base-types,base-utils,lt}.rb` (273) | `backends/ruby.ts` |
+
+**Temuan penting — "dinamis murah" bukan berarti bebas biaya:**
+
+1. **PHP tidak mewarisi scope.** Nested `function` PHP tidak melihat `$sql` induknya, dan closure tak bisa
+dipanggil dengan nama bare. Solusinya butuh **perubahan algoritma**: hook `localFunctionCall` (PHP: `$name(...)`)
++ capture list (variabel + fungsi saudara + diri sendiri) sehingga PHP men-*emit*
+`$name = function(...) use (&$sql, ...) {...};`. Ini analog `nonlocal` Python, tetapi **lebih berat**.
+2. **Ruby tak punya `continue`** (pakai `next`) → hook `breakStatement`/`continueStatement` (keluaran dari
+hardcode di algoritma). Ruby sendiri aman karena lambda menangkap scope.
+3. **PHP array ambigu list vs map.** Runtime PHP harus pakai `array_is_list` untuk membedakan `array<T>`
+dan `map<T>` (kalau tidak: "matches multiple types in the union").
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `parse()` PHP == TS (9 kasus) | **identik** |
+| `parse()` Ruby == TS (9 kasus) | **identik** |
+| Output sql-builder TS/C byte-for-byte | **identik** |
+| sql-builder `bun test --parallel=1` | **102 pass, 53 skip, 0 fail** |
+| method-chain `bun test tests/` | 210 pass, 0 fail |
+
+**Status akhir Gelombang 1 — `parse` berjalan dari satu sumber `src/parse-body.ts`:**
+
+| Bahasa | Emitter | Backend | `parse` jalan |
+|---|---|---|---|
+| TypeScript | ✅ | ✅ | ✅ |
+| C | ✅ | ✅ | ✅ |
+| Python | ✅ | ✅ | ✅ |
+| JavaScript | ✅ | ✅ | ✅ |
+| Ruby | ✅ | ✅ | ✅ |
+| PHP | ✅ | ✅ | ✅ |
+| Go / Rust | ✅ | — | — |
+
+**Pelajaran:** biaya per bahasa **bukan** sekadar "dinamis vs statis". PHP (dinamis) lebih mahal dari Ruby
+karena semantik scope-nya memaksa perluasan algoritma. Urutan realistis: **Python/JS/Ruby (paling murah) →
+PHP → bahasa statis**. Emitter Go/Rust sudah ada untuk Gelombang berikutnya.
