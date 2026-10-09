@@ -458,3 +458,48 @@ berbeda dari Go. Jadi bentuk `appendBlock` berbeda per bahasa.
 Rust: ownership/mutability). Ini menguatkan rekomendasi: jangan komit ke 10 bahasa sebelum pola
 friksi stabil; kalau friksi terus bertambah, pertimbangkan **IR kanonik (Fase 3)** alih-alih
 memperluas emitter terus-menerus.
+
+## 18. Target set bahasa & analisis biaya
+
+### Berapa banyak bahasa "paling sering digunakan"?
+
+Bergantung metrik (TIOBE, Stack Overflow Survey, GitHub Octoverse, IEEE Spectrum, lowongan):
+ribuan bahasa pernah dibuat, **~20–30 masih mainstream**, dan **~10 top-tier** di hampir semua
+ranking. Daftar ~20 yang paling konsisten muncul (2024–2025):
+
+Python, JavaScript, Java, C#, C++, TypeScript, C, Go, Rust, PHP, Kotlin, Swift, Ruby, Scala,
+Dart, R, Lua, Perl, Julia, Elixir.
+
+**Bukan target SQL-builder:** SQL (itu *output*-nya), HTML/CSS, Shell/Bash.
+
+### Model biaya per bahasa (dari Fase 0–4c)
+
+Tiap bahasa ≈ **emitter** (~140 LOC, 33 method) + **backend** model/API (250–650 LOC) +
+**runtime** target. Untuk ~15 bahasa → puluhan ribu LOC + maintenance N× setiap API/model
+berubah.
+
+**Temuan kunci yang mengubah kalkulasi:** biaya per bahasa **jauh lebih murah untuk bahasa
+dinamis/high-level** daripada statis:
+
+- **Dinamis (Python, JavaScript, PHP, Ruby):** sudah punya tipe dinamis bawaan (dict/object/array).
+  Runtime `lt_*` bisa **hampir nol** (pakai tipe native). Emitter lebih sederhana — tanpa enum
+  `Value`, tanpa ownership.
+- **Statis (Rust, Go, Java, C#, Kotlin, Swift, C/C++):** butuh **enum `Value` + runtime** (dan untuk
+  Rust/C: model memori). Inilah yang mahal dan memunculkan friksi yang kita temukan.
+
+### Rekomendasi target set (jangan "cover semua" sekaligus)
+
+| Tier | Bahasa | Alasan |
+|---|---|---|
+| **Core** | Python, JavaScript, TypeScript*, Java, Go | paling banyak dipakai + umum di server |
+| **Mudah berikutnya** | PHP, Ruby, C# | dinamis/GC → biaya rendah |
+| **Mahal / opsional** | Rust, C++, Kotlin, Swift, Scala | tambah hanya bila ada permintaan nyata |
+
+\* TypeScript sudah didukung; C juga sudah (native, meski bukan top aplikasi).
+
+### Decision gate
+
+Ukur **satu bahasa dinamis (Python)** dan **satu bahasa statis tersulit (Rust)** secara
+end-to-end (emitter + backend + runtime + conformance test). Dua angka itu memvalidasi hipotesis
+"dinamis murah vs statis mahal". Kalau benar, "cover ~10 bahasa" realistis dengan urutan:
+**dinamis dulu, statis belakangan**.
