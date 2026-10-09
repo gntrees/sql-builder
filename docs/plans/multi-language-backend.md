@@ -1126,4 +1126,59 @@ Gelombang 3 (Rust, C++) yang butuh enum `Value` + ownership + perubahan algoritm
 | Java | ✅ | ✅ | ✅ |
 | Go | ✅ | ✅ | ✅ |
 | C# | ✅ | ✅ | ✅ |
-| Rust | ✅ | — | — |
+| Rust | ✅ | minimal¹ | ✅ |
+
+¹ Rust memakai model host *minimal* (harness JSON di `tests/rust-parse.test.ts`), bukan
+backend `generateProject` penuh — fokus custom function, sesuai keputusan di Fase 15.
+
+## 32. Fase 15 — Gelombang 3 dimulai: Rust end-to-end untuk `parse` (**statis ownership**)
+
+Rust adalah tier tersulit: tidak ada `any` (butuh enum `Value`) dan tidak ada capture `&mut`
+variabel luar di closure. Alih-alih `RefCell` per-variabel, emitter Rust menaruh **variabel dan
+fungsi lokal di `thread_local` map** (`lt::set_var`/`lt::get_var`, `lt::def_fn`/`lt::call_fn`),
+sehingga closure tidak menangkap apa pun → rekursi (`renderNodes`) dan mutasi buffer luar
+(`pushSql`/`pushW`) bekerja tanpa double-borrow.
+
+**Dua friksi scoping yang hanya muncul saat benar-benar dijalankan:**
+
+1. **Variabel lokal fungsi harus jadi lokal Rust.** Semua variabel di thread-local membuat `pn`/`op`
+   di dalam `predicateNode` (yang dipanggil dari `renderNodes`) jadi *global* → rekursi
+   `renderNodes` saling menimpa (output salah: `... = $1 EQ "b" = $2` alih-alih `AND`). Solusi:
+   hook emitter opsional `beginLocalFunction`/`endLocalFunction` (dipanggil implementasi
+   mengelilingi render body fungsi lokal) → deklarasi di dalam fungsi jadi `let mut x = ...`
+   (Rust lokal, recursion-safe), sedangkan deklarasi top-level tetap thread-local (shared).
+2. **Rust lokal tidak `Copy`.** Referensi ke lokal harus `.clone()`
+   (`lt::call_fn("pushW", &[base.clone()])`), karena `Value` move-semantics.
+
+**Artefak (branch `multi-language-backend`):**
+
+- `core/lingua-tungga/lingua-tungga-rust-emitter.ts` — strategi thread-local + scoping (hook).
+- `core/base/rust/lt.rs` — runtime + `VARS`/`FNS` thread-local, `set_var`/`get_var`/`def_fn`/
+  `call_fn`, `scope` (RAII guard), `get_key`, `params`. (Dipindah dari
+  `core/lingua-tungga/runtime/lt.rs` agar ikut terkirim sebagai `dist/base/rust/lt.rs`, seperti
+  runtime bahasa lain.)
+- `core/lingua-tungga/lingua-tungga-emitter.ts` + `lingua-tungga-implementation.ts` — hook opsional.
+- sql-builder `src/parse-body.ts` — `rustPreamble`/`rustBridge` + entri `rust` di 6 record + emitter.
+- sql-builder `tests/rust-parse.test.ts` — gate end-to-end: schema tree dari TS → JSON → Rust `parse`.
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `rust gate` (method-chain, emitter subset + rekursi + mutable capture) | **`ABC32142`** == TS |
+| `rust parse` (sql-builder): `parse()` Rust == TS (9 kasus) | **identik** |
+| method-chain `bun test tests/` | **216 pass, 0 fail** |
+| sql-builder `bun test tests/ --parallel=1` | **106 pass, 53 skip, 0 fail** |
+| `bunx tsc --noEmit` (kedua repo) | bersih |
+| `bun run generate` | output tidak berubah |
+
+**Biaya terukur Rust (runtime + emitter + hook):** emitter ~250 + runtime `lt.rs` ~590 + hook
+(2 baris interface + 2 baris implementasi) ≈ **~850 LOC** — tanpa model ownership manual (enum
+`Value` sudah ada dari Fase 4d) dan tanpa `RefCell` per-variabel. `parse` Rust memakai model host
+*minimal* (harness JSON di test), bukan backend `generateProject` penuh.
+
+**Status `parse` dari satu sumber `src/parse-body.ts`: 10 bahasa jalan** (TS, C, Python, JS, PHP,
+Ruby, Java, Go, C#, Rust).
+
+**Berikutnya:** C++ (Gelombang 3, kedua) bila diminta; backend `generateProject` Rust penuh (~model
+host + `core-rust.ts` + `core/backends/rust.ts`).

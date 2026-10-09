@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter, rustEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -224,6 +224,15 @@ const csharpBridge = [
     `return LT.Map("sql", LT.Trim(sql), "sqlWithParam", LT.Trim(wsql), "param", LT.Params(@params));`,
 ];
 
+// Rust has no `any` and no closure capture of outer `&mut` state, so the emitter
+// keeps every variable in a thread-local map (`lt::set_var`/`lt::get_var`) and
+// every local function in a thread-local table (`lt::def_fn`/`lt::call_fn`). The
+// preamble only has to seed `root`; the rest is handled by the emitter.
+const rustPreamble = `lt::set_var("root", self.get_schema());`;
+const rustBridge = [
+    `return lt::map(vec![("sql", lt::trim(&lt::get_var("sql"))), ("sqlWithParam", lt::trim(&lt::get_var("wsql"))), ("param", lt::params(&lt::get_var("params")))]);`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
@@ -235,14 +244,15 @@ function buildParser(): LT {
         java: [javaPreamble],
         go: [goPreamble],
         csharp: [csharpPreamble],
+        rust: [rustPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()", rust: "lt::list_new()" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -935,6 +945,7 @@ const parserChain = buildParser().addStatements({
     java: javaBridge,
     go: goBridge,
     csharp: csharpBridge,
+    rust: rustBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
@@ -946,4 +957,5 @@ export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     java: javaEmitter,
     go: goEmitter,
     csharp: csharpEmitter,
+    rust: rustEmitter,
 });
