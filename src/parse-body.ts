@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -206,6 +206,14 @@ const javaBridge = [
     `return Lt.map("sql", Lt.trim(sql[0]), "sqlWithParam", Lt.trim(wsql[0]), "param", Lt.params(params[0]));`,
 ];
 
+// Go has a universal type (`any`), so variables are plain `any` and closures
+// capture them by reference — no boxing. Local functions live in `__fns` so
+// forward/self references are allowed (Go rejects forward references to locals).
+const goPreamble = "root := b.GetSchema()\n__fns := map[string]func(...any) any{}";
+const goBridge = [
+    `return ltMap("sql", ltTrim(sql), "sqlWithParam", ltTrim(wsql), "param", ltParams(params))`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
@@ -215,14 +223,15 @@ function buildParser(): LT {
         php: [phpPreamble],
         ruby: [rubyPreamble],
         java: [javaPreamble],
+        go: [goPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -913,6 +922,7 @@ const parserChain = buildParser().addStatements({
     php: phpBridge,
     ruby: rubyBridge,
     java: javaBridge,
+    go: goBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
@@ -922,4 +932,5 @@ export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     php: phpEmitter,
     ruby: rubyEmitter,
     java: javaEmitter,
+    go: goEmitter,
 });

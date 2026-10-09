@@ -978,3 +978,81 @@ ada, tinggal runtime + backend; butuh toolchain/Docker) dan **C#** (perlu runtim
 | PHP | ✅ | ✅ | ✅ |
 | Java | ✅ | ✅ | ✅ |
 | Go / Rust | ✅ | — | — |
+
+## 30. Fase 13 — Go end-to-end (**Gelombang 2, bahasa ke-2**)
+
+Go dikerjakan setelah Java. Toolchain-nya tidak ada lokal, jadi verifikasi lewat image Docker
+`golang:1.22-alpine` (`go run` / `go build`). Emitter Go sudah ada sejak spike Fase 4; di sini ia
+dipromosikan ke backend + runtime nyata.
+
+**Temuan kunci — Go seperti Java: `any` cukup, tapi objek harus terurut.**
+Go punya top type (`any`), jadi tidak butuh enum `Value`. Tetapi Go **tidak** punya urutan iterasi
+`map` yang stabil (diacak), sedangkan LT (dan SQL yang dihasilkan) harus deterministik dan sama
+dengan TypeScript. Maka objek LT memakai tipe `ltObject` (key order eksplisit) + helper `Obj(...)`;
+`ltMap`/`ltGet`/`ltSet`/`ltKeys`/`ltEntries`/… semuanya menghormati urutan, dan `ltObject` punya
+`MarshalJSON` yang mempertahankan urutan.
+
+**Dua masalah khas Go (mirip Java, tapi lebih ringan):**
+
+1. **Forward reference.** Go, seperti Java, menolak merujuk variabel lokal sebelum deklarasinya.
+   Local function disimpan di `map[string]func(...any) any` bernama `__fns` (dideklarasikan di
+   preamble). Rekursi & panggilan silang aman.
+2. **Closure menangkap *by reference*.** Jadi **tidak** perlu boxing (beda dari Java): variabel LT
+   cukup `var x any = ...` dan closure memutasinya langsung.
+
+**Friksi lain:**
+
+- **`else` harus menempel pada `}`** (`} else {`) — `appendBlock` Go menggabungkannya (sudah ada di spike).
+- **PascalCase dari nama asli.** Awalnya method di-`pascal` dari nama yang sudah camel → `Orderby`
+  (batas kata hilang). Perbaikan: `normalizeName(rawName, "pascal")` langsung dari nama kebab.
+- **`forCounter`** (C-style `for`) tidak dipakai `parse`; `forHeader` Go memakai bentuk C-style.
+
+**Artefak method-chain (branch `multi-language-backend`):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/lingua-tungga/lingua-tungga-go-emitter.ts` | ~180 | emitter Go (dipromosikan dari spike) |
+| `core/base/go/lt.go` | ~560 | runtime `any` + `ltObject` terurut + `Obj` + `MarshalJSON` |
+| `core/base/go/base-utils.go` | ~330 | port runtime method-chain (ordered object) |
+| `core/base/go/base-types.go` | ~10 | `interface Structure` |
+| `core/core-go.ts` | ~300 | generator `generateProject` |
+| `core/backends/go.ts` | ~25 | entri backend |
+| `tests/go-e2e.test.ts` | ~140 | gate LT→Go (run == TS) |
+| `tests/go-backend.test.ts` | ~230 | parity schema/property/copy/customFunction |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `go gate`: LT→Go run == TS (`ABC42`) | **identik** |
+| `go backend`: schema/property/`McCopy()`/customFunction == TS | **identik** |
+| `go parse` (sql-builder): `parse()` Go == TS (9 kasus) | **identik** |
+| `go build ./...` modul hasil generate | **lolos** |
+| method-chain `bun test tests/` | **214 pass, 0 fail** |
+| sql-builder `bun test --parallel=1` | **104 pass, 53 skip, 0 fail** |
+| `bunx tsc --noEmit` | bersih |
+
+**Catatan API Go:** `parse()` mengembalikan `any` (agar tak mengekspos tipe `*ltObject` yang
+unexported); objek argumen (insert/update `set`) dibangun dengan `gntrees.Obj("name", "bob", …)` agar
+urutannya deterministik.
+
+**Biaya terukur Go:** emitter ~180 + runtime ~560 + base-utils ~330 + generator ~300 + backend 25
+≈ **~1.395 LOC** — tanpa enum `Value`, tanpa ownership. (Runtime Go lebih besar dari Java karena
+`ltObject` terurut + `MarshalJSON`.)
+
+**Status Gelombang 2:** Java **selesai**, Go **selesai & terverifikasi end-to-end**. Berikutnya:
+**C#** (perlu runtime + backend; butuh `.NET`/Docker `mcr.microsoft.com/dotnet/sdk`).
+
+**Status akhir `parse` dari satu sumber `src/parse-body.ts`:**
+
+| Bahasa | Emitter | Backend | `parse` jalan |
+|---|---|---|---|
+| TypeScript | ✅ | ✅ | ✅ |
+| C | ✅ | ✅ | ✅ |
+| Python | ✅ | ✅ | ✅ |
+| JavaScript | ✅ | ✅ | ✅ |
+| Ruby | ✅ | ✅ | ✅ |
+| PHP | ✅ | ✅ | ✅ |
+| Java | ✅ | ✅ | ✅ |
+| Go | ✅ | ✅ | ✅ |
+| Rust | ✅ | — | — |
