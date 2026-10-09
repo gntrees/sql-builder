@@ -646,3 +646,85 @@ Pasangan dari Fase 4d: bahasa **dinamis**. Program LT yang *sama* dirender ke Py
   *dan* bahasa berikutnya sekaligus.
 - **Catatan single-source:** `parse-body.ts` tetap ~90% netral; preamble/bridge-nya per-bahasa raw.
   Untuk Gelombang 1 preamble/bridge Python juga perlu ditulis, tapi tanpa model memori.
+
+## 21. Fase 5 — sintaks terakhir keluar dari algoritma (prasyarat)
+
+Sebelum menambah bahasa gelombang berikutnya, sisa sintaks keluarga-C yang masih di-hardcode
+**algoritma** dipindah ke emitter, sehingga bahasa berikutnya tidak menyentuh algoritma lagi:
+
+- **5a:** `statementTerminator` + `ifHeader`/`elseIfHeader`/`elseHeader`/`whileHeader`/`forHeader`
+  + `incrementCounter` (menggantikan `;`, `if (...)`, `while (...)`, `for (;;)`, `break;`,
+  `continue;`, `x++` yang tadinya literal di `lingua-tungga-implementation.ts`).
+- **5b:** `variableReference` + `assignment` (untuk bahasa bersigil, mis. PHP `$x`).
+
+**Gate:** output TS/C **byte-for-byte identik**; method-chain hijau; tsc bersih. Python memakai
+ini untuk `elif` + tanpa `;`; Rust/Python men-*throw* untuk `forCounter` (tak didukung).
+
+## 22. Fase 6 — Gelombang 1: JavaScript, PHP, Ruby (dinamis)
+
+Tiga emitter dinamis, dijalankan **nyata** (bukan struktural), output == referensi TypeScript
+(`ABC42`):
+
+| Bahasa | Emitter | Runtime | Dijalankan dengan |
+|---|---|---|---|
+| JavaScript | **15 LOC** (varian tipis `tsEmitter`, tanpa anotasi tipe) | **0** (native JS) | `node` |
+| PHP | 180 LOC | 128 LOC (`lt.php`) | `docker php:8.3-cli-alpine` |
+| Ruby | 180 LOC | 95 LOC (`lt.rb`) | `docker ruby:3.3-alpine` |
+
+**Gate:** method-chain **206 pass, 0 fail**; output sql-builder byte-for-byte identik; tsc bersih.
+
+**Friksi baru yang diungkap:**
+
+1. **PHP: closure tak bisa dipanggil dengan nama bare.** `$label = function(){}; label();` fatal —
+   algoritma men-*render* `callFunction` sebagai `label(...)`. Solusi: *nested named function*
+   (sama seperti Python/JS).
+2. **Ruby: blok ber-`end` + rantai `if/elsif/else` berbagi satu `end`.** `appendBlock`
+   menggabungkan header lanjutan (`elsif`/`else`) ke statement sebelumnya (trik sama seperti Go).
+3. **Ruby: lambda tak bisa dipanggil bare** (`label(...)` selalu pemanggilan method) → dipakai
+   `->(){} ` + `define_singleton_method` agar pemanggilan bare tetap resolve sekaligus menjaga
+   closure.
+
+## 23. Fase 7 — port custom function `parse` ke Python (fokus custom function)
+
+Sesuai fokus ("hanya custom function"), yang diport adalah **pola `parse`**, bukan seluruh API:
+
+- `index.ts` kini mengekspor `createEmitters`, `generateWith`, dan **semua emitter** sebagai API
+  publik — jadi proyek hilir bisa menambahkan bahasa tanpa mengubah registry default.
+- `tests/python-parse-e2e.test.ts` mereplikasi **bentuk** `parse-body.ts` — *preamble* per-bahasa
+  (`addStatements({typescript, c, python})`), record *variable* per-bahasa, dan *bridge* per-bahasa
+  — lalu menjalankan versi TypeScript **dan** Python pada schema yang sama; keduanya menghasilkan
+  `xyz`.
+
+**Temuan penting:** untuk *host* dinamis, preamble/bridge **nyaris kosong** (`root = self.get_schema()`
+/ `return {"sql": lt.buf_str(out)}`) karena data host sudah dinamis — beda dengan C/Rust yang harus
+mem-*marshal* struct statis. Ini menegaskan biaya port custom function ke Python jauh lebih murah.
+
+**Sengaja TIDAK dilakukan (dan alasannya):**
+
+- **`createEmitters()` tetap ts+c.** Menambah Python ke registry default akan mengubah `generate()`
+  untuk semua konsumen dan memecah 63 assertion di `lingua-tungga.test.ts`. Sebagai gantinya
+  disediakan `generateWith` + emitter ter-ekspor (opt-in).
+- **Backend Python penuh belum dibuat.** Fluent API + model Python = mem-port `base-utils`
+  (~1.000 LOC) + generator — di luar cakupan "custom function saja" dan sesi ini. Ini pekerjaan
+  berikutnya bila ingin `generateProject` menghasilkan file Python utuh.
+- **`parse-body.ts` di sql-builder belum diubah.** Ia mengonsumsi method-chain versi npm; memakai
+  `generateWith`/`pythonEmitter` baru butuh rilis method-chain (alur dua repo). Perubahan yang
+  diperlukan: 6 record per-bahasa diberi entri `python` + `pythonPreamble`/`pythonBridge`, dan
+  `sqlBuilderParseBody` di-*render* via `generateWith({typescript, c, python})`.
+
+## 24. Ringkasan status bahasa
+
+| Bahasa | Emitter | Runtime | Terbukti jalan | Catatan |
+|---|---|---|---|---|
+| TypeScript | ✅ (default) | base-utils | ✅ | asli |
+| C | ✅ (default) | ~2.6k LOC | ✅ | asli |
+| Python | ✅ 154 | 102 | ✅ `python3` | port custom function siap |
+| JavaScript | ✅ 15 | 0 | ✅ `node` | varian TS |
+| PHP | ✅ 180 | 128 | ✅ docker | sigil `$` |
+| Ruby | ✅ 180 | 95 | ✅ docker | blok `end` |
+| Go | ✅ 151 | — | struktural | spike |
+| Rust | ✅ 181 | 482 | ✅ `rustc` | butuh model + algoritma |
+
+**Rekomendasi akhir:** Gelombang 1 (dinamis) **selesai & terverifikasi**. Berikutnya: (1) backend
+Python penuh bila ingin output `generateProject` Python, atau (2) Gelombang 2 (C#/Java/Go) yang
+membutuhkan `Value` enum + runtime (tanpa ownership).
