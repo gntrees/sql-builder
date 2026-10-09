@@ -215,7 +215,9 @@ function buildParser(): LT {
         lt().returnRaw(objGet(objGet(ref("arg"), "string"), "value")));
 
     c = localFn(c, "identStr", ["name"], () =>
-        lt().returnRaw(strCat(ref("quote"), strCat(strReplace(ref("name"), ref("quote"), strCat(ref("quote"), ref("quote"))), ref("quote")))));
+        lt().addVariable("escapedName", strReplace(ref("name"), ref("quote"), strCat(ref("quote"), ref("quote"))))
+            .addVariable("qualifiedName", strReplace(ref("escapedName"), ".", strCat(ref("quote"), strCat(".", ref("quote")))))
+            .returnRaw(strCat(ref("quote"), strCat(ref("qualifiedName"), ref("quote")))));
 
     c = localFn(c, "literalOf", ["arg"], () =>
         lt().addVariable("outLiteral", "")
@@ -232,7 +234,7 @@ function buildParser(): LT {
 
     c = localFn(c, "opOf", ["n"], () => {
         const entries: [string, string][] = [
-            ["eq", "="], ["gt", ">"], ["gte", ">="], ["lt", "<"], ["lte", "<="], ["like", "LIKE"], ["ilike", "ILIKE"],
+            ["eq", "="], ["gt", ">"], ["gte", ">="], ["lt", "<"], ["lte", "<="], ["like", "LIKE"],
         ];
         let b = lt().addVariable("o", "");
         entries.forEach(([name, op], index) => {
@@ -240,6 +242,9 @@ function buildParser(): LT {
             const body = lt().setVariable("o", op);
             b = index === 0 ? b.if(cond, body) : b.elseIf(cond, body);
         });
+        b = b.elseIf(valEq(ref("n"), "ilike"),
+            lt().if(valEq(ref("dialect"), "postgres"), lt().setVariable("o", "ILIKE"))
+                .else(lt().setVariable("o", "LIKE")));
         return b.returnRaw(ref("o"));
     });
 
@@ -445,6 +450,8 @@ function buildParser(): LT {
                     lt().if(valEq(ref("valueFirst"), false),
                             lt().setVariable("sql", bufAppend("sql", ",")).setVariable("wsql", bufAppend("wsql", ",")))
                         .setVariable("valueFirst", false)
+                        .if(valEq(ref("dialect"), "mysql"),
+                            lt().addCallFunction("pushSql", ["ROW"]).addCallFunction("pushW", ["ROW"]))
                         .addCallFunction("pushSql", ["("])
                         .addCallFunction("pushW", ["("])
                         .addVariable("itemFirst", true)
@@ -457,7 +464,9 @@ function buildParser(): LT {
                         .addCallFunction("pushSql", [")"])
                         .addCallFunction("pushW", [")"])))
             .else(
-                lt().addCallFunction("pushSql", ["("])
+                lt().if(valEq(ref("dialect"), "mysql"),
+                        lt().addCallFunction("pushSql", ["ROW"]).addCallFunction("pushW", ["ROW"]))
+                    .addCallFunction("pushSql", ["("])
                     .addCallFunction("pushW", ["("])
                     .addVariable("itemFirst", true)
                     .forEach(ref("valueRows"), "ti",
@@ -472,6 +481,8 @@ function buildParser(): LT {
     const emitTransactionNode = (chain: LT, arg: LT): LT =>
         chain.addCallFunction("pushSql", ["BEGIN"])
             .addCallFunction("pushW", ["BEGIN"])
+            .setVariable("sql", bufAppend("sql", ";"))
+            .setVariable("wsql", bufAppend("wsql", ";"))
             .addVariable("txnFirst", true)
             .forEach(callExpr("itemsOf", [arg]), "txnItem",
                 lt().if(valEq(ref("txnFirst"), false),
@@ -483,6 +494,8 @@ function buildParser(): LT {
                         lt().addCallFunction("pushSql", [callExpr("asString", [ref("txnItem")])])
                             .addCallFunction("pushW", [callExpr("asString", [ref("txnItem")])]))
                     .else(emitRhsNode(lt(), ref("txnItem"))))
+            .if(valEq(ref("txnFirst"), false),
+                lt().setVariable("sql", bufAppend("sql", ";")).setVariable("wsql", bufAppend("wsql", ";")))
             .addCallFunction("pushSql", ["COMMIT"])
             .addCallFunction("pushW", ["COMMIT"]);
 
@@ -721,12 +734,16 @@ function buildParser(): LT {
             { names: ["leftjoin"], build: (n) => joinClause(n, "LEFT JOIN") },
             { names: ["rightjoin"], build: (n) => joinClause(n, "RIGHT JOIN") },
             { names: ["innerjoin"], build: (n) => joinClause(n, "INNER JOIN") },
-            { names: ["fulljoin"], build: (n) => joinClause(n, "FULL JOIN") },
+            { names: ["fulljoin"], build: (n) => lt().if(valEq(ref("dialect"), "mysql"),
+                        lt().throwError("sql-builder parse: FULL JOIN is not supported by mysql"))
+                    .else(joinClause(n, "FULL JOIN")) },
             { names: ["crossjoin"], build: (n) => joinClause(n, "CROSS JOIN") },
             { names: ["where"], build: (n) => keywordClause(n, "WHERE", emitPredicateNodes, (a) => member(a, "chain.values")) },
             { names: ["groupby"], build: (n) => keywordClause(n, "GROUP BY", emitColumnListNode, (a) => a) },
             { names: ["having"], build: (n) => keywordClause(n, "HAVING", emitPredicateNodes, (a) => member(a, "chain.values")) },
-            { names: ["returning"], build: (n) => keywordClause(n, "RETURNING", emitColumnListNode, (a) => a) },
+            { names: ["returning"], build: (n) => lt().if(valEq(ref("dialect"), "mysql"),
+                        lt().throwError("sql-builder parse: RETURNING is not supported by mysql"))
+                    .else(keywordClause(n, "RETURNING", emitColumnListNode, (a) => a)) },
             {
                 names: ["orderby"],
                 build: (n) => lt().setVariable("hasOrder", true)
@@ -772,24 +789,33 @@ function buildParser(): LT {
             },
             {
                 names: ["onconflictdonothing"],
-                build: (n) => lt().addCallFunction("pushSql", ["ON"]).addCallFunction("pushW", ["ON"])
-                    .addCallFunction("pushSql", ["CONFLICT"]).addCallFunction("pushW", ["CONFLICT"])
-                    .addCallFunction("pushSql", [callExpr("conflictTarget", [argAt(n, 0)])])
-                    .addCallFunction("pushW", [callExpr("conflictTarget", [argAt(n, 0)])])
-                    .addCallFunction("pushSql", ["DO"]).addCallFunction("pushW", ["DO"])
-                    .addCallFunction("pushSql", ["NOTHING"]).addCallFunction("pushW", ["NOTHING"]),
-            },
-            {
-                names: ["onconflictdoupdate"],
-                build: (n) => emitAssignmentsNode(
-                    lt().addCallFunction("pushSql", ["ON"]).addCallFunction("pushW", ["ON"])
+                build: (n) => lt().if(valEq(ref("dialect"), "mysql"),
+                        lt().throwError("sql-builder parse: ON CONFLICT DO NOTHING is not supported by mysql"))
+                    .else(lt().addCallFunction("pushSql", ["ON"]).addCallFunction("pushW", ["ON"])
                         .addCallFunction("pushSql", ["CONFLICT"]).addCallFunction("pushW", ["CONFLICT"])
                         .addCallFunction("pushSql", [callExpr("conflictTarget", [argAt(n, 0)])])
                         .addCallFunction("pushW", [callExpr("conflictTarget", [argAt(n, 0)])])
                         .addCallFunction("pushSql", ["DO"]).addCallFunction("pushW", ["DO"])
-                        .addCallFunction("pushSql", ["UPDATE"]).addCallFunction("pushW", ["UPDATE"])
-                        .addCallFunction("pushSql", ["SET"]).addCallFunction("pushW", ["SET"]),
-                    argAt(n, 1)),
+                        .addCallFunction("pushSql", ["NOTHING"]).addCallFunction("pushW", ["NOTHING"])),
+            },
+            {
+                names: ["onconflictdoupdate"],
+                build: (n) => lt().if(valEq(ref("dialect"), "mysql"),
+                        emitAssignmentsNode(
+                            lt().addCallFunction("pushSql", ["ON"]).addCallFunction("pushW", ["ON"])
+                                .addCallFunction("pushSql", ["DUPLICATE"]).addCallFunction("pushW", ["DUPLICATE"])
+                                .addCallFunction("pushSql", ["KEY"]).addCallFunction("pushW", ["KEY"])
+                                .addCallFunction("pushSql", ["UPDATE"]).addCallFunction("pushW", ["UPDATE"]),
+                            argAt(n, 1)))
+                    .else(emitAssignmentsNode(
+                        lt().addCallFunction("pushSql", ["ON"]).addCallFunction("pushW", ["ON"])
+                            .addCallFunction("pushSql", ["CONFLICT"]).addCallFunction("pushW", ["CONFLICT"])
+                            .addCallFunction("pushSql", [callExpr("conflictTarget", [argAt(n, 0)])])
+                            .addCallFunction("pushW", [callExpr("conflictTarget", [argAt(n, 0)])])
+                            .addCallFunction("pushSql", ["DO"]).addCallFunction("pushW", ["DO"])
+                            .addCallFunction("pushSql", ["UPDATE"]).addCallFunction("pushW", ["UPDATE"])
+                            .addCallFunction("pushSql", ["SET"]).addCallFunction("pushW", ["SET"]),
+                        argAt(n, 1))),
             },
         ];
         let b = lt();

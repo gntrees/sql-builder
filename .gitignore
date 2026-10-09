@@ -7,14 +7,31 @@ dist
 
 # logs
 logs
-_.log
+*.log
 
 # caches
 .cache
 *.tsbuildinfo
 
+# test coverage
+coverage
+
+# local database artifacts
+*.sqlite
+*.sqlite3
+*.db
+db/schema.sql
+
 # local registry
 verdaccio/storage/
+
+# docker overrides
+docker-compose.override.yml
+
+# environment
+.env
+.env.*
+!.env.example
 
 # editors
 .idea

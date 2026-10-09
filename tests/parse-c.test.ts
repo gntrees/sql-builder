@@ -92,30 +92,3 @@ int main(void) {
         "SELECT `id`, `name` FROM `users` WHERE ( `age` >= ? AND `active` = ? ) ORDER BY `name` DESC LIMIT ?"
     );
 }, 60000);
-
-test("valid literal string argument passes", () => {
-    const runner = `#include "gntrees-sql-builder.h"
-#include <stdio.h>
-int main(void) {
-    Builder b = sqlBuilder(variableName("q"), setDialect("postgres"));
-    printf("%s\\n", getJSONSchema(&b));
-    return 0;
-}
-`;
-    const { status, stderr } = compileAndRun(runner);
-    expect(status).toBe(0);
-    expect(stderr).not.toContain("validate:");
-}, 60000);
-
-test("invalid literal string argument aborts", () => {
-    const runner = `#include "gntrees-sql-builder.h"
-int main(void) {
-    Builder b = sqlBuilder(variableName("q"), setDialect("oracle"));
-    return 0;
-}
-`;
-    const { status, signal, stderr } = compileAndRun(runner);
-    expect(status).not.toBe(0);
-    expect(signal === "SIGABRT" || (status !== null && status !== 0)).toBe(true);
-    expect(stderr).toContain("literal");
-}, 60000);

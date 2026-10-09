@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run generate
+      - run: bun test tests/
+
+  integration-db:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run generate
+      - run: docker compose -f docker-compose.test.yml up -d --wait postgres mysql
+      - run: bun run db:migrate
+      - run: DB_TESTS=1 bun test tests/db
+      - if: always()
+        run: docker compose -f docker-compose.test.yml logs
+      - if: always()
+        run: docker compose -f docker-compose.test.yml down -v

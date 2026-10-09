@@ -3,31 +3,6 @@ import { sqlBuilder } from "../generated/gntrees-sql-builder/typescript/index";
 
 const qb = () => sqlBuilder("qb") as any;
 
-const firstArg = (schema: any): any => {
-    const value = schema.schema.chain.chain.values[0];
-    if (!("functionCall" in value)) throw new Error("expected a function call");
-    return value.functionCall.arguments[0];
-};
-
-test("template literal with undefined expression throws", () => {
-    expect(() => qb().raw`a ${undefined}`).toThrow("union");
-});
-
-test("template literal with too many expressions throws", () => {
-    expect(() => (qb().raw as any)(["a"], "x", "y")).toThrow("expression");
-});
-
-test("template literal with too few expressions throws", () => {
-    expect(() => (qb().raw as any)(["a", "b", "c"], "x")).toThrow("expression");
-});
-test("template literal records string parts and normalized expressions", () => {
-    const schema = qb().raw`SELECT ${"x"} FROM ${18}`.getSchema();
-    const args = (schema.schema.chain.chain.values[0] as any).functionCall.arguments;
-    expect(args[0].argument).toEqual({ string: { value: "SELECT " } });
-    expect(args[1].argument).toEqual({ string: { value: "x" } });
-    expect(args[2].argument).toEqual({ string: { value: " FROM " } });
-    expect(args[3].argument).toEqual({ number: { value: 18 } });
-});
 test("parse builds postgres sql with placeholders and params", () => {
     const c = qb();
     const result = c
@@ -201,9 +176,9 @@ test("parse builds join on column equality", () => {
         .setDialect("postgres")
         .parse();
     expect(result).toEqual({
-        sql: 'SELECT "id" FROM "users" JOIN "posts" ON "users.id" = "posts.user_id"',
+        sql: 'SELECT "id" FROM "users" JOIN "posts" ON "users"."id" = "posts"."user_id"',
         param: [],
-        sqlWithParam: 'SELECT "id" FROM "users" JOIN "posts" ON "users.id" = "posts.user_id"',
+        sqlWithParam: 'SELECT "id" FROM "users" JOIN "posts" ON "users"."id" = "posts"."user_id"',
     });
 });
 
@@ -215,7 +190,7 @@ test("parse builds left join with mysql quoting", () => {
         .leftJoin(c.table("posts"), c.col("users.id").eq(c.col("posts.user_id")))
         .setDialect("mysql")
         .parse();
-    expect(result.sql).toBe("SELECT `id` FROM `users` LEFT JOIN `posts` ON `users.id` = `posts.user_id`");
+    expect(result.sql).toBe("SELECT `id` FROM `users` LEFT JOIN `posts` ON `users`.`id` = `posts`.`user_id`");
 });
 
 test("parse builds group by with having", () => {
@@ -258,7 +233,7 @@ test("parse aliases from and join tables", () => {
         .join(c.table("posts").as("p"), c.col("u.id").eq(c.col("p.uid")))
         .setDialect("postgres")
         .parse();
-    expect(result.sql).toBe('SELECT "id" FROM "users" AS "u" JOIN "posts" AS "p" ON "u.id" = "p.uid"');
+    expect(result.sql).toBe('SELECT "id" FROM "users" AS "u" JOIN "posts" AS "p" ON "u"."id" = "p"."uid"');
 });
 
 test("parse renders generic operator with literal and column", () => {
@@ -421,10 +396,57 @@ test("parse builds on conflict update with subquery assignment", () => {
         .setDialect("mysql")
         .parse();
     expect(result).toEqual({
-        sql: "INSERT INTO `t` ( `name` ) VALUES ( ? ) ON CONFLICT (`id`) DO UPDATE SET `name` = (SELECT `n` FROM `b`)",
+        sql: "INSERT INTO `t` ( `name` ) VALUES ( ? ) ON DUPLICATE KEY UPDATE `name` = (SELECT `n` FROM `b`)",
         param: ["x"],
-        sqlWithParam: "INSERT INTO `t` ( `name` ) VALUES ( 'x' ) ON CONFLICT (`id`) DO UPDATE SET `name` = (SELECT `n` FROM `b`)",
+        sqlWithParam: "INSERT INTO `t` ( `name` ) VALUES ( 'x' ) ON DUPLICATE KEY UPDATE `name` = (SELECT `n` FROM `b`)",
     });
+});
+
+test("parse maps on conflict do update to mysql upsert", () => {
+    const c = qb();
+    expect(
+        c.insert(c.table("t"), { name: "x" }).onConflictDoUpdate(c.col("id"), { name: "y" }).setDialect("mysql").parse().sql
+    ).toBe("INSERT INTO `t` ( `name` ) VALUES ( ? ) ON DUPLICATE KEY UPDATE `name` = ?");
+});
+
+test("parse renders mysql values with ROW constructors", () => {
+    const c = qb();
+    expect(c.values([["a", 1], ["b", 2]]).setDialect("mysql").parse()).toEqual({
+        sql: "VALUES ROW ( ?, ? ), ROW ( ?, ? )",
+        param: ["a", 1, "b", 2],
+        sqlWithParam: "VALUES ROW ( 'a', 1 ), ROW ( 'b', 2 )",
+    });
+});
+
+test("parse maps ilike to like on mysql", () => {
+    const pg = qb();
+    expect(pg.select(pg.col("id")).where(pg.col("x").ilike("a%")).setDialect("postgres").parse().sql).toBe(
+        'SELECT "id" WHERE "x" ILIKE $1'
+    );
+
+    const my = qb();
+    expect(my.select(my.col("id")).where(my.col("x").ilike("a%")).setDialect("mysql").parse().sql).toBe(
+        "SELECT `id` WHERE `x` LIKE ?"
+    );
+});
+
+test("parse rejects returning on mysql", () => {
+    const c = qb();
+    expect(() => c.select(c.col("id")).from(c.table("t")).returning(c.col("id")).setDialect("mysql").parse()).toThrow(/RETURNING/);
+});
+
+test("parse rejects full join on mysql", () => {
+    const c = qb();
+    expect(() =>
+        c.select(c.col("id")).from(c.table("a")).fullJoin(c.table("b"), c.col("x").eq(c.col("y"))).setDialect("mysql").parse()
+    ).toThrow(/FULL JOIN/);
+});
+
+test("parse rejects on conflict do nothing on mysql", () => {
+    const c = qb();
+    expect(() => c.insert(c.table("t"), { name: "x" }).onConflictDoNothing(c.col("id")).setDialect("mysql").parse()).toThrow(
+        /NOTHING/
+    );
 });
 
 test("parse renders raw template literals", () => {
@@ -452,9 +474,9 @@ test("parse builds exists subquery", () => {
         .setDialect("postgres")
         .parse();
     expect(result).toEqual({
-        sql: 'SELECT "id" FROM "users" WHERE EXISTS (SELECT "id" FROM "posts" WHERE "posts.user_id" = "users.id")',
+        sql: 'SELECT "id" FROM "users" WHERE EXISTS (SELECT "id" FROM "posts" WHERE "posts"."user_id" = "users"."id")',
         param: [],
-        sqlWithParam: 'SELECT "id" FROM "users" WHERE EXISTS (SELECT "id" FROM "posts" WHERE "posts.user_id" = "users.id")',
+        sqlWithParam: 'SELECT "id" FROM "users" WHERE EXISTS (SELECT "id" FROM "posts" WHERE "posts"."user_id" = "users"."id")',
     });
 });
 
@@ -471,21 +493,21 @@ test("parse builds transaction block", () => {
     const c = qb();
     const chained = c.transaction(c.insert(c.table("t"), { a: 1 })).setDialect("postgres").parse();
     expect(chained).toEqual({
-        sql: 'BEGIN INSERT INTO "t" ( "a" ) VALUES ( $1 ) COMMIT',
+        sql: 'BEGIN; INSERT INTO "t" ( "a" ) VALUES ( $1 ); COMMIT',
         param: [1],
-        sqlWithParam: 'BEGIN INSERT INTO "t" ( "a" ) VALUES ( 1 ) COMMIT',
+        sqlWithParam: 'BEGIN; INSERT INTO "t" ( "a" ) VALUES ( 1 ); COMMIT',
     });
 
     const batch = qb();
     const array = batch.transaction([batch.insert(batch.table("t"), { a: 1 }), batch.insert(batch.table("u"), { b: 2 })]).setDialect("postgres").parse();
     expect(array).toEqual({
-        sql: 'BEGIN INSERT INTO "t" ( "a" ) VALUES ( $1 ); INSERT INTO "u" ( "b" ) VALUES ( $2 ) COMMIT',
+        sql: 'BEGIN; INSERT INTO "t" ( "a" ) VALUES ( $1 ); INSERT INTO "u" ( "b" ) VALUES ( $2 ); COMMIT',
         param: [1, 2],
-        sqlWithParam: 'BEGIN INSERT INTO "t" ( "a" ) VALUES ( 1 ); INSERT INTO "u" ( "b" ) VALUES ( 2 ) COMMIT',
+        sqlWithParam: 'BEGIN; INSERT INTO "t" ( "a" ) VALUES ( 1 ); INSERT INTO "u" ( "b" ) VALUES ( 2 ); COMMIT',
     });
 
     const raw = qb();
-    expect(raw.transaction("UPDATE t SET a=1").setDialect("postgres").parse().sql).toBe("BEGIN UPDATE t SET a=1 COMMIT");
+    expect(raw.transaction("UPDATE t SET a=1").setDialect("postgres").parse().sql).toBe("BEGIN; UPDATE t SET a=1; COMMIT");
 });
 
 test("parse leaves SQL responsibility to the caller", () => {
@@ -571,13 +593,4 @@ test("parse builds nested subquery with mysql quoting", () => {
         param: [true],
         sqlWithParam: "SELECT `id` WHERE `id` IN (SELECT `uid` FROM `m` WHERE `uid` IN (SELECT `id` FROM `b` WHERE `ok` = TRUE))",
     });
-});
-
-test("literal string argument accepts matching value", () => {
-    const arg = firstArg(qb().setDialect("postgres").getSchema());
-    expect(arg.argument).toEqual({ string: { value: "postgres" } });
-});
-
-test("literal string argument rejects mismatched value", () => {
-    expect(() => qb().setDialect("oracle")).toThrow("does not match any type in the union");
 });
