@@ -411,3 +411,50 @@ sebenarnya sebuah bahasa tetap = emitter + backend model/API + runtime target; d
 yang idiomnya berbeda (Rust ownership, Go `} else {`) berpotensi memaksa perluasan emitter
 (yang menyentuh semua bahasa). Ini menegaskan: strategi emitter layak, tapi biayanya nyata dan
 bukan "satu entri" — jadi evaluasi Rust sebagai probe berikutnya sebelum komit ke 10 bahasa.
+
+## 17. Fase 4c — probe Rust (hasil)
+
+- Baru: `core/lingua-tungga/lingua-tungga-rust-emitter.ts` — SPIKE, `LtEmitter` untuk Rust
+  (144 LOC).
+- Spike test kini merender satu program LT ke **TS/C/Go/Rust** lewat algoritma yang sama.
+
+**Output Rust (struktur valid):**
+
+```rust
+let mut count = lt::number(5);
+if (lt::value_equals(&count, &lt::number(5))) {
+  use(lt::to_upper(&lt::string("start")));
+}
+else {
+  panic!("{}", lt::to_string(&lt::string("nope")));
+}
+for item in lt::array(vec![lt::string("a"), lt::string("b")]).iter() {
+  use(item);
+}
+let helper = |value: lt::Value| -> lt::Value {
+  return lt::get(&lt::map(vec![("k", lt::number(1))]), "k");
+};
+use(helper(count));
+return lt::str_concat(&lt::string("total="), &lt::to_string(&count));
+```
+
+**Friksi baru yang diungkap Rust** (yang tidak muncul di TS/C/Go):
+
+1. **Dinamis tanpa `any`** — butuh enum `lt::Value`; ekspresi jadi `lt::X(...)`.
+2. **Borrowing eksplisit** — arg read-only harus `&x`; C memakai copy by-value implisit.
+   Emitter harus tahu mana yang di-borrow vs move vs clone.
+3. **Mutability** — `let mut` wajib untuk variabel yang nanti di-`set`; emitter tidak tahu di
+   muka, jadi harus selalu `let mut` (menimbulkan warning) atau algoritma harus mengirim info
+   mutability.
+4. **Local function → closure** (seperti Go).
+5. Operator tetap **native** (seperti C) karena operand-nya raw — jadi tidak perlu `lt::add`.
+
+Kontras penting: Rust **tidak** butuh merge `} else {` (Rust mengizinkan `else` di baris baru),
+berbeda dari Go. Jadi bentuk `appendBlock` berbeda per bahasa.
+
+**Gate:** method-chain 197 pass; output method-chain byte-for-byte identik.
+
+**Kesimpulan:** setiap bahasa yang "jauh" memunculkan kategori friksi **baru** (Go: brace/closure;
+Rust: ownership/mutability). Ini menguatkan rekomendasi: jangan komit ke 10 bahasa sebelum pola
+friksi stabil; kalau friksi terus bertambah, pertimbangkan **IR kanonik (Fase 3)** alih-alih
+memperluas emitter terus-menerus.
