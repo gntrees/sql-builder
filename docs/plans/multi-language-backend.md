@@ -1127,9 +1127,10 @@ Gelombang 3 (Rust, C++) yang butuh enum `Value` + ownership + perubahan algoritm
 | Go | ✅ | ✅ | ✅ |
 | C# | ✅ | ✅ | ✅ |
 | Rust | ✅ | minimal¹ | ✅ |
+| C++ | ✅ | minimal¹ | ✅ |
 
-¹ Rust memakai model host *minimal* (harness JSON di `tests/rust-parse.test.ts`), bukan
-backend `generateProject` penuh — fokus custom function, sesuai keputusan di Fase 15.
+¹ Rust/C++ memakai model host *minimal* (harness JSON di `tests/rust-parse.test.ts` dan
+`tests/cpp-parse.test.ts`), bukan backend `generateProject` penuh — fokus custom function.
 
 ## 32. Fase 15 — Gelombang 3 dimulai: Rust end-to-end untuk `parse` (**statis ownership**)
 
@@ -1182,3 +1183,43 @@ Ruby, Java, Go, C#, Rust).
 
 **Berikutnya:** C++ (Gelombang 3, kedua) bila diminta; backend `generateProject` Rust penuh (~model
 host + `core-rust.ts` + `core/backends/rust.ts`).
+
+## 33. Fase 16 — C++ end-to-end untuk `parse` (**Gelombang 3 selesai**)
+
+C++ butuh tipe variant `Value` (tanpa `any`), tetapi **tidak ada borrow-checker** dan lambda
+menangkap by-reference secara native. Jadi C++ memakai resep Gelombang 2 (Go/C#), bukan resep
+thread-local Rust:
+
+- Variabel = lokal C++ (`lt::Value x = ...`); closure menangkap by-reference → fungsi lokal bisa
+  memutasi buffer luar (`pushSql`), dan variabel internal fungsi otomatis ber-scope per-invocation
+  (rekursi aman) **tanpa hook**.
+- Fungsi lokal di tabel `lt::Fns __fns` (preamble) → forward-reference + rekursi.
+- Read & "move" manipulation sama bentuknya (`lt::buf_append(x, y)`) karena C++ menyalin; tidak perlu
+  juggling borrow.
+
+**Artefak (branch `multi-language-backend`):**
+
+- `core/lingua-tungga/lingua-tungga-cpp-emitter.ts` — emitter C++.
+- `core/base/cpp/lt.hpp` — runtime (`lt::Value` variant + operasi; terkirim sebagai `dist/base/cpp/lt.hpp`).
+- sql-builder `src/parse-body.ts` — `cppPreamble`/`cppBridge` + entri `cpp` di 6 record + emitter.
+- sql-builder `tests/cpp-parse.test.ts` — gate end-to-end (schema JSON → C++ `parse`).
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `cpp gate` (method-chain, rekursi + mutable capture) | **`ABC32142`** == TS |
+| `cpp parse` (sql-builder): `parse()` C++ == TS (9 kasus) | **identik** |
+| `g++ -std=c++17` kompilasi | **status 0** |
+| method-chain `bun test tests/` | **217 pass** (java gate timeout 5s flaky di bawah beban; lolos terpisah) |
+| sql-builder `bun test tests/ --parallel=1` | **107 pass, 53 skip, 0 fail** |
+| `bunx tsc --noEmit` (kedua repo) | bersih |
+
+**Biaya terukur C++:** emitter ~210 + runtime `lt.hpp` ~470 ≈ **~680 LOC** — lebih murah dari Rust
+karena tidak ada problem capture/borrow.
+
+**Status Gelombang 3: SELESAI** (Rust + C++). `parse` jalan dari satu sumber untuk **11 bahasa**:
+TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#, Rust.
+
+**Berikutnya (bila diminta):** backend `generateProject` penuh untuk Rust/C++ (model host + `core-*.ts`
++ `core/backends/*.ts`), atau bahasa Gelombang 3 lain (Kotlin/Swift).
