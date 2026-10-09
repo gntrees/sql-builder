@@ -582,3 +582,67 @@ bukan sekadar "terlihat valid" seperti probe Fase 4c.
   per-bahasa raw, dan beberapa konstruk memaksa perubahan algoritma yang menyentuh semua bahasa.
 - **Langkah berikutnya yang benar:** spike **Python** (bahasa dinamis) untuk mengonfirmasi angka
   "murah", lalu putuskan roadmap. Bahasa dinamis tidak butuh `Value` enum maupun bridge ownership.
+
+## 20. Fase 4e — Python decision gate (end-to-end) + putusan akhir
+
+Pasangan dari Fase 4d: bahasa **dinamis**. Program LT yang *sama* dirender ke Python, dijalankan
+`python3`, dan outputnya dibandingkan dengan TS.
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+- `core/lingua-tungga/lingua-tungga-python-emitter.ts` — emitter Python (**154 LOC**). Karena
+  Python berbasis indentasi, blok + `elif`/`else`/`def` dirender di emitter (bukan algoritma).
+- `core/lingua-tungga/runtime/lt.py` — runtime mini (**102 LOC**) **hanya** untuk tempat di mana
+  semantik JS beda dari Python: `truthy` kontainer kosong, `obj[key]`→`None` (bukan `KeyError`),
+  `String(x)` vs `str(x)`, arg-order `join`.
+- `tests/python-e2e.test.ts` — **2 gate**: (a) program parity dgn gate Rust (`ABC42`);
+  (b) program dict/`objGet`/`objHas`/`elif`/`truthy` (`v5`).
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `python3` jalankan output emitter | **status 0** |
+| Output runtime Python == output TS | **identik** (`ABC42`, `v5`) |
+| `bun test tests/` method-chain | **201 pass, 0 fail** (199 + 2 baru) |
+| Output sql-builder byte-for-byte | **identik** (verifikasi hash, build lokal + swap dist) |
+| `bunx tsc --noEmit` | bersih |
+
+**Friksi baru untuk bahasa dinamis (jauh lebih ringan dari statis):**
+
+1. **Blok indentasi + `elif`.** `else if (cond)` harus jadi `elif (cond)`; blok dirender di emitter
+   (kelas yang sama dengan `} else {` Go).
+2. **Semantik JS tembus.** Perlu runtime kecil: `[]`/`{}` truthy di JS tapi falsy di Python;
+   `obj[key]` harus `None` saat missing; `String(x)` ≠ `str(x)` untuk `None`/bool/kontainer.
+3. **Idiom buffer tak bisa in-place.** `(a.push(b), a)` tidak valid di Python → dipakai
+   `a + [b]` (benar, tapi O(n²)); ini konsekuensi idiom `name = op(name, ...)`.
+4. **Algoritma meng-hardcode `;`** (di `setVariable`/`addExpressionStatements`/`returnRaw`) → Python
+   dapat `;` ekor non-idiomatik (`return v.upper();`). Kelas sama dengan `if (...)` yang di-hardcode
+   — **algoritma masih bocorkan sintaks keluarga-C**. Kosmetik, tapi nyata untuk output rapi.
+
+**Perbandingan biaya (terukur):**
+
+| Komponen | **Python (dinamis)** | **Rust (statis)** |
+|---|---|---|
+| emitter | 154 LOC | 181 LOC |
+| runtime | **102 LOC** (`lt.py`) | **482 LOC** (`lt.rs`) |
+| enum `Value` / ownership | **tidak ada** | wajib |
+| friksi pemblokir di algoritma | tidak ada | `forCounter`, closure-capture |
+| model/API bahasa target | ~0 (tipe native) | ~3.000 LOC (dari C) |
+
+**Putusan akhir decision gate (hipotesis TERKONFIRMASI):**
+
+- Bahasa **dinamis ≈ 2,5–4× lebih murah** dari statis, **dan** tidak memunculkan friksi yang
+  memaksa perubahan algoritma (yang selalu menyentuh *semua* bahasa). Total Python ≈ **256 LOC**;
+  Rust ≈ **663 LOC + ~3k model**.
+- **Roadmap yang direkomendasikan:**
+  1. **Gelombang 1 (dinamis — murah & seragam):** Python, JavaScript, PHP, Ruby. Semuanya mirip
+     Python (tipe native + runtime mini); tidak butuh `Value` enum.
+  2. **Gelombang 2 (statis GC):** C#, Java, Go — butuh `Value` + runtime, tapi tanpa ownership.
+  3. **Gelombang 3 (statis ownership):** Rust, C++ — hanya bila ada permintaan nyata, dan sebaiknya
+     bersama **Fase 3 (IR kanonik)**, karena tuntutannya menembus algoritma.
+- **Prasyarat lintas gelombang:** pindahkan sisa sintaks yang masih di-hardcode algoritma
+  (terminator `;`, paren `if (...)`) ke emitter — satu perubahan kecil yang membereskan Python
+  *dan* bahasa berikutnya sekaligus.
+- **Catatan single-source:** `parse-body.ts` tetap ~90% netral; preamble/bridge-nya per-bahasa raw.
+  Untuk Gelombang 1 preamble/bridge Python juga perlu ditulis, tapi tanpa model memori.
