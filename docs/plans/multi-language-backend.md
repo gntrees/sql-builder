@@ -728,3 +728,42 @@ mem-*marshal* struct statis. Ini menegaskan biaya port custom function ke Python
 **Rekomendasi akhir:** Gelombang 1 (dinamis) **selesai & terverifikasi**. Berikutnya: (1) backend
 Python penuh bila ingin output `generateProject` Python, atau (2) Gelombang 2 (C#/Java/Go) yang
 membutuhkan `Value` enum + runtime (tanpa ownership).
+
+## 25. Fase 8 — backend Python penuh (`generateProject`)
+
+Melengkapi Fase 7: kini `generateProject` bisa menghasilkan **modul Python utuh** (model + fluent
+API), bukan hanya body custom function.
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/python/base-utils.py` | 306 | port runtime TS: `create_schema`, `create_property_call_schema`, `normalize_argument`, `validate_schema`, `make_copy`, `apply_copies` |
+| `core/core-python.ts` | 337 | generator (class, method fluent, `@property`, `customFunction.body.python`, init function, escaping keyword) |
+| `core/backends/python.ts` | 22 | entri `LanguageBackend` |
+| `tests/python-backend.test.ts` | 198 | parity TS↔Python |
+| wiring | — | `core.ts` (load base), `registry.ts`, `LanguageType += "python"` |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| Test parity: schema TS == schema Python (deep-equal) untuk query sama | **lolos** |
+| Property access + `copy()` + custom function (`qb:hi`) | **lolos** |
+| `bun test tests/` method-chain | **207 pass, 0 fail** |
+| Output sql-builder TS/C byte-for-byte | **identik** |
+| `bunx tsc --noEmit` | bersih |
+
+**Temuan:** `from`/`with`/`in`/`and`/`or`/`not`/`as` adalah keyword Python → method yang di-generate
+mendapat akhiran `_` (`from_`, `with_`, …), sementara nama di schema tetap asli. Ini friksi khas
+bahasa yang **tidak muncul** di TS/C.
+
+**Biaya total Python (terukur):** emitter 154 + runtime LT 102 + base-utils 306 + generator 337 +
+backend 22 ≈ **~920 LOC** — semuanya tanpa `Value` enum maupun model memori. Bandingkan Rust:
+~663 LOC emitter+runtime **+ ~3.000 LOC model** yang belum dibangun.
+
+**Sisa satu langkah untuk Python end-to-end di sql-builder:** `parse-body.ts` (sql-builder) masih
+mengonsumsi method-chain versi npm. Untuk mengaktifkan Python di sana: (1) rilis method-chain,
+(2) beri entri `python` pada 6 record per-bahasa di `parse-body.ts` + `pythonPreamble`/`pythonBridge`,
+(3) tambah `python` ke `languages`/`beforeScript`/`importPaths` di `sql-builder.project.ts`. Body
+`parse` Python sendiri sudah terbukti jalan (Fase 7).
