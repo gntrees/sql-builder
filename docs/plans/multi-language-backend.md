@@ -812,3 +812,36 @@ Ini penutup rangkaian: `parse` yang ditulis **sekali** di `src/parse-body.ts` ki
 melembutkan kesimpulan Fase 4e: dinamis lebih murah, **bukan** berarti nol perubahan struktural.
 
 **Status:** `parse` kini benar-benar berjalan untuk **TypeScript, C, dan Python** dari satu sumber.
+
+## 27. Fase 10 — JavaScript end-to-end (backend + `parse`)
+
+Melengkapi Gelombang 1 dengan bahasa dinamis kedua yang jalan penuh: JavaScript.
+
+**Artefak method-chain:**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/javascript/base-utils.js` | 287 | port runtime tanpa tipe (`createSchema`/`normalizeArgument`/… ) |
+| `core/core-javascript.ts` | 222 | generator JS murni (class, method fluent, `get`, custom function) |
+| `core/backends/javascript.ts` | 22 | entri backend |
+| `tests/javascript-backend.test.ts` | 157 | parity TS↔JS |
+
+**Kunci:** JS **tidak butuh runtime `lt` sama sekali** — manipulasi LT di emitter TS/JS sudah
+native (`+`, `.toUpperCase()`, `obj[key]`, `!!x`, `String(x)`). Jadi backend JS lebih murah dari
+Python (tak ada `lt.py` untuk dikirim).
+
+**sql-builder:** `parse-body.ts` diberi `javascript` preamble (`const root = this.getSchema();`),
+record variabel (`[]`), dan bridge (memakai ulang `tsBridge` — sudah JS valid); config
+`languages += "javascript"`.
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `parse()` JS == TS (9 kasus) | **identik** |
+| Output sql-builder TS/C byte-for-byte | **identik** |
+| sql-builder `bun test --parallel=1` | **100 pass, 53 skip, 0 fail** |
+| method-chain `bun test tests/` | 208 pass, 0 fail |
+
+**Status akhir:** `parse` berjalan untuk **TypeScript, C, Python, JavaScript** dari satu sumber
+(`src/parse-body.ts`). Backend penuh: TS, C, Python, JS. Emitter siap (belum backend): Go, Rust, PHP, Ruby.
