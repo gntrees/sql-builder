@@ -767,3 +767,48 @@ mengonsumsi method-chain versi npm. Untuk mengaktifkan Python di sana: (1) rilis
 (2) beri entri `python` pada 6 record per-bahasa di `parse-body.ts` + `pythonPreamble`/`pythonBridge`,
 (3) tambah `python` ke `languages`/`beforeScript`/`importPaths` di `sql-builder.project.ts`. Body
 `parse` Python sendiri sudah terbukti jalan (Fase 7).
+
+## 26. Fase 9 — `parse` Python end-to-end di sql-builder
+
+Ini penutup rangkaian: `parse` yang ditulis **sekali** di `src/parse-body.ts` kini di-generate dan
+**dijalankan** untuk Python di repo sql-builder, dengan output identik TypeScript.
+
+**Alur rilis dua repo (akhirnya dipakai):** verdaccio lokal (`docker compose up -d registry`) →
+`bun run publish:local` → method-chain `0.0.7`/`0.0.8`/`0.0.9` → sql-builder `bun install`
+(`bunfig.toml` sudah me-route `@gntrees` ke `localhost:4873`).
+
+**Perubahan method-chain:**
+
+- **9a — `nonlocal`:** `LtEmitter.localFunction` menerima daftar variabel *enclosing*; algoritma
+  meneruskannya; `pythonEmitter` men-*emit* `nonlocal a, b, …`. Tanpa ini, local function yang
+  memutasi buffer luar (`pushSql`/`pushW`) **tidak akan** mengubah buffer (Python membuat variabel
+  lokal baru) → output salah. Ini analog `nonlocal` dari closure JS / nested function C.
+- **9b — `lt.py` ikut dikirim:** `lt.py` dipindah ke `core/base/python/` (agar ikut `cp` ke `dist`),
+  dan backend Python menambahkannya sebagai `extraFiles`; modul Python yang di-generate men-*emit*
+  `import lt`.
+
+**Perubahan sql-builder:**
+
+- `src/parse-body.ts`: `pythonPreamble` (`root = self.get_schema()`) + `pythonBridge` + entri
+  `python` pada 3 record variabel & 2 record `addStatements`; di-render via
+  `generateWith({ ...createEmitters(), python: pythonEmitter })`.
+- `src/sql-builder.project.ts`: `languages += "python"`, `beforeScript.python`, `body.python`,
+  `return.python = "dict"`.
+- `tests/python-parse.test.ts`: membangun query **sama** di TS dan Python, membandingkan
+  `parse()` untuk **9 kasus** (select/where/order/and/or/not/in/isNull/between/insert/update).
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `parse()` Python == TS (9 kasus) | **identik** |
+| Output sql-builder TS/C byte-for-byte | **identik** |
+| sql-builder `bun test --parallel=1` | **99 pass, 53 skip, 0 fail** |
+| method-chain `bun test tests/` | 207 pass, 0 fail |
+
+**Temuan:** untuk host dinamis, preamble/bridge `parse` **nyaris kosong** (data host sudah dict),
+**tetapi** `localFunction` yang memutasi variabel luar tetap butuh perluasan emitter+algoritma
+(`nonlocal`) — jadi bahkan bahasa "mudah" pun bisa menuntut perubahan algoritma kecil. Ini
+melembutkan kesimpulan Fase 4e: dinamis lebih murah, **bukan** berarti nol perubahan struktural.
+
+**Status:** `parse` kini benar-benar berjalan untuk **TypeScript, C, dan Python** dari satu sumber.
