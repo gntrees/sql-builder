@@ -1128,6 +1128,7 @@ Gelombang 3 (Rust, C++) yang butuh enum `Value` + ownership + perubahan algoritm
 | C# | ✅ | ✅ | ✅ |
 | Rust | ✅ | minimal¹ | ✅ |
 | C++ | ✅ | minimal¹ | ✅ |
+| Kotlin | ✅ | minimal¹ | ✅ |
 
 ¹ Rust/C++ memakai model host *minimal* (harness JSON di `tests/rust-parse.test.ts` dan
 `tests/cpp-parse.test.ts`), bukan backend `generateProject` penuh — fokus custom function.
@@ -1223,3 +1224,44 @@ TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#, Rust.
 
 **Berikutnya (bila diminta):** backend `generateProject` penuh untuk Rust/C++ (model host + `core-*.ts`
 + `core/backends/*.ts`), atau bahasa Gelombang 3 lain (Kotlin/Swift).
+
+## 34. Fase 17 — Kotlin end-to-end untuk `parse` (bahasa #12)
+
+Kotlin punya top type universal (`Any?`) dan closure menangkap (serta boleh memutasi) `var` luar
+by-reference, jadi Kotlin memakai resep **Gelombang 2 (Go/C#/C++)**, bukan thread-local Rust:
+
+- Variabel = `var x: Any?`; fungsi lokal berupa **anonymous function** (`fun(...) { }`) — bukan
+  lambda — karena hanya itu yang mengizinkan `return`; compiler men-box `var` yang ditangkap, jadi
+  mutasi buffer luar (`pushSql`) jalan.
+- Fungsi lokal di tabel `__fns` (`LinkedHashMap<String, (List<Any?>) -> Any?>`).
+- Objek = `LinkedHashMap` (insertion-ordered) → output driver deterministik.
+
+**Toolchain:** Kotlin tidak tersedia di image. Dipakai compiler embeddable dari Maven Central
+(`kotlin-compiler-embeddable` + stdlib/reflect/script-runtime/daemon/trove4j/coroutines/annotations)
+di `/tmp/kotlin`, dijalankan via `java -cp ... K2JVMCompiler`. (GitHub release assets ~150KB/s;
+Maven Central ~570KB/s, jadi embeddable lebih cepat diunduh.)
+
+**Artefak (branch `multi-language-backend`):**
+
+- `core/lingua-tungga/lingua-tungga-kotlin-emitter.ts` — emitter Kotlin.
+- `core/base/kotlin/lt.kt` — runtime (terkirim sebagai `dist/base/kotlin/lt.kt`).
+- sql-builder `src/parse-body.ts` — `kotlinPreamble`/`kotlinBridge` + entri `kotlin` di 6 record.
+- sql-builder `tests/kotlin-parse.test.ts` — gate end-to-end (schema JSON → Kotlin `parse`).
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `kotlin gate` (method-chain, rekursi + mutable capture) | **`ABC32142`** == TS |
+| `kotlin parse` (sql-builder): `parse()` Kotlin == TS (9 kasus) | **identik** |
+| `K2JVMCompiler` kompilasi | **status 0** |
+| `bunx tsc --noEmit` (kedua repo) | bersih |
+
+**Biaya terukur Kotlin:** emitter ~200 + runtime `lt.kt` ~290 ≈ **~490 LOC** — paling ringan dari
+ketiga bahasa statis terakhir (Kotlin punya `Any?` + `LinkedHashMap` bawaan).
+
+**Status `parse` dari satu sumber `src/parse-body.ts`: 12 bahasa** — TS, C, C++, Python, JS, PHP,
+Ruby, Java, Go, C#, Rust, Kotlin.
+
+**Berikutnya (bila diminta):** Swift (butuh toolchain Linux), backend `generateProject` penuh untuk
+Rust/C++/Kotlin, atau bahasa lain.
