@@ -503,3 +503,82 @@ Ukur **satu bahasa dinamis (Python)** dan **satu bahasa statis tersulit (Rust)**
 end-to-end (emitter + backend + runtime + conformance test). Dua angka itu memvalidasi hipotesis
 "dinamis murah vs statis mahal". Kalau benar, "cover ~10 bahasa" realistis dengan urutan:
 **dinamis dulu, statis belakangan**.
+
+## 19. Fase 4d — Rust decision gate (end-to-end, difokuskan ke custom function)
+
+Fokus sesuai keputusan: **hanya custom function `parse`** (bukan seluruh model/API tiap bahasa).
+Tujuannya membuktikan bahwa jalur LT→bahasa statis **benar-benar bisa dikompilasi & dijalankan**,
+bukan sekadar "terlihat valid" seperti probe Fase 4c.
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+- `core/lingua-tungga/lingua-tungga-rust-emitter.ts` — emitter Rust nyata (**181 LOC**),
+  dipromosikan dari spike. Menyandikan strategi ownership:
+  manipulasi read-only → `&arg` (borrow), mutator (`bufferAppend`, `listPush`) → move-in/move-out
+  (cocok dengan idiom algoritma `name = op(name, ...)`), konstruktor → `lt::x()`.
+- `core/lingua-tungga/runtime/lt.rs` — runtime Rust `lt` (**482 LOC**): enum `Value` +
+  primitif (string/array/map/buffer/list/operator bantu). Ini "biaya runtime" bahasa statis.
+- `tests/rust-e2e.test.ts` — **gate end-to-end**: satu program LT → render ke TS **dan** Rust →
+  transpile+jalankan TS sebagai referensi → `rustc --edition 2021` kompilasi → jalankan →
+  **assert stdout Rust == output TS** (`ABC42`). Ini pertama kali jalur ini lolos kompilasi.
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| Rust dikompilasi `rustc` | **status 0** (lolos) |
+| Output runtime Rust == output TS | **identik** (`ABC42`) |
+| `bun test tests/` method-chain | **199 pass, 0 fail** (197 + 2 baru) |
+| Output sql-builder byte-for-byte | **identik** (verify hash, build lokal + swap dist) |
+| `bun test tests/ --parallel=1` sql-builder | 98 pass, 53 skip, 0 fail |
+| `bunx tsc --noEmit` method-chain | bersih |
+
+**Friksi baru yang HANYA muncul saat benar-benar dikompilasi** (di atas temuan Fase 4c):
+
+1. **`forCounter` tidak punya padanan di Rust.** Algoritma meng-hardcode header C-style
+   `for (init; cond; update)`; Rust hanya punya `for … in` dan `loop`. Ini di **algoritma**, jadi
+   memperbaikinya menyentuh *semua* bahasa → butuh hook emitter (seperti `appendBlock` di Fase 4b).
+2. **`localFunction` yang memutasi variabel luar tidak bisa jadi closure Rust.** Pola
+   `pushSql`/`pushW` di `parse-body.ts` (`setVariable("sql", bufAppend("sql", …))` di dalam local
+   function) menuntut capture `&mut` — tidak ada tanpa `RefCell`. Ini bukan sekadar emitter.
+3. **Literal integer ≠ float.** `lt::number(0)` gagal E0308; runtime harus generik
+   `number<N: Into<f64>>`. Halus tapi memblokir kompilasi.
+4. **`Value` tidak iterable.** `forEach` harus lewat `lt::array_items(&v)` (spike memakai
+   `expr.iter()`, yang tidak pernah bisa dikompilasi — jadi probe 4c sebenarnya menyesatkan).
+5. **Paren `if (...)` di-hardcode di algoritma** → warning `unused_parens` di Rust.
+6. **Entri bahasa yang hilang tidak error.** Record `{ typescript, c }` untuk bahasa ke-3 diam-diam
+   dirender jadi literal `undefined` (bukan throw). Footgun nyata saat mem-port `parse-body.ts`.
+
+**Permukaan port `parse-body.ts` untuk Rust (terukur):**
+
+- 1 `addStatements` preamble + 3 `addVariable` + 1 `addStatements` bridge = **6 record per-bahasa**
+  yang harus diberi entri `rust`.
+- `cPreamble` (**~99 baris** raw C) + `cBridge` (**~37 baris**) harus ditulis ulang sebagai
+  `rustPreamble`/`rustBridge` — dan bridge-nya bergantung pada **model Rust** (builder/chain/arg).
+- Body `parse` yang di-generate ≈ **2.585 baris** (C header 5.605 − mulai `parse_impl` di L3.020);
+  model + runtime C sisanya ≈ **3.020 baris**.
+
+**Biaya 1 bahasa statis (terukur + estimasi):**
+
+| Komponen | LOC |
+|---|---|
+| `rustEmitter` | 181 (vs Go 151, C ~75) |
+| runtime `lt.rs` | 482 |
+| tes conformance end-to-end | 148 |
+| per-bahasa raw di `parse-body` (preamble+bridge) | ~137 (C) → perlu versi Rust |
+| model/API bahasa target | ~3.000 (dari C) — **belum dibangun untuk Rust** |
+
+**Keputusan:**
+
+- Untuk **custom function `parse`**, jalur LT→Rust **terbukti bekerja** (kompilasi + output sama)
+  hanya dengan emitter + runtime — **tanpa** menyentuh `parse-body.ts` untuk subset yang diuji.
+- Tetapi port **lengkap** `parse-body` ke Rust menuntut **3 hal non-emitter**: (a) perbaikan
+  algoritma untuk `forCounter` + capture mutable, (b) menulis ulang preamble/bridge per-bahasa,
+  (c) membangun model Rust (~3k LOC). Inilah biaya sesungguhnya bahasa statis.
+- **Konfirmasi hipotesis:** dinamis murah (native dict/list/str, runtime ≈ nol), statis mahal
+  (enum `Value` + runtime + ownership). Urutan tetap: **dinamis dulu, statis belakangan**.
+- **Rust/Go/C++/Kotlin/Swift: tunda** sampai ada permintaan nyata, dan kerjakan hanya bersama
+  **Fase 3 (IR kanonik)** — karena `parse-body.ts` ternyata hanya ~90% netral: preamble/bridge-nya
+  per-bahasa raw, dan beberapa konstruk memaksa perubahan algoritma yang menyentuh semua bahasa.
+- **Langkah berikutnya yang benar:** spike **Python** (bahasa dinamis) untuk mengonfirmasi angka
+  "murah", lalu putuskan roadmap. Bahasa dinamis tidak butuh `Value` enum maupun bridge ownership.
