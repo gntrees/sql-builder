@@ -5,7 +5,7 @@
     "": {
       "name": "@gntrees/sql-builder",
       "dependencies": {
-        "@gntrees/method-chain": "^0.0.9",
+        "@gntrees/method-chain": "^0.0.10",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -14,7 +14,7 @@
     },
   },
   "packages": {
-    "@gntrees/method-chain": ["@gntrees/method-chain@0.0.9", "http://localhost:4873/@gntrees/method-chain/-/method-chain-0.0.9.tgz", { "dependencies": { "prettier": "^3.8.3" }, "peerDependencies": { "typescript": "^5" } }, "sha512-Qd3RR35YKjUSWm0+LJ5OgMQa/dAs0nZwIumQcXITC5Z0nU3UcliVTuGnE9gZq4Mpi4sxif3OHSZZEUR/7j1PdQ=="],
+    "@gntrees/method-chain": ["@gntrees/method-chain@0.0.10", "http://localhost:4873/@gntrees/method-chain/-/method-chain-0.0.10.tgz", { "dependencies": { "prettier": "^3.8.3" }, "peerDependencies": { "typescript": "^5" } }, "sha512-8Sn6vlx2JLu81LXfdbNAlJXK/w1FxxrPszzQSXk/gGVd5Yaq9Dd8YR/6EjRCtI1lrjAyOCWPPVrIbxW0yVn1CA=="],
 
     "@types/bun": ["@types/bun@1.4.2", "", { "dependencies": { "bun-types": "1.4.2" } }, "sha512-GimotNn7+ZV0uVArItBbriZsR1oNf0+WTzPkdcFrzShI7k2norL0uzEaJT8T33dWr7O/c9ZDuAFQrctKCi72oQ=="],
 

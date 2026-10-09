@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -191,14 +191,15 @@ function buildParser(): LT {
         typescript: ["const root: any = this.getSchema();"],
         c: [cPreamble],
         python: [pythonPreamble],
+        javascript: ["const root = this.getSchema();"],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -885,9 +886,12 @@ const parserChain = buildParser().addStatements({
     typescript: [tsBridge],
     c: [cBridge],
     python: pythonBridge,
+    // The TS bridge is already valid JavaScript (no type annotations).
+    javascript: [tsBridge],
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     ...createEmitters(),
     python: pythonEmitter,
+    javascript: jsEmitter,
 });
