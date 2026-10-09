@@ -108,6 +108,7 @@ typedef struct ParseResult {
     size_t paramCount;
     ParseParam *param;
 } ParseResult;`,
+            python: "# parse() returns a dict: { \"sql\": str, \"sqlWithParam\": str, \"param\": list }",
         },
         definitions: [
             {
@@ -168,12 +169,14 @@ typedef struct ParseResult {
                                 name: "parse",
                                 arguments: [],
                                 body: {
-                                    typescript: sqlBuilderParseBody.typescript,
-                                    c: sqlBuilderParseBody.c,
+                                    typescript: sqlBuilderParseBody.typescript!,
+                                    c: sqlBuilderParseBody.c!,
+                                    python: sqlBuilderParseBody.python!,
                                 },
                                 return: {
                                     typescript: "ParseResult",
                                     c: "ParseResult",
+                                    python: "dict",
                                 },
                             },
                         },
@@ -192,6 +195,6 @@ typedef struct ParseResult {
 };
 
 export const sqlBuilderConfig: ConfigType = {
-    languages: ["typescript", "c"],
+    languages: ["typescript", "c", "python"],
     folderName: "generated",
 };

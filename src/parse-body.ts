@@ -1,4 +1,4 @@
-import { linguaTungga } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -177,18 +177,28 @@ const cBridge = String.raw`
 const tsBridge =
     "return { sql: sql.trim(), sqlWithParam: wsql.trim(), param: params.map((p) => p.string ? p.string.value : p.number ? p.number.value : p.boolean ? p.boolean.value : null) };";
 
+// Python is dynamic: the host object already *is* the schema dict, so the
+// preamble is trivial (no struct marshalling like C). The bridge extracts the
+// param values from the wrapped `{string|number|boolean: {value}}` entries.
+const pythonPreamble = "root = self.get_schema()";
+const pythonBridge = [
+    `_param = lambda p: (lt.get(p, "string") or lt.get(p, "number") or lt.get(p, "boolean") or {"value": None})["value"]`,
+    `return {"sql": sql.strip(), "sqlWithParam": wsql.strip(), "param": [_param(p) for p in params]}`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
         c: [cPreamble],
+        python: [pythonPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -871,8 +881,13 @@ function buildParser(): LT {
     return c;
 }
 
-const parserChain = buildParser();
+const parserChain = buildParser().addStatements({
+    typescript: [tsBridge],
+    c: [cBridge],
+    python: pythonBridge,
+});
 
-export const sqlBuilderParseBody = await parserChain
-    .addStatements({ typescript: [tsBridge], c: [cBridge] })
-    .generate();
+export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
+    ...createEmitters(),
+    python: pythonEmitter,
+});
