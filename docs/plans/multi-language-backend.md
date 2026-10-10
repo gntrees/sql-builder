@@ -1756,4 +1756,37 @@ dipisah — `Lt.number` menormalkan integral double ke `int`, `asString(10.0) ==
 **Status `generateProject` penuh: 14 bahasa** (TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#,
 Kotlin, Swift, Rust, **Dart**); `parse`: 14 bahasa.
 
-**Berikutnya:** Scala (resep JVM/Java), lalu R (resep dinamis/Python).
+**Fase 26 — hasil (Scala selesai, bahasa #15):**
+
+| Gate | Hasil |
+|---|---|
+| `scala backend` (method-chain): schema Scala == TS (query + property + copy + customFunction) | **identik** |
+| `scala-e2e` (method-chain): program LT -> Scala kompilasi + jalan == TS | **lolos** |
+| `scala-parse` (sql-builder): `parse()` Scala == TS (9 kasus) | **lolos** |
+| `scalac` library hasil generate | **0 error** |
+| `bunx tsc --noEmit` (kedua repo) | bersih |
+| `parse` + `parse-c` (sql-builder) | **57 pass** |
+
+**Artefak (method-chain, branch `multi-language-backend`):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/scala/base-types.scala` | 11 | `trait Structure` |
+| `core/base/scala/base-utils.scala` | 291 | port `base-utils.kt` (`object Mc`) |
+| `core/base/scala/lt.scala` | 373 | runtime `Lt.*` + `LoopContinue`/`LoopBreak` |
+| `core/core-scala.ts` | 333 | generator |
+| `core/backends/scala.ts` | 28 | entri `LanguageBackend` |
+| `core/lingua-tungga/lingua-tungga-scala-emitter.ts` | 203 | emitter LT |
+| `tests/scala-backend.test.ts` + `tests/scala-e2e.test.ts` | 197 + 178 | gate |
+
+**Friksi Scala nyata:** (1) non-local return di lambda dihapus (Scala 3) -> local function
+jadi nested `def` + registrasi `__fns("name")`; (2) tak ada `break`/`continue` -> diemulasi
+`LoopContinue`/`LoopBreak` (`ControlThrowable`) yang membungkus badan loop (perlu saat wiring
+`parse`, karena `parse` memakai satu `continue`); (3) `mkString` arg-order beda dari Kotlin
+`joinToString`; (4) `in`/`as` bukan keyword Scala (tak di-escape), `with` keyword;
+(5) plain (non-`s`) string tak meng-interpolasi `$` (tak perlu escape).
+
+**Status `generateProject` penuh: 15 bahasa** (TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#,
+Kotlin, Swift, Rust, Dart, **Scala**); `parse`: 15 bahasa.
+
+**Berikutnya:** R (resep dinamis/Python) — Wave 4 terakhir.
