@@ -1552,3 +1552,50 @@ untuk `parse`. Backend penuh perlu:
 Kotlin, Swift).
 - Opsional: wiring Rust/C++ ke `sql-builder.project.ts` (agar sql-builder men-generate 13 bahasa).
 - Semua gate hijau; `tsc` bersih; output 11 bahasa lama tidak berubah.
+
+## 40. Fase 22 — C++ full backend (`generateProject`, bahasa ke-12 penuh)
+
+Sesuai rencana §39: C++ diselesaikan lebih dulu (resep "static GC" — C++ punya kelas +
+exception, jadi paling dekat ke Java/Kotlin). `lt.hpp` (runtime `parse`) sudah ada.
+
+**Friksi khas C++ (yang tidak muncul di Java/Kotlin):**
+
+1. **Tidak ada tipe universal.** LT value = `lt::Value` (tagged union). Tapi argumen
+   *structure-call* adalah sebuah builder, yang bukan `lt::Value`. Solusi: tambah `Kind::Structure`
+   + anggota `Structure*` + `lt::structure(&builder)`; `normalize_argument_structure_call` membaca
+   `arg.structure->getSchema()`. `Structure` juga dapat `kebabName()` (untuk `copy`).
+2. **Fluent method menerima `std::vector<lt::Value> __a = {}`** (analog `Object... __a` di Java);
+   pemanggil menulis `b.select({...})`, `b.limit({lt::number(10)})`.
+3. **Keyword `and`/`or`/`not`/`delete`** → `and_`/`or_`/`not_`/`delete_`.
+4. **Array = value type** → `functionCall` ditambahkan ke `values` sebelum di-box (pola Kotlin/Swift);
+   `apply_copies` memutasi in-place via helper `map_ref`.
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/cpp/base-types.hpp` | 11 | `struct Structure` |
+| `core/base/cpp/base-utils.hpp` | ~300 | port `base-utils.java` (+ `normalize_argument_structure_call`, `copy`) |
+| `core/core-cpp.ts` | ~330 | generator |
+| `core/backends/cpp.ts` | 24 | entri `LanguageBackend` (`index.hpp` + `lt.hpp`) |
+| `core/base/cpp/lt.hpp` | +11 | `Kind::Structure`, `Structure*`, `lt::structure` |
+| wiring | — | `core.ts`, `registry.ts`, `LanguageType += "cpp"` |
+| `tests/cpp-backend.test.ts` | ~210 | parity TS↔C++ |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `cpp backend` (method-chain): schema C++ == TS (query + property + copy + customFunction) | **identik** |
+| `cpp gate` (parse) masih hijau setelah perubahan `lt.hpp` | **lolos** |
+| `g++ -std=c++17 -O0` kompilasi | **status 0** |
+| `bunx tsc --noEmit` | bersih |
+| `java-backend` + `python-backend` (registry tetap utuh) | **lolos** |
+
+**Biaya terukur C++ penuh:** base-types 11 + base-utils ~300 + generator ~330 + backend 24 +
+tambahan runtime 11 ≈ **~680 LOC** (di luar `lt.hpp` yang sudah ada).
+
+**Status `generateProject` penuh: 12 bahasa** — TS, C, **C++**, Python, JS, PHP, Ruby, Java, Go,
+C#, Kotlin, Swift. Parse-only: **Rust** saja.
+
+**Berikutnya:** Fase 23 — Rust full backend (perencanaan di §39).
