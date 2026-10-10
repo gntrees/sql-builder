@@ -1599,3 +1599,53 @@ tambahan runtime 11 ≈ **~680 LOC** (di luar `lt.hpp` yang sudah ada).
 C#, Kotlin, Swift. Parse-only: **Rust** saja.
 
 **Berikutnya:** Fase 23 — Rust full backend (perencanaan di §39).
+
+## 41. Fase 23 — Rust full backend (`generateProject`, bahasa ke-13 penuh)
+
+Sesuai rencana §39: Rust diselesaikan terakhir (tier tersulit). Runtime `lt.rs` (591 LOC) sudah ada
+dari `parse`.
+
+**Friksi khas Rust (paling banyak dari semua bahasa):**
+
+1. **Tidak ada tipe universal.** LT value = `lt::Value` enum. Argumen *structure-call* (builder)
+diwakili oleh **schema builder** itu sendiri (`builder.get_schema()`);
+`try_normalize_argument_structure_call` membaca `schema.schema.chain`.
+2. **Tidak ada exception.** Resolusi `union` butuh "coba tiap tipe": `try_normalize_argument`
+mengembalikan `Result<Value, String>`; `normalize_argument` membungkusnya dengan `panic!`
+(konsisten dengan `throwError` emitter Rust).
+3. **Keyword `in`/`as`/`where`** → `in_`/`as_`/`where_`.
+4. **`use` tidak diwariskan ke submodule** → `pub mod mc` perlu `use crate::lt;` + `use super::Structure;`.
+5. **`index.rs` adalah modul** (bukan crate root) → consumer mendeklarasikan `mod lt;` + `mod index;`
+(gate memakai `#[path = "index.rs"] mod index; #[path = "lt.rs"] mod lt;`).
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/rust/base-types.rs` | 8 | `pub trait Structure` |
+| `core/base/rust/base-utils.rs` | ~330 | port `base-utils.java` (`pub mod mc`) |
+| `core/core-rust.ts` | ~300 | generator |
+| `core/backends/rust.ts` | 24 | entri `LanguageBackend` (`index.rs` + `lt.rs`) |
+| wiring | — | `core.ts`, `registry.ts`, `LanguageType += "rust"` |
+| `tests/rust-backend.test.ts` | ~200 | parity TS↔Rust |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `rust backend` (method-chain): schema Rust == TS (query + property + copy + customFunction) | **identik** |
+| `rust gate` (parse) masih hijau | **lolos** |
+| `rustc --edition 2021` kompilasi | **status 0** |
+| `bunx tsc --noEmit` | bersih |
+| `cpp-backend` + `python-backend` (registry tetap utuh) | **lolos** |
+
+**Biaya terukur Rust penuh:** base-types 8 + base-utils ~330 + generator ~300 + backend 24 ≈
+**~660 LOC** (di luar `lt.rs` yang sudah ada) — sebanding C++ (~680), meski friksinya paling banyak.
+
+**Status `generateProject` penuh: 13 bahasa** — TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#,
+Kotlin, Swift, **Rust**. **Tidak ada lagi bahasa parse-only.**
+
+**Fase 22–23 selesai → "core 13" (§18) lengkap.**
+
+**Berikutnya (bila diminta):** wiring C++/Rust ke `sql-builder.project.ts` (agar sql-builder
+men-generate 13 bahasa), Wave 4 breadth (Dart/Scala/R), atau konsolidasi (merge → `main`, rilis, CI).
