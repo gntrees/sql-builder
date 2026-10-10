@@ -1649,3 +1649,31 @@ Kotlin, Swift, **Rust**. **Tidak ada lagi bahasa parse-only.**
 
 **Berikutnya (bila diminta):** wiring C++/Rust ke `sql-builder.project.ts` (agar sql-builder
 men-generate 13 bahasa), Wave 4 breadth (Dart/Scala/R), atau konsolidasi (merge → `main`, rilis, CI).
+
+## 42. Fase 24 — Wiring C++ & Rust ke `sql-builder` (13 bahasa)
+
+Melengkapi wiring (§38): C++ dan Rust kini punya backend penuh (§40/§41), jadi ditambahkan ke
+definisi proyek sql-builder.
+
+**Perubahan sql-builder:**
+
+- `src/sql-builder.project.ts`: `beforeScript`, `customFunction.body` (`sqlBuilderParseBody.cpp`/`.rust`),
+  `customFunction.return` (keduanya `lt::Value`), dan `languages` (kini **13 bahasa**).
+- `generated/gntrees-sql-builder/{cpp,rust}/`: library penuh (`index.hpp`/`index.rs` + runtime).
+- `@gntrees/method-chain` → `^0.0.31`.
+
+**Perbaikan preamble C++:** method `parse` C++ memanggil `this->getSchema()` (camelCase, seperti
+Java/Kotlin/Swift) — preamble `cppPreamble` + harness `cpp-parse` diselaraskan (sebelumnya
+`get_schema`).
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| library C++ hasil generate (`g++ -O0`) kompilasi + `parse()` | **identik TS** |
+| library Rust hasil generate (`rustc`) kompilasi + `parse()` | **identik TS** |
+| `cpp-parse` + `rust-parse` + `parse` (sql-builder) | **56 pass, 0 fail** |
+| output 11 bahasa lama | **tidak berubah** |
+
+**Status akhir:** `sql-builder` men-generate **13 bahasa** (TS, C, C++, Python, JS, PHP, Ruby, Java,
+Go, C#, Kotlin, Swift, Rust).
