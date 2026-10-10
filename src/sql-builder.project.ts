@@ -115,6 +115,8 @@ typedef struct ParseResult {
             java: "// parse() returns a Map<String, Object>: { \"sql\": String, \"sqlWithParam\": String, \"param\": List }",
             go: "// parse() returns a map[string]any: {\"sql\": string, \"sqlWithParam\": string, \"param\": []any}",
             csharp: "// parse() returns an LtObject: { \"sql\": string, \"sqlWithParam\": string, \"param\": List<object> }",
+            kotlin: "// parse() returns a Map<String, Any?>: { \"sql\": String, \"sqlWithParam\": String, \"param\": List }",
+            swift: "// parse() returns an LtMap: { \"sql\": String, \"sqlWithParam\": String, \"param\": [Any?] }",
         },
         definitions: [
             {
@@ -184,6 +186,8 @@ typedef struct ParseResult {
                                     java: sqlBuilderParseBody.java!,
                                     go: sqlBuilderParseBody.go!,
                                     csharp: sqlBuilderParseBody.csharp!,
+                                    kotlin: sqlBuilderParseBody.kotlin!,
+                                    swift: sqlBuilderParseBody.swift!,
                                 },
                                 return: {
                                     typescript: "ParseResult",
@@ -195,6 +199,8 @@ typedef struct ParseResult {
                                     java: "Map<String, Object>",
                                     go: "any",
                                     csharp: "object",
+                                    kotlin: "MutableMap<String, Any?>",
+                                    swift: "LtMap",
                                 },
                             },
                         },
@@ -213,6 +219,6 @@ typedef struct ParseResult {
 };
 
 export const sqlBuilderConfig: ConfigType = {
-    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp"],
+    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp", "kotlin", "swift"],
     folderName: "generated",
 };
