@@ -1412,3 +1412,48 @@ Kotlin, **Swift**. Parse-only: Rust, C++.
 
 **Berikutnya (bila diminta):** Rust/C++ full backend (biaya ~3.000 LOC masing-masing — tunda sampai
 ada permintaan), atau wiring Kotlin/Swift ke `sql-builder.project.ts`.
+
+## 38. Fase 21 — Wiring Kotlin & Swift ke `sql-builder` + fix format angka
+
+`parse-body.ts` sudah punya entri kotlin/swift sejak Fase 17/18; yang kurang hanya
+`sql-builder.project.ts`. Setelah method-chain merilis backend penuh (§36/§37), kotlin/swift
+ditambahkan ke definisi proyek.
+
+**Perubahan sql-builder:**
+
+- `src/sql-builder.project.ts`: `beforeScript` (komentar bentuk return), `customFunction.body`
+  (`sqlBuilderParseBody.kotlin`/`.swift`), `customFunction.return`
+  (kotlin `MutableMap<String, Any?>`, swift `LtMap`), dan `languages += "kotlin","swift"`.
+- `generated/gntrees-sql-builder/{kotlin,swift}/`: library penuh hasil `bun run generate`
+  (`index.kt`/`index.swift` + runtime `Lt.kt`/`Lt.swift`).
+- `@gntrees/method-chain` → `^0.0.30` (publish via verdaccio).
+
+**Temuan penting — bug format angka (Kotlin & Swift):**
+
+`normalize_argument` menyimpan angka sebagai `Double` (sama seperti Java), tapi `asString`
+Kotlin/Swift **tidak** menormalkan double integral → `limit(10)` dirender `"10.0"`, sedangkan
+TS/Java `"10"`. Java aman karena `to_string` menormalkan (`d == Math.rint(d)`); Kotlin/Swift tidak.
+
+Bug ini lolos dari tiga gate:
+
+- gate `*-backend` membandingkan schema lewat JSON (`10.0 == 10`),
+- harness `*-parse` memberi schema sebagai JSON (angka integral jadi `Long`),
+- gate `*-e2e` memakai `Lt.number` (selalu menormalkan ke Long).
+
+**Fix:** samakan `asString` Kotlin/Swift dengan `to_string` Java (double integral → string integer),
++ tambahkan assertion regression `Lt.asString(10.0) == "10"` di gate `kotlin-backend`/`swift-backend`.
+Diverifikasi terhadap library Java (merender "10") dan dengan menjalankan library Kotlin/Swift
+hasil generate end-to-end.
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| library Kotlin hasil generate (`K2JVMCompiler`) kompilasi + `parse()` | **identik TS** (`LIMIT 10`) |
+| library Swift hasil generate (`swiftc -Onone`) kompilasi + `parse()` | **identik TS** (`LIMIT 10`) |
+| `kotlin-parse` + `swift-parse` + `parse` + `parse-differential` (sql-builder) | **96 pass, 0 fail** |
+| `kotlin-backend` + `swift-backend` (guard baru) | **lolos** |
+| output TS/C/Python/JS/PHP/Ruby/Java/Go/C# | **tidak berubah** |
+
+**Status akhir:** `generateProject` penuh 11 bahasa; `sql-builder` kini men-generate 11 bahasa
+(termasuk Kotlin & Swift). Parse-only: Rust, C++.
