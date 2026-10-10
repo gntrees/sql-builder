@@ -119,6 +119,7 @@ typedef struct ParseResult {
             swift: "// parse() returns an LtMap: { \"sql\": String, \"sqlWithParam\": String, \"param\": [Any?] }",
             cpp: "// parse() returns an lt::Value map: { \"sql\": string, \"sqlWithParam\": string, \"param\": array }",
             rust: "// parse() returns an lt::Value map: { \"sql\": string, \"sqlWithParam\": string, \"param\": array }",
+            dart: "// parse() returns a Map<String, dynamic>: { \"sql\": String, \"sqlWithParam\": String, \"param\": List }",
         },
         definitions: [
             {
@@ -192,6 +193,7 @@ typedef struct ParseResult {
                                     swift: sqlBuilderParseBody.swift!,
                                     cpp: sqlBuilderParseBody.cpp!,
                                     rust: sqlBuilderParseBody.rust!,
+                                    dart: sqlBuilderParseBody.dart!,
                                 },
                                 return: {
                                     typescript: "ParseResult",
@@ -207,6 +209,7 @@ typedef struct ParseResult {
                                     swift: "LtMap",
                                     cpp: "lt::Value",
                                     rust: "lt::Value",
+                                    dart: "dynamic",
                                 },
                             },
                         },
@@ -225,6 +228,6 @@ typedef struct ParseResult {
 };
 
 export const sqlBuilderConfig: ConfigType = {
-    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp", "kotlin", "swift", "cpp", "rust"],
+    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp", "kotlin", "swift", "cpp", "rust", "dart"],
     folderName: "generated",
 };

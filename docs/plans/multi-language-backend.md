@@ -1677,3 +1677,83 @@ Java/Kotlin/Swift) — preamble `cppPreamble` + harness `cpp-parse` diselaraskan
 
 **Status akhir:** `sql-builder` men-generate **13 bahasa** (TS, C, C++, Python, JS, PHP, Ruby, Java,
 Go, C#, Kotlin, Swift, Rust).
+
+## 43. Rencana lanjutan — Fase 25+: Wave 4 breadth (Dart, Scala, R)
+
+"Core 13" (§18) sudah lengkap. Wave 4 menambahkan bahasa paling sering dipakai di luar set itu,
+memakai ulang resep yang sudah stabil (tidak ada emitter/IR baru).
+
+**Target:** **Dart**, **Scala**, **R**.
+
+| Bahasa | Pola (reuse) | Alasan |
+|---|---|---|
+| **Dart** | static GC (Kotlin/Swift) | kelas + `dynamic` top type; `Map` = insertion-ordered; closure capture by reference |
+| **Scala** | static JVM (Java) | kelas + exception; JVM (bisa reuse gaya `Lt.java`) |
+| **R** | dynamic (Python) | `list`/`environment`; tanpa `Value` enum |
+
+**Urutan:** Dart → Scala → R (paling relevan + paling dekat resepnya lebih dulu).
+
+**Biaya per bahasa** (revisi §39): emitter ~180 + base-types ~10 + base-utils ~300 +
+generator ~330 + backend ~27 + runtime ~330 + wiring ~15 + test ~200 ≈ **~1.000–1.300 LOC**.
+
+**Gate per bahasa:**
+
+| Gate | Harus |
+|---|---|
+| method-chain `<lang>-backend` | schema `<lang>` == TS (query + property + copy + customFunction) |
+| method-chain `<lang>-e2e` | output emitter == TS |
+| sql-builder `<lang>-parse` | output `parse` == TS |
+| kompilasi toolchain asli | status 0 (tanpa flag optimasi) |
+| `bunx tsc --noEmit` | bersih (kedua repo) |
+
+**Fase 25 — Dart full backend (detail)**
+
+- `core/base/dart/base-types.dart` — `abstract class Structure { Map<String, dynamic> getSchema(); }`.
+- `core/base/dart/base-utils.dart` — port `base-utils.kt`; `Mc` sebagai top-level functions
+  (Dart tak punya `object`); `Map<String, dynamic>` insertion-ordered.
+- `core/base/dart/lt.dart` — runtime `lt` (`Lt.*`) untuk custom function.
+- `core/core-dart.ts` — generator (port `core-kotlin.ts`).
+- `core/backends/dart.ts` + entri `registry.ts` + `core.ts` + `LanguageType += "dart"`.
+- `tests/dart-backend.test.ts` — parity TS↔Dart.
+- wiring sql-builder: `parse-body.ts`, `sql-builder.project.ts`, `tests/dart-parse.test.ts`.
+
+**Friksi khas Dart yang diperkirakan:** tak ada `vararg` (pakai `List<dynamic> __a`);
+`int` vs `double` (Dart memisahkan keduanya — normalisasi integral double seperti Kotlin/Swift);
+tak ada `object` (fungsi top-level / kelas util); keyword (`in`, `is`, `class`, `extends`, ...).
+
+**Fase 25 — hasil (Dart selesai, bahasa #14):**
+
+| Gate | Hasil |
+|---|---|
+| `dart backend` (method-chain): schema Dart == TS (query + property + copy + customFunction) | **identik** |
+| `dart-e2e` (method-chain): program LT -> Dart kompilasi + jalan == TS (`ABC32142`) | **lolos** |
+| `dart-parse` (sql-builder): `parse()` Dart == TS (9 kasus) | **lolos** |
+| `dart analyze` library hasil generate | **0 error** (18 warning `dead_code`, sama seperti Kotlin) |
+| `bunx tsc --noEmit` (kedua repo) | bersih |
+| `parse` + `parse-c` (sql-builder) | **57 pass** |
+
+**Artefak (method-chain, branch `multi-language-backend`):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/dart/base-types.dart` | 11 | `abstract class Structure` |
+| `core/base/dart/base-utils.dart` | 309 | port `base-utils.kt` (fungsi top-level) |
+| `core/base/dart/lt.dart` | 394 | runtime `Lt.*` |
+| `core/core-dart.ts` | 323 | generator |
+| `core/backends/dart.ts` | 27 | entri `LanguageBackend` |
+| `core/lingua-tungga/lingua-tungga-dart-emitter.ts` | 183 | emitter LT |
+| wiring | — | `core.ts`, `registry.ts`, `LanguageType += "dart"`, `index.ts` |
+| `tests/dart-backend.test.ts` | 189 | parity TS<->Dart |
+| `tests/dart-e2e.test.ts` | 179 | emitter e2e |
+
+**Friksi Dart nyata:** (1) `;` wajib — `statementTerminator = ";"`; (2) `int` vs `double`
+dipisah — `Lt.number` menormalkan integral double ke `int`, `asString(10.0) == "10"`;
+(3) tanpa `vararg` — method pakai `List<dynamic> __a`, `structureFunctionCall` mengemas arg;
+(4) tanpa `object` — runtime jadi fungsi top-level; `Lt.toString` bentrok -> `asString`;
+(5) **`$` interpolasi** — semua literal string harus meng-escape `$` (helper `dartString`)
+   — ini muncul saat wiring `parse` dan diperbaiki di 0.0.33; (6) keyword `in`/`is`/`with`/`as`.
+
+**Status `generateProject` penuh: 14 bahasa** (TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#,
+Kotlin, Swift, Rust, **Dart**); `parse`: 14 bahasa.
+
+**Berikutnya:** Scala (resep JVM/Java), lalu R (resep dinamis/Python).

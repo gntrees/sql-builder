@@ -1,4 +1,4 @@
-import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter, rustEmitter, cppEmitter, kotlinEmitter, swiftEmitter } from "@gntrees/method-chain";
+import { linguaTungga, generateWith, createEmitters, pythonEmitter, jsEmitter, phpEmitter, rubyEmitter, javaEmitter, goEmitter, csharpEmitter, rustEmitter, cppEmitter, kotlinEmitter, swiftEmitter, dartEmitter } from "@gntrees/method-chain";
 
 type LT = any;
 
@@ -259,6 +259,15 @@ const swiftBridge = [
     `return Lt.map([("sql", Lt.trim(sql)), ("sqlWithParam", Lt.trim(wsql)), ("param", Lt.params(params))])`,
 ];
 
+// Dart has a universal top type (`dynamic`) and closures capture (and may mutate)
+// outer variables, so it uses the Go/C#/C++/Kotlin/Swift recipe: real variables plus
+// a shared `__fns` table (closures, so `return` is allowed).
+const dartPreamble =
+    "dynamic root = this.getSchema();\nfinal __fns = <String, dynamic Function(List<dynamic>)>{};";
+const dartBridge = [
+    `return Lt.map({"sql": Lt.trim(sql), "sqlWithParam": Lt.trim(wsql), "param": Lt.params(params)});`,
+];
+
 function buildParser(): LT {
     let c = lt().addStatements({
         typescript: ["const root: any = this.getSchema();"],
@@ -274,14 +283,15 @@ function buildParser(): LT {
         cpp: [cppPreamble],
         kotlin: [kotlinPreamble],
         swift: [swiftPreamble],
+        dart: [dartPreamble],
     });
 
     c = c
         .addVariable("dialect", "")
         .addVariable("quote", "")
-        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()", swift: "Lt.bufNew()" })
-        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()", swift: "Lt.bufNew()" })
-        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()", rust: "lt::list_new()", cpp: "lt::list_new()", kotlin: "Lt.listNew()", swift: "Lt.listNew()" })
+        .addVariable("sql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()", swift: "Lt.bufNew()", dart: "Lt.bufNew()" })
+        .addVariable("wsql", { typescript: "([] as any)", c: "lt_buf_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.bufNew()", go: "ltBufNew()", csharp: "LT.BufNew()", rust: "lt::buf_new()", cpp: "lt::buf_new()", kotlin: "Lt.bufNew()", swift: "Lt.bufNew()", dart: "Lt.bufNew()" })
+        .addVariable("params", { typescript: "([] as any[])", c: "lt_list_new()", python: "[]", javascript: "[]", php: "[]", ruby: "[]", java: "Lt.listNew()", go: "ltListNew()", csharp: "LT.ListNew()", rust: "lt::list_new()", cpp: "lt::list_new()", kotlin: "Lt.listNew()", swift: "Lt.listNew()", dart: "Lt.listNew()" })
         .addVariable("orderSql", "")
         .addVariable("orderW", "")
         .addVariable("hasOrder", false)
@@ -978,6 +988,7 @@ const parserChain = buildParser().addStatements({
     cpp: cppBridge,
     kotlin: kotlinBridge,
     swift: swiftBridge,
+    dart: dartBridge,
 });
 
 export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
@@ -993,4 +1004,5 @@ export const sqlBuilderParseBody = generateWith(parserChain.getSchema(), {
     cpp: cppEmitter,
     kotlin: kotlinEmitter,
     swift: swiftEmitter,
+    dart: dartEmitter,
 });
