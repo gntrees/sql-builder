@@ -1457,3 +1457,98 @@ hasil generate end-to-end.
 
 **Status akhir:** `generateProject` penuh 11 bahasa; `sql-builder` kini men-generate 11 bahasa
 (termasuk Kotlin & Swift). Parse-only: Rust, C++.
+
+## 39. Rencana lanjutan — Fase 22+: melengkapi Rust & C++ (backend penuh)
+
+### Status
+
+- `generateProject` penuh: **11 bahasa** (TS, C, Python, JS, PHP, Ruby, Java, Go, C#, Kotlin, Swift).
+- **Parse-only: Rust, C++** — emitter + runtime (`lt.rs`/`lt.hpp`) + entri `parse-body.ts` sudah ada;
+yang kurang hanya backend `generateProject`.
+- `sql-builder` men-generate 11 bahasa.
+- Branch `multi-language-backend` belum di-merge ke `main` (30+ commit).
+
+### Mengapa Rust & C++
+
+Hanya dua bahasa yang masih parse-only. Menyelesaikannya menutup "core 13" (§18) menjadi
+**13/13 backend penuh**. Keduanya juga sudah punya runtime hasil kerja `parse`, jadi ini
+melanjutkan investasi yang ada, bukan memulai dari nol.
+
+### Estimasi biaya (revisi — lebih murah dari §18)
+
+`lt.rs` (591 LOC) dan `lt.hpp` (544 LOC) **sudah ada**. Jadi sisa per bahasa:
+
+| Komponen | LOC |
+|---|---|
+| `base-types.<lang>` | ~15–25 |
+| `base-utils.<lang>` | ~290–380 |
+| `core-<lang>.ts` (generator) | ~320–430 |
+| `backends/<lang>.ts` | ~25 |
+| tambahan runtime `lt.*` | ~40–70 |
+| wiring (`core.ts`/`registry.ts`/`LanguageType`) | ~15 |
+| `tests/<lang>-backend.test.ts` | ~200 |
+
+≈ **~900–1.100 LOC baru per bahasa** (bukan ~3.000 — estimasi §18 dibuat *sebelum* `lt.*` ada).
+Ini sebanding dengan Kotlin (~590) / Swift (~690), hanya ditambah kompleksitas memori/ownership.
+
+### Rekomendasi urutan
+
+1. **Fase 22 — C++ full backend** (risiko rendah: C++ punya kelas + exception → resep sama dengan
+Java/Kotlin; `lt.hpp` sudah ada).
+2. **Fase 23 — Rust full backend** (risiko tinggi: ownership + `Value` enum + thread-local; `lt.rs`
+sudah ada).
+3. Fase 24 — Wave 4 breadth (Dart/Scala/R) bila diminta.
+4. Konsolidasi (merge branch → `main`, rilis, CI) kapan saja.
+
+Alternatif: bila Rust lebih diprioritaskan (lebih banyak dipakai untuk aplikasi DB), tukar urutan
+1↔2 — resepnya sama.
+
+### Fase 22 — C++ full backend (detail)
+
+**Tujuan:** `generateProject` menghasilkan modul C++ utuh (class builder + fluent API) yang
+membangun schema identik dengan TS.
+
+**Resep:** "static GC" (class + locals + `__fns`), sama seperti Java/Kotlin. Nilai LT = `lt::Value`
+(tagged union di `lt.hpp`).
+
+**Artefak:**
+
+- `core/base/cpp/base-types.hpp` — `struct Structure { virtual lt::Value getSchema() = 0; }`.
+- `core/base/cpp/base-utils.hpp` — port `base-utils.java` ke C++ (pakai helper `lt::`).
+- `core/core-cpp.ts` — generator (class, method fluent, property, `customFunction.body.cpp`, init).
+- `core/backends/cpp.ts` — `LanguageBackend` (`index.hpp` + `lt.hpp`).
+- wiring + `tests/cpp-backend.test.ts`.
+
+**Langkah:**
+
+1. Tulis `base-types.hpp` + `base-utils.hpp` (port dari Java; `throw` → `throw std::runtime_error`).
+2. Tulis `core-cpp.ts` (port `core-java.ts`; sintaks C++).
+3. `backends/cpp.ts` + wiring (`LanguageType += "cpp"`, `core.ts`, `registry.ts`).
+4. Gate: `tests/cpp-backend.test.ts` (compile `g++ -O0`, bandingkan schema dengan TS).
+5. Regression: `cpp-e2e` (parse) + `tsc` + backend Java/Kotlin.
+
+**Gate:** schema C++ == TS (query + property + copy + customFunction); `g++ -O0` status 0; parse C++
+masih hijau; `tsc` bersih.
+
+**Risiko:** template literal (`raw`) → `lt::array`/`lt::map` + `__fns`; keyword C++ (`class`,
+`delete`, `new`, `operator`, `template`, …) → escaping; compile lambat → `-O0` + driver tunggal.
+
+### Fase 23 — Rust full backend (detail, ringkas)
+
+**Tantangan khas:** tanpa `any`/GC → `lt::Value` enum; tanpa capture `&mut` → thread-local
+(`lt::set_var`/`get_var`, `lt::def_fn`/`call_fn`, RAII `lt::scope`) — semua sudah ada di `lt.rs`
+untuk `parse`. Backend penuh perlu:
+
+- Struct builder (`pub struct SqlBuilder { schema: lt::Value }`) + method `&self -> Self`.
+- `base-utils.rs` (port; pakai `lt::Value`).
+- `core-rust.ts` (generator; variabel lokal jadi Rust locals via `beginLocalFunction`/`endLocalFunction`).
+- Gate `tests/rust-backend.test.ts` (`rustc`, **tanpa** `-O`).
+
+**Risiko:** ownership/lifetime pada method chain; `Value` `.clone()`; `forCounter` tak didukung.
+
+### Definisi selesai (Fase 22–23)
+
+- `generateProject` penuh **13 bahasa** (TS, C, C++, Python, JS, PHP, Ruby, Java, Go, C#, Rust,
+Kotlin, Swift).
+- Opsional: wiring Rust/C++ ke `sql-builder.project.ts` (agar sql-builder men-generate 13 bahasa).
+- Semua gate hijau; `tsc` bersih; output 11 bahasa lama tidak berubah.
