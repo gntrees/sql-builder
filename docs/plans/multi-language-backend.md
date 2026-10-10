@@ -1357,3 +1357,58 @@ biaya kompilasi Kotlin yang lambat (~70s) hanya dibayar sekali (288s → ~64s).
 
 **Berikutnya (bila diminta):** Swift full backend (kasus termurah berikutnya), lalu Rust/C++
 (biaya ~3.000 LOC — tunda sampai ada permintaan), atau wiring Kotlin ke `sql-builder.project.ts`.
+
+## 37. Fase 20 — Swift full backend (`generateProject`, bahasa ke-11 penuh)
+
+Melanjutkan decision gate Kotlin (§36): Swift adalah kasus termurah berikutnya di tier statis
+(punya `Any?` + closure menangkap `var` by reference). Resep: **static GC**, sama seperti
+Java/Kotlin/Go/C#.
+
+**Empat friksi khas Swift (yang tidak muncul di Kotlin):**
+
+1. **Tidak ada exception.** Java/Kotlin memakai try/catch untuk resolusi `union` ("coba tiap tipe,
+kumpulkan kegagalan"); Go memakai `panic`/`recover`. Swift tak punya keduanya. Solusi: helper
+internal `normalize_argument_throwing` (`throws LtError`) + tipe error `LtError`; API publik
+`normalize_argument` membungkusnya dengan `fatalError` (konsisten dengan `throwError` emitter
+Swift). `normalize_argument_structure_call` yang di-generate juga `throws`.
+2. **Array adalah value type.** `create_schema`/`create_property_call_schema` menambahkan
+`functionCall` ke `values` *sebelum* menaruhnya di `LtMap` (kalau tidak, copy-on-write membuat
+perubahan tak terlihat). `apply_copies` menulis balik via `LtMap.set` (LtMap adalah kelas →
+mutasi terlihat).
+3. **`in`/`as`/`where` adalah keyword** → `in_`/`as_`/`where_` (skema tetap nama asli).
+4. **Variadic Swift menyebar (spread) array `[Any?]`** bila array itu satu-satunya argumen:
+`select(Lt.array([...]))` akan membuat `__a = [...]` (bukan `[[...]]`). Solusi: parameter pertama
+eksplisit + variadic sisanya — `func select(_ __a0: Any? = Lt.MISSING, _ __aRest: Any?...)` lalu
+`let __a = [__a0] + __aRest`. Ini satu-satunya perbedaan signature yang mencolok.
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/swift/base-types.swift` | 11 | `protocol Structure` |
+| `core/base/swift/base-utils.swift` | ~265 | port `base-utils.java` + `normalize_argument_throwing` |
+| `core/core-swift.ts` | ~320 | generator (`final class`, method fluent, property, `customFunction.body.swift`, `enum Init`, escaping keyword) |
+| `core/backends/swift.ts` | 25 | entri `LanguageBackend` (`index.swift` + `Lt.swift`) |
+| `core/base/swift/lt.swift` | +69 | `LtMissing`/`LtError`, `LtMap.set`, `MISSING`/`isMissing`, `asMap`/`asList`/`items`/`json`; `array`/`map` bertipe konkret, `has` → `Bool` |
+| wiring | — | `core.ts`, `registry.ts`, `LanguageType += "swift"` |
+| `tests/swift-backend.test.ts` | ~200 | parity TS↔Swift |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `swift backend` (method-chain): schema Swift == TS (query + property + copy + customFunction) | **identik** |
+| `swift gate` (parse) masih hijau setelah perubahan `lt.swift` | **`ABC32142`** == TS |
+| `swiftc -Onone` kompilasi | **status 0** |
+| `bunx tsc --noEmit` | bersih |
+| `python-backend` (registry tetap utuh) | **lolos** |
+
+**Biaya terukur Swift penuh:** base-types 11 + base-utils ~265 + generator ~320 + backend 25 +
+tambahan runtime 69 ≈ **~690 LOC** (di luar `lt.swift` yang sudah ada). Sedikit di atas Kotlin
+(~590) karena friksi exception/array/variadic — tapi tetap jauh di bawah Rust/C++.
+
+**Status `generateProject` penuh: 11 bahasa** — TS, C, Python, JS, PHP, Ruby, Java, Go, C#,
+Kotlin, **Swift**. Parse-only: Rust, C++.
+
+**Berikutnya (bila diminta):** Rust/C++ full backend (biaya ~3.000 LOC masing-masing — tunda sampai
+ada permintaan), atau wiring Kotlin/Swift ke `sql-builder.project.ts`.
