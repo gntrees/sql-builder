@@ -327,7 +327,7 @@ test("rust parse: generated parse() matches TypeScript for every case", () => {
     writeFileSync(join(dir, "main.rs"), buildSource());
     const bin = join(dir, "main");
 
-    const compile = spawnSync("rustc", ["--edition", "2021", "-O", "-A", "warnings", "-o", bin, join(dir, "main.rs")], {
+    const compile = spawnSync("rustc", ["--edition", "2021", "-A", "warnings", "-o", bin, join(dir, "main.rs")], {
         encoding: "utf8",
     });
     if (compile.status !== 0) {

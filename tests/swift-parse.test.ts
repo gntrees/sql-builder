@@ -246,7 +246,7 @@ test("swift parse: generated parse() matches TypeScript for every case", () => {
     writeFileSync(join(dir, "main.swift"), buildSource());
     const bin = join(dir, "main");
 
-    const compile = spawnSync(swiftc, ["-O", join(dir, "main.swift"), "-o", bin], { encoding: "utf8" });
+    const compile = spawnSync(swiftc, ["-Onone", join(dir, "main.swift"), "-o", bin], { encoding: "utf8" });
     if (compile.status !== 0) {
         throw new Error(`swift parse failed to compile:\n${compile.stderr}`);
     }
