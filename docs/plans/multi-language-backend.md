@@ -1306,3 +1306,54 @@ Ruby, Java, Go, C#, Rust, Kotlin, Swift.
 
 **Berikutnya (bila diminta):** backend `generateProject` penuh untuk Rust/C++/Kotlin/Swift, atau
 bahasa lain (mis. Dart/Scala).
+
+## 36. Fase 19 — Kotlin full backend (`generateProject`, bahasa ke-10 penuh)
+
+Decision gate untuk "Gelombang 3 lanjutan": apakah resep *static GC* yang sudah dipakai `parse`
+bisa diperluas ke backend `generateProject` penuh. Kotlin dipilih sebagai kasus **termurah** di tier
+statis (punya `Any?` + `LinkedHashMap` bawaan; biaya `parse` saja ~490 LOC, terendah).
+
+**Resep:** sama seperti Java (Gelombang 2), bukan thread-local Rust:
+
+- Nilai LT = tipe Kotlin native (`String`/`Long`/`Double`/`Boolean`/`null`/`List<Any?>`/`LinkedHashMap`).
+- Variabel = `var x: Any?`; kelas builder = `class X : Structure`.
+- `Structure.getSchema(): MutableMap<String, Any?>`; runtime umum di `object Mc`.
+- Objek = `LinkedHashMap` (insertion-ordered) → output driver deterministik.
+- **Kotlin mereservasi `in`/`as`** (hard keyword, beda dari Java) → method fluent jadi `in_`/`as_`,
+  sementara nama di schema tetap `in`/`as`.
+
+**Artefak (branch `multi-language-backend`, method-chain):**
+
+| File | LOC | Isi |
+|---|---|---|
+| `core/base/kotlin/base-types.kt` | 11 | `interface Structure` |
+| `core/base/kotlin/base-utils.kt` | ~215 | port `base-utils.java` (`normalize_argument`, `create_schema`, `create_property_call_schema`, `make_copy`, `apply_copies`) |
+| `core/core-kotlin.ts` | ~310 | generator (class, method fluent, property, `customFunction.body.kotlin`, `object Init`, escaping keyword) |
+| `core/backends/kotlin.ts` | 25 | entri `LanguageBackend` (`index.kt` + `Lt.kt`) |
+| `core/base/kotlin/lt.kt` | +33 | tambahan runtime: `MISSING`, `asMap`, `asList`, `items`, `json`; `map`/`array` bertipe konkret, `has` → `Boolean` |
+| wiring | — | `core.ts` (load base), `registry.ts`, `LanguageType += "kotlin"` |
+| `tests/kotlin-backend.test.ts` | ~215 | parity TS↔Kotlin |
+
+**Gate:**
+
+| Gate | Hasil |
+|---|---|
+| `kotlin backend` (method-chain): schema Kotlin == TS (query + property + copy + customFunction) | **identik** |
+| `kotlin gate` (parse) masih hijau setelah perubahan `lt.kt` | **`ABC32142`** == TS |
+| `K2JVMCompiler` kompilasi | **status 0** |
+| `bunx tsc --noEmit` | bersih |
+| `java-backend` + `python-backend` (registry tetap utuh) | **lolos** |
+
+**Biaya terukur Kotlin penuh:** base-types 11 + base-utils ~215 + generator ~310 + backend 25 +
+tambahan runtime 33 ≈ **~590 LOC** (di luar `lt.kt` yang sudah ada) — sebanding Python (~920) dan
+jauh di bawah Rust/C++ (~3.000 LOC model). **Ini memvalidasi bahwa resep static GC bisa diperluas
+dari `parse` ke `generateProject` penuh dengan biaya rendah.**
+
+**Optimasi gate:** driver tunggal mencetak 4 baris (query/property/copy/customFunction) sehingga
+biaya kompilasi Kotlin yang lambat (~70s) hanya dibayar sekali (288s → ~64s).
+
+**Status `generateProject` penuh: 10 bahasa** — TS, C, Python, JS, PHP, Ruby, Java, Go, C#,
+**Kotlin**. Parse-only: Rust, C++, Swift.
+
+**Berikutnya (bila diminta):** Swift full backend (kasus termurah berikutnya), lalu Rust/C++
+(biaya ~3.000 LOC — tunda sampai ada permintaan), atau wiring Kotlin ke `sql-builder.project.ts`.
