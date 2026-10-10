@@ -236,7 +236,7 @@ const rustBridge = [
 // C++ needs a `Value` variant type, but it has no borrow checker and lambdas
 // capture by reference — so it uses the Go/C# recipe: real locals plus a shared
 // `__fns` table for local functions (forward references + recursion).
-const cppPreamble = "lt::Value root = this->get_schema();\nlt::Fns __fns;";
+const cppPreamble = "lt::Value root = this->getSchema();\nlt::Fns __fns;";
 const cppBridge = [
     `return lt::map({{"sql", lt::trim(sql)}, {"sqlWithParam", lt::trim(wsql)}, {"param", lt::params(params)}});`,
 ];

@@ -117,6 +117,8 @@ typedef struct ParseResult {
             csharp: "// parse() returns an LtObject: { \"sql\": string, \"sqlWithParam\": string, \"param\": List<object> }",
             kotlin: "// parse() returns a Map<String, Any?>: { \"sql\": String, \"sqlWithParam\": String, \"param\": List }",
             swift: "// parse() returns an LtMap: { \"sql\": String, \"sqlWithParam\": String, \"param\": [Any?] }",
+            cpp: "// parse() returns an lt::Value map: { \"sql\": string, \"sqlWithParam\": string, \"param\": array }",
+            rust: "// parse() returns an lt::Value map: { \"sql\": string, \"sqlWithParam\": string, \"param\": array }",
         },
         definitions: [
             {
@@ -188,6 +190,8 @@ typedef struct ParseResult {
                                     csharp: sqlBuilderParseBody.csharp!,
                                     kotlin: sqlBuilderParseBody.kotlin!,
                                     swift: sqlBuilderParseBody.swift!,
+                                    cpp: sqlBuilderParseBody.cpp!,
+                                    rust: sqlBuilderParseBody.rust!,
                                 },
                                 return: {
                                     typescript: "ParseResult",
@@ -201,6 +205,8 @@ typedef struct ParseResult {
                                     csharp: "object",
                                     kotlin: "MutableMap<String, Any?>",
                                     swift: "LtMap",
+                                    cpp: "lt::Value",
+                                    rust: "lt::Value",
                                 },
                             },
                         },
@@ -219,6 +225,6 @@ typedef struct ParseResult {
 };
 
 export const sqlBuilderConfig: ConfigType = {
-    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp", "kotlin", "swift"],
+    languages: ["typescript", "c", "python", "javascript", "php", "ruby", "java", "go", "csharp", "kotlin", "swift", "cpp", "rust"],
     folderName: "generated",
 };

@@ -249,7 +249,7 @@ function buildSource(): string {
         "",
         "struct SqlBuilder {",
         "  lt::Value schema;",
-        "  lt::Value get_schema() const { return schema; }",
+        "  lt::Value getSchema() const { return schema; }",
         "  lt::Value parse() const {",
         sqlBuilderParseBody["cpp"]!,
         "  }",
