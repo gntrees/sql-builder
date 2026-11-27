@@ -63,6 +63,16 @@ Jadi untuk sekarang keduanya hidup berdampingan:
 Saat differential sudah stabil dan slice berikutnya selesai, paket `.lt` pindah
 ke path lama dan referensi legacy dihapus.
 
+## CI
+
+Job `lt` di `.github/workflows/ci.yml` membangun compiler dari sumber (aset
+rilis belum dipublikasikan), lalu menjalankan `lt/check.sh` dan `lt/verify.sh`.
+
+Job `unit` dan `integration-db` masih merah di runner publik karena
+`@gntrees/method-chain@0.0.34` tidak bisa diunduh dari registry publik —
+dependensi itu dibutuhkan generator lama, bukan port `.lt`. Selama paket itu
+belum dipublikasikan atau di-vendor, hanya job `lt` yang bermakna di CI publik.
+
 ## Gate
 
 Slice 1 dianggap selesai bila, untuk dialek Postgres:
