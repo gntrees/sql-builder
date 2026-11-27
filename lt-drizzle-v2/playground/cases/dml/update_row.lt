@@ -1,0 +1,27 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+import select { Select } "./select.lt"
+import update "./update.lt"
+
+package case_update_row {
+  fn t() -> Table {
+    schema.plain("users", [pg_core.serial("id"), pg_core.text("name"), pg_core.integer("age")])
+  }
+  fn q(d: Dialect) -> Str {
+    let tb = t()
+    support.render_built(update.build(update.set_dialect(update.where(update.set(update.create(tb), [schema.assign("name", sql.str("x"))]), sql.eq(schema.col(tb, "id"), sql.int(1))), d)))
+  }
+
+  test "postgres" {
+    expect.not_equal(q(dialect.postgres()), "")
+  }
+  test "mysql" {
+    expect.not_equal(q(dialect.mysql()), "")
+  }
+  test "sqlite" {
+    expect.not_equal(q(dialect.sqlite()), "")
+  }
+}

@@ -1,0 +1,70 @@
+-- migrate:up
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT FALSE,
+    age INTEGER
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    total INTEGER NOT NULL
+);
+
+CREATE TABLE members (
+    id SERIAL PRIMARY KEY,
+    uid INTEGER NOT NULL
+);
+
+CREATE TABLE m (
+    id SERIAL PRIMARY KEY,
+    uid INTEGER NOT NULL
+);
+
+CREATE TABLE b (
+    id SERIAL PRIMARY KEY,
+    ok BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE t (
+    id SERIAL PRIMARY KEY,
+    x INTEGER,
+    name TEXT,
+    a INTEGER,
+    b INTEGER
+);
+
+CREATE TABLE u (
+    id SERIAL PRIMARY KEY,
+    b INTEGER
+);
+
+CREATE TABLE authors (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE books (
+    book_id SERIAL PRIMARY KEY,
+    author_id INTEGER NOT NULL,
+    title TEXT NOT NULL
+);
+
+-- migrate:down
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS u;
+DROP TABLE IF EXISTS t;
+DROP TABLE IF EXISTS b;
+DROP TABLE IF EXISTS m;
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS users;

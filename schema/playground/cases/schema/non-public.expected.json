@@ -1,0 +1,22 @@
+{
+  "schema": {
+    "version": 1,
+    "generator": "prisma-lt",
+    "dialect": "postgres",
+    "prismaVersion": "7.10.1",
+    "tables": [],
+    "enums": [],
+    "foreignKeys": []
+  },
+  "unsupported": {
+    "version": 1,
+    "entries": [
+      {
+        "kind": "schema",
+        "schema": "auth",
+        "table": "audit",
+        "reason": "only the public schema is supported"
+      }
+    ]
+  }
+}

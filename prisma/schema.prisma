@@ -1,0 +1,56 @@
+generator ltSchema {
+  provider = "bun ./schema/prisma-generator.mjs"
+  output   = "../schema"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["auth", "public"]
+}
+
+model audit {
+  id     Int    @id @default(autoincrement())
+  action String
+
+  @@schema("auth")
+}
+
+model memberships {
+  user_id Int
+  org_id  Int
+
+  @@id([user_id, org_id])
+  @@schema("public")
+}
+
+model organizations {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(255)
+  users users[]
+
+  @@schema("public")
+}
+
+model users {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique @db.VarChar(320)
+  display_name  String?
+  role          role          @default(user)
+  created_at    DateTime      @default(now())
+  org_id        Int
+  external_id   String?       @db.Uuid
+  balance       Decimal       @default(0)
+  metadata      Json?
+  organizations organizations @relation(fields: [org_id], references: [id], onDelete: Cascade)
+
+  @@unique([email, org_id])
+  @@index([email])
+  @@schema("public")
+}
+
+enum role {
+  admin
+  user
+
+  @@schema("public")
+}

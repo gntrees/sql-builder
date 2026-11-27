@@ -1,0 +1,4 @@
+title = "Full join"
+feature = "joins/full"
+why = "Join kind and ON clause must match drizzle."
+dialects = "postgres"

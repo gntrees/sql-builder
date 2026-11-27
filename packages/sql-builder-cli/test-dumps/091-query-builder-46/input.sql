@@ -1,1 +1,0 @@
-WITH admins_cte AS (SELECT id FROM admins) SELECT * FROM admins_cte

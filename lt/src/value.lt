@@ -1,0 +1,34 @@
+/// Nilai dinamis yang boleh muncul sebagai parameter query.
+///
+/// Ini pengganti `ArgumentValue` dinamis di desain lama: setiap nilai punya
+/// tag, dan `match` yang exhaustive memaksa setiap target menangani semuanya.
+pub enum Value {
+  Null
+  Bool(Bool)
+  Int(Int)
+  Float(Float)
+  Str(Str)
+}
+
+/// Konstruktor bernama supaya kode pemanggil tidak perlu menyebut tag.
+pub class Values {
+  pub static fn null() -> Value {
+    Value.Null
+  }
+
+  pub static fn bool(value: Bool) -> Value {
+    Value.Bool(value)
+  }
+
+  pub static fn int(value: Int) -> Value {
+    Value.Int(value)
+  }
+
+  pub static fn float(value: Float) -> Value {
+    Value.Float(value)
+  }
+
+  pub static fn str(value: Str) -> Value {
+    Value.Str(value)
+  }
+}

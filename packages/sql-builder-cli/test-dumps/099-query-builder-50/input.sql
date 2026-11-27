@@ -1,1 +1,0 @@
-SELECT users.role, COUNT(*) FROM users GROUP BY users.role

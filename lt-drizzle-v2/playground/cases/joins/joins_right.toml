@@ -1,0 +1,4 @@
+title = "Right join"
+feature = "joins/right"
+why = "Join kind and ON clause must match drizzle."
+dialects = "postgres,mysql"

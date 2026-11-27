@@ -1,0 +1,2 @@
+[install.scopes]
+"@gntrees" = { url = "http://localhost:4873" }

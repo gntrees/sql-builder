@@ -1,1 +1,0 @@
-SELECT DISTINCT users.id, users.name FROM users

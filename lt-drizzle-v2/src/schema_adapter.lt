@@ -1,0 +1,111 @@
+// Handwritten boundary between the generated schema packages and the v2 SQL
+// builder. Generated code returns the neutral `Expr`; this adapter converts it
+// to the v2 `Sql` chunk type. A v3 rewrite should provide its own adapter.
+import schema_expr { Expr, Scalar } "./generated/schema_expr.lt"
+import schema_meta { ColumnMeta, TableMeta } "./generated/schema_meta.lt"
+import schema as v2schema { Column, Table } "./schema.lt"
+import sql as sqlpkg { Sql } "./sql.lt"
+
+package schema_adapter {
+  fn table_schema(meta: TableMeta) -> Option<Str> {
+    if meta.schema == "public" {
+      None
+    } else {
+      Some(meta.schema)
+    }
+  }
+
+  export fn to_column(column: ColumnMeta) -> v2schema.Column {
+    v2schema.Column(
+      name: column.db_name,
+      sql_type: column.sql_type,
+      not_null: !column.nullable,
+      primary: column.primary,
+      unique: column.unique,
+      has_default: column.has_default,
+      default_sql: column.default_sql,
+    )
+  }
+
+  export fn to_table(meta: TableMeta) -> v2schema.Table {
+    v2schema.Table(
+      name: meta.db_name,
+      schema: table_schema(meta),
+      alias: None,
+      columns: meta.columns.map(fn(column) => to_column(column)),
+    )
+  }
+
+  export fn to_tables(metas: List<TableMeta>) -> List<v2schema.Table> {
+    metas.map(fn(meta) => to_table(meta))
+  }
+
+  fn scalar(value: Scalar) -> Sql {
+    match value {
+      Scalar.Null => sqlpkg.null_value()
+      Scalar.Int(item) => sqlpkg.int(item)
+      Scalar.Float(item) => sqlpkg.float(item)
+      Scalar.Bool(item) => sqlpkg.bool(item)
+      Scalar.Text(item) => sqlpkg.str(item)
+    }
+  }
+
+  fn binary(left: Expr, operator: Str, right: Expr) -> Sql {
+    sqlpkg.append(sqlpkg.append(to_sql(left), sqlpkg.raw(` ${operator} `)), to_sql(right))
+  }
+
+  export fn to_sql(expr: Expr) -> Sql {
+    match expr {
+      Expr.Column(ref) => sqlpkg.append(
+        sqlpkg.identifier(ref.table),
+        sqlpkg.append(sqlpkg.raw("."), sqlpkg.identifier(ref.column)),
+      )
+      Expr.Param(value) => scalar(value)
+      Expr.Eq(left, right) => binary(left, "=", right)
+      Expr.Ne(left, right) => binary(left, "<>", right)
+      Expr.Gt(left, right) => binary(left, ">", right)
+      Expr.Gte(left, right) => binary(left, ">=", right)
+      Expr.Lt(left, right) => binary(left, "<", right)
+      Expr.Lte(left, right) => binary(left, "<=", right)
+      Expr.IsNull(value) => sqlpkg.is_null(to_sql(value))
+      Expr.IsNotNull(value) => sqlpkg.is_not_null(to_sql(value))
+      Expr.Like(left, right) => binary(left, "like", right)
+      Expr.ILike(left, right) => binary(left, "ilike", right)
+      Expr.In(left, items) => sqlpkg.append(
+        sqlpkg.append(
+          sqlpkg.append(to_sql(left), sqlpkg.raw(" in (")),
+          sqlpkg.join(items.map(fn(item) => to_sql(item)), ", "),
+        ),
+        sqlpkg.raw(")"),
+      )
+      Expr.NotIn(left, items) => sqlpkg.append(
+        sqlpkg.append(
+          sqlpkg.append(to_sql(left), sqlpkg.raw(" not in (")),
+          sqlpkg.join(items.map(fn(item) => to_sql(item)), ", "),
+        ),
+        sqlpkg.raw(")"),
+      )
+      Expr.Between(left, low, high) => sqlpkg.append(
+        sqlpkg.append(
+          sqlpkg.append(sqlpkg.append(to_sql(left), sqlpkg.raw(" between ")), to_sql(low)),
+          sqlpkg.raw(" and "),
+        ),
+        to_sql(high),
+      )
+      Expr.NotBetween(left, low, high) => sqlpkg.append(
+        sqlpkg.append(
+          sqlpkg.append(sqlpkg.append(to_sql(left), sqlpkg.raw(" not between ")), to_sql(low)),
+          sqlpkg.raw(" and "),
+        ),
+        to_sql(high),
+      )
+      Expr.And(items) => sqlpkg.and(items.map(fn(item) => to_sql(item)))
+      Expr.Or(items) => sqlpkg.or(items.map(fn(item) => to_sql(item)))
+      Expr.Not(value) => sqlpkg.not(to_sql(value))
+      Expr.Asc(value) => sqlpkg.asc(to_sql(value))
+      Expr.Desc(value) => sqlpkg.desc(to_sql(value))
+      Expr.Alias(value, alias) => sqlpkg.as_alias(to_sql(value), alias)
+      Expr.Raw(text) => sqlpkg.raw(text)
+    }
+  }
+}

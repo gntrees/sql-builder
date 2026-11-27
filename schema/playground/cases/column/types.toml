@@ -1,0 +1,3 @@
+title = "Scalar and enum columns map to semantic LT types"
+feature = "column/types"
+why = "Integer, float, text, boolean, decimal, UUID, timestamp, and enum columns each get a distinct accessor type instead of collapsing to Str."

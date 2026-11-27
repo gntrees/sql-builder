@@ -1,0 +1,244 @@
+import value { Value, SqlArg } "./value.lt"
+
+package sql {
+  /// Potongan SQL. Chunk selalu rata (tidak ada `Nested`), sehingga tipe tidak
+  /// rekursif lewat field struct; tanda kurung ditulis sebagai `Raw`.
+  export enum SqlChunk {
+    Raw(Str)
+    Param(Value)
+    Ident(Str)
+  }
+
+  /// Ekspresi SQL yang belum di-deparse.
+  export struct Sql {
+    chunks: List<SqlChunk>
+  }
+
+  export fn raw(text: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Raw(text)])
+  }
+
+  export fn empty() -> Sql {
+    Sql(chunks: [])
+  }
+
+  export fn param(value: Value) -> Sql {
+    Sql(chunks: [SqlChunk.Param(value)])
+  }
+
+  export fn identifier(name: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Ident(name)])
+  }
+
+  export fn int(value: Int) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Integer(value))])
+  }
+
+  export fn float(value: Float) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Float(value))])
+  }
+
+  export fn str(value: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Text(value))])
+  }
+
+  export fn bool(value: Bool) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Boolean(value))])
+  }
+
+  export fn null_value() -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Null)])
+  }
+
+  /// Padanan `sql` tag drizzle.
+  ///
+  /// Dipakai sebagai tagged template (`sql\`...\`` setelah diimpor dengan
+  /// alias) maupun dipanggil biasa dari host dengan `(parts, values)`.
+  export fn tag(parts: List<Str>, values: List<SqlArg>) -> Sql {
+    let mut chunks: List<SqlChunk> = []
+    let mut index = 0
+    for part in parts {
+      chunks = chunks.push(SqlChunk.Raw(part))
+      match values.get(index) {
+        Some(arg) => {
+          chunks = chunks.push(SqlChunk.Param(arg_to_value(arg)))
+        }
+        None => {}
+      }
+      index = index + 1
+    }
+    Sql(chunks: chunks)
+  }
+
+  fn arg_to_value(arg: SqlArg) -> Value {
+    match arg {
+      SqlArg.Null => Value.Null
+      SqlArg.Boolean(value) => Value.Boolean(value)
+      SqlArg.Integer(value) => Value.Integer(value)
+      SqlArg.Float(value) => Value.Float(value)
+      SqlArg.Text(value) => Value.Text(value)
+    }
+  }
+
+  export fn append(s: Sql, other: Sql) -> Sql {
+    Sql(chunks: s.chunks.concat(other.chunks))
+  }
+
+  export fn is_empty(s: Sql) -> Bool {
+    s.chunks.len() == 0
+  }
+
+  // ---- operator (receiver) ----
+
+  fn binary(s: Sql, operator: Str, other: Sql) -> Sql {
+    append(append(s, raw(` ${operator} `)), other)
+  }
+
+  export fn eq(s: Sql, other: Sql) -> Sql {
+    binary(s, "=", other)
+  }
+
+  export fn ne(s: Sql, other: Sql) -> Sql {
+    binary(s, "<>", other)
+  }
+
+  export fn gt(s: Sql, other: Sql) -> Sql {
+    binary(s, ">", other)
+  }
+
+  export fn gte(s: Sql, other: Sql) -> Sql {
+    binary(s, ">=", other)
+  }
+
+  export fn lt(s: Sql, other: Sql) -> Sql {
+    binary(s, "<", other)
+  }
+
+  export fn lte(s: Sql, other: Sql) -> Sql {
+    binary(s, "<=", other)
+  }
+
+  export fn like(s: Sql, other: Sql) -> Sql {
+    binary(s, "like", other)
+  }
+
+  export fn not_like(s: Sql, other: Sql) -> Sql {
+    binary(s, "not like", other)
+  }
+
+  export fn ilike(s: Sql, other: Sql) -> Sql {
+    binary(s, "ilike", other)
+  }
+
+  export fn not_ilike(s: Sql, other: Sql) -> Sql {
+    binary(s, "not ilike", other)
+  }
+
+  export fn in_list(s: Sql, items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      raw("false")
+    } else {
+      binary(s, "in", append(append(raw("("), join(items, ", ")), raw(")")))
+    }
+  }
+
+  export fn not_in_list(s: Sql, items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      raw("true")
+    } else {
+      binary(s, "not in", append(append(raw("("), join(items, ", ")), raw(")")))
+    }
+  }
+
+  export fn between(s: Sql, low: Sql, high: Sql) -> Sql {
+    append(append(append(append(s, raw(" between ")), low), raw(" and ")), high)
+  }
+
+  export fn not_between(s: Sql, low: Sql, high: Sql) -> Sql {
+    append(append(append(append(s, raw(" not between ")), low), raw(" and ")), high)
+  }
+
+  export fn is_null(s: Sql) -> Sql {
+    append(s, raw(" is null"))
+  }
+
+  export fn is_not_null(s: Sql) -> Sql {
+    append(s, raw(" is not null"))
+  }
+
+  export fn asc(s: Sql) -> Sql {
+    append(s, raw(" asc"))
+  }
+
+  export fn desc(s: Sql) -> Sql {
+    append(s, raw(" desc"))
+  }
+
+  export fn as_alias(s: Sql, alias: Str) -> Sql {
+    append(append(s, raw(" as ")), identifier(alias))
+  }
+
+  // ---- statis ----
+
+  export fn join(items: List<Sql>, separator: Str) -> Sql {
+    let mut result = empty()
+    let mut first = true
+    for item in items {
+      if first {
+        result = append(result, item)
+        first = false
+      } else {
+        result = append(append(result, raw(separator)), item)
+      }
+    }
+    result
+  }
+
+  export fn and(items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      empty()
+    } else {
+      append(append(raw("("), join(items, " and ")), raw(")"))
+    }
+  }
+
+  export fn or(items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      empty()
+    } else {
+      append(append(raw("("), join(items, " or ")), raw(")"))
+    }
+  }
+
+  export fn not(expr: Sql) -> Sql {
+    append(raw("not "), expr)
+  }
+
+  fn call(name: Str, argument: Sql) -> Sql {
+    append(append(append(raw(name), raw("(")), argument), raw(")"))
+  }
+
+  export fn count(expr: Sql) -> Sql {
+    call("count", expr)
+  }
+
+  export fn count_all() -> Sql {
+    raw("count(*)")
+  }
+
+  export fn sum(expr: Sql) -> Sql {
+    call("sum", expr)
+  }
+
+  export fn avg(expr: Sql) -> Sql {
+    call("avg", expr)
+  }
+
+  export fn min(expr: Sql) -> Sql {
+    call("min", expr)
+  }
+
+  export fn max(expr: Sql) -> Sql {
+    call("max", expr)
+  }
+}

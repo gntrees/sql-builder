@@ -1,0 +1,4 @@
+title = "Inner join"
+feature = "joins/inner"
+why = "Join kind and ON clause must match drizzle."
+dialects = "postgres,mysql,sqlite"

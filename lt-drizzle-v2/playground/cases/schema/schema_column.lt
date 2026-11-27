@@ -1,0 +1,24 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+
+package case_schema_column {
+  fn t() -> Table {
+    schema.plain("users", [pg_core.serial("id"), pg_core.text("name"), pg_core.integer("age")])
+  }
+  fn q() -> Sql {
+    schema.col(t(), "id")
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), q()), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), q()), "")
+  }
+  test "sqlite" {
+    expect.not_equal(support.render(dialect.sqlite(), q()), "")
+  }
+}

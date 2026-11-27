@@ -1,0 +1,4 @@
+title = "LIMIT and OFFSET are parameters"
+feature = "select/limit"
+why = "Drizzle binds both values instead of inlining them."
+dialects = "postgres,mysql,sqlite"

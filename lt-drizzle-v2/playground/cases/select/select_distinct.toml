@@ -1,0 +1,4 @@
+title = "DISTINCT"
+feature = "select/distinct"
+why = "select distinct "id" from "users""
+dialects = "postgres,mysql,sqlite"

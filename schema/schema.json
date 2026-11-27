@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "generator": "prisma-lt",
+  "dialect": "postgres",
+  "prismaVersion": "7.10.1",
+  "tables": [
+    {
+      "model": "memberships",
+      "name": "memberships",
+      "dbName": "memberships",
+      "schema": "public",
+      "primaryKey": [
+        "user_id",
+        "org_id"
+      ],
+      "columns": [
+        {
+          "name": "user_id",
+          "dbName": "user_id",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "org_id",
+          "dbName": "org_id",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        }
+      ]
+    },
+    {
+      "model": "organizations",
+      "name": "organizations",
+      "dbName": "organizations",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "name",
+          "dbName": "name",
+          "nullable": false,
+          "unique": false,
+          "type": "Str",
+          "nativeType": "VarChar"
+        }
+      ]
+    },
+    {
+      "model": "users",
+      "name": "users",
+      "dbName": "users",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "email",
+          "dbName": "email",
+          "nullable": false,
+          "unique": true,
+          "type": "Str",
+          "nativeType": "VarChar"
+        },
+        {
+          "name": "display_name",
+          "dbName": "display_name",
+          "nullable": true,
+          "unique": false,
+          "type": "Str",
+          "nativeType": "String"
+        },
+        {
+          "name": "role",
+          "dbName": "role",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "literal",
+            "value": "user"
+          },
+          "type": "Enum",
+          "nativeType": "role",
+          "enum": "Role"
+        },
+        {
+          "name": "created_at",
+          "dbName": "created_at",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "now"
+          },
+          "type": "Temporal",
+          "nativeType": "DateTime"
+        },
+        {
+          "name": "org_id",
+          "dbName": "org_id",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "external_id",
+          "dbName": "external_id",
+          "nullable": true,
+          "unique": false,
+          "type": "Uuid",
+          "nativeType": "Uuid"
+        },
+        {
+          "name": "balance",
+          "dbName": "balance",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "literal",
+            "value": 0
+          },
+          "type": "Decimal",
+          "nativeType": "Decimal"
+        },
+        {
+          "name": "metadata",
+          "dbName": "metadata",
+          "nullable": true,
+          "unique": false,
+          "type": "Unsupported",
+          "nativeType": "Json"
+        }
+      ]
+    }
+  ],
+  "enums": [
+    {
+      "name": "Role",
+      "dbName": "role",
+      "package": "schema_enum_role",
+      "values": [
+        {
+          "name": "Admin",
+          "dbName": "admin"
+        },
+        {
+          "name": "User",
+          "dbName": "user"
+        }
+      ]
+    }
+  ],
+  "foreignKeys": [
+    {
+      "name": "organizationsTousers",
+      "fromTable": "users",
+      "fromColumns": [
+        "org_id"
+      ],
+      "toTable": "organizations",
+      "toColumns": [
+        "id"
+      ],
+      "onDelete": "Cascade"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+
+package case_schema_alias {
+  fn q() -> Sql {
+    let tb = schema.with_alias("users", "u", [pg_core.serial("id")])
+    schema.col(tb, "id")
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), q()), "")
+  }
+}

@@ -1,1 +1,0 @@
-SELECT profiles.user_id, users.name FROM users RIGHT JOIN profiles ON profiles.user_id = users.id

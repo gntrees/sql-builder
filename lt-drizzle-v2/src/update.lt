@@ -1,0 +1,104 @@
+import sql { Sql, append, int } "./sql.lt"
+import schema { Table, Assignment } "./schema.lt"
+import dialect { Dialect, sql_to_query } "./dialect.lt"
+import value { Rendered, BuildError } "./value.lt"
+
+package update {
+  /// Builder UPDATE.
+  export struct Update {
+    table: Option<Table>
+    assignments: List<Assignment>
+    where_clause: Option<Sql>
+    returning_fields: List<Sql>
+    returning_all: Bool
+    dialect: Option<Dialect>
+  }
+
+  export fn create(table: Table) -> Update {
+    Update(
+      table: Some(table),
+      assignments: [],
+      where_clause: None,
+      returning_fields: [],
+      returning_all: false,
+      dialect: None,
+    )
+  }
+
+  fn copy(
+    s: Update,
+    assignments: List<Assignment>,
+    where_clause: Option<Sql>,
+    returning_fields: List<Sql>,
+    returning_all: Bool,
+    dialect: Option<Dialect>,
+  ) -> Update {
+    Update(
+      table: s.table,
+      assignments: assignments,
+      where_clause: where_clause,
+      returning_fields: returning_fields,
+      returning_all: returning_all,
+      dialect: dialect,
+    )
+  }
+
+  export fn set(s: Update, assignments: List<Assignment>) -> Update {
+    copy(s, assignments, s.where_clause, s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn where(s: Update, expr: Sql) -> Update {
+    copy(s, s.assignments, Some(expr), s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn returning(s: Update, fields_list: List<Sql>) -> Update {
+    copy(s, s.assignments, s.where_clause, fields_list, false, s.dialect)
+  }
+
+  export fn returning_all_columns(s: Update) -> Update {
+    copy(s, s.assignments, s.where_clause, [], true, s.dialect)
+  }
+
+  export fn set_dialect(s: Update, d: Dialect) -> Update {
+    copy(s, s.assignments, s.where_clause, s.returning_fields, s.returning_all, Some(d))
+  }
+
+  export fn build(s: Update) -> Result<Rendered, BuildError> {
+    match s.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(d) => {
+        match s.table {
+          None => Err(BuildError.MissingTable)
+          Some(table) => Ok(sql_to_query(d, to_sql(s, table)))
+        }
+      }
+    }
+  }
+
+  fn to_sql(s: Update, table: Table) -> Sql {
+    let mut q = append(
+      append(append(sql.raw("update "), schema.from_ref(table)), sql.raw(" set ")),
+      sql.join(s.assignments.map(fn(item) => schema.to_sql(item)), ", "),
+    )
+
+    match s.where_clause {
+      Some(expr) => {
+        if !sql.is_empty(expr) {
+          q = append(append(q, sql.raw(" where ")), expr)
+        }
+      }
+      None => {}
+    }
+
+    let returned = if s.returning_all {
+      table.columns.map(fn(column) => sql.identifier(column.name))
+    } else {
+      s.returning_fields
+    }
+    if returned.len() > 0 {
+      q = append(append(q, sql.raw(" returning ")), sql.join(returned, ", "))
+    }
+
+    q
+  }
+}

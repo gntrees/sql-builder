@@ -1,0 +1,44 @@
+{
+  "schema": {
+    "version": 1,
+    "generator": "prisma-lt",
+    "dialect": "postgres",
+    "prismaVersion": "7.10.1",
+    "tables": [
+      {
+        "model": "Membership",
+        "name": "memberships",
+        "dbName": "memberships",
+        "schema": "public",
+        "primaryKey": [
+          "user_id",
+          "org_id"
+        ],
+        "columns": [
+          {
+            "name": "user_id",
+            "dbName": "user_id",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "org_id",
+            "dbName": "org_id",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          }
+        ]
+      }
+    ],
+    "enums": [],
+    "foreignKeys": []
+  },
+  "unsupported": {
+    "version": 1,
+    "entries": []
+  }
+}

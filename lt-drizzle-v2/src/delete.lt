@@ -1,0 +1,93 @@
+import sql { Sql, append } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect, sql_to_query } "./dialect.lt"
+import value { Rendered, BuildError } "./value.lt"
+
+package delete {
+  /// Builder DELETE.
+  export struct Delete {
+    table: Option<Table>
+    where_clause: Option<Sql>
+    returning_fields: List<Sql>
+    returning_all: Bool
+    dialect: Option<Dialect>
+  }
+
+  export fn create(table: Table) -> Delete {
+    Delete(
+      table: Some(table),
+      where_clause: None,
+      returning_fields: [],
+      returning_all: false,
+      dialect: None,
+    )
+  }
+
+  fn copy(
+    s: Delete,
+    where_clause: Option<Sql>,
+    returning_fields: List<Sql>,
+    returning_all: Bool,
+    dialect: Option<Dialect>,
+  ) -> Delete {
+    Delete(
+      table: s.table,
+      where_clause: where_clause,
+      returning_fields: returning_fields,
+      returning_all: returning_all,
+      dialect: dialect,
+    )
+  }
+
+  export fn where(s: Delete, expr: Sql) -> Delete {
+    copy(s, Some(expr), s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn returning(s: Delete, fields_list: List<Sql>) -> Delete {
+    copy(s, s.where_clause, fields_list, false, s.dialect)
+  }
+
+  export fn returning_all_columns(s: Delete) -> Delete {
+    copy(s, s.where_clause, [], true, s.dialect)
+  }
+
+  export fn set_dialect(s: Delete, d: Dialect) -> Delete {
+    copy(s, s.where_clause, s.returning_fields, s.returning_all, Some(d))
+  }
+
+  export fn build(s: Delete) -> Result<Rendered, BuildError> {
+    match s.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(d) => {
+        match s.table {
+          None => Err(BuildError.MissingTable)
+          Some(table) => Ok(sql_to_query(d, to_sql(s, table)))
+        }
+      }
+    }
+  }
+
+  fn to_sql(s: Delete, table: Table) -> Sql {
+    let mut q = append(sql.raw("delete from "), schema.from_ref(table))
+
+    match s.where_clause {
+      Some(expr) => {
+        if !sql.is_empty(expr) {
+          q = append(append(q, sql.raw(" where ")), expr)
+        }
+      }
+      None => {}
+    }
+
+    let returned = if s.returning_all {
+      table.columns.map(fn(column) => sql.identifier(column.name))
+    } else {
+      s.returning_fields
+    }
+    if returned.len() > 0 {
+      q = append(append(q, sql.raw(" returning ")), sql.join(returned, ", "))
+    }
+
+    q
+  }
+}

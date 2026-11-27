@@ -1,0 +1,27 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+import select { Select } "./select.lt"
+
+package case_joins_right {
+  fn t() -> Table {
+    schema.plain("users", [pg_core.serial("id"), pg_core.text("name"), pg_core.integer("age")])
+  }
+  fn p() -> Table {
+    schema.plain("posts", [pg_core.serial("id"), pg_core.integer("user_id"), pg_core.text("title")])
+  }
+  fn q() -> Select {
+    let tb = t()
+    let other = p()
+    select.fields(select.right_join(select.from_table(select.create(), tb), other, sql.eq(schema.col(tb, "id"), schema.col(other, "user_id"))), [schema.col(tb, "id")])
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), select.to_sql(q())), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), select.to_sql(q())), "")
+  }
+}

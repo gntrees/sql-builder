@@ -1,25 +1,40 @@
 {
-  "author": "gntrees",
+  "name": "@gntrees/sql-builder",
+  "version": "0.0.1",
+  "description": "Multi-language SQL query builder generated from a gntrees project definition.",
   "license": "MIT",
-  "name": "@gntrees/sql-builder-workspace",
-  "version": "1.0.0",
-  "description": "Bun workspace for @gntrees/sql-builder multi-language SQL query builder",
   "type": "module",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "^5.9.3"
-  },
   "scripts": {
-    "install:all": "bun install",
-    "build": "cd packages/sql-builder && bun run build",
-    "test": "bun run test:sql-builder",
-    "test:sql-builder": "cd packages/sql-builder && bun test",
-    "generate": "cd packages/sql-builder && bun run generate",
-    "clean": "rm -rf node_modules packages/*/node_modules",
-    "reinstall": "bun run clean && bun install"
+    "generate": "bun src/generate.ts",
+    "test": "bun test tests/ --parallel=1",
+    "db:up": "docker compose -f docker-compose.test.yml up -d --wait postgres mysql",
+    "db:down": "docker compose -f docker-compose.test.yml down -v",
+    "db:migrate": "docker compose -f docker-compose.test.yml run --rm migrate-postgres && docker compose -f docker-compose.test.yml run --rm migrate-mysql",
+    "db:reset": "docker compose -f docker-compose.test.yml down -v && bun run db:up && bun run db:migrate",
+    "test:db": "DB_TESTS=1 bun test tests/db",
+    "lt-drizzle-v2:build": "bash lt-drizzle-v2/build.sh",
+    "lt-drizzle-v2:verify": "bash lt-drizzle-v2/verify.sh",
+    "lt-drizzle-v2:db": "bash lt-drizzle-v2/verify-db.sh",
+    "playground": "bash lt-drizzle-v2/playground.sh",
+    "schema:generate": "bun schema/codegen.ts generate",
+    "schema:check": "bun schema/codegen.ts check",
+    "schema:generate:allow": "bun schema/codegen.ts generate --allow-unsupported",
+    "schema:check:allow": "bun schema/codegen.ts check --allow-unsupported",
+    "schema:test": "bun test schema/test",
+    "schema:db:up": "docker compose -f schema/fixtures/docker-compose.yml up -d --wait",
+    "schema:db:down": "docker compose -f schema/fixtures/docker-compose.yml down -v",
+    "schema:introspect": "prisma db pull --force && prisma generate",
+    "verify:local": "bash lt-drizzle-v2/verify.sh && bash lt-drizzle-v2/verify-db.sh && bash lt-drizzle-v2/playground.sh",
+    "schema:playground": "bash schema/playground/playground.sh"
+  },
+  "dependencies": {
+    "@gntrees/method-chain": "^0.0.34"
+  },
+  "devDependencies": {
+    "@prisma/generator-helper": "7.10.1",
+    "@types/bun": "latest",
+    "drizzle-orm": "0.44.4",
+    "prisma": "7.10.1",
+    "typescript": "^5"
   }
 }

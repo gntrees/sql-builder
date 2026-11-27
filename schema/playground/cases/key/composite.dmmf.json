@@ -1,0 +1,40 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "Membership",
+        "dbName": "memberships",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "user_id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "org_id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          }
+        ],
+        "primaryKey": { "name": "memberships_pkey", "fields": ["user_id", "org_id"] },
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [],
+    "indexes": []
+  }
+}

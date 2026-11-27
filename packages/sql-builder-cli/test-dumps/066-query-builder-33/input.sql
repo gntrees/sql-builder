@@ -1,1 +1,0 @@
-SELECT users.id, roles.name FROM users CROSS JOIN roles

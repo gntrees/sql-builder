@@ -1,0 +1,3 @@
+title = "Foreign keys become neutral relation metadata"
+feature = "relation/foreign-key"
+why = "Only the owning side has relationFromFields. The generator records one ForeignKey instead of turning the relation into a second column."

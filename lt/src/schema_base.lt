@@ -1,0 +1,94 @@
+import Node from "./sql.lt"
+
+/// Kolom bertipe: nama tabel + nama kolom, dengan operator yang mengembalikan
+/// `Node`. Salah nama kolom atau tabel menjadi compile error, bukan error SQL
+/// saat runtime.
+pub class Column {
+  table: Str
+  name: Str
+
+  /// Nama ter-kualifikasi: `users.id`.
+  pub fn qualified(self) -> Str {
+    `${self.table}.${self.name}`
+  }
+
+  /// Node ter-kualifikasi (`"users"."id"`), bentuk yang dipakai default.
+  pub fn node(self) -> Node {
+    Node.col(self.qualified())
+  }
+
+  /// Node tanpa kualifikasi (`"id"`), untuk query satu tabel.
+  pub fn bare(self) -> Node {
+    Node.col(self.name)
+  }
+
+  pub fn eq(self, other: Node) -> Node {
+    self.node().eq(other)
+  }
+
+  pub fn eq_int(self, value: Int) -> Node {
+    self.node().eq(Node.int(value))
+  }
+
+  pub fn eq_str(self, value: Str) -> Node {
+    self.node().eq(Node.str(value))
+  }
+
+  pub fn eq_bool(self, value: Bool) -> Node {
+    self.node().eq(Node.bool(value))
+  }
+
+  pub fn gt_int(self, value: Int) -> Node {
+    self.node().gt(Node.int(value))
+  }
+
+  pub fn gte_int(self, value: Int) -> Node {
+    self.node().gte(Node.int(value))
+  }
+
+  pub fn lt_int(self, value: Int) -> Node {
+    self.node().lt(Node.int(value))
+  }
+
+  pub fn lte_int(self, value: Int) -> Node {
+    self.node().lte(Node.int(value))
+  }
+
+  pub fn is_null(self) -> Node {
+    self.node().is_null()
+  }
+
+  pub fn is_not_null(self) -> Node {
+    self.node().is_not_null()
+  }
+
+  pub fn like(self, pattern: Str) -> Node {
+    self.node().like(Node.str(pattern))
+  }
+
+  pub fn asc(self) -> Node {
+    self.node().asc()
+  }
+
+  pub fn desc(self) -> Node {
+    self.node().desc()
+  }
+
+  pub fn alias(self, name: Str) -> Node {
+    self.node().alias(name)
+  }
+}
+
+pub class Table {
+  name: Str
+
+  pub fn node(self) -> Node {
+    Node.table(self.name)
+  }
+
+  /// Kolom dinamis; pakai ini hanya bila nama kolom benar-benar tidak
+  /// diketahui saat compile.
+  pub fn col(self, column: Str) -> Column {
+    Column(table: self.name, name: column)
+  }
+}

@@ -1,1 +1,0 @@
-SELECT (SELECT id FROM admins LIMIT 1) AS admin_ids FROM users

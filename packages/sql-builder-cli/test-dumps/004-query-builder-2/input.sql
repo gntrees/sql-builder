@@ -1,1 +1,0 @@
-SELECT * FROM users WHERE table_name.column_name = 'admin'

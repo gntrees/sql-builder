@@ -1,0 +1,207 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "Organization",
+        "dbName": "organizations",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "name",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["VarChar", ["255"]]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      },
+      {
+        "name": "User",
+        "dbName": "users",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "email",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": true,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["VarChar", ["320"]]
+          },
+          {
+            "name": "displayName",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": null
+          },
+          {
+            "name": "role",
+            "kind": "enum",
+            "type": "Role",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": "USER",
+            "nativeType": null
+          },
+          {
+            "name": "createdAt",
+            "kind": "scalar",
+            "type": "DateTime",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": { "name": "now", "args": [] },
+            "nativeType": ["Timestamp", ["3"]]
+          },
+          {
+            "name": "orgId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "externalId",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Uuid", []]
+          },
+          {
+            "name": "balance",
+            "kind": "scalar",
+            "type": "Decimal",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": 0,
+            "nativeType": ["Decimal", ["65", "30"]]
+          },
+          {
+            "name": "metadata",
+            "kind": "scalar",
+            "type": "Json",
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["JsonB", []]
+          },
+          {
+            "name": "organization",
+            "kind": "object",
+            "type": "Organization",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "relationName": "UserToOrganization",
+            "relationFromFields": ["orgId"],
+            "relationToFields": ["id"],
+            "relationOnDelete": "Cascade",
+            "relationOnUpdate": "Cascade"
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [["email", "orgId"]],
+        "uniqueIndexes": []
+      },
+      {
+        "name": "Audit",
+        "dbName": "audit",
+        "schema": "auth",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [
+      {
+        "name": "Role",
+        "dbName": "role",
+        "values": [
+          { "name": "ADMIN", "dbName": "admin" },
+          { "name": "USER", "dbName": "user" }
+        ]
+      }
+    ],
+    "indexes": [
+      {
+        "model": "User",
+        "name": "users_email_idx",
+        "type": "normal",
+        "fields": [{ "name": "email" }]
+      }
+    ]
+  }
+}

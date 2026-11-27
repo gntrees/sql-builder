@@ -1,0 +1,43 @@
+package value {
+  /// Nilai portabel yang boleh muncul sebagai parameter query.
+  ///
+  /// Nama varian sengaja tidak memakai nama builtin Python (`Int`, `Str`,
+  /// `Bool`, `List`, `Map`): emitter v0.3.0 menaruh varian sebagai anggota
+  /// class enum, sehingga nama itu membayangi builtin dan `mypy --strict`
+  /// menolaknya. Lihat docs/plans/drizzle-port-v2.md (H10).
+  export enum Value {
+    Null
+    Boolean(Bool)
+    Integer(Int)
+    Float(Float)
+    Text(Str)
+    Array(List<Value>)
+    Record(Map<Str, Value>)
+  }
+
+  /// Nilai yang boleh masuk lewat tagged template `tag`.
+  ///
+  /// `T` pada tagged template harus konkret dan tidak boleh memakai type
+  /// parameter, jadi tipe campuran dinyatakan dengan enum ini.
+  export enum SqlArg {
+    Null
+    Boolean(Bool)
+    Integer(Int)
+    Float(Float)
+    Text(Str)
+  }
+
+  /// Hasil deparse satu query.
+  export struct Rendered {
+    sql: Str
+    params: List<Value>
+  }
+
+  /// Kegagalan build yang harus dilaporkan, bukan ditelan.
+  export enum BuildError {
+    MissingDialect
+    MissingTable
+    Unsupported(Str, Str)
+    UnknownColumn(Str, Str)
+  }
+}

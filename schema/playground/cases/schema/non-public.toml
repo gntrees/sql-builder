@@ -1,0 +1,3 @@
+title = "Non-public schemas are skipped and recorded"
+feature = "schema/non-public"
+why = "The first slice emits only the public schema. A model in auth is skipped, but the skip is visible in unsupported.json instead of disappearing silently."

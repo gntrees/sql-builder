@@ -1,4 +1,66 @@
-node_modules/
-trash/
-.DS_Store
+# dependencies
+node_modules
+
+# build output
+dist
+*.tgz
+
+# logs
+logs
 *.log
+
+# caches
+.cache
+*.tsbuildinfo
+
+# test coverage
+coverage
+
+# local database artifacts
+*.sqlite
+*.sqlite3
+*.db
+db/schema.sql
+
+# local registry
+verdaccio/storage/
+
+# docker overrides
+docker-compose.override.yml
+
+# environment
+.env
+.env.*
+!.env.example
+
+# editors
+.idea
+.DS_Store
+
+__pycache__/
+*.pyc
+
+# java build artifacts
+*.class
+
+# transient staging for cross-repo file copies
+.staging/
+
+# lt toolchain cache and venv
+.lt/out/
+.lt/out-drizzle-v2/
+.lt/test-v2/
+.lt/playground/
+.lt/venv/
+.lt/bin/
+
+# emitted test packages
+.lt/test-out/
+
+# drizzle port build output
+generated/lt-drizzle-v2/
+lt-drizzle-v2/playground/out/
+
+# schema codegen playground
+schema/playground/out/
+.lt/schema-playground/

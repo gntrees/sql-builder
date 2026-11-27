@@ -1,1 +1,0 @@
-SELECT users.id, users.name FROM users WHERE users.active = true AND users.age < 30 OR users.age > 50 ORDER BY users.name

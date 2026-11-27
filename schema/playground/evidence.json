@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "compiler": "pinned lt",
+  "counts": {
+    "cases": 8,
+    "features": 8,
+    "failing": 0
+  },
+  "cases": {
+    "column/types": {
+      "feature": "column/types",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "key/composite": {
+      "feature": "key/composite",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "naming/renames": {
+      "feature": "naming/renames",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "relation/foreign-key": {
+      "feature": "relation/foreign-key",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "schema/non-public": {
+      "feature": "schema/non-public",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "table/basic": {
+      "feature": "table/basic",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "unsupported/composite-unique": {
+      "feature": "unsupported/composite-unique",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "unsupported/jsonb": {
+      "feature": "unsupported/jsonb",
+      "ir": "pass",
+      "lt": "pass"
+    }
+  }
+}

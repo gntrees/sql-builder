@@ -1,0 +1,4 @@
+title = "Join with ORDER BY and LIMIT"
+feature = "joins/order-limit"
+why = "Clause order after a join."
+dialects = "postgres,mysql,sqlite"

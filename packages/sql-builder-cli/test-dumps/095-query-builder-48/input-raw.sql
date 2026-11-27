@@ -1,1 +1,0 @@
-SELECT DISTINCT ON (posts.author_id) posts.id, posts.title FROM posts

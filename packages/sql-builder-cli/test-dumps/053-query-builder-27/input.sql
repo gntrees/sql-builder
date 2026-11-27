@@ -1,1 +1,0 @@
-SELECT users.id, profiles.bio FROM users LEFT JOIN profiles ON profiles.user_id = users.id

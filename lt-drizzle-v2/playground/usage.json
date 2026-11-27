@@ -1,0 +1,787 @@
+{
+  "version": 1,
+  "cases": {
+    "cte": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "with \"active\" as (select \"id\" from \"users\" where \"users\".\"name\" = $1) select \"id\" from \"active\"\ttext:a",
+          "with `active` as (select `id` from `users` where `users`.`name` = ?) select `id` from `active`\ttext:a",
+          "with \"active\" as (select \"id\" from \"users\" where \"users\".\"name\" = ?) select \"id\" from \"active\"\ttext:a"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "with \"active\" as (select \"id\" from \"users\" where \"users\".\"name\" = $1) select \"id\" from \"active\"\ttext:a",
+          "with `active` as (select `id` from `users` where `users`.`name` = ?) select `id` from `active`\ttext:a",
+          "with \"active\" as (select \"id\" from \"users\" where \"users\".\"name\" = ?) select \"id\" from \"active\"\ttext:a"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "delete_row": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "delete from \"users\" where \"users\".\"id\" = $1\tint:1",
+          "delete from `users` where `users`.`id` = ?\tint:1",
+          "delete from \"users\" where \"users\".\"id\" = ?\tint:1"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "delete from \"users\" where \"users\".\"id\" = $1\tint:1",
+          "delete from `users` where `users`.`id` = ?\tint:1",
+          "delete from \"users\" where \"users\".\"id\" = ?\tint:1"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "insert_conflict": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (default, $1, default) on conflict do nothing\ttext:a",
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (null, ?, null) on conflict do nothing\ttext:a"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (default, $1, default) on conflict do nothing\ttext:a",
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (null, ?, null) on conflict do nothing\ttext:a"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "insert_duplicate": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "insert into `users` (`id`, `name`, `age`) values (default, ?, default) on duplicate key update `name` = ?\ttext:a,text:b"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "insert into `users` (`id`, `name`, `age`) values (default, ?, default) on duplicate key update `name` = ?\ttext:a,text:b"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "insert_returning": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (default, $1, default) returning \"id\", \"name\", \"age\"\ttext:a"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (default, $1, default) returning \"id\", \"name\", \"age\"\ttext:a"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "insert_values": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (default, $1, default)\ttext:a",
+          "insert into `users` (`id`, `name`, `age`) values (default, ?, default)\ttext:a",
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (null, ?, null)\ttext:a"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (default, $1, default)\ttext:a",
+          "insert into `users` (`id`, `name`, `age`) values (default, ?, default)\ttext:a",
+          "insert into \"users\" (\"id\", \"name\", \"age\") values (null, ?, null)\ttext:a"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "update_row": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "update \"users\" set \"name\" = $1 where \"users\".\"id\" = $2\ttext:x,int:1",
+          "update `users` set `name` = ? where `users`.`id` = ?\ttext:x,int:1",
+          "update \"users\" set \"name\" = ? where \"users\".\"id\" = ?\ttext:x,int:1"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "update \"users\" set \"name\" = $1 where \"users\".\"id\" = $2\ttext:x,int:1",
+          "update `users` set `name` = ? where `users`.`id` = ?\ttext:x,int:1",
+          "update \"users\" set \"name\" = ? where \"users\".\"id\" = ?\ttext:x,int:1"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "joins_full": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" full join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" full join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "joins_inner": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" inner join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t",
+          "select `users`.`id` from `users` inner join `posts` on `users`.`id` = `posts`.`user_id`\t",
+          "select \"users\".\"id\" from \"users\" inner join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" inner join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t",
+          "select `users`.`id` from `users` inner join `posts` on `users`.`id` = `posts`.`user_id`\t",
+          "select \"users\".\"id\" from \"users\" inner join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "joins_left": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t",
+          "select `users`.`id` from `users` left join `posts` on `users`.`id` = `posts`.`user_id`\t",
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t",
+          "select `users`.`id` from `users` left join `posts` on `users`.`id` = `posts`.`user_id`\t",
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "joins_order_limit": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\" order by \"users\".\"id\" asc limit $1\tint:1",
+          "select `users`.`id` from `users` left join `posts` on `users`.`id` = `posts`.`user_id` order by `users`.`id` asc limit ?\tint:1",
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\" order by \"users\".\"id\" asc limit ?\tint:1"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\" order by \"users\".\"id\" asc limit $1\tint:1",
+          "select `users`.`id` from `users` left join `posts` on `users`.`id` = `posts`.`user_id` order by `users`.`id` asc limit ?\tint:1",
+          "select \"users\".\"id\" from \"users\" left join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\" order by \"users\".\"id\" asc limit ?\tint:1"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "joins_right": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" right join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t",
+          "select `users`.`id` from `users` right join `posts` on `users`.`id` = `posts`.`user_id`\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"id\" from \"users\" right join \"posts\" on \"users\".\"id\" = \"posts\".\"user_id\"\t",
+          "select `users`.`id` from `users` right join `posts` on `users`.`id` = `posts`.`user_id`\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "operators_between": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"age\" between $1 and $2 and \"users\".\"age\" not between $3 and $4)\tint:1,int:10,int:1,int:10",
+          "select `id` from `users` where (`users`.`age` between ? and ? and `users`.`age` not between ? and ?)\tint:1,int:10,int:1,int:10",
+          "select \"id\" from \"users\" where (\"users\".\"age\" between ? and ? and \"users\".\"age\" not between ? and ?)\tint:1,int:10,int:1,int:10"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"age\" between $1 and $2 and \"users\".\"age\" not between $3 and $4)\tint:1,int:10,int:1,int:10",
+          "select `id` from `users` where (`users`.`age` between ? and ? and `users`.`age` not between ? and ?)\tint:1,int:10,int:1,int:10",
+          "select \"id\" from \"users\" where (\"users\".\"age\" between ? and ? and \"users\".\"age\" not between ? and ?)\tint:1,int:10,int:1,int:10"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "operators_comparison": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"id\" <> $1 and \"users\".\"age\" > $2 and \"users\".\"age\" >= $3 and \"users\".\"age\" < $4 and \"users\".\"age\" <= $5)\tint:1,int:18,int:21,int:65,int:64",
+          "select `id` from `users` where (`users`.`id` <> ? and `users`.`age` > ? and `users`.`age` >= ? and `users`.`age` < ? and `users`.`age` <= ?)\tint:1,int:18,int:21,int:65,int:64",
+          "select \"id\" from \"users\" where (\"users\".\"id\" <> ? and \"users\".\"age\" > ? and \"users\".\"age\" >= ? and \"users\".\"age\" < ? and \"users\".\"age\" <= ?)\tint:1,int:18,int:21,int:65,int:64"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"id\" <> $1 and \"users\".\"age\" > $2 and \"users\".\"age\" >= $3 and \"users\".\"age\" < $4 and \"users\".\"age\" <= $5)\tint:1,int:18,int:21,int:65,int:64",
+          "select `id` from `users` where (`users`.`id` <> ? and `users`.`age` > ? and `users`.`age` >= ? and `users`.`age` < ? and `users`.`age` <= ?)\tint:1,int:18,int:21,int:65,int:64",
+          "select \"id\" from \"users\" where (\"users\".\"id\" <> ? and \"users\".\"age\" > ? and \"users\".\"age\" >= ? and \"users\".\"age\" < ? and \"users\".\"age\" <= ?)\tint:1,int:18,int:21,int:65,int:64"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "operators_like": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"name\" like $1 and \"users\".\"name\" not like $2 and \"users\".\"name\" ilike $3 and \"users\".\"name\" not ilike $4)\ttext:A%,text:B%,text:a%,text:b%",
+          "select `id` from `users` where (`users`.`name` like ? and `users`.`name` not like ? and `users`.`name` ilike ? and `users`.`name` not ilike ?)\ttext:A%,text:B%,text:a%,text:b%",
+          "select \"id\" from \"users\" where (\"users\".\"name\" like ? and \"users\".\"name\" not like ? and \"users\".\"name\" ilike ? and \"users\".\"name\" not ilike ?)\ttext:A%,text:B%,text:a%,text:b%"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"name\" like $1 and \"users\".\"name\" not like $2 and \"users\".\"name\" ilike $3 and \"users\".\"name\" not ilike $4)\ttext:A%,text:B%,text:a%,text:b%",
+          "select `id` from `users` where (`users`.`name` like ? and `users`.`name` not like ? and `users`.`name` ilike ? and `users`.`name` not ilike ?)\ttext:A%,text:B%,text:a%,text:b%",
+          "select \"id\" from \"users\" where (\"users\".\"name\" like ? and \"users\".\"name\" not like ? and \"users\".\"name\" ilike ? and \"users\".\"name\" not ilike ?)\ttext:A%,text:B%,text:a%,text:b%"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "operators_list": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"id\" in ($1, $2) and \"users\".\"id\" not in ($3))\tint:1,int:2,int:3",
+          "select `id` from `users` where (`users`.`id` in (?, ?) and `users`.`id` not in (?))\tint:1,int:2,int:3",
+          "select \"id\" from \"users\" where (\"users\".\"id\" in (?, ?) and \"users\".\"id\" not in (?))\tint:1,int:2,int:3"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"id\" in ($1, $2) and \"users\".\"id\" not in ($3))\tint:1,int:2,int:3",
+          "select `id` from `users` where (`users`.`id` in (?, ?) and `users`.`id` not in (?))\tint:1,int:2,int:3",
+          "select \"id\" from \"users\" where (\"users\".\"id\" in (?, ?) and \"users\".\"id\" not in (?))\tint:1,int:2,int:3"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "operators_logical": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"name\" = $1 and (\"users\".\"age\" > $2 or \"users\".\"age\" is null))\ttext:a,int:18",
+          "select `id` from `users` where (`users`.`name` = ? and (`users`.`age` > ? or `users`.`age` is null))\ttext:a,int:18",
+          "select \"id\" from \"users\" where (\"users\".\"name\" = ? and (\"users\".\"age\" > ? or \"users\".\"age\" is null))\ttext:a,int:18"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"name\" = $1 and (\"users\".\"age\" > $2 or \"users\".\"age\" is null))\ttext:a,int:18",
+          "select `id` from `users` where (`users`.`name` = ? and (`users`.`age` > ? or `users`.`age` is null))\ttext:a,int:18",
+          "select \"id\" from \"users\" where (\"users\".\"name\" = ? and (\"users\".\"age\" > ? or \"users\".\"age\" is null))\ttext:a,int:18"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "operators_null": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"age\" is null and \"users\".\"name\" is not null)\t",
+          "select `id` from `users` where (`users`.`age` is null and `users`.`name` is not null)\t",
+          "select \"id\" from \"users\" where (\"users\".\"age\" is null and \"users\".\"name\" is not null)\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where (\"users\".\"age\" is null and \"users\".\"name\" is not null)\t",
+          "select `id` from `users` where (`users`.`age` is null and `users`.`name` is not null)\t",
+          "select \"id\" from \"users\" where (\"users\".\"age\" is null and \"users\".\"name\" is not null)\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "schema_alias": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "\"u\".\"id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "\"u\".\"id\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "schema_column": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "\"users\".\"id\"\t",
+          "`users`.`id`\t",
+          "\"users\".\"id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "\"users\".\"id\"\t",
+          "`users`.`id`\t",
+          "\"users\".\"id\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "schema_namespace": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "\"auth\".\"accounts\".\"account_id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "\"auth\".\"accounts\".\"account_id\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "schema_table": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "\"users\"\t",
+          "`users`\t",
+          "\"users\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "\"users\"\t",
+          "`users`\t",
+          "\"users\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "select_aggregate": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"age\", count(*) from \"users\" group by \"users\".\"age\" having count(*) > $1\tint:1",
+          "select `age`, count(*) from `users` group by `users`.`age` having count(*) > ?\tint:1",
+          "select \"age\", count(*) from \"users\" group by \"users\".\"age\" having count(*) > ?\tint:1"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"age\", count(*) from \"users\" group by \"users\".\"age\" having count(*) > $1\tint:1",
+          "select `age`, count(*) from `users` group by `users`.`age` having count(*) > ?\tint:1",
+          "select \"age\", count(*) from \"users\" group by \"users\".\"age\" having count(*) > ?\tint:1"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "select_distinct": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select distinct \"id\" from \"users\"\t",
+          "select distinct `id` from `users`\t",
+          "select distinct \"id\" from \"users\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select distinct \"id\" from \"users\"\t",
+          "select distinct `id` from `users`\t",
+          "select distinct \"id\" from \"users\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "select_fields": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\", \"name\" from \"users\"\t",
+          "select `id`, `name` from `users`\t",
+          "select \"id\", \"name\" from \"users\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\", \"name\" from \"users\"\t",
+          "select `id`, `name` from `users`\t",
+          "select \"id\", \"name\" from \"users\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "select_limit": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" limit $1 offset $2\tint:10,int:5",
+          "select `id` from `users` limit ? offset ?\tint:10,int:5",
+          "select \"id\" from \"users\" limit ? offset ?\tint:10,int:5"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" limit $1 offset $2\tint:10,int:5",
+          "select `id` from `users` limit ? offset ?\tint:10,int:5",
+          "select \"id\" from \"users\" limit ? offset ?\tint:10,int:5"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "select_order": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" order by \"users\".\"name\" asc, \"users\".\"id\" desc\t",
+          "select `id` from `users` order by `users`.`name` asc, `users`.`id` desc\t",
+          "select \"id\" from \"users\" order by \"users\".\"name\" asc, \"users\".\"id\" desc\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" order by \"users\".\"name\" asc, \"users\".\"id\" desc\t",
+          "select `id` from `users` order by `users`.`name` asc, `users`.`id` desc\t",
+          "select \"id\" from \"users\" order by \"users\".\"name\" asc, \"users\".\"id\" desc\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "select_where": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where \"users\".\"id\" = $1\tint:1",
+          "select `id` from `users` where `users`.`id` = ?\tint:1",
+          "select \"id\" from \"users\" where \"users\".\"id\" = ?\tint:1"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where \"users\".\"id\" = $1\tint:1",
+          "select `id` from `users` where `users`.`id` = ?\tint:1",
+          "select \"id\" from \"users\" where \"users\".\"id\" = ?\tint:1"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "set_except": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "(select \"id\" from \"users\") except (select \"id\" from \"posts\")\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "(select \"id\" from \"users\") except (select \"id\" from \"posts\")\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "set_intersect": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "(select \"id\" from \"users\") intersect (select \"id\" from \"posts\")\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "(select \"id\" from \"users\") intersect (select \"id\" from \"posts\")\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "set_union": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "(select \"id\" from \"users\") union (select \"id\" from \"posts\")\t",
+          "(select `id` from `users`) union (select `id` from `posts`)\t",
+          "select \"id\" from \"users\" union select \"id\" from \"posts\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "(select \"id\" from \"users\") union (select \"id\" from \"posts\")\t",
+          "(select `id` from `users`) union (select `id` from `posts`)\t",
+          "select \"id\" from \"users\" union select \"id\" from \"posts\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "sql_identifier": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\"\t",
+          "select `users`\t",
+          "select \"users\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\"\t",
+          "select `users`\t",
+          "select \"users\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "sql_params": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select $1, $2, $3\tint:1,bool:true,text:x",
+          "select ?, ?, ?\tint:1,bool:true,text:x",
+          "select ?, ?, ?\tint:1,bool:true,text:x"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select $1, $2, $3\tint:1,bool:true,text:x",
+          "select ?, ?, ?\tint:1,bool:true,text:x",
+          "select ?, ?, ?\tint:1,bool:true,text:x"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "sql_raw": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select 1\t",
+          "select 1\t",
+          "select 1\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select 1\t",
+          "select 1\t",
+          "select 1\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "subquery_exists": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where exists (select \"id\" from \"posts\" where \"posts\".\"user_id\" = \"users\".\"id\")\t",
+          "select `id` from `users` where exists (select `id` from `posts` where `posts`.`user_id` = `users`.`id`)\t",
+          "select \"id\" from \"users\" where exists (select \"id\" from \"posts\" where \"posts\".\"user_id\" = \"users\".\"id\")\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where exists (select \"id\" from \"posts\" where \"posts\".\"user_id\" = \"users\".\"id\")\t",
+          "select `id` from `users` where exists (select `id` from `posts` where `posts`.`user_id` = `users`.`id`)\t",
+          "select \"id\" from \"users\" where exists (select \"id\" from \"posts\" where \"posts\".\"user_id\" = \"users\".\"id\")\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "subquery_from": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from (select \"id\", \"name\" from \"users\") \"s\"\t",
+          "select `id` from (select `id`, `name` from `users`) `s`\t",
+          "select \"id\" from (select \"id\", \"name\" from \"users\") \"s\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from (select \"id\", \"name\" from \"users\") \"s\"\t",
+          "select `id` from (select `id`, `name` from `users`) `s`\t",
+          "select \"id\" from (select \"id\", \"name\" from \"users\") \"s\"\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    },
+    "subquery_in": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where \"users\".\"id\" in (select \"user_id\" from \"posts\")\t",
+          "select `id` from `users` where `users`.`id` in (select `user_id` from `posts`)\t",
+          "select \"id\" from \"users\" where \"users\".\"id\" in (select \"user_id\" from \"posts\")\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"id\" from \"users\" where \"users\".\"id\" in (select \"user_id\" from \"posts\")\t",
+          "select `id` from `users` where `users`.`id` in (select `user_id` from `posts`)\t",
+          "select \"id\" from \"users\" where \"users\".\"id\" in (select \"user_id\" from \"posts\")\t"
+        ]
+      },
+      "go": {
+        "status": "fail",
+        "lines": []
+      }
+    }
+  }
+}

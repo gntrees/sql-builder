@@ -1,0 +1,4 @@
+title = "INSERT fills omitted columns"
+feature = "insert/values"
+why = "default (pg/mysql) vs null (sqlite)."
+dialects = "postgres,mysql,sqlite"

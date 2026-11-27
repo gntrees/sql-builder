@@ -1,0 +1,190 @@
+import sql { Sql, append, int } "./sql.lt"
+import schema { Table, Assignment } "./schema.lt"
+import dialect { Dialect, sql_to_query } "./dialect.lt"
+import value { Rendered, BuildError } "./value.lt"
+
+package insert {
+  /// Builder INSERT.
+  ///
+  /// Drizzle selalu menyebut seluruh kolom tabel dan memakai `default`
+  /// (Postgres/MySQL) atau `null` (SQLite) untuk kolom yang tidak diberikan.
+  export struct Insert {
+    table: Option<Table>
+    rows: List<List<Assignment>>
+    conflict_action: Str
+    conflict_target: List<Str>
+    conflict_set: List<Assignment>
+    returning_fields: List<Sql>
+    returning_all: Bool
+    dialect: Option<Dialect>
+  }
+
+  export fn create(table: Table) -> Insert {
+    Insert(
+      table: Some(table),
+      rows: [],
+      conflict_action: "",
+      conflict_target: [],
+      conflict_set: [],
+      returning_fields: [],
+      returning_all: false,
+      dialect: None,
+    )
+  }
+
+  fn copy(
+    s: Insert,
+    rows: List<List<Assignment>>,
+    conflict_action: Str,
+    conflict_target: List<Str>,
+    conflict_set: List<Assignment>,
+    returning_fields: List<Sql>,
+    returning_all: Bool,
+    dialect: Option<Dialect>,
+  ) -> Insert {
+    Insert(
+      table: s.table,
+      rows: rows,
+      conflict_action: conflict_action,
+      conflict_target: conflict_target,
+      conflict_set: conflict_set,
+      returning_fields: returning_fields,
+      returning_all: returning_all,
+      dialect: dialect,
+    )
+  }
+
+  export fn values(s: Insert, rows: List<List<Assignment>>) -> Insert {
+    copy(s, rows, s.conflict_action, s.conflict_target, s.conflict_set, s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn on_conflict_do_nothing(s: Insert) -> Insert {
+    copy(s, s.rows, "nothing", [], [], s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn on_conflict_do_nothing_target(s: Insert, columns: List<Str>) -> Insert {
+    copy(s, s.rows, "nothing", columns, [], s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn on_conflict_do_update(s: Insert, columns: List<Str>, assignments: List<Assignment>) -> Insert {
+    copy(s, s.rows, "update", columns, assignments, s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  /// MySQL tidak punya `on conflict`; variannya `on duplicate key update`.
+  export fn on_duplicate_key_update(s: Insert, assignments: List<Assignment>) -> Insert {
+    copy(s, s.rows, "duplicate", [], assignments, s.returning_fields, s.returning_all, s.dialect)
+  }
+
+  export fn returning(s: Insert, fields_list: List<Sql>) -> Insert {
+    copy(s, s.rows, s.conflict_action, s.conflict_target, s.conflict_set, fields_list, false, s.dialect)
+  }
+
+  export fn returning_all_columns(s: Insert) -> Insert {
+    copy(s, s.rows, s.conflict_action, s.conflict_target, s.conflict_set, [], true, s.dialect)
+  }
+
+  export fn set_dialect(s: Insert, d: Dialect) -> Insert {
+    copy(s, s.rows, s.conflict_action, s.conflict_target, s.conflict_set, s.returning_fields, s.returning_all, Some(d))
+  }
+
+  export fn build(s: Insert) -> Result<Rendered, BuildError> {
+    match s.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(d) => {
+        match s.table {
+          None => Err(BuildError.MissingTable)
+          Some(table) => Ok(sql_to_query(d, to_sql(s, table, d)))
+        }
+      }
+    }
+  }
+
+  fn value_for(row: List<Assignment>, column: Str) -> Option<Sql> {
+    let mut found: Option<Sql> = None
+    for item in row {
+      if item.column == column {
+        found = Some(item.value)
+      }
+    }
+    found
+  }
+
+  fn column_names(table: Table) -> Sql {
+    sql.join(table.columns.map(fn(column) => sql.identifier(column.name)), ", ")
+  }
+
+  /// Kolom yang tidak diberikan: `default` (Postgres/MySQL) atau `null` (SQLite).
+  fn missing_token(d: Dialect) -> Sql {
+    if d.kind == "sqlite" {
+      sql.raw("null")
+    } else {
+      sql.raw("default")
+    }
+  }
+
+  fn to_sql(s: Insert, table: Table, d: Dialect) -> Sql {
+    let mut q = append(
+      append(
+        append(append(sql.raw("insert into "), schema.from_ref(table)), sql.raw(" (")),
+        column_names(table),
+      ),
+      sql.raw(") values "),
+    )
+
+    let mut row_parts: List<Sql> = []
+    for row in s.rows {
+      let mut column_parts: List<Sql> = []
+      for column in table.columns {
+        match value_for(row, column.name) {
+          Some(value) => {
+            column_parts = column_parts.push(value)
+          }
+          None => {
+            column_parts = column_parts.push(missing_token(d))
+          }
+        }
+      }
+      row_parts = row_parts.push(
+        append(append(sql.raw("("), sql.join(column_parts, ", ")), sql.raw(")")),
+      )
+    }
+    q = append(q, sql.join(row_parts, ", "))
+
+    if s.conflict_action == "duplicate" {
+      q = append(
+        append(q, sql.raw(" on duplicate key update ")),
+        sql.join(s.conflict_set.map(fn(item) => schema.to_sql(item)), ", "),
+      )
+    } else if s.conflict_action != "" {
+      q = append(q, sql.raw(" on conflict"))
+      if s.conflict_target.len() > 0 {
+        q = append(
+          append(
+            append(q, sql.raw(" (")),
+            sql.join(s.conflict_target.map(fn(name) => sql.identifier(name)), ", "),
+          ),
+          sql.raw(")"),
+        )
+      }
+      if s.conflict_action == "nothing" {
+        q = append(q, sql.raw(" do nothing"))
+      } else {
+        q = append(
+          append(q, sql.raw(" do update set ")),
+          sql.join(s.conflict_set.map(fn(item) => schema.to_sql(item)), ", "),
+        )
+      }
+    }
+
+    let returned = if s.returning_all {
+      table.columns.map(fn(column) => sql.identifier(column.name))
+    } else {
+      s.returning_fields
+    }
+    if returned.len() > 0 {
+      q = append(append(q, sql.raw(" returning ")), sql.join(returned, ", "))
+    }
+
+    q
+  }
+}

@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main, lt-core]
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: set -o pipefail; bun install --frozen-lockfile 2>&1 | tee install.log
+      - run: set -o pipefail; bun run generate 2>&1 | tee generate.log
+      - run: set -o pipefail; bun test tests/ 2>&1 | tee test.log
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error:|error TS|\(fail\)|Expected|Received|panicked at' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0
+
+  integration-db:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: set -o pipefail; bun install --frozen-lockfile 2>&1 | tee install.log
+      - run: set -o pipefail; bun run generate 2>&1 | tee generate.log
+      - run: set -o pipefail; docker compose -f docker-compose.test.yml up -d --wait postgres mysql 2>&1 | tee db-up.log
+      - run: set -o pipefail; bun run db:migrate 2>&1 | tee db-migrate.log
+      - run: set -o pipefail; DB_TESTS=1 bun test tests/db 2>&1 | tee test.log
+      - if: always()
+        run: docker compose -f docker-compose.test.yml logs
+      - if: always()
+        run: docker compose -f docker-compose.test.yml down -v
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error:|error TS|\(fail\)|Expected|Received|panicked at|Cannot|failed to' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0

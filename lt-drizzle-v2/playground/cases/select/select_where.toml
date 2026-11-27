@@ -1,0 +1,4 @@
+title = "WHERE qualifies the left-hand column"
+feature = "select/where"
+why = "where "users"."id" = $1"
+dialects = "postgres,mysql,sqlite"

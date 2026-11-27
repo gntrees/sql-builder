@@ -1,4 +1,0 @@
-Match: FAIL
-Input SQL: SELECT * FROM users WHERE column_name = 'active'
-Output SQL: (empty)
-Error: Unexpected keyword 'export'

@@ -1,0 +1,3 @@
+title = "Composite primary keys stay ordered"
+feature = "key/composite"
+why = "Prisma primaryKey.fields is a list; the IR keeps the database order so TableMeta and the v2 Table adapter can preserve it."

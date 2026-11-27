@@ -1,1 +1,0 @@
-SELECT * FROM audit_logs WHERE audit_logs.success = true OR audit_logs.action > 100

@@ -1,1 +1,0 @@
-SELECT * FROM users WHERE (SELECT COUNT(*) FROM users) > 100

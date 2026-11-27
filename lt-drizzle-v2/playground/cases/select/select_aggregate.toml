@@ -1,0 +1,4 @@
+title = "Aggregates and GROUP BY"
+feature = "select/aggregate"
+why = "count(*) and sum over an unqualified field."
+dialects = "postgres,mysql,sqlite"

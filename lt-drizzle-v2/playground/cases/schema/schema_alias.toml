@@ -1,0 +1,4 @@
+title = "Aliased columns use the alias"
+feature = "schema/alias"
+why = "Drizzle renders a table alias as the qualifier, and as `"users" "u"` inside FROM."
+dialects = "postgres"

@@ -1,0 +1,325 @@
+import Query from "./src/sql.lt"
+import Node from "./src/sql.lt"
+import Values from "./src/value.lt"
+import ParseError from "./src/sql.lt"
+import Assignment from "./src/sql.lt"
+import Users from "./src/schema.lt"
+import Posts from "./src/schema.lt"
+
+test class QueryTest {
+  fn build() -> Query {
+    Query.create()
+      .select([Node.col("id"), Node.col("name")])
+      .from_table(Node.table("users"))
+      .where([Node.col("active").eq(Node.bool(true))])
+      .order_by([Node.col("name").desc()])
+      .limit(Node.int(10))
+      .set_dialect("postgres")
+  }
+
+  test fn postgres_select() {
+    let q = Query.create()
+      .select([Node.col("id")])
+      .from_table(Node.table("users"))
+      .where([Node.col("active").eq(Node.bool(true))])
+      .limit(Node.int(10))
+      .set_dialect("postgres")
+    match q.parse() {
+      Ok(result) => {
+        Expect.equal(result.sql, `SELECT "id" FROM "users" WHERE "active" = $1 LIMIT $2`)
+        Expect.equal(result.sql_with_param, `SELECT "id" FROM "users" WHERE "active" = TRUE LIMIT 10`)
+        Expect.equal(result.param.len(), 2)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn order_and_limit() {
+    match Query.create()
+      .select([Node.col("id"), Node.col("name")])
+      .from_table(Node.table("users"))
+      .where([Node.col("age").gte(Node.int(18))])
+      .order_by([Node.col("name").desc()])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `SELECT "id", "name" FROM "users" WHERE "age" >= $1 ORDER BY "name" DESC`,
+        )
+        Expect.equal(
+          result.sql_with_param,
+          `SELECT "id", "name" FROM "users" WHERE "age" >= 18 ORDER BY "name" DESC`,
+        )
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn qualified_identifier() {
+    match Query.create()
+      .select([Node.col("users.id")])
+      .from_table(Node.table("public.users"))
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `SELECT "users"."id" FROM "public"."users"`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn and_group_is_parenthesised() {
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("a").eq(Node.int(1)).and([Node.col("b").eq(Node.int(2))])])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `SELECT "id" WHERE ( "a" = $1 AND "b" = $2 )`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn missing_dialect() {
+    match Query.create().select([Node.col("id")]).parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.NoDialect => Expect.equal("ok", "ok")
+        _ => Expect.equal("NoDialect", "other error")
+      }
+    }
+  }
+
+  test fn unsupported_dialect() {
+    match Query.create().select([Node.col("id")]).set_dialect("sqlite").parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.UnsupportedDialect(name) => Expect.equal(name, "sqlite")
+        _ => Expect.equal("UnsupportedDialect", "other error")
+      }
+    }
+  }
+
+  test fn empty_query_is_rejected() {
+    match Query.create().set_dialect("postgres").parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.EmptyQuery => Expect.equal("ok", "ok")
+        _ => Expect.equal("EmptyQuery", "other error")
+      }
+    }
+  }
+
+  test fn string_literal_escapes_quote() {
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("name").eq(Node.str("o'brien"))])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql_with_param, `SELECT "id" WHERE "name" = 'o''brien'`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn insert_with_conflict_update() {
+    match Query.create()
+      .insert(Node.table("t"), [Assignment.str("name", "x")])
+      .on_conflict_do_update(Node.col("id"), [Assignment.str("name", "y")])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(
+        result.sql,
+        `INSERT INTO "t" ( "name" ) VALUES ( $1 ) ON CONFLICT ("id") DO UPDATE SET "name" = $2`,
+      )
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn update_and_delete() {
+    match Query.create()
+      .update(Node.table("users"), [Assignment.int("age", 2), Assignment.str("name", "a")])
+      .where([Node.col("id").eq(Node.int(1))])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(result.sql, `UPDATE "users" SET "age" = $1, "name" = $2 WHERE "id" = $3`)
+        Expect.equal(
+          result.sql_with_param,
+          `UPDATE "users" SET "age" = 2, "name" = 'a' WHERE "id" = 1`,
+        )
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn in_list_numbers_parameters() {
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("x").in_list([Node.int(1), Node.int(2), Node.int(3)])])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `SELECT "id" WHERE "x" IN ( $1, $2, $3 )`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn between_and_values() {
+    match Query.create()
+      .values([[Node.int(1), Node.str("a")], [Node.int(2), Node.str("b")]])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `VALUES ( $1, $2 ), ( $3, $4 )`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("x").between(Node.int(1), Node.int(5))])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `SELECT "id" WHERE "x" BETWEEN $1 AND $2`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  fn members() -> Query {
+    Query.create()
+      .select([Node.col("uid")])
+      .from_table(Node.table("members"))
+      .where([Node.col("ok").eq(Node.bool(true))])
+  }
+
+  test fn exists_and_numbering() {
+    match Query.create()
+      .select([Node.col("id")])
+      .from_table(Node.table("t"))
+      .where([Node.col("a").eq(Node.int(1)).and([Node.exists(members())])])
+      .limit(Node.int(5))
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `SELECT "id" FROM "t" WHERE ( "a" = $1 AND EXISTS (SELECT "uid" FROM "members" WHERE "ok" = $2) ) LIMIT $3`,
+        )
+        Expect.equal(result.param.len(), 3)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn in_subquery_and_cte() {
+    match Query.create()
+      .with_cte(members(), "active")
+      .select([Node.col("id")])
+      .from_table(Node.table("active"))
+      .where([Node.col("id").in_query(members())])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(
+        result.sql,
+        `WITH "active" AS (SELECT "uid" FROM "members" WHERE "ok" = $1) SELECT "id" FROM "active" WHERE "id" IN (SELECT "uid" FROM "members" WHERE "ok" = $2)`,
+      )
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn mysql_placeholders_and_row() {
+    match Query.create()
+      .values([[Node.str("a"), Node.int(1)]])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(result.sql, `VALUES ROW ( ?, ? )`)
+        Expect.equal(result.sql_with_param, `VALUES ROW ( 'a', 1 )`)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("x").ilike(Node.str("a%"))])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, "SELECT `id` WHERE `x` LIKE ?")
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn mysql_rejects_unmapped_features() {
+    match Query.create()
+      .select([Node.col("a")])
+      .from_table(Node.table("t"))
+      .full_join(Node.table("u"), [Node.col("t.x").eq(Node.col("u.x"))])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.Unsupported(message) => Expect.equal(message, "FULL JOIN is not supported by mysql")
+        _ => Expect.equal("Unsupported", "other error")
+      }
+    }
+    match Query.create()
+      .insert(Node.table("t"), [Assignment.int("a", 1)])
+      .returning([Node.col("id")])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.Unsupported(message) => Expect.equal(message, "RETURNING is not supported by mysql")
+        _ => Expect.equal("Unsupported", "other error")
+      }
+    }
+  }
+
+  test fn typed_schema_columns() {
+    match Query.create()
+      .select([Users.id().node(), Users.name().node()])
+      .from_table(Users.table().node())
+      .where([Users.active().eq_bool(true), Users.age().gte_int(18)])
+      .order_by([Users.name().desc()])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `SELECT "users"."id", "users"."name" FROM "users" WHERE "users"."active" = $1 AND "users"."age" >= $2 ORDER BY "users"."name" DESC`,
+        )
+        Expect.equal(result.param.len(), 2)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn typed_schema_bare_and_join() {
+    match Query.create()
+      .select([Users.id().bare()])
+      .from_table(Users.table().node())
+      .inner_join(Posts.table().node(), [Posts.user_id().eq(Users.id().node())])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(
+        result.sql,
+        `SELECT "id" FROM "users" INNER JOIN "posts" ON "posts"."user_id" = "users"."id"`,
+      )
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn transaction_statements() {
+    match Query.create()
+      .transaction([
+        Query.create().insert(Node.table("t"), [Assignment.int("a", 1)]),
+        Query.create()
+          .update(Node.table("t"), [Assignment.int("a", 2)])
+          .where([Node.col("id").eq(Node.int(3))]),
+      ])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `BEGIN; INSERT INTO "t" ( "a" ) VALUES ( $1 ); UPDATE "t" SET "a" = $2 WHERE "id" = $3; COMMIT`,
+        )
+        Expect.equal(result.param.len(), 3)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+}

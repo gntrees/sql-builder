@@ -1,0 +1,4 @@
+title = "IN and NOT IN"
+feature = "operators/list"
+why = "Empty lists become false/true literals."
+dialects = "postgres,mysql,sqlite"

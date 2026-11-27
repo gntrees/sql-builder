@@ -1,0 +1,4 @@
+title = "Common table expression"
+feature = "cte"
+why = "with "active" as (...) select ..."
+dialects = "postgres,mysql,sqlite"

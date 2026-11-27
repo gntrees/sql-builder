@@ -1,0 +1,10 @@
+import { and, asc, between, count, desc, eq, exists, gt, gte, ilike, inArray, isNotNull, isNull, like, lt, lte, ne, not, notBetween, notInArray, notLike, notIlike, or, sql, sum } from "drizzle-orm";
+import { alias, integer, pgSchema } from "drizzle-orm/pg-core";
+import { out, outQuery, pg, my, sq, pgDb, myDb, sqDb, pgUsers, myUsers, sqUsers, pgPosts, myPosts, sqPosts, pgSub, mySub, sqSub, pgCte, myCte, sqCte } from "../../tables";
+
+
+export const expected = {
+  postgres: out(pg, sql`select ${1}, ${true}, ${"x"}`),
+  mysql: out(my, sql`select ${1}, ${true}, ${"x"}`),
+  sqlite: out(sq, sql`select ${1}, ${true}, ${"x"}`),
+};

@@ -1,0 +1,167 @@
+import sql { Sql, append, identifier, raw } "./sql.lt"
+
+package schema {
+  /// Definisi satu kolom.
+  export struct Column {
+    name: Str
+    sql_type: Str
+    not_null: Bool
+    primary: Bool
+    unique: Bool
+    has_default: Bool
+    default_sql: Str
+  }
+
+  /// Definisi tabel: nama SQL, schema opsional, alias opsional, dan kolom.
+  export struct Table {
+    name: Str
+    schema: Option<Str>
+    alias: Option<Str>
+    columns: List<Column>
+  }
+
+  /// Satu pasangan kolom = nilai untuk `insert`/`update`.
+  export struct Assignment {
+    column: Str
+    value: Sql
+  }
+
+  export fn with_not_null(c: Column) -> Column {
+    Column(
+      name: c.name,
+      sql_type: c.sql_type,
+      not_null: true,
+      primary: c.primary,
+      unique: c.unique,
+      has_default: c.has_default,
+      default_sql: c.default_sql,
+    )
+  }
+
+  export fn with_primary(c: Column) -> Column {
+    Column(
+      name: c.name,
+      sql_type: c.sql_type,
+      not_null: true,
+      primary: true,
+      unique: c.unique,
+      has_default: c.has_default,
+      default_sql: c.default_sql,
+    )
+  }
+
+  export fn with_unique(c: Column) -> Column {
+    Column(
+      name: c.name,
+      sql_type: c.sql_type,
+      not_null: c.not_null,
+      primary: c.primary,
+      unique: true,
+      has_default: c.has_default,
+      default_sql: c.default_sql,
+    )
+  }
+
+  export fn with_default(c: Column, value: Str) -> Column {
+    Column(
+      name: c.name,
+      sql_type: c.sql_type,
+      not_null: c.not_null,
+      primary: c.primary,
+      unique: c.unique,
+      has_default: true,
+      default_sql: value,
+    )
+  }
+
+  export fn plain(name: Str, columns: List<Column>) -> Table {
+    Table(name: name, schema: None, alias: None, columns: columns)
+  }
+
+  export fn with_schema(name: Str, schema_name: Str, columns: List<Column>) -> Table {
+    Table(name: name, schema: Some(schema_name), alias: None, columns: columns)
+  }
+
+  export fn with_alias(name: Str, alias_name: Str, columns: List<Column>) -> Table {
+    Table(name: name, schema: None, alias: Some(alias_name), columns: columns)
+  }
+
+  export fn with_schema_alias(
+    name: Str,
+    schema_name: Str,
+    alias_name: Str,
+    columns: List<Column>,
+  ) -> Table {
+    Table(name: name, schema: Some(schema_name), alias: Some(alias_name), columns: columns)
+  }
+
+  /// Nama yang dipakai untuk mengkualifikasi kolom.
+  export fn label(t: Table) -> Str {
+    match t.alias {
+      Some(value) => value
+      None => t.name
+    }
+  }
+
+  export fn has_column(t: Table, name: Str) -> Bool {
+    let mut found = false
+    for column in t.columns {
+      if column.name == name {
+        found = true
+      }
+    }
+    found
+  }
+
+  /// Referensi kolom, mis. `"users"."id"` atau `"auth"."users"."id"`.
+  export fn col(t: Table, name: Str) -> Sql {
+    append(append(ref(t), raw(".")), identifier(name))
+  }
+
+  /// Field untuk daftar `select`.
+  ///
+  /// Drizzle merender kolom yang dipilih tanpa kualifikasi tabel
+  /// (`select "id" from "users"`), berbeda dari referensi di `where`.
+  export fn field(t: Table, name: Str) -> Sql {
+    identifier(name)
+  }
+
+  /// Semua kolom sebagai field `select`, urutan deklarasi.
+  export fn fields(t: Table) -> List<Sql> {
+    t.columns.map(fn(column) => identifier(column.name))
+  }
+
+  /// Referensi tabel di luar klausa `from`.
+  ///
+  /// Drizzle merender alias sebagai `"u"` saja di sini.
+  export fn ref(t: Table) -> Sql {
+    match t.alias {
+      Some(value) => identifier(value)
+      None => {
+        match t.schema {
+          Some(value) => append(append(identifier(value), raw(".")), identifier(t.name))
+          None => identifier(t.name)
+        }
+      }
+    }
+  }
+
+  /// Referensi tabel untuk klausa `from`.
+  ///
+  /// Drizzle merender alias di `from` sebagai `"users" "u"` (nama asli lalu
+  /// alias), berbeda dari `ref`.
+  export fn from_ref(t: Table) -> Sql {
+    match t.alias {
+      Some(value) => append(append(identifier(t.name), raw(" ")), identifier(value))
+      None => ref(t)
+    }
+  }
+
+  export fn assign(column: Str, value: Sql) -> Assignment {
+    Assignment(column: column, value: value)
+  }
+
+  export fn to_sql(a: Assignment) -> Sql {
+    append(append(identifier(a.column), raw(" = ")), a.value)
+  }
+}

@@ -1,0 +1,5 @@
+import { sqlBuilder } from "../../../../../generated/gntrees-sql-builder/typescript/index";
+
+const c = sqlBuilder("q");
+export const schema = c.values([[c.select(c.col("id")).from(c.table("b")), 1]])
+                .setDialect("postgres");

@@ -1,0 +1,36 @@
+import sql { append, identifier, int, param, raw, tag } "./sql.lt"
+import value { SqlArg, Value } "./value.lt"
+import dialect { mysql, postgres, sql_to_query } "./dialect.lt"
+
+package sql_test {
+  test "raw sql is passed through" {
+    let rendered = sql_to_query(postgres(), raw("select 1"))
+    expect.eq(rendered.sql, "select 1")
+    expect.eq(rendered.params.len(), 0)
+  }
+
+  test "parameters are numbered in order" {
+    let rendered = sql_to_query(
+      postgres(),
+      append(append(raw("select "), param(Value.Integer(1))), append(raw(", "), param(Value.Text("x")))),
+    )
+    expect.eq(rendered.sql, "select $1, $2")
+    expect.eq(rendered.params.len(), 2)
+  }
+
+  test "identifiers are quoted per dialect" {
+    let postgres_sql = sql_to_query(postgres(), append(raw("select "), identifier("users")))
+    let mysql_sql = sql_to_query(mysql(), append(raw("select "), identifier("users")))
+    expect.eq(postgres_sql.sql, `select "users"`)
+    expect.eq(mysql_sql.sql, "select `users`")
+  }
+
+  test "tag keeps typed values" {
+    let rendered = sql_to_query(
+      postgres(),
+      tag([`select `, `, `, ``], [SqlArg.Integer(1), SqlArg.Text("x")]),
+    )
+    expect.eq(rendered.sql, "select $1, $2")
+    expect.eq(rendered.params.len(), 2)
+  }
+}

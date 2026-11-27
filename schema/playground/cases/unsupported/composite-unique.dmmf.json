@@ -1,0 +1,60 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "User",
+        "dbName": "users",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "email",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["VarChar", ["320"]]
+          },
+          {
+            "name": "orgId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [["email", "orgId"]],
+        "uniqueIndexes": [],
+        "_comment": "indexes are declared on datamodel.indexes below"
+      }
+    ],
+    "enums": [],
+    "indexes": [
+      {
+        "model": "User",
+        "name": "users_email_idx",
+        "type": "normal",
+        "fields": [{ "name": "email" }]
+      }
+    ]
+  }
+}
