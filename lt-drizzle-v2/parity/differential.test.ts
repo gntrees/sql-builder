@@ -20,6 +20,9 @@ import { SqlArg, Value } from "../../generated/lt-drizzle-v2/typescript/src/valu
 import * as ltsql from "../../generated/lt-drizzle-v2/typescript/src/sql";
 import * as ltsel from "../../generated/lt-drizzle-v2/typescript/src/select";
 import * as ltsch from "../../generated/lt-drizzle-v2/typescript/src/schema";
+import * as ltins from "../../generated/lt-drizzle-v2/typescript/src/insert";
+import * as ltupd from "../../generated/lt-drizzle-v2/typescript/src/update";
+import * as ltdel from "../../generated/lt-drizzle-v2/typescript/src/delete";
 import { col, plain, ref, withAlias, withSchema } from "../../generated/lt-drizzle-v2/typescript/src/schema";
 import { integer as pgInteger, serial as ltSerial, text as ltText } from "../../generated/lt-drizzle-v2/typescript/src/pg_core";
 import type { Value as ValueT } from "../../generated/lt-drizzle-v2/typescript/src/value";
@@ -548,5 +551,186 @@ describe("joins, subqueries, ctes, and set operations", () => {
     "except",
     fromDrizzle(db.select({ id: users.id }).from(users).except(db.select({ id: posts.id }).from(posts)).toSQL()),
     ltsel.exceptQuery(ltsel.fields(base(tu), list([ltsch.field(tu, "id")])), other()),
+  );
+});
+
+describe("dml", () => {
+  const users = pgTable("users", { id: serial("id"), name: text("name"), age: integer("age") });
+  const t = plain("users", list([ltSerial("id"), ltText("name"), pgInteger("age")]));
+  const db = new PgDatabase(new PgDialect(), {});
+  const pgDialect = postgres();
+  const build = (builder: { build?: unknown }): Outcome => {
+    const result = (builder as any).tag === undefined ? undefined : undefined;
+    throw new Error("unused");
+  };
+  const unwrap = (result: any): Outcome => {
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, result: any) => {
+    diff(name, expected, unwrap(result));
+  };
+  const assign = (column: string, value: Sql) => ltsch.assign(column, value);
+
+  check(
+    "insert fills omitted columns with default",
+    fromDrizzle(db.insert(users).values({ name: "a", age: 3 }).toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.values(
+          ltins.create(t),
+          list([list([assign("name", ltsql.str("a")), assign("age", ltsql.int(3n))])]),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "multi-row insert",
+    fromDrizzle(db.insert(users).values([{ name: "a", age: 3 }, { name: "b", age: 4 }]).toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.values(
+          ltins.create(t),
+          list([
+            list([assign("name", ltsql.str("a")), assign("age", ltsql.int(3n))]),
+            list([assign("name", ltsql.str("b")), assign("age", ltsql.int(4n))]),
+          ]),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "insert returning every column",
+    fromDrizzle(db.insert(users).values({ name: "a" }).returning().toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.returningAllColumns(
+          ltins.values(ltins.create(t), list([list([assign("name", ltsql.str("a"))])])),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "insert returning a column",
+    fromDrizzle(db.insert(users).values({ name: "a" }).returning({ id: users.id }).toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.returning(
+          ltins.values(ltins.create(t), list([list([assign("name", ltsql.str("a"))])])),
+          list([ltsch.field(t, "id")]),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "on conflict do nothing",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onConflictDoNothing().toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.onConflictDoNothing(
+          ltins.values(ltins.create(t), list([list([assign("name", ltsql.str("a"))])])),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "on conflict target do nothing",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onConflictDoNothing({ target: users.id }).toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.onConflictDoNothingTarget(
+          ltins.values(ltins.create(t), list([list([assign("name", ltsql.str("a"))])])),
+          list(["id"]),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "on conflict do update",
+    fromDrizzle(
+      db.insert(users).values({ name: "a" }).onConflictDoUpdate({ target: users.id, set: { name: "b" } }).toSQL(),
+    ),
+    ltins.build(
+      ltins.setDialect(
+        ltins.onConflictDoUpdate(
+          ltins.values(ltins.create(t), list([list([assign("name", ltsql.str("a"))])])),
+          list(["id"]),
+          list([assign("name", ltsql.str("b"))]),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "update",
+    fromDrizzle(db.update(users).set({ name: "x" }).where(eq(users.id, 1)).toSQL()),
+    ltupd.build(
+      ltupd.setDialect(
+        ltupd.where(
+          ltupd.set(ltupd.create(t), list([assign("name", ltsql.str("x"))])),
+          ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n)),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "update returning every column",
+    fromDrizzle(db.update(users).set({ name: "x", age: 2 }).where(eq(users.id, 1)).returning().toSQL()),
+    ltupd.build(
+      ltupd.setDialect(
+        ltupd.returningAllColumns(
+          ltupd.where(
+            ltupd.set(
+              ltupd.create(t),
+              list([assign("name", ltsql.str("x")), assign("age", ltsql.int(2n))]),
+            ),
+            ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n)),
+          ),
+        ),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "delete",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).toSQL()),
+    ltdel.build(
+      ltdel.setDialect(
+        ltdel.where(ltdel.create(t), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))),
+        pgDialect,
+      ),
+    ),
+  );
+
+  check(
+    "delete returning a column",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).returning({ id: users.id }).toSQL()),
+    ltdel.build(
+      ltdel.setDialect(
+        ltdel.returning(
+          ltdel.where(ltdel.create(t), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))),
+          list([ltsch.field(t, "id")]),
+        ),
+        pgDialect,
+      ),
+    ),
   );
 });

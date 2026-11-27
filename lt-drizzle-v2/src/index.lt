@@ -8,6 +8,9 @@ import pg_core { integer } "./pg_core.lt"
 import mysql_core { int } "./mysql_core.lt"
 import sqlite_core { blob } "./sqlite_core.lt"
 import select { Select, create } "./select.lt"
+import insert { Insert } "./insert.lt"
+import update { Update } "./update.lt"
+import delete { Delete } "./delete.lt"
 
 package drizzle_index {
   export struct Root {}
