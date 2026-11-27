@@ -1,24 +1,9 @@
-name: lt
+name: lt (v1 legacy)
 
-# The .lt port is only affected by its own sources, the emitted packages, the
-# legacy oracle, and the differential test. Running it on unrelated changes
-# (legacy generator, docs) wastes minutes.
+# The v1 port is deprecated and its sources still use the pre-v0.3 import
+# syntax. Keep the workflow manual until v1 is migrated or removed; the active
+# LT work is covered by `drizzle-v2` and `schema`.
 on:
-  push:
-    branches: [main, lt-core]
-    paths:
-      - "lt/**"
-      - "generated/lt-sql-builder/**"
-      - "tests/lt-differential.test.ts"
-      - "tests/reference/**"
-      - ".github/workflows/lt.yml"
-  pull_request:
-    paths:
-      - "lt/**"
-      - "generated/lt-sql-builder/**"
-      - "tests/lt-differential.test.ts"
-      - "tests/reference/**"
-      - ".github/workflows/lt.yml"
   workflow_dispatch:
 
 defaults:
