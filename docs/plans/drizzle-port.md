@@ -42,7 +42,7 @@ Keberhasilan diukur dengan **differential harness terhadap drizzle asli**, bukan
 | K14 | Verifikasi: differential string/params **dan** roundtrip DB nyata (Postgres + MySQL). |
 | K15 | Slicing **M0–M7** (bagian 8). Gate per slice: TS + Postgres. |
 | K16 | Opsi kolom = **preset immutable** (`Column.int(...).primary()`), karena LT tidak punya default argumen. |
-| K17 | Nama di output host = **snake_case** di semua target. Tanpa pemetaan camelCase. |
+| K17 | Nama sumber ditulis **snake_case** di `.lt`. Emitter LT menormalkan per target (TS `camelCase`, Go `PascalCase`, Python `snake_case`); port tidak menambah lapisan pemetaan nama sendiri. |
 | K18 | Entry point per jenis query: `Select.create()`, `Insert.create(table)`, `Update.create(table)`, `Delete.create(table)`. Bukan satu `Query` besar. |
 | K19 | **Tanpa** `.$dynamic()` / builder mutable. |
 | K20 | Compiler LT **dipin ke SHA `09bffc7`**; bump hanya lewat keputusan eksplisit. |

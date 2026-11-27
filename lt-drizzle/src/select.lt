@@ -1,0 +1,259 @@
+import Sql from "./sql.lt"
+import Table from "./table.lt"
+import Dialect from "./dialect.lt"
+import Rendered from "./value.lt"
+import BuildError from "./value.lt"
+
+/// Builder SELECT yang immutable.
+///
+/// Drizzle memakai `db.select()`; port ini tidak punya `db` (tidak ada IO),
+/// jadi entry point-nya factory statis (lihat docs/plans/drizzle-port.md, K18).
+pub class Select {
+  table: Option<Table>
+  fields: List<Sql>
+  where_clause: Option<Sql>
+  group_fields: List<Sql>
+  having_clause: Option<Sql>
+  order_fields: List<Sql>
+  limit_value: Option<Int>
+  offset_value: Option<Int>
+  distinct_rows: Bool
+  dialect: Option<Dialect>
+
+  pub static fn create() -> Select {
+    Select(
+      table: None,
+      fields: [],
+      where_clause: None,
+      group_fields: [],
+      having_clause: None,
+      order_fields: [],
+      limit_value: None,
+      offset_value: None,
+      distinct_rows: false,
+      dialect: None,
+    )
+  }
+
+  pub fn from_table(self, table: Table) -> Select {
+    Select(
+      table: Some(table),
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn select(self, fields: List<Sql>) -> Select {
+    Select(
+      table: self.table,
+      fields: fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn where(self, expr: Sql) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: Some(expr),
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn group_by(self, fields: List<Sql>) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn having(self, expr: Sql) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: Some(expr),
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn order_by(self, fields: List<Sql>) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn limit(self, value: Int) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: Some(value),
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn offset(self, value: Int) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: Some(value),
+      distinct_rows: self.distinct_rows,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn with_distinct(self) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: true,
+      dialect: self.dialect,
+    )
+  }
+
+  pub fn set_dialect(self, dialect: Dialect) -> Select {
+    Select(
+      table: self.table,
+      fields: self.fields,
+      where_clause: self.where_clause,
+      group_fields: self.group_fields,
+      having_clause: self.having_clause,
+      order_fields: self.order_fields,
+      limit_value: self.limit_value,
+      offset_value: self.offset_value,
+      distinct_rows: self.distinct_rows,
+      dialect: Some(dialect),
+    )
+  }
+
+  /// Bangun menjadi SQL + params.
+  pub fn build(self) -> Result<Rendered, BuildError> {
+    match self.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(dialect) => {
+        match self.table {
+          None => Err(BuildError.MissingTable)
+          Some(table) => Ok(dialect.sql_to_query(self.to_sql(table)))
+        }
+      }
+    }
+  }
+
+  fn to_sql(self, table: Table) -> Sql {
+    let fields = if self.fields.len() == 0 {
+      table.fields()
+    } else {
+      self.fields
+    }
+    let mut sql = Sql.raw("select ")
+    if self.distinct_rows {
+      sql = sql.append(Sql.raw("distinct "))
+    }
+    sql = sql.append(Sql.join(fields, ", ")).append(Sql.raw(" from ")).append(table.from_ref())
+
+    match self.where_clause {
+      Some(expr) => {
+        if !expr.is_empty() {
+          sql = sql.append(Sql.raw(" where ")).append(expr)
+        }
+      }
+      None => {}
+    }
+
+    if self.group_fields.len() > 0 {
+      sql = sql
+        .append(Sql.raw(" group by "))
+        .append(Sql.join(self.group_fields, ", "))
+    }
+
+    match self.having_clause {
+      Some(expr) => {
+        if !expr.is_empty() {
+          sql = sql.append(Sql.raw(" having ")).append(expr)
+        }
+      }
+      None => {}
+    }
+
+    if self.order_fields.len() > 0 {
+      sql = sql
+        .append(Sql.raw(" order by "))
+        .append(Sql.join(self.order_fields, ", "))
+    }
+
+    match self.limit_value {
+      Some(value) => {
+        sql = sql.append(Sql.raw(" limit ")).append(Sql.int(value))
+      }
+      None => {}
+    }
+
+    match self.offset_value {
+      Some(value) => {
+        sql = sql.append(Sql.raw(" offset ")).append(Sql.int(value))
+      }
+      None => {}
+    }
+
+    sql
+  }
+}

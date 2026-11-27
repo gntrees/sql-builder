@@ -66,6 +66,19 @@ pub class Table {
     self.ref().append(Sql.raw(".")).append(Sql.identifier(name))
   }
 
+  /// Field untuk daftar `select`.
+  ///
+  /// Drizzle merender kolom yang dipilih tanpa kualifikasi tabel
+  /// (`select "id" from "users"`), berbeda dari referensi di `where`.
+  pub fn field(self, name: Str) -> Sql {
+    Sql.identifier(name)
+  }
+
+  /// Semua kolom sebagai field `select`, urutan deklarasi.
+  pub fn fields(self) -> List<Sql> {
+    self.columns.map(fn(column) => Sql.identifier(column.name))
+  }
+
   /// Referensi tabel di luar klausa `from`.
   ///
   /// Drizzle merender alias sebagai `"u"` saja di sini.

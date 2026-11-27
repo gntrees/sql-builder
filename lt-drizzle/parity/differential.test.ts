@@ -4,14 +4,16 @@
 // reference), never from a hand-written string. A fixture is green only when
 // the .lt implementation produces byte-identical `sql` and `params`.
 import { describe, expect, test } from "bun:test";
-import { sql } from "drizzle-orm";
+import { and, asc, between, count, desc, eq, gt, ilike, inArray, isNotNull, isNull, like, ne, not, notBetween, notIlike, notInArray, notLike, or, sql, sum } from "drizzle-orm";
 import { MySqlDialect } from "drizzle-orm/mysql-core";
 import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
+import { PgDatabase } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
 import { LList } from "../../generated/lt-drizzle/typescript/_lingua_rt";
 import { Column } from "../../generated/lt-drizzle/typescript/src/column";
 import { Dialect } from "../../generated/lt-drizzle/typescript/src/dialect";
+import { Select } from "../../generated/lt-drizzle/typescript/src/select";
 import { Sql } from "../../generated/lt-drizzle/typescript/src/sql";
 import { Table } from "../../generated/lt-drizzle/typescript/src/table";
 import {
@@ -210,5 +212,199 @@ describe("schema references", () => {
     "schema-qualified table ref",
     fromDrizzle(pg.sqlToQuery(sql`${accounts}`)),
     fromLt(Dialect.postgres().sqlToQuery(accountsTable.ref())),
+  );
+});
+
+describe("select", () => {
+  const users = pgTable("users", {
+    id: serial("id"),
+    name: text("name"),
+    age: integer("age"),
+  });
+  const t = Table.plain(
+    "users",
+    list([Column.serial("id"), Column.text("name"), Column.integer("age")]),
+  );
+  const db = new PgDatabase(new PgDialect(), {});
+  const q = () => Select.create().fromTable(t).setDialect(Dialect.postgres());
+  const build = (builder: Select): Outcome => {
+    const result = builder.build();
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: Select) => {
+    diff(name, expected, build(builder));
+  };
+
+  check(
+    "single column is unqualified",
+    fromDrizzle(db.select({ id: users.id }).from(users).toSQL()),
+    q().select(list([t.field("id")])),
+  );
+
+  check(
+    "renaming the selection key does not alias the column",
+    fromDrizzle(db.select({ userId: users.id }).from(users).toSQL()),
+    q().select(list([t.field("id")])),
+  );
+
+  check(
+    "empty selection means every column",
+    fromDrizzle(db.select().from(users).toSQL()),
+    q(),
+  );
+
+  check(
+    "where equality",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(eq(users.id, 1)).toSQL()),
+    q().select(list([t.field("id")])).where(t.col("id").eq(Sql.int(1n))),
+  );
+
+  check(
+    "and/or are parenthesized",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(eq(users.name, "a"), or(gt(users.age, 18), isNull(users.age))))
+        .toSQL(),
+    ),
+    q()
+      .select(list([t.field("id")]))
+      .where(
+        Sql.and(
+          list([
+            t.col("name").eq(Sql.str("a")),
+            Sql.or(
+              list([t.col("age").gt(Sql.int(18n)), t.col("age").isNull()]),
+            ),
+          ]),
+        ),
+      ),
+  );
+
+  check(
+    "not has no parentheses",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(not(eq(users.id, 1))).toSQL()),
+    q().select(list([t.field("id")])).where(Sql.not(t.col("id").eq(Sql.int(1n)))),
+  );
+
+  check(
+    "ne uses <>",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(ne(users.id, 1)).toSQL()),
+    q().select(list([t.field("id")])).where(t.col("id").ne(Sql.int(1n))),
+  );
+
+  check(
+    "in list",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(inArray(users.id, [1, 2, 3])).toSQL()),
+    q()
+      .select(list([t.field("id")]))
+      .where(t.col("id").inList(list([Sql.int(1n), Sql.int(2n), Sql.int(3n)]))),
+  );
+
+  check(
+    "empty in list becomes false",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(inArray(users.id, [])).toSQL()),
+    q().select(list([t.field("id")])).where(t.col("id").inList(list([]))),
+  );
+
+  check(
+    "empty not-in list becomes true",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(notInArray(users.id, [])).toSQL()),
+    q().select(list([t.field("id")])).where(t.col("id").notInList(list([]))),
+  );
+
+  check(
+    "is not null",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(isNotNull(users.age)).toSQL()),
+    q().select(list([t.field("id")])).where(t.col("age").isNotNull()),
+  );
+
+  check(
+    "between",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(between(users.age, 1, 10)).toSQL()),
+    q()
+      .select(list([t.field("id")]))
+      .where(t.col("age").between(Sql.int(1n), Sql.int(10n))),
+  );
+
+  check(
+    "not between",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(notBetween(users.age, 1, 10)).toSQL()),
+    q()
+      .select(list([t.field("id")]))
+      .where(t.col("age").notBetween(Sql.int(1n), Sql.int(10n))),
+  );
+
+  check(
+    "like family",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(like(users.name, "A%"), notLike(users.name, "B%"), ilike(users.name, "a%"), notIlike(users.name, "b%")))
+        .toSQL(),
+    ),
+    q()
+      .select(list([t.field("id")]))
+      .where(
+        Sql.and(
+          list([
+            t.col("name").like(Sql.str("A%")),
+            t.col("name").notLike(Sql.str("B%")),
+            t.col("name").ilike(Sql.str("a%")),
+            t.col("name").notIlike(Sql.str("b%")),
+          ]),
+        ),
+      ),
+  );
+
+  check(
+    "order by, limit, and offset",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .orderBy(asc(users.name), desc(users.id))
+        .limit(10)
+        .offset(5)
+        .toSQL(),
+    ),
+    q()
+      .select(list([t.field("id")]))
+      .orderBy(list([t.col("name").asc(), t.col("id").desc()]))
+      .limit(10n)
+      .offset(5n),
+  );
+
+  check(
+    "aggregates and group by",
+    fromDrizzle(
+      db
+        .select({ age: users.age, n: count() })
+        .from(users)
+        .groupBy(users.age)
+        .having(gt(count(), 1))
+        .toSQL(),
+    ),
+    q()
+      .select(list([t.field("age"), Sql.countAll()]))
+      .groupBy(list([t.col("age")]))
+      .having(Sql.countAll().gt(Sql.int(1n))),
+  );
+
+  check(
+    "sum over an unqualified field",
+    fromDrizzle(db.select({ s: sum(users.age) }).from(users).toSQL()),
+    q().select(list([Sql.sum(t.field("age"))])),
+  );
+
+  check(
+    "distinct",
+    fromDrizzle(db.selectDistinct({ id: users.id }).from(users).toSQL()),
+    q().select(list([t.field("id")])).withDistinct(),
   );
 });

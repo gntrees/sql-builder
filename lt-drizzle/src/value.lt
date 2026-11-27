@@ -30,6 +30,7 @@ pub enum SqlArg {
 pub enum BuildError {
   Unsupported(Str, Str)
   MissingDialect
+  MissingTable
   UnknownColumn(Str, Str)
 }
 
