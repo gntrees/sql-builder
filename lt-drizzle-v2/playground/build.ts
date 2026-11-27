@@ -286,7 +286,7 @@ for (const item of results) {
 
 const evidence = {
   version: 1,
-  compiler: ltBin,
+  compiler: "lt",
   counts: { cases: results.length, features: features.length },
   cases: Object.fromEntries(
     results.map((item) => [
