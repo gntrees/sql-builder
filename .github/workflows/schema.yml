@@ -59,7 +59,19 @@ jobs:
       - name: build lt
         run: set -o pipefail; cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt 2>&1 | tee build.log
       - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
-      - run: set -o pipefail; bun install --frozen-lockfile 2>&1 | tee install.log
+
+      # The repo-level install pulls @gntrees/method-chain from the private
+      # local registry. The schema job only needs Prisma and TypeScript, so
+      # install those in an isolated directory instead.
+      - name: install schema toolchain
+        run: |
+          set -o pipefail
+          rm -rf .schema-deps node_modules
+          mkdir -p .schema-deps
+          printf '{"name":"schema-toolchain","private":true}\n' > .schema-deps/package.json
+          ( cd .schema-deps && bun add prisma@7.10.1 @prisma/generator-helper@7.10.1 typescript@5 2>&1 | tee ../install.log )
+          mv .schema-deps/node_modules ./node_modules
+          rm -rf .schema-deps
 
       - name: start schema fixture
         run: docker compose -f schema/fixtures/docker-compose.yml up -d --wait
@@ -69,8 +81,8 @@ jobs:
           DATABASE_URL: postgres://gntrees:gntrees@localhost:5434/gntrees_schema
         run: |
           set -o pipefail
-          bunx prisma db pull --force 2>&1 | tee db-pull.log
-          bunx prisma generate 2>&1 | tee generate.log
+          ./node_modules/.bin/prisma db pull --force 2>&1 | tee db-pull.log
+          ./node_modules/.bin/prisma generate 2>&1 | tee generate.log
 
       - name: generate LT
         run: set -o pipefail; bun run schema:generate:allow 2>&1 | tee codegen.log
