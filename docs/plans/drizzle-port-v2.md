@@ -54,7 +54,7 @@ Diverifikasi langsung terhadap compiler `d11a4c9`:
 | # | Keputusan |
 |---|---|
 | V1 | Compiler dipin ke **v0.3.0 / `d11a4c9`**; binary dibangun ulang dari commit itu, bukan dari binary lama. |
-| V2 | Branch baru **`experiment/drizzle-port-v2`** dari tip `experiment/drizzle-port`; kode di **`lt-drizzle-v2/`**; `lt-drizzle/` (v1) read-only sampai v2 M6 hijau, lalu dihapus. |
+| V2 | Branch baru **`experiment/drizzle-port-v2`** dari tip `experiment/drizzle-port`; kode di **`lt-drizzle-v2/`**. `lt-drizzle/` (v1) sudah **dihapus** setelah M6 v2 hijau (commit pembersihan). |
 | V3 | **API + semantics parity**: nama fungsi mengikuti drizzle dalam snake_case (`pg_table`, `eq`, `and`, `sql` tag, `count`, `on_conflict_do_nothing`). |
 | V4 | Free function dipakai; tidak ada lagi class/static method. |
 | V5 | Package mengikuti namespace drizzle: `value`, `sql`, `schema`, `dialect`, `select`, `insert`, `update`, `delete`, `pg_core`, `mysql_core`, `sqlite_core`. |
@@ -91,7 +91,7 @@ lt-drizzle-v2/
                            # direktori yang sama dengan modul yang diuji
   parity/
     differential.test.ts   # 64 kasus v2 vs drizzle
-    v1-vs-v2.test.ts       # sekali-jalan, bukan gate (butuh artefak v1)
+    (v1-vs-v2.test.ts sudah dijalankan sekali: 3 kasus identik, lalu dihapus bersama v1)
     db.test.ts             # roundtrip
     ddl/postgres.sql
     ddl/mysql.sql
@@ -390,8 +390,8 @@ Urutan commit: `lt-drizzle-v2: Mx - <ringkasan>`.
    bandingkan `sql` + `params` byte-exact. Nama kasus dipertahankan dari v1 (64 kasus).
 2. **Harness**: `parity/differential.test.ts` memakai bentuk emit v2 — `Value.Text(...)`,
    `SqlArg.Integer(...)`, fungsi camelCase bebas (`sqlToQuery(d, q)`, `orderBy(s, …)`), struct sebagai class.
-3. **v1 vs v2 (sekali jalan)**: `parity/v1-vs-v2.test.ts` membandingkan output `lt-drizzle`
-   (v1) dan `lt-drizzle-v2` untuk fixture yang sama; tidak masuk gate CI.
+3. **v1 vs v2 (sekali jalan)**: sudah dijalankan sebelum v1 dihapus — 3 kasus (raw, parameter,
+   select lengkap) identik. Skripnya dihapus bersama v1; hasilnya dicatat di §15.
 4. **Test LT**: package `*_test` di `lt-drizzle-v2/tests/`, dijalankan `lt test` di tiga target.
 5. **Roundtrip**: DDL yang sama dengan v1 (`ddl/postgres.sql`, `ddl/mysql.sql`), eksekusi ke
    Postgres 5433 dan MySQL 3307 lewat `docker-compose.test.yml`.
@@ -407,7 +407,7 @@ Urutan commit: `lt-drizzle-v2: Mx - <ringkasan>`.
 4. Roundtrip Postgres + MySQL hijau.
 5. `drizzle-port-v2.md` memuat tabel perbandingan API v2 vs drizzle dan gap tersisa.
 6. Skrip v1-vs-v2 dijalankan sekali dan hasilnya dicatat di plan.
-7. Tidak ada perubahan pada `lt-drizzle/` (v1) selama migrasi, dan tidak ada perubahan compiler LT.
+7. `lt-drizzle/` (v1) tidak diubah selama migrasi, lalu dihapus setelah M6; tidak ada perubahan compiler LT.
 
 ---
 
@@ -450,7 +450,7 @@ compiler menolak) — di luar wewenang branch ini untuk memperbaiki.
 2. Commit plan ini (di branch v2, bukan di branch v1).
 3. Rebuild `lt` dari `d11a4c9`, catat perintahnya di plan/CI.
 4. Kerjakan M0 → M6; satu batch commit per milestone; `verify.sh` wajib hijau.
-5. `lt-drizzle/` v1 tidak disentuh sampai M6 v2 selesai.
+5. `lt-drizzle/` v1 tidak disentuh sampai M6 v2 selesai, lalu dihapus beserta workflow dan script v1.
 6. Setelah M6: jalankan v1-vs-v2 sekali, tulis laporan gap, lalu putuskan apakah v1 dihapus.
 7. Branch tidak di-merge (mengikuti K24 v1).
 

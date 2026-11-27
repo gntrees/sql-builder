@@ -1,6 +1,6 @@
 # Plan: Port Drizzle ORM ke Lingua Tungga
 
-Status: **draft — belum dieksekusi**
+Status: **dihapus** — port v1 sudah digantikan `drizzle-port-v2.md`; dokumen ini disimpan sebagai sejarah.
 Branch: `experiment/drizzle-port` (base: tip branch `lt-core`)
 Repo: `gntrees-sql-builder`
 Compiler: `gntrees/lingua-tungga` di commit **`09bffc7`** (typed tagged template)
