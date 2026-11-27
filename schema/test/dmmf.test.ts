@@ -124,6 +124,14 @@ describe("DMMF -> schema IR", () => {
         });
     });
 
+    test("can ignore internal tables such as migration metadata", () => {
+        const result = buildSchemaIR(fixture, {
+            prismaVersion: "7.10.1",
+            ignoreTables: ["users"],
+        });
+        expect(result.schema.tables.map((table) => table.name)).toEqual(["organizations"]);
+    });
+
     test("is deterministic", () => {
         expect(JSON.stringify(build())).toBe(JSON.stringify(build()));
     });

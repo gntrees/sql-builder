@@ -29,22 +29,27 @@ only declares the datasource provider and schemas. Add this generator to
 
 ```prisma
 generator ltSchema {
-  provider = "bun ./schema/prisma-generator.mjs"
-  output   = "../schema"
+  provider     = "bun ./schema/prisma-generator.mjs"
+  output       = "../schema"
+  ignoreTables = "schema_migrations"
 }
 ```
+
+`ignoreTables` is a comma-separated list of SQL table names that must not appear in the
+IR. It is used here to keep dbmate's `schema_migrations` out of the generated accessors.
 
 Then:
 
 ```sh
 bunx prisma generate
-bun run schema:generate --allow-unsupported
+bun run schema:generate
 ```
 
 `--allow-unsupported` emits `UnsupportedColumn` for columns whose database type
 has no LT mapping. Without it, codegen fails and lists the offending columns.
-CI uses the allow flag because the fixture deliberately contains `jsonb`; the
-unsupported baseline is what actually gates the change.
+The application schema currently has no unsupported columns; the flag is for the
+fixture experiments that deliberately contain `jsonb`/arrays. When the allow flag
+is used, the `unsupported.json` baseline is what gates the change.
 
 ## Commands
 
@@ -53,7 +58,7 @@ unsupported baseline is what actually gates the change.
 | `bun run schema:generate` | Write generated LT; fail on unsupported columns. |
 | `bun run schema:generate:allow` | Same, but emit `UnsupportedColumn`. |
 | `bun run schema:check` | Fail if generated LT is stale. |
-| `bun run schema:check:allow` | Same, for the fixture/CI. |
+| `bun run schema:check:allow` | Same, for fixture experiments with unsupported columns. |
 | `bun run schema:test` | Unit tests and an LT compile check. |
 | `bun run schema:db:up` | Start the fixture Postgres on port 5434. |
 | `bun run schema:db:down` | Stop and remove the fixture database. |
@@ -70,6 +75,15 @@ Custom output:
 ```sh
 bun schema/codegen.ts generate --out path/to/builder/src/generated
 ```
+
+## Current schema
+
+The committed `schema/schema.json` and generated `.lt` come from the application
+migrations in `db/migrations/postgres` (10 tables). `schema_migrations` is excluded via
+`ignoreTables`.
+
+The separate fixture below is only for exercising enum, FK, unsupported types, and
+non-public schema cases; it is not the app schema.
 
 ## Fixture
 

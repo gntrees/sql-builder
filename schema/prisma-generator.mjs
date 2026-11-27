@@ -51,8 +51,13 @@ generatorHandler({
     }),
 
     onGenerate: async (options) => {
+        const ignoreTables = String(options.generator?.config?.ignoreTables ?? "")
+            .split(",")
+            .map((item) => item.trim())
+            .filter((item) => item.length > 0);
         const { schema, unsupported } = buildSchemaIR(options.dmmf, {
             prismaVersion: prismaVersion !== "unknown" ? prismaVersion : String(options.version ?? "unknown"),
+            ignoreTables,
         });
 
         const out = outputPath(options);

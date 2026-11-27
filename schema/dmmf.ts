@@ -79,6 +79,8 @@ export type DmmfDocument = {
 export type BuildSchemaOptions = {
     prismaVersion: string;
     dialect?: "postgres";
+    /** SQL table names that should not appear in the generated schema. */
+    ignoreTables?: string[];
 };
 
 type ScalarMapping = {
@@ -220,6 +222,7 @@ function assertUnique(values: string[], context: string): void {
 export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): SchemaBuildResult {
     const models = dmmf.datamodel.models ?? [];
     const dmmfEnums = dmmf.datamodel.enums ?? [];
+    const ignoredTables = new Set(options.ignoreTables ?? []);
     const unsupported: UnsupportedEntry[] = [];
 
     const enumByName = new Map<string, DmmfEnum>();
@@ -261,7 +264,9 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
 
     for (const model of models) {
         const schema = model.schema ?? "public";
-        const tableName = toSnakeCase(model.dbName ?? model.name);
+        const dbName = model.dbName ?? model.name;
+        if (ignoredTables.has(dbName)) continue;
+        const tableName = toSnakeCase(dbName);
 
         if (schema !== "public") {
             unsupported.push({

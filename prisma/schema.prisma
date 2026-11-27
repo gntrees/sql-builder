@@ -1,56 +1,94 @@
 generator ltSchema {
-  provider = "bun ./schema/prisma-generator.mjs"
-  output   = "../schema"
+  provider     = "bun ./schema/prisma-generator.mjs"
+  output       = "../schema"
+  ignoreTables = "schema_migrations"
 }
 
 datasource db {
   provider = "postgresql"
-  schemas  = ["auth", "public"]
+  schemas  = ["public"]
 }
 
-model audit {
-  id     Int    @id @default(autoincrement())
-  action String
+model authors {
+  id   Int    @id @default(autoincrement())
+  name String
 
-  @@schema("auth")
-}
-
-model memberships {
-  user_id Int
-  org_id  Int
-
-  @@id([user_id, org_id])
   @@schema("public")
 }
 
-model organizations {
-  id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(255)
-  users users[]
+model b {
+  id Int     @id @default(autoincrement())
+  ok Boolean @default(false)
+
+  @@schema("public")
+}
+
+model books {
+  book_id   Int    @id @default(autoincrement())
+  author_id Int
+  title     String
+
+  @@schema("public")
+}
+
+model m {
+  id  Int @id @default(autoincrement())
+  uid Int
+
+  @@schema("public")
+}
+
+model members {
+  id  Int @id @default(autoincrement())
+  uid Int
+
+  @@schema("public")
+}
+
+model orders {
+  id      Int @id @default(autoincrement())
+  user_id Int
+  total   Int
+
+  @@schema("public")
+}
+
+model posts {
+  id      Int    @id @default(autoincrement())
+  user_id Int
+  title   String
+
+  @@schema("public")
+}
+
+model schema_migrations {
+  version String @id @db.VarChar
+
+  @@schema("public")
+}
+
+model t {
+  id   Int     @id @default(autoincrement())
+  x    Int?
+  name String?
+  a    Int?
+  b    Int?
+
+  @@schema("public")
+}
+
+model u {
+  id Int  @id @default(autoincrement())
+  b  Int?
 
   @@schema("public")
 }
 
 model users {
-  id            Int           @id @default(autoincrement())
-  email         String        @unique @db.VarChar(320)
-  display_name  String?
-  role          role          @default(user)
-  created_at    DateTime      @default(now())
-  org_id        Int
-  external_id   String?       @db.Uuid
-  balance       Decimal       @default(0)
-  metadata      Json?
-  organizations organizations @relation(fields: [org_id], references: [id], onDelete: Cascade)
-
-  @@unique([email, org_id])
-  @@index([email])
-  @@schema("public")
-}
-
-enum role {
-  admin
-  user
+  id     Int     @id @default(autoincrement())
+  name   String
+  active Boolean @default(false)
+  age    Int?
 
   @@schema("public")
 }
