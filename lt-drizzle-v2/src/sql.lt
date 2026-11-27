@@ -1,4 +1,4 @@
-import value { Value } "./value.lt"
+import value { Value, SqlArg } "./value.lt"
 
 package sql {
   /// Potongan SQL. Chunk selalu rata (tidak ada `Nested`), sehingga tipe tidak
@@ -6,6 +6,7 @@ package sql {
   export enum SqlChunk {
     Raw(Str)
     Param(Value)
+    Ident(Str)
   }
 
   /// Ekspresi SQL yang belum di-deparse.
@@ -23,6 +24,60 @@ package sql {
 
   export fn param(value: Value) -> Sql {
     Sql(chunks: [SqlChunk.Param(value)])
+  }
+
+  export fn identifier(name: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Ident(name)])
+  }
+
+  export fn int(value: Int) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Integer(value))])
+  }
+
+  export fn float(value: Float) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Float(value))])
+  }
+
+  export fn str(value: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Text(value))])
+  }
+
+  export fn bool(value: Bool) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Boolean(value))])
+  }
+
+  export fn null_value() -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Null)])
+  }
+
+  /// Padanan `sql` tag drizzle.
+  ///
+  /// Dipakai sebagai tagged template (`sql\`...\`` setelah diimpor dengan
+  /// alias) maupun dipanggil biasa dari host dengan `(parts, values)`.
+  export fn tag(parts: List<Str>, values: List<SqlArg>) -> Sql {
+    let mut chunks: List<SqlChunk> = []
+    let mut index = 0
+    for part in parts {
+      chunks = chunks.push(SqlChunk.Raw(part))
+      match values.get(index) {
+        Some(arg) => {
+          chunks = chunks.push(SqlChunk.Param(arg_to_value(arg)))
+        }
+        None => {}
+      }
+      index = index + 1
+    }
+    Sql(chunks: chunks)
+  }
+
+  fn arg_to_value(arg: SqlArg) -> Value {
+    match arg {
+      SqlArg.Null => Value.Null
+      SqlArg.Boolean(value) => Value.Boolean(value)
+      SqlArg.Integer(value) => Value.Integer(value)
+      SqlArg.Float(value) => Value.Float(value)
+      SqlArg.Text(value) => Value.Text(value)
+    }
   }
 
   export fn append(s: Sql, other: Sql) -> Sql {

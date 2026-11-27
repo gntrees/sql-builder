@@ -15,6 +15,18 @@ package value {
     Record(Map<Str, Value>)
   }
 
+  /// Nilai yang boleh masuk lewat tagged template `tag`.
+  ///
+  /// `T` pada tagged template harus konkret dan tidak boleh memakai type
+  /// parameter, jadi tipe campuran dinyatakan dengan enum ini.
+  export enum SqlArg {
+    Null
+    Boolean(Bool)
+    Integer(Int)
+    Float(Float)
+    Text(Str)
+  }
+
   /// Hasil deparse satu query.
   export struct Rendered {
     sql: Str

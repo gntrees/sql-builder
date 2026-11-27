@@ -5,11 +5,14 @@
 // `params`.
 import { describe, expect, test } from "bun:test";
 import { sql as drizzleSql } from "drizzle-orm";
+import { MySqlDialect } from "drizzle-orm/mysql-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
-import { postgres, sqlToQuery } from "../../generated/lt-drizzle-v2/typescript/src/dialect";
-import { append, param, raw } from "../../generated/lt-drizzle-v2/typescript/src/sql";
-import { Value } from "../../generated/lt-drizzle-v2/typescript/src/value";
+import { LList } from "../../generated/lt-drizzle-v2/typescript/_lingua_rt";
+import { mysql, postgres, sqlToQuery } from "../../generated/lt-drizzle-v2/typescript/src/dialect";
+import { append, bool, float, identifier, int, nullValue, param, raw, str, tag } from "../../generated/lt-drizzle-v2/typescript/src/sql";
+import type { Sql } from "../../generated/lt-drizzle-v2/typescript/src/sql";
+import { SqlArg, Value } from "../../generated/lt-drizzle-v2/typescript/src/value";
 import type { Value as ValueT } from "../../generated/lt-drizzle-v2/typescript/src/value";
 
 type Outcome = { sql: string; params: unknown[] };
@@ -57,5 +60,76 @@ describe("postgres", () => {
     "one parameter is numbered $1",
     fromDrizzle(pg.sqlToQuery(drizzleSql`select ${"x"}`)),
     fromLt(sqlToQuery(postgres(), append(raw("select "), param(Value.Text("x"))))),
+  );
+});
+
+function list<T>(items: T[]): LList<T> {
+  return new LList<T>(items);
+}
+
+function cat(...parts: Sql[]): Sql {
+  return parts.reduce((acc, part) => append(acc, part), raw(""));
+}
+
+describe("identifiers and typed parameters", () => {
+  const my = new MySqlDialect();
+
+  diff(
+    "identifiers are quoted and table-qualified",
+    fromDrizzle(
+      pg.sqlToQuery(
+        drizzleSql`select ${drizzleSql.identifier("users")}.${drizzleSql.identifier("id")} from ${drizzleSql.identifier("users")}`,
+      ),
+    ),
+    fromLt(
+      sqlToQuery(
+        postgres(),
+        cat(raw("select "), identifier("users"), raw("."), identifier("id"), raw(" from "), identifier("users")),
+      ),
+    ),
+  );
+
+  diff(
+    "identifier quotes are not escaped (drizzle quirk)",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`select ${drizzleSql.identifier('we"ird')}`)),
+    fromLt(sqlToQuery(postgres(), cat(raw("select "), identifier('we"ird')))),
+  );
+
+  diff(
+    "mysql identifiers use backticks",
+    fromDrizzle(my.sqlToQuery(drizzleSql`select ${drizzleSql.identifier("users")}`)),
+    fromLt(sqlToQuery(mysql(), cat(raw("select "), identifier("users")))),
+  );
+
+  diff(
+    "every scalar parameter type keeps its order",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`select ${1}, ${true}, ${false}, ${null}, ${2.5}, ${"x"}`)),
+    fromLt(
+      sqlToQuery(
+        postgres(),
+        tag(
+          list(["select ", ", ", ", ", ", ", ", ", ", ", ""]),
+          list([
+            SqlArg.Integer(1n),
+            SqlArg.Boolean(true),
+            SqlArg.Boolean(false),
+            SqlArg.Null,
+            SqlArg.Float(2.5),
+            SqlArg.Text("x"),
+          ]),
+        ),
+      ),
+    ),
+  );
+
+  diff(
+    "parameter factories match the tag",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`select ${1}, ${2.5}, ${true}, ${null}, ${"x"}`)),
+    fromLt(
+      sqlToQuery(
+        postgres(),
+        cat(raw("select "), int(1n), raw(", "), float(2.5), raw(", "), bool(true), raw(", "), nullValue(), raw(", "), str("x")),
+      ),
+    ),
   );
 });
