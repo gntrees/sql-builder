@@ -322,6 +322,11 @@ Fixture DB terpisah di `schema/fixtures/`, mencakup:
 - Perintah: `bun run schema:playground`; regenerate snapshot:
   `bun schema/playground/build.ts --update`.
 
+Schema yang di-commit sekarang berasal dari migrasi aplikasi di
+`db/migrations/postgres`: 10 tabel, 0 unsupported. `schema_migrations` dikecualikan lewat
+konfigurasi generator `ignoreTables`. Fixture terpisah tetap dipakai untuk menguji enum,
+FK, tipe unsupported, dan schema non-public.
+
 Catatan: `bun test schema/test` menjalankan 12 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
 menghasilkan 3 tabel, 1 enum, 1 FK, dan 4 entri unsupported (termasuk schema `auth`,

@@ -1,35 +1,4 @@
 {
   "version": 1,
-  "entries": [
-    {
-      "kind": "column-type",
-      "table": "users",
-      "column": "metadata",
-      "type": "Json",
-      "reason": "JSON values have no LT value type yet"
-    },
-    {
-      "kind": "index",
-      "table": "users",
-      "fields": [
-        "email"
-      ],
-      "reason": "indexes are not emitted yet"
-    },
-    {
-      "kind": "schema",
-      "schema": "auth",
-      "table": "audit",
-      "reason": "only the public schema is supported"
-    },
-    {
-      "kind": "unique-constraint",
-      "table": "users",
-      "fields": [
-        "email",
-        "org_id"
-      ],
-      "reason": "composite unique constraints are not emitted yet"
-    }
-  ]
+  "entries": []
 }

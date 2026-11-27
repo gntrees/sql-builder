@@ -5,37 +5,9 @@
   "prismaVersion": "7.10.1",
   "tables": [
     {
-      "model": "memberships",
-      "name": "memberships",
-      "dbName": "memberships",
-      "schema": "public",
-      "primaryKey": [
-        "user_id",
-        "org_id"
-      ],
-      "columns": [
-        {
-          "name": "user_id",
-          "dbName": "user_id",
-          "nullable": false,
-          "unique": false,
-          "type": "Int",
-          "nativeType": "Int"
-        },
-        {
-          "name": "org_id",
-          "dbName": "org_id",
-          "nullable": false,
-          "unique": false,
-          "type": "Int",
-          "nativeType": "Int"
-        }
-      ]
-    },
-    {
-      "model": "organizations",
-      "name": "organizations",
-      "dbName": "organizations",
+      "model": "authors",
+      "name": "authors",
+      "dbName": "authors",
       "schema": "public",
       "primaryKey": [
         "id"
@@ -58,7 +30,299 @@
           "nullable": false,
           "unique": false,
           "type": "Str",
-          "nativeType": "VarChar"
+          "nativeType": "String"
+        }
+      ]
+    },
+    {
+      "model": "b",
+      "name": "b",
+      "dbName": "b",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "ok",
+          "dbName": "ok",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "literal",
+            "value": false
+          },
+          "type": "Bool",
+          "nativeType": "Boolean"
+        }
+      ]
+    },
+    {
+      "model": "books",
+      "name": "books",
+      "dbName": "books",
+      "schema": "public",
+      "primaryKey": [
+        "book_id"
+      ],
+      "columns": [
+        {
+          "name": "book_id",
+          "dbName": "book_id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "author_id",
+          "dbName": "author_id",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "title",
+          "dbName": "title",
+          "nullable": false,
+          "unique": false,
+          "type": "Str",
+          "nativeType": "String"
+        }
+      ]
+    },
+    {
+      "model": "m",
+      "name": "m",
+      "dbName": "m",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "uid",
+          "dbName": "uid",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        }
+      ]
+    },
+    {
+      "model": "members",
+      "name": "members",
+      "dbName": "members",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "uid",
+          "dbName": "uid",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        }
+      ]
+    },
+    {
+      "model": "orders",
+      "name": "orders",
+      "dbName": "orders",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "user_id",
+          "dbName": "user_id",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "total",
+          "dbName": "total",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        }
+      ]
+    },
+    {
+      "model": "posts",
+      "name": "posts",
+      "dbName": "posts",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "user_id",
+          "dbName": "user_id",
+          "nullable": false,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "title",
+          "dbName": "title",
+          "nullable": false,
+          "unique": false,
+          "type": "Str",
+          "nativeType": "String"
+        }
+      ]
+    },
+    {
+      "model": "t",
+      "name": "t",
+      "dbName": "t",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "x",
+          "dbName": "x",
+          "nullable": true,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "name",
+          "dbName": "name",
+          "nullable": true,
+          "unique": false,
+          "type": "Str",
+          "nativeType": "String"
+        },
+        {
+          "name": "a",
+          "dbName": "a",
+          "nullable": true,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "b",
+          "dbName": "b",
+          "nullable": true,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
+        }
+      ]
+    },
+    {
+      "model": "u",
+      "name": "u",
+      "dbName": "u",
+      "schema": "public",
+      "primaryKey": [
+        "id"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "dbName": "id",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "autoincrement"
+          },
+          "type": "Int",
+          "nativeType": "Int"
+        },
+        {
+          "name": "b",
+          "dbName": "b",
+          "nullable": true,
+          "unique": false,
+          "type": "Int",
+          "nativeType": "Int"
         }
       ]
     },
@@ -83,113 +347,36 @@
           "nativeType": "Int"
         },
         {
-          "name": "email",
-          "dbName": "email",
+          "name": "name",
+          "dbName": "name",
           "nullable": false,
-          "unique": true,
-          "type": "Str",
-          "nativeType": "VarChar"
-        },
-        {
-          "name": "display_name",
-          "dbName": "display_name",
-          "nullable": true,
           "unique": false,
           "type": "Str",
           "nativeType": "String"
         },
         {
-          "name": "role",
-          "dbName": "role",
+          "name": "active",
+          "dbName": "active",
           "nullable": false,
           "unique": false,
           "default": {
             "kind": "literal",
-            "value": "user"
+            "value": false
           },
-          "type": "Enum",
-          "nativeType": "role",
-          "enum": "Role"
+          "type": "Bool",
+          "nativeType": "Boolean"
         },
         {
-          "name": "created_at",
-          "dbName": "created_at",
-          "nullable": false,
-          "unique": false,
-          "default": {
-            "kind": "now"
-          },
-          "type": "Temporal",
-          "nativeType": "DateTime"
-        },
-        {
-          "name": "org_id",
-          "dbName": "org_id",
-          "nullable": false,
+          "name": "age",
+          "dbName": "age",
+          "nullable": true,
           "unique": false,
           "type": "Int",
           "nativeType": "Int"
-        },
-        {
-          "name": "external_id",
-          "dbName": "external_id",
-          "nullable": true,
-          "unique": false,
-          "type": "Uuid",
-          "nativeType": "Uuid"
-        },
-        {
-          "name": "balance",
-          "dbName": "balance",
-          "nullable": false,
-          "unique": false,
-          "default": {
-            "kind": "literal",
-            "value": 0
-          },
-          "type": "Decimal",
-          "nativeType": "Decimal"
-        },
-        {
-          "name": "metadata",
-          "dbName": "metadata",
-          "nullable": true,
-          "unique": false,
-          "type": "Unsupported",
-          "nativeType": "Json"
         }
       ]
     }
   ],
-  "enums": [
-    {
-      "name": "Role",
-      "dbName": "role",
-      "package": "schema_enum_role",
-      "values": [
-        {
-          "name": "Admin",
-          "dbName": "admin"
-        },
-        {
-          "name": "User",
-          "dbName": "user"
-        }
-      ]
-    }
-  ],
-  "foreignKeys": [
-    {
-      "name": "organizationsTousers",
-      "fromTable": "users",
-      "fromColumns": [
-        "org_id"
-      ],
-      "toTable": "organizations",
-      "toColumns": [
-        "id"
-      ],
-      "onDelete": "Cascade"
-    }
-  ]
+  "enums": [],
+  "foreignKeys": []
 }

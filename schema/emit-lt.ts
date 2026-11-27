@@ -529,11 +529,9 @@ function tablesPackage(schema: SchemaIR): EmittedFile | undefined {
     if (schema.tables.some((table) => table.name === "all_table_meta")) {
         throw new Error('table name "all_table_meta" collides with the generated metadata list');
     }
-    body.push(
-        `export let all_table_meta: List<TableMeta> = [${schema.tables
-            .map((table) => `${table.name}_meta`)
-            .join(", ")}]`,
-    );
+    body.push("export let all_table_meta: List<TableMeta> = [");
+    for (const table of schema.tables) body.push(`  ${table.name}_meta,`);
+    body.push("]");
     body.push("");
 
     const content = `${header("schema/schema.json")}${importLines}

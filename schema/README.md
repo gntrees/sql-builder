@@ -29,10 +29,14 @@ only declares the datasource provider and schemas. Add this generator to
 
 ```prisma
 generator ltSchema {
-  provider = "bun ./schema/prisma-generator.mjs"
-  output   = "../schema"
+  provider     = "bun ./schema/prisma-generator.mjs"
+  output       = "../schema"
+  ignoreTables = "schema_migrations"
 }
 ```
+
+`ignoreTables` is a comma-separated list of SQL table names that must not appear in the
+IR. It is used here to keep dbmate's `schema_migrations` out of the generated accessors.
 
 Then:
 
@@ -70,6 +74,15 @@ Custom output:
 ```sh
 bun schema/codegen.ts generate --out path/to/builder/src/generated
 ```
+
+## Current schema
+
+The committed `schema/schema.json` and generated `.lt` come from the application
+migrations in `db/migrations/postgres` (10 tables). `schema_migrations` is excluded via
+`ignoreTables`.
+
+The separate fixture below is only for exercising enum, FK, unsupported types, and
+non-public schema cases; it is not the app schema.
 
 ## Fixture
 
