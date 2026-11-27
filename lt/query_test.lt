@@ -3,6 +3,8 @@ import Node from "./src/sql.lt"
 import Values from "./src/value.lt"
 import ParseError from "./src/sql.lt"
 import Assignment from "./src/sql.lt"
+import Users from "./src/schema.lt"
+import Posts from "./src/schema.lt"
 
 test class QueryTest {
   fn build() -> Query {
@@ -263,6 +265,40 @@ test class QueryTest {
         ParseError.Unsupported(message) => Expect.equal(message, "RETURNING is not supported by mysql")
         _ => Expect.equal("Unsupported", "other error")
       }
+    }
+  }
+
+  test fn typed_schema_columns() {
+    match Query.create()
+      .select([Users.id().node(), Users.name().node()])
+      .from_table(Users.table().node())
+      .where([Users.active().eq_bool(true), Users.age().gte_int(18)])
+      .order_by([Users.name().desc()])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `SELECT "users"."id", "users"."name" FROM "users" WHERE "users"."active" = $1 AND "users"."age" >= $2 ORDER BY "users"."name" DESC`,
+        )
+        Expect.equal(result.param.len(), 2)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn typed_schema_bare_and_join() {
+    match Query.create()
+      .select([Users.id().bare()])
+      .from_table(Users.table().node())
+      .inner_join(Posts.table().node(), [Posts.user_id().eq(Users.id().node())])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(
+        result.sql,
+        `SELECT "id" FROM "users" INNER JOIN "posts" ON "posts"."user_id" = "users"."id"`,
+      )
+      Err(error) => Expect.equal("no error", "parse failed")
     }
   }
 }

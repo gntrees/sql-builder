@@ -4,6 +4,7 @@ package query_test_pkg_test
 import (
 	"testing"
 
+	m3 "linguatungga/gen/src/schema"
 	m1 "linguatungga/gen/src/sql"
 	lt "linguatungga/lt"
 )
@@ -327,6 +328,37 @@ func TestMysqlRejectsUnmappedFeatures(t *testing.T) {
 		default:
 			lt.ExpectEqual("Unsupported", "other error")
 		}
+	default:
+		panic("unreachable")
+	}
+}
+
+func TestTypedSchemaColumns(t *testing.T) {
+	__match25 := m1.QueryCreate().Select(lt.NewList([]m1.Node{m3.UsersId().Node(), m3.UsersName().Node()})).FromTable(m3.UsersTable().Node()).Where(lt.NewList([]m1.Node{m3.UsersActive().EqBool(true), m3.UsersAge().GteInt(int64(18))})).OrderBy(lt.NewList([]m1.Node{m3.UsersName().Desc()})).SetDialect("postgres").Parse()
+	switch __match25.Tag {
+	case "ok":
+		result := __match25.Values[0].(m1.ParseResult)
+		lt.ExpectEqual(result.Sql, "SELECT \"users\".\"id\", \"users\".\"name\" FROM \"users\" WHERE \"users\".\"active\" = $1 AND \"users\".\"age\" >= $2 ORDER BY \"users\".\"name\" DESC")
+		lt.ExpectEqual(result.Param.Len(), int64(2))
+	case "err":
+		error := __match25.Values[0].(lt.Variant)
+		_ = error
+		lt.ExpectEqual("no error", "parse failed")
+	default:
+		panic("unreachable")
+	}
+}
+
+func TestTypedSchemaBareAndJoin(t *testing.T) {
+	__match26 := m1.QueryCreate().Select(lt.NewList([]m1.Node{m3.UsersId().Bare()})).FromTable(m3.UsersTable().Node()).InnerJoin(m3.PostsTable().Node(), lt.NewList([]m1.Node{m3.PostsUserId().Eq(m3.UsersId().Node())})).SetDialect("postgres").Parse()
+	switch __match26.Tag {
+	case "ok":
+		result := __match26.Values[0].(m1.ParseResult)
+		lt.ExpectEqual(result.Sql, "SELECT \"id\" FROM \"users\" INNER JOIN \"posts\" ON \"posts\".\"user_id\" = \"users\".\"id\"")
+	case "err":
+		error := __match26.Values[0].(lt.Variant)
+		_ = error
+		lt.ExpectEqual("no error", "parse failed")
 	default:
 		panic("unreachable")
 	}

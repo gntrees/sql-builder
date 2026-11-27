@@ -4,6 +4,7 @@ from __future__ import annotations
 import lt_runtime as _lt
 from typing import Any
 import gen.src.sql as m1
+import gen.src.schema as m3
 
 def _build() -> m1.Query:
     return m1.Query.create().select(_lt.LList((m1.Node.col("id"), m1.Node.col("name")))).from_table(m1.Node.table("users")).where(_lt.LList((m1.Node.col("active").eq(m1.Node.bool(True)),))).order_by(_lt.LList((m1.Node.col("name").desc(),))).limit(m1.Node.int(10)).set_dialect("postgres")
@@ -241,6 +242,29 @@ def test_mysql_rejects_unmapped_features() -> None:
             _lt.expect_equal(message_2, "RETURNING is not supported by mysql")
         else:
             _lt.expect_equal("Unsupported", "other error")
+    else:
+        raise AssertionError("unreachable")
+
+def test_typed_schema_columns() -> None:
+    __match25 = m1.Query.create().select(_lt.LList((m3.Users.id().node(), m3.Users.name().node()))).from_table(m3.Users.table().node()).where(_lt.LList((m3.Users.active().eq_bool(True), m3.Users.age().gte_int(18)))).order_by(_lt.LList((m3.Users.name().desc(),))).set_dialect("postgres").parse()
+    if __match25.tag == "ok":
+        result: m1.ParseResult = __match25.values[0]
+        _lt.expect_equal(result.sql, "SELECT \"users\".\"id\", \"users\".\"name\" FROM \"users\" WHERE \"users\".\"active\" = $1 AND \"users\".\"age\" >= $2 ORDER BY \"users\".\"name\" DESC")
+        _lt.expect_equal(result.param.len(), 2)
+    elif __match25.tag == "err":
+        error: m1.ParseError = __match25.values[0]
+        _lt.expect_equal("no error", "parse failed")
+    else:
+        raise AssertionError("unreachable")
+
+def test_typed_schema_bare_and_join() -> None:
+    __match26 = m1.Query.create().select(_lt.LList((m3.Users.id().bare(),))).from_table(m3.Users.table().node()).inner_join(m3.Posts.table().node(), _lt.LList((m3.Posts.user_id().eq(m3.Users.id().node()),))).set_dialect("postgres").parse()
+    if __match26.tag == "ok":
+        result: m1.ParseResult = __match26.values[0]
+        _lt.expect_equal(result.sql, "SELECT \"id\" FROM \"users\" INNER JOIN \"posts\" ON \"posts\".\"user_id\" = \"users\".\"id\"")
+    elif __match26.tag == "err":
+        error: m1.ParseError = __match26.values[0]
+        _lt.expect_equal("no error", "parse failed")
     else:
         raise AssertionError("unreachable")
 

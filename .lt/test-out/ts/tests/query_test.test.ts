@@ -2,6 +2,7 @@
 import { describe, it } from "vitest";
 import * as lt from "../_lingua_rt";
 import * as m1 from "../src/src/sql";
+import * as m3 from "../src/src/schema";
 
 function build(): m1.Query {
   return m1.Query.create().select(new lt.LList<m1.Node>([m1.Node.col("id"), m1.Node.col("name")])).fromTable(m1.Node.table("users")).where(new lt.LList<m1.Node>([m1.Node.col("active").eq(m1.Node.bool(true))])).orderBy(new lt.LList<m1.Node>([m1.Node.col("name").desc()])).limit(m1.Node.int(10n)).setDialect("postgres");
@@ -398,6 +399,43 @@ describe("QueryTest", () => {
             break;
           }
         }
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  });
+
+  it("typed_schema_columns", () => {
+    const __match25 = m1.Query.create().select(new lt.LList<m1.Node>([m3.Users.id().node(), m3.Users.name().node()])).fromTable(m3.Users.table().node()).where(new lt.LList<m1.Node>([m3.Users.active().eqBool(true), m3.Users.age().gteInt(18n)])).orderBy(new lt.LList<m1.Node>([m3.Users.name().desc()])).setDialect("postgres").parse();
+    switch (__match25.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match25.values[0];
+        lt.expectEqual(result.sql, "SELECT \"users\".\"id\", \"users\".\"name\" FROM \"users\" WHERE \"users\".\"active\" = $1 AND \"users\".\"age\" >= $2 ORDER BY \"users\".\"name\" DESC");
+        lt.expectEqual(result.param.len(), 2n);
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match25.values[0];
+        lt.expectEqual("no error", "parse failed");
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  });
+
+  it("typed_schema_bare_and_join", () => {
+    const __match26 = m1.Query.create().select(new lt.LList<m1.Node>([m3.Users.id().bare()])).fromTable(m3.Users.table().node()).innerJoin(m3.Posts.table().node(), new lt.LList<m1.Node>([m3.Posts.userId().eq(m3.Users.id().node())])).setDialect("postgres").parse();
+    switch (__match26.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match26.values[0];
+        lt.expectEqual(result.sql, "SELECT \"id\" FROM \"users\" INNER JOIN \"posts\" ON \"posts\".\"user_id\" = \"users\".\"id\"");
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match26.values[0];
+        lt.expectEqual("no error", "parse failed");
         break;
       }
       default:

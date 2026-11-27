@@ -12,6 +12,7 @@ import { LList } from "../generated/lt-sql-builder/typescript/_lingua_rt";
 import { Query } from "../generated/lt-sql-builder/typescript/src/sql";
 import { Node } from "../generated/lt-sql-builder/typescript/src/sql";
 import { Assignment } from "../generated/lt-sql-builder/typescript/src/sql";
+import { Users, Posts } from "../generated/lt-sql-builder/typescript/src/schema";
 import { type Value } from "../generated/lt-sql-builder/typescript/src/value";
 
 const list = <T,>(items: T[]): LList<T> => new LList<T>(items);
@@ -646,6 +647,46 @@ describe("legacy parity (mysql)", () => {
                     .onConflictDoNothing(Node.col("id"))
                     .setDialect("mysql")
                     .parse(),
+        ];
+    });
+});
+
+describe("typed schema produces the same SQL", () => {
+    diff("typed columns with filters and ordering", () => {
+        const c = legacy();
+        return [
+            c
+                .select([c.col("users.id"), c.col("users.name")])
+                .from(c.table("users"))
+                .where(c.and([c.col("users.active").eq(true), c.col("users.age").gte(18)]))
+                .orderBy(c.col("users.name").desc())
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Users.id().node(), Users.name().node()]))
+                .fromTable(Users.table().node())
+                .where(list([Users.active().eqBool(true).and(list([Users.age().gteInt(18n)]))]))
+                .orderBy(list([Users.name().desc()]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("typed join", () => {
+        const c = legacy();
+        return [
+            c
+                .select([c.col("users.id")])
+                .from(c.table("users"))
+                .innerJoin(c.table("posts"), c.col("posts.user_id").eq(c.col("users.id")))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Users.id().node()]))
+                .fromTable(Users.table().node())
+                .innerJoin(Posts.table().node(), list([Posts.userId().eq(Users.id().node())]))
+                .setDialect("postgres")
+                .parse(),
         ];
     });
 });
