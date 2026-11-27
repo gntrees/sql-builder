@@ -159,7 +159,9 @@ function exprPackage(): EmittedFile {
     Like(Expr, Expr)
     ILike(Expr, Expr)
     In(Expr, List<Expr>)
+    NotIn(Expr, List<Expr>)
     Between(Expr, Expr, Expr)
+    NotBetween(Expr, Expr, Expr)
     And(List<Expr>)
     Or(List<Expr>)
     Not(Expr)
@@ -237,7 +239,7 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
         push();
 
         push(`export fn not_in_list(c: ${spec.columnType}, values: List<${spec.valueType}>) -> Expr {`);
-        push("  Expr.Not(Expr.In(col(c), values.map(fn(v) => param(v))))");
+        push("  Expr.NotIn(col(c), values.map(fn(v) => param(v)))");
         push("}");
         push();
 
@@ -247,7 +249,7 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
         push();
 
         push(`export fn not_between(c: ${spec.columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
-        push("  Expr.Not(Expr.Between(col(c), param(low), param(high)))");
+        push("  Expr.NotBetween(col(c), param(low), param(high))");
         push("}");
         push();
     }
@@ -362,7 +364,7 @@ function enumPackage(item: EnumIR): EmittedFile {
     push();
 
     push(`export fn not_in_list(c: ${columnType}, values: List<${item.name}>) -> Expr {`);
-    push("  Expr.Not(Expr.In(col(c), values.map(fn(v) => param(v))))");
+    push("  Expr.NotIn(col(c), values.map(fn(v) => param(v)))");
     push("}");
     push();
 

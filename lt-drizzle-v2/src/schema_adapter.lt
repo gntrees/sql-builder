@@ -78,6 +78,13 @@ package schema_adapter {
         ),
         sqlpkg.raw(")"),
       )
+      Expr.NotIn(left, items) => sqlpkg.append(
+        sqlpkg.append(
+          sqlpkg.append(to_sql(left), sqlpkg.raw(" not in (")),
+          sqlpkg.join(items.map(fn(item) => to_sql(item)), ", "),
+        ),
+        sqlpkg.raw(")"),
+      )
       Expr.Between(left, low, high) => sqlpkg.append(
         sqlpkg.append(
           sqlpkg.append(sqlpkg.append(to_sql(left), sqlpkg.raw(" between ")), to_sql(low)),
@@ -85,27 +92,16 @@ package schema_adapter {
         ),
         to_sql(high),
       )
+      Expr.NotBetween(left, low, high) => sqlpkg.append(
+        sqlpkg.append(
+          sqlpkg.append(sqlpkg.append(to_sql(left), sqlpkg.raw(" not between ")), to_sql(low)),
+          sqlpkg.raw(" and "),
+        ),
+        to_sql(high),
+      )
       Expr.And(items) => sqlpkg.and(items.map(fn(item) => to_sql(item)))
       Expr.Or(items) => sqlpkg.or(items.map(fn(item) => to_sql(item)))
-      Expr.Not(value) => match value {
-        Expr.In(left, items) => sqlpkg.append(
-          sqlpkg.append(
-            sqlpkg.append(to_sql(left), sqlpkg.raw(" not in (")),
-            sqlpkg.join(items.map(fn(item) => to_sql(item)), ", "),
-          ),
-          sqlpkg.raw(")"),
-        )
-        Expr.Between(left, low, high) => sqlpkg.append(
-          sqlpkg.append(
-            sqlpkg.append(sqlpkg.append(to_sql(left), sqlpkg.raw(" not between ")), to_sql(low)),
-            sqlpkg.raw(" and "),
-          ),
-          to_sql(high),
-        )
-        Expr.Like(left, right) => binary(left, "not like", right)
-        Expr.ILike(left, right) => binary(left, "not ilike", right)
-        other => sqlpkg.not(to_sql(other))
-      }
+      Expr.Not(value) => sqlpkg.not(to_sql(value))
       Expr.Asc(value) => sqlpkg.asc(to_sql(value))
       Expr.Desc(value) => sqlpkg.desc(to_sql(value))
       Expr.Alias(value, alias) => sqlpkg.as_alias(to_sql(value), alias)

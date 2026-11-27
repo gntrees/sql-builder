@@ -50,7 +50,7 @@ package schema_temporal {
   }
 
   export fn not_in_list(c: TemporalColumn, values: List<Str>) -> Expr {
-    Expr.Not(Expr.In(col(c), values.map(fn(v) => param(v))))
+    Expr.NotIn(col(c), values.map(fn(v) => param(v)))
   }
 
   export fn between(c: TemporalColumn, low: Str, high: Str) -> Expr {
@@ -58,7 +58,7 @@ package schema_temporal {
   }
 
   export fn not_between(c: TemporalColumn, low: Str, high: Str) -> Expr {
-    Expr.Not(Expr.Between(col(c), param(low), param(high)))
+    Expr.NotBetween(col(c), param(low), param(high))
   }
 
   export fn is_null(c: TemporalColumn) -> Expr {

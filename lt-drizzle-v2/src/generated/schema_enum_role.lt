@@ -46,7 +46,7 @@ package schema_enum_role {
   }
 
   export fn not_in_list(c: RoleColumn, values: List<Role>) -> Expr {
-    Expr.Not(Expr.In(col(c), values.map(fn(v) => param(v))))
+    Expr.NotIn(col(c), values.map(fn(v) => param(v)))
   }
 
   export fn is_null(c: RoleColumn) -> Expr {

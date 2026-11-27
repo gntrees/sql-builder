@@ -50,7 +50,7 @@ package schema_int {
   }
 
   export fn not_in_list(c: IntColumn, values: List<Int>) -> Expr {
-    Expr.Not(Expr.In(col(c), values.map(fn(v) => param(v))))
+    Expr.NotIn(col(c), values.map(fn(v) => param(v)))
   }
 
   export fn between(c: IntColumn, low: Int, high: Int) -> Expr {
@@ -58,7 +58,7 @@ package schema_int {
   }
 
   export fn not_between(c: IntColumn, low: Int, high: Int) -> Expr {
-    Expr.Not(Expr.Between(col(c), param(low), param(high)))
+    Expr.NotBetween(col(c), param(low), param(high))
   }
 
   export fn is_null(c: IntColumn) -> Expr {
