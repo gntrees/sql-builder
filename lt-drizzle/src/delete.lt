@@ -1,0 +1,92 @@
+import Sql from "./sql.lt"
+import Table from "./table.lt"
+import Dialect from "./dialect.lt"
+import Rendered from "./value.lt"
+import BuildError from "./value.lt"
+
+/// Builder DELETE.
+pub class Delete {
+  table: Option<Table>
+  where_clause: Option<Sql>
+  returning_fields: List<Sql>
+  returning_all: Bool
+  dialect: Option<Dialect>
+
+  pub static fn create(table: Table) -> Delete {
+    Delete(
+      table: Some(table),
+      where_clause: None,
+      returning_fields: [],
+      returning_all: false,
+      dialect: None,
+    )
+  }
+
+  fn copy(
+    self,
+    where_clause: Option<Sql>,
+    returning_fields: List<Sql>,
+    returning_all: Bool,
+    dialect: Option<Dialect>,
+  ) -> Delete {
+    Delete(
+      table: self.table,
+      where_clause: where_clause,
+      returning_fields: returning_fields,
+      returning_all: returning_all,
+      dialect: dialect,
+    )
+  }
+
+  pub fn where(self, expr: Sql) -> Delete {
+    self.copy(Some(expr), self.returning_fields, self.returning_all, self.dialect)
+  }
+
+  pub fn returning(self, fields: List<Sql>) -> Delete {
+    self.copy(self.where_clause, fields, false, self.dialect)
+  }
+
+  pub fn returning_all_columns(self) -> Delete {
+    self.copy(self.where_clause, [], true, self.dialect)
+  }
+
+  pub fn set_dialect(self, dialect: Dialect) -> Delete {
+    self.copy(self.where_clause, self.returning_fields, self.returning_all, Some(dialect))
+  }
+
+  pub fn build(self) -> Result<Rendered, BuildError> {
+    match self.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(dialect) => {
+        match self.table {
+          None => Err(BuildError.MissingTable)
+          Some(table) => Ok(dialect.sql_to_query(self.to_sql(table)))
+        }
+      }
+    }
+  }
+
+  fn to_sql(self, table: Table) -> Sql {
+    let mut sql = Sql.raw("delete from ").append(table.from_ref())
+
+    match self.where_clause {
+      Some(expr) => {
+        if !expr.is_empty() {
+          sql = sql.append(Sql.raw(" where ")).append(expr)
+        }
+      }
+      None => {}
+    }
+
+    let returned = if self.returning_all {
+      table.columns.map(fn(column) => Sql.identifier(column.name))
+    } else {
+      self.returning_fields
+    }
+    if returned.len() > 0 {
+      sql = sql.append(Sql.raw(" returning ")).append(Sql.join(returned, ", "))
+    }
+
+    sql
+  }
+}

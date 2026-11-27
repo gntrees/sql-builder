@@ -1,0 +1,165 @@
+import Sql from "./sql.lt"
+import Table from "./table.lt"
+import Dialect from "./dialect.lt"
+import Rendered from "./value.lt"
+import BuildError from "./value.lt"
+import Assignment from "./assignment.lt"
+
+/// Builder INSERT.
+///
+/// Drizzle selalu menyebut seluruh kolom tabel dan memakai `default` untuk
+/// kolom yang tidak diberikan; port ini meniru hal yang sama.
+pub class Insert {
+  table: Option<Table>
+  rows: List<List<Assignment>>
+  conflict_action: Str
+  conflict_target: List<Str>
+  conflict_set: List<Assignment>
+  returning_fields: List<Sql>
+  returning_all: Bool
+  dialect: Option<Dialect>
+
+  pub static fn create(table: Table) -> Insert {
+    Insert(
+      table: Some(table),
+      rows: [],
+      conflict_action: "",
+      conflict_target: [],
+      conflict_set: [],
+      returning_fields: [],
+      returning_all: false,
+      dialect: None,
+    )
+  }
+
+  fn copy(
+    self,
+    rows: List<List<Assignment>>,
+    conflict_action: Str,
+    conflict_target: List<Str>,
+    conflict_set: List<Assignment>,
+    returning_fields: List<Sql>,
+    returning_all: Bool,
+    dialect: Option<Dialect>,
+  ) -> Insert {
+    Insert(
+      table: self.table,
+      rows: rows,
+      conflict_action: conflict_action,
+      conflict_target: conflict_target,
+      conflict_set: conflict_set,
+      returning_fields: returning_fields,
+      returning_all: returning_all,
+      dialect: dialect,
+    )
+  }
+
+  pub fn values(self, rows: List<List<Assignment>>) -> Insert {
+    self.copy(rows, self.conflict_action, self.conflict_target, self.conflict_set, self.returning_fields, self.returning_all, self.dialect)
+  }
+
+  pub fn on_conflict_do_nothing(self) -> Insert {
+    self.copy(self.rows, "nothing", [], [], self.returning_fields, self.returning_all, self.dialect)
+  }
+
+  pub fn on_conflict_do_nothing_target(self, columns: List<Str>) -> Insert {
+    self.copy(self.rows, "nothing", columns, [], self.returning_fields, self.returning_all, self.dialect)
+  }
+
+  pub fn on_conflict_do_update(self, target: List<Str>, set: List<Assignment>) -> Insert {
+    self.copy(self.rows, "update", target, set, self.returning_fields, self.returning_all, self.dialect)
+  }
+
+  pub fn returning(self, fields: List<Sql>) -> Insert {
+    self.copy(self.rows, self.conflict_action, self.conflict_target, self.conflict_set, fields, false, self.dialect)
+  }
+
+  pub fn returning_all_columns(self) -> Insert {
+    self.copy(self.rows, self.conflict_action, self.conflict_target, self.conflict_set, [], true, self.dialect)
+  }
+
+  pub fn set_dialect(self, dialect: Dialect) -> Insert {
+    self.copy(self.rows, self.conflict_action, self.conflict_target, self.conflict_set, self.returning_fields, self.returning_all, Some(dialect))
+  }
+
+  pub fn build(self) -> Result<Rendered, BuildError> {
+    match self.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(dialect) => {
+        match self.table {
+          None => Err(BuildError.MissingTable)
+          Some(table) => Ok(dialect.sql_to_query(self.to_sql(table)))
+        }
+      }
+    }
+  }
+
+  fn value_for(row: List<Assignment>, column: Str) -> Option<Sql> {
+    let mut found: Option<Sql> = None
+    for assignment in row {
+      if assignment.column == column {
+        found = Some(assignment.value)
+      }
+    }
+    found
+  }
+
+  fn column_names(table: Table) -> Sql {
+    Sql.join(table.columns.map(fn(column) => Sql.identifier(column.name)), ", ")
+  }
+
+  fn to_sql(self, table: Table) -> Sql {
+    let mut sql = Sql.raw("insert into ")
+      .append(table.from_ref())
+      .append(Sql.raw(" ("))
+      .append(Insert.column_names(table))
+      .append(Sql.raw(") values "))
+
+    let mut row_parts: List<Sql> = []
+    for row in self.rows {
+      let mut column_parts: List<Sql> = []
+      for column in table.columns {
+        match Insert.value_for(row, column.name) {
+          Some(value) => {
+            column_parts = column_parts.push(value)
+          }
+          None => {
+            column_parts = column_parts.push(Sql.raw("default"))
+          }
+        }
+      }
+      row_parts = row_parts.push(
+        Sql.raw("(").append(Sql.join(column_parts, ", ")).append(Sql.raw(")")),
+      )
+    }
+    sql = sql.append(Sql.join(row_parts, ", "))
+
+    if self.conflict_action != "" {
+      sql = sql.append(Sql.raw(" on conflict"))
+      if self.conflict_target.len() > 0 {
+        sql = sql
+          .append(Sql.raw(" ("))
+          .append(Sql.join(self.conflict_target.map(fn(name) => Sql.identifier(name)), ", "))
+          .append(Sql.raw(")"))
+      }
+      if self.conflict_action == "nothing" {
+        sql = sql.append(Sql.raw(" do nothing"))
+      } else {
+        sql = sql
+          .append(Sql.raw(" do update set "))
+          .append(Sql.join(self.conflict_set.map(fn(item) => item.to_sql()), ", "))
+      }
+    }
+
+    let returned = if self.returning_all {
+      table.columns.map(fn(column) => Sql.identifier(column.name))
+    } else {
+      self.returning_fields
+    }
+    if returned.len() > 0 {
+      sql = sql.append(Sql.raw(" returning ")).append(Sql.join(returned, ", "))
+    }
+
+    sql
+  }
+}

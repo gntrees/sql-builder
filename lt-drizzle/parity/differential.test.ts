@@ -11,7 +11,11 @@ import { PgDatabase } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
 import { LList } from "../../generated/lt-drizzle/typescript/_lingua_rt";
+import { Assignment } from "../../generated/lt-drizzle/typescript/src/assignment";
 import { Column } from "../../generated/lt-drizzle/typescript/src/column";
+import { Delete } from "../../generated/lt-drizzle/typescript/src/delete";
+import { Insert } from "../../generated/lt-drizzle/typescript/src/insert";
+import { Update } from "../../generated/lt-drizzle/typescript/src/update";
 import { Dialect } from "../../generated/lt-drizzle/typescript/src/dialect";
 import { Select } from "../../generated/lt-drizzle/typescript/src/select";
 import { Sql } from "../../generated/lt-drizzle/typescript/src/sql";
@@ -603,5 +607,138 @@ describe("joins, subqueries, ctes, and set operations", () => {
     "except",
     fromDrizzle(db.select({ id: users.id }).from(users).except(db.select({ id: posts.id }).from(posts)).toSQL()),
     q().fromTable(tu).select(list([tu.field("id")])).exceptQuery(other()),
+  );
+});
+
+describe("dml", () => {
+  const users = pgTable("users", {
+    id: serial("id"),
+    name: text("name"),
+    age: integer("age"),
+  });
+  const t = Table.plain(
+    "users",
+    list([Column.serial("id"), Column.text("name"), Column.integer("age")]),
+  );
+  const db = new PgDatabase(new PgDialect(), {});
+  const pgDialect = Dialect.postgres();
+  const build = (builder: { build(): any }): Outcome => {
+    const result = builder.build();
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: { build(): any }) => {
+    diff(name, expected, build(builder));
+  };
+  const assign = (column: string, value: Sql) => Assignment.of(column, value);
+
+  check(
+    "insert fills omitted columns with default",
+    fromDrizzle(db.insert(users).values({ name: "a", age: 3 }).toSQL()),
+    Insert.create(t)
+      .values(list([list([assign("name", Sql.str("a")), assign("age", Sql.int(3n))])]))
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "multi-row insert",
+    fromDrizzle(db.insert(users).values([{ name: "a", age: 3 }, { name: "b", age: 4 }]).toSQL()),
+    Insert.create(t)
+      .values(
+        list([
+          list([assign("name", Sql.str("a")), assign("age", Sql.int(3n))]),
+          list([assign("name", Sql.str("b")), assign("age", Sql.int(4n))]),
+        ]),
+      )
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "insert returning every column",
+    fromDrizzle(db.insert(users).values({ name: "a" }).returning().toSQL()),
+    Insert.create(t)
+      .values(list([list([assign("name", Sql.str("a"))])]))
+      .returningAllColumns()
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "insert returning a column",
+    fromDrizzle(db.insert(users).values({ name: "a" }).returning({ id: users.id }).toSQL()),
+    Insert.create(t)
+      .values(list([list([assign("name", Sql.str("a"))])]))
+      .returning(list([t.field("id")]))
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "on conflict do nothing",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onConflictDoNothing().toSQL()),
+    Insert.create(t)
+      .values(list([list([assign("name", Sql.str("a"))])]))
+      .onConflictDoNothing()
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "on conflict target do nothing",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onConflictDoNothing({ target: users.id }).toSQL()),
+    Insert.create(t)
+      .values(list([list([assign("name", Sql.str("a"))])]))
+      .onConflictDoNothingTarget(list(["id"]))
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "on conflict do update",
+    fromDrizzle(
+      db
+        .insert(users)
+        .values({ name: "a" })
+        .onConflictDoUpdate({ target: users.id, set: { name: "b" } })
+        .toSQL(),
+    ),
+    Insert.create(t)
+      .values(list([list([assign("name", Sql.str("a"))])]))
+      .onConflictDoUpdate(list(["id"]), list([assign("name", Sql.str("b"))]))
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "update",
+    fromDrizzle(db.update(users).set({ name: "x" }).where(eq(users.id, 1)).toSQL()),
+    Update.create(t)
+      .set(list([assign("name", Sql.str("x"))]))
+      .where(t.col("id").eq(Sql.int(1n)))
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "update returning every column",
+    fromDrizzle(db.update(users).set({ name: "x", age: 2 }).where(eq(users.id, 1)).returning().toSQL()),
+    Update.create(t)
+      .set(list([assign("name", Sql.str("x")), assign("age", Sql.int(2n))]))
+      .where(t.col("id").eq(Sql.int(1n)))
+      .returningAllColumns()
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "delete",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).toSQL()),
+    Delete.create(t)
+      .where(t.col("id").eq(Sql.int(1n)))
+      .setDialect(pgDialect),
+  );
+
+  check(
+    "delete returning a column",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).returning({ id: users.id }).toSQL()),
+    Delete.create(t)
+      .where(t.col("id").eq(Sql.int(1n)))
+      .returning(list([t.field("id")]))
+      .setDialect(pgDialect),
   );
 });
