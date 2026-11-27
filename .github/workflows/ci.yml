@@ -82,9 +82,9 @@ jobs:
         run: set -o pipefail; cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt 2>&1 | tee build.log
       - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
       - name: generated code is in sync with lt/src
-        run: set -o pipefail; ./lt/check.sh 2>&1 | tee check.log
+        run: set -o pipefail; bash lt/check.sh 2>&1 | tee check.log
       - name: native gates, test classes, differential
-        run: set -o pipefail; ./lt/verify.sh 2>&1 | tee verify.log
+        run: set -o pipefail; bash lt/verify.sh 2>&1 | tee verify.log
       - name: annotate failure
         if: failure()
         run: |
