@@ -759,3 +759,52 @@ describe("legacy parity (postgres, transaction)", () => {
         ];
     });
 });
+
+describe("legacy parity (postgres, subquery operands)", () => {
+    const legacySub = () => {
+        const c = legacy();
+        return c.select(c.col("id")).from(c.table("users")).where(c.col("ok").eq(true));
+    };
+
+    const nextSub = () =>
+        Query.create()
+            .select(list([Node.col("id")]))
+            .fromTable(Node.table("users"))
+            .where(list([Node.col("ok").eq(Node.bool(true))]));
+
+    diff("subquery in FROM with alias", () => {
+        const c = legacy();
+        return [
+            c.select(c.col("x")).from(legacySub().as("s")).setDialect("postgres").parse(),
+            Query.create()
+                .select(list([Node.col("x")]))
+                .fromTable(Node.subquery(nextSub()).alias("s"))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("subquery in FROM without alias", () => {
+        const c = legacy();
+        return [
+            c.select(c.col("x")).from(legacySub()).setDialect("postgres").parse(),
+            Query.create()
+                .select(list([Node.col("x")]))
+                .fromTable(Node.subquery(nextSub()))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("custom operator", () => {
+        const c = legacy();
+        return [
+            c.select(c.col("id")).where(c.col("x").op("~", "abc")).setDialect("postgres").parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .where(list([Node.col("x").op("~", Node.str("abc"))]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+});

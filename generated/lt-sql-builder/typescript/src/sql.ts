@@ -445,6 +445,10 @@ export class Node {
     return new Node({ kind: Kind_Exists(query) });
   }
 
+  static subquery(query: Query): Node {
+    return new Node({ kind: Kind_Subquery(query) });
+  }
+
   eq(other: Node): Node {
     return new Node({ kind: Kind_Binary("=", this, other) });
   }
@@ -471,6 +475,10 @@ export class Node {
 
   between(low: Node, high: Node): Node {
     return new Node({ kind: Kind_Between(this, low, high) });
+  }
+
+  op(operator: string, other: Node): Node {
+    return new Node({ kind: Kind_Binary(operator, this, other) });
   }
 
   like(pattern: Node): Node {

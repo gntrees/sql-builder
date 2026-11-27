@@ -355,6 +355,10 @@ class Node:
     def exists(query: Query) -> Node:
         return Node(kind=kind_exists(query))
 
+    @staticmethod
+    def subquery(query: Query) -> Node:
+        return Node(kind=kind_subquery(query))
+
     def eq(self, other: Node) -> Node:
         return Node(kind=kind_binary("=", self, other))
 
@@ -375,6 +379,9 @@ class Node:
 
     def between(self, low: Node, high: Node) -> Node:
         return Node(kind=kind_between(self, low, high))
+
+    def op(self, operator: builtins.str, other: Node) -> Node:
+        return Node(kind=kind_binary(operator, self, other))
 
     def like(self, pattern: Node) -> Node:
         return Node(kind=kind_like(self, pattern, False))

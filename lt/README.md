@@ -71,9 +71,9 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 - `mypy --strict` bersih pada paket Python,
 - `go vet` bersih, `gofmt -l` kosong, `go test` hijau pada paket Go,
 - setiap kasus di `tests/lt-differential.test.ts` menghasilkan `sql`, `param`,
-  dan `sqlWithParam` yang identik dengan implementasi legacy (39 kasus: query,
-  DML, join, agregasi, `on conflict`, subquery, dialek MySQL, skema bertipe,
-  dan transaksi),
+  dan `sqlWithParam` yang identik dengan implementasi legacy (42 kasus: query,
+  DML, join, agregasi, `on conflict`, subquery, subquery-di-FROM, `op`,
+  dialek MySQL, skema bertipe, dan transaksi),
 - `./lt/check.sh` lulus (tidak ada drift antara `.lt` dan output yang di-commit).
 
 ## Perbedaan yang disengaja dari API lama

@@ -111,6 +111,12 @@ pub class Node {
     Node(kind: Kind.Exists(query))
   }
 
+  /// Subquery sebagai operand: `(SELECT ...)`, biasanya dipakai di `FROM`
+  /// bersama `alias(...)`.
+  pub static fn subquery(query: Query) -> Node {
+    Node(kind: Kind.Subquery(query))
+  }
+
   pub fn eq(self, other: Node) -> Node {
     Node(kind: Kind.Binary("=", self, other))
   }
@@ -138,6 +144,11 @@ pub class Node {
   /// Rentang inklusif: `BETWEEN $1 AND $2`.
   pub fn between(self, low: Node, high: Node) -> Node {
     Node(kind: Kind.Between(self, low, high))
+  }
+
+  /// Operator SQL bebas yang tidak punya method khusus, mis. `op("~", ...)`.
+  pub fn op(self, operator: Str, other: Node) -> Node {
+    Node(kind: Kind.Binary(operator, self, other))
   }
 
   pub fn like(self, pattern: Node) -> Node {

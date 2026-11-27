@@ -401,6 +401,10 @@ func NodeExists(query Query) Node {
 	return NewNode(KindExists(query))
 }
 
+func NodeSubquery(query Query) Node {
+	return NewNode(KindSubquery(query))
+}
+
 func (self Node) Eq(other Node) Node {
 	return NewNode(KindBinary("=", self, other))
 }
@@ -427,6 +431,10 @@ func (self Node) Lte(other Node) Node {
 
 func (self Node) Between(low Node, high Node) Node {
 	return NewNode(KindBetween(self, low, high))
+}
+
+func (self Node) Op(operator string, other Node) Node {
+	return NewNode(KindBinary(operator, self, other))
 }
 
 func (self Node) Like(pattern Node) Node {
