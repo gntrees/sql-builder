@@ -6,6 +6,7 @@
 import { describe, expect, test } from "bun:test";
 import { sql as drizzleSql } from "drizzle-orm";
 import { MySqlDialect } from "drizzle-orm/mysql-core";
+import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
 import { LList } from "../../generated/lt-drizzle-v2/typescript/_lingua_rt";
@@ -13,6 +14,8 @@ import { mysql, postgres, sqlToQuery } from "../../generated/lt-drizzle-v2/types
 import { append, bool, float, identifier, int, nullValue, param, raw, str, tag } from "../../generated/lt-drizzle-v2/typescript/src/sql";
 import type { Sql } from "../../generated/lt-drizzle-v2/typescript/src/sql";
 import { SqlArg, Value } from "../../generated/lt-drizzle-v2/typescript/src/value";
+import { col, plain, ref, withAlias, withSchema } from "../../generated/lt-drizzle-v2/typescript/src/schema";
+import { integer as pgInteger, serial as ltSerial, text as ltText } from "../../generated/lt-drizzle-v2/typescript/src/pg_core";
 import type { Value as ValueT } from "../../generated/lt-drizzle-v2/typescript/src/value";
 
 type Outcome = { sql: string; params: unknown[] };
@@ -131,5 +134,53 @@ describe("identifiers and typed parameters", () => {
         cat(raw("select "), int(1n), raw(", "), float(2.5), raw(", "), bool(true), raw(", "), nullValue(), raw(", "), str("x")),
       ),
     ),
+  );
+});
+
+describe("schema references", () => {
+  const users = pgTable("users", { id: serial("id"), name: text("name") });
+  const usersTable = plain("users", list([ltSerial("id"), ltText("name")]));
+
+  diff(
+    "column is table-qualified",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`${users.id}`)),
+    fromLt(sqlToQuery(postgres(), col(usersTable, "id"))),
+  );
+
+  diff(
+    "table ref has no qualification",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`${users}`)),
+    fromLt(sqlToQuery(postgres(), ref(usersTable))),
+  );
+
+  const aliased = alias(users, "u");
+  const aliasedTable = withAlias("users", "u", list([ltSerial("id")]));
+
+  diff(
+    "aliased column uses the alias",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`${aliased.id}`)),
+    fromLt(sqlToQuery(postgres(), col(aliasedTable, "id"))),
+  );
+
+  diff(
+    "aliased ref is the alias only",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`${aliased}`)),
+    fromLt(sqlToQuery(postgres(), ref(aliasedTable))),
+  );
+
+  const auth = pgSchema("auth");
+  const accounts = auth.table("accounts", { id: integer("account_id") });
+  const accountsTable = withSchema("accounts", "auth", list([pgInteger("account_id")]));
+
+  diff(
+    "schema-qualified column",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`${accounts.id}`)),
+    fromLt(sqlToQuery(postgres(), col(accountsTable, "account_id"))),
+  );
+
+  diff(
+    "schema-qualified table ref",
+    fromDrizzle(pg.sqlToQuery(drizzleSql`${accounts}`)),
+    fromLt(sqlToQuery(postgres(), ref(accountsTable))),
   );
 });

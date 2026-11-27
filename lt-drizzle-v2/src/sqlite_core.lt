@@ -1,0 +1,47 @@
+import schema { Column } "./schema.lt"
+
+package sqlite_core {
+  fn base(name: Str, sql_type: Str) -> Column {
+    Column(
+      name: name,
+      sql_type: sql_type,
+      not_null: false,
+      primary: false,
+      unique: false,
+      has_default: false,
+      default_sql: "",
+    )
+  }
+
+  export fn integer(name: Str) -> Column {
+    base(name, "integer")
+  }
+
+  export fn real(name: Str) -> Column {
+    base(name, "real")
+  }
+
+  export fn text(name: Str) -> Column {
+    base(name, "text")
+  }
+
+  export fn blob(name: Str) -> Column {
+    base(name, "blob")
+  }
+
+  export fn boolean(name: Str) -> Column {
+    base(name, "boolean")
+  }
+
+  export fn timestamp(name: Str) -> Column {
+    base(name, "timestamp")
+  }
+
+  export fn numeric(name: Str, precision: Int, scale: Int) -> Column {
+    base(name, `numeric(${precision}, ${scale})`)
+  }
+
+  export fn custom(name: Str, sql_type: Str) -> Column {
+    base(name, sql_type)
+  }
+}

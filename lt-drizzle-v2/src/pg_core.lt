@@ -1,0 +1,83 @@
+import schema { Column } "./schema.lt"
+
+package pg_core {
+  fn base(name: Str, sql_type: Str) -> Column {
+    Column(
+      name: name,
+      sql_type: sql_type,
+      not_null: false,
+      primary: false,
+      unique: false,
+      has_default: false,
+      default_sql: "",
+    )
+  }
+
+  export fn integer(name: Str) -> Column {
+    base(name, "integer")
+  }
+
+  export fn serial(name: Str) -> Column {
+    base(name, "serial")
+  }
+
+  export fn bigint(name: Str) -> Column {
+    base(name, "bigint")
+  }
+
+  export fn text(name: Str) -> Column {
+    base(name, "text")
+  }
+
+  export fn boolean(name: Str) -> Column {
+    base(name, "boolean")
+  }
+
+  export fn timestamp(name: Str) -> Column {
+    base(name, "timestamp")
+  }
+
+  export fn date(name: Str) -> Column {
+    base(name, "date")
+  }
+
+  export fn time(name: Str) -> Column {
+    base(name, "time")
+  }
+
+  export fn real(name: Str) -> Column {
+    base(name, "real")
+  }
+
+  export fn double(name: Str) -> Column {
+    base(name, "double precision")
+  }
+
+  export fn json(name: Str) -> Column {
+    base(name, "json")
+  }
+
+  export fn jsonb(name: Str) -> Column {
+    base(name, "jsonb")
+  }
+
+  export fn uuid(name: Str) -> Column {
+    base(name, "uuid")
+  }
+
+  export fn varchar(name: Str, length: Int) -> Column {
+    base(name, `varchar(${length})`)
+  }
+
+  export fn char(name: Str, length: Int) -> Column {
+    base(name, `char(${length})`)
+  }
+
+  export fn numeric(name: Str, precision: Int, scale: Int) -> Column {
+    base(name, `numeric(${precision}, ${scale})`)
+  }
+
+  export fn custom(name: Str, sql_type: Str) -> Column {
+    base(name, sql_type)
+  }
+}

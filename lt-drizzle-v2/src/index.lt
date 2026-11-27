@@ -3,6 +3,10 @@
 import value { Value } "./value.lt"
 import sql { Sql, SqlChunk } "./sql.lt"
 import dialect { Dialect } "./dialect.lt"
+import schema { Column, Table, Assignment } "./schema.lt"
+import pg_core { integer } "./pg_core.lt"
+import mysql_core { int } "./mysql_core.lt"
+import sqlite_core { blob } "./sqlite_core.lt"
 
 package drizzle_index {
   export struct Root {}
