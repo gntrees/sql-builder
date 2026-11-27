@@ -1,0 +1,46 @@
+import Value from "./value.lt"
+import Rendered from "./value.lt"
+import Sql from "./sql.lt"
+import SqlChunk from "./sql.lt"
+
+/// Aturan per-target yang harus persis mengikuti drizzle 0.44.4.
+pub class Dialect {
+  kind: Str
+
+  pub static fn postgres() -> Dialect {
+    Dialect(kind: "postgres")
+  }
+
+  pub static fn mysql() -> Dialect {
+    Dialect(kind: "mysql")
+  }
+
+  pub static fn sqlite() -> Dialect {
+    Dialect(kind: "sqlite")
+  }
+
+  /// Deparse menjadi teks SQL + daftar parameter.
+  ///
+  /// M0 baru menangani `Raw` dan `Param`; quoting identifier dan fitur dialect
+  /// masuk di M1/M2.
+  pub fn sql_to_query(self, sql: Sql) -> Rendered {
+    let mut text = ""
+    let mut params: List<Value> = []
+    for chunk in sql.chunks {
+      match chunk {
+        SqlChunk.Raw(part) => {
+          text = `${text}${part}`
+        }
+        SqlChunk.Param(value) => {
+          params = params.push(value)
+          if self.kind == "postgres" {
+            text = `${text}$${params.len()}`
+          } else {
+            text = `${text}?`
+          }
+        }
+      }
+    }
+    Rendered(sql: text, params: params)
+  }
+}

@@ -1,0 +1,29 @@
+import Value from "./value.lt"
+
+/// Potongan SQL. Chunk selalu rata (tidak ada `Nested`), sehingga tipe tidak
+/// rekursif lewat field class; tanda kurung ditulis sebagai `Raw`.
+pub enum SqlChunk {
+  Raw(Str)
+  Param(Value)
+}
+
+/// Ekspresi SQL yang belum di-deparse.
+pub class Sql {
+  chunks: List<SqlChunk>
+
+  pub static fn raw(text: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Raw(text)])
+  }
+
+  pub static fn param(value: Value) -> Sql {
+    Sql(chunks: [SqlChunk.Param(value)])
+  }
+
+  pub fn append(self, other: Sql) -> Sql {
+    Sql(chunks: self.chunks.concat(other.chunks))
+  }
+
+  pub fn is_empty(self) -> Bool {
+    self.chunks.len() == 0
+  }
+}

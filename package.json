@@ -11,13 +11,16 @@
     "db:down": "docker compose -f docker-compose.test.yml down -v",
     "db:migrate": "docker compose -f docker-compose.test.yml run --rm migrate-postgres && docker compose -f docker-compose.test.yml run --rm migrate-mysql",
     "db:reset": "docker compose -f docker-compose.test.yml down -v && bun run db:up && bun run db:migrate",
-    "test:db": "DB_TESTS=1 bun test tests/db"
+    "test:db": "DB_TESTS=1 bun test tests/db",
+    "lt-drizzle:build": "bash lt-drizzle/build.sh",
+    "lt-drizzle:verify": "bash lt-drizzle/verify.sh"
   },
   "dependencies": {
     "@gntrees/method-chain": "^0.0.34"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "drizzle-orm": "0.44.4",
     "typescript": "^5"
   }
 }

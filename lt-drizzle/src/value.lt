@@ -1,0 +1,20 @@
+/// Nilai portabel yang boleh muncul sebagai parameter query.
+///
+/// Hanya tipe yang bisa dipetakan ke semua target tanpa kehilangan makna.
+/// `Date`, `JSON` bertipe, dan `Buffer` sengaja tidak ada: konversinya
+/// tanggung jawab host (lihat docs/plans/drizzle-port.md, K13).
+pub enum Value {
+  Null
+  Bool(Bool)
+  Int(Int)
+  Float(Float)
+  Str(Str)
+  List(List<Value>)
+  Map(Map<Str, Value>)
+}
+
+/// Hasil deparse satu query.
+pub class Rendered {
+  sql: Str
+  params: List<Value>
+}
