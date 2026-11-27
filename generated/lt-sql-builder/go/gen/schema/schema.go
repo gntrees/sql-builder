@@ -173,10 +173,6 @@ func UsersName() Column {
 	return NewColumn("users", "name")
 }
 
-func UsersEmail() Column {
-	return NewColumn("users", "email")
-}
-
 func UsersAge() Column {
 	return NewColumn("users", "age")
 }
@@ -196,6 +192,70 @@ func (self Users) LtCmp(other any) int {
 
 func (self Users) LtDisplay() string {
 	return "Users"
+}
+
+type Orders struct {
+}
+
+func NewOrders() Orders {
+	return Orders{}
+}
+
+func OrdersTable() Table {
+	return NewTable("orders")
+}
+
+func OrdersId() Column {
+	return NewColumn("orders", "id")
+}
+
+func OrdersUserId() Column {
+	return NewColumn("orders", "user_id")
+}
+
+func OrdersTotal() Column {
+	return NewColumn("orders", "total")
+}
+
+func (self Orders) LtEq(other any) bool {
+	_, ok := other.(Orders)
+	return ok
+}
+
+func (self Orders) LtCmp(other any) int {
+	return 0
+}
+
+func (self Orders) LtDisplay() string {
+	return "Orders"
+}
+
+type Members struct {
+}
+
+func NewMembers() Members {
+	return Members{}
+}
+
+func MembersTable() Table {
+	return NewTable("members")
+}
+
+func MembersUid() Column {
+	return NewColumn("members", "uid")
+}
+
+func (self Members) LtEq(other any) bool {
+	_, ok := other.(Members)
+	return ok
+}
+
+func (self Members) LtCmp(other any) int {
+	return 0
+}
+
+func (self Members) LtDisplay() string {
+	return "Members"
 }
 
 type Posts struct {

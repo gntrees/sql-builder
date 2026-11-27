@@ -65,3 +65,38 @@ jobs:
           if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
           printf '%s\n' "$lines" | sed 's/^/::error::/' || true
           exit 0
+
+  database:
+    name: database (postgres + mysql)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+        with:
+          repository: gntrees/lingua-tungga
+          ref: main
+          path: .lt-src
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.96.0"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ".lt-src -> target"
+      - name: build lt
+        run: cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt
+      - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
+      - name: emit packages
+        run: bash lt/build.sh
+      - name: start databases
+        run: docker compose -f docker-compose.test.yml up -d --wait postgres mysql
+      - name: migrate
+        run: bun run db:migrate
+      # The differential proves the SQL text matches; this proves it runs.
+      - name: run the .lt builder against real databases
+        run: DB_TESTS=1 bun test tests/db/lt-integration.test.ts
+      - if: always()
+        run: docker compose -f docker-compose.test.yml down -v

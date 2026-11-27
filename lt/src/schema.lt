@@ -108,16 +108,40 @@ pub class Users {
     Column(table: "users", name: "name")
   }
 
-  pub static fn email() -> Column {
-    Column(table: "users", name: "email")
-  }
-
   pub static fn age() -> Column {
     Column(table: "users", name: "age")
   }
 
   pub static fn active() -> Column {
     Column(table: "users", name: "active")
+  }
+}
+
+pub class Orders {
+  pub static fn table() -> Table {
+    Table(name: "orders")
+  }
+
+  pub static fn id() -> Column {
+    Column(table: "orders", name: "id")
+  }
+
+  pub static fn user_id() -> Column {
+    Column(table: "orders", name: "user_id")
+  }
+
+  pub static fn total() -> Column {
+    Column(table: "orders", name: "total")
+  }
+}
+
+pub class Members {
+  pub static fn table() -> Table {
+    Table(name: "members")
+  }
+
+  pub static fn uid() -> Column {
+    Column(table: "members", name: "uid")
   }
 }
 

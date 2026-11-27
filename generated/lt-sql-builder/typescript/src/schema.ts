@@ -146,10 +146,6 @@ export class Users {
     return new Column({ table: "users", name: "name" });
   }
 
-  static email(): Column {
-    return new Column({ table: "users", name: "email" });
-  }
-
   static age(): Column {
     return new Column({ table: "users", name: "age" });
   }
@@ -171,6 +167,66 @@ export class Users {
 
   __lt_to_string(): string {
     return "Users";
+  }
+}
+
+export class Orders {
+
+  static table(): Table {
+    return new Table({ name: "orders" });
+  }
+
+  static id(): Column {
+    return new Column({ table: "orders", name: "id" });
+  }
+
+  static userId(): Column {
+    return new Column({ table: "orders", name: "user_id" });
+  }
+
+  static total(): Column {
+    return new Column({ table: "orders", name: "total" });
+  }
+
+  __lt_eq(other: unknown): boolean {
+    if (!(other instanceof Orders)) return false;
+    return true;
+  }
+
+  __lt_cmp(other: unknown): number {
+    if (!(other instanceof Orders)) return 0;
+    const peer = other as Orders;
+    return 0;
+  }
+
+  __lt_to_string(): string {
+    return "Orders";
+  }
+}
+
+export class Members {
+
+  static table(): Table {
+    return new Table({ name: "members" });
+  }
+
+  static uid(): Column {
+    return new Column({ table: "members", name: "uid" });
+  }
+
+  __lt_eq(other: unknown): boolean {
+    if (!(other instanceof Members)) return false;
+    return true;
+  }
+
+  __lt_cmp(other: unknown): number {
+    if (!(other instanceof Members)) return 0;
+    const peer = other as Members;
+    return 0;
+  }
+
+  __lt_to_string(): string {
+    return "Members";
   }
 }
 

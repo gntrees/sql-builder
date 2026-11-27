@@ -110,10 +110,6 @@ class Users:
         return Column(table="users", name="name")
 
     @staticmethod
-    def email() -> Column:
-        return Column(table="users", name="email")
-
-    @staticmethod
     def age() -> Column:
         return Column(table="users", name="age")
 
@@ -126,6 +122,50 @@ class Users:
 
     def to_display(self) -> str:
         return "Users"
+
+@dataclass(frozen=True)
+class Orders:
+    pass
+
+    @staticmethod
+    def table() -> Table:
+        return Table(name="orders")
+
+    @staticmethod
+    def id() -> Column:
+        return Column(table="orders", name="id")
+
+    @staticmethod
+    def user_id() -> Column:
+        return Column(table="orders", name="user_id")
+
+    @staticmethod
+    def total() -> Column:
+        return Column(table="orders", name="total")
+
+    def lt_cmp(self, other: "Orders") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "Orders"
+
+@dataclass(frozen=True)
+class Members:
+    pass
+
+    @staticmethod
+    def table() -> Table:
+        return Table(name="members")
+
+    @staticmethod
+    def uid() -> Column:
+        return Column(table="members", name="uid")
+
+    def lt_cmp(self, other: "Members") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "Members"
 
 @dataclass(frozen=True)
 class Posts:
