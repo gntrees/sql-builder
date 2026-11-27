@@ -392,3 +392,161 @@ describe("select", () => {
     ),
   );
 });
+
+describe("joins, subqueries, ctes, and set operations", () => {
+  const users = pgTable("users", { id: serial("id"), name: text("name") });
+  const posts = pgTable("posts", { id: serial("id"), userId: integer("user_id"), title: text("title") });
+  const tu = plain("users", list([ltSerial("id"), ltText("name")]));
+  const tp = plain("posts", list([ltSerial("id"), pgInteger("user_id"), ltText("title")]));
+  const db = new PgDatabase(new PgDialect(), {});
+  const base = (table: ReturnType<typeof plain>) =>
+    ltsel.setDialect(ltsel.fromTable(ltsel.create(), table), postgres());
+  const build = (builder: ReturnType<typeof base>): Outcome => {
+    const result = ltsel.build(builder);
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: ReturnType<typeof base>) => {
+    diff(name, expected, build(builder));
+  };
+  const on = () => ltsql.eq(ltsch.col(tu, "id"), ltsch.col(tp, "user_id"));
+
+  check(
+    "left join",
+    fromDrizzle(db.select({ id: users.id }).from(users).leftJoin(posts, eq(users.id, posts.userId)).toSQL()),
+    ltsel.leftJoin(ltsel.fields(base(tu), list([ltsch.col(tu, "id")])), tp, on()),
+  );
+
+  check(
+    "inner join",
+    fromDrizzle(db.select({ id: users.id }).from(users).innerJoin(posts, eq(users.id, posts.userId)).toSQL()),
+    ltsel.innerJoin(ltsel.fields(base(tu), list([ltsch.col(tu, "id")])), tp, on()),
+  );
+
+  check(
+    "right join",
+    fromDrizzle(db.select({ id: users.id }).from(users).rightJoin(posts, eq(users.id, posts.userId)).toSQL()),
+    ltsel.rightJoin(ltsel.fields(base(tu), list([ltsch.col(tu, "id")])), tp, on()),
+  );
+
+  check(
+    "full join",
+    fromDrizzle(db.select({ id: users.id }).from(users).fullJoin(posts, eq(users.id, posts.userId)).toSQL()),
+    ltsel.fullJoin(ltsel.fields(base(tu), list([ltsch.col(tu, "id")])), tp, on()),
+  );
+
+  check(
+    "join with order and limit",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .leftJoin(posts, eq(users.id, posts.userId))
+        .orderBy(asc(users.id))
+        .limit(1)
+        .toSQL(),
+    ),
+    ltsel.limit(
+      ltsel.orderBy(
+        ltsel.leftJoin(ltsel.fields(base(tu), list([ltsch.col(tu, "id")])), tp, on()),
+        list([ltsql.asc(ltsch.col(tu, "id"))]),
+      ),
+      1n,
+    ),
+  );
+
+  const subInner = () =>
+    ltsel.fields(base(tu), list([ltsch.field(tu, "id"), ltsch.field(tu, "name")]));
+  const subquery = db.select({ id: users.id, name: users.name }).from(users).as("s");
+
+  check(
+    "subquery in from",
+    fromDrizzle(db.select({ id: subquery.id }).from(subquery).toSQL()),
+    ltsel.fields(ltsel.setDialect(ltsel.fromSubquery(ltsel.create(), subInner(), "s"), postgres()), list([ltsql.identifier("id")])),
+  );
+
+  check(
+    "exists subquery",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(exists(db.select({ id: posts.id }).from(posts).where(eq(posts.userId, users.id))))
+        .toSQL(),
+    ),
+    ltsel.where(
+      ltsel.fields(base(tu), list([ltsch.field(tu, "id")])),
+      ltsel.exists(
+        ltsel.where(
+          ltsel.fields(base(tp), list([ltsch.field(tp, "id")])),
+          ltsql.eq(ltsch.col(tp, "user_id"), ltsch.col(tu, "id")),
+        ),
+      ),
+    ),
+  );
+
+  check(
+    "in subquery",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(inArray(users.id, db.select({ userId: posts.userId }).from(posts)))
+        .toSQL(),
+    ),
+    ltsel.where(
+      ltsel.fields(base(tu), list([ltsch.field(tu, "id")])),
+      ltsel.inSubquery(
+        ltsch.col(tu, "id"),
+        ltsel.fields(base(tp), list([ltsch.field(tp, "user_id")])),
+      ),
+    ),
+  );
+
+  const cteQuery = () =>
+    ltsel.where(
+      ltsel.fields(base(tu), list([ltsch.field(tu, "id")])),
+      ltsql.eq(ltsch.col(tu, "name"), ltsql.str("a")),
+    );
+  const cte = db.$with("active").as(db.select({ id: users.id }).from(users).where(eq(users.name, "a")));
+
+  check(
+    "cte",
+    fromDrizzle(db.with(cte).select({ id: cte.id }).from(cte).toSQL()),
+    ltsel.fields(
+      ltsel.setDialect(
+        ltsel.fromTable(ltsel.withCte(ltsel.create(), "active", cteQuery()), plain("active", list([pgInteger("id")]))),
+        postgres(),
+      ),
+      list([ltsql.identifier("id")]),
+    ),
+  );
+
+  const other = () => ltsel.fields(base(tp), list([ltsch.field(tp, "id")]));
+
+  check(
+    "union",
+    fromDrizzle(db.select({ id: users.id }).from(users).union(db.select({ id: posts.id }).from(posts)).toSQL()),
+    ltsel.union(ltsel.fields(base(tu), list([ltsch.field(tu, "id")])), other()),
+  );
+
+  check(
+    "union all",
+    fromDrizzle(db.select({ id: users.id }).from(users).unionAll(db.select({ id: posts.id }).from(posts)).toSQL()),
+    ltsel.unionAll(ltsel.fields(base(tu), list([ltsch.field(tu, "id")])), other()),
+  );
+
+  check(
+    "intersect",
+    fromDrizzle(db.select({ id: users.id }).from(users).intersect(db.select({ id: posts.id }).from(posts)).toSQL()),
+    ltsel.intersect(ltsel.fields(base(tu), list([ltsch.field(tu, "id")])), other()),
+  );
+
+  check(
+    "except",
+    fromDrizzle(db.select({ id: users.id }).from(users).except(db.select({ id: posts.id }).from(posts)).toSQL()),
+    ltsel.exceptQuery(ltsel.fields(base(tu), list([ltsch.field(tu, "id")])), other()),
+  );
+});
