@@ -61,3 +61,30 @@ jobs:
           if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
           printf '%s\n' "$lines" | sed 's/^/::error::/' || true
           exit 0
+
+  database:
+    name: database (postgres + mysql)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+        with:
+          repository: gntrees/lingua-tungga
+          ref: d11a4c9
+          path: .lt-src
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.96.0"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ".lt-src -> target"
+      - name: build lt
+        run: cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt
+      - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
+      - run: bun install
+      - name: roundtrip
+        run: bash lt-drizzle-v2/verify-db.sh

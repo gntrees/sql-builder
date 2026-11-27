@@ -50,6 +50,7 @@ __pycache__/
 .lt/out/
 .lt/out-drizzle/
 .lt/out-drizzle-v2/
+.lt/test-v2/
 .lt/venv/
 .lt/bin/
 

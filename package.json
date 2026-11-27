@@ -16,7 +16,8 @@
     "lt-drizzle:verify": "bash lt-drizzle/verify.sh",
     "lt-drizzle:db": "bash lt-drizzle/verify-db.sh",
     "lt-drizzle-v2:build": "bash lt-drizzle-v2/build.sh",
-    "lt-drizzle-v2:verify": "bash lt-drizzle-v2/verify.sh"
+    "lt-drizzle-v2:verify": "bash lt-drizzle-v2/verify.sh",
+    "lt-drizzle-v2:db": "bash lt-drizzle-v2/verify-db.sh"
   },
   "dependencies": {
     "@gntrees/method-chain": "^0.0.34"

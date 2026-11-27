@@ -87,13 +87,11 @@ lt-drizzle-v2/
     update.lt       # package update
     delete.lt       # package delete
     index.lt        # package drizzle_index (mengimpor semua agar ikut ter-emit)
-  tests/
-    value_test.lt
-    sql_test.lt
-    select_test.lt
+  src/sql_test.lt          # package test; `lt test` mengharuskan entry ada di
+                           # direktori yang sama dengan modul yang diuji
   parity/
     differential.test.ts   # 64 kasus v2 vs drizzle
-    v1-vs-v2.test.ts       # sekali-jalan, bukan gate
+    v1-vs-v2.test.ts       # sekali-jalan, bukan gate (butuh artefak v1)
     db.test.ts             # roundtrip
     ddl/postgres.sql
     ddl/mysql.sql
@@ -426,6 +424,7 @@ Urutan commit: `lt-drizzle-v2: Mx - <ringkasan>`.
 | H7 | Nama unik case-insensitive | `Table` vs `table()`, `Column` vs `column()` | konstruktor diberi nama lain (`plain`, dst.) | dikunci (F6) |
 | H8 | Package wajib kurung kurawal | contoh spec usang | ikuti grammar | dikunci (F2) |
 | H9 | Emitter Go/Py untuk struct/fungsi/enum baru | risiko terbesar di M6 | smoke tiap milestone | **terbuka** |
+| H11 | `lt test` menolak entry yang mengimpor file di luar direktori entry | test package tidak bisa ditaruh di `tests/` terpisah | test package diletakkan di `src/sql_test.lt` | dikunci (diverifikasi M6) |
 | H10 | Varian enum bernama builtin Python (`Int`, `Str`, `Bool`, `List`, `Map`) membayangi builtin di output Python dan ditolak `mypy --strict` | `Value.Str` tidak bisa dipakai | varian dinamai `Integer/Text/Boolean/Array/Record` | dikunci (diverifikasi M0) |
 
 H6 perlu dilaporkan sebagai **bug/ketidaksesuaian spec di LT** (spec menyebut overloading sah,
@@ -454,6 +453,30 @@ compiler menolak) — di luar wewenang branch ini untuk memperbaiki.
 5. `lt-drizzle/` v1 tidak disentuh sampai M6 v2 selesai.
 6. Setelah M6: jalankan v1-vs-v2 sekali, tulis laporan gap, lalu putuskan apakah v1 dihapus.
 7. Branch tidak di-merge (mengikuti K24 v1).
+
+---
+
+## 15. Progres
+
+| M | Status | Bukti |
+|---|---|---|
+| M0 | selesai | skeleton, differential runner, CI v2 |
+| M1 | selesai | chunk, identifier, parameter bertipe, tag |
+| M2 | selesai | `schema` + `pg_core`/`mysql_core`/`sqlite_core` |
+| M3 | selesai | `select`, operator, order/limit/offset, agregat, distinct |
+| M4 | selesai | join, subquery, CTE, set operations |
+| M5 | selesai | insert/conflict/update/delete/returning |
+| M6 | selesai | parity MySQL+SQLite, 3 target, `lt test`, roundtrip pg+mysql |
+
+Catatan M6:
+
+- Differential: **64 fixture** hijau (pg/mysql/sqlite), nama kasus sama dengan v1.
+- `tsc --noEmit` dan `mypy --strict` bersih; `lt test` (4 test) dijalankan di target TS.
+- Roundtrip Postgres + MySQL hijau lewat `verify-db.sh`.
+- `v1-vs-v2.test.ts` dijalankan sekali: 3 kasus (raw, parameter, select lengkap) identik.
+- Gerbang Go belum dijalankan lokal (toolchain tidak ada); CI `drizzle-v2.yml` menjalankannya.
+- Emitter v2 di-emit sebagai **fungsi bebas** (`sqlToQuery(d, q)`); receiver sugar hanya
+  tersedia di sumber `.lt`.
 
 ---
 

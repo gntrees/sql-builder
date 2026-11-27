@@ -36,5 +36,24 @@ else
   echo "warning: go not found; skipping the Go gate locally" >&2
 fi
 
+echo "== lt test (emit all targets, run TypeScript) =="
+lt_bin="${LT_BIN:-}"
+if [ -z "$lt_bin" ]; then
+  lt_bin="$(command -v lt || true)"
+fi
+if [ -z "$lt_bin" ]; then
+  echo "lt not found: put it on PATH or set LT_BIN" >&2
+  exit 1
+fi
+rm -rf .lt/test-v2
+"$lt_bin" test -t ts lt-drizzle-v2/src/sql_test.lt --out .lt/test-v2 >/dev/null
+"$lt_bin" test -t py lt-drizzle-v2/src/sql_test.lt --out .lt/test-v2 >/dev/null
+"$lt_bin" test -t go lt-drizzle-v2/src/sql_test.lt --out .lt/test-v2 >/dev/null
+(
+  cd .lt/test-v2/ts
+  npm install --no-audit --no-fund --silent >/dev/null
+  npm test >/dev/null
+)
+
 echo "== differential (drizzle vs .lt v2) =="
 bun test lt-drizzle-v2/parity/differential.test.ts

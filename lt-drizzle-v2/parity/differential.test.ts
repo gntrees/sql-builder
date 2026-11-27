@@ -5,7 +5,8 @@
 // `params`.
 import { describe, expect, test } from "bun:test";
 import { and, asc, between, count, desc, eq, exists, gt, ilike, inArray, isNotNull, isNull, like, ne, not, notBetween, notIlike, notInArray, notLike, or, sql as drizzleSql, sum } from "drizzle-orm";
-import { MySqlDialect } from "drizzle-orm/mysql-core";
+import { int as myInt, mysqlTable, MySqlDatabase, MySqlDialect, varchar } from "drizzle-orm/mysql-core";
+import { BaseSQLiteDatabase, integer as sqInt, sqliteTable, SQLiteSyncDialect, text as sqText } from "drizzle-orm/sqlite-core";
 import { PgDatabase } from "drizzle-orm/pg-core";
 import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
@@ -25,6 +26,9 @@ import * as ltupd from "../../generated/lt-drizzle-v2/typescript/src/update";
 import * as ltdel from "../../generated/lt-drizzle-v2/typescript/src/delete";
 import { col, plain, ref, withAlias, withSchema } from "../../generated/lt-drizzle-v2/typescript/src/schema";
 import { integer as pgInteger, serial as ltSerial, text as ltText } from "../../generated/lt-drizzle-v2/typescript/src/pg_core";
+import { int as ltMyInt, varchar as ltMyVarchar } from "../../generated/lt-drizzle-v2/typescript/src/mysql_core";
+import { integer as ltSqInt, text as ltSqText } from "../../generated/lt-drizzle-v2/typescript/src/sqlite_core";
+import { mysql as mysqlDialect, sqlite as sqliteDialect } from "../../generated/lt-drizzle-v2/typescript/src/dialect";
 import type { Value as ValueT } from "../../generated/lt-drizzle-v2/typescript/src/value";
 
 type Outcome = { sql: string; params: unknown[] };
@@ -559,10 +563,6 @@ describe("dml", () => {
   const t = plain("users", list([ltSerial("id"), ltText("name"), pgInteger("age")]));
   const db = new PgDatabase(new PgDialect(), {});
   const pgDialect = postgres();
-  const build = (builder: { build?: unknown }): Outcome => {
-    const result = (builder as any).tag === undefined ? undefined : undefined;
-    throw new Error("unused");
-  };
   const unwrap = (result: any): Outcome => {
     if (result.tag === "err") {
       throw new Error(`build failed: ${result.values[0]?.tag}`);
@@ -732,5 +732,140 @@ describe("dml", () => {
         pgDialect,
       ),
     ),
+  );
+});
+
+describe("mysql parity", () => {
+  const users = mysqlTable("users", { id: myInt("id"), name: varchar("name", { length: 255 }), age: myInt("age") });
+  const t = plain("users", list([ltMyInt("id"), ltMyVarchar("name", 255n), ltMyInt("age")]));
+  const db = new MySqlDatabase(new MySqlDialect(), {});
+  const d = mysqlDialect();
+  const unwrap = (result: any): Outcome => {
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, result: any) => {
+    diff(name, expected, unwrap(result));
+  };
+
+  check(
+    "select with limit",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(eq(users.id, 1)).limit(2).toSQL()),
+    ltsel.build(
+      ltsel.limit(
+        ltsel.where(ltsel.fields(ltsel.setDialect(ltsel.fromTable(ltsel.create(), t), d), list([ltsch.field(t, "id")])), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))),
+        2n,
+      ),
+    ),
+  );
+
+  check(
+    "insert on duplicate key update",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onDuplicateKeyUpdate({ set: { name: "b" } }).toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.onDuplicateKeyUpdate(
+          ltins.values(ltins.create(t), list([list([ltsch.assign("name", ltsql.str("a"))])])),
+          list([ltsch.assign("name", ltsql.str("b"))]),
+        ),
+        d,
+      ),
+    ),
+  );
+
+  check(
+    "update",
+    fromDrizzle(db.update(users).set({ name: "x" }).where(eq(users.id, 1)).toSQL()),
+    ltupd.build(
+      ltupd.setDialect(
+        ltupd.where(ltupd.set(ltupd.create(t), list([ltsch.assign("name", ltsql.str("x"))])), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))),
+        d,
+      ),
+    ),
+  );
+
+  check(
+    "delete",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).toSQL()),
+    ltdel.build(ltdel.setDialect(ltdel.where(ltdel.create(t), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))), d)),
+  );
+});
+
+describe("sqlite parity", () => {
+  const users = sqliteTable("users", { id: sqInt("id"), name: sqText("name") });
+  const t = plain("users", list([ltSqInt("id"), ltSqText("name")]));
+  const db = new BaseSQLiteDatabase("sync", new SQLiteSyncDialect(), {});
+  const d = sqliteDialect();
+  const unwrap = (result: any): Outcome => {
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, result: any) => {
+    diff(name, expected, unwrap(result));
+  };
+
+  check(
+    "select with limit",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(eq(users.id, 1)).limit(2).toSQL()),
+    ltsel.build(
+      ltsel.limit(
+        ltsel.where(ltsel.fields(ltsel.setDialect(ltsel.fromTable(ltsel.create(), t), d), list([ltsch.field(t, "id")])), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))),
+        2n,
+      ),
+    ),
+  );
+
+  check(
+    "insert uses null for omitted columns",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onConflictDoNothing().toSQL()),
+    ltins.build(
+      ltins.setDialect(
+        ltins.onConflictDoNothing(
+          ltins.values(ltins.create(t), list([list([ltsch.assign("name", ltsql.str("a"))])])),
+        ),
+        d,
+      ),
+    ),
+  );
+
+  check(
+    "update",
+    fromDrizzle(db.update(users).set({ name: "x" }).where(eq(users.id, 1)).toSQL()),
+    ltupd.build(
+      ltupd.setDialect(
+        ltupd.where(ltupd.set(ltupd.create(t), list([ltsch.assign("name", ltsql.str("x"))])), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))),
+        d,
+      ),
+    ),
+  );
+
+  check(
+    "delete",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).toSQL()),
+    ltdel.build(ltdel.setDialect(ltdel.where(ltdel.create(t), ltsql.eq(ltsch.col(t, "id"), ltsql.int(1n))), d)),
+  );
+});
+
+describe("selection shortcuts", () => {
+  const users = pgTable("users", { id: serial("id") });
+  const t = plain("users", list([ltSerial("id")]));
+  const db = new PgDatabase(new PgDialect(), {});
+  const builder = ltsel.fields(
+    ltsel.setDialect(ltsel.fromTable(ltsel.create(), t), postgres()),
+    list([ltsch.field(t, "id")]),
+  );
+  const result = ltsel.build(builder);
+  if (result.tag === "err") {
+    throw new Error(`build failed: ${result.values[0]?.tag}`);
+  }
+
+  diff(
+    "renaming the selection key does not alias the column",
+    fromDrizzle(db.select({ userId: users.id }).from(users).toSQL()),
+    fromLt(result.values[0]),
   );
 });
