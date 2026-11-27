@@ -1,0 +1,31 @@
+[[feature]]
+id = "table/basic"
+title = "A table becomes a typed accessor binding"
+
+[[feature]]
+id = "column/types"
+title = "Scalar and enum columns map to semantic LT types"
+
+[[feature]]
+id = "key/composite"
+title = "Composite primary keys stay ordered"
+
+[[feature]]
+id = "relation/foreign-key"
+title = "Foreign keys become neutral relation metadata"
+
+[[feature]]
+id = "unsupported/jsonb"
+title = "Unsupported columns are visible but untyped"
+
+[[feature]]
+id = "schema/non-public"
+title = "Non-public schemas are skipped and recorded"
+
+[[feature]]
+id = "naming/renames"
+title = "Accessor names and SQL names stay separate"
+
+[[feature]]
+id = "unsupported/composite-unique"
+title = "Composite uniques and indexes are recorded"

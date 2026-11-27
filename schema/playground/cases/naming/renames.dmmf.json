@@ -1,0 +1,79 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "UserProfile",
+        "dbName": "user_profiles",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "displayName",
+            "dbName": "display_name",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["VarChar", ["255"]]
+          },
+          {
+            "name": "from",
+            "dbName": "from",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Text", []]
+          },
+          {
+            "name": "createdAt",
+            "dbName": "created_at",
+            "kind": "scalar",
+            "type": "DateTime",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": { "name": "now", "args": [] },
+            "nativeType": ["Timestamp", ["3"]]
+          },
+          {
+            "name": "type",
+            "dbName": "type",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Text", []]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [],
+    "indexes": []
+  }
+}

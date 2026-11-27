@@ -1,0 +1,41 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "Audit",
+        "dbName": "audit",
+        "schema": "auth",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "action",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Text", []]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [],
+    "indexes": []
+  }
+}

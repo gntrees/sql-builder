@@ -58,6 +58,7 @@ unsupported baseline is what actually gates the change.
 | `bun run schema:db:up` | Start the fixture Postgres on port 5434. |
 | `bun run schema:db:down` | Stop and remove the fixture database. |
 | `bun run schema:introspect` | `prisma db pull --force && prisma generate`. |
+| `bun run schema:playground` | Build the static schema playground. |
 | `bun run verify:local` | Full local gate: v2 verify + DB roundtrip + playground. |
 
 CI only runs the schema codegen gate (introspection, codegen, unit tests, formatting,
@@ -110,6 +111,25 @@ is the handwritten boundary that converts `Expr` into the v2 `Sql` type and conv
 ```lt
 let table = to_table(users_meta)
 from_table(create(), table)
+```
+
+## Playground
+
+`schema/playground/` builds a static gallery of 8 cases: table, column types, composite
+key, foreign key, unsupported `jsonb`/array, non-public schema, naming, and composite
+unique/index.
+
+```sh
+bun run schema:playground
+# open schema/playground/out/index.html
+```
+
+Each case shows the DMMF input, `schema.json`, `unsupported.json`, generated LT files,
+and the `lt check` result. IR snapshots live next to the case as
+`<id>.expected.json`; regenerate deliberately with:
+
+```sh
+bun schema/playground/build.ts --update
 ```
 
 ## Known DMMF blind spots

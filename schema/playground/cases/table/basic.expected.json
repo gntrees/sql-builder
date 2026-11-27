@@ -1,0 +1,54 @@
+{
+  "schema": {
+    "version": 1,
+    "generator": "prisma-lt",
+    "dialect": "postgres",
+    "prismaVersion": "7.10.1",
+    "tables": [
+      {
+        "model": "User",
+        "name": "users",
+        "dbName": "users",
+        "schema": "public",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": [
+          {
+            "name": "id",
+            "dbName": "id",
+            "nullable": false,
+            "unique": false,
+            "default": {
+              "kind": "autoincrement"
+            },
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "name",
+            "dbName": "name",
+            "nullable": false,
+            "unique": false,
+            "type": "Str",
+            "nativeType": "VarChar"
+          },
+          {
+            "name": "email",
+            "dbName": "email",
+            "nullable": true,
+            "unique": true,
+            "type": "Str",
+            "nativeType": "String"
+          }
+        ]
+      }
+    ],
+    "enums": [],
+    "foreignKeys": []
+  },
+  "unsupported": {
+    "version": 1,
+    "entries": []
+  }
+}

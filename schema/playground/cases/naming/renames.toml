@@ -1,0 +1,3 @@
+title = "Accessor names and SQL names stay separate"
+feature = "naming/renames"
+why = "displayName becomes the accessor display_name while the SQL string stays display_name/from. Reserved words from and type get a trailing underscore."

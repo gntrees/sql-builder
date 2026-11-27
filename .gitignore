@@ -60,3 +60,7 @@ __pycache__/
 # drizzle port build output
 generated/lt-drizzle-v2/
 lt-drizzle-v2/playground/out/
+
+# schema codegen playground
+schema/playground/out/
+.lt/schema-playground/

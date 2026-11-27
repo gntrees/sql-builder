@@ -1,0 +1,130 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "Sample",
+        "dbName": "samples",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "count",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "ratio",
+            "kind": "scalar",
+            "type": "Float",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["DoublePrecision", []]
+          },
+          {
+            "name": "label",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Text", []]
+          },
+          {
+            "name": "active",
+            "kind": "scalar",
+            "type": "Boolean",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Boolean", []]
+          },
+          {
+            "name": "balance",
+            "kind": "scalar",
+            "type": "Decimal",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": 0,
+            "nativeType": ["Decimal", ["65", "30"]]
+          },
+          {
+            "name": "externalId",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Uuid", []]
+          },
+          {
+            "name": "createdAt",
+            "kind": "scalar",
+            "type": "DateTime",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": { "name": "now", "args": [] },
+            "nativeType": ["Timestamp", ["3"]]
+          },
+          {
+            "name": "status",
+            "kind": "enum",
+            "type": "Status",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": true,
+            "default": "ACTIVE",
+            "nativeType": null
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [
+      {
+        "name": "Status",
+        "dbName": "status",
+        "values": [
+          { "name": "ACTIVE", "dbName": "active" },
+          { "name": "PAUSED", "dbName": "paused" }
+        ]
+      }
+    ],
+    "indexes": []
+  }
+}

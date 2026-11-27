@@ -1,0 +1,3 @@
+title = "Unsupported columns are visible but untyped"
+feature = "unsupported/jsonb"
+why = "jsonb and array columns cannot map to a safe LT value type. With --allow-unsupported they become UnsupportedColumn fields and are recorded in unsupported.json."

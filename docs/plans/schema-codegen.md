@@ -307,6 +307,20 @@ Fixture DB terpisah di `schema/fixtures/`, mencakup:
 | `db pull` + generate terhadap fixture DB | selesai; hasil deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
 | CI job `schema` | selesai (`.github/workflows/schema.yml`) |
+| Schema playground | selesai (`schema/playground/`, 8 kasus, 8 fitur, IR snapshot + `lt check`) |
+
+## 18. Schema Playground
+
+`schema/playground/` adalah galeri statis yang tidak menyentuh database:
+
+- 8 kasus: table, column types, composite key, foreign key, unsupported jsonb/array,
+  non-public schema, naming, composite unique/index.
+- Setiap kasus: DMMF input, `schema.json`, `unsupported.json`, generated LT, dan
+  status `lt check`.
+- Snapshot IR disimpan di `cases/**/<id>.expected.json`.
+- Output: `schema/playground/out/index.html` (gitignored).
+- Perintah: `bun run schema:playground`; regenerate snapshot:
+  `bun schema/playground/build.ts --update`.
 
 Catatan: `bun test schema/test` menjalankan 12 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture

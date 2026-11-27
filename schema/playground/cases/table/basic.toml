@@ -1,0 +1,3 @@
+title = "A table becomes a typed accessor binding"
+feature = "table/basic"
+why = "The DMMF model User maps to the LT binding users and the struct UsersTable. The primary key is retained as metadata."
