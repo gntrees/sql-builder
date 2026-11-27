@@ -66,8 +66,13 @@ pub class Insert {
     self.copy(self.rows, "nothing", columns, [], self.returning_fields, self.returning_all, self.dialect)
   }
 
-  pub fn on_conflict_do_update(self, target: List<Str>, set: List<Assignment>) -> Insert {
-    self.copy(self.rows, "update", target, set, self.returning_fields, self.returning_all, self.dialect)
+  pub fn on_conflict_do_update(self, columns: List<Str>, assignments: List<Assignment>) -> Insert {
+    self.copy(self.rows, "update", columns, assignments, self.returning_fields, self.returning_all, self.dialect)
+  }
+
+  // MySQL tidak punya on conflict; variannya on duplicate key update.
+  pub fn on_duplicate_key_update(self, assignments: List<Assignment>) -> Insert {
+    self.copy(self.rows, "duplicate", [], assignments, self.returning_fields, self.returning_all, self.dialect)
   }
 
   pub fn returning(self, fields: List<Sql>) -> Insert {
@@ -88,7 +93,7 @@ pub class Insert {
       Some(dialect) => {
         match self.table {
           None => Err(BuildError.MissingTable)
-          Some(table) => Ok(dialect.sql_to_query(self.to_sql(table)))
+          Some(table) => Ok(dialect.sql_to_query(self.to_sql(table, dialect)))
         }
       }
     }
@@ -108,7 +113,16 @@ pub class Insert {
     Sql.join(table.columns.map(fn(column) => Sql.identifier(column.name)), ", ")
   }
 
-  fn to_sql(self, table: Table) -> Sql {
+  /// Kolom yang tidak diberikan: `default` (Postgres/MySQL) atau `null` (SQLite).
+  fn missing_token(dialect: Dialect) -> Sql {
+    if dialect.kind == "sqlite" {
+      Sql.raw("null")
+    } else {
+      Sql.raw("default")
+    }
+  }
+
+  fn to_sql(self, table: Table, dialect: Dialect) -> Sql {
     let mut sql = Sql.raw("insert into ")
       .append(table.from_ref())
       .append(Sql.raw(" ("))
@@ -124,7 +138,7 @@ pub class Insert {
             column_parts = column_parts.push(value)
           }
           None => {
-            column_parts = column_parts.push(Sql.raw("default"))
+            column_parts = column_parts.push(Insert.missing_token(dialect))
           }
         }
       }
@@ -134,7 +148,11 @@ pub class Insert {
     }
     sql = sql.append(Sql.join(row_parts, ", "))
 
-    if self.conflict_action != "" {
+    if self.conflict_action == "duplicate" {
+      sql = sql
+        .append(Sql.raw(" on duplicate key update "))
+        .append(Sql.join(self.conflict_set.map(fn(item) => item.to_sql()), ", "))
+    } else if self.conflict_action != "" {
       sql = sql.append(Sql.raw(" on conflict"))
       if self.conflict_target.len() > 0 {
         sql = sql

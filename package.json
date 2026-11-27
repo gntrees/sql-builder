@@ -13,7 +13,8 @@
     "db:reset": "docker compose -f docker-compose.test.yml down -v && bun run db:up && bun run db:migrate",
     "test:db": "DB_TESTS=1 bun test tests/db",
     "lt-drizzle:build": "bash lt-drizzle/build.sh",
-    "lt-drizzle:verify": "bash lt-drizzle/verify.sh"
+    "lt-drizzle:verify": "bash lt-drizzle/verify.sh",
+    "lt-drizzle:db": "bash lt-drizzle/verify-db.sh"
   },
   "dependencies": {
     "@gntrees/method-chain": "^0.0.34"

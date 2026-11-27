@@ -5,7 +5,8 @@
 // the .lt implementation produces byte-identical `sql` and `params`.
 import { describe, expect, test } from "bun:test";
 import { and, asc, between, count, desc, eq, exists, gt, ilike, inArray, isNotNull, isNull, like, ne, not, notBetween, notIlike, notInArray, notLike, or, sql, sum } from "drizzle-orm";
-import { MySqlDialect } from "drizzle-orm/mysql-core";
+import { int, mysqlTable, MySqlDatabase, MySqlDialect, varchar } from "drizzle-orm/mysql-core";
+import { BaseSQLiteDatabase, integer as sqliteInteger, sqliteTable, SQLiteSyncDialect, text as sqliteText } from "drizzle-orm/sqlite-core";
 import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { PgDatabase } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
@@ -740,5 +741,127 @@ describe("dml", () => {
       .where(t.col("id").eq(Sql.int(1n)))
       .returning(list([t.field("id")]))
       .setDialect(pgDialect),
+  );
+});
+
+describe("mysql parity", () => {
+  const users = mysqlTable("users", {
+    id: int("id"),
+    name: varchar("name", { length: 255 }),
+    age: int("age"),
+  });
+  const t = Table.plain(
+    "users",
+    list([Column.integer("id"), Column.varchar("name", 255n), Column.integer("age")]),
+  );
+  const db = new MySqlDatabase(new MySqlDialect(), {});
+  const build = (builder: { build(): any }): Outcome => {
+    const result = builder.build();
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: { build(): any }) => {
+    diff(name, expected, build(builder));
+  };
+
+  check(
+    "select with limit",
+    fromDrizzle(
+      db.select({ id: users.id }).from(users).where(eq(users.id, 1)).limit(2).toSQL(),
+    ),
+    Select.create()
+      .fromTable(t)
+      .select(list([t.field("id")]))
+      .where(t.col("id").eq(Sql.int(1n)))
+      .limit(2n)
+      .setDialect(Dialect.mysql()),
+  );
+
+  check(
+    "insert on duplicate key update",
+    fromDrizzle(
+      db.insert(users).values({ name: "a" }).onDuplicateKeyUpdate({ set: { name: "b" } }).toSQL(),
+    ),
+    Insert.create(t)
+      .values(list([list([Assignment.of("name", Sql.str("a"))])]))
+      .onDuplicateKeyUpdate(list([Assignment.of("name", Sql.str("b"))]))
+      .setDialect(Dialect.mysql()),
+  );
+
+  check(
+    "update",
+    fromDrizzle(db.update(users).set({ name: "x" }).where(eq(users.id, 1)).toSQL()),
+    Update.create(t)
+      .set(list([Assignment.of("name", Sql.str("x"))]))
+      .where(t.col("id").eq(Sql.int(1n)))
+      .setDialect(Dialect.mysql()),
+  );
+
+  check(
+    "delete",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).toSQL()),
+    Delete.create(t)
+      .where(t.col("id").eq(Sql.int(1n)))
+      .setDialect(Dialect.mysql()),
+  );
+});
+
+describe("sqlite parity", () => {
+  const users = sqliteTable("users", {
+    id: sqliteInteger("id"),
+    name: sqliteText("name"),
+  });
+  const t = Table.plain("users", list([Column.integer("id"), Column.text("name")]));
+  const db = new BaseSQLiteDatabase("sync", new SQLiteSyncDialect(), {});
+  const build = (builder: { build(): any }): Outcome => {
+    const result = builder.build();
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: { build(): any }) => {
+    diff(name, expected, build(builder));
+  };
+
+  check(
+    "select with limit",
+    fromDrizzle(
+      db.select({ id: users.id }).from(users).where(eq(users.id, 1)).limit(2).toSQL(),
+    ),
+    Select.create()
+      .fromTable(t)
+      .select(list([t.field("id")]))
+      .where(t.col("id").eq(Sql.int(1n)))
+      .limit(2n)
+      .setDialect(Dialect.sqlite()),
+  );
+
+  check(
+    "insert uses null for omitted columns",
+    fromDrizzle(db.insert(users).values({ name: "a" }).onConflictDoNothing().toSQL()),
+    Insert.create(t)
+      .values(list([list([Assignment.of("name", Sql.str("a"))])]))
+      .onConflictDoNothing()
+      .setDialect(Dialect.sqlite()),
+  );
+
+  check(
+    "update",
+    fromDrizzle(db.update(users).set({ name: "x" }).where(eq(users.id, 1)).toSQL()),
+    Update.create(t)
+      .set(list([Assignment.of("name", Sql.str("x"))]))
+      .where(t.col("id").eq(Sql.int(1n)))
+      .setDialect(Dialect.sqlite()),
+  );
+
+  check(
+    "delete",
+    fromDrizzle(db.delete(users).where(eq(users.id, 1)).toSQL()),
+    Delete.create(t)
+      .where(t.col("id").eq(Sql.int(1n)))
+      .setDialect(Dialect.sqlite()),
   );
 });

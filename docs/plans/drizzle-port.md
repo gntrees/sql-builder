@@ -383,9 +383,10 @@ dijalankan di tiga target lewat `lt test`.
 
 ### 9.4 Roundtrip DB
 
-DDL dari drizzle-kit di `parity/ddl/`, dijalankan lewat `docker-compose.test.yml` yang sudah ada.
-SQL hasil port dieksekusi ke Postgres dan MySQL; hasilnya dibandingkan dengan hasil query
-drizzle yang setara. Roundtrip membuktikan SQL tidak hanya "sama teks" tetapi juga valid.
+DDL fixture di `lt-drizzle/parity/ddl/` dijalankan lewat `docker-compose.test.yml` yang sudah ada.
+Saat ini DDL ditulis tangan sebagai ekuivalen skema drizzle; generasi drizzle-kit adalah
+tindak lanjut K3 (belum dikerjakan pada M6). SQL hasil port dieksekusi ke Postgres dan MySQL;
+roundtrip membuktikan SQL tidak hanya "sama teks" tetapi juga valid.
 
 ---
 
@@ -418,7 +419,7 @@ Workflow baru `.github/workflows/drizzle.yml`:
 | G8 | Tanpa type-level inference | `InferSelectModel` mustahil | di luar scope | dikunci (K10) |
 | G9 | Tanpa state mutable | `$dynamic` mustahil | builder immutable | dikunci (K19) |
 | G10 | Static fn tidak boleh memakai type parameter class | factory generik tidak bisa | factory non-generik | konsekuensi K18 |
-| G11 | Emitter Go/Py untuk generik/enum kompleks | risiko terbesar di M6 | smoke tiap milestone (advisory) | **terbuka — diverifikasi M6** |
+| G11 | Emitter Go/Py untuk generik/enum kompleks | risiko terbesar di M6 | smoke tiap milestone (advisory) | **TS+Py terverifikasi (mypy strict); Go menunggu CI** |
 
 G11 adalah risiko utama: kalau emitter tidak bisa menangani bentuk yang dipakai port, M6 gagal.
 Karena itu smoke emit Go/Py dijalankan (tanpa jadi gate) sejak M2 supaya kegagalan terdeteksi
@@ -456,3 +457,26 @@ lebih awal, tanpa melanggar K8.
 Tidak ada. Semua keputusan desain yang memengaruhi bentuk kode sudah dikunci di bagian 2.
 Hal yang masih perlu **fakta** (bukan keputusan) dicatat sebagai risiko G11 dan diverifikasi
 saat M6.
+
+---
+
+## 15. Progres
+
+| M | Status | Bukti |
+|---|---|---|
+| M0 | selesai | skeleton, differential runner, CI |
+| M1 | selesai | chunk, identifier, parameter bertipe |
+| M2 | selesai | `Table`/`Column`, referensi berkualifikasi, alias, schema |
+| M3 | selesai | `Select`, operator, order/limit/offset, agregat, distinct |
+| M4 | selesai | join, subquery, CTE, set operations |
+| M5 | selesai | insert/conflict/update/delete/returning |
+| M6 | selesai | parity MySQL+SQLite, mypy strict, roundtrip Postgres+MySQL |
+| M7 | belum | opsional, menunggu keputusan |
+
+Catatan M6:
+
+- Gerbang Go (`go vet`, `gofmt`, `go test`) belum dijalankan lokal karena toolchain Go tidak
+  tersedia di mesin pengembangan; CI menjalankannya.
+- DDL roundtrip masih ditulis tangan (lihat §9.4); generasi drizzle-kit belum dikerjakan.
+- Gap yang terverifikasi: `Table.col` menerima nama kolom apa adanya; validasi
+  `BuildError.UnknownColumn` belum diimplementasikan (tidak memengaruhi parity SQL).
