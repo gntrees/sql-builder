@@ -1,0 +1,67 @@
+name: lt
+
+# The .lt port is only affected by its own sources, the emitted packages, the
+# legacy oracle, and the differential test. Running it on unrelated changes
+# (legacy generator, docs) wastes minutes.
+on:
+  push:
+    branches: [main, lt-core]
+    paths:
+      - "lt/**"
+      - "generated/lt-sql-builder/**"
+      - "tests/lt-differential.test.ts"
+      - "tests/reference/**"
+      - ".github/workflows/lt.yml"
+  pull_request:
+    paths:
+      - "lt/**"
+      - "generated/lt-sql-builder/**"
+      - "tests/lt-differential.test.ts"
+      - "tests/reference/**"
+      - ".github/workflows/lt.yml"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  lt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Generated Go is post-processed with gofmt, so the CI Go version has to
+      # match the one used to produce the committed files.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+        with:
+          repository: gntrees/lingua-tungga
+          ref: main
+          path: .lt-src
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.96.0"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ".lt-src -> target"
+      - name: build lt
+        run: set -o pipefail; cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt 2>&1 | tee build.log
+      - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
+      - name: drift, native gates, test classes, differential
+        run: set -o pipefail; bash lt/verify.sh 2>&1 | tee verify.log
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error(\[|:)|error TS|FAIL|failed|Expected|Received|stale|not found|mismatch' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0
