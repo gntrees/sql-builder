@@ -442,4 +442,23 @@ describe("QueryTest", () => {
         throw new Error("unreachable");
     }
   });
+
+  it("transaction_statements", () => {
+    const __match27 = m1.Query.create().transaction(new lt.LList<m1.Query>([m1.Query.create().insert(m1.Node.table("t"), new lt.LList<m1.Assignment>([m1.Assignment.int("a", 1n)])), m1.Query.create().update(m1.Node.table("t"), new lt.LList<m1.Assignment>([m1.Assignment.int("a", 2n)])).where(new lt.LList<m1.Node>([m1.Node.col("id").eq(m1.Node.int(3n))]))])).setDialect("postgres").parse();
+    switch (__match27.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match27.values[0];
+        lt.expectEqual(result.sql, "BEGIN; INSERT INTO \"t\" ( \"a\" ) VALUES ( $1 ); UPDATE \"t\" SET \"a\" = $2 WHERE \"id\" = $3; COMMIT");
+        lt.expectEqual(result.param.len(), 3n);
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match27.values[0];
+        lt.expectEqual("no error", "parse failed");
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  });
 });

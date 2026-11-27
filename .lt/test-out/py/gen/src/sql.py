@@ -194,11 +194,14 @@ def clause_join(_0: str, _1: Node, _2: _lt.LList[Node]) -> Clause:
 def clause_with(_0: Query, _1: str) -> Clause:
     return Clause("With", (_0, _1,), 16)
 
+def clause_transaction(_0: _lt.LList[Query]) -> Clause:
+    return Clause("Transaction", (_0,), 17)
+
 def clause_on_conflict_do_nothing(_0: Node) -> Clause:
-    return Clause("OnConflictDoNothing", (_0,), 17)
+    return Clause("OnConflictDoNothing", (_0,), 18)
 
 def clause_on_conflict_do_update(_0: Node, _1: _lt.LList[Assignment]) -> Clause:
-    return Clause("OnConflictDoUpdate", (_0, _1,), 18)
+    return Clause("OnConflictDoUpdate", (_0, _1,), 19)
 
 def _clause_display(value: Clause) -> str:
     if value.tag == "Select":
@@ -235,6 +238,8 @@ def _clause_display(value: Clause) -> str:
         return "Clause.Join(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ", " + _lt.disp(value.values[2]) + ")"
     if value.tag == "With":
         return "Clause.With(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ")"
+    if value.tag == "Transaction":
+        return "Clause.Transaction(" + _lt.disp(value.values[0]) + ")"
     if value.tag == "OnConflictDoNothing":
         return "Clause.OnConflictDoNothing(" + _lt.disp(value.values[0]) + ")"
     if value.tag == "OnConflictDoUpdate":
@@ -557,6 +562,9 @@ class Query:
 
     def with_cte(self, statement: Query, alias: str) -> Query:
         return self.add(clause_with(statement, alias))
+
+    def transaction(self, statements: _lt.LList[Query]) -> Query:
+        return self.add(clause_transaction(statements))
 
     def on_conflict_do_nothing(self, target: Node) -> Query:
         return self.add(clause_on_conflict_do_nothing(target))
@@ -939,6 +947,9 @@ class Render:
             alias: str = __match15.values[1]
             inner: Rendered = Render.query(statement.clauses, dialect, base, inline)
             return Rendered(text="WITH " + _lt.disp(Render.ident(alias, dialect)) + " AS (" + _lt.disp(inner.text) + ")", params=inner.params)
+        elif __match15.tag == "Transaction":
+            statements: _lt.LList[Query] = __match15.values[0]
+            return Render.transaction(statements, dialect, base, inline)
         elif __match15.tag == "OnConflictDoNothing":
             target: Node = __match15.values[0]
             return Render.keyword("ON CONFLICT", Render.then(Render.parenthesised_ident(target, dialect), Rendered(text="DO NOTHING", params=_lt.LList(()))))
@@ -948,6 +959,16 @@ class Render:
             return Render.keyword("ON CONFLICT", Render.then(Render.parenthesised_ident(target_2, dialect), Render.keyword("DO UPDATE SET", Render.assignments(assignments_4, dialect, base, inline))))
         else:
             raise AssertionError("unreachable")
+
+    @staticmethod
+    def transaction(statements: _lt.LList[Query], dialect: Dialect, base: int, inline: bool) -> Rendered:
+        text: str = "BEGIN"
+        params: _lt.LList[m2.Value] = _lt.LList(())
+        for statement in statements.items:
+            inner: Rendered = Render.query(statement.clauses, dialect, _lt.iadd(base, params.len()), inline)
+            text = "" + _lt.disp(text) + "; " + _lt.disp(inner.text)
+            params = params.concat(inner.params)
+        return Rendered(text="" + _lt.disp(text) + "; COMMIT", params=params)
 
     @staticmethod
     def then(left: Rendered, right: Rendered) -> Rendered:

@@ -268,3 +268,15 @@ def test_typed_schema_bare_and_join() -> None:
     else:
         raise AssertionError("unreachable")
 
+def test_transaction_statements() -> None:
+    __match27 = m1.Query.create().transaction(_lt.LList((m1.Query.create().insert(m1.Node.table("t"), _lt.LList((m1.Assignment.int("a", 1),))), m1.Query.create().update(m1.Node.table("t"), _lt.LList((m1.Assignment.int("a", 2),))).where(_lt.LList((m1.Node.col("id").eq(m1.Node.int(3)),)))))).set_dialect("postgres").parse()
+    if __match27.tag == "ok":
+        result: m1.ParseResult = __match27.values[0]
+        _lt.expect_equal(result.sql, "BEGIN; INSERT INTO \"t\" ( \"a\" ) VALUES ( $1 ); UPDATE \"t\" SET \"a\" = $2 WHERE \"id\" = $3; COMMIT")
+        _lt.expect_equal(result.param.len(), 3)
+    elif __match27.tag == "err":
+        error: m1.ParseError = __match27.values[0]
+        _lt.expect_equal("no error", "parse failed")
+    else:
+        raise AssertionError("unreachable")
+

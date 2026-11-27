@@ -690,3 +690,72 @@ describe("typed schema produces the same SQL", () => {
         ];
     });
 });
+
+describe("legacy parity (postgres, transaction)", () => {
+    diff("two statements with continuing parameter numbers", () => {
+        const c = legacy();
+        return [
+            c
+                .transaction([
+                    c.insert(c.table("t"), { a: 1 }),
+                    c.insert(c.table("t"), { a: 2 }),
+                ])
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .transaction(
+                    list([
+                        Query.create().insert(Node.table("t"), list([Assignment.int("a", 1n)])),
+                        Query.create().insert(Node.table("t"), list([Assignment.int("a", 2n)])),
+                    ]),
+                )
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("single update statement", () => {
+        const c = legacy();
+        return [
+            c
+                .transaction([c.update(c.table("t"), { a: 1 }).where(c.col("id").eq(1))])
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .transaction(
+                    list([
+                        Query.create()
+                            .update(Node.table("t"), list([Assignment.int("a", 1n)]))
+                            .where(list([Node.col("id").eq(Node.int(1n))])),
+                    ]),
+                )
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("raw statement", () => {
+        const c = legacy();
+        return [
+            c.transaction(["DELETE FROM t"]).setDialect("postgres").parse(),
+            Query.create()
+                .transaction(list([Query.create().raw("DELETE FROM t")]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("mysql placeholders inside a transaction", () => {
+        const c = legacy();
+        return [
+            c
+                .transaction([c.insert(c.table("t"), { a: 1 })])
+                .setDialect("mysql")
+                .parse(),
+            Query.create()
+                .transaction(list([Query.create().insert(Node.table("t"), list([Assignment.int("a", 1n)]))]))
+                .setDialect("mysql")
+                .parse(),
+        ];
+    });
+});

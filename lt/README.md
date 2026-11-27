@@ -6,8 +6,8 @@ tiga target yang benar-benar dipakai — TypeScript, Python, Go.
 Status: **slice 3**. Yang sudah ada: pemodelan nilai, AST bertipe, renderer
 Postgres + MySQL, query (`select`/`from`/`where`/`order by`/`limit`/`offset`/
 `raw`/`group by`/`having`/`join`), DML (`insert`/`update`/`delete`/`set`/
-`values`/`returning`/`on conflict`), dan subquery (`exists`, `IN (SELECT ...)`,
-`WITH ... AS (...)`).
+`values`/`returning`/`on conflict`), subquery (`exists`, `IN (SELECT ...)`,
+`WITH ... AS (...)`), dan transaksi (`BEGIN; ...; COMMIT`).
 
 Paritas MySQL ikut dijaga: backtick, placeholder `?`, `VALUES ROW`, `ILIKE`
 yang jatuh ke `LIKE`, dan fitur yang tidak punya padanan (`FULL JOIN`,
@@ -71,9 +71,9 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 - `mypy --strict` bersih pada paket Python,
 - `go vet` bersih, `gofmt -l` kosong, `go test` hijau pada paket Go,
 - setiap kasus di `tests/lt-differential.test.ts` menghasilkan `sql`, `param`,
-  dan `sqlWithParam` yang identik dengan implementasi legacy (35 kasus: query,
-  DML, join, agregasi, `on conflict`, subquery, dialek MySQL, dan skema
-  bertipe),
+  dan `sqlWithParam` yang identik dengan implementasi legacy (39 kasus: query,
+  DML, join, agregasi, `on conflict`, subquery, dialek MySQL, skema bertipe,
+  dan transaksi),
 - `./lt/check.sh` lulus (tidak ada drift antara `.lt` dan output yang di-commit).
 
 ## Perbedaan yang disengaja dari API lama

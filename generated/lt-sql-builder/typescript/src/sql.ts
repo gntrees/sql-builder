@@ -181,6 +181,7 @@ export type Clause =
   | { readonly tag: "Having"; readonly values: readonly [lt.LList<Node>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "Join"; readonly values: readonly [string, Node, lt.LList<Node>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "With"; readonly values: readonly [Query, string]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
+  | { readonly tag: "Transaction"; readonly values: readonly [lt.LList<Query>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "OnConflictDoNothing"; readonly values: readonly [Node]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "OnConflictDoUpdate"; readonly values: readonly [Node, lt.LList<Assignment>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
 
@@ -235,11 +236,14 @@ export function Clause_Join(_0: string, _1: Node, _2: lt.LList<Node>): Clause {
 export function Clause_With(_0: Query, _1: string): Clause {
   return { tag: "With", values: [_0, _1], __lt_order: 16, __lt_display: Clause_display };
 }
+export function Clause_Transaction(_0: lt.LList<Query>): Clause {
+  return { tag: "Transaction", values: [_0], __lt_order: 17, __lt_display: Clause_display };
+}
 export function Clause_OnConflictDoNothing(_0: Node): Clause {
-  return { tag: "OnConflictDoNothing", values: [_0], __lt_order: 17, __lt_display: Clause_display };
+  return { tag: "OnConflictDoNothing", values: [_0], __lt_order: 18, __lt_display: Clause_display };
 }
 export function Clause_OnConflictDoUpdate(_0: Node, _1: lt.LList<Assignment>): Clause {
-  return { tag: "OnConflictDoUpdate", values: [_0, _1], __lt_order: 18, __lt_display: Clause_display };
+  return { tag: "OnConflictDoUpdate", values: [_0, _1], __lt_order: 19, __lt_display: Clause_display };
 }
 export function Clause_display(value: Clause): string {
   switch (value.tag) {
@@ -293,6 +297,9 @@ export function Clause_display(value: Clause): string {
     }
     case "With": {
       return `Clause.With(${lt.disp(value.values[0])}, ${lt.disp(value.values[1])})`;
+    }
+    case "Transaction": {
+      return `Clause.Transaction(${lt.disp(value.values[0])})`;
     }
     case "OnConflictDoNothing": {
       return `Clause.OnConflictDoNothing(${lt.disp(value.values[0])})`;
@@ -725,6 +732,10 @@ export class Query {
 
   withCte(statement: Query, alias: string): Query {
     return this.add(Clause_With(statement, alias));
+  }
+
+  transaction(statements: lt.LList<Query>): Query {
+    return this.add(Clause_Transaction(statements));
   }
 
   onConflictDoNothing(target: Node): Query {
@@ -1212,6 +1223,10 @@ export class Render {
         const inner: Rendered = Render.query(statement.clauses, dialect, base, inline);
         return new Rendered({ text: "WITH " + lt.disp(Render.ident(alias, dialect)) + " AS (" + lt.disp(inner.text) + ")", params: inner.params });
       }
+      case "Transaction": {
+        const statements: lt.LList<Query> = __match15.values[0];
+        return Render.transaction(statements, dialect, base, inline);
+      }
       case "OnConflictDoNothing": {
         const target: Node = __match15.values[0];
         return Render.keyword("ON CONFLICT", Render.then(Render.parenthesisedIdent(target, dialect), new Rendered({ text: "DO NOTHING", params: new lt.LList<m1.Value>([]) })));
@@ -1224,6 +1239,17 @@ export class Render {
       default:
         throw new Error("unreachable");
     }
+  }
+
+  static transaction(statements: lt.LList<Query>, dialect: Dialect, base: bigint, inline: boolean): Rendered {
+    let text: string = "BEGIN";
+    let params: lt.LList<m1.Value> = new lt.LList<m1.Value>([]);
+    for (const statement of statements.items) {
+      const inner: Rendered = Render.query(statement.clauses, dialect, lt.iadd(base, params.len()), inline);
+      text = "" + lt.disp(text) + "; " + lt.disp(inner.text);
+      params = params.concat(inner.params);
+    }
+    return new Rendered({ text: "" + lt.disp(text) + "; COMMIT", params: params });
   }
 
   static then(left: Rendered, right: Rendered): Rendered {

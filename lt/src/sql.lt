@@ -250,6 +250,7 @@ pub enum Clause {
   Having(List<Node>)
   Join(Str, Node, List<Node>)
   With(Query, Str)
+  Transaction(List<Query>)
   OnConflictDoNothing(Node)
   OnConflictDoUpdate(Node, List<Assignment>)
 }
@@ -366,6 +367,11 @@ pub class Query {
 
   pub fn with_cte(self, statement: Query, alias: Str) -> Query {
     self.add(Clause.With(statement, alias))
+  }
+
+  /// Satu klausa transaksi: `BEGIN; ...; ...; COMMIT`.
+  pub fn transaction(self, statements: List<Query>) -> Query {
+    self.add(Clause.Transaction(statements))
   }
 
   pub fn on_conflict_do_nothing(self, target: Node) -> Query {
@@ -762,6 +768,7 @@ class Render {
           params: inner.params,
         )
       }
+      Clause.Transaction(statements) => Render.transaction(statements, dialect, base, inline)
       Clause.OnConflictDoNothing(target) => Render.keyword(
         "ON CONFLICT",
         Render.then(
@@ -777,6 +784,22 @@ class Render {
         ),
       )
     }
+  }
+
+  static fn transaction(
+    statements: List<Query>,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let mut text = "BEGIN"
+    let mut params: List<Value> = []
+    for statement in statements {
+      let inner = Render.query(statement.clauses, dialect, base + params.len(), inline)
+      text = `${text}; ${inner.text}`
+      params = params.concat(inner.params)
+    }
+    Rendered(text: `${text}; COMMIT`, params: params)
   }
 
   /// Menggabungkan dua fragmen dengan satu spasi, membawa parameter.

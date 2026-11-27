@@ -363,3 +363,19 @@ func TestTypedSchemaBareAndJoin(t *testing.T) {
 		panic("unreachable")
 	}
 }
+
+func TestTransactionStatements(t *testing.T) {
+	__match27 := m1.QueryCreate().Transaction(lt.NewList([]m1.Query{m1.QueryCreate().Insert(m1.NodeTable("t"), lt.NewList([]m1.Assignment{m1.AssignmentInt("a", int64(1))})), m1.QueryCreate().Update(m1.NodeTable("t"), lt.NewList([]m1.Assignment{m1.AssignmentInt("a", int64(2))})).Where(lt.NewList([]m1.Node{m1.NodeCol("id").Eq(m1.NodeInt(int64(3)))}))})).SetDialect("postgres").Parse()
+	switch __match27.Tag {
+	case "ok":
+		result := __match27.Values[0].(m1.ParseResult)
+		lt.ExpectEqual(result.Sql, "BEGIN; INSERT INTO \"t\" ( \"a\" ) VALUES ( $1 ); UPDATE \"t\" SET \"a\" = $2 WHERE \"id\" = $3; COMMIT")
+		lt.ExpectEqual(result.Param.Len(), int64(3))
+	case "err":
+		error := __match27.Values[0].(lt.Variant)
+		_ = error
+		lt.ExpectEqual("no error", "parse failed")
+	default:
+		panic("unreachable")
+	}
+}

@@ -301,4 +301,25 @@ test class QueryTest {
       Err(error) => Expect.equal("no error", "parse failed")
     }
   }
+
+  test fn transaction_statements() {
+    match Query.create()
+      .transaction([
+        Query.create().insert(Node.table("t"), [Assignment.int("a", 1)]),
+        Query.create()
+          .update(Node.table("t"), [Assignment.int("a", 2)])
+          .where([Node.col("id").eq(Node.int(3))]),
+      ])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `BEGIN; INSERT INTO "t" ( "a" ) VALUES ( $1 ); UPDATE "t" SET "a" = $2 WHERE "id" = $3; COMMIT`,
+        )
+        Expect.equal(result.param.len(), 3)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
 }

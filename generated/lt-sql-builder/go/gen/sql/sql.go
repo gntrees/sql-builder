@@ -208,12 +208,16 @@ func ClauseWith(_0 Query, _1 string) lt.Variant {
 	return lt.Variant{Tag: "With", Order: 16, Values: []any{_0, _1}, Display: ClauseDisplay}
 }
 
+func ClauseTransaction(_0 lt.List[Query]) lt.Variant {
+	return lt.Variant{Tag: "Transaction", Order: 17, Values: []any{_0}, Display: ClauseDisplay}
+}
+
 func ClauseOnConflictDoNothing(_0 Node) lt.Variant {
-	return lt.Variant{Tag: "OnConflictDoNothing", Order: 17, Values: []any{_0}, Display: ClauseDisplay}
+	return lt.Variant{Tag: "OnConflictDoNothing", Order: 18, Values: []any{_0}, Display: ClauseDisplay}
 }
 
 func ClauseOnConflictDoUpdate(_0 Node, _1 lt.List[Assignment]) lt.Variant {
-	return lt.Variant{Tag: "OnConflictDoUpdate", Order: 18, Values: []any{_0, _1}, Display: ClauseDisplay}
+	return lt.Variant{Tag: "OnConflictDoUpdate", Order: 19, Values: []any{_0, _1}, Display: ClauseDisplay}
 }
 
 func ClauseDisplay(value lt.Variant) string {
@@ -252,6 +256,8 @@ func ClauseDisplay(value lt.Variant) string {
 		return "Clause.Join(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ", " + lt.Disp(value.Values[2]) + ")"
 	case "With":
 		return "Clause.With(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ")"
+	case "Transaction":
+		return "Clause.Transaction(" + lt.Disp(value.Values[0]) + ")"
 	case "OnConflictDoNothing":
 		return "Clause.OnConflictDoNothing(" + lt.Disp(value.Values[0]) + ")"
 	case "OnConflictDoUpdate":
@@ -714,6 +720,10 @@ func (self Query) WithCte(statement Query, alias string) Query {
 	return self.Add(ClauseWith(statement, alias))
 }
 
+func (self Query) Transaction(statements lt.List[Query]) Query {
+	return self.Add(ClauseTransaction(statements))
+}
+
 func (self Query) OnConflictDoNothing(target Node) Query {
 	return self.Add(ClauseOnConflictDoNothing(target))
 }
@@ -1148,6 +1158,9 @@ func RenderClause(clause lt.Variant, dialect lt.Variant, base int64, inline bool
 		alias := __match15.Values[1].(string)
 		inner := RenderQuery(statement.Clauses, dialect, base, inline)
 		return NewRendered("WITH "+lt.Disp(RenderIdent(alias, dialect))+" AS ("+lt.Disp(inner.Text)+")", inner.Params)
+	case "Transaction":
+		statements := __match15.Values[0].(lt.List[Query])
+		return RenderTransaction(statements, dialect, base, inline)
 	case "OnConflictDoNothing":
 		target := __match15.Values[0].(Node)
 		return RenderKeyword("ON CONFLICT", RenderThen(RenderParenthesisedIdent(target, dialect), NewRendered("DO NOTHING", lt.NewList([]lt.Variant{}))))
@@ -1158,6 +1171,17 @@ func RenderClause(clause lt.Variant, dialect lt.Variant, base int64, inline bool
 	default:
 		panic("unreachable")
 	}
+}
+
+func RenderTransaction(statements lt.List[Query], dialect lt.Variant, base int64, inline bool) Rendered {
+	text := "BEGIN"
+	params := lt.NewList([]lt.Variant{})
+	for _, statement := range statements.Items {
+		inner := RenderQuery(statement.Clauses, dialect, (base + params.Len()), inline)
+		text = "" + lt.Disp(text) + "; " + lt.Disp(inner.Text)
+		params = params.Concat(inner.Params)
+	}
+	return NewRendered(""+lt.Disp(text)+"; COMMIT", params)
 }
 
 func RenderThen(left Rendered, right Rendered) Rendered {
