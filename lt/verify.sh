@@ -11,7 +11,13 @@ out="generated/lt-sql-builder"
 ./lt/build.sh
 
 echo "== typescript =="
-bunx tsc --noEmit -p "$out/typescript/tsconfig.json"
+if [ -x node_modules/.bin/tsc ]; then
+  node_modules/.bin/tsc --noEmit -p "$out/typescript/tsconfig.json"
+else
+  # Pinned because CI has no node_modules: the repo's install needs a private
+  # registry, so the gate must not depend on it.
+  npx --yes --package typescript@5.9.3 tsc --noEmit -p "$out/typescript/tsconfig.json"
+fi
 
 echo "== python =="
 if [ ! -x .lt/venv/bin/python ]; then
