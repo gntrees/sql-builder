@@ -5,30 +5,48 @@ on:
     branches: [main, lt-core]
   pull_request:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   unit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run generate
-      - run: bun test tests/
+      - run: set -o pipefail; bun install --frozen-lockfile 2>&1 | tee install.log
+      - run: set -o pipefail; bun run generate 2>&1 | tee generate.log
+      - run: set -o pipefail; bun test tests/ 2>&1 | tee test.log
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error:|error TS|\(fail\)|Expected|Received|panicked at' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0
 
   integration-db:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run generate
-      - run: docker compose -f docker-compose.test.yml up -d --wait postgres mysql
-      - run: bun run db:migrate
-      - run: DB_TESTS=1 bun test tests/db
+      - run: set -o pipefail; bun install --frozen-lockfile 2>&1 | tee install.log
+      - run: set -o pipefail; bun run generate 2>&1 | tee generate.log
+      - run: set -o pipefail; docker compose -f docker-compose.test.yml up -d --wait postgres mysql 2>&1 | tee db-up.log
+      - run: set -o pipefail; bun run db:migrate 2>&1 | tee db-migrate.log
+      - run: set -o pipefail; DB_TESTS=1 bun test tests/db 2>&1 | tee test.log
       - if: always()
         run: docker compose -f docker-compose.test.yml logs
       - if: always()
         run: docker compose -f docker-compose.test.yml down -v
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error:|error TS|\(fail\)|Expected|Received|panicked at|Cannot|failed to' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0
 
   # The .lt port: build the compiler from source (the release assets are not
   # published yet), then check that the committed packages match lt/src and
@@ -61,10 +79,17 @@ jobs:
         with:
           workspaces: ".lt-src -> target"
       - name: build lt
-        run: cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt
+        run: set -o pipefail; cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt 2>&1 | tee build.log
       - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
-      - run: bun install
+      - run: set -o pipefail; bun install 2>&1 | tee install.log
       - name: generated code is in sync with lt/src
-        run: ./lt/check.sh
+        run: set -o pipefail; ./lt/check.sh 2>&1 | tee check.log
       - name: native gates, test classes, differential
-        run: ./lt/verify.sh
+        run: set -o pipefail; ./lt/verify.sh 2>&1 | tee verify.log
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error(\[|:)|error TS|FAIL|failed|Expected|Received|stale|not found|mismatch' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0

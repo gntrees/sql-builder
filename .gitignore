@@ -50,3 +50,6 @@ __pycache__/
 .lt/out/
 .lt/venv/
 .lt/bin/
+
+# emitted test packages
+.lt/test-out/
