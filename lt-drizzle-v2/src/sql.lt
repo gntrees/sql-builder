@@ -87,4 +87,158 @@ package sql {
   export fn is_empty(s: Sql) -> Bool {
     s.chunks.len() == 0
   }
+
+  // ---- operator (receiver) ----
+
+  fn binary(s: Sql, operator: Str, other: Sql) -> Sql {
+    append(append(s, raw(` ${operator} `)), other)
+  }
+
+  export fn eq(s: Sql, other: Sql) -> Sql {
+    binary(s, "=", other)
+  }
+
+  export fn ne(s: Sql, other: Sql) -> Sql {
+    binary(s, "<>", other)
+  }
+
+  export fn gt(s: Sql, other: Sql) -> Sql {
+    binary(s, ">", other)
+  }
+
+  export fn gte(s: Sql, other: Sql) -> Sql {
+    binary(s, ">=", other)
+  }
+
+  export fn lt(s: Sql, other: Sql) -> Sql {
+    binary(s, "<", other)
+  }
+
+  export fn lte(s: Sql, other: Sql) -> Sql {
+    binary(s, "<=", other)
+  }
+
+  export fn like(s: Sql, other: Sql) -> Sql {
+    binary(s, "like", other)
+  }
+
+  export fn not_like(s: Sql, other: Sql) -> Sql {
+    binary(s, "not like", other)
+  }
+
+  export fn ilike(s: Sql, other: Sql) -> Sql {
+    binary(s, "ilike", other)
+  }
+
+  export fn not_ilike(s: Sql, other: Sql) -> Sql {
+    binary(s, "not ilike", other)
+  }
+
+  export fn in_list(s: Sql, items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      raw("false")
+    } else {
+      binary(s, "in", append(append(raw("("), join(items, ", ")), raw(")")))
+    }
+  }
+
+  export fn not_in_list(s: Sql, items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      raw("true")
+    } else {
+      binary(s, "not in", append(append(raw("("), join(items, ", ")), raw(")")))
+    }
+  }
+
+  export fn between(s: Sql, low: Sql, high: Sql) -> Sql {
+    append(append(append(append(s, raw(" between ")), low), raw(" and ")), high)
+  }
+
+  export fn not_between(s: Sql, low: Sql, high: Sql) -> Sql {
+    append(append(append(append(s, raw(" not between ")), low), raw(" and ")), high)
+  }
+
+  export fn is_null(s: Sql) -> Sql {
+    append(s, raw(" is null"))
+  }
+
+  export fn is_not_null(s: Sql) -> Sql {
+    append(s, raw(" is not null"))
+  }
+
+  export fn asc(s: Sql) -> Sql {
+    append(s, raw(" asc"))
+  }
+
+  export fn desc(s: Sql) -> Sql {
+    append(s, raw(" desc"))
+  }
+
+  export fn as_alias(s: Sql, alias: Str) -> Sql {
+    append(append(s, raw(" as ")), identifier(alias))
+  }
+
+  // ---- statis ----
+
+  export fn join(items: List<Sql>, separator: Str) -> Sql {
+    let mut result = empty()
+    let mut first = true
+    for item in items {
+      if first {
+        result = append(result, item)
+        first = false
+      } else {
+        result = append(append(result, raw(separator)), item)
+      }
+    }
+    result
+  }
+
+  export fn and(items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      empty()
+    } else {
+      append(append(raw("("), join(items, " and ")), raw(")"))
+    }
+  }
+
+  export fn or(items: List<Sql>) -> Sql {
+    if items.len() == 0 {
+      empty()
+    } else {
+      append(append(raw("("), join(items, " or ")), raw(")"))
+    }
+  }
+
+  export fn not(expr: Sql) -> Sql {
+    append(raw("not "), expr)
+  }
+
+  fn call(name: Str, argument: Sql) -> Sql {
+    append(append(append(raw(name), raw("(")), argument), raw(")"))
+  }
+
+  export fn count(expr: Sql) -> Sql {
+    call("count", expr)
+  }
+
+  export fn count_all() -> Sql {
+    raw("count(*)")
+  }
+
+  export fn sum(expr: Sql) -> Sql {
+    call("sum", expr)
+  }
+
+  export fn avg(expr: Sql) -> Sql {
+    call("avg", expr)
+  }
+
+  export fn min(expr: Sql) -> Sql {
+    call("min", expr)
+  }
+
+  export fn max(expr: Sql) -> Sql {
+    call("max", expr)
+  }
 }

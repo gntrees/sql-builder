@@ -4,8 +4,9 @@
 // green only when the .lt implementation produces byte-identical `sql` and
 // `params`.
 import { describe, expect, test } from "bun:test";
-import { sql as drizzleSql } from "drizzle-orm";
+import { and, asc, between, count, desc, eq, exists, gt, ilike, inArray, isNotNull, isNull, like, ne, not, notBetween, notIlike, notInArray, notLike, or, sql as drizzleSql, sum } from "drizzle-orm";
 import { MySqlDialect } from "drizzle-orm/mysql-core";
+import { PgDatabase } from "drizzle-orm/pg-core";
 import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
@@ -14,6 +15,11 @@ import { mysql, postgres, sqlToQuery } from "../../generated/lt-drizzle-v2/types
 import { append, bool, float, identifier, int, nullValue, param, raw, str, tag } from "../../generated/lt-drizzle-v2/typescript/src/sql";
 import type { Sql } from "../../generated/lt-drizzle-v2/typescript/src/sql";
 import { SqlArg, Value } from "../../generated/lt-drizzle-v2/typescript/src/value";
+
+
+import * as ltsql from "../../generated/lt-drizzle-v2/typescript/src/sql";
+import * as ltsel from "../../generated/lt-drizzle-v2/typescript/src/select";
+import * as ltsch from "../../generated/lt-drizzle-v2/typescript/src/schema";
 import { col, plain, ref, withAlias, withSchema } from "../../generated/lt-drizzle-v2/typescript/src/schema";
 import { integer as pgInteger, serial as ltSerial, text as ltText } from "../../generated/lt-drizzle-v2/typescript/src/pg_core";
 import type { Value as ValueT } from "../../generated/lt-drizzle-v2/typescript/src/value";
@@ -182,5 +188,207 @@ describe("schema references", () => {
     "schema-qualified table ref",
     fromDrizzle(pg.sqlToQuery(drizzleSql`${accounts}`)),
     fromLt(sqlToQuery(postgres(), ref(accountsTable))),
+  );
+});
+
+describe("select", () => {
+  const users = pgTable("users", { id: serial("id"), name: text("name"), age: integer("age") });
+  const t = plain("users", list([ltSerial("id"), ltText("name"), pgInteger("age")]));
+  const db = new PgDatabase(new PgDialect(), {});
+  const q = () => ltsel.setDialect(ltsel.fromTable(ltsel.create(), t), postgres());
+  const build = (builder: ReturnType<typeof q>): Outcome => {
+    const result = ltsel.build(builder);
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: ReturnType<typeof q>) => {
+    diff(name, expected, build(builder));
+  };
+  const c = (name: string) => ltsch.col(t, name);
+  const f = (name: string) => ltsch.field(t, name);
+
+  check(
+    "single column is unqualified",
+    fromDrizzle(db.select({ id: users.id }).from(users).toSQL()),
+    ltsel.fields(q(), list([f("id")])),
+  );
+
+  check(
+    "empty selection means every column",
+    fromDrizzle(db.select().from(users).toSQL()),
+    q(),
+  );
+
+  check(
+    "where equality",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(eq(users.id, 1)).toSQL()),
+    ltsel.where(ltsel.fields(q(), list([f("id")])), ltsql.eq(c("id"), ltsql.int(1n))),
+  );
+
+  check(
+    "and/or are parenthesized",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(eq(users.name, "a"), or(gt(users.age, 18), isNull(users.age))))
+        .toSQL(),
+    ),
+    ltsel.where(
+      ltsel.fields(q(), list([f("id")])),
+      ltsql.and(
+        list([
+          ltsql.eq(c("name"), ltsql.str("a")),
+          ltsql.or(list([ltsql.gt(c("age"), ltsql.int(18n)), ltsql.isNull(c("age"))])),
+        ]),
+      ),
+    ),
+  );
+
+  check(
+    "not has no parentheses",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(not(eq(users.id, 1))).toSQL()),
+    ltsel.where(ltsel.fields(q(), list([f("id")])), ltsql.not(ltsql.eq(c("id"), ltsql.int(1n)))),
+  );
+
+  check(
+    "ne uses <>",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(ne(users.id, 1)).toSQL()),
+    ltsel.where(ltsel.fields(q(), list([f("id")])), ltsql.ne(c("id"), ltsql.int(1n))),
+  );
+
+  check(
+    "in list",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(inArray(users.id, [1, 2, 3])).toSQL()),
+    ltsel.where(
+      ltsel.fields(q(), list([f("id")])),
+      ltsql.inList(c("id"), list([ltsql.int(1n), ltsql.int(2n), ltsql.int(3n)])),
+    ),
+  );
+
+  check(
+    "empty in list becomes false",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(inArray(users.id, [])).toSQL()),
+    ltsel.where(ltsel.fields(q(), list([f("id")])), ltsql.inList(c("id"), list([]))),
+  );
+
+  check(
+    "empty not-in list becomes true",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(notInArray(users.id, [])).toSQL()),
+    ltsel.where(ltsel.fields(q(), list([f("id")])), ltsql.notInList(c("id"), list([]))),
+  );
+
+  check(
+    "is not null",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(isNotNull(users.age)).toSQL()),
+    ltsel.where(ltsel.fields(q(), list([f("id")])), ltsql.isNotNull(c("age"))),
+  );
+
+  check(
+    "between",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(between(users.age, 1, 10)).toSQL()),
+    ltsel.where(
+      ltsel.fields(q(), list([f("id")])),
+      ltsql.between(c("age"), ltsql.int(1n), ltsql.int(10n)),
+    ),
+  );
+
+  check(
+    "not between",
+    fromDrizzle(db.select({ id: users.id }).from(users).where(notBetween(users.age, 1, 10)).toSQL()),
+    ltsel.where(
+      ltsel.fields(q(), list([f("id")])),
+      ltsql.notBetween(c("age"), ltsql.int(1n), ltsql.int(10n)),
+    ),
+  );
+
+  check(
+    "like family",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(like(users.name, "A%"), notLike(users.name, "B%"), ilike(users.name, "a%"), notIlike(users.name, "b%")))
+        .toSQL(),
+    ),
+    ltsel.where(
+      ltsel.fields(q(), list([f("id")])),
+      ltsql.and(
+        list([
+          ltsql.like(c("name"), ltsql.str("A%")),
+          ltsql.notLike(c("name"), ltsql.str("B%")),
+          ltsql.ilike(c("name"), ltsql.str("a%")),
+          ltsql.notIlike(c("name"), ltsql.str("b%")),
+        ]),
+      ),
+    ),
+  );
+
+  check(
+    "order by, limit, and offset",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .orderBy(asc(users.name), desc(users.id))
+        .limit(10)
+        .offset(5)
+        .toSQL(),
+    ),
+    ltsel.offset(
+      ltsel.limit(
+        ltsel.orderBy(
+          ltsel.fields(q(), list([f("id")])),
+          list([ltsql.asc(c("name")), ltsql.desc(c("id"))]),
+        ),
+        10n,
+      ),
+      5n,
+    ),
+  );
+
+  check(
+    "aggregates and group by",
+    fromDrizzle(
+      db
+        .select({ age: users.age, n: count() })
+        .from(users)
+        .groupBy(users.age)
+        .having(gt(count(), 1))
+        .toSQL(),
+    ),
+    ltsel.having(
+      ltsel.groupBy(
+        ltsel.fields(q(), list([f("age"), ltsql.countAll()])),
+        list([c("age")]),
+      ),
+      ltsql.gt(ltsql.countAll(), ltsql.int(1n)),
+    ),
+  );
+
+  check(
+    "sum over an unqualified field",
+    fromDrizzle(db.select({ s: sum(users.age) }).from(users).toSQL()),
+    ltsel.fields(q(), list([ltsql.sum(f("age"))])),
+  );
+
+  check(
+    "distinct",
+    fromDrizzle(db.selectDistinct({ id: users.id }).from(users).toSQL()),
+    ltsel.distinct(ltsel.fields(q(), list([f("id")]))),
+  );
+
+  const aliased = alias(users, "u");
+  const aliasedTable = withAlias("users", "u", list([ltSerial("id"), ltText("name"), pgInteger("age")]));
+
+  check(
+    "aliased from keeps the original name",
+    fromDrizzle(db.select({ id: aliased.id }).from(aliased).toSQL()),
+    ltsel.fields(
+      ltsel.setDialect(ltsel.fromTable(ltsel.create(), aliasedTable), postgres()),
+      list([ltsch.field(aliasedTable, "id")]),
+    ),
   );
 });

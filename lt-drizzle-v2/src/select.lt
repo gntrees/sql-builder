@@ -1,0 +1,625 @@
+import sql { Sql, append, identifier, int, is_empty, join, raw } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect, sql_to_query } "./dialect.lt"
+import value { Rendered, BuildError } "./value.lt"
+
+package select {
+  /// Satu klausa join.
+  export struct Join {
+    kind: Str
+    table: Table
+    on_expr: Sql
+  }
+
+  /// Builder SELECT yang immutable.
+  ///
+  /// Entry point: `select.create()`. Tidak ada `db` (tidak ada IO).
+  export struct Select {
+    table: Option<Table>
+    subquery: Option<Select>
+    subquery_alias: Str
+    joins: List<Join>
+    cte_names: List<Str>
+    cte_queries: List<Select>
+    select_fields: List<Sql>
+    where_clause: Option<Sql>
+    group_fields: List<Sql>
+    having_clause: Option<Sql>
+    order_fields: List<Sql>
+    limit_value: Option<Int>
+    offset_value: Option<Int>
+    distinct_rows: Bool
+    dialect: Option<Dialect>
+    set_operator: Str
+    set_query: Option<Select>
+  }
+
+  export fn create() -> Select {
+    Select(
+      table: None,
+      subquery: None,
+      subquery_alias: "",
+      joins: [],
+      cte_names: [],
+      cte_queries: [],
+      select_fields: [],
+      where_clause: None,
+      group_fields: [],
+      having_clause: None,
+      order_fields: [],
+      limit_value: None,
+      offset_value: None,
+      distinct_rows: false,
+      dialect: None,
+      set_operator: "",
+      set_query: None,
+    )
+  }
+  export fn from_table(s: Select, table: Table) -> Select {
+    Select(
+      table: Some(table),
+      subquery: None,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn from_subquery(s: Select, query: Select, alias: Str) -> Select {
+    Select(
+      table: None,
+      subquery: Some(query),
+      subquery_alias: alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn left_join(s: Select, table: Table, on_expr: Sql) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins.push(Join(kind: "left", table: table, on_expr: on_expr)),
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn inner_join(s: Select, table: Table, on_expr: Sql) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins.push(Join(kind: "inner", table: table, on_expr: on_expr)),
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn right_join(s: Select, table: Table, on_expr: Sql) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins.push(Join(kind: "right", table: table, on_expr: on_expr)),
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn full_join(s: Select, table: Table, on_expr: Sql) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins.push(Join(kind: "full", table: table, on_expr: on_expr)),
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn with_cte(s: Select, name: Str, query: Select) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names.push(name),
+      cte_queries: s.cte_queries.push(query),
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn fields(s: Select, items: List<Sql>) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: items,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn where(s: Select, expr: Sql) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: Some(expr),
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn group_by(s: Select, items: List<Sql>) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: items,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn having(s: Select, expr: Sql) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: Some(expr),
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn order_by(s: Select, items: List<Sql>) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: items,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn limit(s: Select, value: Int) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: Some(value),
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn offset(s: Select, value: Int) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: Some(value),
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn distinct(s: Select) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: true,
+      dialect: s.dialect,
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn set_dialect(s: Select, d: Dialect) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: Some(d),
+      set_operator: s.set_operator,
+      set_query: s.set_query,
+    )
+  }
+  export fn union(s: Select, query: Select) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: "union",
+      set_query: Some(query),
+    )
+  }
+  export fn union_all(s: Select, query: Select) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: "union all",
+      set_query: Some(query),
+    )
+  }
+  export fn intersect(s: Select, query: Select) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: "intersect",
+      set_query: Some(query),
+    )
+  }
+  export fn except_query(s: Select, query: Select) -> Select {
+    Select(
+      table: s.table,
+      subquery: s.subquery,
+      subquery_alias: s.subquery_alias,
+      joins: s.joins,
+      cte_names: s.cte_names,
+      cte_queries: s.cte_queries,
+      select_fields: s.select_fields,
+      where_clause: s.where_clause,
+      group_fields: s.group_fields,
+      having_clause: s.having_clause,
+      order_fields: s.order_fields,
+      limit_value: s.limit_value,
+      offset_value: s.offset_value,
+      distinct_rows: s.distinct_rows,
+      dialect: s.dialect,
+      set_operator: "except",
+      set_query: Some(query),
+    )
+  }
+
+  export fn build(s: Select) -> Result<Rendered, BuildError> {
+    match s.dialect {
+      None => Err(BuildError.MissingDialect)
+      Some(d) => Ok(sql_to_query(d, to_sql(s)))
+    }
+  }
+
+  /// `exists (select ...)`.
+  export fn exists(query: Select) -> Sql {
+    append(append(raw("exists ("), to_sql(query)), raw(")"))
+  }
+
+  export fn not_exists(query: Select) -> Sql {
+    append(append(raw("not exists ("), to_sql(query)), raw(")"))
+  }
+
+  export fn in_subquery(expr: Sql, query: Select) -> Sql {
+    append(append(append(expr, raw(" in (")), to_sql(query)), raw(")"))
+  }
+
+  export fn ref(alias: Str, column: Str) -> Sql {
+    append(append(identifier(alias), raw(".")), identifier(column))
+  }
+
+  export fn to_sql(s: Select) -> Sql {
+    let body = body_sql(s)
+    let mut result = match s.set_query {
+      Some(query) => {
+        append(
+          append(
+            append(
+              append(append(raw("("), body), raw(")")),
+              raw(` ${s.set_operator} `),
+            ),
+            raw("("),
+          ),
+          append(to_sql(query), raw(")")),
+        )
+      }
+      None => body
+    }
+    if s.cte_names.len() > 0 {
+      let mut parts: List<Sql> = []
+      let mut index = 0
+      for name in s.cte_names {
+        let query = s.cte_queries.get(index).unwrap()
+        parts = parts.push(
+          append(
+            append(append(identifier(name), raw(" as (")), to_sql(query)),
+            raw(")"),
+          ),
+        )
+        index = index + 1
+      }
+      result = append(
+        append(append(raw("with "), join(parts, ", ")), raw(" ")),
+        result,
+      )
+    }
+    result
+  }
+
+  fn body_sql(s: Select) -> Sql {
+    let mut sql = raw("select ")
+    if s.distinct_rows {
+      sql = append(sql, raw("distinct "))
+    }
+    let selected = if s.select_fields.len() == 0 {
+      match s.table {
+        Some(table) => schema.fields(table)
+        None => s.select_fields
+      }
+    } else {
+      s.select_fields
+    }
+    sql = append(append(sql, join(selected, ", ")), raw(" from "))
+
+    match s.table {
+      Some(table) => {
+        sql = append(sql, schema.from_ref(table))
+      }
+      None => {
+        match s.subquery {
+          Some(query) => {
+            sql = append(
+              append(append(append(sql, raw("(")), to_sql(query)), raw(") ")),
+              identifier(s.subquery_alias),
+            )
+          }
+          None => {}
+        }
+      }
+    }
+
+    for item in s.joins {
+      sql = append(
+        append(
+          append(append(sql, raw(` ${item.kind} join `)), schema.from_ref(item.table)),
+          raw(" on "),
+        ),
+        item.on_expr,
+      )
+    }
+
+    match s.where_clause {
+      Some(expr) => {
+        if !is_empty(expr) {
+          sql = append(append(sql, raw(" where ")), expr)
+        }
+      }
+      None => {}
+    }
+
+    if s.group_fields.len() > 0 {
+      sql = append(append(sql, raw(" group by ")), join(s.group_fields, ", "))
+    }
+
+    match s.having_clause {
+      Some(expr) => {
+        if !is_empty(expr) {
+          sql = append(append(sql, raw(" having ")), expr)
+        }
+      }
+      None => {}
+    }
+
+    if s.order_fields.len() > 0 {
+      sql = append(append(sql, raw(" order by ")), join(s.order_fields, ", "))
+    }
+
+    match s.limit_value {
+      Some(value) => {
+        sql = append(append(sql, raw(" limit ")), int(value))
+      }
+      None => {}
+    }
+
+    match s.offset_value {
+      Some(value) => {
+        sql = append(append(sql, raw(" offset ")), int(value))
+      }
+      None => {}
+    }
+
+    sql
+  }
+}
