@@ -1,0 +1,113 @@
+name: schema
+
+on:
+  push:
+    branches: [main, experiment/drizzle-port-v2]
+    paths:
+      - "schema/**"
+      - "prisma/**"
+      - "prisma.config.ts"
+      - "lt-drizzle-v2/src/schema_adapter.lt"
+      - "lt-drizzle-v2/src/generated/**"
+      - "lt-drizzle-v2/src/index.lt"
+      - "package.json"
+      - "bun.lock"
+      - ".github/workflows/schema.yml"
+  pull_request:
+    paths:
+      - "schema/**"
+      - "prisma/**"
+      - "prisma.config.ts"
+      - "lt-drizzle-v2/src/schema_adapter.lt"
+      - "lt-drizzle-v2/src/generated/**"
+      - "lt-drizzle-v2/src/index.lt"
+      - "package.json"
+      - "bun.lock"
+      - ".github/workflows/schema.yml"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+        with:
+          repository: gntrees/lingua-tungga
+          ref: d11a4c9
+          path: .lt-src
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.96.0"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ".lt-src -> target"
+      - name: build lt
+        run: set -o pipefail; cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt 2>&1 | tee build.log
+      - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
+      - run: set -o pipefail; bun install --frozen-lockfile 2>&1 | tee install.log
+
+      - name: start schema fixture
+        run: docker compose -f schema/fixtures/docker-compose.yml up -d --wait
+
+      - name: introspect and generate IR
+        env:
+          DATABASE_URL: postgres://gntrees:gntrees@localhost:5434/gntrees_schema
+        run: |
+          set -o pipefail
+          bunx prisma db pull --force 2>&1 | tee db-pull.log
+          bunx prisma generate 2>&1 | tee generate.log
+
+      - name: generate LT
+        run: set -o pipefail; bun run schema:generate:allow 2>&1 | tee codegen.log
+
+      - name: codegen unit tests and LT checks
+        run: set -o pipefail; bun test schema/test 2>&1 | tee schema-test.log
+
+      - name: generated code is formatted and current
+        run: |
+          set -o pipefail
+          lt fmt --check lt-drizzle-v2/src/generated/*.lt lt-drizzle-v2/src/schema_adapter.lt
+          bun run schema:check:allow
+          git diff --exit-code -- prisma/schema.prisma schema/schema.json schema/unsupported.json lt-drizzle-v2/src/generated
+
+      - name: emit v2 targets
+        run: set -o pipefail; bash lt-drizzle-v2/build.sh 2>&1 | tee build-targets.log
+
+      - name: typescript
+        run: node_modules/.bin/tsc --noEmit -p generated/lt-drizzle-v2/typescript/tsconfig.json
+
+      - name: python
+        run: |
+          if [ ! -x .lt/venv/bin/python ]; then python3 -m venv .lt/venv; fi
+          .lt/venv/bin/pip -q install mypy
+          .lt/venv/bin/python -m mypy --strict generated/lt-drizzle-v2/python
+
+      - name: go
+        run: |
+          ( cd generated/lt-drizzle-v2/go && go vet ./... && test -z "$(gofmt -l .)" && go test ./... )
+
+      - if: always()
+        run: docker compose -f schema/fixtures/docker-compose.yml down -v
+
+      - name: annotate failure
+        if: failure()
+        run: |
+          lines="$(grep -ahE 'error(\[|:)|error TS|FAIL|failed|Expected|Received|mismatch|stale|missing' *.log 2>/dev/null | tail -10)"
+          if [ -z "$lines" ]; then lines="$(tail -10 *.log 2>/dev/null)"; fi
+          printf '%s\n' "$lines" | sed 's/^/::error::/' || true
+          exit 0

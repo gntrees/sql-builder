@@ -15,14 +15,24 @@
     "lt-drizzle-v2:build": "bash lt-drizzle-v2/build.sh",
     "lt-drizzle-v2:verify": "bash lt-drizzle-v2/verify.sh",
     "lt-drizzle-v2:db": "bash lt-drizzle-v2/verify-db.sh",
-    "playground": "bash lt-drizzle-v2/playground.sh"
+    "playground": "bash lt-drizzle-v2/playground.sh",
+    "schema:generate": "bun schema/codegen.ts generate",
+    "schema:check": "bun schema/codegen.ts check",
+    "schema:generate:allow": "bun schema/codegen.ts generate --allow-unsupported",
+    "schema:check:allow": "bun schema/codegen.ts check --allow-unsupported",
+    "schema:test": "bun test schema/test",
+    "schema:db:up": "docker compose -f schema/fixtures/docker-compose.yml up -d --wait",
+    "schema:db:down": "docker compose -f schema/fixtures/docker-compose.yml down -v",
+    "schema:introspect": "prisma db pull --force && prisma generate"
   },
   "dependencies": {
     "@gntrees/method-chain": "^0.0.34"
   },
   "devDependencies": {
+    "@prisma/generator-helper": "7.10.1",
     "@types/bun": "latest",
     "drizzle-orm": "0.44.4",
+    "prisma": "7.10.1",
     "typescript": "^5"
   }
 }

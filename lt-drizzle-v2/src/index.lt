@@ -1,16 +1,18 @@
+import delete { Delete } "./delete.lt"
+import dialect { Dialect } "./dialect.lt"
+import schema_tables { all_table_meta } "./generated/schema_tables.lt"
+import insert { Insert } "./insert.lt"
+import mysql_core { int } "./mysql_core.lt"
+import pg_core { integer } "./pg_core.lt"
+import schema { Column, Table, Assignment } "./schema.lt"
+import schema_adapter { to_sql } "./schema_adapter.lt"
+import select { Select, create } "./select.lt"
+import sql { Sql, SqlChunk } "./sql.lt"
+import sqlite_core { blob } "./sqlite_core.lt"
+import update { Update } "./update.lt"
 // Entry point untuk `lt build`: mengimpor seluruh package supaya ikut ter-emit.
 // Tidak ada deklarasi telanjang di top-level, jadi file ini tetap butuh package.
 import value { Value } "./value.lt"
-import sql { Sql, SqlChunk } "./sql.lt"
-import dialect { Dialect } "./dialect.lt"
-import schema { Column, Table, Assignment } "./schema.lt"
-import pg_core { integer } "./pg_core.lt"
-import mysql_core { int } "./mysql_core.lt"
-import sqlite_core { blob } "./sqlite_core.lt"
-import select { Select, create } "./select.lt"
-import insert { Insert } "./insert.lt"
-import update { Update } "./update.lt"
-import delete { Delete } "./delete.lt"
 
 package drizzle_index {
   export struct Root {}

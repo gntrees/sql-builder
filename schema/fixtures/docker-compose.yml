@@ -1,0 +1,19 @@
+services:
+  schema-postgres:
+    image: postgres:16-alpine
+    container_name: gntrees-schema-fixture
+    environment:
+      POSTGRES_USER: gntrees
+      POSTGRES_PASSWORD: gntrees
+      POSTGRES_DB: gntrees_schema
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gntrees -d gntrees_schema"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - ./postgres.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    tmpfs:
+      - /var/lib/postgresql/data
