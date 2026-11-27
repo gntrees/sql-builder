@@ -266,15 +266,15 @@ if (process.env.DB_TESTS === "1") {
   };
 
   const inserted = await runCase("insert_values");
-  if (inserted) dbByCase.insert_values = { note: "insert (1 row)", rows: inserted.rows };
+  if (inserted) dbByCase.insert_values = { note: "insert — no RETURNING, so no rows", rows: inserted.rows };
   // seed one row so the SELECT case has something to show
   await db.unsafe(`insert into "users" ("name") values ('seed')`);
   const selected = await runCase("select_where");
   if (selected) dbByCase.select_where = { note: "rows returned", rows: selected.rows };
   const updated = await runCase("update_row");
-  if (updated) dbByCase.update_row = { note: "update (1 row)", rows: updated.rows };
+  if (updated) dbByCase.update_row = { note: "update — no RETURNING, so no rows", rows: updated.rows };
   const deleted = await runCase("delete_row");
-  if (deleted) dbByCase.delete_row = { note: "delete (1 row)", rows: deleted.rows };
+  if (deleted) dbByCase.delete_row = { note: "delete — no RETURNING, so no rows", rows: deleted.rows };
   await db.close();
 }
 
@@ -286,7 +286,6 @@ for (const item of results) {
 
 const evidence = {
   version: 1,
-  generatedAt: new Date().toISOString(),
   compiler: ltBin,
   counts: { cases: results.length, features: features.length },
   cases: Object.fromEntries(
