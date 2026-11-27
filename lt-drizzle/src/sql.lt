@@ -1,10 +1,12 @@
 import Value from "./value.lt"
+import SqlArg from "./value.lt"
 
 /// Potongan SQL. Chunk selalu rata (tidak ada `Nested`), sehingga tipe tidak
 /// rekursif lewat field class; tanda kurung ditulis sebagai `Raw`.
 pub enum SqlChunk {
   Raw(Str)
   Param(Value)
+  Ident(Str)
 }
 
 /// Ekspresi SQL yang belum di-deparse.
@@ -17,6 +19,62 @@ pub class Sql {
 
   pub static fn param(value: Value) -> Sql {
     Sql(chunks: [SqlChunk.Param(value)])
+  }
+
+  pub static fn identifier(name: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Ident(name)])
+  }
+
+  pub static fn int(value: Int) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Int(value))])
+  }
+
+  pub static fn float(value: Float) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Float(value))])
+  }
+
+  pub static fn str(value: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Str(value))])
+  }
+
+  pub static fn bool(value: Bool) -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Bool(value))])
+  }
+
+  pub static fn null_() -> Sql {
+    Sql(chunks: [SqlChunk.Param(Value.Null)])
+  }
+
+  /// Padanan `sql` tag drizzle.
+  ///
+  /// Bisa dipakai sebagai tagged template (`Sql.template` `...`) maupun
+  /// dipanggil biasa dari host dengan `(parts, values)`. Invariant
+  /// `parts.len() == values.len() + 1` dijamin compiler untuk bentuk tag, dan
+  /// dijaga di sini untuk pemanggilan biasa.
+  pub static fn template(parts: List<Str>, values: List<SqlArg>) -> Sql {
+    let mut chunks: List<SqlChunk> = []
+    let mut index = 0
+    for part in parts {
+      chunks = chunks.push(SqlChunk.Raw(part))
+      match values.get(index) {
+        Some(arg) => {
+          chunks = chunks.push(SqlChunk.Param(Sql.arg_to_value(arg)))
+        }
+        None => {}
+      }
+      index = index + 1
+    }
+    Sql(chunks: chunks)
+  }
+
+  fn arg_to_value(arg: SqlArg) -> Value {
+    match arg {
+      SqlArg.Null => Value.Null
+      SqlArg.Bool(value) => Value.Bool(value)
+      SqlArg.Int(value) => Value.Int(value)
+      SqlArg.Float(value) => Value.Float(value)
+      SqlArg.Str(value) => Value.Str(value)
+    }
   }
 
   pub fn append(self, other: Sql) -> Sql {

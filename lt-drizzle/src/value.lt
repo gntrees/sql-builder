@@ -13,6 +13,26 @@ pub enum Value {
   Map(Map<Str, Value>)
 }
 
+/// Nilai yang boleh masuk lewat tagged template `Sql.template`.
+///
+/// `T` pada tagged template harus konkret dan tidak boleh memakai type
+/// parameter class, jadi tipe campuran dinyatakan dengan enum ini. Setiap
+/// interpolasi harus dibungkus eksplisit (`${SqlArg.Int(id)}`).
+pub enum SqlArg {
+  Null
+  Bool(Bool)
+  Int(Int)
+  Float(Float)
+  Str(Str)
+}
+
+/// Kegagalan build yang harus dilaporkan, bukan ditelan.
+pub enum BuildError {
+  Unsupported(Str, Str)
+  MissingDialect
+  UnknownColumn(Str, Str)
+}
+
 /// Hasil deparse satu query.
 pub class Rendered {
   sql: Str

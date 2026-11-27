@@ -8,15 +8,26 @@ import { sql } from "drizzle-orm";
 import { MySqlDialect } from "drizzle-orm/mysql-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
+import { LList } from "../../generated/lt-drizzle/typescript/_lingua_rt";
 import { Dialect } from "../../generated/lt-drizzle/typescript/src/dialect";
 import { Sql } from "../../generated/lt-drizzle/typescript/src/sql";
-import { Value_Str } from "../../generated/lt-drizzle/typescript/src/value";
+import {
+  SqlArg_Bool,
+  SqlArg_Float,
+  SqlArg_Int,
+  SqlArg_Null,
+  SqlArg_Str,
+} from "../../generated/lt-drizzle/typescript/src/value";
 import type { Value } from "../../generated/lt-drizzle/typescript/src/value";
 
 type Outcome = { sql: string; params: unknown[] };
 
 const pg = new PgDialect();
 const mysql = new MySqlDialect();
+
+function list<T>(items: T[]): LList<T> {
+  return new LList<T>(items);
+}
 
 // Convert an emitted `Value` into the plain JS value drizzle would report.
 function native(value: Value): unknown {
@@ -64,7 +75,66 @@ describe("postgres", () => {
     fromDrizzle(pg.sqlToQuery(sql`select ${"x"}`)),
     fromLt(
       Dialect.postgres().sqlToQuery(
-        Sql.raw("select ").append(Sql.param(Value_Str("x"))),
+        Sql.raw("select ").append(Sql.str("x")),
+      ),
+    ),
+  );
+
+  diff(
+    "every scalar parameter type is numbered in order",
+    fromDrizzle(pg.sqlToQuery(sql`select ${1}, ${true}, ${false}, ${null}, ${2.5}, ${"x"}`)),
+    fromLt(
+      Dialect.postgres().sqlToQuery(
+        Sql.template(
+          list(["select ", ", ", ", ", ", ", ", ", ", ", ""]),
+          list([
+            SqlArg_Int(1n),
+            SqlArg_Bool(true),
+            SqlArg_Bool(false),
+            SqlArg_Null,
+            SqlArg_Float(2.5),
+            SqlArg_Str("x"),
+          ]),
+        ),
+      ),
+    ),
+  );
+
+  diff(
+    "identifiers are quoted and table-qualified",
+    fromDrizzle(
+      pg.sqlToQuery(
+        sql`select ${sql.identifier("users")}.${sql.identifier("id")} from ${sql.identifier("users")}`,
+      ),
+    ),
+    fromLt(
+      Dialect.postgres().sqlToQuery(
+        Sql.raw("select ")
+          .append(Sql.identifier("users"))
+          .append(Sql.raw("."))
+          .append(Sql.identifier("id"))
+          .append(Sql.raw(" from "))
+          .append(Sql.identifier("users")),
+      ),
+    ),
+  );
+
+  diff(
+    "identifier quotes are not escaped (drizzle quirk)",
+    fromDrizzle(pg.sqlToQuery(sql`select ${sql.identifier('we"ird')}`)),
+    fromLt(
+      Dialect.postgres().sqlToQuery(
+        Sql.raw("select ").append(Sql.identifier('we"ird')),
+      ),
+    ),
+  );
+
+  diff(
+    "raw fragments stay raw and unchanged",
+    fromDrizzle(pg.sqlToQuery(sql`select ${sql.raw("now()")}`)),
+    fromLt(
+      Dialect.postgres().sqlToQuery(
+        Sql.raw("select ").append(Sql.raw("now()")),
       ),
     ),
   );
@@ -76,7 +146,17 @@ describe("mysql", () => {
     fromDrizzle(mysql.sqlToQuery(sql`select ${"x"}`)),
     fromLt(
       Dialect.mysql().sqlToQuery(
-        Sql.raw("select ").append(Sql.param(Value_Str("x"))),
+        Sql.raw("select ").append(Sql.str("x")),
+      ),
+    ),
+  );
+
+  diff(
+    "identifiers use backticks",
+    fromDrizzle(mysql.sqlToQuery(sql`select ${sql.identifier("users")}`)),
+    fromLt(
+      Dialect.mysql().sqlToQuery(
+        Sql.raw("select ").append(Sql.identifier("users")),
       ),
     ),
   );

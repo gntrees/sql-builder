@@ -19,10 +19,31 @@ pub class Dialect {
     Dialect(kind: "sqlite")
   }
 
-  /// Deparse menjadi teks SQL + daftar parameter.
+  /// Karakter quote identifier per dialect.
+  pub fn quote_char(self) -> Str {
+    if self.kind == "mysql" {
+      "`"
+    } else {
+      "\""
+    }
+  }
+
+  /// Bungkus identifier.
   ///
-  /// M0 baru menangani `Raw` dan `Param`; quoting identifier dan fitur dialect
-  /// masuk di M1/M2.
+  /// Drizzle 0.44.4 **tidak** meng-escape karakter quote di dalam identifier
+  /// (`sql.identifier('we"ird')` menghasilkan `"we"ird"`). Port ini meniru
+  /// perilaku itu apa adanya, karena kontraknya adalah output yang identik,
+  /// bukan output yang lebih benar. Perbaikan escaping adalah keputusan
+  /// terpisah yang harus mengubah kedua sisi sekaligus.
+  pub fn quote_identifier(self, name: Str) -> Str {
+    if self.kind == "mysql" {
+      `\`${name}\``
+    } else {
+      `"${name}"`
+    }
+  }
+
+  /// Deparse menjadi teks SQL + daftar parameter.
   pub fn sql_to_query(self, sql: Sql) -> Rendered {
     let mut text = ""
     let mut params: List<Value> = []
@@ -30,6 +51,9 @@ pub class Dialect {
       match chunk {
         SqlChunk.Raw(part) => {
           text = `${text}${part}`
+        }
+        SqlChunk.Ident(name) => {
+          text = `${text}${self.quote_identifier(name)}`
         }
         SqlChunk.Param(value) => {
           params = params.push(value)

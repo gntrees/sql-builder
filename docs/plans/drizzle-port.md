@@ -270,6 +270,9 @@ pub class Dialect {
 Perbedaan yang harus persis mengikuti drizzle 0.44.4:
 - Quote: `"..."` (pg, sqlite), `` `...` `` (mysql).
 - Placeholder: `$1, $2, ...` (pg), `?` (mysql, sqlite).
+- **Drizzle 0.44.4 tidak meng-escape karakter quote di dalam identifier**
+  (`sql.identifier('we"ird')` → `"we"ird"`). Port meniru apa adanya; escaping adalah
+  keputusan terpisah yang harus mengubah kedua sisi sekaligus. (Terverifikasi di M1.)
 - Literal boolean di dalam `Raw` tidak diubah; nilai selalu lewat parameter.
 - Dukungan `RETURNING`, sintaks `ON CONFLICT`, dan `ON DUPLICATE KEY` diverifikasi per fixture
   pada M5/M6, bukan diasumsikan.
@@ -336,7 +339,7 @@ informasi, tetapi bukan gate sampai M6.
 | M | Isi | Gate (harus hijau) |
 |---|---|---|
 | **M0** | `lt-drizzle/` skeleton, `build.sh`, `verify.sh`, differential runner 1 fixture, `drizzle.yml` | `bash lt-drizzle/verify.sh` hijau; CI job jalan; fixture `SELECT 1` identik |
-| **M1** | `Value`, `SqlArg`, `Rendered`, `BuildError`, `Sql`, `SqlChunk`, `Dialect` + quote/placeholder/escape | fixture raw/param/identifier Postgres identik, termasuk escaping tanda kutip dan `$n` |
+| **M1** | `Value`, `SqlArg`, `Rendered`, `BuildError`, `Sql`, `SqlChunk`, `Dialect` + quote/placeholder/escape | fixture raw/param/identifier Postgres identik, termasuk quirk drizzle yang tidak meng-escape quote identifier dan `$n` |
 | **M2** | `Table`, `Column`, `ColumnOpts`; 15 factory kolom; alias/schema | reference kolom (`"users"."id"`, alias) identik |
 | **M3** | `Select`: select-list, `where` + semua operator, `order_by`, `limit`, `offset`, agregat (`count/sum/avg/min/max`), `distinct` | setiap operator punya minimal 1 fixture; `and/or/not` bersarang identik |
 | **M4** | join (inner/left/right/full), subquery (from/where/select), CTE (`with`), set ops (`union/unionAll/intersect/except`) | fixture join + subquery + CTE identik; error untuk fitur yang tidak didukung |
