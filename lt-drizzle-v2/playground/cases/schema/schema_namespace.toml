@@ -1,0 +1,4 @@
+title = "Schema-qualified names"
+feature = "schema/namespace"
+why = "A table inside a schema renders `"auth"."accounts"."id"`."
+dialects = "postgres"

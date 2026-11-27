@@ -1,0 +1,4 @@
+title = "DELETE with WHERE"
+feature = "delete"
+why = "delete from ... where ..."
+dialects = "postgres,mysql,sqlite"

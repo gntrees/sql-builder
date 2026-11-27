@@ -14,7 +14,8 @@
     "test:db": "DB_TESTS=1 bun test tests/db",
     "lt-drizzle-v2:build": "bash lt-drizzle-v2/build.sh",
     "lt-drizzle-v2:verify": "bash lt-drizzle-v2/verify.sh",
-    "lt-drizzle-v2:db": "bash lt-drizzle-v2/verify-db.sh"
+    "lt-drizzle-v2:db": "bash lt-drizzle-v2/verify-db.sh",
+    "playground": "bash lt-drizzle-v2/playground.sh"
   },
   "dependencies": {
     "@gntrees/method-chain": "^0.0.34"

@@ -201,7 +201,7 @@ describe("schema references", () => {
 describe("select", () => {
   const users = pgTable("users", { id: serial("id"), name: text("name"), age: integer("age") });
   const t = plain("users", list([ltSerial("id"), ltText("name"), pgInteger("age")]));
-  const db = new PgDatabase(new PgDialect(), {});
+  const db = new (PgDatabase as any)(new PgDialect(), {});
   const q = () => ltsel.setDialect(ltsel.fromTable(ltsel.create(), t), postgres());
   const build = (builder: ReturnType<typeof q>): Outcome => {
     const result = ltsel.build(builder);
@@ -405,7 +405,7 @@ describe("joins, subqueries, ctes, and set operations", () => {
   const posts = pgTable("posts", { id: serial("id"), userId: integer("user_id"), title: text("title") });
   const tu = plain("users", list([ltSerial("id"), ltText("name")]));
   const tp = plain("posts", list([ltSerial("id"), pgInteger("user_id"), ltText("title")]));
-  const db = new PgDatabase(new PgDialect(), {});
+  const db = new (PgDatabase as any)(new PgDialect(), {});
   const base = (table: ReturnType<typeof plain>) =>
     ltsel.setDialect(ltsel.fromTable(ltsel.create(), table), postgres());
   const build = (builder: ReturnType<typeof base>): Outcome => {
@@ -561,7 +561,7 @@ describe("joins, subqueries, ctes, and set operations", () => {
 describe("dml", () => {
   const users = pgTable("users", { id: serial("id"), name: text("name"), age: integer("age") });
   const t = plain("users", list([ltSerial("id"), ltText("name"), pgInteger("age")]));
-  const db = new PgDatabase(new PgDialect(), {});
+  const db = new (PgDatabase as any)(new PgDialect(), {});
   const pgDialect = postgres();
   const unwrap = (result: any): Outcome => {
     if (result.tag === "err") {
@@ -738,7 +738,7 @@ describe("dml", () => {
 describe("mysql parity", () => {
   const users = mysqlTable("users", { id: myInt("id"), name: varchar("name", { length: 255 }), age: myInt("age") });
   const t = plain("users", list([ltMyInt("id"), ltMyVarchar("name", 255n), ltMyInt("age")]));
-  const db = new MySqlDatabase(new MySqlDialect(), {});
+  const db = new (MySqlDatabase as any)(new MySqlDialect(), {});
   const d = mysqlDialect();
   const unwrap = (result: any): Outcome => {
     if (result.tag === "err") {
@@ -796,7 +796,7 @@ describe("mysql parity", () => {
 describe("sqlite parity", () => {
   const users = sqliteTable("users", { id: sqInt("id"), name: sqText("name") });
   const t = plain("users", list([ltSqInt("id"), ltSqText("name")]));
-  const db = new BaseSQLiteDatabase("sync", new SQLiteSyncDialect(), {});
+  const db = new (BaseSQLiteDatabase as any)("sync", new SQLiteSyncDialect(), {});
   const d = sqliteDialect();
   const unwrap = (result: any): Outcome => {
     if (result.tag === "err") {
@@ -853,7 +853,7 @@ describe("sqlite parity", () => {
 describe("selection shortcuts", () => {
   const users = pgTable("users", { id: serial("id") });
   const t = plain("users", list([ltSerial("id")]));
-  const db = new PgDatabase(new PgDialect(), {});
+  const db = new (PgDatabase as any)(new PgDialect(), {});
   const builder = ltsel.fields(
     ltsel.setDialect(ltsel.fromTable(ltsel.create(), t), postgres()),
     list([ltsch.field(t, "id")]),

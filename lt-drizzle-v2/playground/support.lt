@@ -1,0 +1,34 @@
+import value { Value, Rendered, BuildError } "./value.lt"
+import sql { Sql } "./sql.lt"
+import dialect { Dialect, sql_to_query } "./dialect.lt"
+
+package support {
+  fn param_text(value: Value) -> Str {
+    match value {
+      Value.Null => "null"
+      Value.Boolean(v) => if v { "bool:true" } else { "bool:false" }
+      Value.Integer(v) => `int:${v}`
+      Value.Float(v) => `float:${v}`
+      Value.Text(v) => `text:${v}`
+      Value.Array(_) => "array"
+      Value.Record(_) => "record"
+    }
+  }
+
+  fn format(rendered: Rendered) -> Str {
+    `${rendered.sql}\t${rendered.params.map(fn(value) => param_text(value)).join(",")}`
+  }
+
+  /// Baris kanonik `<sql>\t<params>`; formatnya dikunci di plan (P7/P8).
+  export fn render(d: Dialect, q: Sql) -> Str {
+    format(sql_to_query(d, q))
+  }
+
+  /// Sama, untuk builder yang mengembalikan `Result` (INSERT/UPDATE/DELETE).
+  export fn render_built(result: Result<Rendered, BuildError>) -> Str {
+    match result {
+      Ok(rendered) => format(rendered)
+      Err(_) => "error"
+    }
+  }
+}

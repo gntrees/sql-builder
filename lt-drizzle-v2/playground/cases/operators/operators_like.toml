@@ -1,0 +1,4 @@
+title = "LIKE family"
+feature = "operators/like"
+why = "like / not like / ilike / not ilike"
+dialects = "postgres,mysql,sqlite"

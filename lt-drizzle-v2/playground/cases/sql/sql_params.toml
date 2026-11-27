@@ -1,0 +1,4 @@
+title = "Typed parameters keep their order"
+feature = "sql/params"
+why = "Every scalar type is a parameter; numbering and dialect placeholders must match."
+dialects = "postgres,mysql,sqlite"

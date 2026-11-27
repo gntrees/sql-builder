@@ -1,0 +1,4 @@
+title = "AND / OR / NOT"
+feature = "operators/logical"
+why = "Parenthesisation must match drizzle."
+dialects = "postgres,mysql,sqlite"

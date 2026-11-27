@@ -1,0 +1,4 @@
+title = "UPDATE with RETURNING"
+feature = "update"
+why = "SET then WHERE then RETURNING."
+dialects = "postgres,mysql,sqlite"

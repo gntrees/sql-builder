@@ -1,0 +1,16 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+
+package case_schema_namespace {
+  fn q() -> Sql {
+    let tb = schema.with_schema("accounts", "auth", [pg_core.integer("account_id")])
+    schema.col(tb, "account_id")
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), q()), "")
+  }
+}

@@ -1,0 +1,344 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-27T20:34:10.359Z",
+  "compiler": "../gntrees-lingua-tungga/target/release/lt",
+  "counts": {
+    "cases": 37,
+    "features": 37
+  },
+  "cases": {
+    "cte": {
+      "feature": "cte",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "delete_row": {
+      "feature": "delete",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "insert_conflict": {
+      "feature": "insert/conflict",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "insert_duplicate": {
+      "feature": "insert/duplicate",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "insert_returning": {
+      "feature": "insert/returning",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "insert_values": {
+      "feature": "insert/values",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "update_row": {
+      "feature": "update",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "joins_full": {
+      "feature": "joins/full",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "joins_inner": {
+      "feature": "joins/inner",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "joins_left": {
+      "feature": "joins/left",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "joins_order_limit": {
+      "feature": "joins/order-limit",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "joins_right": {
+      "feature": "joins/right",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "operators_between": {
+      "feature": "operators/between",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "operators_comparison": {
+      "feature": "operators/comparison",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "operators_like": {
+      "feature": "operators/like",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "operators_list": {
+      "feature": "operators/list",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "operators_logical": {
+      "feature": "operators/logical",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "operators_null": {
+      "feature": "operators/null",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "schema_alias": {
+      "feature": "schema/alias",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "schema_column": {
+      "feature": "schema/column",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "schema_namespace": {
+      "feature": "schema/namespace",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "schema_table": {
+      "feature": "schema/table",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "select_aggregate": {
+      "feature": "select/aggregate",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "select_distinct": {
+      "feature": "select/distinct",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "select_fields": {
+      "feature": "select/fields",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "select_limit": {
+      "feature": "select/limit",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "select_order": {
+      "feature": "select/order",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "select_where": {
+      "feature": "select/where",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "set_except": {
+      "feature": "set/except",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "set_intersect": {
+      "feature": "set/intersect",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "set_union": {
+      "feature": "set/union",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "sql_identifier": {
+      "feature": "sql/identifier",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "sql_params": {
+      "feature": "sql/params",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "sql_raw": {
+      "feature": "sql/raw",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "subquery_exists": {
+      "feature": "subquery/exists",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "subquery_from": {
+      "feature": "subquery/from",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "subquery_in": {
+      "feature": "subquery/in",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    }
+  }
+}

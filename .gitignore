@@ -50,6 +50,7 @@ __pycache__/
 .lt/out/
 .lt/out-drizzle-v2/
 .lt/test-v2/
+.lt/playground/
 .lt/venv/
 .lt/bin/
 
@@ -58,3 +59,4 @@ __pycache__/
 
 # drizzle port build output
 generated/lt-drizzle-v2/
+lt-drizzle-v2/playground/out/

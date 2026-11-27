@@ -1,0 +1,4 @@
+title = "Identifiers are quoted per dialect"
+feature = "sql/identifier"
+why = "Postgres and SQLite use double quotes, MySQL backticks; drizzle does not escape embedded quotes."
+dialects = "postgres,mysql,sqlite"

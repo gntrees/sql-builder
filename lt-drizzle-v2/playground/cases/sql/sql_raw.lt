@@ -1,0 +1,21 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+
+package case_sql_raw {
+  fn q() -> Sql {
+    sql.raw("select 1")
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), q()), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), q()), "")
+  }
+  test "sqlite" {
+    expect.not_equal(support.render(dialect.sqlite(), q()), "")
+  }
+}

@@ -1,0 +1,4 @@
+title = "IS NULL / IS NOT NULL"
+feature = "operators/null"
+why = "is null stays unparenthesised"
+dialects = "postgres,mysql,sqlite"

@@ -1,0 +1,4 @@
+title = "Column references are table-qualified"
+feature = "schema/column"
+why = "In WHERE, drizzle qualifies columns with the table label."
+dialects = "postgres,mysql,sqlite"

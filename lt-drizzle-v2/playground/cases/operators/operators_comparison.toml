@@ -1,0 +1,4 @@
+title = "Comparison operators"
+feature = "operators/comparison"
+why = "<> > >= < <="
+dialects = "postgres,mysql,sqlite"

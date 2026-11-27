@@ -1,0 +1,26 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+import select { Select } "./select.lt"
+
+package case_select_limit {
+  fn t() -> Table {
+    schema.plain("users", [pg_core.serial("id"), pg_core.text("name"), pg_core.integer("age")])
+  }
+  fn q() -> Select {
+    let tb = t()
+    select.offset(select.limit(select.fields(select.from_table(select.create(), tb), [schema.field(tb, "id")]), 10), 5)
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), select.to_sql(q())), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), select.to_sql(q())), "")
+  }
+  test "sqlite" {
+    expect.not_equal(support.render(dialect.sqlite(), select.to_sql(q())), "")
+  }
+}

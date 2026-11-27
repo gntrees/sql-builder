@@ -1,0 +1,4 @@
+title = "INTERSECT"
+feature = "set/intersect"
+why = "Set intersection."
+dialects = "postgres"

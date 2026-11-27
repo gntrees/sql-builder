@@ -1,0 +1,4 @@
+title = "ON CONFLICT"
+feature = "insert/conflict"
+why = "do nothing / do update."
+dialects = "postgres,sqlite"

@@ -1,0 +1,4 @@
+title = "Selected columns are unqualified"
+feature = "select/fields"
+why = "Drizzle renders selected columns by name, not table-qualified."
+dialects = "postgres,mysql,sqlite"

@@ -1,0 +1,147 @@
+[[feature]]
+id = "sql/raw"
+title = "Raw SQL is passed through"
+
+[[feature]]
+id = "sql/params"
+title = "Typed parameters keep their order"
+
+[[feature]]
+id = "sql/identifier"
+title = "Identifiers are quoted per dialect"
+
+[[feature]]
+id = "schema/column"
+title = "Column references are table-qualified"
+
+[[feature]]
+id = "schema/table"
+title = "Table references are unqualified"
+
+[[feature]]
+id = "schema/alias"
+title = "Aliased columns use the alias"
+
+[[feature]]
+id = "schema/namespace"
+title = "Schema-qualified names"
+
+[[feature]]
+id = "select/fields"
+title = "Selected columns are unqualified"
+
+[[feature]]
+id = "select/where"
+title = "WHERE qualifies the left-hand column"
+
+[[feature]]
+id = "select/order"
+title = "ORDER BY with asc/desc"
+
+[[feature]]
+id = "select/limit"
+title = "LIMIT and OFFSET are parameters"
+
+[[feature]]
+id = "select/distinct"
+title = "DISTINCT"
+
+[[feature]]
+id = "select/aggregate"
+title = "Aggregates and GROUP BY"
+
+[[feature]]
+id = "operators/comparison"
+title = "Comparison operators"
+
+[[feature]]
+id = "operators/logical"
+title = "AND / OR / NOT"
+
+[[feature]]
+id = "operators/list"
+title = "IN and NOT IN"
+
+[[feature]]
+id = "operators/null"
+title = "IS NULL / IS NOT NULL"
+
+[[feature]]
+id = "operators/like"
+title = "LIKE family"
+
+[[feature]]
+id = "operators/between"
+title = "BETWEEN and NOT BETWEEN"
+
+[[feature]]
+id = "joins/inner"
+title = "Inner join"
+
+[[feature]]
+id = "joins/left"
+title = "Left join"
+
+[[feature]]
+id = "joins/right"
+title = "Right join"
+
+[[feature]]
+id = "joins/full"
+title = "Full join"
+
+[[feature]]
+id = "joins/order-limit"
+title = "Join with ORDER BY and LIMIT"
+
+[[feature]]
+id = "subquery/from"
+title = "Subquery in FROM"
+
+[[feature]]
+id = "subquery/exists"
+title = "EXISTS subquery"
+
+[[feature]]
+id = "subquery/in"
+title = "IN subquery"
+
+[[feature]]
+id = "cte"
+title = "Common table expression"
+
+[[feature]]
+id = "set/union"
+title = "UNION and UNION ALL"
+
+[[feature]]
+id = "set/intersect"
+title = "INTERSECT"
+
+[[feature]]
+id = "set/except"
+title = "EXCEPT"
+
+[[feature]]
+id = "insert/values"
+title = "INSERT fills omitted columns"
+
+[[feature]]
+id = "insert/returning"
+title = "INSERT ... RETURNING"
+
+[[feature]]
+id = "insert/conflict"
+title = "ON CONFLICT"
+
+[[feature]]
+id = "insert/duplicate"
+title = "ON DUPLICATE KEY UPDATE"
+
+[[feature]]
+id = "update"
+title = "UPDATE with RETURNING"
+
+[[feature]]
+id = "delete"
+title = "DELETE with WHERE"

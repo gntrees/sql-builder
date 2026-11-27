@@ -1,0 +1,4 @@
+title = "Subquery in FROM"
+feature = "subquery/from"
+why = "from (select ...) "s""
+dialects = "postgres,mysql,sqlite"

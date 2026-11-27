@@ -1,0 +1,4 @@
+title = "Raw SQL is passed through"
+feature = "sql/raw"
+why = "Drizzle hands raw text to the dialect unchanged; the port must not add quoting."
+dialects = "postgres,mysql,sqlite"

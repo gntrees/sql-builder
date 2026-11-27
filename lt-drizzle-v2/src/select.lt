@@ -502,18 +502,31 @@ package select {
 
   export fn to_sql(s: Select) -> Sql {
     let body = body_sql(s)
+    let mut wrap = true
+    match s.dialect {
+      Some(d) => {
+        if d.kind == "sqlite" {
+          wrap = false
+        }
+      }
+      None => {}
+    }
     let mut result = match s.set_query {
       Some(query) => {
-        append(
+        if wrap {
           append(
             append(
-              append(append(raw("("), body), raw(")")),
-              raw(` ${s.set_operator} `),
+              append(
+                append(append(raw("("), body), raw(")")),
+                raw(` ${s.set_operator} `),
+              ),
+              raw("("),
             ),
-            raw("("),
-          ),
-          append(to_sql(query), raw(")")),
-        )
+            append(to_sql(query), raw(")")),
+          )
+        } else {
+          append(append(body, raw(` ${s.set_operator} `)), to_sql(query))
+        }
       }
       None => body
     }

@@ -1,0 +1,4 @@
+title = "Table references are unqualified"
+feature = "schema/table"
+why = "A table on its own renders as its quoted name."
+dialects = "postgres,mysql,sqlite"

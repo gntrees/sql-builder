@@ -1,0 +1,22 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+import value { SqlArg } "./value.lt"
+
+package case_sql_params {
+  fn q() -> Sql {
+    sql.tag(["select ", ", ", ", ", ""], [SqlArg.Integer(1), SqlArg.Boolean(true), SqlArg.Text("x")])
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), q()), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), q()), "")
+  }
+  test "sqlite" {
+    expect.not_equal(support.render(dialect.sqlite(), q()), "")
+  }
+}

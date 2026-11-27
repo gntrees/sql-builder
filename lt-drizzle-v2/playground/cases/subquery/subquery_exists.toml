@@ -1,0 +1,4 @@
+title = "EXISTS subquery"
+feature = "subquery/exists"
+why = "exists (select ...)"
+dialects = "postgres,mysql,sqlite"

@@ -1,0 +1,70 @@
+name: playground
+
+on:
+  push:
+    branches: [experiment/drizzle-port-v2]
+    paths:
+      - "lt-drizzle-v2/**"
+      - ".github/workflows/playground.yml"
+  pull_request:
+    paths:
+      - "lt-drizzle-v2/**"
+      - ".github/workflows/playground.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+        with:
+          repository: gntrees/lingua-tungga
+          ref: d11a4c9
+          path: .lt-src
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.96.0"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ".lt-src -> target"
+      - name: build lt
+        run: cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt
+      - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
+      - run: python3 -m venv .lt/venv
+      - run: .lt/venv/bin/pip -q install mypy pytest
+      - run: bun install
+      - name: playground gate
+        run: bash lt-drizzle-v2/playground.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: lt-drizzle-v2/playground/out
+
+  pages:
+    needs: gate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

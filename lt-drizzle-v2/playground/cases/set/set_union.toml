@@ -1,0 +1,4 @@
+title = "UNION and UNION ALL"
+feature = "set/union"
+why = "Both sides parenthesised."
+dialects = "postgres,mysql,sqlite"

@@ -1,0 +1,4 @@
+title = "ON DUPLICATE KEY UPDATE"
+feature = "insert/duplicate"
+why = "MySQL has no ON CONFLICT."
+dialects = "mysql"

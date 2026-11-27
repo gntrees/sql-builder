@@ -1,0 +1,4 @@
+title = "INSERT ... RETURNING"
+feature = "insert/returning"
+why = "Drizzle only supports RETURNING on Postgres."
+dialects = "postgres"

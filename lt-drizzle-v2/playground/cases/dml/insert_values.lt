@@ -1,0 +1,27 @@
+import sql { Sql } "./sql.lt"
+import schema { Table } "./schema.lt"
+import dialect { Dialect } "./dialect.lt"
+import support "./support.lt"
+import pg_core "./pg_core.lt"
+import select { Select } "./select.lt"
+import insert "./insert.lt"
+
+package case_insert_values {
+  fn t() -> Table {
+    schema.plain("users", [pg_core.serial("id"), pg_core.text("name"), pg_core.integer("age")])
+  }
+  fn q(d: Dialect) -> Str {
+    let tb = t()
+    support.render_built(insert.build(insert.set_dialect(insert.values(insert.create(tb), [[schema.assign("name", sql.str("a"))]]), d)))
+  }
+
+  test "postgres" {
+    expect.not_equal(q(dialect.postgres()), "")
+  }
+  test "mysql" {
+    expect.not_equal(q(dialect.mysql()), "")
+  }
+  test "sqlite" {
+    expect.not_equal(q(dialect.sqlite()), "")
+  }
+}

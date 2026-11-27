@@ -1,0 +1,4 @@
+title = "ORDER BY with asc/desc"
+feature = "select/order"
+why = "Direction is lower-case and the column stays qualified."
+dialects = "postgres,mysql,sqlite"
