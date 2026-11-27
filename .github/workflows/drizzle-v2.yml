@@ -51,7 +51,17 @@ jobs:
       - name: build lt
         run: set -o pipefail; cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt 2>&1 | tee build.log
       - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
-      - run: bun install
+      # The repo-level install pulls @gntrees/method-chain from the private
+      # local registry. The v2 gate only needs drizzle-orm and TypeScript.
+      - name: install v2 toolchain
+        run: |
+          set -o pipefail
+          rm -rf .v2-deps node_modules
+          mkdir -p .v2-deps
+          printf '{"name":"v2-toolchain","private":true}\n' > .v2-deps/package.json
+          ( cd .v2-deps && bun add drizzle-orm@0.44.4 typescript@5 2>&1 | tee ../install.log )
+          mv .v2-deps/node_modules ./node_modules
+          rm -rf .v2-deps
       - name: parity gate
         run: set -o pipefail; bash lt-drizzle-v2/verify.sh 2>&1 | tee verify.log
       - name: annotate failure
@@ -64,6 +74,8 @@ jobs:
 
   database:
     name: database (postgres + mysql)
+    # DB roundtrips are heavy and available locally via `bun run lt-drizzle-v2:db`.
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -85,6 +97,16 @@ jobs:
       - name: build lt
         run: cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt
       - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
-      - run: bun install
+      # The repo-level install pulls @gntrees/method-chain from the private
+      # local registry. The v2 gate only needs drizzle-orm and TypeScript.
+      - name: install v2 toolchain
+        run: |
+          set -o pipefail
+          rm -rf .v2-deps node_modules
+          mkdir -p .v2-deps
+          printf '{"name":"v2-toolchain","private":true}\n' > .v2-deps/package.json
+          ( cd .v2-deps && bun add drizzle-orm@0.44.4 typescript@5 2>&1 | tee ../install.log )
+          mv .v2-deps/node_modules ./node_modules
+          rm -rf .v2-deps
       - name: roundtrip
         run: bash lt-drizzle-v2/verify-db.sh

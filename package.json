@@ -23,7 +23,8 @@
     "schema:test": "bun test schema/test",
     "schema:db:up": "docker compose -f schema/fixtures/docker-compose.yml up -d --wait",
     "schema:db:down": "docker compose -f schema/fixtures/docker-compose.yml down -v",
-    "schema:introspect": "prisma db pull --force && prisma generate"
+    "schema:introspect": "prisma db pull --force && prisma generate",
+    "verify:local": "bash lt-drizzle-v2/verify.sh && bash lt-drizzle-v2/verify-db.sh && bash lt-drizzle-v2/playground.sh"
   },
   "dependencies": {
     "@gntrees/method-chain": "^0.0.34"

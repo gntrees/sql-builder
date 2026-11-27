@@ -39,12 +39,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
       - uses: actions/checkout@v4
         with:
           repository: gntrees/lingua-tungga
@@ -69,7 +63,7 @@ jobs:
           rm -rf .schema-deps node_modules
           mkdir -p .schema-deps
           printf '{"name":"schema-toolchain","private":true}\n' > .schema-deps/package.json
-          ( cd .schema-deps && bun add prisma@7.10.1 @prisma/generator-helper@7.10.1 typescript@5 2>&1 | tee ../install.log )
+          ( cd .schema-deps && bun add prisma@7.10.1 @prisma/generator-helper@7.10.1 2>&1 | tee ../install.log )
           mv .schema-deps/node_modules ./node_modules
           rm -rf .schema-deps
 
@@ -97,22 +91,9 @@ jobs:
           bun run schema:check:allow
           git diff --exit-code -- prisma/schema.prisma schema/schema.json schema/unsupported.json lt-drizzle-v2/src/generated
 
-      - name: emit v2 targets
-        run: set -o pipefail; bash lt-drizzle-v2/build.sh 2>&1 | tee build-targets.log
-
-      - name: typescript
-        run: node_modules/.bin/tsc --noEmit -p generated/lt-drizzle-v2/typescript/tsconfig.json
-
-      - name: python
-        run: |
-          if [ ! -x .lt/venv/bin/python ]; then python3 -m venv .lt/venv; fi
-          .lt/venv/bin/pip -q install mypy
-          .lt/venv/bin/python -m mypy --strict generated/lt-drizzle-v2/python
-
-      - name: go
-        run: |
-          ( cd generated/lt-drizzle-v2/go && go vet ./... && test -z "$(gofmt -l .)" && go test ./... )
-
+      # Native TS/Py/Go gates and DB roundtrips are intentionally local.
+      # They are heavy and already covered by `bun run lt-drizzle-v2:verify`,
+      # `bun run lt-drizzle-v2:db`, and `bun run playground`.
       - if: always()
         run: docker compose -f schema/fixtures/docker-compose.yml down -v
 

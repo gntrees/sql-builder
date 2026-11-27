@@ -58,6 +58,11 @@ unsupported baseline is what actually gates the change.
 | `bun run schema:db:up` | Start the fixture Postgres on port 5434. |
 | `bun run schema:db:down` | Stop and remove the fixture database. |
 | `bun run schema:introspect` | `prisma db pull --force && prisma generate`. |
+| `bun run verify:local` | Full local gate: v2 verify + DB roundtrip + playground. |
+
+CI only runs the schema codegen gate (introspection, codegen, unit tests, formatting,
+drift check). The heavy native TS/Py/Go gates, database roundtrips, and playground
+are local commands so they do not consume GitHub Actions minutes on every push.
 
 Custom output:
 

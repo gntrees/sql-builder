@@ -234,15 +234,28 @@ Adapter adalah boundary yang dijaga:
 
 ## 14. Gate CI
 
-Job baru `schema`:
+Job `schema` sengaja dibuat ringan:
 
 1. nyalakan fixture DB;
 2. `prisma db pull --force`;
 3. `prisma generate`;
 4. `bun schema/codegen.ts generate --allow-unsupported`;
-5. `lt fmt` lalu `lt build -t ts|py|go`;
-6. `git diff --exit-code schema/ lt-drizzle-v2/src/generated/`;
+5. `bun test schema/test` + `lt check`;
+6. `lt fmt --check` dan `git diff --exit-code`;
 7. gagal jika ada entri `unsupported.json` baru.
+
+Build TS/Py/Go, `mypy`, `go vet`, DB roundtrip, dan playground **tidak** dijalankan
+di CI schema karena berat dan bisa dijalankan lokal:
+
+```sh
+bun run verify:local        # verify + verify-db + playground
+bun run lt-drizzle-v2:verify
+bun run lt-drizzle-v2:db
+bun run playground
+```
+
+Job `drizzle-v2` tetap menjalankan parity gate; job `database` hanya berjalan lewat
+`workflow_dispatch`. Playground hanya berjalan di `main` atau manual.
 
 Fixture DB terpisah di `schema/fixtures/`, mencakup:
 

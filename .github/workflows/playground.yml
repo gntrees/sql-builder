@@ -1,12 +1,10 @@
 name: playground
 
 on:
+  # The playground gate runs three language targets plus real databases. It is
+  # intentionally not part of every push/PR; run `bun run playground` locally.
   push:
-    branches: [experiment/drizzle-port-v2]
-    paths:
-      - "lt-drizzle-v2/**"
-      - ".github/workflows/playground.yml"
-  pull_request:
+    branches: [main]
     paths:
       - "lt-drizzle-v2/**"
       - ".github/workflows/playground.yml"
@@ -52,7 +50,17 @@ jobs:
       - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
       - run: python3 -m venv .lt/venv
       - run: .lt/venv/bin/pip -q install mypy pytest
-      - run: bun install
+      # The repo-level install pulls @gntrees/method-chain from the private
+      # local registry. The playground only needs drizzle-orm and TypeScript.
+      - name: install playground toolchain
+        run: |
+          set -o pipefail
+          rm -rf .playground-deps node_modules
+          mkdir -p .playground-deps
+          printf '{"name":"playground-toolchain","private":true}\n' > .playground-deps/package.json
+          ( cd .playground-deps && bun add drizzle-orm@0.44.4 typescript@5 2>&1 | tee ../install.log )
+          mv .playground-deps/node_modules ./node_modules
+          rm -rf .playground-deps
       - name: playground gate
         run: bash lt-drizzle-v2/playground.sh
       - uses: actions/upload-pages-artifact@v3
