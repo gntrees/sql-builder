@@ -67,12 +67,15 @@ jobs:
           mv .schema-deps/node_modules ./node_modules
           rm -rf .schema-deps
 
-      - name: start schema fixture
-        run: docker compose -f schema/fixtures/docker-compose.yml up -d --wait
+      - name: start application database
+        run: |
+          set -o pipefail
+          docker compose -f docker-compose.test.yml up -d --wait postgres 2>&1 | tee db-up.log
+          docker compose -f docker-compose.test.yml run --rm migrate-postgres 2>&1 | tee db-migrate.log
 
       - name: introspect and generate IR
         env:
-          DATABASE_URL: postgres://gntrees:gntrees@localhost:5434/gntrees_schema
+          DATABASE_URL: postgres://gntrees:gntrees@localhost:5433/gntrees_test
         run: |
           set -o pipefail
           ./node_modules/.bin/prisma db pull --force 2>&1 | tee db-pull.log
@@ -95,7 +98,7 @@ jobs:
       # They are heavy and already covered by `bun run lt-drizzle-v2:verify`,
       # `bun run lt-drizzle-v2:db`, and `bun run playground`.
       - if: always()
-        run: docker compose -f schema/fixtures/docker-compose.yml down -v
+        run: docker compose -f docker-compose.test.yml down -v
 
       - name: annotate failure
         if: failure()

@@ -236,10 +236,10 @@ Adapter adalah boundary yang dijaga:
 
 Job `schema` sengaja dibuat ringan:
 
-1. nyalakan fixture DB;
+1. nyalakan database aplikasi (`docker-compose.test.yml`) dan jalankan migrasi;
 2. `prisma db pull --force`;
 3. `prisma generate`;
-4. `bun schema/codegen.ts generate --allow-unsupported`;
+4. `bun schema/codegen.ts generate`;
 5. `bun test schema/test` + `lt check`;
 6. `lt fmt --check` dan `git diff --exit-code`;
 7. gagal jika ada entri `unsupported.json` baru.
@@ -257,7 +257,9 @@ bun run playground
 Job `drizzle-v2` tetap menjalankan parity gate; job `database` hanya berjalan lewat
 `workflow_dispatch`. Playground hanya berjalan di `main` atau manual.
 
-Fixture DB terpisah di `schema/fixtures/`, mencakup:
+Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
+`schema_migrations` dikecualikan lewat `ignoreTables`. Fixture terpisah di
+`schema/fixtures/` hanya dipakai oleh playground/test untuk mencakup:
 
 - tabel biasa;
 - FK;
@@ -304,7 +306,7 @@ Fixture DB terpisah di `schema/fixtures/`, mencakup:
 | Adapter `Expr -> Sql` | selesai (`lt-drizzle-v2/src/schema_adapter.lt`), lolos `lt check` dan runtime assertion |
 | TableMeta + adapter `TableMeta -> v2 Table` | selesai; `from_table(create(), to_table(users_meta))` teruji |
 | Install Prisma 7.10.x | selesai |
-| `db pull` + generate terhadap fixture DB | selesai; hasil deterministik |
+| `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 0 unsupported, deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
 | CI job `schema` | selesai (`.github/workflows/schema.yml`) |
 | Schema playground | selesai (`schema/playground/`, 8 kasus, 8 fitur, IR snapshot + `lt check`) |
