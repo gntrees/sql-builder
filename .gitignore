@@ -45,3 +45,8 @@ __pycache__/
 
 # transient staging for cross-repo file copies
 .staging/
+
+# lt toolchain cache and venv
+.lt/out/
+.lt/venv/
+.lt/bin/

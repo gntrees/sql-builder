@@ -1,0 +1,146 @@
+import Node from "./node.lt"
+import Value from "./value.lt"
+
+/// Dialek yang didukung. Dialek di luar ini ditolak saat `parse()`.
+pub enum Dialect {
+  Postgres
+  MySql
+}
+
+/// Hasil render satu ekspresi: teks SQL dan parameter yang sudah terkumpul
+/// (termasuk parameter dari ekspresi sebelumnya, supaya penomoran `$n`
+/// konsisten tanpa state global).
+pub class Rendered {
+  text: Str
+  params: List<Value>
+}
+
+pub class Renderer {
+  pub static fn quote(dialect: Dialect) -> Str {
+    match dialect {
+      Dialect.Postgres => `"`
+      Dialect.MySql => "`"
+    }
+  }
+
+  /// Nama di-escape dengan menggandakan karakter kutip, lalu titik dijadikan
+  /// pemisah kualifikasi: `public.users` -> `"public"."users"`.
+  pub static fn ident(name: Str, dialect: Dialect) -> Str {
+    let quote = Renderer.quote(dialect)
+    let escaped = name.replace(quote, `${quote}${quote}`)
+    let qualified = escaped.replace(".", `${quote}.${quote}`)
+    `${quote}${qualified}${quote}`
+  }
+
+  pub static fn literal(value: Value) -> Str {
+    match value {
+      Value.Null => "NULL"
+      Value.Bool(flag) => if flag { "TRUE" } else { "FALSE" }
+      Value.Int(number) => `${number}`
+      Value.Float(number) => `${number}`
+      Value.Str(text) => `'${text.replace("'", "''")}'`
+    }
+  }
+
+  pub static fn placeholder(index: Int, dialect: Dialect) -> Str {
+    match dialect {
+      Dialect.Postgres => `$${index}`
+      Dialect.MySql => "?"
+    }
+  }
+
+  /// `base` = jumlah parameter yang sudah dipakai sebelum node ini, sehingga
+  /// parameter pertama node ini bernomor `base + 1`.
+  /// `inline` = true menghasilkan teks untuk `sql_with_param`.
+  pub static fn expr(node: Node, dialect: Dialect, base: Int, inline: Bool) -> Rendered {
+    match node.kind {
+      Kind.Column(name) => Rendered(text: Renderer.ident(name, dialect), params: [])
+      Kind.Table(name) => Rendered(text: Renderer.ident(name, dialect), params: [])
+      Kind.Raw(text) => Rendered(text: text, params: [])
+      Kind.Lit(value) => Renderer.lit(value, dialect, base, inline)
+      Kind.Binary(operator, left, right) =>
+        Renderer.binary(operator, left, right, dialect, base, inline)
+      Kind.And(items) => Renderer.chain(items, "AND", dialect, base, inline)
+      Kind.Or(items) => Renderer.chain(items, "OR", dialect, base, inline)
+      Kind.Not(inner) => {
+        let rendered = Renderer.expr(inner, dialect, base, inline)
+        Rendered(text: `NOT ( ${rendered.text} )`, params: rendered.params)
+      }
+      Kind.IsNull(inner) => {
+        let rendered = Renderer.expr(inner, dialect, base, inline)
+        Rendered(text: `${rendered.text} IS NULL`, params: rendered.params)
+      }
+      Kind.IsNotNull(inner) => {
+        let rendered = Renderer.expr(inner, dialect, base, inline)
+        Rendered(text: `${rendered.text} IS NOT NULL`, params: rendered.params)
+      }
+      Kind.Alias(inner, name) => {
+        let rendered = Renderer.expr(inner, dialect, base, inline)
+        Rendered(
+          text: `${rendered.text} AS ${Renderer.ident(name, dialect)}`,
+          params: rendered.params,
+        )
+      }
+      Kind.Order(inner, descending) => {
+        let rendered = Renderer.expr(inner, dialect, base, inline)
+        let direction = if descending { "DESC" } else { "ASC" }
+        Rendered(text: `${rendered.text} ${direction}`, params: rendered.params)
+      }
+    }
+  }
+
+  static fn lit(value: Value, dialect: Dialect, base: Int, inline: Bool) -> Rendered {
+    let index = base + 1
+    let text = if inline {
+      Renderer.literal(value)
+    } else {
+      Renderer.placeholder(index, dialect)
+    }
+    Rendered(text: text, params: [value])
+  }
+
+  static fn binary(
+    operator: Str,
+    left: Node,
+    right: Node,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let l = Renderer.expr(left, dialect, base, inline)
+    let r = Renderer.expr(right, dialect, base + l.params.len(), inline)
+    Rendered(text: `${l.text} ${operator} ${r.text}`, params: l.params.concat(r.params))
+  }
+
+  static fn chain(
+    items: List<Node>,
+    operator: Str,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let rendered = Renderer.list(items, dialect, base, inline, ` ${operator} `)
+    Rendered(text: `( ${rendered.text} )`, params: rendered.params)
+  }
+
+  pub static fn list(
+    items: List<Node>,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+    separator: Str,
+  ) -> Rendered {
+    let mut text = ""
+    let mut params: List<Value> = []
+    for item in items {
+      let rendered = Renderer.expr(item, dialect, base + params.len(), inline)
+      if params.len() == 0 && text == "" {
+        text = rendered.text
+      } else {
+        text = `${text}${separator}${rendered.text}`
+      }
+      params = params.concat(rendered.params)
+    }
+    Rendered(text: text, params: params)
+  }
+}

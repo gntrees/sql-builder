@@ -1,0 +1,143 @@
+import Renderer from "./renderer.lt"
+import Rendered from "./renderer.lt"
+import Dialect from "./renderer.lt"
+import Node from "./node.lt"
+import Value from "./value.lt"
+
+/// Satu klausa query, disimpan berurutan supaya `parse()` merender apa adanya.
+pub enum Clause {
+  Select(List<Node>)
+  From(Node)
+  Where(List<Node>)
+  OrderBy(List<Node>)
+  Limit(Node)
+  Offset(Node)
+  Raw(Str)
+}
+
+pub class ParseResult {
+  sql: Str
+  param: List<Value>
+  sql_with_param: Str
+}
+
+pub enum ParseError {
+  NoDialect
+  UnsupportedDialect(Str)
+  EmptyQuery
+}
+
+pub class Query {
+  clauses: List<Clause>
+  dialect: Option<Str>
+
+  pub static fn create() -> Query {
+    Query(clauses: [], dialect: None)
+  }
+
+  pub fn set_dialect(self, db: Str) -> Query {
+    Query(clauses: self.clauses, dialect: Some(db))
+  }
+
+  pub fn select(self, columns: List<Node>) -> Query {
+    self.add(Clause.Select(columns))
+  }
+
+  pub fn from_table(self, table: Node) -> Query {
+    self.add(Clause.From(table))
+  }
+
+  pub fn where(self, conditions: List<Node>) -> Query {
+    self.add(Clause.Where(conditions))
+  }
+
+  pub fn order_by(self, columns: List<Node>) -> Query {
+    self.add(Clause.OrderBy(columns))
+  }
+
+  pub fn limit(self, count: Node) -> Query {
+    self.add(Clause.Limit(count))
+  }
+
+  pub fn offset(self, count: Node) -> Query {
+    self.add(Clause.Offset(count))
+  }
+
+  pub fn raw(self, text: Str) -> Query {
+    self.add(Clause.Raw(text))
+  }
+
+  /// Dialek diperiksa di sini, bukan di setiap emitter, supaya perilakunya
+  /// sama di ketiga target.
+  pub fn parse(self) -> Result<ParseResult, ParseError> {
+    match self.dialect {
+      None => Err(ParseError.NoDialect)
+      Some(name) => if name == "postgres" {
+        Query.finish(self.clauses, Dialect.Postgres)
+      } else if name == "mysql" {
+        Query.finish(self.clauses, Dialect.MySql)
+      } else {
+        Err(ParseError.UnsupportedDialect(name))
+      }
+    }
+  }
+
+  fn add(self, clause: Clause) -> Query {
+    Query(clauses: self.clauses.push(clause), dialect: self.dialect)
+  }
+
+  static fn finish(clauses: List<Clause>, dialect: Dialect) -> Result<ParseResult, ParseError> {
+    if clauses.len() == 0 {
+      return Err(ParseError.EmptyQuery)
+    }
+    let plain = Query.render(clauses, dialect, false)
+    let inlined = Query.render(clauses, dialect, true)
+    Ok(
+      ParseResult(
+        sql: plain.text,
+        param: plain.params,
+        sql_with_param: inlined.text,
+      ),
+    )
+  }
+
+  static fn render(clauses: List<Clause>, dialect: Dialect, inline: Bool) -> Rendered {
+    let mut text = ""
+    let mut params: List<Value> = []
+    for clause in clauses {
+      let piece = Query.clause(clause, dialect, params.len(), inline)
+      if text == "" {
+        text = piece.text
+      } else {
+        text = `${text} ${piece.text}`
+      }
+      params = params.concat(piece.params)
+    }
+    Rendered(text: text, params: params)
+  }
+
+  static fn clause(clause: Clause, dialect: Dialect, base: Int, inline: Bool) -> Rendered {
+    match clause {
+      Clause.Select(columns) => Query.keyword(
+        "SELECT",
+        Renderer.list(columns, dialect, base, inline, ", "),
+      )
+      Clause.From(table) => Query.keyword("FROM", Renderer.expr(table, dialect, base, inline))
+      Clause.Where(conditions) => Query.keyword(
+        "WHERE",
+        Renderer.list(conditions, dialect, base, inline, " AND "),
+      )
+      Clause.OrderBy(columns) => Query.keyword(
+        "ORDER BY",
+        Renderer.list(columns, dialect, base, inline, ", "),
+      )
+      Clause.Limit(count) => Query.keyword("LIMIT", Renderer.expr(count, dialect, base, inline))
+      Clause.Offset(count) => Query.keyword("OFFSET", Renderer.expr(count, dialect, base, inline))
+      Clause.Raw(text) => Rendered(text: text, params: [])
+    }
+  }
+
+  static fn keyword(word: Str, rendered: Rendered) -> Rendered {
+    Rendered(text: `${word} ${rendered.text}`, params: rendered.params)
+  }
+}
