@@ -6,11 +6,14 @@
 import { describe, expect, test } from "bun:test";
 import { sql } from "drizzle-orm";
 import { MySqlDialect } from "drizzle-orm/mysql-core";
+import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { PgDialect } from "drizzle-orm/pg-core";
 
 import { LList } from "../../generated/lt-drizzle/typescript/_lingua_rt";
+import { Column } from "../../generated/lt-drizzle/typescript/src/column";
 import { Dialect } from "../../generated/lt-drizzle/typescript/src/dialect";
 import { Sql } from "../../generated/lt-drizzle/typescript/src/sql";
+import { Table } from "../../generated/lt-drizzle/typescript/src/table";
 import {
   SqlArg_Bool,
   SqlArg_Float,
@@ -159,5 +162,53 @@ describe("mysql", () => {
         Sql.raw("select ").append(Sql.identifier("users")),
       ),
     ),
+  );
+});
+
+describe("schema references", () => {
+  const users = pgTable("users", { id: serial("id"), name: text("name") });
+  const usersTable = Table.plain("users", list([Column.serial("id"), Column.text("name")]));
+
+  diff(
+    "column is table-qualified",
+    fromDrizzle(pg.sqlToQuery(sql`${users.id}`)),
+    fromLt(Dialect.postgres().sqlToQuery(usersTable.col("id"))),
+  );
+
+  diff(
+    "table ref has no qualification",
+    fromDrizzle(pg.sqlToQuery(sql`${users}`)),
+    fromLt(Dialect.postgres().sqlToQuery(usersTable.ref())),
+  );
+
+  const aliased = alias(users, "u");
+  const aliasedTable = Table.withAlias("users", "u", list([Column.serial("id")]));
+
+  diff(
+    "aliased column uses the alias",
+    fromDrizzle(pg.sqlToQuery(sql`${aliased.id}`)),
+    fromLt(Dialect.postgres().sqlToQuery(aliasedTable.col("id"))),
+  );
+
+  diff(
+    "aliased table ref keeps the original name",
+    fromDrizzle(pg.sqlToQuery(sql`${aliased}`)),
+    fromLt(Dialect.postgres().sqlToQuery(aliasedTable.ref())),
+  );
+
+  const auth = pgSchema("auth");
+  const accounts = auth.table("accounts", { id: integer("account_id") });
+  const accountsTable = Table.withSchema("accounts", "auth", list([Column.integer("account_id")]));
+
+  diff(
+    "schema-qualified column",
+    fromDrizzle(pg.sqlToQuery(sql`${accounts.id}`)),
+    fromLt(Dialect.postgres().sqlToQuery(accountsTable.col("account_id"))),
+  );
+
+  diff(
+    "schema-qualified table ref",
+    fromDrizzle(pg.sqlToQuery(sql`${accounts}`)),
+    fromLt(Dialect.postgres().sqlToQuery(accountsTable.ref())),
   );
 });

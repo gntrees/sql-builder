@@ -3,6 +3,11 @@
 // file modul secara langsung.
 import Value from "./value.lt"
 import Rendered from "./value.lt"
+import SqlArg from "./value.lt"
+import BuildError from "./value.lt"
 import Sql from "./sql.lt"
 import SqlChunk from "./sql.lt"
+import Column from "./column.lt"
+import ColumnOpts from "./column.lt"
+import Table from "./table.lt"
 import Dialect from "./dialect.lt"

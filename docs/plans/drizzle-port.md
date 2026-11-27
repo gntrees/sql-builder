@@ -186,7 +186,7 @@ pub class Sql {
   static fn str(v: Str) -> Sql
   static fn bool(v: Bool) -> Sql
   static fn float(v: Float) -> Sql
-  static fn null_() -> Sql
+  static fn null_value() -> Sql
   static fn and(items: List<Sql>) -> Sql
   static fn or(items: List<Sql>) -> Sql
   static fn not(expr: Sql) -> Sql
@@ -209,10 +209,10 @@ pub class ColumnOpts {
   has_default: Bool
   default_sql: Str
   static fn none() -> ColumnOpts
-  fn not_null_(self) -> ColumnOpts
-  fn primary_(self) -> ColumnOpts
-  fn unique_(self) -> ColumnOpts
-  fn default_(self, sql: Str) -> ColumnOpts
+  fn with_not_null(self) -> ColumnOpts
+  fn with_primary(self) -> ColumnOpts
+  fn with_unique(self) -> ColumnOpts
+  fn with_default(self, sql: Str) -> ColumnOpts
 }
 
 pub class Column {
@@ -236,7 +236,7 @@ pub class Column {
   static fn numeric(name: Str, precision: Int, scale: Int) -> Column
   static fn json(name: Str) -> Column
   static fn jsonb(name: Str) -> Column
-  static fn uuid_(name: Str) -> Column
+  static fn uuid(name: Str) -> Column
   static fn custom(name: Str, sql_type: Str) -> Column
 }
 
@@ -290,20 +290,23 @@ import Insert from "./insert.lt"
 
 pub class Users {
   static fn table() -> Table {
-    Table.postgres(
-      name: "users",
-      schema: None,
-      alias: None,
-      columns: [
-        Column.serial(name: "id").primary_(),
-        Column.text(name: "name").not_null_(),
-        Column.boolean(name: "active").not_null_().default_("true"),
-        Column.timestamp(name: "created_at").not_null_(),
+    Table.plain(
+      "users",
+      [
+        Column.serial("id").with_primary(),
+        Column.text("name").with_not_null(),
+        Column.boolean("active").with_not_null().with_default("true"),
+        Column.timestamp("created_at").with_not_null(),
       ],
     )
   }
 }
 ```
+
+Catatan: **static method memakai argumen posisional**, bukan named argument — hanya
+konstruktor class yang memakai named argument (spec LT §6.1). Karena itu API publik
+memakai bentuk posisional dan menyediakan helper seperti `Table.plain`/`with_schema`/
+`with_alias` agar `Option` tidak bocor ke pemanggil.
 
 ```lt
 let t = Users.table()

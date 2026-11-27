@@ -41,7 +41,7 @@ pub class Sql {
     Sql(chunks: [SqlChunk.Param(Value.Bool(value))])
   }
 
-  pub static fn null_() -> Sql {
+  pub static fn null_value() -> Sql {
     Sql(chunks: [SqlChunk.Param(Value.Null)])
   }
 
