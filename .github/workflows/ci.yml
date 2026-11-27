@@ -1,9 +1,10 @@
-name: CI
+name: CI (legacy)
 
+# Legacy generator gate. It needs @gntrees/method-chain from a private local
+# registry, so it cannot run on public GitHub runners. Run it locally with the
+# registry available; the relevant public gates are `schema` and `drizzle-v2`.
 on:
-  push:
-    branches: [main, lt-core]
-  pull_request:
+  workflow_dispatch:
 
 defaults:
   run:

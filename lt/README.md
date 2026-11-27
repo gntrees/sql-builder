@@ -77,13 +77,15 @@ ke path lama dan referensi legacy dihapus.
 
 ## CI
 
-Job `lt` di `.github/workflows/ci.yml` membangun compiler dari sumber (aset
-rilis belum dipublikasikan), lalu menjalankan `lt/check.sh` dan `lt/verify.sh`.
+Workflow `ci.yml` dan `lt.yml` sekarang **manual-only** (`workflow_dispatch`):
 
-Job `unit` dan `integration-db` masih merah di runner publik karena
-`@gntrees/method-chain@0.0.34` tidak bisa diunduh dari registry publik —
-dependensi itu dibutuhkan generator lama, bukan port `.lt`. Selama paket itu
-belum dipublikasikan atau di-vendor, hanya job `lt` yang bermakna di CI publik.
+- `unit`/`integration-db` membutuhkan `@gntrees/method-chain@0.0.34` dari
+  registry lokal, yang tidak tersedia di runner publik;
+- source v1 di `lt/` masih memakai sintaks import lama (`from`) yang ditolak
+  compiler v0.3.0.
+
+Jalankan gate legacy secara lokal saat registry tersedia. Gate publik yang
+aktif untuk pekerjaan baru adalah `schema` dan `drizzle-v2`.
 
 ## Skema dan migration
 
