@@ -2,232 +2,139 @@
 package schema
 
 import (
-	m2 "linguatungga/gen/sql"
-	lt "linguatungga/lt"
+	m3 "linguatungga/gen/schema_base"
 )
 
-type Column struct {
-	Table string
-	Name  string
+type Authors struct {
 }
 
-func NewColumn(table string, name string) Column {
-	return Column{
-		Table: table,
-		Name:  name,
-	}
+func NewAuthors() Authors {
+	return Authors{}
 }
 
-func (self Column) Qualified() string {
-	return "" + lt.Disp(self.Table) + "." + lt.Disp(self.Name)
+func AuthorsTable() m3.Table {
+	return m3.NewTable("authors")
 }
 
-func (self Column) Node() m2.Node {
-	return m2.NodeCol(self.Qualified())
+func AuthorsId() m3.Column {
+	return m3.NewColumn("authors", "id")
 }
 
-func (self Column) Bare() m2.Node {
-	return m2.NodeCol(self.Name)
+func AuthorsName() m3.Column {
+	return m3.NewColumn("authors", "name")
 }
 
-func (self Column) Eq(other m2.Node) m2.Node {
-	return self.Node().Eq(other)
-}
-
-func (self Column) EqInt(value int64) m2.Node {
-	return self.Node().Eq(m2.NodeInt(value))
-}
-
-func (self Column) EqStr(value string) m2.Node {
-	return self.Node().Eq(m2.NodeStr(value))
-}
-
-func (self Column) EqBool(value bool) m2.Node {
-	return self.Node().Eq(m2.NodeBool(value))
-}
-
-func (self Column) GtInt(value int64) m2.Node {
-	return self.Node().Gt(m2.NodeInt(value))
-}
-
-func (self Column) GteInt(value int64) m2.Node {
-	return self.Node().Gte(m2.NodeInt(value))
-}
-
-func (self Column) LtInt(value int64) m2.Node {
-	return self.Node().Lt(m2.NodeInt(value))
-}
-
-func (self Column) LteInt(value int64) m2.Node {
-	return self.Node().Lte(m2.NodeInt(value))
-}
-
-func (self Column) IsNull() m2.Node {
-	return self.Node().IsNull()
-}
-
-func (self Column) IsNotNull() m2.Node {
-	return self.Node().IsNotNull()
-}
-
-func (self Column) Like(pattern string) m2.Node {
-	return self.Node().Like(m2.NodeStr(pattern))
-}
-
-func (self Column) Asc() m2.Node {
-	return self.Node().Asc()
-}
-
-func (self Column) Desc() m2.Node {
-	return self.Node().Desc()
-}
-
-func (self Column) Alias(name string) m2.Node {
-	return self.Node().Alias(name)
-}
-
-func (self Column) LtEq(other any) bool {
-	peer, ok := other.(Column)
-	if !ok {
-		return false
-	}
-	return lt.Eq(self.Table, peer.Table) &&
-		lt.Eq(self.Name, peer.Name)
-}
-
-func (self Column) LtCmp(other any) int {
-	peer, ok := other.(Column)
-	if !ok {
-		return 0
-	}
-	if step := lt.Cmp(self.Table, peer.Table); step != 0 {
-		return step
-	}
-	if step := lt.Cmp(self.Name, peer.Name); step != 0 {
-		return step
-	}
-	return 0
-}
-
-func (self Column) LtDisplay() string {
-	return "Column(" + "table: " + lt.Disp(self.Table) + ", " + "name: " + lt.Disp(self.Name) + ")"
-}
-
-type Table struct {
-	Name string
-}
-
-func NewTable(name string) Table {
-	return Table{
-		Name: name,
-	}
-}
-
-func (self Table) Node() m2.Node {
-	return m2.NodeTable(self.Name)
-}
-
-func (self Table) Col(column string) Column {
-	return NewColumn(self.Name, column)
-}
-
-func (self Table) LtEq(other any) bool {
-	peer, ok := other.(Table)
-	if !ok {
-		return false
-	}
-	return lt.Eq(self.Name, peer.Name)
-}
-
-func (self Table) LtCmp(other any) int {
-	peer, ok := other.(Table)
-	if !ok {
-		return 0
-	}
-	if step := lt.Cmp(self.Name, peer.Name); step != 0 {
-		return step
-	}
-	return 0
-}
-
-func (self Table) LtDisplay() string {
-	return "Table(" + "name: " + lt.Disp(self.Name) + ")"
-}
-
-type Users struct {
-}
-
-func NewUsers() Users {
-	return Users{}
-}
-
-func UsersTable() Table {
-	return NewTable("users")
-}
-
-func UsersId() Column {
-	return NewColumn("users", "id")
-}
-
-func UsersName() Column {
-	return NewColumn("users", "name")
-}
-
-func UsersAge() Column {
-	return NewColumn("users", "age")
-}
-
-func UsersActive() Column {
-	return NewColumn("users", "active")
-}
-
-func (self Users) LtEq(other any) bool {
-	_, ok := other.(Users)
+func (self Authors) LtEq(other any) bool {
+	_, ok := other.(Authors)
 	return ok
 }
 
-func (self Users) LtCmp(other any) int {
+func (self Authors) LtCmp(other any) int {
 	return 0
 }
 
-func (self Users) LtDisplay() string {
-	return "Users"
+func (self Authors) LtDisplay() string {
+	return "Authors"
 }
 
-type Orders struct {
+type B struct {
 }
 
-func NewOrders() Orders {
-	return Orders{}
+func NewB() B {
+	return B{}
 }
 
-func OrdersTable() Table {
-	return NewTable("orders")
+func BTable() m3.Table {
+	return m3.NewTable("b")
 }
 
-func OrdersId() Column {
-	return NewColumn("orders", "id")
+func BId() m3.Column {
+	return m3.NewColumn("b", "id")
 }
 
-func OrdersUserId() Column {
-	return NewColumn("orders", "user_id")
+func BOk() m3.Column {
+	return m3.NewColumn("b", "ok")
 }
 
-func OrdersTotal() Column {
-	return NewColumn("orders", "total")
-}
-
-func (self Orders) LtEq(other any) bool {
-	_, ok := other.(Orders)
+func (self B) LtEq(other any) bool {
+	_, ok := other.(B)
 	return ok
 }
 
-func (self Orders) LtCmp(other any) int {
+func (self B) LtCmp(other any) int {
 	return 0
 }
 
-func (self Orders) LtDisplay() string {
-	return "Orders"
+func (self B) LtDisplay() string {
+	return "B"
+}
+
+type Books struct {
+}
+
+func NewBooks() Books {
+	return Books{}
+}
+
+func BooksTable() m3.Table {
+	return m3.NewTable("books")
+}
+
+func BooksBookId() m3.Column {
+	return m3.NewColumn("books", "book_id")
+}
+
+func BooksAuthorId() m3.Column {
+	return m3.NewColumn("books", "author_id")
+}
+
+func BooksTitle() m3.Column {
+	return m3.NewColumn("books", "title")
+}
+
+func (self Books) LtEq(other any) bool {
+	_, ok := other.(Books)
+	return ok
+}
+
+func (self Books) LtCmp(other any) int {
+	return 0
+}
+
+func (self Books) LtDisplay() string {
+	return "Books"
+}
+
+type M struct {
+}
+
+func NewM() M {
+	return M{}
+}
+
+func MTable() m3.Table {
+	return m3.NewTable("m")
+}
+
+func MId() m3.Column {
+	return m3.NewColumn("m", "id")
+}
+
+func MUid() m3.Column {
+	return m3.NewColumn("m", "uid")
+}
+
+func (self M) LtEq(other any) bool {
+	_, ok := other.(M)
+	return ok
+}
+
+func (self M) LtCmp(other any) int {
+	return 0
+}
+
+func (self M) LtDisplay() string {
+	return "M"
 }
 
 type Members struct {
@@ -237,12 +144,16 @@ func NewMembers() Members {
 	return Members{}
 }
 
-func MembersTable() Table {
-	return NewTable("members")
+func MembersTable() m3.Table {
+	return m3.NewTable("members")
 }
 
-func MembersUid() Column {
-	return NewColumn("members", "uid")
+func MembersId() m3.Column {
+	return m3.NewColumn("members", "id")
+}
+
+func MembersUid() m3.Column {
+	return m3.NewColumn("members", "uid")
 }
 
 func (self Members) LtEq(other any) bool {
@@ -258,6 +169,42 @@ func (self Members) LtDisplay() string {
 	return "Members"
 }
 
+type Orders struct {
+}
+
+func NewOrders() Orders {
+	return Orders{}
+}
+
+func OrdersTable() m3.Table {
+	return m3.NewTable("orders")
+}
+
+func OrdersId() m3.Column {
+	return m3.NewColumn("orders", "id")
+}
+
+func OrdersUserId() m3.Column {
+	return m3.NewColumn("orders", "user_id")
+}
+
+func OrdersTotal() m3.Column {
+	return m3.NewColumn("orders", "total")
+}
+
+func (self Orders) LtEq(other any) bool {
+	_, ok := other.(Orders)
+	return ok
+}
+
+func (self Orders) LtCmp(other any) int {
+	return 0
+}
+
+func (self Orders) LtDisplay() string {
+	return "Orders"
+}
+
 type Posts struct {
 }
 
@@ -265,20 +212,20 @@ func NewPosts() Posts {
 	return Posts{}
 }
 
-func PostsTable() Table {
-	return NewTable("posts")
+func PostsTable() m3.Table {
+	return m3.NewTable("posts")
 }
 
-func PostsId() Column {
-	return NewColumn("posts", "id")
+func PostsId() m3.Column {
+	return m3.NewColumn("posts", "id")
 }
 
-func PostsUserId() Column {
-	return NewColumn("posts", "user_id")
+func PostsUserId() m3.Column {
+	return m3.NewColumn("posts", "user_id")
 }
 
-func PostsTitle() Column {
-	return NewColumn("posts", "title")
+func PostsTitle() m3.Column {
+	return m3.NewColumn("posts", "title")
 }
 
 func (self Posts) LtEq(other any) bool {
@@ -292,4 +239,148 @@ func (self Posts) LtCmp(other any) int {
 
 func (self Posts) LtDisplay() string {
 	return "Posts"
+}
+
+type SchemaMigrations struct {
+}
+
+func NewSchemaMigrations() SchemaMigrations {
+	return SchemaMigrations{}
+}
+
+func SchemaMigrationsTable() m3.Table {
+	return m3.NewTable("schema_migrations")
+}
+
+func SchemaMigrationsVersion() m3.Column {
+	return m3.NewColumn("schema_migrations", "version")
+}
+
+func (self SchemaMigrations) LtEq(other any) bool {
+	_, ok := other.(SchemaMigrations)
+	return ok
+}
+
+func (self SchemaMigrations) LtCmp(other any) int {
+	return 0
+}
+
+func (self SchemaMigrations) LtDisplay() string {
+	return "SchemaMigrations"
+}
+
+type T struct {
+}
+
+func NewT() T {
+	return T{}
+}
+
+func TTable() m3.Table {
+	return m3.NewTable("t")
+}
+
+func TId() m3.Column {
+	return m3.NewColumn("t", "id")
+}
+
+func TX() m3.Column {
+	return m3.NewColumn("t", "x")
+}
+
+func TName() m3.Column {
+	return m3.NewColumn("t", "name")
+}
+
+func TA() m3.Column {
+	return m3.NewColumn("t", "a")
+}
+
+func TB() m3.Column {
+	return m3.NewColumn("t", "b")
+}
+
+func (self T) LtEq(other any) bool {
+	_, ok := other.(T)
+	return ok
+}
+
+func (self T) LtCmp(other any) int {
+	return 0
+}
+
+func (self T) LtDisplay() string {
+	return "T"
+}
+
+type U struct {
+}
+
+func NewU() U {
+	return U{}
+}
+
+func UTable() m3.Table {
+	return m3.NewTable("u")
+}
+
+func UId() m3.Column {
+	return m3.NewColumn("u", "id")
+}
+
+func UB() m3.Column {
+	return m3.NewColumn("u", "b")
+}
+
+func (self U) LtEq(other any) bool {
+	_, ok := other.(U)
+	return ok
+}
+
+func (self U) LtCmp(other any) int {
+	return 0
+}
+
+func (self U) LtDisplay() string {
+	return "U"
+}
+
+type Users struct {
+}
+
+func NewUsers() Users {
+	return Users{}
+}
+
+func UsersTable() m3.Table {
+	return m3.NewTable("users")
+}
+
+func UsersId() m3.Column {
+	return m3.NewColumn("users", "id")
+}
+
+func UsersName() m3.Column {
+	return m3.NewColumn("users", "name")
+}
+
+func UsersActive() m3.Column {
+	return m3.NewColumn("users", "active")
+}
+
+func UsersAge() m3.Column {
+	return m3.NewColumn("users", "age")
+}
+
+func (self Users) LtEq(other any) bool {
+	_, ok := other.(Users)
+	return ok
+}
+
+func (self Users) LtCmp(other any) int {
+	return 0
+}
+
+func (self Users) LtDisplay() string {
+	return "Users"
 }

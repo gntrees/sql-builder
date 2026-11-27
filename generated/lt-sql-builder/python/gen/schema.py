@@ -3,163 +3,116 @@ from __future__ import annotations
 
 import lt_runtime as _lt
 from dataclasses import dataclass
-import gen.sql as m2
+import gen.schema_base as m3
 from typing import Any
 
 @dataclass(frozen=True)
-class Column:
-    table: str
-    name: str
-
-    def qualified(self) -> str:
-        return "" + _lt.disp(self.table) + "." + _lt.disp(self.name)
-
-    def node(self) -> m2.Node:
-        return m2.Node.col(self.qualified())
-
-    def bare(self) -> m2.Node:
-        return m2.Node.col(self.name)
-
-    def eq(self, other: m2.Node) -> m2.Node:
-        return self.node().eq(other)
-
-    def eq_int(self, value: int) -> m2.Node:
-        return self.node().eq(m2.Node.int(value))
-
-    def eq_str(self, value: str) -> m2.Node:
-        return self.node().eq(m2.Node.str(value))
-
-    def eq_bool(self, value: bool) -> m2.Node:
-        return self.node().eq(m2.Node.bool(value))
-
-    def gt_int(self, value: int) -> m2.Node:
-        return self.node().gt(m2.Node.int(value))
-
-    def gte_int(self, value: int) -> m2.Node:
-        return self.node().gte(m2.Node.int(value))
-
-    def lt_int(self, value: int) -> m2.Node:
-        return self.node().lt(m2.Node.int(value))
-
-    def lte_int(self, value: int) -> m2.Node:
-        return self.node().lte(m2.Node.int(value))
-
-    def is_null(self) -> m2.Node:
-        return self.node().is_null()
-
-    def is_not_null(self) -> m2.Node:
-        return self.node().is_not_null()
-
-    def like(self, pattern: str) -> m2.Node:
-        return self.node().like(m2.Node.str(pattern))
-
-    def asc(self) -> m2.Node:
-        return self.node().asc()
-
-    def desc(self) -> m2.Node:
-        return self.node().desc()
-
-    def alias(self, name: str) -> m2.Node:
-        return self.node().alias(name)
-
-    def lt_cmp(self, other: "Column") -> int:
-        step = _lt.cmp(self.table, other.table)
-        if step != 0:
-            return step
-        step = _lt.cmp(self.name, other.name)
-        if step != 0:
-            return step
-        return 0
-
-    def to_display(self) -> str:
-        return "Column(" + "table: " + _lt.disp(self.table) + ", " + "name: " + _lt.disp(self.name) + ")"
-
-@dataclass(frozen=True)
-class Table:
-    name: str
-
-    def node(self) -> m2.Node:
-        return m2.Node.table(self.name)
-
-    def col(self, column: str) -> Column:
-        return Column(table=self.name, name=column)
-
-    def lt_cmp(self, other: "Table") -> int:
-        step = _lt.cmp(self.name, other.name)
-        if step != 0:
-            return step
-        return 0
-
-    def to_display(self) -> str:
-        return "Table(" + "name: " + _lt.disp(self.name) + ")"
-
-@dataclass(frozen=True)
-class Users:
+class Authors:
     pass
 
     @staticmethod
-    def table() -> Table:
-        return Table(name="users")
+    def table() -> m3.Table:
+        return m3.Table(name="authors")
 
     @staticmethod
-    def id() -> Column:
-        return Column(table="users", name="id")
+    def id() -> m3.Column:
+        return m3.Column(table="authors", name="id")
 
     @staticmethod
-    def name() -> Column:
-        return Column(table="users", name="name")
+    def name() -> m3.Column:
+        return m3.Column(table="authors", name="name")
 
-    @staticmethod
-    def age() -> Column:
-        return Column(table="users", name="age")
-
-    @staticmethod
-    def active() -> Column:
-        return Column(table="users", name="active")
-
-    def lt_cmp(self, other: "Users") -> int:
+    def lt_cmp(self, other: "Authors") -> int:
         return 0
 
     def to_display(self) -> str:
-        return "Users"
+        return "Authors"
 
 @dataclass(frozen=True)
-class Orders:
+class B:
     pass
 
     @staticmethod
-    def table() -> Table:
-        return Table(name="orders")
+    def table() -> m3.Table:
+        return m3.Table(name="b")
 
     @staticmethod
-    def id() -> Column:
-        return Column(table="orders", name="id")
+    def id() -> m3.Column:
+        return m3.Column(table="b", name="id")
 
     @staticmethod
-    def user_id() -> Column:
-        return Column(table="orders", name="user_id")
+    def ok() -> m3.Column:
+        return m3.Column(table="b", name="ok")
 
-    @staticmethod
-    def total() -> Column:
-        return Column(table="orders", name="total")
-
-    def lt_cmp(self, other: "Orders") -> int:
+    def lt_cmp(self, other: "B") -> int:
         return 0
 
     def to_display(self) -> str:
-        return "Orders"
+        return "B"
+
+@dataclass(frozen=True)
+class Books:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="books")
+
+    @staticmethod
+    def book_id() -> m3.Column:
+        return m3.Column(table="books", name="book_id")
+
+    @staticmethod
+    def author_id() -> m3.Column:
+        return m3.Column(table="books", name="author_id")
+
+    @staticmethod
+    def title() -> m3.Column:
+        return m3.Column(table="books", name="title")
+
+    def lt_cmp(self, other: "Books") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "Books"
+
+@dataclass(frozen=True)
+class M:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="m")
+
+    @staticmethod
+    def id() -> m3.Column:
+        return m3.Column(table="m", name="id")
+
+    @staticmethod
+    def uid() -> m3.Column:
+        return m3.Column(table="m", name="uid")
+
+    def lt_cmp(self, other: "M") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "M"
 
 @dataclass(frozen=True)
 class Members:
     pass
 
     @staticmethod
-    def table() -> Table:
-        return Table(name="members")
+    def table() -> m3.Table:
+        return m3.Table(name="members")
 
     @staticmethod
-    def uid() -> Column:
-        return Column(table="members", name="uid")
+    def id() -> m3.Column:
+        return m3.Column(table="members", name="id")
+
+    @staticmethod
+    def uid() -> m3.Column:
+        return m3.Column(table="members", name="uid")
 
     def lt_cmp(self, other: "Members") -> int:
         return 0
@@ -168,28 +121,158 @@ class Members:
         return "Members"
 
 @dataclass(frozen=True)
+class Orders:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="orders")
+
+    @staticmethod
+    def id() -> m3.Column:
+        return m3.Column(table="orders", name="id")
+
+    @staticmethod
+    def user_id() -> m3.Column:
+        return m3.Column(table="orders", name="user_id")
+
+    @staticmethod
+    def total() -> m3.Column:
+        return m3.Column(table="orders", name="total")
+
+    def lt_cmp(self, other: "Orders") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "Orders"
+
+@dataclass(frozen=True)
 class Posts:
     pass
 
     @staticmethod
-    def table() -> Table:
-        return Table(name="posts")
+    def table() -> m3.Table:
+        return m3.Table(name="posts")
 
     @staticmethod
-    def id() -> Column:
-        return Column(table="posts", name="id")
+    def id() -> m3.Column:
+        return m3.Column(table="posts", name="id")
 
     @staticmethod
-    def user_id() -> Column:
-        return Column(table="posts", name="user_id")
+    def user_id() -> m3.Column:
+        return m3.Column(table="posts", name="user_id")
 
     @staticmethod
-    def title() -> Column:
-        return Column(table="posts", name="title")
+    def title() -> m3.Column:
+        return m3.Column(table="posts", name="title")
 
     def lt_cmp(self, other: "Posts") -> int:
         return 0
 
     def to_display(self) -> str:
         return "Posts"
+
+@dataclass(frozen=True)
+class SchemaMigrations:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="schema_migrations")
+
+    @staticmethod
+    def version() -> m3.Column:
+        return m3.Column(table="schema_migrations", name="version")
+
+    def lt_cmp(self, other: "SchemaMigrations") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "SchemaMigrations"
+
+@dataclass(frozen=True)
+class T:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="t")
+
+    @staticmethod
+    def id() -> m3.Column:
+        return m3.Column(table="t", name="id")
+
+    @staticmethod
+    def x() -> m3.Column:
+        return m3.Column(table="t", name="x")
+
+    @staticmethod
+    def name() -> m3.Column:
+        return m3.Column(table="t", name="name")
+
+    @staticmethod
+    def a() -> m3.Column:
+        return m3.Column(table="t", name="a")
+
+    @staticmethod
+    def b() -> m3.Column:
+        return m3.Column(table="t", name="b")
+
+    def lt_cmp(self, other: "T") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "T"
+
+@dataclass(frozen=True)
+class U:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="u")
+
+    @staticmethod
+    def id() -> m3.Column:
+        return m3.Column(table="u", name="id")
+
+    @staticmethod
+    def b() -> m3.Column:
+        return m3.Column(table="u", name="b")
+
+    def lt_cmp(self, other: "U") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "U"
+
+@dataclass(frozen=True)
+class Users:
+    pass
+
+    @staticmethod
+    def table() -> m3.Table:
+        return m3.Table(name="users")
+
+    @staticmethod
+    def id() -> m3.Column:
+        return m3.Column(table="users", name="id")
+
+    @staticmethod
+    def name() -> m3.Column:
+        return m3.Column(table="users", name="name")
+
+    @staticmethod
+    def active() -> m3.Column:
+        return m3.Column(table="users", name="active")
+
+    @staticmethod
+    def age() -> m3.Column:
+        return m3.Column(table="users", name="age")
+
+    def lt_cmp(self, other: "Users") -> int:
+        return 0
+
+    def to_display(self) -> str:
+        return "Users"
 

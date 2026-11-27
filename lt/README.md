@@ -14,9 +14,21 @@ yang jatuh ke `LIKE`, dan fitur yang tidak punya padanan (`FULL JOIN`,
 `RETURNING`, `ON CONFLICT DO NOTHING`) ditolak dengan `ParseError.Unsupported`
 alih-alih diam-diam berbeda perilaku.
 
-Skema bertipe ada di [`lt/src/schema.lt`](src/schema.lt): `Column` dan `Table`
-plus deklarasi `Users`/`Posts`. Salah nama tabel atau kolom menjadi compile
-error, bukan error SQL saat runtime:
+Skema bertipe **dibangkitkan dari database hasil migrasi**, bukan ditulis
+tangan:
+
+```sh
+bun lt/gen_schema.ts           # tulis lt/src/schema.lt
+bun lt/gen_schema.ts --check   # gagal kalau file yang di-commit basi
+```
+
+`information_schema.columns` adalah sumbernya, karena migration sudah mem-parse
+DDL untuk kita. Tipe Postgres yang belum punya padanan membuat generator
+berhenti, bukan menebak. `Column`/`Table` sendiri ada di
+[`lt/src/schema_base.lt`](src/schema_base.lt) dan tidak ikut digenerate.
+
+Salah nama tabel atau kolom menjadi compile error, bukan error SQL saat
+runtime:
 
 ```lt
 Query.create()
@@ -31,8 +43,8 @@ sebagai jalan keluar dinamis.
 
 Seluruh AST ada di satu modul, [`lt/src/sql.lt`](src/sql.lt), karena `Node`
 dan `Query` saling merujuk (subquery) sedangkan import melingkar dilarang.
-Modul lain: `value.lt` (enum `Value`), `schema.lt` (tipe + skema pilot), dan
-`index.lt` (entry point build).
+Modul lain: `value.lt` (enum `Value`), `schema_base.lt` (tipe `Column`/`Table`),
+`schema.lt` (hasil generate, jangan diedit), dan `index.lt` (entry build).
 
 ## Perintah
 
@@ -72,6 +84,12 @@ Job `unit` dan `integration-db` masih merah di runner publik karena
 `@gntrees/method-chain@0.0.34` tidak bisa diunduh dari registry publik —
 dependensi itu dibutuhkan generator lama, bukan port `.lt`. Selama paket itu
 belum dipublikasikan atau di-vendor, hanya job `lt` yang bermakna di CI publik.
+
+## Skema dan migration
+
+`schema.lt` hanya sebaik migration-nya. Job `database` di CI menjalankan
+migrasi, lalu `bun lt/gen_schema.ts --check`; kalau migration berubah dan
+skema tidak diregenerate, pipeline gagal sebelum test sempat berbohong.
 
 ## Gate
 
