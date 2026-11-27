@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "compiler": "../gntrees-lingua-tungga/target/release/lt",
+  "compiler": "lt",
   "counts": {
     "cases": 37,
     "features": 37
