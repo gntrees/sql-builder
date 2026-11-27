@@ -2,6 +2,7 @@ import Query from "./src/query.lt"
 import Node from "./src/node.lt"
 import Values from "./src/value.lt"
 import ParseError from "./src/query.lt"
+import Assignment from "./src/assignment.lt"
 
 test class QueryTest {
   fn build() -> Query {
@@ -112,6 +113,66 @@ test class QueryTest {
       .set_dialect("postgres")
       .parse() {
       Ok(result) => Expect.equal(result.sql_with_param, `SELECT "id" WHERE "name" = 'o''brien'`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn insert_with_conflict_update() {
+    match Query.create()
+      .insert(Node.table("t"), [Assignment.str("name", "x")])
+      .on_conflict_do_update(Node.col("id"), [Assignment.str("name", "y")])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(
+        result.sql,
+        `INSERT INTO "t" ( "name" ) VALUES ( $1 ) ON CONFLICT ("id") DO UPDATE SET "name" = $2`,
+      )
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn update_and_delete() {
+    match Query.create()
+      .update(Node.table("users"), [Assignment.int("age", 2), Assignment.str("name", "a")])
+      .where([Node.col("id").eq(Node.int(1))])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(result.sql, `UPDATE "users" SET "age" = $1, "name" = $2 WHERE "id" = $3`)
+        Expect.equal(
+          result.sql_with_param,
+          `UPDATE "users" SET "age" = 2, "name" = 'a' WHERE "id" = 1`,
+        )
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn in_list_numbers_parameters() {
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("x").in_list([Node.int(1), Node.int(2), Node.int(3)])])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `SELECT "id" WHERE "x" IN ( $1, $2, $3 )`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn between_and_values() {
+    match Query.create()
+      .values([[Node.int(1), Node.str("a")], [Node.int(2), Node.str("b")]])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `VALUES ( $1, $2 ), ( $3, $4 )`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("x").between(Node.int(1), Node.int(5))])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, `SELECT "id" WHERE "x" BETWEEN $1 AND $2`)
       Err(error) => Expect.equal("no error", "parse failed")
     }
   }

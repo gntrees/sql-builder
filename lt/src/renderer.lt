@@ -60,6 +60,11 @@ pub class Renderer {
       Kind.Lit(value) => Renderer.lit(value, dialect, base, inline)
       Kind.Binary(operator, left, right) =>
         Renderer.binary(operator, left, right, dialect, base, inline)
+      Kind.Between(left, low, high) => Renderer.between(left, low, high, dialect, base, inline)
+      Kind.Like(left, pattern, insensitive) =>
+        Renderer.like(left, pattern, insensitive, dialect, base, inline)
+      Kind.InText(left, text) => Renderer.in_text(left, text, dialect, base, inline)
+      Kind.InList(left, values) => Renderer.in_list(left, values, dialect, base, inline)
       Kind.And(items) => Renderer.chain(items, "AND", dialect, base, inline)
       Kind.Or(items) => Renderer.chain(items, "OR", dialect, base, inline)
       Kind.Not(inner) => {
@@ -97,6 +102,67 @@ pub class Renderer {
       Renderer.placeholder(index, dialect)
     }
     Rendered(text: text, params: [value])
+  }
+
+  static fn between(
+    left: Node,
+    low: Node,
+    high: Node,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let l = Renderer.expr(left, dialect, base, inline)
+    let lo = Renderer.expr(low, dialect, base + l.params.len(), inline)
+    let hi = Renderer.expr(high, dialect, base + l.params.len() + lo.params.len(), inline)
+    Rendered(
+      text: `${l.text} BETWEEN ${lo.text} AND ${hi.text}`,
+      params: l.params.concat(lo.params).concat(hi.params),
+    )
+  }
+
+  static fn like(
+    left: Node,
+    pattern: Node,
+    insensitive: Bool,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let l = Renderer.expr(left, dialect, base, inline)
+    let p = Renderer.expr(pattern, dialect, base + l.params.len(), inline)
+    let operator = if insensitive { "ILIKE" } else { "LIKE" }
+    Rendered(text: `${l.text} ${operator} ${p.text}`, params: l.params.concat(p.params))
+  }
+
+  static fn in_text(
+    left: Node,
+    text: Str,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let l = Renderer.expr(left, dialect, base, inline)
+    let value = Renderer.lit(Value.Str(text), dialect, base + l.params.len(), inline)
+    Rendered(
+      text: `${l.text} IN ( ${value.text} )`,
+      params: l.params.concat(value.params),
+    )
+  }
+
+  static fn in_list(
+    left: Node,
+    values: List<Node>,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let l = Renderer.expr(left, dialect, base, inline)
+    let items = Renderer.list(values, dialect, base + l.params.len(), inline, ", ")
+    Rendered(
+      text: `${l.text} IN ( ${items.text} )`,
+      params: l.params.concat(items.params),
+    )
   }
 
   static fn binary(

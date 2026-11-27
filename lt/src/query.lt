@@ -3,6 +3,7 @@ import Rendered from "./renderer.lt"
 import Dialect from "./renderer.lt"
 import Node from "./node.lt"
 import Value from "./value.lt"
+import Assignment from "./assignment.lt"
 
 /// Satu klausa query, disimpan berurutan supaya `parse()` merender apa adanya.
 pub enum Clause {
@@ -13,6 +14,17 @@ pub enum Clause {
   Limit(Node)
   Offset(Node)
   Raw(Str)
+  Update(Node, List<Assignment>)
+  Insert(Node, List<Assignment>)
+  Delete(Node)
+  Set(List<Assignment>)
+  Values(List<List<Node>>)
+  Returning(List<Node>)
+  GroupBy(List<Node>)
+  Having(List<Node>)
+  Join(Str, Node, List<Node>)
+  OnConflictDoNothing(Node)
+  OnConflictDoUpdate(Node, List<Assignment>)
 }
 
 pub class ParseResult {
@@ -65,6 +77,66 @@ pub class Query {
 
   pub fn raw(self, text: Str) -> Query {
     self.add(Clause.Raw(text))
+  }
+
+  pub fn update(self, table: Node, assignments: List<Assignment>) -> Query {
+    self.add(Clause.Update(table, assignments))
+  }
+
+  pub fn insert(self, table: Node, assignments: List<Assignment>) -> Query {
+    self.add(Clause.Insert(table, assignments))
+  }
+
+  pub fn delete_from(self, table: Node) -> Query {
+    self.add(Clause.Delete(table))
+  }
+
+  pub fn set(self, assignments: List<Assignment>) -> Query {
+    self.add(Clause.Set(assignments))
+  }
+
+  pub fn values(self, rows: List<List<Node>>) -> Query {
+    self.add(Clause.Values(rows))
+  }
+
+  pub fn returning(self, columns: List<Node>) -> Query {
+    self.add(Clause.Returning(columns))
+  }
+
+  pub fn group_by(self, columns: List<Node>) -> Query {
+    self.add(Clause.GroupBy(columns))
+  }
+
+  pub fn having(self, conditions: List<Node>) -> Query {
+    self.add(Clause.Having(conditions))
+  }
+
+  pub fn join(self, table: Node, on: List<Node>) -> Query {
+    self.add(Clause.Join("JOIN", table, on))
+  }
+
+  pub fn left_join(self, table: Node, on: List<Node>) -> Query {
+    self.add(Clause.Join("LEFT JOIN", table, on))
+  }
+
+  pub fn right_join(self, table: Node, on: List<Node>) -> Query {
+    self.add(Clause.Join("RIGHT JOIN", table, on))
+  }
+
+  pub fn inner_join(self, table: Node, on: List<Node>) -> Query {
+    self.add(Clause.Join("INNER JOIN", table, on))
+  }
+
+  pub fn cross_join(self, table: Node, on: List<Node>) -> Query {
+    self.add(Clause.Join("CROSS JOIN", table, on))
+  }
+
+  pub fn on_conflict_do_nothing(self, target: Node) -> Query {
+    self.add(Clause.OnConflictDoNothing(target))
+  }
+
+  pub fn on_conflict_do_update(self, target: Node, assignments: List<Assignment>) -> Query {
+    self.add(Clause.OnConflictDoUpdate(target, assignments))
   }
 
   /// Dialek diperiksa di sini, bukan di setiap emitter, supaya perilakunya
@@ -134,6 +206,149 @@ pub class Query {
       Clause.Limit(count) => Query.keyword("LIMIT", Renderer.expr(count, dialect, base, inline))
       Clause.Offset(count) => Query.keyword("OFFSET", Renderer.expr(count, dialect, base, inline))
       Clause.Raw(text) => Rendered(text: text, params: [])
+      Clause.Update(table, assignments) => Query.keyword(
+        "UPDATE",
+        Query.then(
+          Renderer.expr(table, dialect, base, inline),
+          Query.keyword("SET", Query.assignments(assignments, dialect, base, inline)),
+        ),
+      )
+      Clause.Insert(table, assignments) => Query.insert_clause(
+        table,
+        assignments,
+        dialect,
+        base,
+        inline,
+      )
+      Clause.Delete(table) => Query.keyword(
+        "DELETE FROM",
+        Renderer.expr(table, dialect, base, inline),
+      )
+      Clause.Set(assignments) => Query.keyword(
+        "SET",
+        Query.assignments(assignments, dialect, base, inline),
+      )
+      Clause.Values(rows) => Query.keyword(
+        "VALUES",
+        Query.rows(rows, dialect, base, inline),
+      )
+      Clause.Returning(columns) => Query.keyword(
+        "RETURNING",
+        Renderer.list(columns, dialect, base, inline, ", "),
+      )
+      Clause.GroupBy(columns) => Query.keyword(
+        "GROUP BY",
+        Renderer.list(columns, dialect, base, inline, ", "),
+      )
+      Clause.Having(conditions) => Query.keyword(
+        "HAVING",
+        Renderer.list(conditions, dialect, base, inline, " AND "),
+      )
+      Clause.Join(keyword, table, on) => Query.keyword(
+        keyword,
+        Query.then(
+          Renderer.expr(table, dialect, base, inline),
+          Query.keyword("ON", Renderer.list(on, dialect, base, inline, " AND ")),
+        ),
+      )
+      Clause.OnConflictDoNothing(target) => Query.keyword(
+        "ON CONFLICT",
+        Query.then(
+          Query.parenthesised_ident(target, dialect),
+          Rendered(text: "DO NOTHING", params: []),
+        ),
+      )
+      Clause.OnConflictDoUpdate(target, assignments) => Query.keyword(
+        "ON CONFLICT",
+        Query.then(
+          Query.parenthesised_ident(target, dialect),
+          Query.keyword(
+            "DO UPDATE SET",
+            Query.assignments(assignments, dialect, base, inline),
+          ),
+        ),
+      )
+    }
+  }
+
+  /// Menggabungkan dua fragmen dengan satu spasi, membawa parameter.
+  static fn then(left: Rendered, right: Rendered) -> Rendered {
+    Rendered(
+      text: `${left.text} ${right.text}`,
+      params: left.params.concat(right.params),
+    )
+  }
+
+  static fn assignments(
+    items: List<Assignment>,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let mut text = ""
+    let mut params: List<Value> = []
+    for item in items {
+      let column = Renderer.ident(item.column, dialect)
+      let value = Renderer.expr(item.value, dialect, base + params.len(), inline)
+      if text == "" {
+        text = `${column} = ${value.text}`
+      } else {
+        text = `${text}, ${column} = ${value.text}`
+      }
+      params = params.concat(value.params)
+    }
+    Rendered(text: text, params: params)
+  }
+
+  static fn insert_clause(
+    table: Node,
+    items: List<Assignment>,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let mut columns: List<Str> = []
+    let mut values: List<Str> = []
+    let mut params: List<Value> = []
+    for item in items {
+      columns = columns.push(Renderer.ident(item.column, dialect))
+      let value = Renderer.expr(item.value, dialect, base + params.len(), inline)
+      values = values.push(value.text)
+      params = params.concat(value.params)
+    }
+    let table_text = Renderer.expr(table, dialect, base, inline)
+    Rendered(
+      text: `INSERT INTO ${table_text.text} ( ${columns.join(", ")} ) VALUES ( ${values.join(", ")} )`,
+      params: params,
+    )
+  }
+
+  static fn rows(
+    rows: List<List<Node>>,
+    dialect: Dialect,
+    base: Int,
+    inline: Bool,
+  ) -> Rendered {
+    let mut text = ""
+    let mut params: List<Value> = []
+    for row in rows {
+      let items = Renderer.list(row, dialect, base + params.len(), inline, ", ")
+      if text == "" {
+        text = `( ${items.text} )`
+      } else {
+        text = `${text}, ( ${items.text} )`
+      }
+      params = params.concat(items.params)
+    }
+    Rendered(text: text, params: params)
+  }
+
+  static fn parenthesised_ident(node: Node, dialect: Dialect) -> Rendered {
+    match node.kind {
+      Kind.Column(name) => Rendered(text: `(${Renderer.ident(name, dialect)})`, params: [])
+      Kind.Table(name) => Rendered(text: `(${Renderer.ident(name, dialect)})`, params: [])
+      Kind.Raw(text) => Rendered(text: `(${text})`, params: [])
+      _ => Renderer.expr(node, dialect, 0, false)
     }
   }
 

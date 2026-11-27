@@ -26,32 +26,48 @@ func KindBinary(_0 string, _1 Node, _2 Node) lt.Variant {
 	return lt.Variant{Tag: "Binary", Order: 4, Values: []any{_0, _1, _2}, Display: KindDisplay}
 }
 
+func KindBetween(_0 Node, _1 Node, _2 Node) lt.Variant {
+	return lt.Variant{Tag: "Between", Order: 5, Values: []any{_0, _1, _2}, Display: KindDisplay}
+}
+
+func KindLike(_0 Node, _1 Node, _2 bool) lt.Variant {
+	return lt.Variant{Tag: "Like", Order: 6, Values: []any{_0, _1, _2}, Display: KindDisplay}
+}
+
+func KindInText(_0 Node, _1 string) lt.Variant {
+	return lt.Variant{Tag: "InText", Order: 7, Values: []any{_0, _1}, Display: KindDisplay}
+}
+
+func KindInList(_0 Node, _1 lt.List[Node]) lt.Variant {
+	return lt.Variant{Tag: "InList", Order: 8, Values: []any{_0, _1}, Display: KindDisplay}
+}
+
 func KindAnd(_0 lt.List[Node]) lt.Variant {
-	return lt.Variant{Tag: "And", Order: 5, Values: []any{_0}, Display: KindDisplay}
+	return lt.Variant{Tag: "And", Order: 9, Values: []any{_0}, Display: KindDisplay}
 }
 
 func KindOr(_0 lt.List[Node]) lt.Variant {
-	return lt.Variant{Tag: "Or", Order: 6, Values: []any{_0}, Display: KindDisplay}
+	return lt.Variant{Tag: "Or", Order: 10, Values: []any{_0}, Display: KindDisplay}
 }
 
 func KindNot(_0 Node) lt.Variant {
-	return lt.Variant{Tag: "Not", Order: 7, Values: []any{_0}, Display: KindDisplay}
+	return lt.Variant{Tag: "Not", Order: 11, Values: []any{_0}, Display: KindDisplay}
 }
 
 func KindIsNull(_0 Node) lt.Variant {
-	return lt.Variant{Tag: "IsNull", Order: 8, Values: []any{_0}, Display: KindDisplay}
+	return lt.Variant{Tag: "IsNull", Order: 12, Values: []any{_0}, Display: KindDisplay}
 }
 
 func KindIsNotNull(_0 Node) lt.Variant {
-	return lt.Variant{Tag: "IsNotNull", Order: 9, Values: []any{_0}, Display: KindDisplay}
+	return lt.Variant{Tag: "IsNotNull", Order: 13, Values: []any{_0}, Display: KindDisplay}
 }
 
 func KindAlias(_0 Node, _1 string) lt.Variant {
-	return lt.Variant{Tag: "Alias", Order: 10, Values: []any{_0, _1}, Display: KindDisplay}
+	return lt.Variant{Tag: "Alias", Order: 14, Values: []any{_0, _1}, Display: KindDisplay}
 }
 
 func KindOrder(_0 Node, _1 bool) lt.Variant {
-	return lt.Variant{Tag: "Order", Order: 11, Values: []any{_0, _1}, Display: KindDisplay}
+	return lt.Variant{Tag: "Order", Order: 15, Values: []any{_0, _1}, Display: KindDisplay}
 }
 
 func KindDisplay(value lt.Variant) string {
@@ -66,6 +82,14 @@ func KindDisplay(value lt.Variant) string {
 		return "Kind.Lit(" + lt.Disp(value.Values[0]) + ")"
 	case "Binary":
 		return "Kind.Binary(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ", " + lt.Disp(value.Values[2]) + ")"
+	case "Between":
+		return "Kind.Between(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ", " + lt.Disp(value.Values[2]) + ")"
+	case "Like":
+		return "Kind.Like(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ", " + lt.Disp(value.Values[2]) + ")"
+	case "InText":
+		return "Kind.InText(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ")"
+	case "InList":
+		return "Kind.InList(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ")"
 	case "And":
 		return "Kind.And(" + lt.Disp(value.Values[0]) + ")"
 	case "Or":
@@ -172,6 +196,26 @@ func (self Node) Lt(other Node) Node {
 
 func (self Node) Lte(other Node) Node {
 	return NewNode(KindBinary("<=", self, other))
+}
+
+func (self Node) Between(low Node, high Node) Node {
+	return NewNode(KindBetween(self, low, high))
+}
+
+func (self Node) Like(pattern Node) Node {
+	return NewNode(KindLike(self, pattern, false))
+}
+
+func (self Node) Ilike(pattern Node) Node {
+	return NewNode(KindLike(self, pattern, true))
+}
+
+func (self Node) InText(text string) Node {
+	return NewNode(KindInText(self, text))
+}
+
+func (self Node) InList(values lt.List[Node]) Node {
+	return NewNode(KindInList(self, values))
 }
 
 func (self Node) IsNull() Node {

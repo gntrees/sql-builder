@@ -11,6 +11,7 @@ import {
 import { LList } from "../generated/lt-sql-builder/typescript/_lingua_rt";
 import { Query } from "../generated/lt-sql-builder/typescript/src/query";
 import { Node } from "../generated/lt-sql-builder/typescript/src/node";
+import { Assignment } from "../generated/lt-sql-builder/typescript/src/assignment";
 import { type Value } from "../generated/lt-sql-builder/typescript/src/value";
 
 const list = <T,>(items: T[]): LList<T> => new LList<T>(items);
@@ -206,6 +207,205 @@ describe("legacy parity (postgres)", () => {
                 .where(list([Node.col("a").eq(Node.int(1n)).and(list([Node.col("b").eq(Node.str("x"))]))]))
                 .limit(Node.int(5n))
                 .offset(Node.int(10n))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+});
+
+describe("legacy parity (postgres, DML and clauses)", () => {
+    diff("update with column values", () => {
+        const c = legacy();
+        return [
+            c.update(c.table("users"), { name: "ana", age: 2 }).setDialect("postgres").parse(),
+            Query.create()
+                .update(
+                    Node.table("users"),
+                    list([Assignment.str("name", "ana"), Assignment.int("age", 2n)]),
+                )
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("insert with returning", () => {
+        const c = legacy();
+        return [
+            c
+                .insert(c.table("users"), { name: "ana" })
+                .returning(c.col("id"))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .insert(Node.table("users"), list([Assignment.str("name", "ana")]))
+                .returning(list([Node.col("id")]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("delete with where", () => {
+        const c = legacy();
+        return [
+            c.delete(c.table("users")).where(c.col("id").eq(1)).setDialect("postgres").parse(),
+            Query.create()
+                .deleteFrom(Node.table("users"))
+                .where(list([Node.col("id").eq(Node.int(1n))]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("update with where", () => {
+        const c = legacy();
+        return [
+            c
+                .update(c.table("users"), { name: "a" })
+                .where(c.col("id").eq(1))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .update(Node.table("users"), list([Assignment.str("name", "a")]))
+                .where(list([Node.col("id").eq(Node.int(1n))]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("group by and having", () => {
+        const c = legacy();
+        return [
+            c
+                .select([c.col("dept"), c.col("n")])
+                .from(c.table("t"))
+                .groupBy(c.col("dept"))
+                .having(c.col("n").gt(1))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("dept"), Node.col("n")]))
+                .fromTable(Node.table("t"))
+                .groupBy(list([Node.col("dept")]))
+                .having(list([Node.col("n").gt(Node.int(1n))]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("left join", () => {
+        const c = legacy();
+        return [
+            c
+                .select(c.col("u.id"))
+                .from(c.table("users"))
+                .leftJoin(c.table("posts"), c.col("posts.user_id").eq(c.col("u.id")))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("u.id")]))
+                .fromTable(Node.table("users"))
+                .leftJoin(
+                    Node.table("posts"),
+                    list([Node.col("posts.user_id").eq(Node.col("u.id"))]),
+                )
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("in with text", () => {
+        const c = legacy();
+        return [
+            c.select(c.col("id")).where(c.col("x").in("1,2,3")).setDialect("postgres").parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .where(list([Node.col("x").inText("1,2,3")]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("between with columns", () => {
+        const c = legacy();
+        return [
+            c
+                .select(c.col("id"))
+                .where(c.col("x").between(c.col("lo"), c.col("hi")))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .where(list([Node.col("x").between(Node.col("lo"), Node.col("hi"))]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("like and ilike", () => {
+        const c = legacy();
+        return [
+            c
+                .select(c.col("id"))
+                .where(c.and([c.col("a").like("x%"), c.col("b").ilike("y%")]))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .where(
+                    list([
+                        Node.col("a")
+                            .like(Node.str("x%"))
+                            .and(list([Node.col("b").ilike(Node.str("y%"))])),
+                    ]),
+                )
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("values rows", () => {
+        const c = legacy();
+        return [
+            c.values([["a", "b"], ["c", "d"]]).setDialect("postgres").parse(),
+            Query.create()
+                .values(
+                    list([
+                        list([Node.str("a"), Node.str("b")]),
+                        list([Node.str("c"), Node.str("d")]),
+                    ]),
+                )
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("on conflict do nothing", () => {
+        const c = legacy();
+        return [
+            c
+                .insert(c.table("t"), { name: "x" })
+                .onConflictDoNothing(c.col("id"))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .insert(Node.table("t"), list([Assignment.str("name", "x")]))
+                .onConflictDoNothing(Node.col("id"))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("on conflict do update", () => {
+        const c = legacy();
+        return [
+            c
+                .insert(c.table("t"), { name: "x" })
+                .onConflictDoUpdate(c.col("id"), { name: "y" })
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .insert(Node.table("t"), list([Assignment.str("name", "x")]))
+                .onConflictDoUpdate(Node.col("id"), list([Assignment.str("name", "y")]))
                 .setDialect("postgres")
                 .parse(),
         ];

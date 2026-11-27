@@ -7,6 +7,10 @@ pub enum Kind {
   Raw(Str)
   Lit(Value)
   Binary(Str, Node, Node)
+  Between(Node, Node, Node)
+  Like(Node, Node, Bool)
+  InText(Node, Str)
+  InList(Node, List<Node>)
   And(List<Node>)
   Or(List<Node>)
   Not(Node)
@@ -102,6 +106,29 @@ pub class Node {
 
   pub fn lte(self, other: Node) -> Node {
     Node(kind: Kind.Binary("<=", self, other))
+  }
+
+  /// Rentang inklusif: `BETWEEN $1 AND $2`.
+  pub fn between(self, low: Node, high: Node) -> Node {
+    Node(kind: Kind.Between(self, low, high))
+  }
+
+  pub fn like(self, pattern: Node) -> Node {
+    Node(kind: Kind.Like(self, pattern, false))
+  }
+
+  pub fn ilike(self, pattern: Node) -> Node {
+    Node(kind: Kind.Like(self, pattern, true))
+  }
+
+  /// Kompatibel dengan `in("1,2,3")` lama: teksnya menjadi satu parameter.
+  pub fn in_text(self, text: Str) -> Node {
+    Node(kind: Kind.InText(self, text))
+  }
+
+  /// `IN` dengan daftar nilai bertipe: `IN ( $1, $2 )`.
+  pub fn in_list(self, values: List<Node>) -> Node {
+    Node(kind: Kind.InList(self, values))
   }
 
   pub fn is_null(self) -> Node {

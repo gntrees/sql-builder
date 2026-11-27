@@ -2,7 +2,8 @@
 package renderer
 
 import (
-	m2 "linguatungga/gen/node"
+	m3 "linguatungga/gen/node"
+	m1 "linguatungga/gen/value"
 	lt "linguatungga/lt"
 )
 
@@ -123,7 +124,7 @@ func RendererPlaceholder(index int64, dialect lt.Variant) string {
 	}
 }
 
-func RendererExpr(node m2.Node, dialect lt.Variant, base int64, inline bool) Rendered {
+func RendererExpr(node m3.Node, dialect lt.Variant, base int64, inline bool) Rendered {
 	__match4 := node.Kind
 	switch __match4.Tag {
 	case "Column":
@@ -140,34 +141,52 @@ func RendererExpr(node m2.Node, dialect lt.Variant, base int64, inline bool) Ren
 		return RendererLit(value, dialect, base, inline)
 	case "Binary":
 		operator := __match4.Values[0].(string)
-		left := __match4.Values[1].(m2.Node)
-		right := __match4.Values[2].(m2.Node)
+		left := __match4.Values[1].(m3.Node)
+		right := __match4.Values[2].(m3.Node)
 		return RendererBinary(operator, left, right, dialect, base, inline)
+	case "Between":
+		left := __match4.Values[0].(m3.Node)
+		low := __match4.Values[1].(m3.Node)
+		high := __match4.Values[2].(m3.Node)
+		return RendererBetween(left, low, high, dialect, base, inline)
+	case "Like":
+		left := __match4.Values[0].(m3.Node)
+		pattern := __match4.Values[1].(m3.Node)
+		insensitive := __match4.Values[2].(bool)
+		return RendererLike(left, pattern, insensitive, dialect, base, inline)
+	case "InText":
+		left := __match4.Values[0].(m3.Node)
+		text := __match4.Values[1].(string)
+		return RendererInText(left, text, dialect, base, inline)
+	case "InList":
+		left := __match4.Values[0].(m3.Node)
+		values := __match4.Values[1].(lt.List[m3.Node])
+		return RendererInList(left, values, dialect, base, inline)
 	case "And":
-		items := __match4.Values[0].(lt.List[m2.Node])
+		items := __match4.Values[0].(lt.List[m3.Node])
 		return RendererChain(items, "AND", dialect, base, inline)
 	case "Or":
-		items := __match4.Values[0].(lt.List[m2.Node])
+		items := __match4.Values[0].(lt.List[m3.Node])
 		return RendererChain(items, "OR", dialect, base, inline)
 	case "Not":
-		inner := __match4.Values[0].(m2.Node)
+		inner := __match4.Values[0].(m3.Node)
 		rendered := RendererExpr(inner, dialect, base, inline)
 		return NewRendered("NOT ( "+lt.Disp(rendered.Text)+" )", rendered.Params)
 	case "IsNull":
-		inner := __match4.Values[0].(m2.Node)
+		inner := __match4.Values[0].(m3.Node)
 		rendered := RendererExpr(inner, dialect, base, inline)
 		return NewRendered(""+lt.Disp(rendered.Text)+" IS NULL", rendered.Params)
 	case "IsNotNull":
-		inner := __match4.Values[0].(m2.Node)
+		inner := __match4.Values[0].(m3.Node)
 		rendered := RendererExpr(inner, dialect, base, inline)
 		return NewRendered(""+lt.Disp(rendered.Text)+" IS NOT NULL", rendered.Params)
 	case "Alias":
-		inner := __match4.Values[0].(m2.Node)
+		inner := __match4.Values[0].(m3.Node)
 		name := __match4.Values[1].(string)
 		rendered := RendererExpr(inner, dialect, base, inline)
 		return NewRendered(""+lt.Disp(rendered.Text)+" AS "+lt.Disp(RendererIdent(name, dialect)), rendered.Params)
 	case "Order":
-		inner := __match4.Values[0].(m2.Node)
+		inner := __match4.Values[0].(m3.Node)
 		descending := __match4.Values[1].(bool)
 		rendered := RendererExpr(inner, dialect, base, inline)
 		var __if5 string
@@ -195,18 +214,50 @@ func RendererLit(value lt.Variant, dialect lt.Variant, base int64, inline bool) 
 	return NewRendered(text, lt.NewList([]lt.Variant{value}))
 }
 
-func RendererBinary(operator string, left m2.Node, right m2.Node, dialect lt.Variant, base int64, inline bool) Rendered {
+func RendererBetween(left m3.Node, low m3.Node, high m3.Node, dialect lt.Variant, base int64, inline bool) Rendered {
+	l := RendererExpr(left, dialect, base, inline)
+	lo := RendererExpr(low, dialect, (base + l.Params.Len()), inline)
+	hi := RendererExpr(high, dialect, ((base + l.Params.Len()) + lo.Params.Len()), inline)
+	return NewRendered(""+lt.Disp(l.Text)+" BETWEEN "+lt.Disp(lo.Text)+" AND "+lt.Disp(hi.Text), l.Params.Concat(lo.Params).Concat(hi.Params))
+}
+
+func RendererLike(left m3.Node, pattern m3.Node, insensitive bool, dialect lt.Variant, base int64, inline bool) Rendered {
+	l := RendererExpr(left, dialect, base, inline)
+	p := RendererExpr(pattern, dialect, (base + l.Params.Len()), inline)
+	var __if7 string
+	if insensitive {
+		__if7 = "ILIKE"
+	} else {
+		__if7 = "LIKE"
+	}
+	operator := __if7
+	return NewRendered(""+lt.Disp(l.Text)+" "+lt.Disp(operator)+" "+lt.Disp(p.Text), l.Params.Concat(p.Params))
+}
+
+func RendererInText(left m3.Node, text string, dialect lt.Variant, base int64, inline bool) Rendered {
+	l := RendererExpr(left, dialect, base, inline)
+	value := RendererLit(m1.ValueStr(text), dialect, (base + l.Params.Len()), inline)
+	return NewRendered(""+lt.Disp(l.Text)+" IN ( "+lt.Disp(value.Text)+" )", l.Params.Concat(value.Params))
+}
+
+func RendererInList(left m3.Node, values lt.List[m3.Node], dialect lt.Variant, base int64, inline bool) Rendered {
+	l := RendererExpr(left, dialect, base, inline)
+	items := RendererList(values, dialect, (base + l.Params.Len()), inline, ", ")
+	return NewRendered(""+lt.Disp(l.Text)+" IN ( "+lt.Disp(items.Text)+" )", l.Params.Concat(items.Params))
+}
+
+func RendererBinary(operator string, left m3.Node, right m3.Node, dialect lt.Variant, base int64, inline bool) Rendered {
 	l := RendererExpr(left, dialect, base, inline)
 	r := RendererExpr(right, dialect, (base + l.Params.Len()), inline)
 	return NewRendered(""+lt.Disp(l.Text)+" "+lt.Disp(operator)+" "+lt.Disp(r.Text), l.Params.Concat(r.Params))
 }
 
-func RendererChain(items lt.List[m2.Node], operator string, dialect lt.Variant, base int64, inline bool) Rendered {
+func RendererChain(items lt.List[m3.Node], operator string, dialect lt.Variant, base int64, inline bool) Rendered {
 	rendered := RendererList(items, dialect, base, inline, " "+lt.Disp(operator)+" ")
 	return NewRendered("( "+lt.Disp(rendered.Text)+" )", rendered.Params)
 }
 
-func RendererList(items lt.List[m2.Node], dialect lt.Variant, base int64, inline bool, separator string) Rendered {
+func RendererList(items lt.List[m3.Node], dialect lt.Variant, base int64, inline bool, separator string) Rendered {
 	text := ""
 	params := lt.NewList([]lt.Variant{})
 	for _, item := range items.Items {

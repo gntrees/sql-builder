@@ -4,7 +4,7 @@ from __future__ import annotations
 import lt_runtime as _lt
 from dataclasses import dataclass
 import gen.value as m1
-import gen.node as m2
+import gen.node as m3
 from typing import Any
 
 @dataclass(frozen=True)
@@ -99,7 +99,7 @@ class Renderer:
             raise AssertionError("unreachable")
 
     @staticmethod
-    def expr(node: m2.Node, dialect: Dialect, base: int, inline: bool) -> Rendered:
+    def expr(node: m3.Node, dialect: Dialect, base: int, inline: bool) -> Rendered:
         __match4 = node.kind
         if __match4.tag == "Column":
             name: str = __match4.values[0]
@@ -115,34 +115,52 @@ class Renderer:
             return Renderer.lit(value, dialect, base, inline)
         elif __match4.tag == "Binary":
             operator: str = __match4.values[0]
-            left: m2.Node = __match4.values[1]
-            right: m2.Node = __match4.values[2]
+            left: m3.Node = __match4.values[1]
+            right: m3.Node = __match4.values[2]
             return Renderer.binary(operator, left, right, dialect, base, inline)
+        elif __match4.tag == "Between":
+            left_2: m3.Node = __match4.values[0]
+            low: m3.Node = __match4.values[1]
+            high: m3.Node = __match4.values[2]
+            return Renderer.between(left_2, low, high, dialect, base, inline)
+        elif __match4.tag == "Like":
+            left_3: m3.Node = __match4.values[0]
+            pattern: m3.Node = __match4.values[1]
+            insensitive: bool = __match4.values[2]
+            return Renderer.like(left_3, pattern, insensitive, dialect, base, inline)
+        elif __match4.tag == "InText":
+            left_4: m3.Node = __match4.values[0]
+            text_2: str = __match4.values[1]
+            return Renderer.in_text(left_4, text_2, dialect, base, inline)
+        elif __match4.tag == "InList":
+            left_5: m3.Node = __match4.values[0]
+            values: _lt.LList[m3.Node] = __match4.values[1]
+            return Renderer.in_list(left_5, values, dialect, base, inline)
         elif __match4.tag == "And":
-            items: _lt.LList[m2.Node] = __match4.values[0]
+            items: _lt.LList[m3.Node] = __match4.values[0]
             return Renderer.chain(items, "AND", dialect, base, inline)
         elif __match4.tag == "Or":
-            items_2: _lt.LList[m2.Node] = __match4.values[0]
+            items_2: _lt.LList[m3.Node] = __match4.values[0]
             return Renderer.chain(items_2, "OR", dialect, base, inline)
         elif __match4.tag == "Not":
-            inner: m2.Node = __match4.values[0]
+            inner: m3.Node = __match4.values[0]
             rendered: Rendered = Renderer.expr(inner, dialect, base, inline)
             return Rendered(text="NOT ( " + _lt.disp(rendered.text) + " )", params=rendered.params)
         elif __match4.tag == "IsNull":
-            inner_2: m2.Node = __match4.values[0]
+            inner_2: m3.Node = __match4.values[0]
             rendered_2: Rendered = Renderer.expr(inner_2, dialect, base, inline)
             return Rendered(text="" + _lt.disp(rendered_2.text) + " IS NULL", params=rendered_2.params)
         elif __match4.tag == "IsNotNull":
-            inner_3: m2.Node = __match4.values[0]
+            inner_3: m3.Node = __match4.values[0]
             rendered_3: Rendered = Renderer.expr(inner_3, dialect, base, inline)
             return Rendered(text="" + _lt.disp(rendered_3.text) + " IS NOT NULL", params=rendered_3.params)
         elif __match4.tag == "Alias":
-            inner_4: m2.Node = __match4.values[0]
+            inner_4: m3.Node = __match4.values[0]
             name_3: str = __match4.values[1]
             rendered_4: Rendered = Renderer.expr(inner_4, dialect, base, inline)
             return Rendered(text="" + _lt.disp(rendered_4.text) + " AS " + _lt.disp(Renderer.ident(name_3, dialect)), params=rendered_4.params)
         elif __match4.tag == "Order":
-            inner_5: m2.Node = __match4.values[0]
+            inner_5: m3.Node = __match4.values[0]
             descending: bool = __match4.values[1]
             rendered_5: Rendered = Renderer.expr(inner_5, dialect, base, inline)
             __if5: str
@@ -167,18 +185,49 @@ class Renderer:
         return Rendered(text=text, params=_lt.LList((value,)))
 
     @staticmethod
-    def binary(operator: str, left: m2.Node, right: m2.Node, dialect: Dialect, base: int, inline: bool) -> Rendered:
+    def between(left: m3.Node, low: m3.Node, high: m3.Node, dialect: Dialect, base: int, inline: bool) -> Rendered:
+        l: Rendered = Renderer.expr(left, dialect, base, inline)
+        lo: Rendered = Renderer.expr(low, dialect, _lt.iadd(base, l.params.len()), inline)
+        hi: Rendered = Renderer.expr(high, dialect, _lt.iadd(_lt.iadd(base, l.params.len()), lo.params.len()), inline)
+        return Rendered(text="" + _lt.disp(l.text) + " BETWEEN " + _lt.disp(lo.text) + " AND " + _lt.disp(hi.text), params=l.params.concat(lo.params).concat(hi.params))
+
+    @staticmethod
+    def like(left: m3.Node, pattern: m3.Node, insensitive: bool, dialect: Dialect, base: int, inline: bool) -> Rendered:
+        l: Rendered = Renderer.expr(left, dialect, base, inline)
+        p: Rendered = Renderer.expr(pattern, dialect, _lt.iadd(base, l.params.len()), inline)
+        __if7: str
+        if insensitive:
+            __if7 = "ILIKE"
+        else:
+            __if7 = "LIKE"
+        operator: str = __if7
+        return Rendered(text="" + _lt.disp(l.text) + " " + _lt.disp(operator) + " " + _lt.disp(p.text), params=l.params.concat(p.params))
+
+    @staticmethod
+    def in_text(left: m3.Node, text: str, dialect: Dialect, base: int, inline: bool) -> Rendered:
+        l: Rendered = Renderer.expr(left, dialect, base, inline)
+        value: Rendered = Renderer.lit(m1.value_str(text), dialect, _lt.iadd(base, l.params.len()), inline)
+        return Rendered(text="" + _lt.disp(l.text) + " IN ( " + _lt.disp(value.text) + " )", params=l.params.concat(value.params))
+
+    @staticmethod
+    def in_list(left: m3.Node, values: _lt.LList[m3.Node], dialect: Dialect, base: int, inline: bool) -> Rendered:
+        l: Rendered = Renderer.expr(left, dialect, base, inline)
+        items: Rendered = Renderer.list(values, dialect, _lt.iadd(base, l.params.len()), inline, ", ")
+        return Rendered(text="" + _lt.disp(l.text) + " IN ( " + _lt.disp(items.text) + " )", params=l.params.concat(items.params))
+
+    @staticmethod
+    def binary(operator: str, left: m3.Node, right: m3.Node, dialect: Dialect, base: int, inline: bool) -> Rendered:
         l: Rendered = Renderer.expr(left, dialect, base, inline)
         r: Rendered = Renderer.expr(right, dialect, _lt.iadd(base, l.params.len()), inline)
         return Rendered(text="" + _lt.disp(l.text) + " " + _lt.disp(operator) + " " + _lt.disp(r.text), params=l.params.concat(r.params))
 
     @staticmethod
-    def chain(items: _lt.LList[m2.Node], operator: str, dialect: Dialect, base: int, inline: bool) -> Rendered:
+    def chain(items: _lt.LList[m3.Node], operator: str, dialect: Dialect, base: int, inline: bool) -> Rendered:
         rendered: Rendered = Renderer.list(items, dialect, base, inline, " " + _lt.disp(operator) + " ")
         return Rendered(text="( " + _lt.disp(rendered.text) + " )", params=rendered.params)
 
     @staticmethod
-    def list(items: _lt.LList[m2.Node], dialect: Dialect, base: int, inline: bool, separator: str) -> Rendered:
+    def list(items: _lt.LList[m3.Node], dialect: Dialect, base: int, inline: bool, separator: str) -> Rendered:
         text: str = ""
         params: _lt.LList[m1.Value] = _lt.LList(())
         for item in items.items:

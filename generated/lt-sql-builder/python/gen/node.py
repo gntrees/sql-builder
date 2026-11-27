@@ -31,26 +31,38 @@ def kind_lit(_0: m1.Value) -> Kind:
 def kind_binary(_0: str, _1: Node, _2: Node) -> Kind:
     return Kind("Binary", (_0, _1, _2,), 4)
 
+def kind_between(_0: Node, _1: Node, _2: Node) -> Kind:
+    return Kind("Between", (_0, _1, _2,), 5)
+
+def kind_like(_0: Node, _1: Node, _2: bool) -> Kind:
+    return Kind("Like", (_0, _1, _2,), 6)
+
+def kind_in_text(_0: Node, _1: str) -> Kind:
+    return Kind("InText", (_0, _1,), 7)
+
+def kind_in_list(_0: Node, _1: _lt.LList[Node]) -> Kind:
+    return Kind("InList", (_0, _1,), 8)
+
 def kind_and(_0: _lt.LList[Node]) -> Kind:
-    return Kind("And", (_0,), 5)
+    return Kind("And", (_0,), 9)
 
 def kind_or(_0: _lt.LList[Node]) -> Kind:
-    return Kind("Or", (_0,), 6)
+    return Kind("Or", (_0,), 10)
 
 def kind_not(_0: Node) -> Kind:
-    return Kind("Not", (_0,), 7)
+    return Kind("Not", (_0,), 11)
 
 def kind_is_null(_0: Node) -> Kind:
-    return Kind("IsNull", (_0,), 8)
+    return Kind("IsNull", (_0,), 12)
 
 def kind_is_not_null(_0: Node) -> Kind:
-    return Kind("IsNotNull", (_0,), 9)
+    return Kind("IsNotNull", (_0,), 13)
 
 def kind_alias(_0: Node, _1: str) -> Kind:
-    return Kind("Alias", (_0, _1,), 10)
+    return Kind("Alias", (_0, _1,), 14)
 
 def kind_order(_0: Node, _1: bool) -> Kind:
-    return Kind("Order", (_0, _1,), 11)
+    return Kind("Order", (_0, _1,), 15)
 
 def _kind_display(value: Kind) -> str:
     if value.tag == "Column":
@@ -63,6 +75,14 @@ def _kind_display(value: Kind) -> str:
         return "Kind.Lit(" + _lt.disp(value.values[0]) + ")"
     if value.tag == "Binary":
         return "Kind.Binary(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ", " + _lt.disp(value.values[2]) + ")"
+    if value.tag == "Between":
+        return "Kind.Between(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ", " + _lt.disp(value.values[2]) + ")"
+    if value.tag == "Like":
+        return "Kind.Like(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ", " + _lt.disp(value.values[2]) + ")"
+    if value.tag == "InText":
+        return "Kind.InText(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ")"
+    if value.tag == "InList":
+        return "Kind.InList(" + _lt.disp(value.values[0]) + ", " + _lt.disp(value.values[1]) + ")"
     if value.tag == "And":
         return "Kind.And(" + _lt.disp(value.values[0]) + ")"
     if value.tag == "Or":
@@ -154,6 +174,21 @@ class Node:
 
     def lte(self, other: Node) -> Node:
         return Node(kind=kind_binary("<=", self, other))
+
+    def between(self, low: Node, high: Node) -> Node:
+        return Node(kind=kind_between(self, low, high))
+
+    def like(self, pattern: Node) -> Node:
+        return Node(kind=kind_like(self, pattern, False))
+
+    def ilike(self, pattern: Node) -> Node:
+        return Node(kind=kind_like(self, pattern, True))
+
+    def in_text(self, text: builtins.str) -> Node:
+        return Node(kind=kind_in_text(self, text))
+
+    def in_list(self, values: _lt.LList[Node]) -> Node:
+        return Node(kind=kind_in_list(self, values))
 
     def is_null(self) -> Node:
         return Node(kind=kind_is_null(self))

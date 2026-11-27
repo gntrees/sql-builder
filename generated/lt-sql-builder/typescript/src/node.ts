@@ -8,6 +8,10 @@ export type Kind =
   | { readonly tag: "Raw"; readonly values: readonly [string]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "Lit"; readonly values: readonly [m1.Value]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "Binary"; readonly values: readonly [string, Node, Node]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
+  | { readonly tag: "Between"; readonly values: readonly [Node, Node, Node]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
+  | { readonly tag: "Like"; readonly values: readonly [Node, Node, boolean]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
+  | { readonly tag: "InText"; readonly values: readonly [Node, string]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
+  | { readonly tag: "InList"; readonly values: readonly [Node, lt.LList<Node>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "And"; readonly values: readonly [lt.LList<Node>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "Or"; readonly values: readonly [lt.LList<Node>]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "Not"; readonly values: readonly [Node]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
@@ -31,26 +35,38 @@ export function Kind_Lit(_0: m1.Value): Kind {
 export function Kind_Binary(_0: string, _1: Node, _2: Node): Kind {
   return { tag: "Binary", values: [_0, _1, _2], __lt_order: 4, __lt_display: Kind_display };
 }
+export function Kind_Between(_0: Node, _1: Node, _2: Node): Kind {
+  return { tag: "Between", values: [_0, _1, _2], __lt_order: 5, __lt_display: Kind_display };
+}
+export function Kind_Like(_0: Node, _1: Node, _2: boolean): Kind {
+  return { tag: "Like", values: [_0, _1, _2], __lt_order: 6, __lt_display: Kind_display };
+}
+export function Kind_InText(_0: Node, _1: string): Kind {
+  return { tag: "InText", values: [_0, _1], __lt_order: 7, __lt_display: Kind_display };
+}
+export function Kind_InList(_0: Node, _1: lt.LList<Node>): Kind {
+  return { tag: "InList", values: [_0, _1], __lt_order: 8, __lt_display: Kind_display };
+}
 export function Kind_And(_0: lt.LList<Node>): Kind {
-  return { tag: "And", values: [_0], __lt_order: 5, __lt_display: Kind_display };
+  return { tag: "And", values: [_0], __lt_order: 9, __lt_display: Kind_display };
 }
 export function Kind_Or(_0: lt.LList<Node>): Kind {
-  return { tag: "Or", values: [_0], __lt_order: 6, __lt_display: Kind_display };
+  return { tag: "Or", values: [_0], __lt_order: 10, __lt_display: Kind_display };
 }
 export function Kind_Not(_0: Node): Kind {
-  return { tag: "Not", values: [_0], __lt_order: 7, __lt_display: Kind_display };
+  return { tag: "Not", values: [_0], __lt_order: 11, __lt_display: Kind_display };
 }
 export function Kind_IsNull(_0: Node): Kind {
-  return { tag: "IsNull", values: [_0], __lt_order: 8, __lt_display: Kind_display };
+  return { tag: "IsNull", values: [_0], __lt_order: 12, __lt_display: Kind_display };
 }
 export function Kind_IsNotNull(_0: Node): Kind {
-  return { tag: "IsNotNull", values: [_0], __lt_order: 9, __lt_display: Kind_display };
+  return { tag: "IsNotNull", values: [_0], __lt_order: 13, __lt_display: Kind_display };
 }
 export function Kind_Alias(_0: Node, _1: string): Kind {
-  return { tag: "Alias", values: [_0, _1], __lt_order: 10, __lt_display: Kind_display };
+  return { tag: "Alias", values: [_0, _1], __lt_order: 14, __lt_display: Kind_display };
 }
 export function Kind_Order(_0: Node, _1: boolean): Kind {
-  return { tag: "Order", values: [_0, _1], __lt_order: 11, __lt_display: Kind_display };
+  return { tag: "Order", values: [_0, _1], __lt_order: 15, __lt_display: Kind_display };
 }
 export function Kind_display(value: Kind): string {
   switch (value.tag) {
@@ -68,6 +84,18 @@ export function Kind_display(value: Kind): string {
     }
     case "Binary": {
       return `Kind.Binary(${lt.disp(value.values[0])}, ${lt.disp(value.values[1])}, ${lt.disp(value.values[2])})`;
+    }
+    case "Between": {
+      return `Kind.Between(${lt.disp(value.values[0])}, ${lt.disp(value.values[1])}, ${lt.disp(value.values[2])})`;
+    }
+    case "Like": {
+      return `Kind.Like(${lt.disp(value.values[0])}, ${lt.disp(value.values[1])}, ${lt.disp(value.values[2])})`;
+    }
+    case "InText": {
+      return `Kind.InText(${lt.disp(value.values[0])}, ${lt.disp(value.values[1])})`;
+    }
+    case "InList": {
+      return `Kind.InList(${lt.disp(value.values[0])}, ${lt.disp(value.values[1])})`;
     }
     case "And": {
       return `Kind.And(${lt.disp(value.values[0])})`;
@@ -184,6 +212,26 @@ export class Node {
 
   lte(other: Node): Node {
     return new Node({ kind: Kind_Binary("<=", this, other) });
+  }
+
+  between(low: Node, high: Node): Node {
+    return new Node({ kind: Kind_Between(this, low, high) });
+  }
+
+  like(pattern: Node): Node {
+    return new Node({ kind: Kind_Like(this, pattern, false) });
+  }
+
+  ilike(pattern: Node): Node {
+    return new Node({ kind: Kind_Like(this, pattern, true) });
+  }
+
+  inText(text: string): Node {
+    return new Node({ kind: Kind_InText(this, text) });
+  }
+
+  inList(values: lt.LList<Node>): Node {
+    return new Node({ kind: Kind_InList(this, values) });
   }
 
   isNull(): Node {

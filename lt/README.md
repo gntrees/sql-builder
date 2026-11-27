@@ -3,9 +3,10 @@
 Eksperimen: mengganti generator 15-bahasa dengan sumber tunggal `.lt` untuk
 tiga target yang benar-benar dipakai — TypeScript, Python, Go.
 
-Status: **slice 1**. Yang sudah ada: pemodelan nilai, AST bertipe, renderer
-Postgres + MySQL, dan query builder untuk `select`/`from`/`where`/`order by`/
-`limit`/`offset`/`raw`.
+Status: **slice 2**. Yang sudah ada: pemodelan nilai, AST bertipe, renderer
+Postgres + MySQL, query (`select`/`from`/`where`/`order by`/`limit`/`offset`/
+`raw`/`group by`/`having`/`join`), dan DML (`insert`/`update`/`delete`/`set`/
+`values`/`returning`/`on conflict`).
 
 ## Perintah
 
@@ -42,7 +43,8 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 - `mypy --strict` bersih pada paket Python,
 - `go vet` bersih, `gofmt -l` kosong, `go test` hijau pada paket Go,
 - setiap kasus di `tests/lt-differential.test.ts` menghasilkan `sql`, `param`,
-  dan `sqlWithParam` yang identik dengan implementasi legacy,
+  dan `sqlWithParam` yang identik dengan implementasi legacy (21 kasus: query,
+  join, agregasi, DML, dan `on conflict`),
 - `./lt/check.sh` lulus (tidak ada drift antara `.lt` dan output yang di-commit).
 
 ## Perbedaan yang disengaja dari API lama
@@ -56,6 +58,7 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 | `parse()` gagal | melempar exception | `Result<ParseResult, ParseError>` | LT tidak punya exception |
 | `sqlWithParam` untuk Float bulat | `1` | `1.0` | `Display` Float di LT membedakan `1` dan `1.0`; hanya memengaruhi string pratinjau |
 | Dua `where(...)` berturut-turut | `WHERE a WHERE b` | digabung dengan `AND` | perilaku lama adalah bug |
+| `IN` dengan daftar nilai | hanya teks (`in("1,2,3")`) atau subquery | `in_text(...)` dan `in_list([...])` | daftar bertipe tidak bisa diungkapkan map/array dinamis lama |
 
 ## Temuan yang sudah diperbaiki di compiler
 

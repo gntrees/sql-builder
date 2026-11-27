@@ -2,37 +2,82 @@
 package query
 
 import (
-	m2 "linguatungga/gen/node"
-	m3 "linguatungga/gen/renderer"
+	m2 "linguatungga/gen/assignment"
+	m3 "linguatungga/gen/node"
+	m4 "linguatungga/gen/renderer"
 	lt "linguatungga/lt"
 )
 
-func ClauseSelect(_0 lt.List[m2.Node]) lt.Variant {
+func ClauseSelect(_0 lt.List[m3.Node]) lt.Variant {
 	return lt.Variant{Tag: "Select", Order: 0, Values: []any{_0}, Display: ClauseDisplay}
 }
 
-func ClauseFrom(_0 m2.Node) lt.Variant {
+func ClauseFrom(_0 m3.Node) lt.Variant {
 	return lt.Variant{Tag: "From", Order: 1, Values: []any{_0}, Display: ClauseDisplay}
 }
 
-func ClauseWhere(_0 lt.List[m2.Node]) lt.Variant {
+func ClauseWhere(_0 lt.List[m3.Node]) lt.Variant {
 	return lt.Variant{Tag: "Where", Order: 2, Values: []any{_0}, Display: ClauseDisplay}
 }
 
-func ClauseOrderBy(_0 lt.List[m2.Node]) lt.Variant {
+func ClauseOrderBy(_0 lt.List[m3.Node]) lt.Variant {
 	return lt.Variant{Tag: "OrderBy", Order: 3, Values: []any{_0}, Display: ClauseDisplay}
 }
 
-func ClauseLimit(_0 m2.Node) lt.Variant {
+func ClauseLimit(_0 m3.Node) lt.Variant {
 	return lt.Variant{Tag: "Limit", Order: 4, Values: []any{_0}, Display: ClauseDisplay}
 }
 
-func ClauseOffset(_0 m2.Node) lt.Variant {
+func ClauseOffset(_0 m3.Node) lt.Variant {
 	return lt.Variant{Tag: "Offset", Order: 5, Values: []any{_0}, Display: ClauseDisplay}
 }
 
 func ClauseRaw(_0 string) lt.Variant {
 	return lt.Variant{Tag: "Raw", Order: 6, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseUpdate(_0 m3.Node, _1 lt.List[m2.Assignment]) lt.Variant {
+	return lt.Variant{Tag: "Update", Order: 7, Values: []any{_0, _1}, Display: ClauseDisplay}
+}
+
+func ClauseInsert(_0 m3.Node, _1 lt.List[m2.Assignment]) lt.Variant {
+	return lt.Variant{Tag: "Insert", Order: 8, Values: []any{_0, _1}, Display: ClauseDisplay}
+}
+
+func ClauseDelete(_0 m3.Node) lt.Variant {
+	return lt.Variant{Tag: "Delete", Order: 9, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseSet(_0 lt.List[m2.Assignment]) lt.Variant {
+	return lt.Variant{Tag: "Set", Order: 10, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseValues(_0 lt.List[lt.List[m3.Node]]) lt.Variant {
+	return lt.Variant{Tag: "Values", Order: 11, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseReturning(_0 lt.List[m3.Node]) lt.Variant {
+	return lt.Variant{Tag: "Returning", Order: 12, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseGroupBy(_0 lt.List[m3.Node]) lt.Variant {
+	return lt.Variant{Tag: "GroupBy", Order: 13, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseHaving(_0 lt.List[m3.Node]) lt.Variant {
+	return lt.Variant{Tag: "Having", Order: 14, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseJoin(_0 string, _1 m3.Node, _2 lt.List[m3.Node]) lt.Variant {
+	return lt.Variant{Tag: "Join", Order: 15, Values: []any{_0, _1, _2}, Display: ClauseDisplay}
+}
+
+func ClauseOnConflictDoNothing(_0 m3.Node) lt.Variant {
+	return lt.Variant{Tag: "OnConflictDoNothing", Order: 16, Values: []any{_0}, Display: ClauseDisplay}
+}
+
+func ClauseOnConflictDoUpdate(_0 m3.Node, _1 lt.List[m2.Assignment]) lt.Variant {
+	return lt.Variant{Tag: "OnConflictDoUpdate", Order: 17, Values: []any{_0, _1}, Display: ClauseDisplay}
 }
 
 func ClauseDisplay(value lt.Variant) string {
@@ -51,6 +96,28 @@ func ClauseDisplay(value lt.Variant) string {
 		return "Clause.Offset(" + lt.Disp(value.Values[0]) + ")"
 	case "Raw":
 		return "Clause.Raw(" + lt.Disp(value.Values[0]) + ")"
+	case "Update":
+		return "Clause.Update(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ")"
+	case "Insert":
+		return "Clause.Insert(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ")"
+	case "Delete":
+		return "Clause.Delete(" + lt.Disp(value.Values[0]) + ")"
+	case "Set":
+		return "Clause.Set(" + lt.Disp(value.Values[0]) + ")"
+	case "Values":
+		return "Clause.Values(" + lt.Disp(value.Values[0]) + ")"
+	case "Returning":
+		return "Clause.Returning(" + lt.Disp(value.Values[0]) + ")"
+	case "GroupBy":
+		return "Clause.GroupBy(" + lt.Disp(value.Values[0]) + ")"
+	case "Having":
+		return "Clause.Having(" + lt.Disp(value.Values[0]) + ")"
+	case "Join":
+		return "Clause.Join(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ", " + lt.Disp(value.Values[2]) + ")"
+	case "OnConflictDoNothing":
+		return "Clause.OnConflictDoNothing(" + lt.Disp(value.Values[0]) + ")"
+	case "OnConflictDoUpdate":
+		return "Clause.OnConflictDoUpdate(" + lt.Disp(value.Values[0]) + ", " + lt.Disp(value.Values[1]) + ")"
 	}
 	panic("unreachable")
 }
@@ -140,32 +207,92 @@ func (self Query) SetDialect(db string) Query {
 	return NewQuery(self.Clauses, lt.Some(db))
 }
 
-func (self Query) Select(columns lt.List[m2.Node]) Query {
+func (self Query) Select(columns lt.List[m3.Node]) Query {
 	return self.Add(ClauseSelect(columns))
 }
 
-func (self Query) FromTable(table m2.Node) Query {
+func (self Query) FromTable(table m3.Node) Query {
 	return self.Add(ClauseFrom(table))
 }
 
-func (self Query) Where(conditions lt.List[m2.Node]) Query {
+func (self Query) Where(conditions lt.List[m3.Node]) Query {
 	return self.Add(ClauseWhere(conditions))
 }
 
-func (self Query) OrderBy(columns lt.List[m2.Node]) Query {
+func (self Query) OrderBy(columns lt.List[m3.Node]) Query {
 	return self.Add(ClauseOrderBy(columns))
 }
 
-func (self Query) Limit(count m2.Node) Query {
+func (self Query) Limit(count m3.Node) Query {
 	return self.Add(ClauseLimit(count))
 }
 
-func (self Query) Offset(count m2.Node) Query {
+func (self Query) Offset(count m3.Node) Query {
 	return self.Add(ClauseOffset(count))
 }
 
 func (self Query) Raw(text string) Query {
 	return self.Add(ClauseRaw(text))
+}
+
+func (self Query) Update(table m3.Node, assignments lt.List[m2.Assignment]) Query {
+	return self.Add(ClauseUpdate(table, assignments))
+}
+
+func (self Query) Insert(table m3.Node, assignments lt.List[m2.Assignment]) Query {
+	return self.Add(ClauseInsert(table, assignments))
+}
+
+func (self Query) DeleteFrom(table m3.Node) Query {
+	return self.Add(ClauseDelete(table))
+}
+
+func (self Query) Set(assignments lt.List[m2.Assignment]) Query {
+	return self.Add(ClauseSet(assignments))
+}
+
+func (self Query) Values(rows lt.List[lt.List[m3.Node]]) Query {
+	return self.Add(ClauseValues(rows))
+}
+
+func (self Query) Returning(columns lt.List[m3.Node]) Query {
+	return self.Add(ClauseReturning(columns))
+}
+
+func (self Query) GroupBy(columns lt.List[m3.Node]) Query {
+	return self.Add(ClauseGroupBy(columns))
+}
+
+func (self Query) Having(conditions lt.List[m3.Node]) Query {
+	return self.Add(ClauseHaving(conditions))
+}
+
+func (self Query) Join(table m3.Node, on lt.List[m3.Node]) Query {
+	return self.Add(ClauseJoin("JOIN", table, on))
+}
+
+func (self Query) LeftJoin(table m3.Node, on lt.List[m3.Node]) Query {
+	return self.Add(ClauseJoin("LEFT JOIN", table, on))
+}
+
+func (self Query) RightJoin(table m3.Node, on lt.List[m3.Node]) Query {
+	return self.Add(ClauseJoin("RIGHT JOIN", table, on))
+}
+
+func (self Query) InnerJoin(table m3.Node, on lt.List[m3.Node]) Query {
+	return self.Add(ClauseJoin("INNER JOIN", table, on))
+}
+
+func (self Query) CrossJoin(table m3.Node, on lt.List[m3.Node]) Query {
+	return self.Add(ClauseJoin("CROSS JOIN", table, on))
+}
+
+func (self Query) OnConflictDoNothing(target m3.Node) Query {
+	return self.Add(ClauseOnConflictDoNothing(target))
+}
+
+func (self Query) OnConflictDoUpdate(target m3.Node, assignments lt.List[m2.Assignment]) Query {
+	return self.Add(ClauseOnConflictDoUpdate(target, assignments))
 }
 
 func (self Query) Parse() lt.Variant {
@@ -176,9 +303,9 @@ func (self Query) Parse() lt.Variant {
 	case "some":
 		name := __match1.Values[0].(string)
 		if lt.Eq(name, "postgres") {
-			return QueryFinish(self.Clauses, m3.DialectPostgres)
+			return QueryFinish(self.Clauses, m4.DialectPostgres)
 		} else if lt.Eq(name, "mysql") {
-			return QueryFinish(self.Clauses, m3.DialectMySql)
+			return QueryFinish(self.Clauses, m4.DialectMySql)
 		} else {
 			return lt.Err(ParseErrorUnsupportedDialect(name))
 		}
@@ -200,7 +327,7 @@ func QueryFinish(clauses lt.List[lt.Variant], dialect lt.Variant) lt.Variant {
 	return lt.Ok(NewParseResult(plain.Text, plain.Params, inlined.Text))
 }
 
-func QueryRender(clauses lt.List[lt.Variant], dialect lt.Variant, inline bool) m3.Rendered {
+func QueryRender(clauses lt.List[lt.Variant], dialect lt.Variant, inline bool) m4.Rendered {
 	text := ""
 	params := lt.NewList([]lt.Variant{})
 	for _, clause := range clauses.Items {
@@ -212,40 +339,144 @@ func QueryRender(clauses lt.List[lt.Variant], dialect lt.Variant, inline bool) m
 		}
 		params = params.Concat(piece.Params)
 	}
-	return m3.NewRendered(text, params)
+	return m4.NewRendered(text, params)
 }
 
-func QueryClause(clause lt.Variant, dialect lt.Variant, base int64, inline bool) m3.Rendered {
+func QueryClause(clause lt.Variant, dialect lt.Variant, base int64, inline bool) m4.Rendered {
 	__match2 := clause
 	switch __match2.Tag {
 	case "Select":
-		columns := __match2.Values[0].(lt.List[m2.Node])
-		return QueryKeyword("SELECT", m3.RendererList(columns, dialect, base, inline, ", "))
+		columns := __match2.Values[0].(lt.List[m3.Node])
+		return QueryKeyword("SELECT", m4.RendererList(columns, dialect, base, inline, ", "))
 	case "From":
-		table := __match2.Values[0].(m2.Node)
-		return QueryKeyword("FROM", m3.RendererExpr(table, dialect, base, inline))
+		table := __match2.Values[0].(m3.Node)
+		return QueryKeyword("FROM", m4.RendererExpr(table, dialect, base, inline))
 	case "Where":
-		conditions := __match2.Values[0].(lt.List[m2.Node])
-		return QueryKeyword("WHERE", m3.RendererList(conditions, dialect, base, inline, " AND "))
+		conditions := __match2.Values[0].(lt.List[m3.Node])
+		return QueryKeyword("WHERE", m4.RendererList(conditions, dialect, base, inline, " AND "))
 	case "OrderBy":
-		columns := __match2.Values[0].(lt.List[m2.Node])
-		return QueryKeyword("ORDER BY", m3.RendererList(columns, dialect, base, inline, ", "))
+		columns := __match2.Values[0].(lt.List[m3.Node])
+		return QueryKeyword("ORDER BY", m4.RendererList(columns, dialect, base, inline, ", "))
 	case "Limit":
-		count := __match2.Values[0].(m2.Node)
-		return QueryKeyword("LIMIT", m3.RendererExpr(count, dialect, base, inline))
+		count := __match2.Values[0].(m3.Node)
+		return QueryKeyword("LIMIT", m4.RendererExpr(count, dialect, base, inline))
 	case "Offset":
-		count := __match2.Values[0].(m2.Node)
-		return QueryKeyword("OFFSET", m3.RendererExpr(count, dialect, base, inline))
+		count := __match2.Values[0].(m3.Node)
+		return QueryKeyword("OFFSET", m4.RendererExpr(count, dialect, base, inline))
 	case "Raw":
 		text := __match2.Values[0].(string)
-		return m3.NewRendered(text, lt.NewList([]lt.Variant{}))
+		return m4.NewRendered(text, lt.NewList([]lt.Variant{}))
+	case "Update":
+		table := __match2.Values[0].(m3.Node)
+		assignments := __match2.Values[1].(lt.List[m2.Assignment])
+		return QueryKeyword("UPDATE", QueryThen(m4.RendererExpr(table, dialect, base, inline), QueryKeyword("SET", QueryAssignments(assignments, dialect, base, inline))))
+	case "Insert":
+		table := __match2.Values[0].(m3.Node)
+		assignments := __match2.Values[1].(lt.List[m2.Assignment])
+		return QueryInsertClause(table, assignments, dialect, base, inline)
+	case "Delete":
+		table := __match2.Values[0].(m3.Node)
+		return QueryKeyword("DELETE FROM", m4.RendererExpr(table, dialect, base, inline))
+	case "Set":
+		assignments := __match2.Values[0].(lt.List[m2.Assignment])
+		return QueryKeyword("SET", QueryAssignments(assignments, dialect, base, inline))
+	case "Values":
+		rows := __match2.Values[0].(lt.List[lt.List[m3.Node]])
+		return QueryKeyword("VALUES", QueryRows(rows, dialect, base, inline))
+	case "Returning":
+		columns := __match2.Values[0].(lt.List[m3.Node])
+		return QueryKeyword("RETURNING", m4.RendererList(columns, dialect, base, inline, ", "))
+	case "GroupBy":
+		columns := __match2.Values[0].(lt.List[m3.Node])
+		return QueryKeyword("GROUP BY", m4.RendererList(columns, dialect, base, inline, ", "))
+	case "Having":
+		conditions := __match2.Values[0].(lt.List[m3.Node])
+		return QueryKeyword("HAVING", m4.RendererList(conditions, dialect, base, inline, " AND "))
+	case "Join":
+		keyword := __match2.Values[0].(string)
+		table := __match2.Values[1].(m3.Node)
+		on := __match2.Values[2].(lt.List[m3.Node])
+		return QueryKeyword(keyword, QueryThen(m4.RendererExpr(table, dialect, base, inline), QueryKeyword("ON", m4.RendererList(on, dialect, base, inline, " AND "))))
+	case "OnConflictDoNothing":
+		target := __match2.Values[0].(m3.Node)
+		return QueryKeyword("ON CONFLICT", QueryThen(QueryParenthesisedIdent(target, dialect), m4.NewRendered("DO NOTHING", lt.NewList([]lt.Variant{}))))
+	case "OnConflictDoUpdate":
+		target := __match2.Values[0].(m3.Node)
+		assignments := __match2.Values[1].(lt.List[m2.Assignment])
+		return QueryKeyword("ON CONFLICT", QueryThen(QueryParenthesisedIdent(target, dialect), QueryKeyword("DO UPDATE SET", QueryAssignments(assignments, dialect, base, inline))))
 	default:
 		panic("unreachable")
 	}
 }
 
-func QueryKeyword(word string, rendered m3.Rendered) m3.Rendered {
-	return m3.NewRendered(""+lt.Disp(word)+" "+lt.Disp(rendered.Text), rendered.Params)
+func QueryThen(left m4.Rendered, right m4.Rendered) m4.Rendered {
+	return m4.NewRendered(""+lt.Disp(left.Text)+" "+lt.Disp(right.Text), left.Params.Concat(right.Params))
+}
+
+func QueryAssignments(items lt.List[m2.Assignment], dialect lt.Variant, base int64, inline bool) m4.Rendered {
+	text := ""
+	params := lt.NewList([]lt.Variant{})
+	for _, item := range items.Items {
+		column := m4.RendererIdent(item.Column, dialect)
+		value := m4.RendererExpr(item.Value, dialect, (base + params.Len()), inline)
+		if lt.Eq(text, "") {
+			text = "" + lt.Disp(column) + " = " + lt.Disp(value.Text)
+		} else {
+			text = "" + lt.Disp(text) + ", " + lt.Disp(column) + " = " + lt.Disp(value.Text)
+		}
+		params = params.Concat(value.Params)
+	}
+	return m4.NewRendered(text, params)
+}
+
+func QueryInsertClause(table m3.Node, items lt.List[m2.Assignment], dialect lt.Variant, base int64, inline bool) m4.Rendered {
+	columns := lt.NewList([]string{})
+	values := lt.NewList([]string{})
+	params := lt.NewList([]lt.Variant{})
+	for _, item := range items.Items {
+		columns = columns.Push(m4.RendererIdent(item.Column, dialect))
+		value := m4.RendererExpr(item.Value, dialect, (base + params.Len()), inline)
+		values = values.Push(value.Text)
+		params = params.Concat(value.Params)
+	}
+	tableText := m4.RendererExpr(table, dialect, base, inline)
+	return m4.NewRendered("INSERT INTO "+lt.Disp(tableText.Text)+" ( "+lt.Disp(lt.JoinList(columns, ", "))+" ) VALUES ( "+lt.Disp(lt.JoinList(values, ", "))+" )", params)
+}
+
+func QueryRows(rows lt.List[lt.List[m3.Node]], dialect lt.Variant, base int64, inline bool) m4.Rendered {
+	text := ""
+	params := lt.NewList([]lt.Variant{})
+	for _, row := range rows.Items {
+		items := m4.RendererList(row, dialect, (base + params.Len()), inline, ", ")
+		if lt.Eq(text, "") {
+			text = "( " + lt.Disp(items.Text) + " )"
+		} else {
+			text = "" + lt.Disp(text) + ", ( " + lt.Disp(items.Text) + " )"
+		}
+		params = params.Concat(items.Params)
+	}
+	return m4.NewRendered(text, params)
+}
+
+func QueryParenthesisedIdent(node m3.Node, dialect lt.Variant) m4.Rendered {
+	__match3 := node.Kind
+	switch __match3.Tag {
+	case "Column":
+		name := __match3.Values[0].(string)
+		return m4.NewRendered("("+lt.Disp(m4.RendererIdent(name, dialect))+")", lt.NewList([]lt.Variant{}))
+	case "Table":
+		name := __match3.Values[0].(string)
+		return m4.NewRendered("("+lt.Disp(m4.RendererIdent(name, dialect))+")", lt.NewList([]lt.Variant{}))
+	case "Raw":
+		text := __match3.Values[0].(string)
+		return m4.NewRendered("("+lt.Disp(text)+")", lt.NewList([]lt.Variant{}))
+	default:
+		return m4.RendererExpr(node, dialect, int64(0), false)
+	}
+}
+
+func QueryKeyword(word string, rendered m4.Rendered) m4.Rendered {
+	return m4.NewRendered(""+lt.Disp(word)+" "+lt.Disp(rendered.Text), rendered.Params)
 }
 
 func (self Query) LtEq(other any) bool {

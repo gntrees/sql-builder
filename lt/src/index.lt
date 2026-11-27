@@ -2,6 +2,7 @@
 // paket ikut ter-emit. Tidak ada re-export di Lingua Tungga; pemakai host
 // meng-import file modul secara langsung.
 import Value from "./value.lt"
+import Assignment from "./assignment.lt"
 import Values from "./value.lt"
 import Node from "./node.lt"
 import Kind from "./node.lt"
