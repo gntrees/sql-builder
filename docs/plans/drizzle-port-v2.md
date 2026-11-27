@@ -423,7 +423,7 @@ Urutan commit: `lt-drizzle-v2: Mx - <ringkasan>`.
 | H6 | **Overloading receiver tidak diterima** (beda dengan spec v2) | satu package tidak bisa memuat `where` untuk Select/Update/Delete | pecah package builder | dikunci (F5) |
 | H7 | Nama unik case-insensitive | `Table` vs `table()`, `Column` vs `column()` | konstruktor diberi nama lain (`plain`, dst.) | dikunci (F6) |
 | H8 | Package wajib kurung kurawal | contoh spec usang | ikuti grammar | dikunci (F2) |
-| H9 | Emitter Go/Py untuk struct/fungsi/enum baru | risiko terbesar di M6 | smoke tiap milestone | **terbuka** |
+| H9 | Emitter Go/Py untuk struct/fungsi/enum baru | risiko terbesar di M6 | smoke tiap milestone | **terverifikasi**: `mypy --strict`, `go vet`, `gofmt -l`, `go test`, `pytest`, `vitest` hijau |
 | H11 | `lt test` menolak entry yang mengimpor file di luar direktori entry | test package tidak bisa ditaruh di `tests/` terpisah | test package diletakkan di `src/sql_test.lt` | dikunci (diverifikasi M6) |
 | H10 | Varian enum bernama builtin Python (`Int`, `Str`, `Bool`, `List`, `Map`) membayangi builtin di output Python dan ditolak `mypy --strict` | `Value.Str` tidak bisa dipakai | varian dinamai `Integer/Text/Boolean/Array/Record` | dikunci (diverifikasi M0) |
 
@@ -474,7 +474,8 @@ Catatan M6:
 - `tsc --noEmit` dan `mypy --strict` bersih; `lt test` (4 test) dijalankan di target TS.
 - Roundtrip Postgres + MySQL hijau lewat `verify-db.sh`.
 - `v1-vs-v2.test.ts` dijalankan sekali: 3 kasus (raw, parameter, select lengkap) identik.
-- Gerbang Go belum dijalankan lokal (toolchain tidak ada); CI `drizzle-v2.yml` menjalankannya.
+- Gerbang Go dijalankan lokal dengan Go 1.27.4: `go vet`, `gofmt -l` kosong, `go test` hijau.
+- `lt test` dijalankan di tiga target: vitest (TS), pytest (Py), `go test` (Go) — 4 test lulus di masing-masing.
 - Emitter v2 di-emit sebagai **fungsi bebas** (`sqlToQuery(d, q)`); receiver sugar hanya
   tersedia di sumber `.lt`.
 

@@ -23,7 +23,7 @@ echo "== python =="
 if [ ! -x .lt/venv/bin/python ]; then
   python3 -m venv .lt/venv
 fi
-.lt/venv/bin/pip -q install mypy
+.lt/venv/bin/pip -q install mypy pytest
 .lt/venv/bin/python -m mypy --strict "$out/python"
 
 echo "== go =="
@@ -54,6 +54,13 @@ rm -rf .lt/test-v2
   npm install --no-audit --no-fund --silent >/dev/null
   npm test >/dev/null
 )
+(
+  cd .lt/test-v2/py
+  "$root/.lt/venv/bin/python" -m pytest -q >/dev/null
+)
+if command -v go >/dev/null 2>&1; then
+  ( cd .lt/test-v2/go && go test ./... >/dev/null )
+fi
 
 echo "== differential (drizzle vs .lt v2) =="
 bun test lt-drizzle-v2/parity/differential.test.ts
