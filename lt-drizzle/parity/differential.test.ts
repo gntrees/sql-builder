@@ -4,7 +4,7 @@
 // reference), never from a hand-written string. A fixture is green only when
 // the .lt implementation produces byte-identical `sql` and `params`.
 import { describe, expect, test } from "bun:test";
-import { and, asc, between, count, desc, eq, gt, ilike, inArray, isNotNull, isNull, like, ne, not, notBetween, notIlike, notInArray, notLike, or, sql, sum } from "drizzle-orm";
+import { and, asc, between, count, desc, eq, exists, gt, ilike, inArray, isNotNull, isNull, like, ne, not, notBetween, notIlike, notInArray, notLike, or, sql, sum } from "drizzle-orm";
 import { MySqlDialect } from "drizzle-orm/mysql-core";
 import { alias, integer, pgSchema, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { PgDatabase } from "drizzle-orm/pg-core";
@@ -406,5 +406,202 @@ describe("select", () => {
     "distinct",
     fromDrizzle(db.selectDistinct({ id: users.id }).from(users).toSQL()),
     q().select(list([t.field("id")])).withDistinct(),
+  );
+});
+
+describe("joins, subqueries, ctes, and set operations", () => {
+  const users = pgTable("users", { id: serial("id"), name: text("name") });
+  const posts = pgTable("posts", {
+    id: serial("id"),
+    userId: integer("user_id"),
+    title: text("title"),
+  });
+  const tu = Table.plain("users", list([Column.serial("id"), Column.text("name")]));
+  const tp = Table.plain(
+    "posts",
+    list([Column.serial("id"), Column.integer("user_id"), Column.text("title")]),
+  );
+  const db = new PgDatabase(new PgDialect(), {});
+  const q = () => Select.create().setDialect(Dialect.postgres());
+  const build = (builder: Select): Outcome => {
+    const result = builder.build();
+    if (result.tag === "err") {
+      throw new Error(`build failed: ${result.values[0]?.tag}`);
+    }
+    return fromLt(result.values[0]);
+  };
+  const check = (name: string, expected: Outcome, builder: Select) => {
+    diff(name, expected, build(builder));
+  };
+
+  const on = () => tu.col("id").eq(tp.col("user_id"));
+
+  check(
+    "left join",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .leftJoin(posts, eq(users.id, posts.userId))
+        .toSQL(),
+    ),
+    q().fromTable(tu).select(list([tu.col("id")])).leftJoin(tp, on()),
+  );
+
+  check(
+    "inner join",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .innerJoin(posts, eq(users.id, posts.userId))
+        .toSQL(),
+    ),
+    q().fromTable(tu).select(list([tu.col("id")])).innerJoin(tp, on()),
+  );
+
+  check(
+    "right join",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .rightJoin(posts, eq(users.id, posts.userId))
+        .toSQL(),
+    ),
+    q().fromTable(tu).select(list([tu.col("id")])).rightJoin(tp, on()),
+  );
+
+  check(
+    "full join",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .fullJoin(posts, eq(users.id, posts.userId))
+        .toSQL(),
+    ),
+    q().fromTable(tu).select(list([tu.col("id")])).fullJoin(tp, on()),
+  );
+
+  check(
+    "join with order and limit",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .leftJoin(posts, eq(users.id, posts.userId))
+        .orderBy(asc(users.id))
+        .limit(1)
+        .toSQL(),
+    ),
+    q()
+      .fromTable(tu)
+      .select(list([tu.col("id")]))
+      .leftJoin(tp, on())
+      .orderBy(list([tu.col("id").asc()]))
+      .limit(1n),
+  );
+
+  const inner = () => q().fromTable(tu).select(list([tu.field("id"), tu.field("name")]));
+  const subquery = db.select({ id: users.id, name: users.name }).from(users).as("s");
+
+  check(
+    "subquery in from",
+    fromDrizzle(db.select({ id: subquery.id }).from(subquery).toSQL()),
+    q().fromSubquery(inner(), "s").select(list([Sql.identifier("id")])),
+  );
+
+  check(
+    "exists subquery",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(
+          exists(
+            db
+              .select({ id: posts.id })
+              .from(posts)
+              .where(eq(posts.userId, users.id)),
+          ),
+        )
+        .toSQL(),
+    ),
+    q()
+      .fromTable(tu)
+      .select(list([tu.field("id")]))
+      .where(
+        Select.exists(
+          q()
+            .fromTable(tp)
+            .select(list([tp.field("id")]))
+            .where(tp.col("user_id").eq(tu.col("id"))),
+        ),
+      ),
+  );
+
+  check(
+    "in subquery",
+    fromDrizzle(
+      db
+        .select({ id: users.id })
+        .from(users)
+        .where(inArray(users.id, db.select({ userId: posts.userId }).from(posts)))
+        .toSQL(),
+    ),
+    q()
+      .fromTable(tu)
+      .select(list([tu.field("id")]))
+      .where(
+        Select.inSubquery(
+          tu.col("id"),
+          q().fromTable(tp).select(list([tp.field("user_id")])),
+        ),
+      ),
+  );
+
+  const cteQuery = () =>
+    q()
+      .fromTable(tu)
+      .select(list([tu.field("id")]))
+      .where(tu.col("name").eq(Sql.str("a")));
+  const cte = db.$with("active").as(
+    db.select({ id: users.id }).from(users).where(eq(users.name, "a")),
+  );
+
+  check(
+    "cte",
+    fromDrizzle(db.with(cte).select({ id: cte.id }).from(cte).toSQL()),
+    q()
+      .withCte("active", cteQuery())
+      .fromTable(Table.plain("active", list([Column.integer("id")])))
+      .select(list([Sql.identifier("id")])),
+  );
+
+  const other = () => q().fromTable(tp).select(list([tp.field("id")]));
+
+  check(
+    "union",
+    fromDrizzle(db.select({ id: users.id }).from(users).union(db.select({ id: posts.id }).from(posts)).toSQL()),
+    q().fromTable(tu).select(list([tu.field("id")])).union(other()),
+  );
+
+  check(
+    "union all",
+    fromDrizzle(db.select({ id: users.id }).from(users).unionAll(db.select({ id: posts.id }).from(posts)).toSQL()),
+    q().fromTable(tu).select(list([tu.field("id")])).unionAll(other()),
+  );
+
+  check(
+    "intersect",
+    fromDrizzle(db.select({ id: users.id }).from(users).intersect(db.select({ id: posts.id }).from(posts)).toSQL()),
+    q().fromTable(tu).select(list([tu.field("id")])).intersect(other()),
+  );
+
+  check(
+    "except",
+    fromDrizzle(db.select({ id: users.id }).from(users).except(db.select({ id: posts.id }).from(posts)).toSQL()),
+    q().fromTable(tu).select(list([tu.field("id")])).exceptQuery(other()),
   );
 });
