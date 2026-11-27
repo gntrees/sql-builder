@@ -40,9 +40,9 @@ Diverifikasi langsung terhadap compiler `d11a4c9`:
 | F5 | **Overloading berdasarkan tipe receiver TIDAK diterima**: dua `fn where(...)` di satu package = error, meski spec v2 menyebutnya sah | semua builder tidak boleh satu package; `query` dipecah |
 | F6 | Nama dalam satu package unik **case-insensitive** | `Table` struct dan `table()` fungsi tidak boleh berdampingan |
 | F7 | Import gaya Go: `import pkg { A, b } "./file.lt"`; path di belakang; blok `import ( … )` | semua file `.lt` memakai sintaks ini |
-| F8 | Tagged template: tag = path fungsi package-level, `(List<Str>, List<T>) -> R`, `T` konkret | `import sql { tag as sql }` lalu `sql\`…${SqlArg.Int(id)}…\`` |
-| F9 | Enum di-emit satu nama: TS `Shape.Circle(...)` / `Shape.Point`, bukan `Shape_Circle` | harness harus memakai `Value.Str(...)`, `SqlArg.Int(...)` |
-| F10 | Struct di-emit sebagai class TS (konstruktor named-arg); fungsi snake_case → camelCase (`order_by` → `orderBy`) | harness memanggil `select.create()`, `s.orderBy(...)` |
+| F8 | Tagged template: tag = path fungsi package-level, `(List<Str>, List<T>) -> R`, `T` konkret | `import sql { tag as sql }` lalu `sql\`…${SqlArg.Integer(id)}…\`` |
+| F9 | Enum di-emit satu nama: TS `Shape.Circle(...)` / `Shape.Point`, bukan `Shape_Circle` | harness harus memakai `Value.Text(...)`, `SqlArg.Integer(...)` |
+| F10 | Struct di-emit sebagai class TS (konstruktor named-arg); fungsi snake_case → camelCase. **Receiver sugar hanya ada di source `.lt`**; API host adalah fungsi bebas (`sqlToQuery(d, q)`, `append(a, b)`), bukan method | harness memanggil fungsi bebas, bukan `d.sqlToQuery(...)` |
 | F11 | `lt build -t ts` menaruh modul di `out/ts/src/<file>.ts` | build script menyalin dari `src/` |
 | F12 | Tetap tanpa default argumen dan tanpa varargs | preset `with_primary` dsb. dan parameter `List<…>` tetap dipakai |
 | F13 | Package test ditulis `test "judul" { … }` di dalam package | test LT diletakkan di package `*_test` terpisah |
@@ -116,20 +116,20 @@ Catatan: `index.lt` tetap perlu package (tidak ada deklarasi telanjang), isinya 
 package value {
   export enum Value {
     Null
-    Bool(Bool)
-    Int(Int)
+    Boolean(Bool)
+    Integer(Int)
     Float(Float)
-    Str(Str)
-    List(List<Value>)
-    Map(Map<Str, Value>)
+    Text(Str)
+    Array(List<Value>)
+    Record(Map<Str, Value>)
   }
 
   export enum SqlArg {
     Null
-    Bool(Bool)
-    Int(Int)
+    Boolean(Bool)
+    Integer(Int)
     Float(Float)
-    Str(Str)
+    Text(Str)
   }
 
   export enum BuildError {
@@ -390,8 +390,8 @@ Urutan commit: `lt-drizzle-v2: Mx - <ringkasan>`.
 
 1. **Differential (gate)**: definisi query yang sama di drizzle 0.44.4 dan di output v2;
    bandingkan `sql` + `params` byte-exact. Nama kasus dipertahankan dari v1 (64 kasus).
-2. **Harness**: `parity/differential.test.ts` memakai bentuk emit v2 — `Value.Str(...)`,
-   `SqlArg.Int(...)`, fungsi camelCase (`sqlToQuery`, `orderBy`, …), struct sebagai class.
+2. **Harness**: `parity/differential.test.ts` memakai bentuk emit v2 — `Value.Text(...)`,
+   `SqlArg.Integer(...)`, fungsi camelCase bebas (`sqlToQuery(d, q)`, `orderBy(s, …)`), struct sebagai class.
 3. **v1 vs v2 (sekali jalan)**: `parity/v1-vs-v2.test.ts` membandingkan output `lt-drizzle`
    (v1) dan `lt-drizzle-v2` untuk fixture yang sama; tidak masuk gate CI.
 4. **Test LT**: package `*_test` di `lt-drizzle-v2/tests/`, dijalankan `lt test` di tiga target.
@@ -426,6 +426,7 @@ Urutan commit: `lt-drizzle-v2: Mx - <ringkasan>`.
 | H7 | Nama unik case-insensitive | `Table` vs `table()`, `Column` vs `column()` | konstruktor diberi nama lain (`plain`, dst.) | dikunci (F6) |
 | H8 | Package wajib kurung kurawal | contoh spec usang | ikuti grammar | dikunci (F2) |
 | H9 | Emitter Go/Py untuk struct/fungsi/enum baru | risiko terbesar di M6 | smoke tiap milestone | **terbuka** |
+| H10 | Varian enum bernama builtin Python (`Int`, `Str`, `Bool`, `List`, `Map`) membayangi builtin di output Python dan ditolak `mypy --strict` | `Value.Str` tidak bisa dipakai | varian dinamai `Integer/Text/Boolean/Array/Record` | dikunci (diverifikasi M0) |
 
 H6 perlu dilaporkan sebagai **bug/ketidaksesuaian spec di LT** (spec menyebut overloading sah,
 compiler menolak) — di luar wewenang branch ini untuk memperbaiki.

@@ -1,0 +1,35 @@
+import value { Value } "./value.lt"
+
+package sql {
+  /// Potongan SQL. Chunk selalu rata (tidak ada `Nested`), sehingga tipe tidak
+  /// rekursif lewat field struct; tanda kurung ditulis sebagai `Raw`.
+  export enum SqlChunk {
+    Raw(Str)
+    Param(Value)
+  }
+
+  /// Ekspresi SQL yang belum di-deparse.
+  export struct Sql {
+    chunks: List<SqlChunk>
+  }
+
+  export fn raw(text: Str) -> Sql {
+    Sql(chunks: [SqlChunk.Raw(text)])
+  }
+
+  export fn empty() -> Sql {
+    Sql(chunks: [])
+  }
+
+  export fn param(value: Value) -> Sql {
+    Sql(chunks: [SqlChunk.Param(value)])
+  }
+
+  export fn append(s: Sql, other: Sql) -> Sql {
+    Sql(chunks: s.chunks.concat(other.chunks))
+  }
+
+  export fn is_empty(s: Sql) -> Bool {
+    s.chunks.len() == 0
+  }
+}

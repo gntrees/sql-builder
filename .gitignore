@@ -49,6 +49,7 @@ __pycache__/
 # lt toolchain cache and venv
 .lt/out/
 .lt/out-drizzle/
+.lt/out-drizzle-v2/
 .lt/venv/
 .lt/bin/
 
@@ -57,3 +58,4 @@ __pycache__/
 
 # drizzle port build output
 generated/lt-drizzle/
+generated/lt-drizzle-v2/

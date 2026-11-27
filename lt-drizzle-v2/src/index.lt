@@ -1,0 +1,9 @@
+// Entry point untuk `lt build`: mengimpor seluruh package supaya ikut ter-emit.
+// Tidak ada deklarasi telanjang di top-level, jadi file ini tetap butuh package.
+import value { Value } "./value.lt"
+import sql { Sql, SqlChunk } "./sql.lt"
+import dialect { Dialect } "./dialect.lt"
+
+package drizzle_index {
+  export struct Root {}
+}
