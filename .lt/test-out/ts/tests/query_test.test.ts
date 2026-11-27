@@ -315,4 +315,93 @@ describe("QueryTest", () => {
         throw new Error("unreachable");
     }
   });
+
+  it("mysql_placeholders_and_row", () => {
+    const __match19 = m1.Query.create().values(new lt.LList<lt.LList<m1.Node>>([new lt.LList<m1.Node>([m1.Node.str("a"), m1.Node.int(1n)])])).setDialect("mysql").parse();
+    switch (__match19.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match19.values[0];
+        lt.expectEqual(result.sql, "VALUES ROW ( ?, ? )");
+        lt.expectEqual(result.sqlWithParam, "VALUES ROW ( 'a', 1 )");
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match19.values[0];
+        lt.expectEqual("no error", "parse failed");
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+    const __match20 = m1.Query.create().select(new lt.LList<m1.Node>([m1.Node.col("id")])).where(new lt.LList<m1.Node>([m1.Node.col("x").ilike(m1.Node.str("a%"))])).setDialect("mysql").parse();
+    switch (__match20.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match20.values[0];
+        lt.expectEqual(result.sql, "SELECT `id` WHERE `x` LIKE ?");
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match20.values[0];
+        lt.expectEqual("no error", "parse failed");
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  });
+
+  it("mysql_rejects_unmapped_features", () => {
+    const __match21 = m1.Query.create().select(new lt.LList<m1.Node>([m1.Node.col("a")])).fromTable(m1.Node.table("t")).fullJoin(m1.Node.table("u"), new lt.LList<m1.Node>([m1.Node.col("t.x").eq(m1.Node.col("u.x"))])).setDialect("mysql").parse();
+    switch (__match21.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match21.values[0];
+        lt.expectEqual("no error", "parse succeeded");
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match21.values[0];
+        const __match22 = error;
+        switch (__match22.tag) {
+          case "Unsupported": {
+            const message: string = __match22.values[0];
+            lt.expectEqual(message, "FULL JOIN is not supported by mysql");
+            break;
+          }
+          default: {
+            lt.expectEqual("Unsupported", "other error");
+            break;
+          }
+        }
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+    const __match23 = m1.Query.create().insert(m1.Node.table("t"), new lt.LList<m1.Assignment>([m1.Assignment.int("a", 1n)])).returning(new lt.LList<m1.Node>([m1.Node.col("id")])).setDialect("mysql").parse();
+    switch (__match23.tag) {
+      case "ok": {
+        const result: m1.ParseResult = __match23.values[0];
+        lt.expectEqual("no error", "parse succeeded");
+        break;
+      }
+      case "err": {
+        const error: m1.ParseError = __match23.values[0];
+        const __match24 = error;
+        switch (__match24.tag) {
+          case "Unsupported": {
+            const message: string = __match24.values[0];
+            lt.expectEqual(message, "RETURNING is not supported by mysql");
+            break;
+          }
+          default: {
+            lt.expectEqual("Unsupported", "other error");
+            break;
+          }
+        }
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  });
 });

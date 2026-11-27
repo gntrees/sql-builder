@@ -193,3 +193,54 @@ def test_in_subquery_and_cte() -> None:
     else:
         raise AssertionError("unreachable")
 
+def test_mysql_placeholders_and_row() -> None:
+    __match19 = m1.Query.create().values(_lt.LList((_lt.LList((m1.Node.str("a"), m1.Node.int(1))),))).set_dialect("mysql").parse()
+    if __match19.tag == "ok":
+        result: m1.ParseResult = __match19.values[0]
+        _lt.expect_equal(result.sql, "VALUES ROW ( ?, ? )")
+        _lt.expect_equal(result.sql_with_param, "VALUES ROW ( 'a', 1 )")
+    elif __match19.tag == "err":
+        error: m1.ParseError = __match19.values[0]
+        _lt.expect_equal("no error", "parse failed")
+    else:
+        raise AssertionError("unreachable")
+    __match20 = m1.Query.create().select(_lt.LList((m1.Node.col("id"),))).where(_lt.LList((m1.Node.col("x").ilike(m1.Node.str("a%")),))).set_dialect("mysql").parse()
+    if __match20.tag == "ok":
+        result_2: m1.ParseResult = __match20.values[0]
+        _lt.expect_equal(result_2.sql, "SELECT `id` WHERE `x` LIKE ?")
+    elif __match20.tag == "err":
+        error_2: m1.ParseError = __match20.values[0]
+        _lt.expect_equal("no error", "parse failed")
+    else:
+        raise AssertionError("unreachable")
+
+def test_mysql_rejects_unmapped_features() -> None:
+    __match21 = m1.Query.create().select(_lt.LList((m1.Node.col("a"),))).from_table(m1.Node.table("t")).full_join(m1.Node.table("u"), _lt.LList((m1.Node.col("t.x").eq(m1.Node.col("u.x")),))).set_dialect("mysql").parse()
+    if __match21.tag == "ok":
+        result: m1.ParseResult = __match21.values[0]
+        _lt.expect_equal("no error", "parse succeeded")
+    elif __match21.tag == "err":
+        error: m1.ParseError = __match21.values[0]
+        __match22 = error
+        if __match22.tag == "Unsupported":
+            message: str = __match22.values[0]
+            _lt.expect_equal(message, "FULL JOIN is not supported by mysql")
+        else:
+            _lt.expect_equal("Unsupported", "other error")
+    else:
+        raise AssertionError("unreachable")
+    __match23 = m1.Query.create().insert(m1.Node.table("t"), _lt.LList((m1.Assignment.int("a", 1),))).returning(_lt.LList((m1.Node.col("id"),))).set_dialect("mysql").parse()
+    if __match23.tag == "ok":
+        result_2: m1.ParseResult = __match23.values[0]
+        _lt.expect_equal("no error", "parse succeeded")
+    elif __match23.tag == "err":
+        error_2: m1.ParseError = __match23.values[0]
+        __match24 = error_2
+        if __match24.tag == "Unsupported":
+            message_2: str = __match24.values[0]
+            _lt.expect_equal(message_2, "RETURNING is not supported by mysql")
+        else:
+            _lt.expect_equal("Unsupported", "other error")
+    else:
+        raise AssertionError("unreachable")
+

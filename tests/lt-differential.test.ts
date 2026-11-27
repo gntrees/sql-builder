@@ -499,3 +499,153 @@ describe("legacy parity (postgres, subqueries)", () => {
         ];
     });
 });
+
+function errorDiff(name: string, build: () => [() => any, () => any]) {
+    test(name, () => {
+        const [legacyRun, nextRun] = build();
+        let legacyMessage = "";
+        try {
+            legacyRun();
+        } catch (error) {
+            legacyMessage = (error as Error).message;
+        }
+        expect(legacyMessage).not.toBe("");
+
+        const result = nextRun();
+        if (result.tag !== "err") {
+            throw new Error("expected the .lt implementation to reject this query");
+        }
+        expect(legacyMessage).toContain(result.values[0].values[0]);
+    });
+}
+
+describe("legacy parity (mysql)", () => {
+    diff("select, order by, limit", () => {
+        const c = legacy();
+        return [
+            c
+                .select([c.col("id"), c.col("name")])
+                .from(c.table("users"))
+                .where(c.col("a").eq(1))
+                .orderBy(c.col("name").desc())
+                .limit(10)
+                .setDialect("mysql")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("id"), Node.col("name")]))
+                .fromTable(Node.table("users"))
+                .where(list([Node.col("a").eq(Node.int(1n))]))
+                .orderBy(list([Node.col("name").desc()]))
+                .limit(Node.int(10n))
+                .setDialect("mysql")
+                .parse(),
+        ];
+    });
+
+    diff("insert and update", () => {
+        const c = legacy();
+        return [
+            c.update(c.table("users"), { name: "a" }).where(c.col("id").eq(1)).setDialect("mysql").parse(),
+            Query.create()
+                .update(Node.table("users"), list([Assignment.str("name", "a")]))
+                .where(list([Node.col("id").eq(Node.int(1n))]))
+                .setDialect("mysql")
+                .parse(),
+        ];
+    });
+
+    diff("values uses ROW", () => {
+        const c = legacy();
+        return [
+            c.values([["a", 1], ["b", 2]]).setDialect("mysql").parse(),
+            Query.create()
+                .values(
+                    list([
+                        list([Node.str("a"), Node.int(1n)]),
+                        list([Node.str("b"), Node.int(2n)]),
+                    ]),
+                )
+                .setDialect("mysql")
+                .parse(),
+        ];
+    });
+
+    diff("ilike falls back to LIKE", () => {
+        const c = legacy();
+        return [
+            c.select(c.col("id")).where(c.col("x").ilike("a%")).setDialect("mysql").parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .where(list([Node.col("x").ilike(Node.str("a%"))]))
+                .setDialect("mysql")
+                .parse(),
+        ];
+    });
+
+    diff("exists subquery", () => {
+        const c = legacy();
+        const sub = c.select(c.col("uid")).from(c.table("m")).where(c.col("ok").eq(true));
+        return [
+            c.select(c.col("id")).where(c.exists(sub)).setDialect("mysql").parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .where(
+                    list([
+                        Node.exists(
+                            Query.create()
+                                .select(list([Node.col("uid")]))
+                                .fromTable(Node.table("m"))
+                                .where(list([Node.col("ok").eq(Node.bool(true))])),
+                        ),
+                    ]),
+                )
+                .setDialect("mysql")
+                .parse(),
+        ];
+    });
+
+    errorDiff("full join is rejected", () => {
+        const c = legacy();
+        return [
+            () => c.select(c.col("a")).from(c.table("t")).fullJoin(c.table("u"), c.col("t.x").eq(c.col("u.x"))).setDialect("mysql").parse(),
+            () =>
+                Query.create()
+                    .select(list([Node.col("a")]))
+                    .fromTable(Node.table("t"))
+                    .fullJoin(Node.table("u"), list([Node.col("t.x").eq(Node.col("u.x"))]))
+                    .setDialect("mysql")
+                    .parse(),
+        ];
+    });
+
+    errorDiff("returning is rejected", () => {
+        const c = legacy();
+        return [
+            () => c.insert(c.table("t"), { a: 1 }).returning(c.col("id")).setDialect("mysql").parse(),
+            () =>
+                Query.create()
+                    .insert(Node.table("t"), list([Assignment.int("a", 1n)]))
+                    .returning(list([Node.col("id")]))
+                    .setDialect("mysql")
+                    .parse(),
+        ];
+    });
+
+    errorDiff("on conflict do nothing is rejected", () => {
+        const c = legacy();
+        return [
+            () =>
+                c
+                    .insert(c.table("t"), { name: "x" })
+                    .onConflictDoNothing(c.col("id"))
+                    .setDialect("mysql")
+                    .parse(),
+            () =>
+                Query.create()
+                    .insert(Node.table("t"), list([Assignment.str("name", "x")]))
+                    .onConflictDoNothing(Node.col("id"))
+                    .setDialect("mysql")
+                    .parse(),
+        ];
+    });
+});

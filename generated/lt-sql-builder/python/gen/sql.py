@@ -255,13 +255,18 @@ parse_error_no_dialect = ParseError("NoDialect", (), 0)
 def parse_error_unsupported_dialect(_0: str) -> ParseError:
     return ParseError("UnsupportedDialect", (_0,), 1)
 
-parse_error_empty_query = ParseError("EmptyQuery", (), 2)
+def parse_error_unsupported(_0: str) -> ParseError:
+    return ParseError("Unsupported", (_0,), 2)
+
+parse_error_empty_query = ParseError("EmptyQuery", (), 3)
 
 def _parse_error_display(value: ParseError) -> str:
     if value.tag == "NoDialect":
         return "ParseError.NoDialect"
     if value.tag == "UnsupportedDialect":
         return "ParseError.UnsupportedDialect(" + _lt.disp(value.values[0]) + ")"
+    if value.tag == "Unsupported":
+        return "ParseError.Unsupported(" + _lt.disp(value.values[0]) + ")"
     if value.tag == "EmptyQuery":
         return "ParseError.EmptyQuery"
     raise AssertionError("unreachable")
@@ -547,6 +552,9 @@ class Query:
     def cross_join(self, table: Node, on: _lt.LList[Node]) -> Query:
         return self.add(clause_join("CROSS JOIN", table, on))
 
+    def full_join(self, table: Node, on: _lt.LList[Node]) -> Query:
+        return self.add(clause_join("FULL JOIN", table, on))
+
     def with_cte(self, statement: Query, alias: str) -> Query:
         return self.add(clause_with(statement, alias))
 
@@ -578,6 +586,47 @@ class Query:
     def finish(clauses: _lt.LList[Clause], dialect: Dialect) -> _lt.Res[ParseResult, ParseError]:
         if _lt.eq(clauses.len(), 0):
             return _lt.Err(parse_error_empty_query)
+        unsupported: _lt.Opt[str] = Query.unsupported(clauses, dialect)
+        __match3 = unsupported
+        if __match3.tag == "some":
+            feature: str = __match3.values[0]
+            return _lt.Err(parse_error_unsupported("" + _lt.disp(feature) + " is not supported by mysql"))
+        elif __match3.tag == "none":
+            return Query.emit(clauses, dialect)
+        else:
+            raise AssertionError("unreachable")
+
+    @staticmethod
+    def unsupported(clauses: _lt.LList[Clause], dialect: Dialect) -> _lt.Opt[str]:
+        __match4: bool
+        __match5 = dialect
+        if __match5.tag == "Postgres":
+            __match4 = False
+        elif __match5.tag == "MySql":
+            __match4 = True
+        else:
+            raise AssertionError("unreachable")
+        mysql: bool = __match4
+        if (not (mysql)):
+            return _lt.None_()
+        found: _lt.Opt[str] = _lt.None_()
+        for clause in clauses.items:
+            if _lt.opt_is_none(found):
+                __match6 = clause
+                if __match6.tag == "Join":
+                    keyword: str = __match6.values[0]
+                    if _lt.eq(keyword, "FULL JOIN"):
+                        found = _lt.Some("FULL JOIN")
+                elif __match6.tag == "Returning":
+                    found = _lt.Some("RETURNING")
+                elif __match6.tag == "OnConflictDoNothing":
+                    found = _lt.Some("ON CONFLICT DO NOTHING")
+                else:
+                    pass
+        return found
+
+    @staticmethod
+    def emit(clauses: _lt.LList[Clause], dialect: Dialect) -> _lt.Res[ParseResult, ParseError]:
         plain: Rendered = Render.query(clauses, dialect, 0, False)
         inlined: Rendered = Render.query(clauses, dialect, 0, True)
         return _lt.Ok(ParseResult(sql=plain.text, param=plain.params, sql_with_param=inlined.text))
@@ -599,11 +648,21 @@ class Render:
     pass
 
     @staticmethod
+    def is_postgres(dialect: Dialect) -> bool:
+        __match7 = dialect
+        if __match7.tag == "Postgres":
+            return True
+        elif __match7.tag == "MySql":
+            return False
+        else:
+            raise AssertionError("unreachable")
+
+    @staticmethod
     def quote(dialect: Dialect) -> str:
-        __match3 = dialect
-        if __match3.tag == "Postgres":
+        __match8 = dialect
+        if __match8.tag == "Postgres":
             return "\""
-        elif __match3.tag == "MySql":
+        elif __match8.tag == "MySql":
             return "`"
         else:
             raise AssertionError("unreachable")
@@ -617,120 +676,120 @@ class Render:
 
     @staticmethod
     def literal(value: m1.Value) -> str:
-        __match4 = value
-        if __match4.tag == "Null":
+        __match9 = value
+        if __match9.tag == "Null":
             return "NULL"
-        elif __match4.tag == "Bool":
-            flag: bool = __match4.values[0]
+        elif __match9.tag == "Bool":
+            flag: bool = __match9.values[0]
             if flag:
                 return "TRUE"
             else:
                 return "FALSE"
-        elif __match4.tag == "Int":
-            number: int = __match4.values[0]
+        elif __match9.tag == "Int":
+            number: int = __match9.values[0]
             return "" + _lt.disp(number)
-        elif __match4.tag == "Float":
-            number_2: float = __match4.values[0]
+        elif __match9.tag == "Float":
+            number_2: float = __match9.values[0]
             return "" + _lt.disp(number_2)
-        elif __match4.tag == "Str":
-            text: str = __match4.values[0]
+        elif __match9.tag == "Str":
+            text: str = __match9.values[0]
             return "'" + _lt.disp(_lt.str_replace(text, "'", "''")) + "'"
         else:
             raise AssertionError("unreachable")
 
     @staticmethod
     def placeholder(index: int, dialect: Dialect) -> str:
-        __match5 = dialect
-        if __match5.tag == "Postgres":
+        __match10 = dialect
+        if __match10.tag == "Postgres":
             return "$" + _lt.disp(index)
-        elif __match5.tag == "MySql":
+        elif __match10.tag == "MySql":
             return "?"
         else:
             raise AssertionError("unreachable")
 
     @staticmethod
     def expr(node: Node, dialect: Dialect, base: int, inline: bool) -> Rendered:
-        __match6 = node.kind
-        if __match6.tag == "Column":
-            name: str = __match6.values[0]
+        __match11 = node.kind
+        if __match11.tag == "Column":
+            name: str = __match11.values[0]
             return Rendered(text=Render.ident(name, dialect), params=_lt.LList(()))
-        elif __match6.tag == "Table":
-            name_2: str = __match6.values[0]
+        elif __match11.tag == "Table":
+            name_2: str = __match11.values[0]
             return Rendered(text=Render.ident(name_2, dialect), params=_lt.LList(()))
-        elif __match6.tag == "Raw":
-            text: str = __match6.values[0]
+        elif __match11.tag == "Raw":
+            text: str = __match11.values[0]
             return Rendered(text=text, params=_lt.LList(()))
-        elif __match6.tag == "Lit":
-            value: m1.Value = __match6.values[0]
+        elif __match11.tag == "Lit":
+            value: m1.Value = __match11.values[0]
             return Render.lit(value, dialect, base, inline)
-        elif __match6.tag == "Binary":
-            operator: str = __match6.values[0]
-            left: Node = __match6.values[1]
-            right: Node = __match6.values[2]
+        elif __match11.tag == "Binary":
+            operator: str = __match11.values[0]
+            left: Node = __match11.values[1]
+            right: Node = __match11.values[2]
             return Render.binary(operator, left, right, dialect, base, inline)
-        elif __match6.tag == "Between":
-            left_2: Node = __match6.values[0]
-            low: Node = __match6.values[1]
-            high: Node = __match6.values[2]
+        elif __match11.tag == "Between":
+            left_2: Node = __match11.values[0]
+            low: Node = __match11.values[1]
+            high: Node = __match11.values[2]
             return Render.between(left_2, low, high, dialect, base, inline)
-        elif __match6.tag == "Like":
-            left_3: Node = __match6.values[0]
-            pattern: Node = __match6.values[1]
-            insensitive: bool = __match6.values[2]
+        elif __match11.tag == "Like":
+            left_3: Node = __match11.values[0]
+            pattern: Node = __match11.values[1]
+            insensitive: bool = __match11.values[2]
             return Render.like(left_3, pattern, insensitive, dialect, base, inline)
-        elif __match6.tag == "InText":
-            left_4: Node = __match6.values[0]
-            text_2: str = __match6.values[1]
+        elif __match11.tag == "InText":
+            left_4: Node = __match11.values[0]
+            text_2: str = __match11.values[1]
             return Render.in_text(left_4, text_2, dialect, base, inline)
-        elif __match6.tag == "InList":
-            left_5: Node = __match6.values[0]
-            values: _lt.LList[Node] = __match6.values[1]
+        elif __match11.tag == "InList":
+            left_5: Node = __match11.values[0]
+            values: _lt.LList[Node] = __match11.values[1]
             return Render.in_list(left_5, values, dialect, base, inline)
-        elif __match6.tag == "InQuery":
-            left_6: Node = __match6.values[0]
-            query: Query = __match6.values[1]
+        elif __match11.tag == "InQuery":
+            left_6: Node = __match11.values[0]
+            query: Query = __match11.values[1]
             return Render.in_query(left_6, query, dialect, base, inline)
-        elif __match6.tag == "Exists":
-            query_2: Query = __match6.values[0]
+        elif __match11.tag == "Exists":
+            query_2: Query = __match11.values[0]
             inner: Rendered = Render.query(query_2.clauses, dialect, base, inline)
             return Rendered(text="EXISTS (" + _lt.disp(inner.text) + ")", params=inner.params)
-        elif __match6.tag == "Subquery":
-            query_3: Query = __match6.values[0]
+        elif __match11.tag == "Subquery":
+            query_3: Query = __match11.values[0]
             inner_2: Rendered = Render.query(query_3.clauses, dialect, base, inline)
             return Rendered(text="(" + _lt.disp(inner_2.text) + ")", params=inner_2.params)
-        elif __match6.tag == "And":
-            items: _lt.LList[Node] = __match6.values[0]
+        elif __match11.tag == "And":
+            items: _lt.LList[Node] = __match11.values[0]
             return Render.chain(items, "AND", dialect, base, inline)
-        elif __match6.tag == "Or":
-            items_2: _lt.LList[Node] = __match6.values[0]
+        elif __match11.tag == "Or":
+            items_2: _lt.LList[Node] = __match11.values[0]
             return Render.chain(items_2, "OR", dialect, base, inline)
-        elif __match6.tag == "Not":
-            inner_3: Node = __match6.values[0]
+        elif __match11.tag == "Not":
+            inner_3: Node = __match11.values[0]
             rendered: Rendered = Render.expr(inner_3, dialect, base, inline)
             return Rendered(text="NOT ( " + _lt.disp(rendered.text) + " )", params=rendered.params)
-        elif __match6.tag == "IsNull":
-            inner_4: Node = __match6.values[0]
+        elif __match11.tag == "IsNull":
+            inner_4: Node = __match11.values[0]
             rendered_2: Rendered = Render.expr(inner_4, dialect, base, inline)
             return Rendered(text="" + _lt.disp(rendered_2.text) + " IS NULL", params=rendered_2.params)
-        elif __match6.tag == "IsNotNull":
-            inner_5: Node = __match6.values[0]
+        elif __match11.tag == "IsNotNull":
+            inner_5: Node = __match11.values[0]
             rendered_3: Rendered = Render.expr(inner_5, dialect, base, inline)
             return Rendered(text="" + _lt.disp(rendered_3.text) + " IS NOT NULL", params=rendered_3.params)
-        elif __match6.tag == "Alias":
-            inner_6: Node = __match6.values[0]
-            name_3: str = __match6.values[1]
+        elif __match11.tag == "Alias":
+            inner_6: Node = __match11.values[0]
+            name_3: str = __match11.values[1]
             rendered_4: Rendered = Render.expr(inner_6, dialect, base, inline)
             return Rendered(text="" + _lt.disp(rendered_4.text) + " AS " + _lt.disp(Render.ident(name_3, dialect)), params=rendered_4.params)
-        elif __match6.tag == "Order":
-            inner_7: Node = __match6.values[0]
-            descending: bool = __match6.values[1]
+        elif __match11.tag == "Order":
+            inner_7: Node = __match11.values[0]
+            descending: bool = __match11.values[1]
             rendered_5: Rendered = Render.expr(inner_7, dialect, base, inline)
-            __if7: str
+            __if12: str
             if descending:
-                __if7 = "DESC"
+                __if12 = "DESC"
             else:
-                __if7 = "ASC"
-            direction: str = __if7
+                __if12 = "ASC"
+            direction: str = __if12
             return Rendered(text="" + _lt.disp(rendered_5.text) + " " + _lt.disp(direction), params=rendered_5.params)
         else:
             raise AssertionError("unreachable")
@@ -738,12 +797,12 @@ class Render:
     @staticmethod
     def lit(value: m1.Value, dialect: Dialect, base: int, inline: bool) -> Rendered:
         index: int = _lt.iadd(base, 1)
-        __if8: str
+        __if13: str
         if inline:
-            __if8 = Render.literal(value)
+            __if13 = Render.literal(value)
         else:
-            __if8 = Render.placeholder(index, dialect)
-        text: str = __if8
+            __if13 = Render.placeholder(index, dialect)
+        text: str = __if13
         return Rendered(text=text, params=_lt.LList((value,)))
 
     @staticmethod
@@ -757,12 +816,12 @@ class Render:
     def like(left: Node, pattern: Node, insensitive: bool, dialect: Dialect, base: int, inline: bool) -> Rendered:
         l: Rendered = Render.expr(left, dialect, base, inline)
         p: Rendered = Render.expr(pattern, dialect, _lt.iadd(base, l.params.len()), inline)
-        __if9: str
-        if insensitive:
-            __if9 = "ILIKE"
+        __if14: str
+        if (insensitive and Render.is_postgres(dialect)):
+            __if14 = "ILIKE"
         else:
-            __if9 = "LIKE"
-        operator: str = __if9
+            __if14 = "LIKE"
+        operator: str = __if14
         return Rendered(text="" + _lt.disp(l.text) + " " + _lt.disp(operator) + " " + _lt.disp(p.text), params=l.params.concat(p.params))
 
     @staticmethod
@@ -822,70 +881,70 @@ class Render:
 
     @staticmethod
     def clause(clause: Clause, dialect: Dialect, base: int, inline: bool) -> Rendered:
-        __match10 = clause
-        if __match10.tag == "Select":
-            columns: _lt.LList[Node] = __match10.values[0]
+        __match15 = clause
+        if __match15.tag == "Select":
+            columns: _lt.LList[Node] = __match15.values[0]
             return Render.keyword("SELECT", Render.list(columns, dialect, base, inline, ", "))
-        elif __match10.tag == "From":
-            table: Node = __match10.values[0]
+        elif __match15.tag == "From":
+            table: Node = __match15.values[0]
             return Render.keyword("FROM", Render.expr(table, dialect, base, inline))
-        elif __match10.tag == "Where":
-            conditions: _lt.LList[Node] = __match10.values[0]
+        elif __match15.tag == "Where":
+            conditions: _lt.LList[Node] = __match15.values[0]
             return Render.keyword("WHERE", Render.list(conditions, dialect, base, inline, " AND "))
-        elif __match10.tag == "OrderBy":
-            columns_2: _lt.LList[Node] = __match10.values[0]
+        elif __match15.tag == "OrderBy":
+            columns_2: _lt.LList[Node] = __match15.values[0]
             return Render.keyword("ORDER BY", Render.list(columns_2, dialect, base, inline, ", "))
-        elif __match10.tag == "Limit":
-            count: Node = __match10.values[0]
+        elif __match15.tag == "Limit":
+            count: Node = __match15.values[0]
             return Render.keyword("LIMIT", Render.expr(count, dialect, base, inline))
-        elif __match10.tag == "Offset":
-            count_2: Node = __match10.values[0]
+        elif __match15.tag == "Offset":
+            count_2: Node = __match15.values[0]
             return Render.keyword("OFFSET", Render.expr(count_2, dialect, base, inline))
-        elif __match10.tag == "Raw":
-            text: str = __match10.values[0]
+        elif __match15.tag == "Raw":
+            text: str = __match15.values[0]
             return Rendered(text=text, params=_lt.LList(()))
-        elif __match10.tag == "Update":
-            table_2: Node = __match10.values[0]
-            assignments: _lt.LList[Assignment] = __match10.values[1]
+        elif __match15.tag == "Update":
+            table_2: Node = __match15.values[0]
+            assignments: _lt.LList[Assignment] = __match15.values[1]
             return Render.keyword("UPDATE", Render.then(Render.expr(table_2, dialect, base, inline), Render.keyword("SET", Render.assignments(assignments, dialect, base, inline))))
-        elif __match10.tag == "Insert":
-            table_3: Node = __match10.values[0]
-            assignments_2: _lt.LList[Assignment] = __match10.values[1]
+        elif __match15.tag == "Insert":
+            table_3: Node = __match15.values[0]
+            assignments_2: _lt.LList[Assignment] = __match15.values[1]
             return Render.insert_clause(table_3, assignments_2, dialect, base, inline)
-        elif __match10.tag == "Delete":
-            table_4: Node = __match10.values[0]
+        elif __match15.tag == "Delete":
+            table_4: Node = __match15.values[0]
             return Render.keyword("DELETE FROM", Render.expr(table_4, dialect, base, inline))
-        elif __match10.tag == "Set":
-            assignments_3: _lt.LList[Assignment] = __match10.values[0]
+        elif __match15.tag == "Set":
+            assignments_3: _lt.LList[Assignment] = __match15.values[0]
             return Render.keyword("SET", Render.assignments(assignments_3, dialect, base, inline))
-        elif __match10.tag == "Values":
-            rows: _lt.LList[_lt.LList[Node]] = __match10.values[0]
+        elif __match15.tag == "Values":
+            rows: _lt.LList[_lt.LList[Node]] = __match15.values[0]
             return Render.keyword("VALUES", Render.rows(rows, dialect, base, inline))
-        elif __match10.tag == "Returning":
-            columns_3: _lt.LList[Node] = __match10.values[0]
+        elif __match15.tag == "Returning":
+            columns_3: _lt.LList[Node] = __match15.values[0]
             return Render.keyword("RETURNING", Render.list(columns_3, dialect, base, inline, ", "))
-        elif __match10.tag == "GroupBy":
-            columns_4: _lt.LList[Node] = __match10.values[0]
+        elif __match15.tag == "GroupBy":
+            columns_4: _lt.LList[Node] = __match15.values[0]
             return Render.keyword("GROUP BY", Render.list(columns_4, dialect, base, inline, ", "))
-        elif __match10.tag == "Having":
-            conditions_2: _lt.LList[Node] = __match10.values[0]
+        elif __match15.tag == "Having":
+            conditions_2: _lt.LList[Node] = __match15.values[0]
             return Render.keyword("HAVING", Render.list(conditions_2, dialect, base, inline, " AND "))
-        elif __match10.tag == "Join":
-            keyword: str = __match10.values[0]
-            table_5: Node = __match10.values[1]
-            on: _lt.LList[Node] = __match10.values[2]
+        elif __match15.tag == "Join":
+            keyword: str = __match15.values[0]
+            table_5: Node = __match15.values[1]
+            on: _lt.LList[Node] = __match15.values[2]
             return Render.keyword(keyword, Render.then(Render.expr(table_5, dialect, base, inline), Render.keyword("ON", Render.list(on, dialect, base, inline, " AND "))))
-        elif __match10.tag == "With":
-            statement: Query = __match10.values[0]
-            alias: str = __match10.values[1]
+        elif __match15.tag == "With":
+            statement: Query = __match15.values[0]
+            alias: str = __match15.values[1]
             inner: Rendered = Render.query(statement.clauses, dialect, base, inline)
             return Rendered(text="WITH " + _lt.disp(Render.ident(alias, dialect)) + " AS (" + _lt.disp(inner.text) + ")", params=inner.params)
-        elif __match10.tag == "OnConflictDoNothing":
-            target: Node = __match10.values[0]
+        elif __match15.tag == "OnConflictDoNothing":
+            target: Node = __match15.values[0]
             return Render.keyword("ON CONFLICT", Render.then(Render.parenthesised_ident(target, dialect), Rendered(text="DO NOTHING", params=_lt.LList(()))))
-        elif __match10.tag == "OnConflictDoUpdate":
-            target_2: Node = __match10.values[0]
-            assignments_4: _lt.LList[Assignment] = __match10.values[1]
+        elif __match15.tag == "OnConflictDoUpdate":
+            target_2: Node = __match15.values[0]
+            assignments_4: _lt.LList[Assignment] = __match15.values[1]
             return Render.keyword("ON CONFLICT", Render.then(Render.parenthesised_ident(target_2, dialect), Render.keyword("DO UPDATE SET", Render.assignments(assignments_4, dialect, base, inline))))
         else:
             raise AssertionError("unreachable")
@@ -931,24 +990,30 @@ class Render:
         params: _lt.LList[m1.Value] = _lt.LList(())
         for row in rows.items:
             items: Rendered = Render.list(row, dialect, _lt.iadd(base, params.len()), inline, ", ")
-            if _lt.eq(text, ""):
-                text = "( " + _lt.disp(items.text) + " )"
+            __if16: str
+            if Render.is_postgres(dialect):
+                __if16 = ""
             else:
-                text = "" + _lt.disp(text) + ", ( " + _lt.disp(items.text) + " )"
+                __if16 = "ROW "
+            prefix: str = __if16
+            if _lt.eq(text, ""):
+                text = "" + _lt.disp(prefix) + "( " + _lt.disp(items.text) + " )"
+            else:
+                text = "" + _lt.disp(text) + ", " + _lt.disp(prefix) + "( " + _lt.disp(items.text) + " )"
             params = params.concat(items.params)
         return Rendered(text=text, params=params)
 
     @staticmethod
     def parenthesised_ident(node: Node, dialect: Dialect) -> Rendered:
-        __match11 = node.kind
-        if __match11.tag == "Column":
-            name: str = __match11.values[0]
+        __match17 = node.kind
+        if __match17.tag == "Column":
+            name: str = __match17.values[0]
             return Rendered(text="(" + _lt.disp(Render.ident(name, dialect)) + ")", params=_lt.LList(()))
-        elif __match11.tag == "Table":
-            name_2: str = __match11.values[0]
+        elif __match17.tag == "Table":
+            name_2: str = __match17.values[0]
             return Rendered(text="(" + _lt.disp(Render.ident(name_2, dialect)) + ")", params=_lt.LList(()))
-        elif __match11.tag == "Raw":
-            text: str = __match11.values[0]
+        elif __match17.tag == "Raw":
+            text: str = __match17.values[0]
             return Rendered(text="(" + _lt.disp(text) + ")", params=_lt.LList(()))
         else:
             return Render.expr(node, dialect, 0, False)

@@ -9,6 +9,11 @@ Postgres + MySQL, query (`select`/`from`/`where`/`order by`/`limit`/`offset`/
 `values`/`returning`/`on conflict`), dan subquery (`exists`, `IN (SELECT ...)`,
 `WITH ... AS (...)`).
 
+Paritas MySQL ikut dijaga: backtick, placeholder `?`, `VALUES ROW`, `ILIKE`
+yang jatuh ke `LIKE`, dan fitur yang tidak punya padanan (`FULL JOIN`,
+`RETURNING`, `ON CONFLICT DO NOTHING`) ditolak dengan `ParseError.Unsupported`
+alih-alih diam-diam berbeda perilaku.
+
 Seluruh AST ada di satu modul, [`lt/src/sql.lt`](src/sql.lt), karena `Node`
 dan `Query` saling merujuk (subquery) sedangkan import melingkar dilarang.
 Modul lain: `value.lt` (enum `Value`) dan `index.lt` (entry point build).
@@ -50,8 +55,8 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 - `mypy --strict` bersih pada paket Python,
 - `go vet` bersih, `gofmt -l` kosong, `go test` hijau pada paket Go,
 - setiap kasus di `tests/lt-differential.test.ts` menghasilkan `sql`, `param`,
-  dan `sqlWithParam` yang identik dengan implementasi legacy (25 kasus: query,
-  join, agregasi, DML, `on conflict`, dan subquery),
+  dan `sqlWithParam` yang identik dengan implementasi legacy (33 kasus: query,
+  DML, join, agregasi, `on conflict`, subquery, dan dialek MySQL),
 - `./lt/check.sh` lulus (tidak ada drift antara `.lt` dan output yang di-commit).
 
 ## Perbedaan yang disengaja dari API lama
@@ -66,6 +71,7 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 | `sqlWithParam` untuk Float bulat | `1` | `1.0` | `Display` Float di LT membedakan `1` dan `1.0`; hanya memengaruhi string pratinjau |
 | Dua `where(...)` berturut-turut | `WHERE a WHERE b` | digabung dengan `AND` | perilaku lama adalah bug |
 | `WITH` | `with(sub, "alias")` | `with_cte(sub, "alias")` | `with` kata kunci di TS/Python, dan rename per target merusak kesamaan API |
+| Fitur khusus Postgres di MySQL | exception saat `parse()` | `ParseError.Unsupported(pesan)` | LT tidak punya exception; pesannya sama dengan legacy |
 | `IN` dengan daftar nilai | hanya teks (`in("1,2,3")`) atau subquery | `in_text(...)` dan `in_list([...])` | daftar bertipe tidak bisa diungkapkan map/array dinamis lama |
 
 ## Temuan yang sudah diperbaiki di compiler

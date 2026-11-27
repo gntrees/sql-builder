@@ -218,4 +218,51 @@ test class QueryTest {
       Err(error) => Expect.equal("no error", "parse failed")
     }
   }
+
+  test fn mysql_placeholders_and_row() {
+    match Query.create()
+      .values([[Node.str("a"), Node.int(1)]])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(result.sql, `VALUES ROW ( ?, ? )`)
+        Expect.equal(result.sql_with_param, `VALUES ROW ( 'a', 1 )`)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+    match Query.create()
+      .select([Node.col("id")])
+      .where([Node.col("x").ilike(Node.str("a%"))])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => Expect.equal(result.sql, "SELECT `id` WHERE `x` LIKE ?")
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn mysql_rejects_unmapped_features() {
+    match Query.create()
+      .select([Node.col("a")])
+      .from_table(Node.table("t"))
+      .full_join(Node.table("u"), [Node.col("t.x").eq(Node.col("u.x"))])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.Unsupported(message) => Expect.equal(message, "FULL JOIN is not supported by mysql")
+        _ => Expect.equal("Unsupported", "other error")
+      }
+    }
+    match Query.create()
+      .insert(Node.table("t"), [Assignment.int("a", 1)])
+      .returning([Node.col("id")])
+      .set_dialect("mysql")
+      .parse() {
+      Ok(result) => Expect.equal("no error", "parse succeeded")
+      Err(error) => match error {
+        ParseError.Unsupported(message) => Expect.equal(message, "RETURNING is not supported by mysql")
+        _ => Expect.equal("Unsupported", "other error")
+      }
+    }
+  }
 }

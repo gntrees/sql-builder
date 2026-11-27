@@ -263,6 +263,8 @@ pub class ParseResult {
 pub enum ParseError {
   NoDialect
   UnsupportedDialect(Str)
+  /// Fitur yang sah di Postgres tetapi tidak punya padanan di dialek aktif.
+  Unsupported(Str)
   EmptyQuery
 }
 
@@ -358,6 +360,10 @@ pub class Query {
     self.add(Clause.Join("CROSS JOIN", table, on))
   }
 
+  pub fn full_join(self, table: Node, on: List<Node>) -> Query {
+    self.add(Clause.Join("FULL JOIN", table, on))
+  }
+
   pub fn with_cte(self, statement: Query, alias: Str) -> Query {
     self.add(Clause.With(statement, alias))
   }
@@ -393,6 +399,46 @@ pub class Query {
     if clauses.len() == 0 {
       return Err(ParseError.EmptyQuery)
     }
+    let unsupported = Query.unsupported(clauses, dialect)
+    match unsupported {
+      Some(feature) => Err(ParseError.Unsupported(`${feature} is not supported by mysql`))
+      None => Query.emit(clauses, dialect)
+    }
+  }
+
+  /// Fitur yang tidak dipetakan ke MySQL ditolak sebelum render, supaya tidak
+  /// ada perbedaan perilaku diam-diam antar dialek.
+  static fn unsupported(clauses: List<Clause>, dialect: Dialect) -> Option<Str> {
+    let mysql = match dialect {
+      Dialect.Postgres => false
+      Dialect.MySql => true
+    }
+    if !mysql {
+      return None
+    }
+    let mut found: Option<Str> = None
+    for clause in clauses {
+      if found.is_none() {
+        match clause {
+          Clause.Join(keyword, _, _) => {
+            if keyword == "FULL JOIN" {
+              found = Some("FULL JOIN")
+            }
+          }
+          Clause.Returning(_) => {
+            found = Some("RETURNING")
+          }
+          Clause.OnConflictDoNothing(_) => {
+            found = Some("ON CONFLICT DO NOTHING")
+          }
+          _ => {}
+        }
+      }
+    }
+    found
+  }
+
+  static fn emit(clauses: List<Clause>, dialect: Dialect) -> Result<ParseResult, ParseError> {
     let plain = Render.query(clauses, dialect, 0, false)
     let inlined = Render.query(clauses, dialect, 0, true)
     Ok(
@@ -408,6 +454,13 @@ pub class Query {
 /// Semua fungsi render. Menyatu dengan AST karena subquery membutuhkan
 /// `Render.expr` (Node) dan `Render.query` (Query) saling memanggil.
 class Render {
+  static fn is_postgres(dialect: Dialect) -> Bool {
+    match dialect {
+      Dialect.Postgres => true
+      Dialect.MySql => false
+    }
+  }
+
   static fn quote(dialect: Dialect) -> Str {
     match dialect {
       Dialect.Postgres => `"`
@@ -531,7 +584,7 @@ class Render {
   ) -> Rendered {
     let l = Render.expr(left, dialect, base, inline)
     let p = Render.expr(pattern, dialect, base + l.params.len(), inline)
-    let operator = if insensitive { "ILIKE" } else { "LIKE" }
+    let operator = if insensitive && Render.is_postgres(dialect) { "ILIKE" } else { "LIKE" }
     Rendered(text: `${l.text} ${operator} ${p.text}`, params: l.params.concat(p.params))
   }
 
@@ -792,10 +845,11 @@ class Render {
     let mut params: List<Value> = []
     for row in rows {
       let items = Render.list(row, dialect, base + params.len(), inline, ", ")
+      let prefix = if Render.is_postgres(dialect) { "" } else { "ROW " }
       if text == "" {
-        text = `( ${items.text} )`
+        text = `${prefix}( ${items.text} )`
       } else {
-        text = `${text}, ( ${items.text} )`
+        text = `${text}, ${prefix}( ${items.text} )`
       }
       params = params.concat(items.params)
     }

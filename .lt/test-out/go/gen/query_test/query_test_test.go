@@ -262,3 +262,72 @@ func TestInSubqueryAndCte(t *testing.T) {
 		panic("unreachable")
 	}
 }
+
+func TestMysqlPlaceholdersAndRow(t *testing.T) {
+	__match19 := m1.QueryCreate().Values(lt.NewList([]lt.List[m1.Node]{lt.NewList([]m1.Node{m1.NodeStr("a"), m1.NodeInt(int64(1))})})).SetDialect("mysql").Parse()
+	switch __match19.Tag {
+	case "ok":
+		result := __match19.Values[0].(m1.ParseResult)
+		lt.ExpectEqual(result.Sql, "VALUES ROW ( ?, ? )")
+		lt.ExpectEqual(result.SqlWithParam, "VALUES ROW ( 'a', 1 )")
+	case "err":
+		error := __match19.Values[0].(lt.Variant)
+		_ = error
+		lt.ExpectEqual("no error", "parse failed")
+	default:
+		panic("unreachable")
+	}
+	__match20 := m1.QueryCreate().Select(lt.NewList([]m1.Node{m1.NodeCol("id")})).Where(lt.NewList([]m1.Node{m1.NodeCol("x").Ilike(m1.NodeStr("a%"))})).SetDialect("mysql").Parse()
+	switch __match20.Tag {
+	case "ok":
+		result := __match20.Values[0].(m1.ParseResult)
+		lt.ExpectEqual(result.Sql, "SELECT `id` WHERE `x` LIKE ?")
+	case "err":
+		error := __match20.Values[0].(lt.Variant)
+		_ = error
+		lt.ExpectEqual("no error", "parse failed")
+	default:
+		panic("unreachable")
+	}
+}
+
+func TestMysqlRejectsUnmappedFeatures(t *testing.T) {
+	__match21 := m1.QueryCreate().Select(lt.NewList([]m1.Node{m1.NodeCol("a")})).FromTable(m1.NodeTable("t")).FullJoin(m1.NodeTable("u"), lt.NewList([]m1.Node{m1.NodeCol("t.x").Eq(m1.NodeCol("u.x"))})).SetDialect("mysql").Parse()
+	switch __match21.Tag {
+	case "ok":
+		result := __match21.Values[0].(m1.ParseResult)
+		_ = result
+		lt.ExpectEqual("no error", "parse succeeded")
+	case "err":
+		error := __match21.Values[0].(lt.Variant)
+		__match22 := error
+		switch __match22.Tag {
+		case "Unsupported":
+			message := __match22.Values[0].(string)
+			lt.ExpectEqual(message, "FULL JOIN is not supported by mysql")
+		default:
+			lt.ExpectEqual("Unsupported", "other error")
+		}
+	default:
+		panic("unreachable")
+	}
+	__match23 := m1.QueryCreate().Insert(m1.NodeTable("t"), lt.NewList([]m1.Assignment{m1.AssignmentInt("a", int64(1))})).Returning(lt.NewList([]m1.Node{m1.NodeCol("id")})).SetDialect("mysql").Parse()
+	switch __match23.Tag {
+	case "ok":
+		result := __match23.Values[0].(m1.ParseResult)
+		_ = result
+		lt.ExpectEqual("no error", "parse succeeded")
+	case "err":
+		error := __match23.Values[0].(lt.Variant)
+		__match24 := error
+		switch __match24.Tag {
+		case "Unsupported":
+			message := __match24.Values[0].(string)
+			lt.ExpectEqual(message, "RETURNING is not supported by mysql")
+		default:
+			lt.ExpectEqual("Unsupported", "other error")
+		}
+	default:
+		panic("unreachable")
+	}
+}

@@ -308,13 +308,17 @@ export function Clause_display(value: Clause): string {
 export type ParseError =
   | { readonly tag: "NoDialect"; readonly values: readonly []; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "UnsupportedDialect"; readonly values: readonly [string]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
+  | { readonly tag: "Unsupported"; readonly values: readonly [string]; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
   | { readonly tag: "EmptyQuery"; readonly values: readonly []; readonly __lt_display: (value: any) => string; readonly __lt_order: number }
 
 export const ParseError_NoDialect: ParseError = { tag: "NoDialect", values: [], __lt_order: 0, __lt_display: ParseError_display };
 export function ParseError_UnsupportedDialect(_0: string): ParseError {
   return { tag: "UnsupportedDialect", values: [_0], __lt_order: 1, __lt_display: ParseError_display };
 }
-export const ParseError_EmptyQuery: ParseError = { tag: "EmptyQuery", values: [], __lt_order: 2, __lt_display: ParseError_display };
+export function ParseError_Unsupported(_0: string): ParseError {
+  return { tag: "Unsupported", values: [_0], __lt_order: 2, __lt_display: ParseError_display };
+}
+export const ParseError_EmptyQuery: ParseError = { tag: "EmptyQuery", values: [], __lt_order: 3, __lt_display: ParseError_display };
 export function ParseError_display(value: ParseError): string {
   switch (value.tag) {
     case "NoDialect": {
@@ -322,6 +326,9 @@ export function ParseError_display(value: ParseError): string {
     }
     case "UnsupportedDialect": {
       return `ParseError.UnsupportedDialect(${lt.disp(value.values[0])})`;
+    }
+    case "Unsupported": {
+      return `ParseError.Unsupported(${lt.disp(value.values[0])})`;
     }
     case "EmptyQuery": {
       return "ParseError.EmptyQuery";
@@ -712,6 +719,10 @@ export class Query {
     return this.add(Clause_Join("CROSS JOIN", table, on));
   }
 
+  fullJoin(table: Node, on: lt.LList<Node>): Query {
+    return this.add(Clause_Join("FULL JOIN", table, on));
+  }
+
   withCte(statement: Query, alias: string): Query {
     return this.add(Clause_With(statement, alias));
   }
@@ -753,6 +764,70 @@ export class Query {
     if (lt.eq(clauses.len(), 0n)) {
       return lt.Err(ParseError_EmptyQuery);
     }
+    const unsupported: lt.Opt<string> = Query.unsupported(clauses, dialect);
+    const __match3 = unsupported;
+    switch (__match3.tag) {
+      case "some": {
+        const feature: string = __match3.values[0];
+        return lt.Err(ParseError_Unsupported("" + lt.disp(feature) + " is not supported by mysql"));
+      }
+      case "none": {
+        return Query.emit(clauses, dialect);
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  }
+
+  static unsupported(clauses: lt.LList<Clause>, dialect: Dialect): lt.Opt<string> {
+    let __match4: boolean;
+    const __match5 = dialect;
+    switch (__match5.tag) {
+      case "Postgres": {
+        __match4 = false;
+        break;
+      }
+      case "MySql": {
+        __match4 = true;
+        break;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+    const mysql: boolean = __match4;
+    if (!(mysql)) {
+      return lt.None();
+    }
+    let found: lt.Opt<string> = lt.None();
+    for (const clause of clauses.items) {
+      if (lt.optIsNone(found)) {
+        const __match6 = clause;
+        switch (__match6.tag) {
+          case "Join": {
+            const keyword: string = __match6.values[0];
+            if (lt.eq(keyword, "FULL JOIN")) {
+              found = lt.Some("FULL JOIN");
+            }
+            break;
+          }
+          case "Returning": {
+            found = lt.Some("RETURNING");
+            break;
+          }
+          case "OnConflictDoNothing": {
+            found = lt.Some("ON CONFLICT DO NOTHING");
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+    return found;
+  }
+
+  static emit(clauses: lt.LList<Clause>, dialect: Dialect): lt.Res<ParseResult, ParseError> {
     const plain: Rendered = Render.query(clauses, dialect, 0n, false);
     const inlined: Rendered = Render.query(clauses, dialect, 0n, true);
     return lt.Ok(new ParseResult({ sql: plain.text, param: plain.params, sqlWithParam: inlined.text }));
@@ -780,9 +855,23 @@ export class Query {
 
 export class Render {
 
+  static isPostgres(dialect: Dialect): boolean {
+    const __match7 = dialect;
+    switch (__match7.tag) {
+      case "Postgres": {
+        return true;
+      }
+      case "MySql": {
+        return false;
+      }
+      default:
+        throw new Error("unreachable");
+    }
+  }
+
   static quote(dialect: Dialect): string {
-    const __match3 = dialect;
-    switch (__match3.tag) {
+    const __match8 = dialect;
+    switch (__match8.tag) {
       case "Postgres": {
         return "\"";
       }
@@ -802,13 +891,13 @@ export class Render {
   }
 
   static literal(value: m1.Value): string {
-    const __match4 = value;
-    switch (__match4.tag) {
+    const __match9 = value;
+    switch (__match9.tag) {
       case "Null": {
         return "NULL";
       }
       case "Bool": {
-        const flag: boolean = __match4.values[0];
+        const flag: boolean = __match9.values[0];
         if (flag) {
           return "TRUE";
         } else {
@@ -816,15 +905,15 @@ export class Render {
         }
       }
       case "Int": {
-        const number: bigint = __match4.values[0];
+        const number: bigint = __match9.values[0];
         return "" + lt.disp(number);
       }
       case "Float": {
-        const number: number = __match4.values[0];
+        const number: number = __match9.values[0];
         return "" + lt.disp(number);
       }
       case "Str": {
-        const text: string = __match4.values[0];
+        const text: string = __match9.values[0];
         return "'" + lt.disp(lt.strReplace(text, "'", "''")) + "'";
       }
       default:
@@ -833,8 +922,8 @@ export class Render {
   }
 
   static placeholder(index: bigint, dialect: Dialect): string {
-    const __match5 = dialect;
-    switch (__match5.tag) {
+    const __match10 = dialect;
+    switch (__match10.tag) {
       case "Postgres": {
         return "$" + lt.disp(index);
       }
@@ -847,107 +936,107 @@ export class Render {
   }
 
   static expr(node: Node, dialect: Dialect, base: bigint, inline: boolean): Rendered {
-    const __match6 = node.kind;
-    switch (__match6.tag) {
+    const __match11 = node.kind;
+    switch (__match11.tag) {
       case "Column": {
-        const name: string = __match6.values[0];
+        const name: string = __match11.values[0];
         return new Rendered({ text: Render.ident(name, dialect), params: new lt.LList<m1.Value>([]) });
       }
       case "Table": {
-        const name: string = __match6.values[0];
+        const name: string = __match11.values[0];
         return new Rendered({ text: Render.ident(name, dialect), params: new lt.LList<m1.Value>([]) });
       }
       case "Raw": {
-        const text: string = __match6.values[0];
+        const text: string = __match11.values[0];
         return new Rendered({ text: text, params: new lt.LList<m1.Value>([]) });
       }
       case "Lit": {
-        const value: m1.Value = __match6.values[0];
+        const value: m1.Value = __match11.values[0];
         return Render.lit(value, dialect, base, inline);
       }
       case "Binary": {
-        const operator: string = __match6.values[0];
-        const left: Node = __match6.values[1];
-        const right: Node = __match6.values[2];
+        const operator: string = __match11.values[0];
+        const left: Node = __match11.values[1];
+        const right: Node = __match11.values[2];
         return Render.binary(operator, left, right, dialect, base, inline);
       }
       case "Between": {
-        const left: Node = __match6.values[0];
-        const low: Node = __match6.values[1];
-        const high: Node = __match6.values[2];
+        const left: Node = __match11.values[0];
+        const low: Node = __match11.values[1];
+        const high: Node = __match11.values[2];
         return Render.between(left, low, high, dialect, base, inline);
       }
       case "Like": {
-        const left: Node = __match6.values[0];
-        const pattern: Node = __match6.values[1];
-        const insensitive: boolean = __match6.values[2];
+        const left: Node = __match11.values[0];
+        const pattern: Node = __match11.values[1];
+        const insensitive: boolean = __match11.values[2];
         return Render.like(left, pattern, insensitive, dialect, base, inline);
       }
       case "InText": {
-        const left: Node = __match6.values[0];
-        const text: string = __match6.values[1];
+        const left: Node = __match11.values[0];
+        const text: string = __match11.values[1];
         return Render.inText(left, text, dialect, base, inline);
       }
       case "InList": {
-        const left: Node = __match6.values[0];
-        const values: lt.LList<Node> = __match6.values[1];
+        const left: Node = __match11.values[0];
+        const values: lt.LList<Node> = __match11.values[1];
         return Render.inList(left, values, dialect, base, inline);
       }
       case "InQuery": {
-        const left: Node = __match6.values[0];
-        const query: Query = __match6.values[1];
+        const left: Node = __match11.values[0];
+        const query: Query = __match11.values[1];
         return Render.inQuery(left, query, dialect, base, inline);
       }
       case "Exists": {
-        const query: Query = __match6.values[0];
+        const query: Query = __match11.values[0];
         const inner: Rendered = Render.query(query.clauses, dialect, base, inline);
         return new Rendered({ text: "EXISTS (" + lt.disp(inner.text) + ")", params: inner.params });
       }
       case "Subquery": {
-        const query: Query = __match6.values[0];
+        const query: Query = __match11.values[0];
         const inner: Rendered = Render.query(query.clauses, dialect, base, inline);
         return new Rendered({ text: "(" + lt.disp(inner.text) + ")", params: inner.params });
       }
       case "And": {
-        const items: lt.LList<Node> = __match6.values[0];
+        const items: lt.LList<Node> = __match11.values[0];
         return Render.chain(items, "AND", dialect, base, inline);
       }
       case "Or": {
-        const items: lt.LList<Node> = __match6.values[0];
+        const items: lt.LList<Node> = __match11.values[0];
         return Render.chain(items, "OR", dialect, base, inline);
       }
       case "Not": {
-        const inner: Node = __match6.values[0];
+        const inner: Node = __match11.values[0];
         const rendered: Rendered = Render.expr(inner, dialect, base, inline);
         return new Rendered({ text: "NOT ( " + lt.disp(rendered.text) + " )", params: rendered.params });
       }
       case "IsNull": {
-        const inner: Node = __match6.values[0];
+        const inner: Node = __match11.values[0];
         const rendered: Rendered = Render.expr(inner, dialect, base, inline);
         return new Rendered({ text: "" + lt.disp(rendered.text) + " IS NULL", params: rendered.params });
       }
       case "IsNotNull": {
-        const inner: Node = __match6.values[0];
+        const inner: Node = __match11.values[0];
         const rendered: Rendered = Render.expr(inner, dialect, base, inline);
         return new Rendered({ text: "" + lt.disp(rendered.text) + " IS NOT NULL", params: rendered.params });
       }
       case "Alias": {
-        const inner: Node = __match6.values[0];
-        const name: string = __match6.values[1];
+        const inner: Node = __match11.values[0];
+        const name: string = __match11.values[1];
         const rendered: Rendered = Render.expr(inner, dialect, base, inline);
         return new Rendered({ text: "" + lt.disp(rendered.text) + " AS " + lt.disp(Render.ident(name, dialect)), params: rendered.params });
       }
       case "Order": {
-        const inner: Node = __match6.values[0];
-        const descending: boolean = __match6.values[1];
+        const inner: Node = __match11.values[0];
+        const descending: boolean = __match11.values[1];
         const rendered: Rendered = Render.expr(inner, dialect, base, inline);
-        let __if7: string;
+        let __if12: string;
         if (descending) {
-          __if7 = "DESC";
+          __if12 = "DESC";
         } else {
-          __if7 = "ASC";
+          __if12 = "ASC";
         }
-        const direction: string = __if7;
+        const direction: string = __if12;
         return new Rendered({ text: "" + lt.disp(rendered.text) + " " + lt.disp(direction), params: rendered.params });
       }
       default:
@@ -957,13 +1046,13 @@ export class Render {
 
   static lit(value: m1.Value, dialect: Dialect, base: bigint, inline: boolean): Rendered {
     const index: bigint = lt.iadd(base, 1n);
-    let __if8: string;
+    let __if13: string;
     if (inline) {
-      __if8 = Render.literal(value);
+      __if13 = Render.literal(value);
     } else {
-      __if8 = Render.placeholder(index, dialect);
+      __if13 = Render.placeholder(index, dialect);
     }
-    const text: string = __if8;
+    const text: string = __if13;
     return new Rendered({ text: text, params: new lt.LList<m1.Value>([value]) });
   }
 
@@ -977,13 +1066,13 @@ export class Render {
   static like(left: Node, pattern: Node, insensitive: boolean, dialect: Dialect, base: bigint, inline: boolean): Rendered {
     const l: Rendered = Render.expr(left, dialect, base, inline);
     const p: Rendered = Render.expr(pattern, dialect, lt.iadd(base, l.params.len()), inline);
-    let __if9: string;
-    if (insensitive) {
-      __if9 = "ILIKE";
+    let __if14: string;
+    if ((insensitive && Render.isPostgres(dialect))) {
+      __if14 = "ILIKE";
     } else {
-      __if9 = "LIKE";
+      __if14 = "LIKE";
     }
-    const operator: string = __if9;
+    const operator: string = __if14;
     return new Rendered({ text: "" + lt.disp(l.text) + " " + lt.disp(operator) + " " + lt.disp(p.text), params: l.params.concat(p.params) });
   }
 
@@ -1047,89 +1136,89 @@ export class Render {
   }
 
   static clause(clause: Clause, dialect: Dialect, base: bigint, inline: boolean): Rendered {
-    const __match10 = clause;
-    switch (__match10.tag) {
+    const __match15 = clause;
+    switch (__match15.tag) {
       case "Select": {
-        const columns: lt.LList<Node> = __match10.values[0];
+        const columns: lt.LList<Node> = __match15.values[0];
         return Render.keyword("SELECT", Render.list(columns, dialect, base, inline, ", "));
       }
       case "From": {
-        const table: Node = __match10.values[0];
+        const table: Node = __match15.values[0];
         return Render.keyword("FROM", Render.expr(table, dialect, base, inline));
       }
       case "Where": {
-        const conditions: lt.LList<Node> = __match10.values[0];
+        const conditions: lt.LList<Node> = __match15.values[0];
         return Render.keyword("WHERE", Render.list(conditions, dialect, base, inline, " AND "));
       }
       case "OrderBy": {
-        const columns: lt.LList<Node> = __match10.values[0];
+        const columns: lt.LList<Node> = __match15.values[0];
         return Render.keyword("ORDER BY", Render.list(columns, dialect, base, inline, ", "));
       }
       case "Limit": {
-        const count: Node = __match10.values[0];
+        const count: Node = __match15.values[0];
         return Render.keyword("LIMIT", Render.expr(count, dialect, base, inline));
       }
       case "Offset": {
-        const count: Node = __match10.values[0];
+        const count: Node = __match15.values[0];
         return Render.keyword("OFFSET", Render.expr(count, dialect, base, inline));
       }
       case "Raw": {
-        const text: string = __match10.values[0];
+        const text: string = __match15.values[0];
         return new Rendered({ text: text, params: new lt.LList<m1.Value>([]) });
       }
       case "Update": {
-        const table: Node = __match10.values[0];
-        const assignments: lt.LList<Assignment> = __match10.values[1];
+        const table: Node = __match15.values[0];
+        const assignments: lt.LList<Assignment> = __match15.values[1];
         return Render.keyword("UPDATE", Render.then(Render.expr(table, dialect, base, inline), Render.keyword("SET", Render.assignments(assignments, dialect, base, inline))));
       }
       case "Insert": {
-        const table: Node = __match10.values[0];
-        const assignments: lt.LList<Assignment> = __match10.values[1];
+        const table: Node = __match15.values[0];
+        const assignments: lt.LList<Assignment> = __match15.values[1];
         return Render.insertClause(table, assignments, dialect, base, inline);
       }
       case "Delete": {
-        const table: Node = __match10.values[0];
+        const table: Node = __match15.values[0];
         return Render.keyword("DELETE FROM", Render.expr(table, dialect, base, inline));
       }
       case "Set": {
-        const assignments: lt.LList<Assignment> = __match10.values[0];
+        const assignments: lt.LList<Assignment> = __match15.values[0];
         return Render.keyword("SET", Render.assignments(assignments, dialect, base, inline));
       }
       case "Values": {
-        const rows: lt.LList<lt.LList<Node>> = __match10.values[0];
+        const rows: lt.LList<lt.LList<Node>> = __match15.values[0];
         return Render.keyword("VALUES", Render.rows(rows, dialect, base, inline));
       }
       case "Returning": {
-        const columns: lt.LList<Node> = __match10.values[0];
+        const columns: lt.LList<Node> = __match15.values[0];
         return Render.keyword("RETURNING", Render.list(columns, dialect, base, inline, ", "));
       }
       case "GroupBy": {
-        const columns: lt.LList<Node> = __match10.values[0];
+        const columns: lt.LList<Node> = __match15.values[0];
         return Render.keyword("GROUP BY", Render.list(columns, dialect, base, inline, ", "));
       }
       case "Having": {
-        const conditions: lt.LList<Node> = __match10.values[0];
+        const conditions: lt.LList<Node> = __match15.values[0];
         return Render.keyword("HAVING", Render.list(conditions, dialect, base, inline, " AND "));
       }
       case "Join": {
-        const keyword: string = __match10.values[0];
-        const table: Node = __match10.values[1];
-        const on: lt.LList<Node> = __match10.values[2];
+        const keyword: string = __match15.values[0];
+        const table: Node = __match15.values[1];
+        const on: lt.LList<Node> = __match15.values[2];
         return Render.keyword(keyword, Render.then(Render.expr(table, dialect, base, inline), Render.keyword("ON", Render.list(on, dialect, base, inline, " AND "))));
       }
       case "With": {
-        const statement: Query = __match10.values[0];
-        const alias: string = __match10.values[1];
+        const statement: Query = __match15.values[0];
+        const alias: string = __match15.values[1];
         const inner: Rendered = Render.query(statement.clauses, dialect, base, inline);
         return new Rendered({ text: "WITH " + lt.disp(Render.ident(alias, dialect)) + " AS (" + lt.disp(inner.text) + ")", params: inner.params });
       }
       case "OnConflictDoNothing": {
-        const target: Node = __match10.values[0];
+        const target: Node = __match15.values[0];
         return Render.keyword("ON CONFLICT", Render.then(Render.parenthesisedIdent(target, dialect), new Rendered({ text: "DO NOTHING", params: new lt.LList<m1.Value>([]) })));
       }
       case "OnConflictDoUpdate": {
-        const target: Node = __match10.values[0];
-        const assignments: lt.LList<Assignment> = __match10.values[1];
+        const target: Node = __match15.values[0];
+        const assignments: lt.LList<Assignment> = __match15.values[1];
         return Render.keyword("ON CONFLICT", Render.then(Render.parenthesisedIdent(target, dialect), Render.keyword("DO UPDATE SET", Render.assignments(assignments, dialect, base, inline))));
       }
       default:
@@ -1180,10 +1269,17 @@ export class Render {
     let params: lt.LList<m1.Value> = new lt.LList<m1.Value>([]);
     for (const row of rows.items) {
       const items: Rendered = Render.list(row, dialect, lt.iadd(base, params.len()), inline, ", ");
-      if (lt.eq(text, "")) {
-        text = "( " + lt.disp(items.text) + " )";
+      let __if16: string;
+      if (Render.isPostgres(dialect)) {
+        __if16 = "";
       } else {
-        text = "" + lt.disp(text) + ", ( " + lt.disp(items.text) + " )";
+        __if16 = "ROW ";
+      }
+      const prefix: string = __if16;
+      if (lt.eq(text, "")) {
+        text = "" + lt.disp(prefix) + "( " + lt.disp(items.text) + " )";
+      } else {
+        text = "" + lt.disp(text) + ", " + lt.disp(prefix) + "( " + lt.disp(items.text) + " )";
       }
       params = params.concat(items.params);
     }
@@ -1191,18 +1287,18 @@ export class Render {
   }
 
   static parenthesisedIdent(node: Node, dialect: Dialect): Rendered {
-    const __match11 = node.kind;
-    switch (__match11.tag) {
+    const __match17 = node.kind;
+    switch (__match17.tag) {
       case "Column": {
-        const name: string = __match11.values[0];
+        const name: string = __match17.values[0];
         return new Rendered({ text: "(" + lt.disp(Render.ident(name, dialect)) + ")", params: new lt.LList<m1.Value>([]) });
       }
       case "Table": {
-        const name: string = __match11.values[0];
+        const name: string = __match17.values[0];
         return new Rendered({ text: "(" + lt.disp(Render.ident(name, dialect)) + ")", params: new lt.LList<m1.Value>([]) });
       }
       case "Raw": {
-        const text: string = __match11.values[0];
+        const text: string = __match17.values[0];
         return new Rendered({ text: "(" + lt.disp(text) + ")", params: new lt.LList<m1.Value>([]) });
       }
       default: {

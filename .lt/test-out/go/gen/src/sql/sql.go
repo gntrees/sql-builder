@@ -266,7 +266,11 @@ func ParseErrorUnsupportedDialect(_0 string) lt.Variant {
 	return lt.Variant{Tag: "UnsupportedDialect", Order: 1, Values: []any{_0}, Display: ParseErrorDisplay}
 }
 
-var ParseErrorEmptyQuery = lt.Variant{Tag: "EmptyQuery", Order: 2, Display: ParseErrorDisplay}
+func ParseErrorUnsupported(_0 string) lt.Variant {
+	return lt.Variant{Tag: "Unsupported", Order: 2, Values: []any{_0}, Display: ParseErrorDisplay}
+}
+
+var ParseErrorEmptyQuery = lt.Variant{Tag: "EmptyQuery", Order: 3, Display: ParseErrorDisplay}
 
 func ParseErrorDisplay(value lt.Variant) string {
 	switch value.Tag {
@@ -274,6 +278,8 @@ func ParseErrorDisplay(value lt.Variant) string {
 		return "ParseError.NoDialect"
 	case "UnsupportedDialect":
 		return "ParseError.UnsupportedDialect(" + lt.Disp(value.Values[0]) + ")"
+	case "Unsupported":
+		return "ParseError.Unsupported(" + lt.Disp(value.Values[0]) + ")"
 	case "EmptyQuery":
 		return "ParseError.EmptyQuery"
 	}
@@ -700,6 +706,10 @@ func (self Query) CrossJoin(table Node, on lt.List[Node]) Query {
 	return self.Add(ClauseJoin("CROSS JOIN", table, on))
 }
 
+func (self Query) FullJoin(table Node, on lt.List[Node]) Query {
+	return self.Add(ClauseJoin("FULL JOIN", table, on))
+}
+
 func (self Query) WithCte(statement Query, alias string) Query {
 	return self.Add(ClauseWith(statement, alias))
 }
@@ -739,6 +749,56 @@ func QueryFinish(clauses lt.List[lt.Variant], dialect lt.Variant) lt.Variant {
 	if lt.Eq(clauses.Len(), int64(0)) {
 		return lt.Err(ParseErrorEmptyQuery)
 	}
+	unsupported := QueryUnsupported(clauses, dialect)
+	__match3 := unsupported
+	switch __match3.Tag {
+	case "some":
+		feature := __match3.Values[0].(string)
+		return lt.Err(ParseErrorUnsupported("" + lt.Disp(feature) + " is not supported by mysql"))
+	case "none":
+		return QueryEmit(clauses, dialect)
+	default:
+		panic("unreachable")
+	}
+}
+
+func QueryUnsupported(clauses lt.List[lt.Variant], dialect lt.Variant) lt.Variant {
+	var __match4 bool
+	__match5 := dialect
+	switch __match5.Tag {
+	case "Postgres":
+		__match4 = false
+	case "MySql":
+		__match4 = true
+	default:
+		panic("unreachable")
+	}
+	mysql := __match4
+	if !mysql {
+		return lt.None()
+	}
+	found := lt.None()
+	for _, clause := range clauses.Items {
+		if lt.OptIsNone(found) {
+			__match6 := clause
+			switch __match6.Tag {
+			case "Join":
+				keyword := __match6.Values[0].(string)
+				if lt.Eq(keyword, "FULL JOIN") {
+					found = lt.Some("FULL JOIN")
+				}
+			case "Returning":
+				found = lt.Some("RETURNING")
+			case "OnConflictDoNothing":
+				found = lt.Some("ON CONFLICT DO NOTHING")
+			default:
+			}
+		}
+	}
+	return found
+}
+
+func QueryEmit(clauses lt.List[lt.Variant], dialect lt.Variant) lt.Variant {
 	plain := RenderQuery(clauses, dialect, int64(0), false)
 	inlined := RenderQuery(clauses, dialect, int64(0), true)
 	return lt.Ok(NewParseResult(plain.Text, plain.Params, inlined.Text))
@@ -778,9 +838,21 @@ func NewRender() Render {
 	return Render{}
 }
 
+func RenderIsPostgres(dialect lt.Variant) bool {
+	__match7 := dialect
+	switch __match7.Tag {
+	case "Postgres":
+		return true
+	case "MySql":
+		return false
+	default:
+		panic("unreachable")
+	}
+}
+
 func RenderQuote(dialect lt.Variant) string {
-	__match3 := dialect
-	switch __match3.Tag {
+	__match8 := dialect
+	switch __match8.Tag {
 	case "Postgres":
 		return "\""
 	case "MySql":
@@ -798,25 +870,25 @@ func RenderIdent(name string, dialect lt.Variant) string {
 }
 
 func RenderLiteral(value lt.Variant) string {
-	__match4 := value
-	switch __match4.Tag {
+	__match9 := value
+	switch __match9.Tag {
 	case "Null":
 		return "NULL"
 	case "Bool":
-		flag := __match4.Values[0].(bool)
+		flag := __match9.Values[0].(bool)
 		if flag {
 			return "TRUE"
 		} else {
 			return "FALSE"
 		}
 	case "Int":
-		number := __match4.Values[0].(int64)
+		number := __match9.Values[0].(int64)
 		return "" + lt.Disp(number)
 	case "Float":
-		number := __match4.Values[0].(float64)
+		number := __match9.Values[0].(float64)
 		return "" + lt.Disp(number)
 	case "Str":
-		text := __match4.Values[0].(string)
+		text := __match9.Values[0].(string)
 		return "'" + lt.Disp(lt.StrReplace(text, "'", "''")) + "'"
 	default:
 		panic("unreachable")
@@ -824,8 +896,8 @@ func RenderLiteral(value lt.Variant) string {
 }
 
 func RenderPlaceholder(index int64, dialect lt.Variant) string {
-	__match5 := dialect
-	switch __match5.Tag {
+	__match10 := dialect
+	switch __match10.Tag {
 	case "Postgres":
 		return "$" + lt.Disp(index)
 	case "MySql":
@@ -836,89 +908,89 @@ func RenderPlaceholder(index int64, dialect lt.Variant) string {
 }
 
 func RenderExpr(node Node, dialect lt.Variant, base int64, inline bool) Rendered {
-	__match6 := node.Kind
-	switch __match6.Tag {
+	__match11 := node.Kind
+	switch __match11.Tag {
 	case "Column":
-		name := __match6.Values[0].(string)
+		name := __match11.Values[0].(string)
 		return NewRendered(RenderIdent(name, dialect), lt.NewList([]lt.Variant{}))
 	case "Table":
-		name := __match6.Values[0].(string)
+		name := __match11.Values[0].(string)
 		return NewRendered(RenderIdent(name, dialect), lt.NewList([]lt.Variant{}))
 	case "Raw":
-		text := __match6.Values[0].(string)
+		text := __match11.Values[0].(string)
 		return NewRendered(text, lt.NewList([]lt.Variant{}))
 	case "Lit":
-		value := __match6.Values[0].(lt.Variant)
+		value := __match11.Values[0].(lt.Variant)
 		return RenderLit(value, dialect, base, inline)
 	case "Binary":
-		operator := __match6.Values[0].(string)
-		left := __match6.Values[1].(Node)
-		right := __match6.Values[2].(Node)
+		operator := __match11.Values[0].(string)
+		left := __match11.Values[1].(Node)
+		right := __match11.Values[2].(Node)
 		return RenderBinary(operator, left, right, dialect, base, inline)
 	case "Between":
-		left := __match6.Values[0].(Node)
-		low := __match6.Values[1].(Node)
-		high := __match6.Values[2].(Node)
+		left := __match11.Values[0].(Node)
+		low := __match11.Values[1].(Node)
+		high := __match11.Values[2].(Node)
 		return RenderBetween(left, low, high, dialect, base, inline)
 	case "Like":
-		left := __match6.Values[0].(Node)
-		pattern := __match6.Values[1].(Node)
-		insensitive := __match6.Values[2].(bool)
+		left := __match11.Values[0].(Node)
+		pattern := __match11.Values[1].(Node)
+		insensitive := __match11.Values[2].(bool)
 		return RenderLike(left, pattern, insensitive, dialect, base, inline)
 	case "InText":
-		left := __match6.Values[0].(Node)
-		text := __match6.Values[1].(string)
+		left := __match11.Values[0].(Node)
+		text := __match11.Values[1].(string)
 		return RenderInText(left, text, dialect, base, inline)
 	case "InList":
-		left := __match6.Values[0].(Node)
-		values := __match6.Values[1].(lt.List[Node])
+		left := __match11.Values[0].(Node)
+		values := __match11.Values[1].(lt.List[Node])
 		return RenderInList(left, values, dialect, base, inline)
 	case "InQuery":
-		left := __match6.Values[0].(Node)
-		query := __match6.Values[1].(Query)
+		left := __match11.Values[0].(Node)
+		query := __match11.Values[1].(Query)
 		return RenderInQuery(left, query, dialect, base, inline)
 	case "Exists":
-		query := __match6.Values[0].(Query)
+		query := __match11.Values[0].(Query)
 		inner := RenderQuery(query.Clauses, dialect, base, inline)
 		return NewRendered("EXISTS ("+lt.Disp(inner.Text)+")", inner.Params)
 	case "Subquery":
-		query := __match6.Values[0].(Query)
+		query := __match11.Values[0].(Query)
 		inner := RenderQuery(query.Clauses, dialect, base, inline)
 		return NewRendered("("+lt.Disp(inner.Text)+")", inner.Params)
 	case "And":
-		items := __match6.Values[0].(lt.List[Node])
+		items := __match11.Values[0].(lt.List[Node])
 		return RenderChain(items, "AND", dialect, base, inline)
 	case "Or":
-		items := __match6.Values[0].(lt.List[Node])
+		items := __match11.Values[0].(lt.List[Node])
 		return RenderChain(items, "OR", dialect, base, inline)
 	case "Not":
-		inner := __match6.Values[0].(Node)
+		inner := __match11.Values[0].(Node)
 		rendered := RenderExpr(inner, dialect, base, inline)
 		return NewRendered("NOT ( "+lt.Disp(rendered.Text)+" )", rendered.Params)
 	case "IsNull":
-		inner := __match6.Values[0].(Node)
+		inner := __match11.Values[0].(Node)
 		rendered := RenderExpr(inner, dialect, base, inline)
 		return NewRendered(""+lt.Disp(rendered.Text)+" IS NULL", rendered.Params)
 	case "IsNotNull":
-		inner := __match6.Values[0].(Node)
+		inner := __match11.Values[0].(Node)
 		rendered := RenderExpr(inner, dialect, base, inline)
 		return NewRendered(""+lt.Disp(rendered.Text)+" IS NOT NULL", rendered.Params)
 	case "Alias":
-		inner := __match6.Values[0].(Node)
-		name := __match6.Values[1].(string)
+		inner := __match11.Values[0].(Node)
+		name := __match11.Values[1].(string)
 		rendered := RenderExpr(inner, dialect, base, inline)
 		return NewRendered(""+lt.Disp(rendered.Text)+" AS "+lt.Disp(RenderIdent(name, dialect)), rendered.Params)
 	case "Order":
-		inner := __match6.Values[0].(Node)
-		descending := __match6.Values[1].(bool)
+		inner := __match11.Values[0].(Node)
+		descending := __match11.Values[1].(bool)
 		rendered := RenderExpr(inner, dialect, base, inline)
-		var __if7 string
+		var __if12 string
 		if descending {
-			__if7 = "DESC"
+			__if12 = "DESC"
 		} else {
-			__if7 = "ASC"
+			__if12 = "ASC"
 		}
-		direction := __if7
+		direction := __if12
 		return NewRendered(""+lt.Disp(rendered.Text)+" "+lt.Disp(direction), rendered.Params)
 	default:
 		panic("unreachable")
@@ -927,13 +999,13 @@ func RenderExpr(node Node, dialect lt.Variant, base int64, inline bool) Rendered
 
 func RenderLit(value lt.Variant, dialect lt.Variant, base int64, inline bool) Rendered {
 	index := (base + int64(1))
-	var __if8 string
+	var __if13 string
 	if inline {
-		__if8 = RenderLiteral(value)
+		__if13 = RenderLiteral(value)
 	} else {
-		__if8 = RenderPlaceholder(index, dialect)
+		__if13 = RenderPlaceholder(index, dialect)
 	}
-	text := __if8
+	text := __if13
 	return NewRendered(text, lt.NewList([]lt.Variant{value}))
 }
 
@@ -947,13 +1019,13 @@ func RenderBetween(left Node, low Node, high Node, dialect lt.Variant, base int6
 func RenderLike(left Node, pattern Node, insensitive bool, dialect lt.Variant, base int64, inline bool) Rendered {
 	l := RenderExpr(left, dialect, base, inline)
 	p := RenderExpr(pattern, dialect, (base + l.Params.Len()), inline)
-	var __if9 string
-	if insensitive {
-		__if9 = "ILIKE"
+	var __if14 string
+	if insensitive && RenderIsPostgres(dialect) {
+		__if14 = "ILIKE"
 	} else {
-		__if9 = "LIKE"
+		__if14 = "LIKE"
 	}
-	operator := __if9
+	operator := __if14
 	return NewRendered(""+lt.Disp(l.Text)+" "+lt.Disp(operator)+" "+lt.Disp(p.Text), l.Params.Concat(p.Params))
 }
 
@@ -1017,71 +1089,71 @@ func RenderQuery(clauses lt.List[lt.Variant], dialect lt.Variant, base int64, in
 }
 
 func RenderClause(clause lt.Variant, dialect lt.Variant, base int64, inline bool) Rendered {
-	__match10 := clause
-	switch __match10.Tag {
+	__match15 := clause
+	switch __match15.Tag {
 	case "Select":
-		columns := __match10.Values[0].(lt.List[Node])
+		columns := __match15.Values[0].(lt.List[Node])
 		return RenderKeyword("SELECT", RenderList(columns, dialect, base, inline, ", "))
 	case "From":
-		table := __match10.Values[0].(Node)
+		table := __match15.Values[0].(Node)
 		return RenderKeyword("FROM", RenderExpr(table, dialect, base, inline))
 	case "Where":
-		conditions := __match10.Values[0].(lt.List[Node])
+		conditions := __match15.Values[0].(lt.List[Node])
 		return RenderKeyword("WHERE", RenderList(conditions, dialect, base, inline, " AND "))
 	case "OrderBy":
-		columns := __match10.Values[0].(lt.List[Node])
+		columns := __match15.Values[0].(lt.List[Node])
 		return RenderKeyword("ORDER BY", RenderList(columns, dialect, base, inline, ", "))
 	case "Limit":
-		count := __match10.Values[0].(Node)
+		count := __match15.Values[0].(Node)
 		return RenderKeyword("LIMIT", RenderExpr(count, dialect, base, inline))
 	case "Offset":
-		count := __match10.Values[0].(Node)
+		count := __match15.Values[0].(Node)
 		return RenderKeyword("OFFSET", RenderExpr(count, dialect, base, inline))
 	case "Raw":
-		text := __match10.Values[0].(string)
+		text := __match15.Values[0].(string)
 		return NewRendered(text, lt.NewList([]lt.Variant{}))
 	case "Update":
-		table := __match10.Values[0].(Node)
-		assignments := __match10.Values[1].(lt.List[Assignment])
+		table := __match15.Values[0].(Node)
+		assignments := __match15.Values[1].(lt.List[Assignment])
 		return RenderKeyword("UPDATE", RenderThen(RenderExpr(table, dialect, base, inline), RenderKeyword("SET", RenderAssignments(assignments, dialect, base, inline))))
 	case "Insert":
-		table := __match10.Values[0].(Node)
-		assignments := __match10.Values[1].(lt.List[Assignment])
+		table := __match15.Values[0].(Node)
+		assignments := __match15.Values[1].(lt.List[Assignment])
 		return RenderInsertClause(table, assignments, dialect, base, inline)
 	case "Delete":
-		table := __match10.Values[0].(Node)
+		table := __match15.Values[0].(Node)
 		return RenderKeyword("DELETE FROM", RenderExpr(table, dialect, base, inline))
 	case "Set":
-		assignments := __match10.Values[0].(lt.List[Assignment])
+		assignments := __match15.Values[0].(lt.List[Assignment])
 		return RenderKeyword("SET", RenderAssignments(assignments, dialect, base, inline))
 	case "Values":
-		rows := __match10.Values[0].(lt.List[lt.List[Node]])
+		rows := __match15.Values[0].(lt.List[lt.List[Node]])
 		return RenderKeyword("VALUES", RenderRows(rows, dialect, base, inline))
 	case "Returning":
-		columns := __match10.Values[0].(lt.List[Node])
+		columns := __match15.Values[0].(lt.List[Node])
 		return RenderKeyword("RETURNING", RenderList(columns, dialect, base, inline, ", "))
 	case "GroupBy":
-		columns := __match10.Values[0].(lt.List[Node])
+		columns := __match15.Values[0].(lt.List[Node])
 		return RenderKeyword("GROUP BY", RenderList(columns, dialect, base, inline, ", "))
 	case "Having":
-		conditions := __match10.Values[0].(lt.List[Node])
+		conditions := __match15.Values[0].(lt.List[Node])
 		return RenderKeyword("HAVING", RenderList(conditions, dialect, base, inline, " AND "))
 	case "Join":
-		keyword := __match10.Values[0].(string)
-		table := __match10.Values[1].(Node)
-		on := __match10.Values[2].(lt.List[Node])
+		keyword := __match15.Values[0].(string)
+		table := __match15.Values[1].(Node)
+		on := __match15.Values[2].(lt.List[Node])
 		return RenderKeyword(keyword, RenderThen(RenderExpr(table, dialect, base, inline), RenderKeyword("ON", RenderList(on, dialect, base, inline, " AND "))))
 	case "With":
-		statement := __match10.Values[0].(Query)
-		alias := __match10.Values[1].(string)
+		statement := __match15.Values[0].(Query)
+		alias := __match15.Values[1].(string)
 		inner := RenderQuery(statement.Clauses, dialect, base, inline)
 		return NewRendered("WITH "+lt.Disp(RenderIdent(alias, dialect))+" AS ("+lt.Disp(inner.Text)+")", inner.Params)
 	case "OnConflictDoNothing":
-		target := __match10.Values[0].(Node)
+		target := __match15.Values[0].(Node)
 		return RenderKeyword("ON CONFLICT", RenderThen(RenderParenthesisedIdent(target, dialect), NewRendered("DO NOTHING", lt.NewList([]lt.Variant{}))))
 	case "OnConflictDoUpdate":
-		target := __match10.Values[0].(Node)
-		assignments := __match10.Values[1].(lt.List[Assignment])
+		target := __match15.Values[0].(Node)
+		assignments := __match15.Values[1].(lt.List[Assignment])
 		return RenderKeyword("ON CONFLICT", RenderThen(RenderParenthesisedIdent(target, dialect), RenderKeyword("DO UPDATE SET", RenderAssignments(assignments, dialect, base, inline))))
 	default:
 		panic("unreachable")
@@ -1131,10 +1203,17 @@ func RenderRows(rows lt.List[lt.List[Node]], dialect lt.Variant, base int64, inl
 	params := lt.NewList([]lt.Variant{})
 	for _, row := range rows.Items {
 		items := RenderList(row, dialect, (base + params.Len()), inline, ", ")
-		if lt.Eq(text, "") {
-			text = "( " + lt.Disp(items.Text) + " )"
+		var __if16 string
+		if RenderIsPostgres(dialect) {
+			__if16 = ""
 		} else {
-			text = "" + lt.Disp(text) + ", ( " + lt.Disp(items.Text) + " )"
+			__if16 = "ROW "
+		}
+		prefix := __if16
+		if lt.Eq(text, "") {
+			text = "" + lt.Disp(prefix) + "( " + lt.Disp(items.Text) + " )"
+		} else {
+			text = "" + lt.Disp(text) + ", " + lt.Disp(prefix) + "( " + lt.Disp(items.Text) + " )"
 		}
 		params = params.Concat(items.Params)
 	}
@@ -1142,16 +1221,16 @@ func RenderRows(rows lt.List[lt.List[Node]], dialect lt.Variant, base int64, inl
 }
 
 func RenderParenthesisedIdent(node Node, dialect lt.Variant) Rendered {
-	__match11 := node.Kind
-	switch __match11.Tag {
+	__match17 := node.Kind
+	switch __match17.Tag {
 	case "Column":
-		name := __match11.Values[0].(string)
+		name := __match17.Values[0].(string)
 		return NewRendered("("+lt.Disp(RenderIdent(name, dialect))+")", lt.NewList([]lt.Variant{}))
 	case "Table":
-		name := __match11.Values[0].(string)
+		name := __match17.Values[0].(string)
 		return NewRendered("("+lt.Disp(RenderIdent(name, dialect))+")", lt.NewList([]lt.Variant{}))
 	case "Raw":
-		text := __match11.Values[0].(string)
+		text := __match17.Values[0].(string)
 		return NewRendered("("+lt.Disp(text)+")", lt.NewList([]lt.Variant{}))
 	default:
 		return RenderExpr(node, dialect, int64(0), false)
