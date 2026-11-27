@@ -3,16 +3,23 @@
 Eksperimen: mengganti generator 15-bahasa dengan sumber tunggal `.lt` untuk
 tiga target yang benar-benar dipakai — TypeScript, Python, Go.
 
-Status: **slice 2**. Yang sudah ada: pemodelan nilai, AST bertipe, renderer
+Status: **slice 3**. Yang sudah ada: pemodelan nilai, AST bertipe, renderer
 Postgres + MySQL, query (`select`/`from`/`where`/`order by`/`limit`/`offset`/
-`raw`/`group by`/`having`/`join`), dan DML (`insert`/`update`/`delete`/`set`/
-`values`/`returning`/`on conflict`).
+`raw`/`group by`/`having`/`join`), DML (`insert`/`update`/`delete`/`set`/
+`values`/`returning`/`on conflict`), dan subquery (`exists`, `IN (SELECT ...)`,
+`WITH ... AS (...)`).
+
+Seluruh AST ada di satu modul, [`lt/src/sql.lt`](src/sql.lt), karena `Node`
+dan `Query` saling merujuk (subquery) sedangkan import melingkar dilarang.
+Modul lain: `value.lt` (enum `Value`) dan `index.lt` (entry point build).
 
 ## Perintah
 
 ```sh
 ./lt/build.sh    # emit ke generated/lt-sql-builder/{typescript,python,go}
-./lt/verify.sh   # build + tsc + mypy --strict + go vet/gofmt/test + differential
+./lt/test.sh     # emit + jalankan test class .lt di tiga target
+./lt/verify.sh   # build + test class + tsc + mypy --strict + go vet/gofmt/test
+                 # + differential + drift
 ./lt/check.sh    # build lalu gagal bila output yang di-commit berbeda
 ```
 
@@ -43,8 +50,8 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 - `mypy --strict` bersih pada paket Python,
 - `go vet` bersih, `gofmt -l` kosong, `go test` hijau pada paket Go,
 - setiap kasus di `tests/lt-differential.test.ts` menghasilkan `sql`, `param`,
-  dan `sqlWithParam` yang identik dengan implementasi legacy (21 kasus: query,
-  join, agregasi, DML, dan `on conflict`),
+  dan `sqlWithParam` yang identik dengan implementasi legacy (25 kasus: query,
+  join, agregasi, DML, `on conflict`, dan subquery),
 - `./lt/check.sh` lulus (tidak ada drift antara `.lt` dan output yang di-commit).
 
 ## Perbedaan yang disengaja dari API lama
@@ -58,6 +65,7 @@ Slice 1 dianggap selesai bila, untuk dialek Postgres:
 | `parse()` gagal | melempar exception | `Result<ParseResult, ParseError>` | LT tidak punya exception |
 | `sqlWithParam` untuk Float bulat | `1` | `1.0` | `Display` Float di LT membedakan `1` dan `1.0`; hanya memengaruhi string pratinjau |
 | Dua `where(...)` berturut-turut | `WHERE a WHERE b` | digabung dengan `AND` | perilaku lama adalah bug |
+| `WITH` | `with(sub, "alias")` | `with_cte(sub, "alias")` | `with` kata kunci di TS/Python, dan rename per target merusak kesamaan API |
 | `IN` dengan daftar nilai | hanya teks (`in("1,2,3")`) atau subquery | `in_text(...)` dan `in_list([...])` | daftar bertipe tidak bisa diungkapkan map/array dinamis lama |
 
 ## Temuan yang sudah diperbaiki di compiler

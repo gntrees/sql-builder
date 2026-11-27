@@ -9,9 +9,9 @@ import {
     sqlBuilder,
 } from "../tests/reference/legacy-ts/index";
 import { LList } from "../generated/lt-sql-builder/typescript/_lingua_rt";
-import { Query } from "../generated/lt-sql-builder/typescript/src/query";
-import { Node } from "../generated/lt-sql-builder/typescript/src/node";
-import { Assignment } from "../generated/lt-sql-builder/typescript/src/assignment";
+import { Query } from "../generated/lt-sql-builder/typescript/src/sql";
+import { Node } from "../generated/lt-sql-builder/typescript/src/sql";
+import { Assignment } from "../generated/lt-sql-builder/typescript/src/sql";
 import { type Value } from "../generated/lt-sql-builder/typescript/src/value";
 
 const list = <T,>(items: T[]): LList<T> => new LList<T>(items);
@@ -406,6 +406,94 @@ describe("legacy parity (postgres, DML and clauses)", () => {
             Query.create()
                 .insert(Node.table("t"), list([Assignment.str("name", "x")]))
                 .onConflictDoUpdate(Node.col("id"), list([Assignment.str("name", "y")]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+});
+
+describe("legacy parity (postgres, subqueries)", () => {
+    const legacySub = () => {
+        const c = legacy();
+        return c.select(c.col("uid")).from(c.table("members")).where(c.col("ok").eq(true));
+    };
+
+    const nextSub = () =>
+        Query.create()
+            .select(list([Node.col("uid")]))
+            .fromTable(Node.table("members"))
+            .where(list([Node.col("ok").eq(Node.bool(true))]));
+
+    diff("exists subquery", () => {
+        const c = legacy();
+        return [
+            c
+                .select(c.col("id"))
+                .from(c.table("users"))
+                .where(c.exists(legacySub()))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .fromTable(Node.table("users"))
+                .where(list([Node.exists(nextSub())]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("in subquery", () => {
+        const c = legacy();
+        return [
+            c
+                .select(c.col("id"))
+                .from(c.table("users"))
+                .where(c.col("id").in(legacySub()))
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .fromTable(Node.table("users"))
+                .where(list([Node.col("id").inQuery(nextSub())]))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("with clause", () => {
+        const c = legacy();
+        return [
+            c.with(legacySub(), "active").select(c.col("id")).from(c.table("active")).setDialect("postgres").parse(),
+            Query.create()
+                .withCte(nextSub(), "active")
+                .select(list([Node.col("id")]))
+                .fromTable(Node.table("active"))
+                .setDialect("postgres")
+                .parse(),
+        ];
+    });
+
+    diff("parameter numbering across a subquery", () => {
+        const c = legacy();
+        return [
+            c
+                .select(c.col("id"))
+                .from(c.table("t"))
+                .where(c.and([c.col("a").eq(1), c.exists(legacySub())]))
+                .limit(5)
+                .setDialect("postgres")
+                .parse(),
+            Query.create()
+                .select(list([Node.col("id")]))
+                .fromTable(Node.table("t"))
+                .where(
+                    list([
+                        Node.col("a")
+                            .eq(Node.int(1n))
+                            .and(list([Node.exists(nextSub())])),
+                    ]),
+                )
+                .limit(Node.int(5n))
                 .setDialect("postgres")
                 .parse(),
         ];

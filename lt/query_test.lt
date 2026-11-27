@@ -1,8 +1,8 @@
-import Query from "./src/query.lt"
-import Node from "./src/node.lt"
+import Query from "./src/sql.lt"
+import Node from "./src/sql.lt"
 import Values from "./src/value.lt"
-import ParseError from "./src/query.lt"
-import Assignment from "./src/assignment.lt"
+import ParseError from "./src/sql.lt"
+import Assignment from "./src/sql.lt"
 
 test class QueryTest {
   fn build() -> Query {
@@ -173,6 +173,48 @@ test class QueryTest {
       .set_dialect("postgres")
       .parse() {
       Ok(result) => Expect.equal(result.sql, `SELECT "id" WHERE "x" BETWEEN $1 AND $2`)
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  fn members() -> Query {
+    Query.create()
+      .select([Node.col("uid")])
+      .from_table(Node.table("members"))
+      .where([Node.col("ok").eq(Node.bool(true))])
+  }
+
+  test fn exists_and_numbering() {
+    match Query.create()
+      .select([Node.col("id")])
+      .from_table(Node.table("t"))
+      .where([Node.col("a").eq(Node.int(1)).and([Node.exists(members())])])
+      .limit(Node.int(5))
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => {
+        Expect.equal(
+          result.sql,
+          `SELECT "id" FROM "t" WHERE ( "a" = $1 AND EXISTS (SELECT "uid" FROM "members" WHERE "ok" = $2) ) LIMIT $3`,
+        )
+        Expect.equal(result.param.len(), 3)
+      }
+      Err(error) => Expect.equal("no error", "parse failed")
+    }
+  }
+
+  test fn in_subquery_and_cte() {
+    match Query.create()
+      .with_cte(members(), "active")
+      .select([Node.col("id")])
+      .from_table(Node.table("active"))
+      .where([Node.col("id").in_query(members())])
+      .set_dialect("postgres")
+      .parse() {
+      Ok(result) => Expect.equal(
+        result.sql,
+        `WITH "active" AS (SELECT "uid" FROM "members" WHERE "ok" = $1) SELECT "id" FROM "active" WHERE "id" IN (SELECT "uid" FROM "members" WHERE "ok" = $2)`,
+      )
       Err(error) => Expect.equal("no error", "parse failed")
     }
   }
