@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, lt-core]
   pull_request:
 
 jobs:
@@ -29,3 +29,42 @@ jobs:
         run: docker compose -f docker-compose.test.yml logs
       - if: always()
         run: docker compose -f docker-compose.test.yml down -v
+
+  # The .lt port: build the compiler from source (the release assets are not
+  # published yet), then check that the committed packages match lt/src and
+  # that they pass every native gate.
+  lt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Generated Go is post-processed with gofmt, so the CI Go version has to
+      # match the one used to produce the committed files.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: actions/checkout@v4
+        with:
+          repository: gntrees/lingua-tungga
+          ref: main
+          path: .lt-src
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.96.0"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ".lt-src -> target"
+      - name: build lt
+        run: cargo build --release --manifest-path .lt-src/Cargo.toml --bin lt
+      - run: echo "$GITHUB_WORKSPACE/.lt-src/target/release" >> "$GITHUB_PATH"
+      - run: bun install
+      - name: generated code is in sync with lt/src
+        run: ./lt/check.sh
+      - name: native gates, test classes, differential
+        run: ./lt/verify.sh
