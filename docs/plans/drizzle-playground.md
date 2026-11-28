@@ -283,7 +283,7 @@ CI `playground.yml`:
 | Format baris kanonik berubah dan membuat semua expected basi | `line.ts` satu implementasi; versi format dicatat di evidence |
 | Usage program mencetak lebih dari satu argumen | konvensi: hanya `expect.eq(line, expected)`, argumen pertama = baris |
 | Staging menyembunyikan import yang salah | staging menolak file dengan import di luar `./`; build.ts memeriksa sebelum menyalin |
-| Gate butuh 4 toolchain + docker | cache venv/node_modules; job DB terpisah seperti `verify-db.sh` |
+| Gate butuh 4 toolchain + docker | cache venv/node_modules; job DB terpisah seperti `verify-db.sh`; target Go di-skip bila `go` tidak ada (tercatat di evidence). |
 | Pages belum diaktifkan di repo | langkah deploy tetap dibuat; aktivasi settings didokumentasikan |
 
 ---
@@ -304,8 +304,8 @@ Hasil:
 - `playground.sh` hijau: **41 kasus, 0 gagal**, 3 dialect.
 - Staging kini ikut menyalin `src/generated/`, sehingga kasus bisa memakai
   `schema_tables`, `schema_relations`, dan `schema_adapter` yang di-commit.
-- Usage program dijalankan nyata di TS dan Py; target Go mengikuti toolchain dan
-  tercatat apa adanya di `evidence.json`.
+- Usage program dijalankan nyata di TS dan Py; target Go di-skip dengan status
+  `skipped` bila `go` tidak ada di `PATH` (set `GO_BIN` untuk memaksa path lain).
 - Temuan nyata: **SQLite tidak memakai tanda kurung pada set operation** (drizzle:
   `select ... union select ...`), sedangkan port selalu membungkus. Ini memperbaiki
   `select.lt`: pembungkusan set-op sekarang sadar-dialect (SQLite tanpa kurung).

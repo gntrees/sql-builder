@@ -29,6 +29,10 @@ function findLt(): string {
 }
 
 const ltBin = findLt();
+const goBin = process.env.GO_BIN ?? Bun.which("go");
+if (!goBin) {
+  console.warn("playground: go not found on PATH; Go usage programs are recorded as skipped");
+}
 
 type Meta = { title: string; feature: string; why: string; dialects: string[] };
 type CaseFile = { id: string; group: string; file: string; meta: Meta; module: string };
@@ -160,7 +164,7 @@ if (!statSync(join(tsDir, "node_modules"), { throwIfNoEntry: false })) {
   if (install.code !== 0) fail("npm install for the TypeScript usage programs failed");
 }
 
-type TargetRun = { status: "pass" | "fail"; lines: string[]; source: string; stderr: string };
+type TargetRun = { status: "pass" | "fail" | "skipped"; lines: string[]; source: string; stderr: string };
 type CaseResult = {
   id: string;
   group: string;
@@ -206,8 +210,15 @@ for (const item of cases) {
         source: readFileSync(join(outDir, "py", "usage", `${item.module}.py`), "utf8"),
         stderr: result.stderr,
       };
+    } else if (!goBin) {
+      run = {
+        status: "skipped",
+        lines: [],
+        source: readFileSync(join(outDir, "go", "usage", item.module, "main.go"), "utf8"),
+        stderr: "go not found on PATH; set GO_BIN to include the Go target",
+      };
     } else {
-      const result = sh(["go", "run", `./usage/${item.module}`], join(outDir, "go"), true);
+      const result = sh([goBin, "run", `./usage/${item.module}`], join(outDir, "go"), true);
       run = {
         status: result.code === 0 ? "pass" : "fail",
         lines: result.stdout.split("\n").filter((row) => row.length > 0),

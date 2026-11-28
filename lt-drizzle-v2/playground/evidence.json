@@ -12,7 +12,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "delete_row": {
@@ -21,7 +21,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "insert_conflict": {
@@ -30,7 +30,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "insert_duplicate": {
@@ -39,7 +39,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "insert_returning": {
@@ -48,7 +48,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "insert_values": {
@@ -57,7 +57,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "update_row": {
@@ -66,7 +66,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "joins_full": {
@@ -75,7 +75,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "joins_inner": {
@@ -84,7 +84,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "joins_left": {
@@ -93,7 +93,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "joins_order_limit": {
@@ -102,7 +102,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "joins_right": {
@@ -111,7 +111,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "operators_between": {
@@ -120,7 +120,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "operators_comparison": {
@@ -129,7 +129,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "operators_like": {
@@ -138,7 +138,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "operators_list": {
@@ -147,7 +147,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "operators_logical": {
@@ -156,7 +156,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "operators_null": {
@@ -165,7 +165,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "distinct_from": {
@@ -174,7 +174,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "nullable_insert": {
@@ -183,7 +183,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "relation_alias": {
@@ -192,7 +192,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "relation_join": {
@@ -201,7 +201,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "schema_alias": {
@@ -210,7 +210,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "schema_column": {
@@ -219,7 +219,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "schema_namespace": {
@@ -228,7 +228,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "schema_table": {
@@ -237,7 +237,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "select_aggregate": {
@@ -246,7 +246,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "select_distinct": {
@@ -255,7 +255,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "select_fields": {
@@ -264,7 +264,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "select_limit": {
@@ -273,7 +273,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "select_order": {
@@ -282,7 +282,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "select_where": {
@@ -291,7 +291,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "set_except": {
@@ -300,7 +300,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "set_intersect": {
@@ -309,7 +309,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "set_union": {
@@ -318,7 +318,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "sql_identifier": {
@@ -327,7 +327,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "sql_params": {
@@ -336,7 +336,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "sql_raw": {
@@ -345,7 +345,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "subquery_exists": {
@@ -354,7 +354,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "subquery_from": {
@@ -363,7 +363,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     },
     "subquery_in": {
@@ -372,7 +372,7 @@
       "targets": {
         "ts": "pass",
         "py": "pass",
-        "go": "fail"
+        "go": "skipped"
       }
     }
   }

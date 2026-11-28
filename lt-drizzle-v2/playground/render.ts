@@ -160,7 +160,7 @@ function languageTabs(item: CaseResult): string {
           <pre class="code">${highlight(run.source, guessLang(run.source))}</pre>
         </div>
         <div class="block">
-          <div class="block-head ${run.status === "pass" ? "ok" : "bad"}">stdout · ${run.status}</div>
+          <div class="block-head ${run.status === "pass" ? "ok" : run.status === "skipped" ? "skip" : "bad"}">stdout · ${run.status}</div>
           <pre class="code stdout">${stdout}</pre>
         </div>
       </div>`;
