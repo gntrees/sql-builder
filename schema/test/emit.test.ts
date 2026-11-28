@@ -31,6 +31,8 @@ describe("schema IR -> LT", () => {
             "schema_float.lt",
             "schema_int.lt",
             "schema_meta.lt",
+            "schema_nullable_str.lt",
+            "schema_nullable_uuid.lt",
             "schema_relations.lt",
             "schema_str.lt",
             "schema_tables.lt",
@@ -42,7 +44,7 @@ describe("schema IR -> LT", () => {
 
     test("keeps SQL names separate from accessor names", () => {
         const tables = byName.get("schema_tables.lt")!;
-        expect(tables).toContain("display_name: StrColumn");
+        expect(tables).toContain("display_name: NullableStrColumn");
         expect(tables).toContain('column: "displayName"');
         expect(tables).toContain('column: "createdAt"');
         expect(tables).toContain('column: "orgId"');
@@ -78,6 +80,52 @@ describe("schema IR -> LT", () => {
         expect(relations).toContain('to_table: "organizations"');
         expect(relations).toContain('on_delete: "Cascade"');
         expect(relations).toContain("export let all_relations: List<RelationMeta>");
+    });
+
+    test("emits composite relation bindings with ordered columns", () => {
+        const document = structuredClone(fixture);
+        const user = document.datamodel.models.find((model) => model.name === "User")!;
+        const relation = user.fields.find((field) => field.kind === "object")!;
+        relation.relationFromFields = ["orgId", "email"];
+        relation.relationToFields = ["id", "name"];
+
+        const { schema, unsupported } = buildSchemaIR(document, { prismaVersion: "7.10.1" });
+        const relations = emitLt(schema).find((file) => file.name === "schema_relations.lt")!;
+
+        expect(relations.content).toContain("export struct CompositeRelationMeta");
+        expect(relations.content).toContain("export let users_organizations: CompositeRelationMeta");
+        expect(relations.content).toContain('from_columns: ["orgId", "email"]');
+        expect(relations.content).toContain('to_columns: ["id", "name"]');
+        expect(relations.content).toContain("export let all_composite_relations");
+        expect(relations.content).not.toContain("export let all_relations");
+        expect(unsupported.entries.some((entry) => entry.kind === "foreign-key")).toBe(false);
+    });
+
+    test("emits index and composite unique metadata", () => {
+        const meta = byName.get("schema_meta.lt")!;
+        expect(meta).toContain("export struct IndexMeta");
+        expect(meta).toContain("indexes: List<IndexMeta>");
+
+        const tables = byName.get("schema_tables.lt")!;
+        expect(tables).toContain('name: "users_email_org_id_key"');
+        expect(tables).toContain('columns: ["email", "orgId"]');
+        expect(tables).toContain('name: "users_email_idx"');
+        expect(tables).toContain("unique: false");
+    });
+
+    test("emits nullable column packages with optional assignments", () => {
+        const nullableStr = byName.get("schema_nullable_str.lt")!;
+        expect(nullableStr).toContain("export struct NullableStrColumn");
+        expect(nullableStr).toContain(
+            "export fn assign(c: NullableStrColumn, v: Option<Str>) -> ColumnValue",
+        );
+        expect(nullableStr).toContain("Some(item) => ColumnValue");
+        expect(nullableStr).toContain("None => ColumnValue");
+        expect(nullableStr).toContain("export fn like(c: NullableStrColumn, v: Str) -> Expr");
+        expect(byName.get("schema_nullable_uuid.lt")).toContain(
+            "export struct NullableUuidColumn",
+        );
+        expect(byName.has("schema_nullable_int.lt")).toBe(false);
     });
 
     test("emits typed assignments for insert and update", () => {

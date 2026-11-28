@@ -1,6 +1,6 @@
 {
   "schema": {
-    "version": 1,
+    "version": 2,
     "generator": "prisma-lt",
     "dialect": "postgres",
     "prismaVersion": "7.10.1",
@@ -49,14 +49,15 @@
             "type": "Unsupported",
             "nativeType": "Text"
           }
-        ]
+        ],
+        "indexes": []
       }
     ],
     "enums": [],
     "foreignKeys": []
   },
   "unsupported": {
-    "version": 1,
+    "version": 2,
     "entries": [
       {
         "kind": "column-type",

@@ -18,5 +18,12 @@ package schema_meta {
     schema: Str
     primary_key: List<Str>
     columns: List<ColumnMeta>
+    indexes: List<IndexMeta>
+  }
+
+  export struct IndexMeta {
+    name: Str
+    columns: List<Str>
+    unique: Bool
   }
 }

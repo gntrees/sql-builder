@@ -51,7 +51,7 @@ describe("generated schema runtime", () => {
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
 import schema { Assignment, field } "./schema.lt"
-import schema_adapter { on, to_assignment, to_sql, to_table } "./schema_adapter.lt"
+import schema_adapter { on, on_alias, to_assignment, to_sql, to_table } "./schema_adapter.lt"
 import schema_expr { Expr } "./generated/schema_expr.lt"
 import schema_int { eq } "./generated/schema_int.lt"
 import schema_relations { users_organizations } "./generated/schema_relations.lt"
@@ -72,8 +72,12 @@ package use {
     on(users_organizations)
   }
 
+  export fn aliased_relation() -> Sql {
+    on_alias(users_organizations, "u", "o")
+  }
+
   export fn assignment() -> Assignment {
-    to_assignment(users.display_name.assign("bob"))
+    to_assignment(users.display_name.assign(Some("bob")))
   }
 
   export fn query() -> Select {
@@ -102,17 +106,21 @@ package use {
 
         const root = join(temp, "out/ts");
         const { LList } = await import(pathToFileURL(join(root, "_lingua_rt.ts")).href);
+        const { Some } = await import(pathToFileURL(join(root, "_lingua_rt.ts")).href);
         const { users, usersMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_tables.ts")).href
         );
-        const { toSql, toTable, on, toAssignment } = await import(
+        const { toSql, toTable, on, onAlias, onComposite, toAssignment } = await import(
             pathToFileURL(join(root, "src/schema_adapter.ts")).href
         );
         const { usersOrganizations } = await import(
             pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
         );
+        const { CompositeRelationMeta } = await import(
+            pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
+        );
         const { assign: assignStr } = await import(
-            pathToFileURL(join(root, "src/generated/schema_str.ts")).href
+            pathToFileURL(join(root, "src/generated/schema_nullable_str.ts")).href
         );
         const { sqlToQuery, postgres } = await import(
             pathToFileURL(join(root, "src/dialect.ts")).href
@@ -157,7 +165,26 @@ package use {
         expect(relationSql.sql).toBe('"users"."orgId" = "organizations"."id"');
         expect(relationSql.params.items).toHaveLength(0);
 
-        const assignment = toAssignment(assignStr(users.displayName, "bob"));
+        const aliasedSql = sqlToQuery(postgres(), onAlias(usersOrganizations, "u", "o"));
+        expect(aliasedSql.sql).toBe('"u"."orgId" = "o"."id"');
+
+        const composite = new CompositeRelationMeta({
+            name: "OrdersToUsers",
+            fromTable: "orders",
+            fromColumns: new LList(["user_id", "tenant_id"]),
+            fromSchema: "public",
+            toTable: "users",
+            toColumns: new LList(["id", "tenant_id"]),
+            toSchema: "public",
+            onDelete: "NoAction",
+            onUpdate: "NoAction",
+        });
+        const compositeSql = sqlToQuery(postgres(), onComposite(composite));
+        expect(compositeSql.sql).toBe(
+            '("orders"."user_id" = "users"."id" and "orders"."tenant_id" = "users"."tenant_id")',
+        );
+
+        const assignment = toAssignment(assignStr(users.displayName, Some("bob")));
         expect(assignment.column).toBe("displayName");
         const assignmentSql = sqlToQuery(postgres(), assignment.value);
         expect(assignmentSql.sql).toBe("$1");

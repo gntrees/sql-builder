@@ -1,0 +1,3 @@
+title = "Composite foreign keys keep both column pairs"
+feature = "relation/composite-fk"
+why = "A two-column relation is emitted as CompositeRelationMeta with aligned from_columns and to_columns; the adapter combines the pairs with AND."

@@ -64,6 +64,7 @@ export type DmmfEnum = {
 export type DmmfIndex = {
     model: string;
     name?: string | null;
+    dbName?: string | null;
     type?: string;
     fields?: { name: string }[];
 };
@@ -217,6 +218,14 @@ function assertUnique(values: string[], context: string): void {
         }
         seen.add(key);
     }
+}
+
+function addTableIndex(table: TableIR, name: string, columns: string[], unique: boolean): void {
+    const key = `${unique}\u0000${columns.join(",")}`;
+    if (table.indexes.some((index) => `${index.unique}\u0000${index.columns.join(",")}` === key)) {
+        return;
+    }
+    table.indexes.push({ name, columns, unique });
 }
 
 export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): SchemaBuildResult {
@@ -375,14 +384,30 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
             }
         }
 
+        const table: TableIR = {
+            model: model.name,
+            name: tableName,
+            dbName,
+            schema,
+            primaryKey,
+            columns,
+            indexes: [],
+        };
+        const toDbColumns = (fields: string[]): string[] =>
+            fields.map((fieldName) => {
+                const accessor = columnByField.get(fieldName) ?? fieldName;
+                return columns.find((column) => column.name === accessor)?.dbName ?? accessor;
+            });
+
         for (const fields of model.uniqueFields ?? []) {
             if (fields.length > 1) {
-                unsupported.push({
-                    kind: "unique-constraint",
-                    table: tableName,
-                    fields: fields.map((field) => columnByField.get(field) ?? field),
-                    reason: "composite unique constraints are not emitted yet",
-                });
+                const dbColumns = toDbColumns(fields);
+                addTableIndex(
+                    table,
+                    toSnakeCase(`${dbName}_${dbColumns.join("_")}_key`),
+                    dbColumns,
+                    true,
+                );
             } else if (fields.length === 1) {
                 const columnName = columnByField.get(fields[0]!);
                 const column = columns.find((item) => item.name === columnName);
@@ -392,13 +417,13 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
 
         for (const index of model.uniqueIndexes ?? []) {
             if (index.fields.length > 1) {
-                unsupported.push({
-                    kind: "unique-constraint",
-                    table: tableName,
-                    name: index.name ?? undefined,
-                    fields: index.fields.map((field) => columnByField.get(field) ?? field),
-                    reason: "composite unique indexes are not emitted yet",
-                });
+                const dbColumns = toDbColumns(index.fields);
+                addTableIndex(
+                    table,
+                    index.name ?? toSnakeCase(`${dbName}_${dbColumns.join("_")}_key`),
+                    dbColumns,
+                    true,
+                );
             } else if (index.fields.length === 1) {
                 const columnName = columnByField.get(index.fields[0]!);
                 const column = columns.find((item) => item.name === columnName);
@@ -406,14 +431,6 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
             }
         }
 
-        const table: TableIR = {
-            model: model.name,
-            name: tableName,
-            dbName: model.dbName ?? model.name,
-            schema,
-            primaryKey,
-            columns,
-        };
         tables.push(table);
         modelInfos.set(model.name, { model, table, columnByField, supported: true });
     }
@@ -423,16 +440,28 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
 
     for (const index of dmmf.datamodel.indexes ?? []) {
         // Primary keys and unique constraints are handled above; recording them
-        // again as indexes only creates duplicate unsupported entries.
+        // again as indexes only creates duplicates.
         if (index.type === "id" || index.type === "unique") continue;
         const info = modelInfos.get(index.model);
-        const tableName = info?.table.name ?? toSnakeCase(index.model);
-        unsupported.push({
-            kind: "index",
-            table: tableName,
-            name: index.name ?? undefined,
-            fields: index.fields?.map((field) => info?.columnByField.get(field.name) ?? toSnakeCase(field.name)),
-            reason: "indexes are not emitted yet",
+        if (!info) continue;
+        const dbColumns = (index.fields ?? []).map((field) => {
+            const accessor = info.columnByField.get(field.name) ?? toSnakeCase(field.name);
+            return info.table.columns.find((column) => column.name === accessor)?.dbName ?? accessor;
+        });
+        if (dbColumns.length === 0) continue;
+        addTableIndex(
+            info.table,
+            index.dbName ?? index.name ?? toSnakeCase(`${info.table.dbName}_${dbColumns.join("_")}_idx`),
+            dbColumns,
+            false,
+        );
+    }
+
+    for (const table of tables) {
+        table.indexes.sort((left, right) => {
+            const leftKey = `${left.name}\u0000${left.columns.join(",")}\u0000${left.unique}`;
+            const rightKey = `${right.name}\u0000${right.columns.join(",")}\u0000${right.unique}`;
+            return leftKey.localeCompare(rightKey);
         });
     }
 
@@ -465,19 +494,6 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
             const toColumns = field.relationToFields.map(
                 (name) => target.columnByField.get(name) ?? name,
             );
-
-            // The generated relation metadata only models single-column foreign
-            // keys in this slice. Composite keys are recorded instead of being
-            // silently dropped.
-            if (fromColumns.length > 1 || toColumns.length > 1) {
-                unsupported.push({
-                    kind: "foreign-key",
-                    table: info.table.name,
-                    name: field.relationName ?? undefined,
-                    reason: "composite foreign keys are not emitted yet",
-                });
-                continue;
-            }
 
             const key = `${info.table.name}(${fromColumns.join(",")})->${target.table.name}(${toColumns.join(",")})`;
             if (seenForeignKeys.has(key)) continue;

@@ -12,7 +12,7 @@ Postgres
   -> lt-drizzle-v2/src/generated/schema_*.lt
 ```
 
-The canonical IR is `schema/schema.json` (version 1). `schema/unsupported.json`
+The canonical IR is `schema/schema.json` (version 2). `schema/unsupported.json`
 records schema features that are not emitted yet. Neither file is hand-edited.
 
 ## Prisma setup
@@ -86,6 +86,7 @@ The committed `schema/schema.json` and generated `.lt` come from the application
 migrations in `db/migrations/postgres` (10 tables, 1 enum, 3 foreign keys).
 `schema_migrations` is excluded via `ignoreTables`. `db/migrations/postgres/20260102000000_schema_features.sql`
 adds the enum, unique email, and foreign keys that the application schema now exercises.
+Indexes and composite unique constraints are recorded as `IndexMeta` on `TableMeta`.
 
 The separate fixture below is only for exercising unsupported types and non-public schema
 cases; it is not the app schema.
@@ -111,7 +112,7 @@ The DMMF fixture used by the unit tests is
 
 ```
 schema_expr.lt          ColumnRef, Scalar, ColumnValue, Expr
-schema_meta.lt          ColumnMeta, TableMeta
+schema_meta.lt          ColumnMeta, TableMeta, IndexMeta
 schema_int.lt           IntColumn + operators + assign/assign_null
 schema_str.lt           StrColumn + operators (including like/ilike)
 schema_bool.lt          BoolColumn + equality/null operators
@@ -119,8 +120,9 @@ schema_decimal.lt       DecimalColumn (string values)
 schema_uuid.lt          UuidColumn (string values)
 schema_temporal.lt      TemporalColumn (string values)
 schema_enum_<name>.lt   enum + column + value mapping
+schema_nullable_<type>.lt Nullable<...>Column + assign(Option<T>)
 schema_unsupported.lt   UnsupportedColumn (no operators)
-schema_relations.lt     RelationMeta + forward/inverse bindings + all_relations
+schema_relations.lt     RelationMeta/CompositeRelationMeta + forward/inverse bindings
 schema_tables.lt        table structs, bindings such as `users`, and `users_meta`
 ```
 
@@ -141,8 +143,12 @@ inner_join(select, to_table(posts_meta), on(posts_users))
 ```
 
 `on(rel)` renders the canonical `from.column = to.column` form for both the forward
-(`posts_users`) and inverse (`users_posts`) binding. Aliased tables are not supported yet;
-use explicit column references when a table is aliased.
+(`posts_users`) and inverse (`users_posts`) binding. For aliased tables use
+`on_alias(rel, from_alias, to_alias)`; predicates on an aliased table still need explicit
+column references because generated accessors carry the base table name.
+
+Composite foreign keys are emitted as `CompositeRelationMeta`; `on_composite(rel)` combines
+every column pair with AND.
 
 INSERT and UPDATE values use the same generated columns:
 
@@ -152,13 +158,16 @@ let query = insert.values(insert.create(to_table(users_meta)), [row])
 ```
 
 Omitted columns fall back to the database default (INSERT) or stay unchanged (UPDATE).
-`assign_null(users.email)` writes an explicit NULL.
+`assign_null(users.email)` writes an explicit NULL. Nullable columns use the generated
+`Nullable<...>Column` type, so their assignment takes `Option<T>`:
+`users.email.assign(Some("a@b"))` or `users.email.assign(None)`. Predicates keep taking
+raw values (`users.email.eq("a@b")`, `users.email.is_null()`).
 
 ## Playground
 
-`schema/playground/` builds a static gallery of 9 cases: table, column types, composite
-key, foreign key, ambiguous foreign key, unsupported `jsonb`/array, non-public schema,
-naming, and composite unique/index.
+`schema/playground/` builds a static gallery of 10 cases: table, column types, composite
+key, foreign key, ambiguous foreign key, composite foreign key, unsupported `jsonb`/array,
+non-public schema, naming, and composite unique/index.
 
 ```sh
 bun run schema:playground

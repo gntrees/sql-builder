@@ -2,13 +2,18 @@
   "version": 1,
   "compiler": "pinned lt",
   "counts": {
-    "cases": 9,
-    "features": 9,
+    "cases": 10,
+    "features": 10,
     "failing": 0
   },
   "cases": {
     "column/types": {
       "feature": "column/types",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "index/composite-unique": {
+      "feature": "index/composite-unique",
       "ir": "pass",
       "lt": "pass"
     },
@@ -27,6 +32,11 @@
       "ir": "pass",
       "lt": "pass"
     },
+    "relation/composite-fk": {
+      "feature": "relation/composite-fk",
+      "ir": "pass",
+      "lt": "pass"
+    },
     "relation/foreign-key": {
       "feature": "relation/foreign-key",
       "ir": "pass",
@@ -39,11 +49,6 @@
     },
     "table/basic": {
       "feature": "table/basic",
-      "ir": "pass",
-      "lt": "pass"
-    },
-    "unsupported/composite-unique": {
-      "feature": "unsupported/composite-unique",
       "ir": "pass",
       "lt": "pass"
     },

@@ -116,18 +116,22 @@ function columnTypeFor(column: ColumnIR): string {
     if (column.type === "Unsupported") return "UnsupportedColumn";
     if (column.type === "Enum") {
         if (!column.enum) throw new Error(`column ${column.name}: enum type is missing`);
-        return enumColumnTypeName(column.enum);
+        const base = enumColumnTypeName(column.enum);
+        return column.nullable ? `Nullable${base}` : base;
     }
-    return SCALAR_BY_TYPE.get(column.type)!.columnType;
+    const base = SCALAR_BY_TYPE.get(column.type)!.columnType;
+    return column.nullable ? `Nullable${base}` : base;
 }
 
 function packageFor(column: ColumnIR): string {
     if (column.type === "Unsupported") return "schema_unsupported";
     if (column.type === "Enum") {
         if (!column.enum) throw new Error(`column ${column.name}: enum type is missing`);
-        return enumPackageName(column.enum);
+        const base = enumPackageName(column.enum);
+        return column.nullable ? `${base}_nullable` : base;
     }
-    return SCALAR_BY_TYPE.get(column.type)!.packageName;
+    const base = SCALAR_BY_TYPE.get(column.type)!.packageName;
+    return column.nullable ? base.replace(/^schema_/, "schema_nullable_") : base;
 }
 
 function exprPackage(): EmittedFile {
@@ -199,23 +203,27 @@ function exprPackage(): EmittedFile {
     return { name: "schema_expr.lt", content };
 }
 
-function scalarPackage(spec: ScalarSpec): EmittedFile {
+function scalarPackage(spec: ScalarSpec, nullable = false): EmittedFile {
+    const columnType = nullable ? `Nullable${spec.columnType}` : spec.columnType;
+    const packageName = nullable
+        ? spec.packageName.replace(/^schema_/, "schema_nullable_")
+        : spec.packageName;
     const lines: string[] = [];
     const push = (line = "") => lines.push(line);
 
-    push(`export struct ${spec.columnType} {`);
+    push(`export struct ${columnType} {`);
     push("  table: Str");
     push("  column: Str");
     push("  nullable: Bool");
     push("}");
     push();
 
-    push(`fn ref(c: ${spec.columnType}) -> ColumnRef {`);
+    push(`fn ref(c: ${columnType}) -> ColumnRef {`);
     push(`  ColumnRef(table: c.table, column: c.column, sql_type: ${ltString(spec.type)}, nullable: c.nullable)`);
     push("}");
     push();
 
-    push(`fn col(c: ${spec.columnType}) -> Expr {`);
+    push(`fn col(c: ${columnType}) -> Expr {`);
     push("  Expr.Column(ref(c))");
     push("}");
     push();
@@ -225,18 +233,28 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
     push("}");
     push();
 
-    push(`export fn assign(c: ${spec.columnType}, v: ${spec.valueType}) -> ColumnValue {`);
-    push(`  ColumnValue(column: c.column, value: ${spec.param}(v))`);
-    push("}");
-    push();
+    if (nullable) {
+        push(`export fn assign(c: ${columnType}, v: Option<${spec.valueType}>) -> ColumnValue {`);
+        push("  match v {");
+        push(`    Some(item) => ColumnValue(column: c.column, value: ${spec.param}(item))`);
+        push("    None => ColumnValue(column: c.column, value: Scalar.Null)");
+        push("  }");
+        push("}");
+        push();
+    } else {
+        push(`export fn assign(c: ${columnType}, v: ${spec.valueType}) -> ColumnValue {`);
+        push(`  ColumnValue(column: c.column, value: ${spec.param}(v))`);
+        push("}");
+        push();
+    }
 
-    push(`export fn assign_null(c: ${spec.columnType}) -> ColumnValue {`);
+    push(`export fn assign_null(c: ${columnType}) -> ColumnValue {`);
     push("  ColumnValue(column: c.column, value: Scalar.Null)");
     push("}");
     push();
 
     const binary = (name: string, variant: string) => {
-        push(`export fn ${name}(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn ${name}(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push(`  Expr.${variant}(col(c), param(v))`);
         push("}");
         push();
@@ -251,81 +269,84 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
         binary("lt", "Lt");
         binary("lte", "Lte");
 
-        push(`export fn in_list(c: ${spec.columnType}, values: List<${spec.valueType}>) -> Expr {`);
+        push(`export fn in_list(c: ${columnType}, values: List<${spec.valueType}>) -> Expr {`);
         push("  Expr.In(col(c), values.map(fn(v) => param(v)))");
         push("}");
         push();
 
-        push(`export fn not_in_list(c: ${spec.columnType}, values: List<${spec.valueType}>) -> Expr {`);
+        push(`export fn not_in_list(c: ${columnType}, values: List<${spec.valueType}>) -> Expr {`);
         push("  Expr.NotIn(col(c), values.map(fn(v) => param(v)))");
         push("}");
         push();
 
-        push(`export fn between(c: ${spec.columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
+        push(`export fn between(c: ${columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
         push("  Expr.Between(col(c), param(low), param(high))");
         push("}");
         push();
 
-        push(`export fn not_between(c: ${spec.columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
+        push(`export fn not_between(c: ${columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
         push("  Expr.NotBetween(col(c), param(low), param(high))");
         push("}");
         push();
     }
 
     if (spec.pattern) {
-        push(`export fn like(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn like(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.Like(col(c), param(v))");
         push("}");
         push();
-        push(`export fn not_like(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn not_like(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.Not(Expr.Like(col(c), param(v)))");
         push("}");
         push();
-        push(`export fn ilike(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn ilike(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.ILike(col(c), param(v))");
         push("}");
         push();
-        push(`export fn not_ilike(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn not_ilike(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.Not(Expr.ILike(col(c), param(v)))");
         push("}");
         push();
     }
 
-    push(`export fn is_null(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn is_null(c: ${columnType}) -> Expr {`);
     push("  Expr.IsNull(col(c))");
     push("}");
     push();
 
-    push(`export fn is_not_null(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn is_not_null(c: ${columnType}) -> Expr {`);
     push("  Expr.IsNotNull(col(c))");
     push("}");
     push();
 
-    push(`export fn asc(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn asc(c: ${columnType}) -> Expr {`);
     push("  Expr.Asc(col(c))");
     push("}");
     push();
 
-    push(`export fn desc(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn desc(c: ${columnType}) -> Expr {`);
     push("  Expr.Desc(col(c))");
     push("}");
     push();
 
-    push(`export fn as_alias(c: ${spec.columnType}, alias: Str) -> Expr {`);
+    push(`export fn as_alias(c: ${columnType}, alias: Str) -> Expr {`);
     push("  Expr.Alias(col(c), alias)");
     push("}");
     push();
 
     const content = `${header("schema/schema.json")}import schema_expr { ColumnValue, Expr, ColumnRef, Scalar } "./schema_expr.lt"
 
-package ${spec.packageName} {
+package ${packageName} {
 ${lines.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
 `;
-    return { name: `${spec.packageName}.lt`, content };
+    return { name: `${packageName}.lt`, content };
 }
 
-function enumPackage(item: EnumIR): EmittedFile {
-    const columnType = enumColumnTypeName(item.name);
+function enumPackage(item: EnumIR, nullable = false): EmittedFile {
+    const columnType = nullable
+        ? `Nullable${enumColumnTypeName(item.name)}`
+        : enumColumnTypeName(item.name);
+    const packageName = nullable ? `${item.package}_nullable` : item.package;
     const valueFn = enumValueFunctionName(item.name);
     const lines: string[] = [];
     const push = (line = "") => lines.push(line);
@@ -366,10 +387,20 @@ function enumPackage(item: EnumIR): EmittedFile {
     push("}");
     push();
 
-    push(`export fn assign(c: ${columnType}, v: ${item.name}) -> ColumnValue {`);
-    push(`  ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(v)))`);
-    push("}");
-    push();
+    if (nullable) {
+        push(`export fn assign(c: ${columnType}, v: Option<${item.name}>) -> ColumnValue {`);
+        push("  match v {");
+        push(`    Some(item) => ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(item)))`);
+        push("    None => ColumnValue(column: c.column, value: Scalar.Null)");
+        push("  }");
+        push("}");
+        push();
+    } else {
+        push(`export fn assign(c: ${columnType}, v: ${item.name}) -> ColumnValue {`);
+        push(`  ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(v)))`);
+        push("}");
+        push();
+    }
 
     push(`export fn assign_null(c: ${columnType}) -> ColumnValue {`);
     push("  ColumnValue(column: c.column, value: Scalar.Null)");
@@ -413,10 +444,10 @@ function enumPackage(item: EnumIR): EmittedFile {
 
     const content = `${header("schema/schema.json")}import schema_expr { ColumnValue, Expr, ColumnRef, Scalar } "./schema_expr.lt"
 
-package ${item.package} {
+package ${packageName} {
 ${lines.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
 `;
-    return { name: `${item.package}.lt`, content };
+    return { name: `${packageName}.lt`, content };
 }
 
 function unsupportedPackage(): EmittedFile {
@@ -451,6 +482,13 @@ function metaPackage(): EmittedFile {
     schema: Str
     primary_key: List<Str>
     columns: List<ColumnMeta>
+    indexes: List<IndexMeta>
+  }
+
+  export struct IndexMeta {
+    name: Str
+    columns: List<Str>
+    unique: Bool
   }
 }
 `;
@@ -502,7 +540,7 @@ function tablesPackage(schema: SchemaIR): EmittedFile | undefined {
     const importLines = [
         ...imports.entries()
             .map(([pkg, types]) => `import ${pkg} { ${[...types].sort().join(", ")} } "./${pkg}.lt"`),
-        `import schema_meta { ColumnMeta, TableMeta } "./schema_meta.lt"`,
+        `import schema_meta { ColumnMeta, IndexMeta, TableMeta } "./schema_meta.lt"`,
     ]
         .sort()
         .join("\n");
@@ -550,6 +588,19 @@ function tablesPackage(schema: SchemaIR): EmittedFile | undefined {
             body.push("    ),");
         }
         body.push("  ],");
+        if (table.indexes.length === 0) {
+            body.push("  indexes: [],");
+        } else {
+            body.push("  indexes: [");
+            for (const index of table.indexes) {
+                body.push("    IndexMeta(");
+                body.push(`      name: ${ltString(index.name)},`);
+                body.push(`      columns: [${index.columns.map((column) => ltString(column)).join(", ")}],`);
+                body.push(`      unique: ${index.unique},`);
+                body.push("    ),");
+            }
+            body.push("  ],");
+        }
         body.push(")");
         body.push("");
     }
@@ -588,29 +639,45 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
         fk: ForeignKeyIR;
         from: TableIR;
         to: TableIR;
-        fromColumn: ColumnIR;
-        toColumn: ColumnIR;
+        fromColumns: ColumnIR[];
+        toColumns: ColumnIR[];
+        composite: boolean;
     };
 
     const bindings: Binding[] = [];
-    const used = new Set<string>(["all_relations", "relation_meta"]);
+    const used = new Set<string>([
+        "all_relations",
+        "all_composite_relations",
+        "relation_meta",
+        "composite_relation_meta",
+    ]);
 
     for (const fk of schema.foreignKeys) {
         const from = tableByName.get(fk.fromTable);
         const to = tableByName.get(fk.toTable);
         if (!from) throw new Error(`foreign key ${fk.name}: unknown table "${fk.fromTable}"`);
         if (!to) throw new Error(`foreign key ${fk.name}: unknown table "${fk.toTable}"`);
-        if (fk.fromColumns.length !== 1 || fk.toColumns.length !== 1) {
-            throw new Error(`foreign key ${fk.name}: only single-column relations are emitted`);
+        if (fk.fromColumns.length === 0 || fk.fromColumns.length !== fk.toColumns.length) {
+            throw new Error(`foreign key ${fk.name}: from/to columns must be non-empty and aligned`);
         }
 
-        const fromColumn = from.columns.find((column) => column.name === fk.fromColumns[0]);
-        const toColumn = to.columns.find((column) => column.name === fk.toColumns[0]);
-        if (!fromColumn) throw new Error(`foreign key ${fk.name}: unknown column "${fk.fromColumns[0]}"`);
-        if (!toColumn) throw new Error(`foreign key ${fk.name}: unknown column "${fk.toColumns[0]}"`);
+        const fromColumns = fk.fromColumns.map((name) => {
+            const column = from.columns.find((candidate) => candidate.name === name);
+            if (!column) throw new Error(`foreign key ${fk.name}: unknown column "${name}"`);
+            return column;
+        });
+        const toColumns = fk.toColumns.map((name) => {
+            const column = to.columns.find((candidate) => candidate.name === name);
+            if (!column) throw new Error(`foreign key ${fk.name}: unknown column "${name}"`);
+            return column;
+        });
 
+        const composite = fromColumns.length > 1;
         const ambiguous = (pairCount.get(`${fk.fromTable}\u0000${fk.toTable}`) ?? 0) > 1;
-        const suffix = ambiguous ? `_${fromColumn.name}` : "";
+        const suffixName = composite
+            ? fromColumns.map((column) => column.name).join("_")
+            : fromColumns[0]!.name;
+        const suffix = ambiguous ? `_${suffixName}` : "";
         const names = [
             toSnakeCase(`${from.name}_${to.name}${suffix}`),
             toSnakeCase(`${to.name}_${from.name}${suffix}`),
@@ -623,7 +690,7 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
                 );
             }
             used.add(name);
-            bindings.push({ name, fk, from, to, fromColumn, toColumn });
+            bindings.push({ name, fk, from, to, fromColumns, toColumns, composite });
         }
     }
 
@@ -646,15 +713,48 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
     }
     body.push("}");
     body.push("");
+    body.push("export struct CompositeRelationMeta {");
+    for (const field of [
+        "name: Str",
+        "from_table: Str",
+        "from_columns: List<Str>",
+        "from_schema: Str",
+        "to_table: Str",
+        "to_columns: List<Str>",
+        "to_schema: Str",
+        "on_delete: Str",
+        "on_update: Str",
+    ]) {
+        body.push(`  ${field}`);
+    }
+    body.push("}");
+    body.push("");
 
     for (const binding of bindings) {
-        body.push(`export let ${binding.name}: RelationMeta = RelationMeta(`);
+        const type = binding.composite ? "CompositeRelationMeta" : "RelationMeta";
+        body.push(`export let ${binding.name}: ${type} = ${type}(`);
         body.push(`  name: ${ltString(binding.fk.name)},`);
         body.push(`  from_table: ${ltString(binding.from.dbName)},`);
-        body.push(`  from_column: ${ltString(binding.fromColumn.dbName)},`);
+        if (binding.composite) {
+            body.push(
+                `  from_columns: [${binding.fromColumns
+                    .map((column) => ltString(column.dbName))
+                    .join(", ")}],`,
+            );
+        } else {
+            body.push(`  from_column: ${ltString(binding.fromColumns[0]!.dbName)},`);
+        }
         body.push(`  from_schema: ${ltString(binding.from.schema)},`);
         body.push(`  to_table: ${ltString(binding.to.dbName)},`);
-        body.push(`  to_column: ${ltString(binding.toColumn.dbName)},`);
+        if (binding.composite) {
+            body.push(
+                `  to_columns: [${binding.toColumns
+                    .map((column) => ltString(column.dbName))
+                    .join(", ")}],`,
+            );
+        } else {
+            body.push(`  to_column: ${ltString(binding.toColumns[0]!.dbName)},`);
+        }
         body.push(`  to_schema: ${ltString(binding.to.schema)},`);
         body.push(`  on_delete: ${ltString(binding.fk.onDelete ?? "NoAction")},`);
         body.push(`  on_update: ${ltString(binding.fk.onUpdate ?? "NoAction")},`);
@@ -662,12 +762,24 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
         body.push("");
     }
 
-    body.push(
-        `export let all_relations: List<RelationMeta> = [${bindings
-            .map((binding) => binding.name)
-            .join(", ")}]`,
-    );
-    body.push("");
+    const single = bindings.filter((binding) => !binding.composite);
+    const composite = bindings.filter((binding) => binding.composite);
+    if (single.length > 0) {
+        body.push(
+            `export let all_relations: List<RelationMeta> = [${single
+                .map((binding) => binding.name)
+                .join(", ")}]`,
+        );
+        body.push("");
+    }
+    if (composite.length > 0) {
+        body.push(
+            `export let all_composite_relations: List<CompositeRelationMeta> = [${composite
+                .map((binding) => binding.name)
+                .join(", ")}]`,
+        );
+        body.push("");
+    }
 
     const content = `${header("schema/schema.json")}package schema_relations {
 ${body.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
@@ -678,11 +790,32 @@ ${body.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
 export function emitLt(schema: SchemaIR): EmittedFile[] {
     const files: EmittedFile[] = [
         exprPackage(),
-        ...SCALAR_SPECS.map(scalarPackage),
+        ...SCALAR_SPECS.map((spec) => scalarPackage(spec)),
         unsupportedPackage(),
         metaPackage(),
-        ...schema.enums.map(enumPackage),
+        ...schema.enums.map((item) => enumPackage(item)),
     ];
+
+    const nullableColumns = schema.tables.flatMap((table) =>
+        table.columns.filter((column) => column.nullable && column.type !== "Unsupported"),
+    );
+    const nullableScalarTypes = new Set(
+        nullableColumns
+            .filter((column) => column.type !== "Enum")
+            .map((column) => column.type),
+    );
+    for (const spec of SCALAR_SPECS) {
+        if (nullableScalarTypes.has(spec.type)) files.push(scalarPackage(spec, true));
+    }
+
+    const nullableEnums = new Set(
+        nullableColumns
+            .filter((column) => column.type === "Enum")
+            .map((column) => column.enum!),
+    );
+    for (const item of schema.enums) {
+        if (nullableEnums.has(item.name)) files.push(enumPackage(item, true));
+    }
 
     const tables = tablesPackage(schema);
     if (tables) files.push(tables);

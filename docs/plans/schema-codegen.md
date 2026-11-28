@@ -37,7 +37,7 @@ Bukan tujuan:
 | S2 | DB live adalah source of truth; `schema.prisma` adalah generated mirror. |
 | S3 | `prisma db pull --force` boleh menimpa `schema.prisma`. |
 | S4 | Prisma dipin ke `7.10.x`; jangan memakai `latest`. |
-| S5 | `schema.json` adalah IR kanonik dan stabil; `version: 1`. |
+| S5 | `schema.json` adalah IR kanonik dan stabil; `version: 2`. |
 | S6 | Generated `.lt` berada di dalam tree entry builder karena LT menolak import ke luar direktori entry. |
 | S7 | Konsumen awal adalah v2; v3 nanti memakai adapter baru. |
 | S8 | `lt/src/schema.lt` (v1) tidak diubah; ditandai deprecated di dokumentasi. |
@@ -63,7 +63,7 @@ Konsekuensi: generated schema terdiri dari beberapa file/package, bukan satu `sc
 | Path | Isi |
 |---|---|
 | `prisma/schema.prisma` | Generated mirror dari DB. |
-| `schema/schema.json` | IR kanonik, `version: 1`. |
+| `schema/schema.json` | IR kanonik, `version: 2`. |
 | `schema/unsupported.json` | Daftar fitur yang belum didukung. |
 | `lt-drizzle-v2/src/generated/schema_*.lt` | Package generated. |
 | `lt-drizzle-v2/src/schema_adapter.lt` | Adapter handwritten `Expr -> Sql`. |
@@ -88,7 +88,7 @@ Shape:
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "generator": "prisma-lt",
   "dialect": "postgres",
   "prismaVersion": "7.10.1",
@@ -99,6 +99,9 @@ Shape:
       "dbName": "users",
       "schema": "public",
       "primaryKey": ["id"],
+      "indexes": [
+        { "name": "users_email_org_id_key", "columns": ["email", "orgId"], "unique": true }
+      ],
       "columns": [
         {
           "name": "id",
@@ -169,9 +172,10 @@ Operator lain dicatat sebagai backlog.
 
 Relasi:
 
-- `schema_relations` memuat `RelationMeta` dan binding maju/balik untuk setiap FK
-  satu kolom.
-- Adapter menyediakan `on(rel) -> Sql` sebagai kondisi join kanonik.
+- `schema_relations` memuat `RelationMeta` untuk FK satu kolom dan
+  `CompositeRelationMeta` untuk FK komposit, masing-masing dengan binding maju/balik.
+- Adapter menyediakan `on(rel) -> Sql`, `on_alias(rel, …)`, dan
+  `on_composite(rel) -> Sql`.
 
 DML:
 
@@ -195,10 +199,13 @@ DML:
 
 ## 10. Nullability dan Relasi
 
-- Nullability hanya metadata `nullable: Bool`; belum type-level.
-- FK di-emit sebagai `RelationMeta` di `schema_relations` (maju dan balik); join tetap
-  eksplisit lewat `on(rel)` di adapter. FK komposit dicatat sebagai unsupported.
-- `on(rel)` belum mengenal alias tabel; alias harus memakai referensi kolom eksplisit.
+- Nullability: kolom nullable memakai tipe `Nullable<...>Column` dari paket
+  `schema_nullable_*`; predikat tetap menerima nilai mentah, sedangkan assignment
+  menerima `Option<T>` (`Some(v)` / `None`).
+- FK di-emit sebagai `RelationMeta`/`CompositeRelationMeta` di `schema_relations`
+  (maju dan balik); join tetap eksplisit lewat `on`/`on_alias`/`on_composite` di adapter.
+- `on(rel)` belum mengenal alias tabel; gunakan `on_alias(rel, from_alias, to_alias)`.
+  Predikat pada tabel alias tetap memakai referensi kolom eksplisit.
 
 ## 11. Unsupported
 
@@ -206,7 +213,7 @@ DML:
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "entries": [
     {
       "kind": "column-type",
@@ -235,7 +242,9 @@ Aturan:
 | `schema_meta` | `ColumnMeta`, `TableMeta` netral. |
 | `schema_int`, `schema_float`, `schema_str`, `schema_bool` | Tipe kolom + operator. |
 | `schema_decimal`, `schema_uuid`, `schema_temporal` | Tipe kolom berbasis string + operator. |
+| `schema_nullable_<type>` | `Nullable<...>Column` + operator + `assign(Option<T>)`. |
 | `schema_enum_<name>` | Enum, mapping value, tipe kolom, operator. |
+| `schema_enum_<name>_nullable` | Varian nullable untuk kolom enum nullable. |
 | `schema_unsupported` | `UnsupportedColumn` tanpa operator. |
 | `schema_relations` | `RelationMeta`, binding relasi maju/balik, dan `all_relations`. |
 | `schema_tables` | Struct tabel, binding `users`, `users_meta`, dan `all_table_meta`. |
@@ -304,11 +313,8 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 
 ## 16. Backlog
 
-- Nullability type-level.
-- `on_alias` untuk relasi pada tabel yang di-alias.
-- FK komposit (saat ini tercatat di `unsupported.json`).
 - Accessor relasi many-to-many lewat tabel perantara.
-- Index, unique constraint komposit, check constraint, view.
+- Check constraint dan view (blind spot DMMF).
 - Multi-schema.
 - `Date`/`Decimal` typed value di builder.
 - Operator lanjutan: array, JSON, `is distinct from`, window.
@@ -333,17 +339,22 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 1 enum, 3 FK, 0 unsupported, deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
 | CI job `schema` | selesai (`.github/workflows/schema.yml`); ikut terpicu saat `db/migrations` berubah |
-| Schema playground | selesai (`schema/playground/`, 9 kasus, 9 fitur, IR snapshot + `lt check`) |
+| Schema playground | selesai (`schema/playground/`, 10 kasus, 10 fitur, IR snapshot + `lt check`) |
 | Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
 | Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
+| Alias relation | selesai (`schema_adapter.on_alias`) |
+| Composite foreign keys | selesai (`CompositeRelationMeta`, `schema_adapter.on_composite`) |
+| Index & composite unique metadata | selesai (`IndexMeta` di `TableMeta`, IR version 2) |
+| Nullability type-level | selesai (`Nullable<...>Column`, `assign(Option<T>)`) |
 | DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground
 
 `schema/playground/` adalah galeri statis yang tidak menyentuh database:
 
-- 9 kasus: table, column types, composite key, foreign key, ambiguous foreign key,
-  unsupported jsonb/array, non-public schema, naming, composite unique/index.
+- 10 kasus: table, column types, composite key, foreign key, ambiguous foreign key,
+  composite foreign key, unsupported jsonb/array, non-public schema, naming,
+  composite unique/index.
 - Setiap kasus: DMMF input, `schema.json`, `unsupported.json`, generated LT, dan
   status `lt check`.
 - Snapshot IR disimpan di `cases/**/<id>.expected.json`.
@@ -356,13 +367,14 @@ Schema yang di-commit sekarang berasal dari migrasi aplikasi di
 `schema_migrations` dikecualikan lewat konfigurasi generator `ignoreTables`. Fixture
 terpisah tetap dipakai untuk menguji tipe unsupported dan schema non-public.
 
-Catatan: `bun test schema/test` menjalankan 12 test, termasuk `lt check`, runtime SQL
+Catatan: `bun test schema/test` menjalankan 19 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
-menghasilkan 3 tabel, 1 enum, 1 FK, dan 4 entri unsupported (termasuk schema `auth`,
-`jsonb`, composite unique, dan index). Build v2 menghasilkan 23 module dan lolos `tsc`
-serta `mypy --strict`; differential tetap 64/64. `to_table(users_meta)` sekarang bisa
-dipakai di `from_table`, dan `to_sql(users.id.eq(1))` menghasilkan
-`"users"."id" = $1`.
+menghasilkan 3 tabel, 1 enum, 1 FK, serta 2 entri unsupported (schema `auth` dan
+`jsonb`); composite unique dan index kini menjadi `IndexMeta`. IR memakai `version: 2`.
+Kolom nullable menghasilkan paket `schema_nullable_*`. Build v2 menghasilkan 23 module
+dan lolos `tsc` serta `mypy --strict`; differential tetap 64/64.
+`to_table(users_meta)` sekarang bisa dipakai di `from_table`, dan
+`to_sql(users.id.eq(1))` menghasilkan `"users"."id" = $1`.
 
 Integrasi ke database aplikasi diuji oleh
 `lt-drizzle-v2/parity/schema-integration.test.ts` (bagian dari `verify-db.sh`): tabel,

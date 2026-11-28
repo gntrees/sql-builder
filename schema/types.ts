@@ -4,7 +4,7 @@
 // stable ordering, and an explicit format version. Bump SCHEMA_IR_VERSION only
 // when the shape or the meaning of a field changes.
 
-export const SCHEMA_IR_VERSION = 1 as const;
+export const SCHEMA_IR_VERSION = 2 as const;
 
 export type SemanticType =
     | "Int"
@@ -42,6 +42,15 @@ export type ColumnIR = {
     enum?: string;
 };
 
+export type IndexIR = {
+    /** Index/constraint name from the database. */
+    name: string;
+    /** SQL column names, in index order. */
+    columns: string[];
+    /** True for unique constraints/indexes. */
+    unique: boolean;
+};
+
 export type TableIR = {
     /** Prisma model name. */
     model: string;
@@ -54,6 +63,8 @@ export type TableIR = {
     /** Column accessor names. */
     primaryKey: string[];
     columns: ColumnIR[];
+    /** Non-primary indexes and composite unique constraints. */
+    indexes: IndexIR[];
 };
 
 export type EnumValueIR = {
