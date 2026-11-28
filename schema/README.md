@@ -141,8 +141,9 @@ inner_join(select, to_table(posts_meta), on(posts_users))
 ```
 
 `on(rel)` renders the canonical `from.column = to.column` form for both the forward
-(`posts_users`) and inverse (`users_posts`) binding. Aliased tables are not supported yet;
-use explicit column references when a table is aliased.
+(`posts_users`) and inverse (`users_posts`) binding. For aliased tables use
+`on_alias(rel, from_alias, to_alias)`; predicates on an aliased table still need explicit
+column references because generated accessors carry the base table name.
 
 INSERT and UPDATE values use the same generated columns:
 

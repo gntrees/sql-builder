@@ -40,7 +40,7 @@ describe("generated schema adapter", () => {
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
 import schema { Assignment, field } "./schema.lt"
-import schema_adapter { on, to_assignment, to_sql, to_table } "./schema_adapter.lt"
+import schema_adapter { on, on_alias, to_assignment, to_sql, to_table } "./schema_adapter.lt"
 import schema_enum_role { Role } "./generated/schema_enum_role.lt"
 import schema_relations { users_organizations } "./generated/schema_relations.lt"
 import schema_tables { users, users_meta } "./generated/schema_tables.lt"
@@ -54,6 +54,10 @@ package use {
 
   export fn assignment() -> Assignment {
     to_assignment(users.display_name.assign("bob"))
+  }
+
+  export fn aliased_relation() -> Sql {
+    on_alias(users_organizations, "u", "o")
   }
 
   export fn admins() -> Sql {

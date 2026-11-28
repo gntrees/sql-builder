@@ -198,7 +198,8 @@ DML:
 - Nullability hanya metadata `nullable: Bool`; belum type-level.
 - FK di-emit sebagai `RelationMeta` di `schema_relations` (maju dan balik); join tetap
   eksplisit lewat `on(rel)` di adapter. FK komposit dicatat sebagai unsupported.
-- `on(rel)` belum mengenal alias tabel; alias harus memakai referensi kolom eksplisit.
+- `on(rel)` belum mengenal alias tabel; gunakan `on_alias(rel, from_alias, to_alias)`.
+  Predikat pada tabel alias tetap memakai referensi kolom eksplisit.
 
 ## 11. Unsupported
 
@@ -305,7 +306,6 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 ## 16. Backlog
 
 - Nullability type-level.
-- `on_alias` untuk relasi pada tabel yang di-alias.
 - FK komposit (saat ini tercatat di `unsupported.json`).
 - Accessor relasi many-to-many lewat tabel perantara.
 - Index, unique constraint komposit, check constraint, view.
@@ -336,6 +336,7 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Schema playground | selesai (`schema/playground/`, 9 kasus, 9 fitur, IR snapshot + `lt check`) |
 | Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
 | Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
+| Alias relation | selesai (`schema_adapter.on_alias`) |
 | DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground

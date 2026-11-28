@@ -56,12 +56,29 @@ package schema_adapter {
   /// Join condition for a generated relation.
   ///
   /// The condition is canonical (`from.column = to.column`) for both the
-  /// forward and the inverse binding. Aliased tables are not supported yet;
-  /// use explicit column references when a table is aliased.
+  /// forward and the inverse binding. Use `on_alias` when the tables are
+  /// aliased in the query.
   export fn on(rel: RelationMeta) -> Sql {
     sqlpkg.eq(
       qualified(rel.from_schema, rel.from_table, rel.from_column),
       qualified(rel.to_schema, rel.to_table, rel.to_column),
+    )
+  }
+
+  /// Join condition for a relation whose tables are aliased in the query.
+  ///
+  /// Column accessors still carry the base table name, so predicates on an
+  /// aliased table must use explicit column references.
+  export fn on_alias(rel: RelationMeta, from_alias: Str, to_alias: Str) -> Sql {
+    sqlpkg.eq(
+      sqlpkg.append(
+        sqlpkg.append(sqlpkg.identifier(from_alias), sqlpkg.raw(".")),
+        sqlpkg.identifier(rel.from_column),
+      ),
+      sqlpkg.append(
+        sqlpkg.append(sqlpkg.identifier(to_alias), sqlpkg.raw(".")),
+        sqlpkg.identifier(rel.to_column),
+      ),
     )
   }
 
