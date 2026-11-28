@@ -70,6 +70,10 @@ CI only runs the schema codegen gate (introspection, codegen, unit tests, format
 drift check). The heavy native TS/Py/Go gates, database roundtrips, and playground
 are local commands so they do not consume GitHub Actions minutes on every push.
 
+`bun run verify:local` also runs `lt-drizzle-v2/parity/schema-integration.test.ts`,
+which applies the application migrations and checks the generated schema against the real
+`users`/`posts` tables.
+
 Custom output:
 
 ```sh
@@ -79,11 +83,12 @@ bun schema/codegen.ts generate --out path/to/builder/src/generated
 ## Current schema
 
 The committed `schema/schema.json` and generated `.lt` come from the application
-migrations in `db/migrations/postgres` (10 tables). `schema_migrations` is excluded via
-`ignoreTables`.
+migrations in `db/migrations/postgres` (10 tables, 1 enum, 3 foreign keys).
+`schema_migrations` is excluded via `ignoreTables`. `db/migrations/postgres/20260102000000_schema_features.sql`
+adds the enum, unique email, and foreign keys that the application schema now exercises.
 
-The separate fixture below is only for exercising enum, FK, unsupported types, and
-non-public schema cases; it is not the app schema.
+The separate fixture below is only for exercising unsupported types and non-public schema
+cases; it is not the app schema.
 
 ## Fixture
 

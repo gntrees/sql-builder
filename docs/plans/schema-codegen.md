@@ -236,13 +236,16 @@ Adapter adalah boundary yang dijaga:
 
 Job `schema` sengaja dibuat ringan:
 
-1. nyalakan database aplikasi (`docker-compose.test.yml`) dan jalankan migrasi;
-2. `prisma db pull --force`;
+1. nyalakan database aplikasi (`docker-compose.test.yml`) dan jalankan migrasi;2. `prisma db pull --force`;
 3. `prisma generate`;
 4. `bun schema/codegen.ts generate`;
 5. `bun test schema/test` + `lt check`;
 6. `lt fmt --check` dan `git diff --exit-code`;
 7. gagal jika ada entri `unsupported.json` baru.
+
+Job juga terpicu ketika `db/migrations/**` berubah, karena migrasi aplikasi adalah
+source of truth schema yang di-commit. Integrasi schema generated ke database aplikasi
+dijalankan lokal lewat `verify-db.sh` (`lt-drizzle-v2/parity/schema-integration.test.ts`).
 
 Build TS/Py/Go, `mypy`, `go vet`, DB roundtrip, dan playground **tidak** dijalankan
 di CI schema karena berat dan bisa dijalankan lokal:
@@ -306,10 +309,11 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Adapter `Expr -> Sql` | selesai (`lt-drizzle-v2/src/schema_adapter.lt`), lolos `lt check` dan runtime assertion |
 | TableMeta + adapter `TableMeta -> v2 Table` | selesai; `from_table(create(), to_table(users_meta))` teruji |
 | Install Prisma 7.10.x | selesai |
-| `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 0 unsupported, deterministik |
+| `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 1 enum, 3 FK, 0 unsupported, deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
-| CI job `schema` | selesai (`.github/workflows/schema.yml`) |
+| CI job `schema` | selesai (`.github/workflows/schema.yml`); ikut terpicu saat `db/migrations` berubah |
 | Schema playground | selesai (`schema/playground/`, 8 kasus, 8 fitur, IR snapshot + `lt check`) |
+| Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
 
 ## 18. Schema Playground
 
@@ -325,9 +329,9 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
   `bun schema/playground/build.ts --update`.
 
 Schema yang di-commit sekarang berasal dari migrasi aplikasi di
-`db/migrations/postgres`: 10 tabel, 0 unsupported. `schema_migrations` dikecualikan lewat
-konfigurasi generator `ignoreTables`. Fixture terpisah tetap dipakai untuk menguji enum,
-FK, tipe unsupported, dan schema non-public.
+`db/migrations/postgres`: 10 tabel, 1 enum (`user_role`), 3 foreign key, 0 unsupported.
+`schema_migrations` dikecualikan lewat konfigurasi generator `ignoreTables`. Fixture
+terpisah tetap dipakai untuk menguji tipe unsupported dan schema non-public.
 
 Catatan: `bun test schema/test` menjalankan 12 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
@@ -336,5 +340,10 @@ menghasilkan 3 tabel, 1 enum, 1 FK, dan 4 entri unsupported (termasuk schema `au
 serta `mypy --strict`; differential tetap 64/64. `to_table(users_meta)` sekarang bisa
 dipakai di `from_table`, dan `to_sql(users.id.eq(1))` menghasilkan
 `"users"."id" = $1`.
+
+Integrasi ke database aplikasi diuji oleh
+`lt-drizzle-v2/parity/schema-integration.test.ts` (bagian dari `verify-db.sh`): tabel,
+predikat bertipe, enum, nullability, dan join diambil dari `schema_tables` generated lalu
+dijalankan terhadap tabel `users`/`posts` hasil migrasi aplikasi.
 `bunx tsc` penuh masih gagal pada artefak `generated/` lama yang tidak terkait; file
 `schema/*.ts` dan `prisma.config.ts` lolos typecheck terpisah.

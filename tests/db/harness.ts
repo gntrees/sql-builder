@@ -30,8 +30,15 @@ export async function resetDb(dialect: Dialect): Promise<void> {
     if (dialect === "postgres") {
         await db.unsafe(`TRUNCATE ${tables.join(", ")} RESTART IDENTITY CASCADE`);
     } else {
-        for (const table of tables) {
-            await db.unsafe(`TRUNCATE TABLE \`${table}\``);
+        // MySQL refuses to truncate a table referenced by a foreign key, so the
+        // checks are disabled for the duration of the reset.
+        await db.unsafe("SET FOREIGN_KEY_CHECKS = 0");
+        try {
+            for (const table of tables) {
+                await db.unsafe(`TRUNCATE TABLE \`${table}\``);
+            }
+        } finally {
+            await db.unsafe("SET FOREIGN_KEY_CHECKS = 1");
         }
     }
 }

@@ -172,8 +172,10 @@ for (const dialect of dialects) {
         });
 
         test("deletes rows", async () => {
+            // carol has no posts or orders, so the foreign keys from the
+            // application schema do not block the delete.
             const c = qb();
-            await execute(dialect, c.delete(c.table("users")).where(c.col("name").eq("bob")));
+            await execute(dialect, c.delete(c.table("users")).where(c.col("name").eq("carol")));
 
             const verify = qb();
             const { rows } = await execute(dialect, verify.select(verify.col("id")).from(verify.table("users")));
