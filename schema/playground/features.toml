@@ -28,7 +28,7 @@ title = "Unsupported columns are visible but untyped"
 
 [[feature]]
 id = "schema/non-public"
-title = "Non-public schemas are skipped and recorded"
+title = "Non-public schemas keep their schema"
 
 [[feature]]
 id = "naming/renames"

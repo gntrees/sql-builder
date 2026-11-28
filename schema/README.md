@@ -12,7 +12,7 @@ Postgres
   -> lt-drizzle-v2/src/generated/schema_*.lt
 ```
 
-The canonical IR is `schema/schema.json` (version 2). `schema/unsupported.json`
+The canonical IR is `schema/schema.json` (version 3). `schema/unsupported.json`
 records schema features that are not emitted yet. Neither file is hand-edited.
 
 ## Prisma setup
@@ -87,6 +87,8 @@ migrations in `db/migrations/postgres` (10 tables, 1 enum, 3 foreign keys).
 `schema_migrations` is excluded via `ignoreTables`. `db/migrations/postgres/20260102000000_schema_features.sql`
 adds the enum, unique email, and foreign keys that the application schema now exercises.
 Indexes and composite unique constraints are recorded as `IndexMeta` on `TableMeta`.
+Tables in non-public schemas are emitted too; when two schemas share a table name the
+accessor gets the schema prefix (`auth_users`).
 
 The separate fixture below is only for exercising unsupported types and non-public schema
 cases; it is not the app schema.

@@ -1,3 +1,3 @@
-title = "Non-public schemas are skipped and recorded"
+title = "Non-public schemas keep their schema"
 feature = "schema/non-public"
-why = "The first slice emits only the public schema. A model in auth is skipped, but the skip is visible in unsupported.json instead of disappearing silently."
+why = "A model in the auth schema is emitted normally; TableMeta keeps schema = auth so from_table renders the qualified name. Accessors are schema-prefixed only when two schemas share a table name."

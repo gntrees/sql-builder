@@ -37,6 +37,14 @@ package schema_bool {
     Expr.Ne(col(c), param(v))
   }
 
+  export fn is_distinct_from(c: BoolColumn, v: Bool) -> Expr {
+    Expr.IsDistinct(col(c), param(v))
+  }
+
+  export fn is_not_distinct_from(c: BoolColumn, v: Bool) -> Expr {
+    Expr.IsNotDistinct(col(c), param(v))
+  }
+
   export fn is_null(c: BoolColumn) -> Expr {
     Expr.IsNull(col(c))
   }

@@ -4,7 +4,7 @@
 // stable ordering, and an explicit format version. Bump SCHEMA_IR_VERSION only
 // when the shape or the meaning of a field changes.
 
-export const SCHEMA_IR_VERSION = 2 as const;
+export const SCHEMA_IR_VERSION = 3 as const;
 
 export type SemanticType =
     | "Int"
@@ -58,7 +58,7 @@ export type TableIR = {
     name: string;
     /** SQL table name. */
     dbName: string;
-    /** SQL schema; only "public" is emitted in the first slice. */
+    /** SQL schema name. */
     schema: string;
     /** Column accessor names. */
     primaryKey: string[];

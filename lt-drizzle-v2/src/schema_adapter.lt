@@ -130,6 +130,8 @@ package schema_adapter {
       Expr.Param(value) => scalar(value)
       Expr.Eq(left, right) => binary(left, "=", right)
       Expr.Ne(left, right) => binary(left, "<>", right)
+      Expr.IsDistinct(left, right) => binary(left, "is distinct from", right)
+      Expr.IsNotDistinct(left, right) => binary(left, "is not distinct from", right)
       Expr.Gt(left, right) => binary(left, ">", right)
       Expr.Gte(left, right) => binary(left, ">=", right)
       Expr.Lt(left, right) => binary(left, "<", right)

@@ -54,11 +54,19 @@ describe("schema IR -> LT", () => {
         expect(tables).toContain('primary_key: ["id"]');
         expect(tables).toContain('default_sql: "autoincrement"');
         expect(tables).toContain("export let all_table_meta: List<TableMeta>");
+        expect(tables).toContain("export let audit_meta: TableMeta");
+        expect(tables).toContain('schema: "auth"');
     });
 
     test("emits typed operators and enum value mapping", () => {
         expect(byName.get("schema_int.lt")).toContain(
             "export fn gt(c: IntColumn, v: Int) -> Expr",
+        );
+        expect(byName.get("schema_int.lt")).toContain(
+            "export fn is_distinct_from(c: IntColumn, v: Int) -> Expr",
+        );
+        expect(byName.get("schema_enum_role.lt")).toContain(
+            "export fn is_not_distinct_from(c: RoleColumn, v: Role) -> Expr",
         );
         expect(byName.get("schema_str.lt")).toContain(
             "export fn ilike(c: StrColumn, v: Str) -> Expr",

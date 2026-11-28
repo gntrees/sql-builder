@@ -40,6 +40,14 @@ package schema_nullable_int {
     Expr.Ne(col(c), param(v))
   }
 
+  export fn is_distinct_from(c: NullableIntColumn, v: Int) -> Expr {
+    Expr.IsDistinct(col(c), param(v))
+  }
+
+  export fn is_not_distinct_from(c: NullableIntColumn, v: Int) -> Expr {
+    Expr.IsNotDistinct(col(c), param(v))
+  }
+
   export fn gt(c: NullableIntColumn, v: Int) -> Expr {
     Expr.Gt(col(c), param(v))
   }

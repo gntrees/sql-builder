@@ -13,15 +13,15 @@ function build() {
 }
 
 describe("DMMF -> schema IR", () => {
-    test("keeps supported tables and skips non-public schemas", () => {
+    test("keeps tables from every schema", () => {
         const { schema, unsupported } = build();
-        expect(schema.tables.map((table) => table.name)).toEqual(["organizations", "users"]);
-        expect(unsupported.entries).toContainEqual({
-            kind: "schema",
-            schema: "auth",
-            table: "audit",
-            reason: "only the public schema is supported",
-        });
+        expect(schema.tables.map((table) => table.name)).toEqual([
+            "audit",
+            "organizations",
+            "users",
+        ]);
+        expect(schema.tables.find((table) => table.name === "audit")?.schema).toBe("auth");
+        expect(unsupported.entries.some((entry) => entry.kind === "schema")).toBe(false);
     });
 
     test("maps columns, defaults, enum, nullability, and unsupported types", () => {
@@ -124,6 +124,24 @@ describe("DMMF -> schema IR", () => {
         });
     });
 
+    test("prefixes accessors when two schemas share a table name", () => {
+        const document = structuredClone(fixture);
+        const audit = document.datamodel.models.find((model) => model.name === "Audit")!;
+        const publicAudit = structuredClone(audit);
+        publicAudit.name = "PublicAudit";
+        publicAudit.schema = "public";
+        publicAudit.dbName = "audit";
+        document.datamodel.models.push(publicAudit);
+
+        const { schema } = buildSchemaIR(document, { prismaVersion: "7.10.1" });
+        expect(
+            schema.tables
+                .filter((table) => table.dbName === "audit")
+                .map((table) => table.name)
+                .sort(),
+        ).toEqual(["auth_audit", "public_audit"]);
+    });
+
     test("extracts composite foreign keys with aligned columns", () => {
         const document = structuredClone(fixture);
         const user = document.datamodel.models.find((model) => model.name === "User")!;
@@ -149,7 +167,10 @@ describe("DMMF -> schema IR", () => {
             prismaVersion: "7.10.1",
             ignoreTables: ["users"],
         });
-        expect(result.schema.tables.map((table) => table.name)).toEqual(["organizations"]);
+        expect(result.schema.tables.map((table) => table.name)).toEqual([
+            "audit",
+            "organizations",
+        ]);
     });
 
     test("is deterministic", () => {

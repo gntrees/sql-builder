@@ -162,6 +162,8 @@ function exprPackage(): EmittedFile {
     Param(Scalar)
     Eq(Expr, Expr)
     Ne(Expr, Expr)
+    IsDistinct(Expr, Expr)
+    IsNotDistinct(Expr, Expr)
     Gt(Expr, Expr)
     Gte(Expr, Expr)
     Lt(Expr, Expr)
@@ -262,6 +264,8 @@ function scalarPackage(spec: ScalarSpec, nullable = false): EmittedFile {
 
     binary("eq", "Eq");
     binary("ne", "Ne");
+    binary("is_distinct_from", "IsDistinct");
+    binary("is_not_distinct_from", "IsNotDistinct");
 
     if (spec.ordered) {
         binary("gt", "Gt");
@@ -414,6 +418,16 @@ function enumPackage(item: EnumIR, nullable = false): EmittedFile {
 
     push(`export fn ne(c: ${columnType}, v: ${item.name}) -> Expr {`);
     push("  Expr.Ne(col(c), param(v))");
+    push("}");
+    push();
+
+    push(`export fn is_distinct_from(c: ${columnType}, v: ${item.name}) -> Expr {`);
+    push("  Expr.IsDistinct(col(c), param(v))");
+    push("}");
+    push();
+
+    push(`export fn is_not_distinct_from(c: ${columnType}, v: ${item.name}) -> Expr {`);
+    push("  Expr.IsNotDistinct(col(c), param(v))");
     push("}");
     push();
 
