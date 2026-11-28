@@ -51,7 +51,7 @@ describe("generated schema runtime", () => {
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
 import schema { Assignment, field } "./schema.lt"
-import schema_adapter { on, to_assignment, to_sql, to_table } "./schema_adapter.lt"
+import schema_adapter { on, on_alias, to_assignment, to_sql, to_table } "./schema_adapter.lt"
 import schema_expr { Expr } "./generated/schema_expr.lt"
 import schema_int { eq } "./generated/schema_int.lt"
 import schema_relations { users_organizations } "./generated/schema_relations.lt"
@@ -70,6 +70,10 @@ package use {
 
   export fn relation() -> Sql {
     on(users_organizations)
+  }
+
+  export fn aliased_relation() -> Sql {
+    on_alias(users_organizations, "u", "o")
   }
 
   export fn assignment() -> Assignment {
@@ -105,7 +109,7 @@ package use {
         const { users, usersMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_tables.ts")).href
         );
-        const { toSql, toTable, on, toAssignment } = await import(
+        const { toSql, toTable, on, onAlias, toAssignment } = await import(
             pathToFileURL(join(root, "src/schema_adapter.ts")).href
         );
         const { usersOrganizations } = await import(
@@ -156,6 +160,9 @@ package use {
         const relationSql = sqlToQuery(postgres(), on(usersOrganizations));
         expect(relationSql.sql).toBe('"users"."orgId" = "organizations"."id"');
         expect(relationSql.params.items).toHaveLength(0);
+
+        const aliasedSql = sqlToQuery(postgres(), onAlias(usersOrganizations, "u", "o"));
+        expect(aliasedSql.sql).toBe('"u"."orgId" = "o"."id"');
 
         const assignment = toAssignment(assignStr(users.displayName, "bob"));
         expect(assignment.column).toBe("displayName");
