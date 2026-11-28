@@ -40,8 +40,9 @@ describe("generated schema adapter", () => {
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
 import schema { field } "./schema.lt"
-import schema_adapter { to_sql, to_table } "./schema_adapter.lt"
+import schema_adapter { to_sql, to_table, on } "./schema_adapter.lt"
 import schema_enum_role { Role } "./generated/schema_enum_role.lt"
+import schema_relations { users_organizations } "./generated/schema_relations.lt"
 import schema_tables { users, users_meta } "./generated/schema_tables.lt"
 import select { Select, create, fields, from_table, set_dialect, where } "./select.lt"
 import sql { Sql } "./sql.lt"
@@ -61,6 +62,10 @@ package use {
 
   export fn recent() -> Sql {
     to_sql(users.created_at.gt("2020-01-01"))
+  }
+
+  export fn relation() -> Sql {
+    on(users_organizations)
   }
 
   export fn query() -> Select {

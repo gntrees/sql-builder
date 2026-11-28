@@ -10,8 +10,9 @@ datasource db {
 }
 
 model authors {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String
+  books books[]
 
   @@schema("public")
 }
@@ -24,9 +25,10 @@ model b {
 }
 
 model books {
-  book_id   Int    @id @default(autoincrement())
+  book_id   Int     @id @default(autoincrement())
   author_id Int
   title     String
+  authors   authors @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -46,9 +48,10 @@ model members {
 }
 
 model orders {
-  id      Int @id @default(autoincrement())
+  id      Int   @id @default(autoincrement())
   user_id Int
   total   Int
+  users   users @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -57,6 +60,7 @@ model posts {
   id      Int    @id @default(autoincrement())
   user_id Int
   title   String
+  users   users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -85,10 +89,21 @@ model u {
 }
 
 model users {
-  id     Int     @id @default(autoincrement())
+  id     Int       @id @default(autoincrement())
   name   String
-  active Boolean @default(false)
+  active Boolean   @default(false)
   age    Int?
+  email  String?   @unique @db.VarChar(320)
+  role   user_role @default(user)
+  orders orders[]
+  posts  posts[]
+
+  @@schema("public")
+}
+
+enum user_role {
+  admin
+  user
 
   @@schema("public")
 }

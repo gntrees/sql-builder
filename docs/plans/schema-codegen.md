@@ -167,6 +167,12 @@ Set operator awal:
 
 Operator lain dicatat sebagai backlog.
 
+Relasi:
+
+- `schema_relations` memuat `RelationMeta` dan binding maju/balik untuk setiap FK
+  satu kolom.
+- Adapter menyediakan `on(rel) -> Sql` sebagai kondisi join kanonik.
+
 ## 9. Naming dan Collision
 
 - Nama tabel binding berasal dari `dbName`, disanitize ke `snake_case`.
@@ -176,12 +182,16 @@ Operator lain dicatat sebagai backlog.
 - Collision setelah sanitasi menggagalkan codegen; tidak ada auto-suffix.
 - Enum dan variant disanitize; collision menggagalkan codegen.
 - Nilai DB asli tidak diubah; dipetakan lewat fungsi `*_value()`.
+- Binding relasi memakai nama tabel accessor: `<from>_<to>` dan kebalikannya
+  `<to>_<from>`; bila ada lebih dari satu FK antar pasangan yang sama, nama kolom
+  pemilik ditambahkan (`messages_users_sender_id`). Collision menggagalkan codegen.
 
 ## 10. Nullability dan Relasi
 
 - Nullability hanya metadata `nullable: Bool`; belum type-level.
-- FK hanya metadata di `schema.json`; belum ada accessor relasi.
-- Join tetap eksplisit.
+- FK di-emit sebagai `RelationMeta` di `schema_relations` (maju dan balik); join tetap
+  eksplisit lewat `on(rel)` di adapter. FK komposit dicatat sebagai unsupported.
+- `on(rel)` belum mengenal alias tabel; alias harus memakai referensi kolom eksplisit.
 
 ## 11. Unsupported
 
@@ -220,6 +230,7 @@ Aturan:
 | `schema_decimal`, `schema_uuid`, `schema_temporal` | Tipe kolom berbasis string + operator. |
 | `schema_enum_<name>` | Enum, mapping value, tipe kolom, operator. |
 | `schema_unsupported` | `UnsupportedColumn` tanpa operator. |
+| `schema_relations` | `RelationMeta`, binding relasi maju/balik, dan `all_relations`. |
 | `schema_tables` | Struct tabel, binding `users`, `users_meta`, dan `all_table_meta`. |
 
 ## 13. Adapter
@@ -236,13 +247,16 @@ Adapter adalah boundary yang dijaga:
 
 Job `schema` sengaja dibuat ringan:
 
-1. nyalakan database aplikasi (`docker-compose.test.yml`) dan jalankan migrasi;
-2. `prisma db pull --force`;
+1. nyalakan database aplikasi (`docker-compose.test.yml`) dan jalankan migrasi;2. `prisma db pull --force`;
 3. `prisma generate`;
 4. `bun schema/codegen.ts generate`;
 5. `bun test schema/test` + `lt check`;
 6. `lt fmt --check` dan `git diff --exit-code`;
 7. gagal jika ada entri `unsupported.json` baru.
+
+Job juga terpicu ketika `db/migrations/**` berubah, karena migrasi aplikasi adalah
+source of truth schema yang di-commit. Integrasi schema generated ke database aplikasi
+dijalankan lokal lewat `verify-db.sh` (`lt-drizzle-v2/parity/schema-integration.test.ts`).
 
 Build TS/Py/Go, `mypy`, `go vet`, DB roundtrip, dan playground **tidak** dijalankan
 di CI schema karena berat dan bisa dijalankan lokal:
@@ -283,7 +297,9 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 ## 16. Backlog
 
 - Nullability type-level.
-- Accessor relasi (`users.posts()`).
+- `on_alias` untuk relasi pada tabel yang di-alias.
+- FK komposit (saat ini tercatat di `unsupported.json`).
+- Accessor relasi many-to-many lewat tabel perantara.
 - Index, unique constraint komposit, check constraint, view.
 - Multi-schema.
 - `Date`/`Decimal` typed value di builder.
@@ -306,17 +322,19 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Adapter `Expr -> Sql` | selesai (`lt-drizzle-v2/src/schema_adapter.lt`), lolos `lt check` dan runtime assertion |
 | TableMeta + adapter `TableMeta -> v2 Table` | selesai; `from_table(create(), to_table(users_meta))` teruji |
 | Install Prisma 7.10.x | selesai |
-| `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 0 unsupported, deterministik |
+| `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 1 enum, 3 FK, 0 unsupported, deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
-| CI job `schema` | selesai (`.github/workflows/schema.yml`) |
-| Schema playground | selesai (`schema/playground/`, 8 kasus, 8 fitur, IR snapshot + `lt check`) |
+| CI job `schema` | selesai (`.github/workflows/schema.yml`); ikut terpicu saat `db/migrations` berubah |
+| Schema playground | selesai (`schema/playground/`, 9 kasus, 9 fitur, IR snapshot + `lt check`) |
+| Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
+| Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
 
 ## 18. Schema Playground
 
 `schema/playground/` adalah galeri statis yang tidak menyentuh database:
 
-- 8 kasus: table, column types, composite key, foreign key, unsupported jsonb/array,
-  non-public schema, naming, composite unique/index.
+- 9 kasus: table, column types, composite key, foreign key, ambiguous foreign key,
+  unsupported jsonb/array, non-public schema, naming, composite unique/index.
 - Setiap kasus: DMMF input, `schema.json`, `unsupported.json`, generated LT, dan
   status `lt check`.
 - Snapshot IR disimpan di `cases/**/<id>.expected.json`.
@@ -325,9 +343,9 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
   `bun schema/playground/build.ts --update`.
 
 Schema yang di-commit sekarang berasal dari migrasi aplikasi di
-`db/migrations/postgres`: 10 tabel, 0 unsupported. `schema_migrations` dikecualikan lewat
-konfigurasi generator `ignoreTables`. Fixture terpisah tetap dipakai untuk menguji enum,
-FK, tipe unsupported, dan schema non-public.
+`db/migrations/postgres`: 10 tabel, 1 enum (`user_role`), 3 foreign key, 0 unsupported.
+`schema_migrations` dikecualikan lewat konfigurasi generator `ignoreTables`. Fixture
+terpisah tetap dipakai untuk menguji tipe unsupported dan schema non-public.
 
 Catatan: `bun test schema/test` menjalankan 12 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
@@ -336,5 +354,11 @@ menghasilkan 3 tabel, 1 enum, 1 FK, dan 4 entri unsupported (termasuk schema `au
 serta `mypy --strict`; differential tetap 64/64. `to_table(users_meta)` sekarang bisa
 dipakai di `from_table`, dan `to_sql(users.id.eq(1))` menghasilkan
 `"users"."id" = $1`.
+
+Integrasi ke database aplikasi diuji oleh
+`lt-drizzle-v2/parity/schema-integration.test.ts` (bagian dari `verify-db.sh`): tabel,
+predikat bertipe, enum, nullability, dan join lewat `on(posts_users)` diambil dari
+`schema_relations` generated lalu dijalankan terhadap tabel `users`/`posts` hasil
+migrasi aplikasi.
 `bunx tsc` penuh masih gagal pada artefak `generated/` lama yang tidak terkait; file
 `schema/*.ts` dan `prisma.config.ts` lolos typecheck terpisah.

@@ -124,6 +124,23 @@ describe("DMMF -> schema IR", () => {
         });
     });
 
+    test("records composite foreign keys as unsupported", () => {
+        const document = structuredClone(fixture);
+        const user = document.datamodel.models.find((model) => model.name === "User")!;
+        const relation = user.fields.find((field) => field.kind === "object")!;
+        relation.relationFromFields = ["orgId", "email"];
+        relation.relationToFields = ["id", "email"];
+
+        const { schema, unsupported } = buildSchemaIR(document, { prismaVersion: "7.10.1" });
+        expect(schema.foreignKeys).toEqual([]);
+        expect(unsupported.entries).toContainEqual({
+            kind: "foreign-key",
+            table: "users",
+            name: "UserToOrganization",
+            reason: "composite foreign keys are not emitted yet",
+        });
+    });
+
     test("can ignore internal tables such as migration metadata", () => {
         const result = buildSchemaIR(fixture, {
             prismaVersion: "7.10.1",

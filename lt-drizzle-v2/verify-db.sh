@@ -14,4 +14,5 @@ cleanup() {
 trap cleanup EXIT
 
 docker compose -f docker-compose.test.yml up -d --wait postgres mysql
-DB_TESTS=1 bun test lt-drizzle-v2/parity/db.test.ts
+docker compose -f docker-compose.test.yml run --rm migrate-postgres >/dev/null
+DB_TESTS=1 bun test lt-drizzle-v2/parity/db.test.ts lt-drizzle-v2/parity/schema-integration.test.ts

@@ -70,6 +70,10 @@ CI only runs the schema codegen gate (introspection, codegen, unit tests, format
 drift check). The heavy native TS/Py/Go gates, database roundtrips, and playground
 are local commands so they do not consume GitHub Actions minutes on every push.
 
+`bun run verify:local` also runs `lt-drizzle-v2/parity/schema-integration.test.ts`,
+which applies the application migrations and checks the generated schema against the real
+`users`/`posts` tables.
+
 Custom output:
 
 ```sh
@@ -79,11 +83,12 @@ bun schema/codegen.ts generate --out path/to/builder/src/generated
 ## Current schema
 
 The committed `schema/schema.json` and generated `.lt` come from the application
-migrations in `db/migrations/postgres` (10 tables). `schema_migrations` is excluded via
-`ignoreTables`.
+migrations in `db/migrations/postgres` (10 tables, 1 enum, 3 foreign keys).
+`schema_migrations` is excluded via `ignoreTables`. `db/migrations/postgres/20260102000000_schema_features.sql`
+adds the enum, unique email, and foreign keys that the application schema now exercises.
 
-The separate fixture below is only for exercising enum, FK, unsupported types, and
-non-public schema cases; it is not the app schema.
+The separate fixture below is only for exercising unsupported types and non-public schema
+cases; it is not the app schema.
 
 ## Fixture
 
@@ -115,6 +120,7 @@ schema_uuid.lt          UuidColumn (string values)
 schema_temporal.lt      TemporalColumn (string values)
 schema_enum_<name>.lt   enum + column + value mapping
 schema_unsupported.lt   UnsupportedColumn (no operators)
+schema_relations.lt     RelationMeta + forward/inverse bindings + all_relations
 schema_tables.lt        table structs, bindings such as `users`, and `users_meta`
 ```
 
@@ -127,11 +133,22 @@ let table = to_table(users_meta)
 from_table(create(), table)
 ```
 
+Foreign keys are emitted as neutral metadata. The adapter turns a relation binding into a
+join condition:
+
+```lt
+inner_join(select, to_table(posts_meta), on(posts_users))
+```
+
+`on(rel)` renders the canonical `from.column = to.column` form for both the forward
+(`posts_users`) and inverse (`users_posts`) binding. Aliased tables are not supported yet;
+use explicit column references when a table is aliased.
+
 ## Playground
 
-`schema/playground/` builds a static gallery of 8 cases: table, column types, composite
-key, foreign key, unsupported `jsonb`/array, non-public schema, naming, and composite
-unique/index.
+`schema/playground/` builds a static gallery of 9 cases: table, column types, composite
+key, foreign key, ambiguous foreign key, unsupported `jsonb`/array, non-public schema,
+naming, and composite unique/index.
 
 ```sh
 bun run schema:playground

@@ -373,10 +373,87 @@
           "unique": false,
           "type": "Int",
           "nativeType": "Int"
+        },
+        {
+          "name": "email",
+          "dbName": "email",
+          "nullable": true,
+          "unique": true,
+          "type": "Str",
+          "nativeType": "VarChar"
+        },
+        {
+          "name": "role",
+          "dbName": "role",
+          "nullable": false,
+          "unique": false,
+          "default": {
+            "kind": "literal",
+            "value": "user"
+          },
+          "type": "Enum",
+          "nativeType": "user_role",
+          "enum": "UserRole"
         }
       ]
     }
   ],
-  "enums": [],
-  "foreignKeys": []
+  "enums": [
+    {
+      "name": "UserRole",
+      "dbName": "user_role",
+      "package": "schema_enum_user_role",
+      "values": [
+        {
+          "name": "Admin",
+          "dbName": "admin"
+        },
+        {
+          "name": "User",
+          "dbName": "user"
+        }
+      ]
+    }
+  ],
+  "foreignKeys": [
+    {
+      "name": "authorsTobooks",
+      "fromTable": "books",
+      "fromColumns": [
+        "author_id"
+      ],
+      "toTable": "authors",
+      "toColumns": [
+        "id"
+      ],
+      "onDelete": "NoAction",
+      "onUpdate": "NoAction"
+    },
+    {
+      "name": "ordersTousers",
+      "fromTable": "orders",
+      "fromColumns": [
+        "user_id"
+      ],
+      "toTable": "users",
+      "toColumns": [
+        "id"
+      ],
+      "onDelete": "NoAction",
+      "onUpdate": "NoAction"
+    },
+    {
+      "name": "postsTousers",
+      "fromTable": "posts",
+      "fromColumns": [
+        "user_id"
+      ],
+      "toTable": "users",
+      "toColumns": [
+        "id"
+      ],
+      "onDelete": "Cascade",
+      "onUpdate": "NoAction"
+    }
+  ]
 }
