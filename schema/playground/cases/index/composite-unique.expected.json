@@ -1,6 +1,6 @@
 {
   "schema": {
-    "version": 1,
+    "version": 2,
     "generator": "prisma-lt",
     "dialect": "postgres",
     "prismaVersion": "7.10.1",
@@ -41,6 +41,23 @@
             "type": "Int",
             "nativeType": "Int"
           }
+        ],
+        "indexes": [
+          {
+            "name": "users_email_idx",
+            "columns": [
+              "email"
+            ],
+            "unique": false
+          },
+          {
+            "name": "users_email_org_id_key",
+            "columns": [
+              "email",
+              "orgId"
+            ],
+            "unique": true
+          }
         ]
       }
     ],
@@ -48,26 +65,7 @@
     "foreignKeys": []
   },
   "unsupported": {
-    "version": 1,
-    "entries": [
-      {
-        "kind": "index",
-        "table": "users",
-        "name": "users_email_idx",
-        "fields": [
-          "email"
-        ],
-        "reason": "indexes are not emitted yet"
-      },
-      {
-        "kind": "unique-constraint",
-        "table": "users",
-        "fields": [
-          "email",
-          "org_id"
-        ],
-        "reason": "composite unique constraints are not emitted yet"
-      }
-    ]
+    "version": 2,
+    "entries": []
   }
 }

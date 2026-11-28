@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "generator": "prisma-lt",
   "dialect": "postgres",
   "prismaVersion": "7.10.1",
@@ -32,7 +32,8 @@
           "type": "Str",
           "nativeType": "String"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "b",
@@ -66,7 +67,8 @@
           "type": "Bool",
           "nativeType": "Boolean"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "books",
@@ -104,7 +106,8 @@
           "type": "Str",
           "nativeType": "String"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "m",
@@ -134,7 +137,8 @@
           "type": "Int",
           "nativeType": "Int"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "members",
@@ -164,7 +168,8 @@
           "type": "Int",
           "nativeType": "Int"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "orders",
@@ -202,7 +207,8 @@
           "type": "Int",
           "nativeType": "Int"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "posts",
@@ -240,7 +246,8 @@
           "type": "Str",
           "nativeType": "String"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "t",
@@ -294,7 +301,8 @@
           "type": "Int",
           "nativeType": "Int"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "u",
@@ -324,7 +332,8 @@
           "type": "Int",
           "nativeType": "Int"
         }
-      ]
+      ],
+      "indexes": []
     },
     {
       "model": "users",
@@ -395,7 +404,8 @@
           "nativeType": "user_role",
           "enum": "UserRole"
         }
-      ]
+      ],
+      "indexes": []
     }
   ],
   "enums": [

@@ -1,6 +1,6 @@
 {
   "schema": {
-    "version": 1,
+    "version": 2,
     "generator": "prisma-lt",
     "dialect": "postgres",
     "prismaVersion": "7.10.1",
@@ -41,7 +41,8 @@
             "type": "Str",
             "nativeType": "VarChar"
           }
-        ]
+        ],
+        "indexes": []
       },
       {
         "model": "User",
@@ -79,7 +80,8 @@
             "type": "Int",
             "nativeType": "Int"
           }
-        ]
+        ],
+        "indexes": []
       }
     ],
     "enums": [],
@@ -102,7 +104,7 @@
     ]
   },
   "unsupported": {
-    "version": 1,
+    "version": 2,
     "entries": []
   }
 }

@@ -451,6 +451,13 @@ function metaPackage(): EmittedFile {
     schema: Str
     primary_key: List<Str>
     columns: List<ColumnMeta>
+    indexes: List<IndexMeta>
+  }
+
+  export struct IndexMeta {
+    name: Str
+    columns: List<Str>
+    unique: Bool
   }
 }
 `;
@@ -502,7 +509,7 @@ function tablesPackage(schema: SchemaIR): EmittedFile | undefined {
     const importLines = [
         ...imports.entries()
             .map(([pkg, types]) => `import ${pkg} { ${[...types].sort().join(", ")} } "./${pkg}.lt"`),
-        `import schema_meta { ColumnMeta, TableMeta } "./schema_meta.lt"`,
+        `import schema_meta { ColumnMeta, IndexMeta, TableMeta } "./schema_meta.lt"`,
     ]
         .sort()
         .join("\n");
@@ -550,6 +557,19 @@ function tablesPackage(schema: SchemaIR): EmittedFile | undefined {
             body.push("    ),");
         }
         body.push("  ],");
+        if (table.indexes.length === 0) {
+            body.push("  indexes: [],");
+        } else {
+            body.push("  indexes: [");
+            for (const index of table.indexes) {
+                body.push("    IndexMeta(");
+                body.push(`      name: ${ltString(index.name)},`);
+                body.push(`      columns: [${index.columns.map((column) => ltString(column)).join(", ")}],`);
+                body.push(`      unique: ${index.unique},`);
+                body.push("    ),");
+            }
+            body.push("  ],");
+        }
         body.push(")");
         body.push("");
     }

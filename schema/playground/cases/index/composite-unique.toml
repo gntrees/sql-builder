@@ -1,0 +1,3 @@
+title = "Composite uniques and indexes become table metadata"
+feature = "index/composite-unique"
+why = "Both the non-unique index and the composite unique constraint are emitted as IndexMeta on the table, in index order, instead of being reported as unsupported."
