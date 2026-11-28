@@ -64,6 +64,10 @@ package use {
     to_sql(eq(users.id, 1))
   }
 
+  export fn distinct_from() -> Sql {
+    to_sql(users.id.is_distinct_from(1))
+  }
+
   export fn table_count() -> Int {
     all_table_meta.len()
   }
@@ -129,7 +133,7 @@ package use {
             pathToFileURL(join(root, "src/select.ts")).href
         );
         const { field } = await import(pathToFileURL(join(root, "src/schema.ts")).href);
-        const { eq: eqInt, notInList } = await import(
+        const { eq: eqInt, isDistinctFrom, notInList } = await import(
             pathToFileURL(join(root, "src/generated/schema_int.ts")).href
         );
         const { Role, eq: eqRole } = await import(
@@ -154,6 +158,9 @@ package use {
         const enumSql = sqlToQuery(postgres(), toSql(eqRole(users.role, Role.Admin)));
         expect(enumSql.sql).toBe('"users"."role" = $1');
         expect(enumSql.params.items.map((item: any) => String(item.values[0]))).toEqual(["admin"]);
+
+        const distinctSql = sqlToQuery(postgres(), toSql(isDistinctFrom(users.id, 1n)));
+        expect(distinctSql.sql).toBe('"users"."id" is distinct from $1');
 
         const notInSql = sqlToQuery(
             postgres(),

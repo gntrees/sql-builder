@@ -49,6 +49,14 @@ package schema_enum_user_role {
     Expr.Ne(col(c), param(v))
   }
 
+  export fn is_distinct_from(c: UserRoleColumn, v: UserRole) -> Expr {
+    Expr.IsDistinct(col(c), param(v))
+  }
+
+  export fn is_not_distinct_from(c: UserRoleColumn, v: UserRole) -> Expr {
+    Expr.IsNotDistinct(col(c), param(v))
+  }
+
   export fn in_list(c: UserRoleColumn, values: List<UserRole>) -> Expr {
     Expr.In(col(c), values.map(fn(v) => param(v)))
   }

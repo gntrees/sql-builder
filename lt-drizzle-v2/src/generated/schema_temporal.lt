@@ -37,6 +37,14 @@ package schema_temporal {
     Expr.Ne(col(c), param(v))
   }
 
+  export fn is_distinct_from(c: TemporalColumn, v: Str) -> Expr {
+    Expr.IsDistinct(col(c), param(v))
+  }
+
+  export fn is_not_distinct_from(c: TemporalColumn, v: Str) -> Expr {
+    Expr.IsNotDistinct(col(c), param(v))
+  }
+
   export fn gt(c: TemporalColumn, v: Str) -> Expr {
     Expr.Gt(col(c), param(v))
   }

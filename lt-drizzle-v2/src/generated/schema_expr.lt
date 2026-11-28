@@ -27,6 +27,8 @@ package schema_expr {
     Param(Scalar)
     Eq(Expr, Expr)
     Ne(Expr, Expr)
+    IsDistinct(Expr, Expr)
+    IsNotDistinct(Expr, Expr)
     Gt(Expr, Expr)
     Gte(Expr, Expr)
     Lt(Expr, Expr)

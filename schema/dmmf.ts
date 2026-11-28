@@ -271,34 +271,25 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
     const modelInfos = new Map<string, ModelInfo>();
     const tables: TableIR[] = [];
 
+    // Table accessors use the bare SQL name when it is unique. If two schemas
+    // expose the same table name, the accessor is prefixed with the schema.
+    const tableNameCounts = new Map<string, number>();
+    for (const model of models) {
+        const dbName = model.dbName ?? model.name;
+        if (ignoredTables.has(dbName)) continue;
+        const baseName = toSnakeCase(dbName);
+        tableNameCounts.set(baseName, (tableNameCounts.get(baseName) ?? 0) + 1);
+    }
+
     for (const model of models) {
         const schema = model.schema ?? "public";
         const dbName = model.dbName ?? model.name;
         if (ignoredTables.has(dbName)) continue;
-        const tableName = toSnakeCase(dbName);
-
-        if (schema !== "public") {
-            unsupported.push({
-                kind: "schema",
-                schema,
-                table: tableName,
-                reason: "only the public schema is supported",
-            });
-            modelInfos.set(model.name, {
-                model,
-                table: {
-                    model: model.name,
-                    name: tableName,
-                    dbName: model.dbName ?? model.name,
-                    schema,
-                    primaryKey: [],
-                    columns: [],
-                },
-                columnByField: new Map(),
-                supported: false,
-            });
-            continue;
-        }
+        const baseName = toSnakeCase(dbName);
+        const tableName =
+            (tableNameCounts.get(baseName) ?? 0) > 1
+                ? toSnakeCase(`${schema}_${dbName}`)
+                : baseName;
 
         const columns: ColumnIR[] = [];
         const columnByField = new Map<string, string>();

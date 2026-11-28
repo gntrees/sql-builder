@@ -37,7 +37,7 @@ Bukan tujuan:
 | S2 | DB live adalah source of truth; `schema.prisma` adalah generated mirror. |
 | S3 | `prisma db pull --force` boleh menimpa `schema.prisma`. |
 | S4 | Prisma dipin ke `7.10.x`; jangan memakai `latest`. |
-| S5 | `schema.json` adalah IR kanonik dan stabil; `version: 2`. |
+| S5 | `schema.json` adalah IR kanonik dan stabil; `version: 3`. |
 | S6 | Generated `.lt` berada di dalam tree entry builder karena LT menolak import ke luar direktori entry. |
 | S7 | Konsumen awal adalah v2; v3 nanti memakai adapter baru. |
 | S8 | `lt/src/schema.lt` (v1) tidak diubah; ditandai deprecated di dokumentasi. |
@@ -63,7 +63,7 @@ Konsekuensi: generated schema terdiri dari beberapa file/package, bukan satu `sc
 | Path | Isi |
 |---|---|
 | `prisma/schema.prisma` | Generated mirror dari DB. |
-| `schema/schema.json` | IR kanonik, `version: 2`. |
+| `schema/schema.json` | IR kanonik, `version: 3`. |
 | `schema/unsupported.json` | Daftar fitur yang belum didukung. |
 | `lt-drizzle-v2/src/generated/schema_*.lt` | Package generated. |
 | `lt-drizzle-v2/src/schema_adapter.lt` | Adapter handwritten `Expr -> Sql`. |
@@ -88,7 +88,7 @@ Shape:
 
 ```json
 {
-  "version": 2,
+  "version": 3,
   "generator": "prisma-lt",
   "dialect": "postgres",
   "prismaVersion": "7.10.1",
@@ -163,7 +163,8 @@ users.role.eq(Role.Admin)
 
 Set operator awal:
 
-- semua tipe: `eq`, `ne`, `is_null`, `is_not_null`, `asc`, `desc`, `as_alias`
+- semua tipe: `eq`, `ne`, `is_distinct_from`, `is_not_distinct_from`, `is_null`,
+  `is_not_null`, `asc`, `desc`, `as_alias`
 - tipe terurut: `gt`, `gte`, `lt`, `lte`, `in_list`, `not_in_list`, `between`, `not_between`
 - `Str`: tambah `like`, `not_like`, `ilike`, `not_ilike`
 - enum: `eq`, `ne`, `in_list`, `not_in_list`, `is_null`, `is_not_null`
@@ -204,6 +205,8 @@ DML:
   menerima `Option<T>` (`Some(v)` / `None`).
 - FK di-emit sebagai `RelationMeta`/`CompositeRelationMeta` di `schema_relations`
   (maju dan balik); join tetap eksplisit lewat `on`/`on_alias`/`on_composite` di adapter.
+- Tabel dari schema non-public ikut di-emit; accessor memakai prefix schema hanya bila
+  nama tabel bentrok antar schema.
 - `on(rel)` belum mengenal alias tabel; gunakan `on_alias(rel, from_alias, to_alias)`.
   Predikat pada tabel alias tetap memakai referensi kolom eksplisit.
 
@@ -213,7 +216,7 @@ DML:
 
 ```json
 {
-  "version": 2,
+  "version": 3,
   "entries": [
     {
       "kind": "column-type",
@@ -313,11 +316,8 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 
 ## 16. Backlog
 
-- Accessor relasi many-to-many lewat tabel perantara.
-- Check constraint dan view (blind spot DMMF).
-- Multi-schema.
-- `Date`/`Decimal` typed value di builder.
-- Operator lanjutan: array, JSON, `is distinct from`, window.
+- Accessor relasi many-to-many lewat tabel perantara (model join eksplisit sudah
+  didukung).
 - Host method chaining (di luar codegen).
 
 ## 17. Progres Slice Pertama
@@ -344,8 +344,10 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
 | Alias relation | selesai (`schema_adapter.on_alias`) |
 | Composite foreign keys | selesai (`CompositeRelationMeta`, `schema_adapter.on_composite`) |
-| Index & composite unique metadata | selesai (`IndexMeta` di `TableMeta`, IR version 2) |
+| Index & composite unique metadata | selesai (`IndexMeta` di `TableMeta`, IR v2) |
 | Nullability type-level | selesai (`Nullable<...>Column`, `assign(Option<T>)`) |
+| Multi-schema | selesai (semua schema di-emit, accessor diprefiks saat bentrok) |
+| `is distinct from` | selesai (`is_distinct_from`, `is_not_distinct_from`) |
 | DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground
@@ -367,10 +369,10 @@ Schema yang di-commit sekarang berasal dari migrasi aplikasi di
 `schema_migrations` dikecualikan lewat konfigurasi generator `ignoreTables`. Fixture
 terpisah tetap dipakai untuk menguji tipe unsupported dan schema non-public.
 
-Catatan: `bun test schema/test` menjalankan 19 test, termasuk `lt check`, runtime SQL
+Catatan: `bun test schema/test` menjalankan 20 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
-menghasilkan 3 tabel, 1 enum, 1 FK, serta 2 entri unsupported (schema `auth` dan
-`jsonb`); composite unique dan index kini menjadi `IndexMeta`. IR memakai `version: 2`.
+menghasilkan 3 tabel, 1 enum, 1 FK, serta 1 entri unsupported (`jsonb`); composite
+unique dan index kini menjadi `IndexMeta`. IR memakai `version: 3`.
 Kolom nullable menghasilkan paket `schema_nullable_*`. Build v2 menghasilkan 23 module
 dan lolos `tsc` serta `mypy --strict`; differential tetap 64/64.
 `to_table(users_meta)` sekarang bisa dipakai di `from_table`, dan
@@ -383,3 +385,17 @@ INSERT/UPDATE/DELETE lewat `assign`/`assign_null` dijalankan terhadap tabel
 `users`/`posts` hasil migrasi aplikasi, di Postgres dan MySQL.
 `bunx tsc` penuh masih gagal pada artefak `generated/` lama yang tidak terkait; file
 `schema/*.ts` dan `prisma.config.ts` lolos typecheck terpisah.
+
+## 19. Item yang ditutup
+
+Item berikut sengaja **tidak** diimplementasikan dan ditutup dengan alasan teknis,
+bukan tertunda tanpa keputusan:
+
+| Item | Alasan |
+|---|---|
+| Relasi many-to-many implisit | DMMF tidak mengekspos tabel join. Model join eksplisit (dua FK) sudah didukung lewat `schema_relations`. |
+| Check constraint & view | Tidak ada di DMMF Prisma; tetap blind spot yang didokumentasikan. |
+| `Date`/`Decimal` typed value | LT v0.3 belum punya tipe tanggal/desimal; nilainya tetap string. |
+| Operator array/JSON | Kolomnya masuk `Unsupported` karena tidak ada tipe nilai LT. |
+| Window function | Bukan bagian codegen schema; tempatnya di builder v2. |
+
