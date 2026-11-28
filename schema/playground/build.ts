@@ -46,6 +46,7 @@ function readMeta(path: string): { title: string; feature: string; why: string }
 function findLt(): string | undefined {
     const candidates = [
         process.env.LT_BIN,
+        join(repoRoot, ".lt/bin/lt"),
         join(repoRoot, "..", "gntrees-lingua-tungga", "target", "release", "lt"),
         Bun.which("lt"),
     ];

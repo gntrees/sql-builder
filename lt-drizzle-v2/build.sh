@@ -15,8 +15,10 @@ if [ -z "$lt_bin" ]; then
     lt_bin="$(command -v lt)"
   elif [ -x "$root/.lt/bin/lt" ]; then
     lt_bin="$root/.lt/bin/lt"
+  elif [ -x "$root/../gntrees-lingua-tungga/target/release/lt" ]; then
+    lt_bin="$root/../gntrees-lingua-tungga/target/release/lt"
   else
-    echo "lt not found: put it on PATH or set LT_BIN" >&2
+    echo "lt not found: put it on PATH, set LT_BIN, or build ../gntrees-lingua-tungga" >&2
     exit 1
   fi
 fi

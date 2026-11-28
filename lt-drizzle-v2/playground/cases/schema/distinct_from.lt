@@ -1,0 +1,26 @@
+import dialect { Dialect } "./dialect.lt"
+import schema { field } "./schema.lt"
+import schema_adapter { to_sql, to_table } "./schema_adapter.lt"
+import schema_tables { users, users_meta } "./generated/schema_tables.lt"
+import select { Select } "./select.lt"
+import support "./support.lt"
+
+package case_schema_distinct_from {
+  fn q() -> Select {
+    let t = to_table(users_meta)
+    select.where(
+      select.fields(select.from_table(select.create(), t), [field(t, "age")]),
+      to_sql(users.age.is_distinct_from(18)),
+    )
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), select.to_sql(q())), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), select.to_sql(q())), "")
+  }
+  test "sqlite" {
+    expect.not_equal(support.render(dialect.sqlite(), select.to_sql(q())), "")
+  }
+}

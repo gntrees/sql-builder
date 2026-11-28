@@ -1,0 +1,4 @@
+title = "IS DISTINCT FROM from a nullable column"
+feature = "schema/distinct-from"
+why = "Nullable columns still expose distinct-from predicates; the adapter renders the neutral Expr as IS DISTINCT FROM."
+dialects = "postgres,mysql,sqlite"

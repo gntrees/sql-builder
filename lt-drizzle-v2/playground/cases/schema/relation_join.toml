@@ -1,0 +1,4 @@
+title = "Join from generated relation metadata"
+feature = "schema/relation-join"
+why = "The ON clause comes from posts_users in schema_relations, not a hand-written column comparison."
+dialects = "postgres,mysql,sqlite"

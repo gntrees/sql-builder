@@ -1,0 +1,4 @@
+title = "Generated relation with aliased tables"
+feature = "schema/relation-alias"
+why = "on_alias turns the same generated relation into an ON clause that uses the query aliases p and u."
+dialects = "postgres,mysql,sqlite"

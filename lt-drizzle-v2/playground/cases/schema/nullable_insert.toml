@@ -1,0 +1,4 @@
+title = "Nullable assignment takes an Option"
+feature = "schema/nullable-insert"
+why = "users.age is nullable, so its generated assign takes Option<Int>; Some(18) becomes a bound parameter."
+dialects = "postgres,mysql,sqlite"

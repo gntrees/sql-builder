@@ -145,3 +145,19 @@ title = "UPDATE with RETURNING"
 [[feature]]
 id = "delete"
 title = "DELETE with WHERE"
+
+[[feature]]
+id = "schema/relation-join"
+title = "Join from generated relation metadata"
+
+[[feature]]
+id = "schema/relation-alias"
+title = "Generated relation with aliased tables"
+
+[[feature]]
+id = "schema/nullable-insert"
+title = "Nullable assignment takes an Option"
+
+[[feature]]
+id = "schema/distinct-from"
+title = "IS DISTINCT FROM from a nullable column"

@@ -19,7 +19,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -41,7 +41,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -61,7 +61,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -79,7 +79,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -97,7 +97,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -119,7 +119,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -141,7 +141,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -159,7 +159,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -181,7 +181,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -203,7 +203,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -225,7 +225,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -245,7 +245,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -267,7 +267,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -289,7 +289,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -311,7 +311,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -333,7 +333,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -355,7 +355,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -377,7 +377,95 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
+        "lines": []
+      }
+    },
+    "distinct_from": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"age\" from \"users\" where \"users\".\"age\" is distinct from $1\tint:18",
+          "select `age` from `users` where `users`.`age` is distinct from ?\tint:18",
+          "select \"age\" from \"users\" where \"users\".\"age\" is distinct from ?\tint:18"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"age\" from \"users\" where \"users\".\"age\" is distinct from $1\tint:18",
+          "select `age` from `users` where `users`.`age` is distinct from ?\tint:18",
+          "select \"age\" from \"users\" where \"users\".\"age\" is distinct from ?\tint:18"
+        ]
+      },
+      "go": {
+        "status": "skipped",
+        "lines": []
+      }
+    },
+    "nullable_insert": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"active\", \"age\", \"email\", \"role\") values (default, $1, default, $2, default, default)\ttext:a,int:18",
+          "insert into `users` (`id`, `name`, `active`, `age`, `email`, `role`) values (default, ?, default, ?, default, default)\ttext:a,int:18",
+          "insert into \"users\" (\"id\", \"name\", \"active\", \"age\", \"email\", \"role\") values (null, ?, null, ?, null, null)\ttext:a,int:18"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "insert into \"users\" (\"id\", \"name\", \"active\", \"age\", \"email\", \"role\") values (default, $1, default, $2, default, default)\ttext:a,int:18",
+          "insert into `users` (`id`, `name`, `active`, `age`, `email`, `role`) values (default, ?, default, ?, default, default)\ttext:a,int:18",
+          "insert into \"users\" (\"id\", \"name\", \"active\", \"age\", \"email\", \"role\") values (null, ?, null, ?, null, null)\ttext:a,int:18"
+        ]
+      },
+      "go": {
+        "status": "skipped",
+        "lines": []
+      }
+    },
+    "relation_alias": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"u\".\"name\", \"p\".\"title\" from \"users\" \"u\" inner join \"posts\" \"p\" on \"p\".\"user_id\" = \"u\".\"id\" order by \"p\".\"title\" asc\t",
+          "select `u`.`name`, `p`.`title` from `users` `u` inner join `posts` `p` on `p`.`user_id` = `u`.`id` order by `p`.`title` asc\t",
+          "select \"u\".\"name\", \"p\".\"title\" from \"users\" \"u\" inner join \"posts\" \"p\" on \"p\".\"user_id\" = \"u\".\"id\" order by \"p\".\"title\" asc\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"u\".\"name\", \"p\".\"title\" from \"users\" \"u\" inner join \"posts\" \"p\" on \"p\".\"user_id\" = \"u\".\"id\" order by \"p\".\"title\" asc\t",
+          "select `u`.`name`, `p`.`title` from `users` `u` inner join `posts` `p` on `p`.`user_id` = `u`.`id` order by `p`.`title` asc\t",
+          "select \"u\".\"name\", \"p\".\"title\" from \"users\" \"u\" inner join \"posts\" \"p\" on \"p\".\"user_id\" = \"u\".\"id\" order by \"p\".\"title\" asc\t"
+        ]
+      },
+      "go": {
+        "status": "skipped",
+        "lines": []
+      }
+    },
+    "relation_join": {
+      "ts": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"name\", \"posts\".\"title\" from \"users\" inner join \"posts\" on \"posts\".\"user_id\" = \"users\".\"id\"\t",
+          "select `users`.`name`, `posts`.`title` from `users` inner join `posts` on `posts`.`user_id` = `users`.`id`\t",
+          "select \"users\".\"name\", \"posts\".\"title\" from \"users\" inner join \"posts\" on \"posts\".\"user_id\" = \"users\".\"id\"\t"
+        ]
+      },
+      "py": {
+        "status": "pass",
+        "lines": [
+          "select \"users\".\"name\", \"posts\".\"title\" from \"users\" inner join \"posts\" on \"posts\".\"user_id\" = \"users\".\"id\"\t",
+          "select `users`.`name`, `posts`.`title` from `users` inner join `posts` on `posts`.`user_id` = `users`.`id`\t",
+          "select \"users\".\"name\", \"posts\".\"title\" from \"users\" inner join \"posts\" on \"posts\".\"user_id\" = \"users\".\"id\"\t"
+        ]
+      },
+      "go": {
+        "status": "skipped",
         "lines": []
       }
     },
@@ -395,7 +483,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -417,7 +505,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -435,7 +523,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -457,7 +545,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -479,7 +567,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -501,7 +589,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -523,7 +611,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -545,7 +633,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -567,7 +655,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -589,7 +677,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -607,7 +695,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -625,7 +713,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -647,7 +735,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -669,7 +757,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -691,7 +779,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -713,7 +801,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -735,7 +823,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -757,7 +845,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     },
@@ -779,7 +867,7 @@
         ]
       },
       "go": {
-        "status": "fail",
+        "status": "skipped",
         "lines": []
       }
     }

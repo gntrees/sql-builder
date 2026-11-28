@@ -1,0 +1,32 @@
+import dialect { Dialect } "./dialect.lt"
+import schema_adapter { to_assignment, to_table } "./schema_adapter.lt"
+import schema_tables { users, users_meta } "./generated/schema_tables.lt"
+import insert "./insert.lt"
+import support "./support.lt"
+
+package case_schema_nullable_insert {
+  fn q(d: Dialect) -> Str {
+    let row = [
+      to_assignment(users.age.assign(Some(18))),
+      to_assignment(users.name.assign("a")),
+    ]
+    support.render_built(
+      insert.build(
+        insert.set_dialect(
+          insert.values(insert.create(to_table(users_meta)), [row]),
+          d,
+        ),
+      ),
+    )
+  }
+
+  test "postgres" {
+    expect.not_equal(q(dialect.postgres()), "")
+  }
+  test "mysql" {
+    expect.not_equal(q(dialect.mysql()), "")
+  }
+  test "sqlite" {
+    expect.not_equal(q(dialect.sqlite()), "")
+  }
+}

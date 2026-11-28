@@ -1,6 +1,6 @@
 # Plan: Playground Komprehensif untuk Port Drizzle v2
 
-Status: **draft — belum dieksekusi**
+Status: **selesai (P0–P5)**
 Branch: `experiment/drizzle-port-v2`
 Repo: `gntrees-sql-builder`
 Compiler: Lingua Tungga v0.3.0 (`d11a4c9`)
@@ -271,6 +271,7 @@ CI `playground.yml`:
 | **P2** | `joins`/`subquery`/`cte`/`set` (13 kasus) | parity hijau |
 | **P3** | `insert`/`update`/`delete` + 4 kasus DB (9 kasus) | roundtrip baris nyata |
 | **P4** | Halaman final (filter/tab/pencarian), `evidence.json`/`usage.json`, Pages, docs | definisi selesai §10 |
+| **P5** | Kasus `schema/*` memakai generated schema: relation join, alias, nullable insert, distinct-from | parity hijau + bukti DB join |
 
 ---
 
@@ -282,7 +283,7 @@ CI `playground.yml`:
 | Format baris kanonik berubah dan membuat semua expected basi | `line.ts` satu implementasi; versi format dicatat di evidence |
 | Usage program mencetak lebih dari satu argumen | konvensi: hanya `expect.eq(line, expected)`, argumen pertama = baris |
 | Staging menyembunyikan import yang salah | staging menolak file dengan import di luar `./`; build.ts memeriksa sebelum menyalin |
-| Gate butuh 4 toolchain + docker | cache venv/node_modules; job DB terpisah seperti `verify-db.sh` |
+| Gate butuh 4 toolchain + docker | cache venv/node_modules; job DB terpisah seperti `verify-db.sh`; target Go di-skip bila `go` tidak ada (tercatat di evidence). |
 | Pages belum diaktifkan di repo | langkah deploy tetap dibuat; aktivasi settings didokumentasikan |
 
 ---
@@ -296,11 +297,15 @@ CI `playground.yml`:
 | P2 | selesai | `joins`/`subquery`/`cte`/`set` |
 | P3 | selesai | `insert`/`update`/`delete` + baris DB Postgres |
 | P4 | selesai | halaman final, `evidence.json`/`usage.json`, workflow Pages, docs |
+| P5 | selesai | 4 kasus `schema/*` dari generated schema; join dijalankan ke Postgres |
 
 Hasil:
 
-- `playground.sh` hijau: **37 kasus, 0 gagal**, 3 bahasa, 3 dialect.
-- Usage program dijalankan nyata di TS/Py/Go; stdout cocok dengan drizzle.
+- `playground.sh` hijau: **41 kasus, 0 gagal**, 3 dialect.
+- Staging kini ikut menyalin `src/generated/`, sehingga kasus bisa memakai
+  `schema_tables`, `schema_relations`, dan `schema_adapter` yang di-commit.
+- Usage program dijalankan nyata di TS dan Py; target Go di-skip dengan status
+  `skipped` bila `go` tidak ada di `PATH` (set `GO_BIN` untuk memaksa path lain).
 - Temuan nyata: **SQLite tidak memakai tanda kurung pada set operation** (drizzle:
   `select ... union select ...`), sedangkan port selalu membungkus. Ini memperbaiki
   `select.lt`: pembungkusan set-op sekarang sadar-dialect (SQLite tanpa kurung).

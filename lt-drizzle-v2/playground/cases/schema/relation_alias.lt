@@ -1,0 +1,27 @@
+import dialect { Dialect } "./dialect.lt"
+import schema { Table, col, with_alias } "./schema.lt"
+import schema_adapter { on_alias, to_table } "./schema_adapter.lt"
+import schema_relations { posts_users } "./generated/schema_relations.lt"
+import schema_tables { posts_meta, users_meta } "./generated/schema_tables.lt"
+import select { Select } "./select.lt"
+import sql { Sql } "./sql.lt"
+import support "./support.lt"
+
+package case_schema_relation_alias {
+  fn q() -> Select {
+    let u = with_alias("users", "u", to_table(users_meta).columns)
+    let p = with_alias("posts", "p", to_table(posts_meta).columns)
+    let joined = select.inner_join(select.from_table(select.create(), u), p, on_alias(posts_users, "p", "u"))
+    select.order_by(select.fields(joined, [col(u, "name"), col(p, "title")]), [sql.asc(col(p, "title"))])
+  }
+
+  test "postgres" {
+    expect.not_equal(support.render(dialect.postgres(), select.to_sql(q())), "")
+  }
+  test "mysql" {
+    expect.not_equal(support.render(dialect.mysql(), select.to_sql(q())), "")
+  }
+  test "sqlite" {
+    expect.not_equal(support.render(dialect.sqlite(), select.to_sql(q())), "")
+  }
+}
