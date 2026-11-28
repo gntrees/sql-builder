@@ -3,7 +3,7 @@
 import schema_bool { BoolColumn } "./schema_bool.lt"
 import schema_enum_user_role { UserRoleColumn } "./schema_enum_user_role.lt"
 import schema_int { IntColumn } "./schema_int.lt"
-import schema_meta { ColumnMeta, TableMeta } "./schema_meta.lt"
+import schema_meta { ColumnMeta, IndexMeta, TableMeta } "./schema_meta.lt"
 import schema_str { StrColumn } "./schema_str.lt"
 
 package schema_tables {
@@ -154,6 +154,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let b_meta: TableMeta = TableMeta(
@@ -183,6 +184,7 @@ package schema_tables {
         default_sql: "false",
       ),
     ],
+    indexes: [],
   )
 
   export let books_meta: TableMeta = TableMeta(
@@ -222,6 +224,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let m_meta: TableMeta = TableMeta(
@@ -251,6 +254,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let members_meta: TableMeta = TableMeta(
@@ -280,6 +284,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let orders_meta: TableMeta = TableMeta(
@@ -319,6 +324,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let posts_meta: TableMeta = TableMeta(
@@ -358,6 +364,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let t_meta: TableMeta = TableMeta(
@@ -417,6 +424,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let u_meta: TableMeta = TableMeta(
@@ -446,6 +454,7 @@ package schema_tables {
         default_sql: "",
       ),
     ],
+    indexes: [],
   )
 
   export let users_meta: TableMeta = TableMeta(
@@ -515,6 +524,7 @@ package schema_tables {
         default_sql: "\"user\"",
       ),
     ],
+    indexes: [],
   )
 
   export let all_table_meta: List<TableMeta> = [

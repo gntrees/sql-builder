@@ -99,6 +99,18 @@ describe("schema IR -> LT", () => {
         expect(unsupported.entries.some((entry) => entry.kind === "foreign-key")).toBe(false);
     });
 
+    test("emits index and composite unique metadata", () => {
+        const meta = byName.get("schema_meta.lt")!;
+        expect(meta).toContain("export struct IndexMeta");
+        expect(meta).toContain("indexes: List<IndexMeta>");
+
+        const tables = byName.get("schema_tables.lt")!;
+        expect(tables).toContain('name: "users_email_org_id_key"');
+        expect(tables).toContain('columns: ["email", "orgId"]');
+        expect(tables).toContain('name: "users_email_idx"');
+        expect(tables).toContain("unique: false");
+    });
+
     test("emits typed assignments for insert and update", () => {
         expect(byName.get("schema_expr.lt")).toContain("export struct ColumnValue");
         expect(byName.get("schema_int.lt")).toContain(

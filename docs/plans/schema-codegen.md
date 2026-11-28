@@ -37,7 +37,7 @@ Bukan tujuan:
 | S2 | DB live adalah source of truth; `schema.prisma` adalah generated mirror. |
 | S3 | `prisma db pull --force` boleh menimpa `schema.prisma`. |
 | S4 | Prisma dipin ke `7.10.x`; jangan memakai `latest`. |
-| S5 | `schema.json` adalah IR kanonik dan stabil; `version: 1`. |
+| S5 | `schema.json` adalah IR kanonik dan stabil; `version: 2`. |
 | S6 | Generated `.lt` berada di dalam tree entry builder karena LT menolak import ke luar direktori entry. |
 | S7 | Konsumen awal adalah v2; v3 nanti memakai adapter baru. |
 | S8 | `lt/src/schema.lt` (v1) tidak diubah; ditandai deprecated di dokumentasi. |
@@ -63,7 +63,7 @@ Konsekuensi: generated schema terdiri dari beberapa file/package, bukan satu `sc
 | Path | Isi |
 |---|---|
 | `prisma/schema.prisma` | Generated mirror dari DB. |
-| `schema/schema.json` | IR kanonik, `version: 1`. |
+| `schema/schema.json` | IR kanonik, `version: 2`. |
 | `schema/unsupported.json` | Daftar fitur yang belum didukung. |
 | `lt-drizzle-v2/src/generated/schema_*.lt` | Package generated. |
 | `lt-drizzle-v2/src/schema_adapter.lt` | Adapter handwritten `Expr -> Sql`. |
@@ -88,7 +88,7 @@ Shape:
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "generator": "prisma-lt",
   "dialect": "postgres",
   "prismaVersion": "7.10.1",
@@ -99,6 +99,9 @@ Shape:
       "dbName": "users",
       "schema": "public",
       "primaryKey": ["id"],
+      "indexes": [
+        { "name": "users_email_org_id_key", "columns": ["email", "orgId"], "unique": true }
+      ],
       "columns": [
         {
           "name": "id",
@@ -208,7 +211,7 @@ DML:
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "entries": [
     {
       "kind": "column-type",
@@ -308,7 +311,7 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 
 - Nullability type-level.
 - Accessor relasi many-to-many lewat tabel perantara.
-- Index, unique constraint komposit, check constraint, view.
+- Check constraint dan view (blind spot DMMF).
 - Multi-schema.
 - `Date`/`Decimal` typed value di builder.
 - Operator lanjutan: array, JSON, `is distinct from`, window.
@@ -338,6 +341,7 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
 | Alias relation | selesai (`schema_adapter.on_alias`) |
 | Composite foreign keys | selesai (`CompositeRelationMeta`, `schema_adapter.on_composite`) |
+| Index & composite unique metadata | selesai (`IndexMeta` di `TableMeta`, IR version 2) |
 | DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground
@@ -359,13 +363,13 @@ Schema yang di-commit sekarang berasal dari migrasi aplikasi di
 `schema_migrations` dikecualikan lewat konfigurasi generator `ignoreTables`. Fixture
 terpisah tetap dipakai untuk menguji tipe unsupported dan schema non-public.
 
-Catatan: `bun test schema/test` menjalankan 12 test, termasuk `lt check`, runtime SQL
+Catatan: `bun test schema/test` menjalankan 18 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
-menghasilkan 3 tabel, 1 enum, 1 FK, dan 4 entri unsupported (termasuk schema `auth`,
-`jsonb`, composite unique, dan index). Build v2 menghasilkan 23 module dan lolos `tsc`
-serta `mypy --strict`; differential tetap 64/64. `to_table(users_meta)` sekarang bisa
-dipakai di `from_table`, dan `to_sql(users.id.eq(1))` menghasilkan
-`"users"."id" = $1`.
+menghasilkan 3 tabel, 1 enum, 1 FK, serta 2 entri unsupported (schema `auth` dan
+`jsonb`); composite unique dan index kini menjadi `IndexMeta`. IR memakai `version: 2`.
+Build v2 menghasilkan 21 module dan lolos `tsc` serta `mypy --strict`; differential tetap
+64/64. `to_table(users_meta)` sekarang bisa dipakai di `from_table`, dan
+`to_sql(users.id.eq(1))` menghasilkan `"users"."id" = $1`.
 
 Integrasi ke database aplikasi diuji oleh
 `lt-drizzle-v2/parity/schema-integration.test.ts` (bagian dari `verify-db.sh`): tabel,

@@ -12,7 +12,7 @@ Postgres
   -> lt-drizzle-v2/src/generated/schema_*.lt
 ```
 
-The canonical IR is `schema/schema.json` (version 1). `schema/unsupported.json`
+The canonical IR is `schema/schema.json` (version 2). `schema/unsupported.json`
 records schema features that are not emitted yet. Neither file is hand-edited.
 
 ## Prisma setup
@@ -86,6 +86,7 @@ The committed `schema/schema.json` and generated `.lt` come from the application
 migrations in `db/migrations/postgres` (10 tables, 1 enum, 3 foreign keys).
 `schema_migrations` is excluded via `ignoreTables`. `db/migrations/postgres/20260102000000_schema_features.sql`
 adds the enum, unique email, and foreign keys that the application schema now exercises.
+Indexes and composite unique constraints are recorded as `IndexMeta` on `TableMeta`.
 
 The separate fixture below is only for exercising unsupported types and non-public schema
 cases; it is not the app schema.
@@ -111,7 +112,7 @@ The DMMF fixture used by the unit tests is
 
 ```
 schema_expr.lt          ColumnRef, Scalar, ColumnValue, Expr
-schema_meta.lt          ColumnMeta, TableMeta
+schema_meta.lt          ColumnMeta, TableMeta, IndexMeta
 schema_int.lt           IntColumn + operators + assign/assign_null
 schema_str.lt           StrColumn + operators (including like/ilike)
 schema_bool.lt          BoolColumn + equality/null operators

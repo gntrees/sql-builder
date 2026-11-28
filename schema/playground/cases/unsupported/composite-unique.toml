@@ -1,3 +1,0 @@
-title = "Composite uniques and indexes are recorded"
-feature = "unsupported/composite-unique"
-why = "The IR keeps only single-column uniqueness. Composite unique constraints and indexes are listed in unsupported.json so they can be added deliberately later."

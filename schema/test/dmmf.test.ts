@@ -100,27 +100,27 @@ describe("DMMF -> schema IR", () => {
         ]);
     });
 
-    test("records unsupported column types, composite uniques, and indexes", () => {
-        const { unsupported } = build();
+    test("emits composite uniques and indexes as table metadata", () => {
+        const { schema, unsupported } = build();
+        const users = schema.tables.find((table) => table.name === "users")!;
+        expect(users.indexes).toContainEqual({
+            name: "users_email_org_id_key",
+            columns: ["email", "orgId"],
+            unique: true,
+        });
+        expect(users.indexes).toContainEqual({
+            name: "users_email_idx",
+            columns: ["email"],
+            unique: false,
+        });
+        expect(unsupported.entries.some((entry) => entry.kind === "index")).toBe(false);
+        expect(unsupported.entries.some((entry) => entry.kind === "unique-constraint")).toBe(false);
         expect(unsupported.entries).toContainEqual({
             kind: "column-type",
             table: "users",
             column: "metadata",
             type: "JsonB",
             reason: "JSON values have no LT value type yet",
-        });
-        expect(unsupported.entries).toContainEqual({
-            kind: "unique-constraint",
-            table: "users",
-            fields: ["email", "org_id"],
-            reason: "composite unique constraints are not emitted yet",
-        });
-        expect(unsupported.entries).toContainEqual({
-            kind: "index",
-            table: "users",
-            name: "users_email_idx",
-            fields: ["email"],
-            reason: "indexes are not emitted yet",
         });
     });
 

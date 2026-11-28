@@ -12,6 +12,11 @@
       "ir": "pass",
       "lt": "pass"
     },
+    "index/composite-unique": {
+      "feature": "index/composite-unique",
+      "ir": "pass",
+      "lt": "pass"
+    },
     "key/composite": {
       "feature": "key/composite",
       "ir": "pass",
@@ -44,11 +49,6 @@
     },
     "table/basic": {
       "feature": "table/basic",
-      "ir": "pass",
-      "lt": "pass"
-    },
-    "unsupported/composite-unique": {
-      "feature": "unsupported/composite-unique",
       "ir": "pass",
       "lt": "pass"
     },

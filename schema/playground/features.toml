@@ -35,5 +35,5 @@ id = "naming/renames"
 title = "Accessor names and SQL names stay separate"
 
 [[feature]]
-id = "unsupported/composite-unique"
-title = "Composite uniques and indexes are recorded"
+id = "index/composite-unique"
+title = "Composite uniques and indexes become table metadata"
