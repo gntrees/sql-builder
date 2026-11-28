@@ -39,8 +39,8 @@ describe("generated schema adapter", () => {
         writeFileSync(
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
-import schema { field } "./schema.lt"
-import schema_adapter { to_sql, to_table, on } "./schema_adapter.lt"
+import schema { Assignment, field } "./schema.lt"
+import schema_adapter { on, to_assignment, to_sql, to_table } "./schema_adapter.lt"
 import schema_enum_role { Role } "./generated/schema_enum_role.lt"
 import schema_relations { users_organizations } "./generated/schema_relations.lt"
 import schema_tables { users, users_meta } "./generated/schema_tables.lt"
@@ -50,6 +50,10 @@ import sql { Sql } "./sql.lt"
 package use {
   export fn by_id() -> Sql {
     to_sql(users.id.eq(1))
+  }
+
+  export fn assignment() -> Assignment {
+    to_assignment(users.display_name.assign("bob"))
   }
 
   export fn admins() -> Sql {

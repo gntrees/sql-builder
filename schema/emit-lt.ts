@@ -147,6 +147,12 @@ function exprPackage(): EmittedFile {
     Text(Str)
   }
 
+  /// Nilai untuk INSERT/UPDATE: nama kolom SQL + scalar netral.
+  export struct ColumnValue {
+    column: Str
+    value: Scalar
+  }
+
   export enum Expr {
     Column(ColumnRef)
     Param(Scalar)
@@ -216,6 +222,16 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
 
     push(`fn param(v: ${spec.valueType}) -> Expr {`);
     push(`  Expr.Param(${spec.param}(v))`);
+    push("}");
+    push();
+
+    push(`export fn assign(c: ${spec.columnType}, v: ${spec.valueType}) -> ColumnValue {`);
+    push(`  ColumnValue(column: c.column, value: ${spec.param}(v))`);
+    push("}");
+    push();
+
+    push(`export fn assign_null(c: ${spec.columnType}) -> ColumnValue {`);
+    push("  ColumnValue(column: c.column, value: Scalar.Null)");
     push("}");
     push();
 
@@ -300,7 +316,7 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
     push("}");
     push();
 
-    const content = `${header("schema/schema.json")}import schema_expr { Expr, ColumnRef, Scalar } "./schema_expr.lt"
+    const content = `${header("schema/schema.json")}import schema_expr { ColumnValue, Expr, ColumnRef, Scalar } "./schema_expr.lt"
 
 package ${spec.packageName} {
 ${lines.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
@@ -350,6 +366,16 @@ function enumPackage(item: EnumIR): EmittedFile {
     push("}");
     push();
 
+    push(`export fn assign(c: ${columnType}, v: ${item.name}) -> ColumnValue {`);
+    push(`  ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(v)))`);
+    push("}");
+    push();
+
+    push(`export fn assign_null(c: ${columnType}) -> ColumnValue {`);
+    push("  ColumnValue(column: c.column, value: Scalar.Null)");
+    push("}");
+    push();
+
     push(`export fn eq(c: ${columnType}, v: ${item.name}) -> Expr {`);
     push("  Expr.Eq(col(c), param(v))");
     push("}");
@@ -385,7 +411,7 @@ function enumPackage(item: EnumIR): EmittedFile {
     push("}");
     push();
 
-    const content = `${header("schema/schema.json")}import schema_expr { Expr, ColumnRef, Scalar } "./schema_expr.lt"
+    const content = `${header("schema/schema.json")}import schema_expr { ColumnValue, Expr, ColumnRef, Scalar } "./schema_expr.lt"
 
 package ${item.package} {
 ${lines.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
