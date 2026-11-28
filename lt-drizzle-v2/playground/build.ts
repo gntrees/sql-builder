@@ -14,7 +14,21 @@ const playground = join(root, "lt-drizzle-v2/playground");
 const work = join(root, ".lt/playground");
 const staged = join(work, "src");
 const outDir = join(work, "out");
-const ltBin = process.env.LT_BIN ?? "lt";
+
+function findLt(): string {
+  const candidates = [
+    process.env.LT_BIN,
+    join(root, ".lt/bin/lt"),
+    join(root, "..", "gntrees-lingua-tungga", "target", "release", "lt"),
+    Bun.which("lt"),
+  ];
+  for (const candidate of candidates) {
+    if (candidate && statSync(candidate, { throwIfNoEntry: false })?.isFile()) return candidate;
+  }
+  return "lt";
+}
+
+const ltBin = findLt();
 
 type Meta = { title: string; feature: string; why: string; dialects: string[] };
 type CaseFile = { id: string; group: string; file: string; meta: Meta; module: string };
@@ -116,6 +130,12 @@ for (const name of readdirSync(srcDir)) {
   if (!name.endsWith(".lt")) continue;
   if (name.endsWith("_test.lt")) continue;
   sh(["cp", join(srcDir, name), staged]);
+}
+const generatedDir = join(srcDir, "generated");
+sh(["mkdir", "-p", join(staged, "generated")]);
+for (const name of readdirSync(generatedDir)) {
+  if (!name.endsWith(".lt")) continue;
+  sh(["cp", join(generatedDir, name), join(staged, "generated")]);
 }
 sh(["cp", join(playground, "support.lt"), staged]);
 for (const item of cases) {
@@ -244,6 +264,10 @@ if (process.env.DB_TESTS === "1") {
   await db.unsafe(
     `create table "users" (id serial primary key, name text not null default '', age integer)`,
   );
+  await db.unsafe(`drop table if exists "posts"`);
+  await db.unsafe(
+    `create table "posts" (id serial primary key, user_id integer not null, title text not null)`,
+  );
 
   const paramsOf = (text: string): unknown[] =>
     text.length === 0
@@ -269,6 +293,11 @@ if (process.env.DB_TESTS === "1") {
   if (inserted) dbByCase.insert_values = { note: "insert — no RETURNING, so no rows", rows: inserted.rows };
   // seed one row so the SELECT case has something to show
   await db.unsafe(`insert into "users" ("name") values ('seed')`);
+  await db.unsafe(
+    `insert into "posts" ("user_id", "title") select min(id), 'seed post' from "users"`,
+  );
+  const joined = await runCase("relation_join");
+  if (joined) dbByCase.relation_join = { note: "rows returned", rows: joined.rows };
   const selected = await runCase("select_where");
   if (selected) dbByCase.select_where = { note: "rows returned", rows: selected.rows };
   const updated = await runCase("update_row");

@@ -1,10 +1,11 @@
 // Shared drizzle fixtures for the playground's expected values. These are the
 // reference side; the port side lives in the .lt cases.
 import { eq as eq2, sql } from "drizzle-orm";
-import { MySqlDatabase, MySqlDialect, int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
+import { MySqlDatabase, MySqlDialect, boolean as myBoolean, int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
 import {
   PgDatabase,
   PgDialect,
+  boolean as pgBoolean,
   integer,
   pgTable,
   serial,
@@ -40,6 +41,16 @@ export const pgPosts = pgTable("posts", {
 });
 export const pgAccounts = pgTable("accounts", { id: integer("account_id") });
 
+// Full application-shaped users, used by the generated-schema cases.
+export const pgAppUsers = pgTable("users", {
+  id: serial("id"),
+  name: text("name").notNull(),
+  active: pgBoolean("active").notNull().default(false),
+  age: integer("age"),
+  email: text("email"),
+  role: text("role").notNull().default("user"),
+});
+
 export const myUsers = mysqlTable("users", {
   id: int("id"),
   name: varchar("name", { length: 255 }),
@@ -51,6 +62,15 @@ export const myPosts = mysqlTable("posts", {
   title: varchar("title", { length: 255 }),
 });
 
+export const myAppUsers = mysqlTable("users", {
+  id: int("id"),
+  name: varchar("name", { length: 255 }).notNull(),
+  active: myBoolean("active").notNull().default(false),
+  age: int("age"),
+  email: varchar("email", { length: 320 }),
+  role: varchar("role", { length: 255 }).notNull().default("user"),
+});
+
 export const sqUsers = sqliteTable("users", {
   id: sqInteger("id"),
   name: sqText("name"),
@@ -60,6 +80,15 @@ export const sqPosts = sqliteTable("posts", {
   id: sqInteger("id"),
   userId: sqInteger("user_id"),
   title: sqText("title"),
+});
+
+export const sqAppUsers = sqliteTable("users", {
+  id: sqInteger("id"),
+  name: sqText("name"),
+  active: sqInteger("active"),
+  age: sqInteger("age"),
+  email: sqText("email"),
+  role: sqText("role"),
 });
 
 export const pgSub = pgDb.select({ id: pgUsers.id, name: pgUsers.name }).from(pgUsers).as("s");

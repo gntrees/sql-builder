@@ -2,8 +2,8 @@
   "version": 1,
   "compiler": "lt",
   "counts": {
-    "cases": 37,
-    "features": 37
+    "cases": 41,
+    "features": 41
   },
   "cases": {
     "cte": {
@@ -161,6 +161,42 @@
     },
     "operators_null": {
       "feature": "operators/null",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "distinct_from": {
+      "feature": "schema/distinct-from",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "nullable_insert": {
+      "feature": "schema/nullable-insert",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "relation_alias": {
+      "feature": "schema/relation-alias",
+      "status": "pass",
+      "targets": {
+        "ts": "pass",
+        "py": "pass",
+        "go": "fail"
+      }
+    },
+    "relation_join": {
+      "feature": "schema/relation-join",
       "status": "pass",
       "targets": {
         "ts": "pass",
