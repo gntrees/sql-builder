@@ -109,10 +109,13 @@ package use {
         const { users, usersMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_tables.ts")).href
         );
-        const { toSql, toTable, on, onAlias, toAssignment } = await import(
+        const { toSql, toTable, on, onAlias, onComposite, toAssignment } = await import(
             pathToFileURL(join(root, "src/schema_adapter.ts")).href
         );
         const { usersOrganizations } = await import(
+            pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
+        );
+        const { CompositeRelationMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
         );
         const { assign: assignStr } = await import(
@@ -163,6 +166,22 @@ package use {
 
         const aliasedSql = sqlToQuery(postgres(), onAlias(usersOrganizations, "u", "o"));
         expect(aliasedSql.sql).toBe('"u"."orgId" = "o"."id"');
+
+        const composite = new CompositeRelationMeta({
+            name: "OrdersToUsers",
+            fromTable: "orders",
+            fromColumns: new LList(["user_id", "tenant_id"]),
+            fromSchema: "public",
+            toTable: "users",
+            toColumns: new LList(["id", "tenant_id"]),
+            toSchema: "public",
+            onDelete: "NoAction",
+            onUpdate: "NoAction",
+        });
+        const compositeSql = sqlToQuery(postgres(), onComposite(composite));
+        expect(compositeSql.sql).toBe(
+            '("orders"."user_id" = "users"."id" and "orders"."tenant_id" = "users"."tenant_id")',
+        );
 
         const assignment = toAssignment(assignStr(users.displayName, "bob"));
         expect(assignment.column).toBe("displayName");

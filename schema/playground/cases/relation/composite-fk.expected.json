@@ -1,0 +1,108 @@
+{
+  "schema": {
+    "version": 1,
+    "generator": "prisma-lt",
+    "dialect": "postgres",
+    "prismaVersion": "7.10.1",
+    "tables": [
+      {
+        "model": "Organization",
+        "name": "organizations",
+        "dbName": "organizations",
+        "schema": "public",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": [
+          {
+            "name": "id",
+            "dbName": "id",
+            "nullable": false,
+            "unique": false,
+            "default": {
+              "kind": "autoincrement"
+            },
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "tenant_id",
+            "dbName": "tenantId",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "name",
+            "dbName": "name",
+            "nullable": false,
+            "unique": false,
+            "type": "Str",
+            "nativeType": "VarChar"
+          }
+        ]
+      },
+      {
+        "model": "User",
+        "name": "users",
+        "dbName": "users",
+        "schema": "public",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": [
+          {
+            "name": "id",
+            "dbName": "id",
+            "nullable": false,
+            "unique": false,
+            "default": {
+              "kind": "autoincrement"
+            },
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "org_id",
+            "dbName": "orgId",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "org_tenant_id",
+            "dbName": "orgTenantId",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          }
+        ]
+      }
+    ],
+    "enums": [],
+    "foreignKeys": [
+      {
+        "name": "UserOrganization",
+        "fromTable": "users",
+        "fromColumns": [
+          "org_id",
+          "org_tenant_id"
+        ],
+        "toTable": "organizations",
+        "toColumns": [
+          "id",
+          "tenant_id"
+        ],
+        "onDelete": "Cascade",
+        "onUpdate": "NoAction"
+      }
+    ]
+  },
+  "unsupported": {
+    "version": 1,
+    "entries": []
+  }
+}

@@ -3,7 +3,7 @@
 // to the v2 `Sql` chunk type. A v3 rewrite should provide its own adapter.
 import schema_expr { ColumnValue, Expr, Scalar } "./generated/schema_expr.lt"
 import schema_meta { ColumnMeta, TableMeta } "./generated/schema_meta.lt"
-import schema_relations { RelationMeta } "./generated/schema_relations.lt"
+import schema_relations { CompositeRelationMeta, RelationMeta } "./generated/schema_relations.lt"
 import schema as v2schema { Column, Table } "./schema.lt"
 import sql as sqlpkg { Sql } "./sql.lt"
 
@@ -80,6 +80,26 @@ package schema_adapter {
         sqlpkg.identifier(rel.to_column),
       ),
     )
+  }
+
+  /// Join condition for a composite foreign key.
+  ///
+  /// All column pairs are combined with AND.
+  export fn on_composite(rel: CompositeRelationMeta) -> Sql {
+    let mut conditions: List<Sql> = []
+    let mut index = 0
+    while index < rel.from_columns.len() {
+      let from_column = rel.from_columns.get(index).unwrap()
+      let to_column = rel.to_columns.get(index).unwrap()
+      conditions = conditions.push(
+        sqlpkg.eq(
+          qualified(rel.from_schema, rel.from_table, from_column),
+          qualified(rel.to_schema, rel.to_table, to_column),
+        ),
+      )
+      index = index + 1
+    }
+    sqlpkg.and(conditions)
   }
 
   fn scalar(value: Scalar) -> Sql {

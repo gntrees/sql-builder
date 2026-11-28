@@ -169,9 +169,10 @@ Operator lain dicatat sebagai backlog.
 
 Relasi:
 
-- `schema_relations` memuat `RelationMeta` dan binding maju/balik untuk setiap FK
-  satu kolom.
-- Adapter menyediakan `on(rel) -> Sql` sebagai kondisi join kanonik.
+- `schema_relations` memuat `RelationMeta` untuk FK satu kolom dan
+  `CompositeRelationMeta` untuk FK komposit, masing-masing dengan binding maju/balik.
+- Adapter menyediakan `on(rel) -> Sql`, `on_alias(rel, …)`, dan
+  `on_composite(rel) -> Sql`.
 
 DML:
 
@@ -196,8 +197,8 @@ DML:
 ## 10. Nullability dan Relasi
 
 - Nullability hanya metadata `nullable: Bool`; belum type-level.
-- FK di-emit sebagai `RelationMeta` di `schema_relations` (maju dan balik); join tetap
-  eksplisit lewat `on(rel)` di adapter. FK komposit dicatat sebagai unsupported.
+- FK di-emit sebagai `RelationMeta`/`CompositeRelationMeta` di `schema_relations`
+  (maju dan balik); join tetap eksplisit lewat `on`/`on_alias`/`on_composite` di adapter.
 - `on(rel)` belum mengenal alias tabel; gunakan `on_alias(rel, from_alias, to_alias)`.
   Predikat pada tabel alias tetap memakai referensi kolom eksplisit.
 
@@ -306,7 +307,6 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 ## 16. Backlog
 
 - Nullability type-level.
-- FK komposit (saat ini tercatat di `unsupported.json`).
 - Accessor relasi many-to-many lewat tabel perantara.
 - Index, unique constraint komposit, check constraint, view.
 - Multi-schema.
@@ -333,18 +333,20 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 1 enum, 3 FK, 0 unsupported, deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
 | CI job `schema` | selesai (`.github/workflows/schema.yml`); ikut terpicu saat `db/migrations` berubah |
-| Schema playground | selesai (`schema/playground/`, 9 kasus, 9 fitur, IR snapshot + `lt check`) |
+| Schema playground | selesai (`schema/playground/`, 10 kasus, 10 fitur, IR snapshot + `lt check`) |
 | Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
 | Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
 | Alias relation | selesai (`schema_adapter.on_alias`) |
+| Composite foreign keys | selesai (`CompositeRelationMeta`, `schema_adapter.on_composite`) |
 | DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground
 
 `schema/playground/` adalah galeri statis yang tidak menyentuh database:
 
-- 9 kasus: table, column types, composite key, foreign key, ambiguous foreign key,
-  unsupported jsonb/array, non-public schema, naming, composite unique/index.
+- 10 kasus: table, column types, composite key, foreign key, ambiguous foreign key,
+  composite foreign key, unsupported jsonb/array, non-public schema, naming,
+  composite unique/index.
 - Setiap kasus: DMMF input, `schema.json`, `unsupported.json`, generated LT, dan
   status `lt check`.
 - Snapshot IR disimpan di `cases/**/<id>.expected.json`.

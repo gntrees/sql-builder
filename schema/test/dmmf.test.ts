@@ -124,21 +124,24 @@ describe("DMMF -> schema IR", () => {
         });
     });
 
-    test("records composite foreign keys as unsupported", () => {
+    test("extracts composite foreign keys with aligned columns", () => {
         const document = structuredClone(fixture);
         const user = document.datamodel.models.find((model) => model.name === "User")!;
         const relation = user.fields.find((field) => field.kind === "object")!;
         relation.relationFromFields = ["orgId", "email"];
-        relation.relationToFields = ["id", "email"];
+        relation.relationToFields = ["id", "name"];
 
         const { schema, unsupported } = buildSchemaIR(document, { prismaVersion: "7.10.1" });
-        expect(schema.foreignKeys).toEqual([]);
-        expect(unsupported.entries).toContainEqual({
-            kind: "foreign-key",
-            table: "users",
+        expect(schema.foreignKeys).toContainEqual({
             name: "UserToOrganization",
-            reason: "composite foreign keys are not emitted yet",
+            fromTable: "users",
+            fromColumns: ["org_id", "email"],
+            toTable: "organizations",
+            toColumns: ["id", "name"],
+            onDelete: "Cascade",
+            onUpdate: "Cascade",
         });
+        expect(unsupported.entries.some((entry) => entry.kind === "foreign-key")).toBe(false);
     });
 
     test("can ignore internal tables such as migration metadata", () => {

@@ -80,6 +80,25 @@ describe("schema IR -> LT", () => {
         expect(relations).toContain("export let all_relations: List<RelationMeta>");
     });
 
+    test("emits composite relation bindings with ordered columns", () => {
+        const document = structuredClone(fixture);
+        const user = document.datamodel.models.find((model) => model.name === "User")!;
+        const relation = user.fields.find((field) => field.kind === "object")!;
+        relation.relationFromFields = ["orgId", "email"];
+        relation.relationToFields = ["id", "name"];
+
+        const { schema, unsupported } = buildSchemaIR(document, { prismaVersion: "7.10.1" });
+        const relations = emitLt(schema).find((file) => file.name === "schema_relations.lt")!;
+
+        expect(relations.content).toContain("export struct CompositeRelationMeta");
+        expect(relations.content).toContain("export let users_organizations: CompositeRelationMeta");
+        expect(relations.content).toContain('from_columns: ["orgId", "email"]');
+        expect(relations.content).toContain('to_columns: ["id", "name"]');
+        expect(relations.content).toContain("export let all_composite_relations");
+        expect(relations.content).not.toContain("export let all_relations");
+        expect(unsupported.entries.some((entry) => entry.kind === "foreign-key")).toBe(false);
+    });
+
     test("emits typed assignments for insert and update", () => {
         expect(byName.get("schema_expr.lt")).toContain("export struct ColumnValue");
         expect(byName.get("schema_int.lt")).toContain(

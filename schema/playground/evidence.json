@@ -2,8 +2,8 @@
   "version": 1,
   "compiler": "pinned lt",
   "counts": {
-    "cases": 9,
-    "features": 9,
+    "cases": 10,
+    "features": 10,
     "failing": 0
   },
   "cases": {
@@ -24,6 +24,11 @@
     },
     "relation/ambiguous-fk": {
       "feature": "relation/ambiguous-fk",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "relation/composite-fk": {
+      "feature": "relation/composite-fk",
       "ir": "pass",
       "lt": "pass"
     },

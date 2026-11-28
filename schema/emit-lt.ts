@@ -588,29 +588,45 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
         fk: ForeignKeyIR;
         from: TableIR;
         to: TableIR;
-        fromColumn: ColumnIR;
-        toColumn: ColumnIR;
+        fromColumns: ColumnIR[];
+        toColumns: ColumnIR[];
+        composite: boolean;
     };
 
     const bindings: Binding[] = [];
-    const used = new Set<string>(["all_relations", "relation_meta"]);
+    const used = new Set<string>([
+        "all_relations",
+        "all_composite_relations",
+        "relation_meta",
+        "composite_relation_meta",
+    ]);
 
     for (const fk of schema.foreignKeys) {
         const from = tableByName.get(fk.fromTable);
         const to = tableByName.get(fk.toTable);
         if (!from) throw new Error(`foreign key ${fk.name}: unknown table "${fk.fromTable}"`);
         if (!to) throw new Error(`foreign key ${fk.name}: unknown table "${fk.toTable}"`);
-        if (fk.fromColumns.length !== 1 || fk.toColumns.length !== 1) {
-            throw new Error(`foreign key ${fk.name}: only single-column relations are emitted`);
+        if (fk.fromColumns.length === 0 || fk.fromColumns.length !== fk.toColumns.length) {
+            throw new Error(`foreign key ${fk.name}: from/to columns must be non-empty and aligned`);
         }
 
-        const fromColumn = from.columns.find((column) => column.name === fk.fromColumns[0]);
-        const toColumn = to.columns.find((column) => column.name === fk.toColumns[0]);
-        if (!fromColumn) throw new Error(`foreign key ${fk.name}: unknown column "${fk.fromColumns[0]}"`);
-        if (!toColumn) throw new Error(`foreign key ${fk.name}: unknown column "${fk.toColumns[0]}"`);
+        const fromColumns = fk.fromColumns.map((name) => {
+            const column = from.columns.find((candidate) => candidate.name === name);
+            if (!column) throw new Error(`foreign key ${fk.name}: unknown column "${name}"`);
+            return column;
+        });
+        const toColumns = fk.toColumns.map((name) => {
+            const column = to.columns.find((candidate) => candidate.name === name);
+            if (!column) throw new Error(`foreign key ${fk.name}: unknown column "${name}"`);
+            return column;
+        });
 
+        const composite = fromColumns.length > 1;
         const ambiguous = (pairCount.get(`${fk.fromTable}\u0000${fk.toTable}`) ?? 0) > 1;
-        const suffix = ambiguous ? `_${fromColumn.name}` : "";
+        const suffixName = composite
+            ? fromColumns.map((column) => column.name).join("_")
+            : fromColumns[0]!.name;
+        const suffix = ambiguous ? `_${suffixName}` : "";
         const names = [
             toSnakeCase(`${from.name}_${to.name}${suffix}`),
             toSnakeCase(`${to.name}_${from.name}${suffix}`),
@@ -623,7 +639,7 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
                 );
             }
             used.add(name);
-            bindings.push({ name, fk, from, to, fromColumn, toColumn });
+            bindings.push({ name, fk, from, to, fromColumns, toColumns, composite });
         }
     }
 
@@ -646,15 +662,48 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
     }
     body.push("}");
     body.push("");
+    body.push("export struct CompositeRelationMeta {");
+    for (const field of [
+        "name: Str",
+        "from_table: Str",
+        "from_columns: List<Str>",
+        "from_schema: Str",
+        "to_table: Str",
+        "to_columns: List<Str>",
+        "to_schema: Str",
+        "on_delete: Str",
+        "on_update: Str",
+    ]) {
+        body.push(`  ${field}`);
+    }
+    body.push("}");
+    body.push("");
 
     for (const binding of bindings) {
-        body.push(`export let ${binding.name}: RelationMeta = RelationMeta(`);
+        const type = binding.composite ? "CompositeRelationMeta" : "RelationMeta";
+        body.push(`export let ${binding.name}: ${type} = ${type}(`);
         body.push(`  name: ${ltString(binding.fk.name)},`);
         body.push(`  from_table: ${ltString(binding.from.dbName)},`);
-        body.push(`  from_column: ${ltString(binding.fromColumn.dbName)},`);
+        if (binding.composite) {
+            body.push(
+                `  from_columns: [${binding.fromColumns
+                    .map((column) => ltString(column.dbName))
+                    .join(", ")}],`,
+            );
+        } else {
+            body.push(`  from_column: ${ltString(binding.fromColumns[0]!.dbName)},`);
+        }
         body.push(`  from_schema: ${ltString(binding.from.schema)},`);
         body.push(`  to_table: ${ltString(binding.to.dbName)},`);
-        body.push(`  to_column: ${ltString(binding.toColumn.dbName)},`);
+        if (binding.composite) {
+            body.push(
+                `  to_columns: [${binding.toColumns
+                    .map((column) => ltString(column.dbName))
+                    .join(", ")}],`,
+            );
+        } else {
+            body.push(`  to_column: ${ltString(binding.toColumns[0]!.dbName)},`);
+        }
         body.push(`  to_schema: ${ltString(binding.to.schema)},`);
         body.push(`  on_delete: ${ltString(binding.fk.onDelete ?? "NoAction")},`);
         body.push(`  on_update: ${ltString(binding.fk.onUpdate ?? "NoAction")},`);
@@ -662,12 +711,24 @@ function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
         body.push("");
     }
 
-    body.push(
-        `export let all_relations: List<RelationMeta> = [${bindings
-            .map((binding) => binding.name)
-            .join(", ")}]`,
-    );
-    body.push("");
+    const single = bindings.filter((binding) => !binding.composite);
+    const composite = bindings.filter((binding) => binding.composite);
+    if (single.length > 0) {
+        body.push(
+            `export let all_relations: List<RelationMeta> = [${single
+                .map((binding) => binding.name)
+                .join(", ")}]`,
+        );
+        body.push("");
+    }
+    if (composite.length > 0) {
+        body.push(
+            `export let all_composite_relations: List<CompositeRelationMeta> = [${composite
+                .map((binding) => binding.name)
+                .join(", ")}]`,
+        );
+        body.push("");
+    }
 
     const content = `${header("schema/schema.json")}package schema_relations {
 ${body.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
