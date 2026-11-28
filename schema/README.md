@@ -120,7 +120,7 @@ schema_uuid.lt          UuidColumn (string values)
 schema_temporal.lt      TemporalColumn (string values)
 schema_enum_<name>.lt   enum + column + value mapping
 schema_unsupported.lt   UnsupportedColumn (no operators)
-schema_relations.lt     RelationMeta + forward/inverse bindings + all_relations
+schema_relations.lt     RelationMeta/CompositeRelationMeta + forward/inverse bindings
 schema_tables.lt        table structs, bindings such as `users`, and `users_meta`
 ```
 
@@ -145,6 +145,9 @@ inner_join(select, to_table(posts_meta), on(posts_users))
 `on_alias(rel, from_alias, to_alias)`; predicates on an aliased table still need explicit
 column references because generated accessors carry the base table name.
 
+Composite foreign keys are emitted as `CompositeRelationMeta`; `on_composite(rel)` combines
+every column pair with AND.
+
 INSERT and UPDATE values use the same generated columns:
 
 ```lt
@@ -157,9 +160,9 @@ Omitted columns fall back to the database default (INSERT) or stay unchanged (UP
 
 ## Playground
 
-`schema/playground/` builds a static gallery of 9 cases: table, column types, composite
-key, foreign key, ambiguous foreign key, unsupported `jsonb`/array, non-public schema,
-naming, and composite unique/index.
+`schema/playground/` builds a static gallery of 10 cases: table, column types, composite
+key, foreign key, ambiguous foreign key, composite foreign key, unsupported `jsonb`/array,
+non-public schema, naming, and composite unique/index.
 
 ```sh
 bun run schema:playground

@@ -466,19 +466,6 @@ export function buildSchemaIR(dmmf: DmmfDocument, options: BuildSchemaOptions): 
                 (name) => target.columnByField.get(name) ?? name,
             );
 
-            // The generated relation metadata only models single-column foreign
-            // keys in this slice. Composite keys are recorded instead of being
-            // silently dropped.
-            if (fromColumns.length > 1 || toColumns.length > 1) {
-                unsupported.push({
-                    kind: "foreign-key",
-                    table: info.table.name,
-                    name: field.relationName ?? undefined,
-                    reason: "composite foreign keys are not emitted yet",
-                });
-                continue;
-            }
-
             const key = `${info.table.name}(${fromColumns.join(",")})->${target.table.name}(${toColumns.join(",")})`;
             if (seenForeignKeys.has(key)) continue;
             seenForeignKeys.add(key);

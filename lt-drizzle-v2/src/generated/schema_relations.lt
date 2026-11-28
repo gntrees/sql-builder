@@ -13,6 +13,18 @@ package schema_relations {
     on_update: Str
   }
 
+  export struct CompositeRelationMeta {
+    name: Str
+    from_table: Str
+    from_columns: List<Str>
+    from_schema: Str
+    to_table: Str
+    to_columns: List<Str>
+    to_schema: Str
+    on_delete: Str
+    on_update: Str
+  }
+
   export let authors_books: RelationMeta = RelationMeta(
     name: "authorsTobooks",
     from_table: "books",

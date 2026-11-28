@@ -1,0 +1,111 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "Organization",
+        "dbName": "organizations",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "tenantId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "name",
+            "kind": "scalar",
+            "type": "String",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["VarChar", ["255"]]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      },
+      {
+        "name": "User",
+        "dbName": "users",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "orgId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "orgTenantId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "organization",
+            "kind": "object",
+            "type": "Organization",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "relationName": "UserOrganization",
+            "relationFromFields": ["orgId", "orgTenantId"],
+            "relationToFields": ["id", "tenantId"],
+            "relationOnDelete": "Cascade",
+            "relationOnUpdate": "NoAction"
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [],
+    "indexes": []
+  }
+}
