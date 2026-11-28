@@ -53,7 +53,7 @@ package use {
   }
 
   export fn assignment() -> Assignment {
-    to_assignment(users.display_name.assign("bob"))
+    to_assignment(users.display_name.assign(Some("bob")))
   }
 
   export fn aliased_relation() -> Sql {

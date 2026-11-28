@@ -120,6 +120,7 @@ schema_decimal.lt       DecimalColumn (string values)
 schema_uuid.lt          UuidColumn (string values)
 schema_temporal.lt      TemporalColumn (string values)
 schema_enum_<name>.lt   enum + column + value mapping
+schema_nullable_<type>.lt Nullable<...>Column + assign(Option<T>)
 schema_unsupported.lt   UnsupportedColumn (no operators)
 schema_relations.lt     RelationMeta/CompositeRelationMeta + forward/inverse bindings
 schema_tables.lt        table structs, bindings such as `users`, and `users_meta`
@@ -157,7 +158,10 @@ let query = insert.values(insert.create(to_table(users_meta)), [row])
 ```
 
 Omitted columns fall back to the database default (INSERT) or stay unchanged (UPDATE).
-`assign_null(users.email)` writes an explicit NULL.
+`assign_null(users.email)` writes an explicit NULL. Nullable columns use the generated
+`Nullable<...>Column` type, so their assignment takes `Option<T>`:
+`users.email.assign(Some("a@b"))` or `users.email.assign(None)`. Predicates keep taking
+raw values (`users.email.eq("a@b")`, `users.email.is_null()`).
 
 ## Playground
 

@@ -31,6 +31,8 @@ describe("schema IR -> LT", () => {
             "schema_float.lt",
             "schema_int.lt",
             "schema_meta.lt",
+            "schema_nullable_str.lt",
+            "schema_nullable_uuid.lt",
             "schema_relations.lt",
             "schema_str.lt",
             "schema_tables.lt",
@@ -42,7 +44,7 @@ describe("schema IR -> LT", () => {
 
     test("keeps SQL names separate from accessor names", () => {
         const tables = byName.get("schema_tables.lt")!;
-        expect(tables).toContain("display_name: StrColumn");
+        expect(tables).toContain("display_name: NullableStrColumn");
         expect(tables).toContain('column: "displayName"');
         expect(tables).toContain('column: "createdAt"');
         expect(tables).toContain('column: "orgId"');
@@ -109,6 +111,21 @@ describe("schema IR -> LT", () => {
         expect(tables).toContain('columns: ["email", "orgId"]');
         expect(tables).toContain('name: "users_email_idx"');
         expect(tables).toContain("unique: false");
+    });
+
+    test("emits nullable column packages with optional assignments", () => {
+        const nullableStr = byName.get("schema_nullable_str.lt")!;
+        expect(nullableStr).toContain("export struct NullableStrColumn");
+        expect(nullableStr).toContain(
+            "export fn assign(c: NullableStrColumn, v: Option<Str>) -> ColumnValue",
+        );
+        expect(nullableStr).toContain("Some(item) => ColumnValue");
+        expect(nullableStr).toContain("None => ColumnValue");
+        expect(nullableStr).toContain("export fn like(c: NullableStrColumn, v: Str) -> Expr");
+        expect(byName.get("schema_nullable_uuid.lt")).toContain(
+            "export struct NullableUuidColumn",
+        );
+        expect(byName.has("schema_nullable_int.lt")).toBe(false);
     });
 
     test("emits typed assignments for insert and update", () => {

@@ -199,7 +199,9 @@ DML:
 
 ## 10. Nullability dan Relasi
 
-- Nullability hanya metadata `nullable: Bool`; belum type-level.
+- Nullability: kolom nullable memakai tipe `Nullable<...>Column` dari paket
+  `schema_nullable_*`; predikat tetap menerima nilai mentah, sedangkan assignment
+  menerima `Option<T>` (`Some(v)` / `None`).
 - FK di-emit sebagai `RelationMeta`/`CompositeRelationMeta` di `schema_relations`
   (maju dan balik); join tetap eksplisit lewat `on`/`on_alias`/`on_composite` di adapter.
 - `on(rel)` belum mengenal alias tabel; gunakan `on_alias(rel, from_alias, to_alias)`.
@@ -240,7 +242,9 @@ Aturan:
 | `schema_meta` | `ColumnMeta`, `TableMeta` netral. |
 | `schema_int`, `schema_float`, `schema_str`, `schema_bool` | Tipe kolom + operator. |
 | `schema_decimal`, `schema_uuid`, `schema_temporal` | Tipe kolom berbasis string + operator. |
+| `schema_nullable_<type>` | `Nullable<...>Column` + operator + `assign(Option<T>)`. |
 | `schema_enum_<name>` | Enum, mapping value, tipe kolom, operator. |
+| `schema_enum_<name>_nullable` | Varian nullable untuk kolom enum nullable. |
 | `schema_unsupported` | `UnsupportedColumn` tanpa operator. |
 | `schema_relations` | `RelationMeta`, binding relasi maju/balik, dan `all_relations`. |
 | `schema_tables` | Struct tabel, binding `users`, `users_meta`, dan `all_table_meta`. |
@@ -309,7 +313,6 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 
 ## 16. Backlog
 
-- Nullability type-level.
 - Accessor relasi many-to-many lewat tabel perantara.
 - Check constraint dan view (blind spot DMMF).
 - Multi-schema.
@@ -342,6 +345,7 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Alias relation | selesai (`schema_adapter.on_alias`) |
 | Composite foreign keys | selesai (`CompositeRelationMeta`, `schema_adapter.on_composite`) |
 | Index & composite unique metadata | selesai (`IndexMeta` di `TableMeta`, IR version 2) |
+| Nullability type-level | selesai (`Nullable<...>Column`, `assign(Option<T>)`) |
 | DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground
@@ -363,12 +367,13 @@ Schema yang di-commit sekarang berasal dari migrasi aplikasi di
 `schema_migrations` dikecualikan lewat konfigurasi generator `ignoreTables`. Fixture
 terpisah tetap dipakai untuk menguji tipe unsupported dan schema non-public.
 
-Catatan: `bun test schema/test` menjalankan 18 test, termasuk `lt check`, runtime SQL
+Catatan: `bun test schema/test` menjalankan 19 test, termasuk `lt check`, runtime SQL
 assertion lewat v2 `sqlToQuery`, dan konversi `TableMeta -> v2 Table`. Pipeline fixture
 menghasilkan 3 tabel, 1 enum, 1 FK, serta 2 entri unsupported (schema `auth` dan
 `jsonb`); composite unique dan index kini menjadi `IndexMeta`. IR memakai `version: 2`.
-Build v2 menghasilkan 21 module dan lolos `tsc` serta `mypy --strict`; differential tetap
-64/64. `to_table(users_meta)` sekarang bisa dipakai di `from_table`, dan
+Kolom nullable menghasilkan paket `schema_nullable_*`. Build v2 menghasilkan 23 module
+dan lolos `tsc` serta `mypy --strict`; differential tetap 64/64.
+`to_table(users_meta)` sekarang bisa dipakai di `from_table`, dan
 `to_sql(users.id.eq(1))` menghasilkan `"users"."id" = $1`.
 
 Integrasi ke database aplikasi diuji oleh

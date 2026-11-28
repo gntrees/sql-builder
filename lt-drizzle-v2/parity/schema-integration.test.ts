@@ -12,10 +12,13 @@ import { SQL } from "bun";
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
 import { LList } from "../../generated/lt-drizzle-v2/typescript/_lingua_rt";
+import { None, Some } from "../../generated/lt-drizzle-v2/typescript/_lingua_rt";
 import { mysql as mysqlDialect, postgres as postgresDialect } from "../../generated/lt-drizzle-v2/typescript/src/dialect";
 import * as ltdel from "../../generated/lt-drizzle-v2/typescript/src/delete";
 import { assign as assignRole, eq as eqRole, UserRole } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_enum_user_role";
-import { asc, assign as assignInt, assignNull as assignNullInt, isNull } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_int";
+import { asc, assign as assignInt } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_int";
+import { assign as assignNullableInt, assignNull as assignNullInt } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_nullable_int";
+import { assign as assignNullableStr, isNull as isNullNullableStr } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_nullable_str";
 import { postsUsers } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_relations";
 import { assign as assignStr, eq as eqStr } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_str";
 import { assign as assignBool } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_bool";
@@ -141,14 +144,14 @@ for (const name of dialects) {
               userRow(
                 toAssignment(assignStr(users.name, "alice")),
                 toAssignment(assignBool(users.active, true)),
-                toAssignment(assignInt(users.age, 30n)),
-                toAssignment(assignStr(users.email, "alice@example.com")),
+                toAssignment(assignNullableInt(users.age, Some(30n))),
+                toAssignment(assignNullableStr(users.email, Some("alice@example.com"))),
                 toAssignment(assignRole(users.role, UserRole.Admin)),
               ),
               userRow(
                 toAssignment(assignStr(users.name, "bob")),
                 toAssignment(assignBool(users.active, false)),
-                toAssignment(assignInt(users.age, 17n)),
+                toAssignment(assignNullableInt(users.age, Some(17n))),
               ),
             ]),
           ),
@@ -252,7 +255,7 @@ for (const name of dialects) {
         name,
         where(
           fields(fromTable(create(), usersTable), list([field(usersTable, "name")])),
-          toSql(isNull(users.email)),
+          toSql(isNullNullableStr(users.email)),
         ),
       );
 
@@ -349,7 +352,7 @@ for (const name of dialects) {
             ltupd.set(
               ltupd.create(usersTable),
               list([
-                toAssignment(assignInt(users.age, 28n)),
+                toAssignment(assignNullableInt(users.age, Some(28n))),
                 toAssignment(assignRole(users.role, UserRole.Admin)),
               ]),
             ),

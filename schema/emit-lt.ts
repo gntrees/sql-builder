@@ -116,18 +116,22 @@ function columnTypeFor(column: ColumnIR): string {
     if (column.type === "Unsupported") return "UnsupportedColumn";
     if (column.type === "Enum") {
         if (!column.enum) throw new Error(`column ${column.name}: enum type is missing`);
-        return enumColumnTypeName(column.enum);
+        const base = enumColumnTypeName(column.enum);
+        return column.nullable ? `Nullable${base}` : base;
     }
-    return SCALAR_BY_TYPE.get(column.type)!.columnType;
+    const base = SCALAR_BY_TYPE.get(column.type)!.columnType;
+    return column.nullable ? `Nullable${base}` : base;
 }
 
 function packageFor(column: ColumnIR): string {
     if (column.type === "Unsupported") return "schema_unsupported";
     if (column.type === "Enum") {
         if (!column.enum) throw new Error(`column ${column.name}: enum type is missing`);
-        return enumPackageName(column.enum);
+        const base = enumPackageName(column.enum);
+        return column.nullable ? `${base}_nullable` : base;
     }
-    return SCALAR_BY_TYPE.get(column.type)!.packageName;
+    const base = SCALAR_BY_TYPE.get(column.type)!.packageName;
+    return column.nullable ? base.replace(/^schema_/, "schema_nullable_") : base;
 }
 
 function exprPackage(): EmittedFile {
@@ -199,23 +203,27 @@ function exprPackage(): EmittedFile {
     return { name: "schema_expr.lt", content };
 }
 
-function scalarPackage(spec: ScalarSpec): EmittedFile {
+function scalarPackage(spec: ScalarSpec, nullable = false): EmittedFile {
+    const columnType = nullable ? `Nullable${spec.columnType}` : spec.columnType;
+    const packageName = nullable
+        ? spec.packageName.replace(/^schema_/, "schema_nullable_")
+        : spec.packageName;
     const lines: string[] = [];
     const push = (line = "") => lines.push(line);
 
-    push(`export struct ${spec.columnType} {`);
+    push(`export struct ${columnType} {`);
     push("  table: Str");
     push("  column: Str");
     push("  nullable: Bool");
     push("}");
     push();
 
-    push(`fn ref(c: ${spec.columnType}) -> ColumnRef {`);
+    push(`fn ref(c: ${columnType}) -> ColumnRef {`);
     push(`  ColumnRef(table: c.table, column: c.column, sql_type: ${ltString(spec.type)}, nullable: c.nullable)`);
     push("}");
     push();
 
-    push(`fn col(c: ${spec.columnType}) -> Expr {`);
+    push(`fn col(c: ${columnType}) -> Expr {`);
     push("  Expr.Column(ref(c))");
     push("}");
     push();
@@ -225,18 +233,28 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
     push("}");
     push();
 
-    push(`export fn assign(c: ${spec.columnType}, v: ${spec.valueType}) -> ColumnValue {`);
-    push(`  ColumnValue(column: c.column, value: ${spec.param}(v))`);
-    push("}");
-    push();
+    if (nullable) {
+        push(`export fn assign(c: ${columnType}, v: Option<${spec.valueType}>) -> ColumnValue {`);
+        push("  match v {");
+        push(`    Some(item) => ColumnValue(column: c.column, value: ${spec.param}(item))`);
+        push("    None => ColumnValue(column: c.column, value: Scalar.Null)");
+        push("  }");
+        push("}");
+        push();
+    } else {
+        push(`export fn assign(c: ${columnType}, v: ${spec.valueType}) -> ColumnValue {`);
+        push(`  ColumnValue(column: c.column, value: ${spec.param}(v))`);
+        push("}");
+        push();
+    }
 
-    push(`export fn assign_null(c: ${spec.columnType}) -> ColumnValue {`);
+    push(`export fn assign_null(c: ${columnType}) -> ColumnValue {`);
     push("  ColumnValue(column: c.column, value: Scalar.Null)");
     push("}");
     push();
 
     const binary = (name: string, variant: string) => {
-        push(`export fn ${name}(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn ${name}(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push(`  Expr.${variant}(col(c), param(v))`);
         push("}");
         push();
@@ -251,81 +269,84 @@ function scalarPackage(spec: ScalarSpec): EmittedFile {
         binary("lt", "Lt");
         binary("lte", "Lte");
 
-        push(`export fn in_list(c: ${spec.columnType}, values: List<${spec.valueType}>) -> Expr {`);
+        push(`export fn in_list(c: ${columnType}, values: List<${spec.valueType}>) -> Expr {`);
         push("  Expr.In(col(c), values.map(fn(v) => param(v)))");
         push("}");
         push();
 
-        push(`export fn not_in_list(c: ${spec.columnType}, values: List<${spec.valueType}>) -> Expr {`);
+        push(`export fn not_in_list(c: ${columnType}, values: List<${spec.valueType}>) -> Expr {`);
         push("  Expr.NotIn(col(c), values.map(fn(v) => param(v)))");
         push("}");
         push();
 
-        push(`export fn between(c: ${spec.columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
+        push(`export fn between(c: ${columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
         push("  Expr.Between(col(c), param(low), param(high))");
         push("}");
         push();
 
-        push(`export fn not_between(c: ${spec.columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
+        push(`export fn not_between(c: ${columnType}, low: ${spec.valueType}, high: ${spec.valueType}) -> Expr {`);
         push("  Expr.NotBetween(col(c), param(low), param(high))");
         push("}");
         push();
     }
 
     if (spec.pattern) {
-        push(`export fn like(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn like(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.Like(col(c), param(v))");
         push("}");
         push();
-        push(`export fn not_like(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn not_like(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.Not(Expr.Like(col(c), param(v)))");
         push("}");
         push();
-        push(`export fn ilike(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn ilike(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.ILike(col(c), param(v))");
         push("}");
         push();
-        push(`export fn not_ilike(c: ${spec.columnType}, v: ${spec.valueType}) -> Expr {`);
+        push(`export fn not_ilike(c: ${columnType}, v: ${spec.valueType}) -> Expr {`);
         push("  Expr.Not(Expr.ILike(col(c), param(v)))");
         push("}");
         push();
     }
 
-    push(`export fn is_null(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn is_null(c: ${columnType}) -> Expr {`);
     push("  Expr.IsNull(col(c))");
     push("}");
     push();
 
-    push(`export fn is_not_null(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn is_not_null(c: ${columnType}) -> Expr {`);
     push("  Expr.IsNotNull(col(c))");
     push("}");
     push();
 
-    push(`export fn asc(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn asc(c: ${columnType}) -> Expr {`);
     push("  Expr.Asc(col(c))");
     push("}");
     push();
 
-    push(`export fn desc(c: ${spec.columnType}) -> Expr {`);
+    push(`export fn desc(c: ${columnType}) -> Expr {`);
     push("  Expr.Desc(col(c))");
     push("}");
     push();
 
-    push(`export fn as_alias(c: ${spec.columnType}, alias: Str) -> Expr {`);
+    push(`export fn as_alias(c: ${columnType}, alias: Str) -> Expr {`);
     push("  Expr.Alias(col(c), alias)");
     push("}");
     push();
 
     const content = `${header("schema/schema.json")}import schema_expr { ColumnValue, Expr, ColumnRef, Scalar } "./schema_expr.lt"
 
-package ${spec.packageName} {
+package ${packageName} {
 ${lines.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
 `;
-    return { name: `${spec.packageName}.lt`, content };
+    return { name: `${packageName}.lt`, content };
 }
 
-function enumPackage(item: EnumIR): EmittedFile {
-    const columnType = enumColumnTypeName(item.name);
+function enumPackage(item: EnumIR, nullable = false): EmittedFile {
+    const columnType = nullable
+        ? `Nullable${enumColumnTypeName(item.name)}`
+        : enumColumnTypeName(item.name);
+    const packageName = nullable ? `${item.package}_nullable` : item.package;
     const valueFn = enumValueFunctionName(item.name);
     const lines: string[] = [];
     const push = (line = "") => lines.push(line);
@@ -366,10 +387,20 @@ function enumPackage(item: EnumIR): EmittedFile {
     push("}");
     push();
 
-    push(`export fn assign(c: ${columnType}, v: ${item.name}) -> ColumnValue {`);
-    push(`  ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(v)))`);
-    push("}");
-    push();
+    if (nullable) {
+        push(`export fn assign(c: ${columnType}, v: Option<${item.name}>) -> ColumnValue {`);
+        push("  match v {");
+        push(`    Some(item) => ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(item)))`);
+        push("    None => ColumnValue(column: c.column, value: Scalar.Null)");
+        push("  }");
+        push("}");
+        push();
+    } else {
+        push(`export fn assign(c: ${columnType}, v: ${item.name}) -> ColumnValue {`);
+        push(`  ColumnValue(column: c.column, value: Scalar.Text(${valueFn}(v)))`);
+        push("}");
+        push();
+    }
 
     push(`export fn assign_null(c: ${columnType}) -> ColumnValue {`);
     push("  ColumnValue(column: c.column, value: Scalar.Null)");
@@ -413,10 +444,10 @@ function enumPackage(item: EnumIR): EmittedFile {
 
     const content = `${header("schema/schema.json")}import schema_expr { ColumnValue, Expr, ColumnRef, Scalar } "./schema_expr.lt"
 
-package ${item.package} {
+package ${packageName} {
 ${lines.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
 `;
-    return { name: `${item.package}.lt`, content };
+    return { name: `${packageName}.lt`, content };
 }
 
 function unsupportedPackage(): EmittedFile {
@@ -759,11 +790,32 @@ ${body.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
 export function emitLt(schema: SchemaIR): EmittedFile[] {
     const files: EmittedFile[] = [
         exprPackage(),
-        ...SCALAR_SPECS.map(scalarPackage),
+        ...SCALAR_SPECS.map((spec) => scalarPackage(spec)),
         unsupportedPackage(),
         metaPackage(),
-        ...schema.enums.map(enumPackage),
+        ...schema.enums.map((item) => enumPackage(item)),
     ];
+
+    const nullableColumns = schema.tables.flatMap((table) =>
+        table.columns.filter((column) => column.nullable && column.type !== "Unsupported"),
+    );
+    const nullableScalarTypes = new Set(
+        nullableColumns
+            .filter((column) => column.type !== "Enum")
+            .map((column) => column.type),
+    );
+    for (const spec of SCALAR_SPECS) {
+        if (nullableScalarTypes.has(spec.type)) files.push(scalarPackage(spec, true));
+    }
+
+    const nullableEnums = new Set(
+        nullableColumns
+            .filter((column) => column.type === "Enum")
+            .map((column) => column.enum!),
+    );
+    for (const item of schema.enums) {
+        if (nullableEnums.has(item.name)) files.push(enumPackage(item, true));
+    }
 
     const tables = tablesPackage(schema);
     if (tables) files.push(tables);

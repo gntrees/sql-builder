@@ -77,7 +77,7 @@ package use {
   }
 
   export fn assignment() -> Assignment {
-    to_assignment(users.display_name.assign("bob"))
+    to_assignment(users.display_name.assign(Some("bob")))
   }
 
   export fn query() -> Select {
@@ -106,6 +106,7 @@ package use {
 
         const root = join(temp, "out/ts");
         const { LList } = await import(pathToFileURL(join(root, "_lingua_rt.ts")).href);
+        const { Some } = await import(pathToFileURL(join(root, "_lingua_rt.ts")).href);
         const { users, usersMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_tables.ts")).href
         );
@@ -119,7 +120,7 @@ package use {
             pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
         );
         const { assign: assignStr } = await import(
-            pathToFileURL(join(root, "src/generated/schema_str.ts")).href
+            pathToFileURL(join(root, "src/generated/schema_nullable_str.ts")).href
         );
         const { sqlToQuery, postgres } = await import(
             pathToFileURL(join(root, "src/dialect.ts")).href
@@ -183,7 +184,7 @@ package use {
             '("orders"."user_id" = "users"."id" and "orders"."tenant_id" = "users"."tenant_id")',
         );
 
-        const assignment = toAssignment(assignStr(users.displayName, "bob"));
+        const assignment = toAssignment(assignStr(users.displayName, Some("bob")));
         expect(assignment.column).toBe("displayName");
         const assignmentSql = sqlToQuery(postgres(), assignment.value);
         expect(assignmentSql.sql).toBe("$1");

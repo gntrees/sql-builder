@@ -4,6 +4,8 @@ import schema_bool { BoolColumn } "./schema_bool.lt"
 import schema_enum_user_role { UserRoleColumn } "./schema_enum_user_role.lt"
 import schema_int { IntColumn } "./schema_int.lt"
 import schema_meta { ColumnMeta, IndexMeta, TableMeta } "./schema_meta.lt"
+import schema_nullable_int { NullableIntColumn } "./schema_nullable_int.lt"
+import schema_nullable_str { NullableStrColumn } "./schema_nullable_str.lt"
 import schema_str { StrColumn } "./schema_str.lt"
 
 package schema_tables {
@@ -47,23 +49,23 @@ package schema_tables {
 
   export struct TTable {
     id: IntColumn
-    x: IntColumn
-    name: StrColumn
-    a: IntColumn
-    b: IntColumn
+    x: NullableIntColumn
+    name: NullableStrColumn
+    a: NullableIntColumn
+    b: NullableIntColumn
   }
 
   export struct UTable {
     id: IntColumn
-    b: IntColumn
+    b: NullableIntColumn
   }
 
   export struct UsersTable {
     id: IntColumn
     name: StrColumn
     active: BoolColumn
-    age: IntColumn
-    email: StrColumn
+    age: NullableIntColumn
+    email: NullableStrColumn
     role: UserRoleColumn
   }
 
@@ -107,23 +109,23 @@ package schema_tables {
 
   export let t: TTable = TTable(
     id: IntColumn(table: "t", column: "id", nullable: false),
-    x: IntColumn(table: "t", column: "x", nullable: true),
-    name: StrColumn(table: "t", column: "name", nullable: true),
-    a: IntColumn(table: "t", column: "a", nullable: true),
-    b: IntColumn(table: "t", column: "b", nullable: true),
+    x: NullableIntColumn(table: "t", column: "x", nullable: true),
+    name: NullableStrColumn(table: "t", column: "name", nullable: true),
+    a: NullableIntColumn(table: "t", column: "a", nullable: true),
+    b: NullableIntColumn(table: "t", column: "b", nullable: true),
   )
 
   export let u: UTable = UTable(
     id: IntColumn(table: "u", column: "id", nullable: false),
-    b: IntColumn(table: "u", column: "b", nullable: true),
+    b: NullableIntColumn(table: "u", column: "b", nullable: true),
   )
 
   export let users: UsersTable = UsersTable(
     id: IntColumn(table: "users", column: "id", nullable: false),
     name: StrColumn(table: "users", column: "name", nullable: false),
     active: BoolColumn(table: "users", column: "active", nullable: false),
-    age: IntColumn(table: "users", column: "age", nullable: true),
-    email: StrColumn(table: "users", column: "email", nullable: true),
+    age: NullableIntColumn(table: "users", column: "age", nullable: true),
+    email: NullableStrColumn(table: "users", column: "email", nullable: true),
     role: UserRoleColumn(table: "users", column: "role", nullable: false),
   )
 
