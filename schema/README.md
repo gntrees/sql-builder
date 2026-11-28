@@ -110,9 +110,9 @@ The DMMF fixture used by the unit tests is
 ## Generated shape
 
 ```
-schema_expr.lt          ColumnRef, Scalar, Expr
+schema_expr.lt          ColumnRef, Scalar, ColumnValue, Expr
 schema_meta.lt          ColumnMeta, TableMeta
-schema_int.lt           IntColumn + operators
+schema_int.lt           IntColumn + operators + assign/assign_null
 schema_str.lt           StrColumn + operators (including like/ilike)
 schema_bool.lt          BoolColumn + equality/null operators
 schema_decimal.lt       DecimalColumn (string values)
@@ -143,6 +143,16 @@ inner_join(select, to_table(posts_meta), on(posts_users))
 `on(rel)` renders the canonical `from.column = to.column` form for both the forward
 (`posts_users`) and inverse (`users_posts`) binding. Aliased tables are not supported yet;
 use explicit column references when a table is aliased.
+
+INSERT and UPDATE values use the same generated columns:
+
+```lt
+let row = [to_assignment(users.name.assign("ana")), to_assignment(users.active.assign(true))]
+let query = insert.values(insert.create(to_table(users_meta)), [row])
+```
+
+Omitted columns fall back to the database default (INSERT) or stay unchanged (UPDATE).
+`assign_null(users.email)` writes an explicit NULL.
 
 ## Playground
 

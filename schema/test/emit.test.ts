@@ -79,6 +79,32 @@ describe("schema IR -> LT", () => {
         expect(relations).toContain('on_delete: "Cascade"');
         expect(relations).toContain("export let all_relations: List<RelationMeta>");
     });
+
+    test("emits typed assignments for insert and update", () => {
+        expect(byName.get("schema_expr.lt")).toContain("export struct ColumnValue");
+        expect(byName.get("schema_int.lt")).toContain(
+            "export fn assign(c: IntColumn, v: Int) -> ColumnValue",
+        );
+        expect(byName.get("schema_str.lt")).toContain(
+            "export fn assign(c: StrColumn, v: Str) -> ColumnValue",
+        );
+        expect(byName.get("schema_bool.lt")).toContain(
+            "export fn assign(c: BoolColumn, v: Bool) -> ColumnValue",
+        );
+        expect(byName.get("schema_decimal.lt")).toContain(
+            "export fn assign(c: DecimalColumn, v: Str) -> ColumnValue",
+        );
+        expect(byName.get("schema_enum_role.lt")).toContain(
+            "export fn assign(c: RoleColumn, v: Role) -> ColumnValue",
+        );
+        expect(byName.get("schema_enum_role.lt")).toContain(
+            "ColumnValue(column: c.column, value: Scalar.Text(role_value(v)))",
+        );
+        expect(byName.get("schema_int.lt")).toContain(
+            "export fn assign_null(c: IntColumn) -> ColumnValue",
+        );
+        expect(byName.get("schema_unsupported.lt")).not.toContain("assign");
+    });
 });
 
 describe("generated LT compiles", () => {

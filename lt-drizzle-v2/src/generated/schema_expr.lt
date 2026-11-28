@@ -16,6 +16,12 @@ package schema_expr {
     Text(Str)
   }
 
+  /// Nilai untuk INSERT/UPDATE: nama kolom SQL + scalar netral.
+  export struct ColumnValue {
+    column: Str
+    value: Scalar
+  }
+
   export enum Expr {
     Column(ColumnRef)
     Param(Scalar)

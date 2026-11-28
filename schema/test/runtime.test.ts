@@ -50,8 +50,8 @@ describe("generated schema runtime", () => {
         writeFileSync(
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
-import schema { field } "./schema.lt"
-import schema_adapter { to_sql, to_table, on } "./schema_adapter.lt"
+import schema { Assignment, field } "./schema.lt"
+import schema_adapter { on, to_assignment, to_sql, to_table } "./schema_adapter.lt"
 import schema_expr { Expr } "./generated/schema_expr.lt"
 import schema_int { eq } "./generated/schema_int.lt"
 import schema_relations { users_organizations } "./generated/schema_relations.lt"
@@ -70,6 +70,10 @@ package use {
 
   export fn relation() -> Sql {
     on(users_organizations)
+  }
+
+  export fn assignment() -> Assignment {
+    to_assignment(users.display_name.assign("bob"))
   }
 
   export fn query() -> Select {
@@ -101,11 +105,14 @@ package use {
         const { users, usersMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_tables.ts")).href
         );
-        const { toSql, toTable, on } = await import(
+        const { toSql, toTable, on, toAssignment } = await import(
             pathToFileURL(join(root, "src/schema_adapter.ts")).href
         );
         const { usersOrganizations } = await import(
             pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
+        );
+        const { assign: assignStr } = await import(
+            pathToFileURL(join(root, "src/generated/schema_str.ts")).href
         );
         const { sqlToQuery, postgres } = await import(
             pathToFileURL(join(root, "src/dialect.ts")).href
@@ -149,5 +156,13 @@ package use {
         const relationSql = sqlToQuery(postgres(), on(usersOrganizations));
         expect(relationSql.sql).toBe('"users"."orgId" = "organizations"."id"');
         expect(relationSql.params.items).toHaveLength(0);
+
+        const assignment = toAssignment(assignStr(users.displayName, "bob"));
+        expect(assignment.column).toBe("displayName");
+        const assignmentSql = sqlToQuery(postgres(), assignment.value);
+        expect(assignmentSql.sql).toBe("$1");
+        expect(assignmentSql.params.items.map((item: any) => String(item.values[0]))).toEqual([
+            "bob",
+        ]);
     });
 });

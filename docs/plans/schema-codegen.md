@@ -173,6 +173,13 @@ Relasi:
   satu kolom.
 - Adapter menyediakan `on(rel) -> Sql` sebagai kondisi join kanonik.
 
+DML:
+
+- Setiap paket tipe meng-emit `assign(c, v) -> ColumnValue` dan
+  `assign_null(c) -> ColumnValue`.
+- Adapter menyediakan `to_assignment(cv) -> Assignment` untuk INSERT/UPDATE.
+- Kolom yang diomisi tidak masuk list; default/NULL diserahkan ke database.
+
 ## 9. Naming dan Collision
 
 - Nama tabel binding berasal dari `dbName`, disanitize ke `snake_case`.
@@ -239,6 +246,7 @@ Adapter adalah boundary yang dijaga:
 
 - handwritten di `lt-drizzle-v2/src/schema_adapter.lt`;
 - mengubah `Expr` netral menjadi `Sql` v2;
+- mengubah `ColumnValue` menjadi `Assignment` v2;
 - memetakan binding generated ke `Table`/`Column` v2 bila diperlukan;
 - v3 menulis adapter sendiri;
 - logika v2 tidak boleh masuk ke package generated.
@@ -328,6 +336,7 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | Schema playground | selesai (`schema/playground/`, 9 kasus, 9 fitur, IR snapshot + `lt check`) |
 | Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
 | Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
+| DML assignment | selesai (`assign`/`assign_null`, `schema_adapter.to_assignment`) |
 
 ## 18. Schema Playground
 
@@ -357,8 +366,8 @@ dipakai di `from_table`, dan `to_sql(users.id.eq(1))` menghasilkan
 
 Integrasi ke database aplikasi diuji oleh
 `lt-drizzle-v2/parity/schema-integration.test.ts` (bagian dari `verify-db.sh`): tabel,
-predikat bertipe, enum, nullability, dan join lewat `on(posts_users)` diambil dari
-`schema_relations` generated lalu dijalankan terhadap tabel `users`/`posts` hasil
-migrasi aplikasi.
+predikat bertipe, enum, nullability, join lewat `on(posts_users)`, serta
+INSERT/UPDATE/DELETE lewat `assign`/`assign_null` dijalankan terhadap tabel
+`users`/`posts` hasil migrasi aplikasi, di Postgres dan MySQL.
 `bunx tsc` penuh masih gagal pada artefak `generated/` lama yang tidak terkait; file
 `schema/*.ts` dan `prisma.config.ts` lolos typecheck terpisah.
