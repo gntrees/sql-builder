@@ -1,6 +1,7 @@
 import delete { Delete } "./delete.lt"
 import dialect { Dialect } "./dialect.lt"
 import schema_tables { all_table_meta } "./generated/schema_tables.lt"
+import schema_relations { all_relations } "./generated/schema_relations.lt"
 import insert { Insert } "./insert.lt"
 import mysql_core { int } "./mysql_core.lt"
 import pg_core { integer } "./pg_core.lt"

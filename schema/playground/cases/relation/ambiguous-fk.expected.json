@@ -1,0 +1,103 @@
+{
+  "schema": {
+    "version": 1,
+    "generator": "prisma-lt",
+    "dialect": "postgres",
+    "prismaVersion": "7.10.1",
+    "tables": [
+      {
+        "model": "Message",
+        "name": "messages",
+        "dbName": "messages",
+        "schema": "public",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": [
+          {
+            "name": "id",
+            "dbName": "id",
+            "nullable": false,
+            "unique": false,
+            "default": {
+              "kind": "autoincrement"
+            },
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "sender_id",
+            "dbName": "senderId",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          },
+          {
+            "name": "receiver_id",
+            "dbName": "receiverId",
+            "nullable": false,
+            "unique": false,
+            "type": "Int",
+            "nativeType": "Int"
+          }
+        ]
+      },
+      {
+        "model": "User",
+        "name": "users",
+        "dbName": "users",
+        "schema": "public",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": [
+          {
+            "name": "id",
+            "dbName": "id",
+            "nullable": false,
+            "unique": false,
+            "default": {
+              "kind": "autoincrement"
+            },
+            "type": "Int",
+            "nativeType": "Int"
+          }
+        ]
+      }
+    ],
+    "enums": [],
+    "foreignKeys": [
+      {
+        "name": "MessageReceiver",
+        "fromTable": "messages",
+        "fromColumns": [
+          "receiver_id"
+        ],
+        "toTable": "users",
+        "toColumns": [
+          "id"
+        ],
+        "onDelete": "NoAction",
+        "onUpdate": "NoAction"
+      },
+      {
+        "name": "MessageSender",
+        "fromTable": "messages",
+        "fromColumns": [
+          "sender_id"
+        ],
+        "toTable": "users",
+        "toColumns": [
+          "id"
+        ],
+        "onDelete": "Cascade",
+        "onUpdate": "Cascade"
+      }
+    ]
+  },
+  "unsupported": {
+    "version": 1,
+    "entries": []
+  }
+}

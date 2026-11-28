@@ -51,9 +51,10 @@ describe("generated schema runtime", () => {
             join(temp, "use.lt"),
             `import dialect { postgres } "./dialect.lt"
 import schema { field } "./schema.lt"
-import schema_adapter { to_sql, to_table } "./schema_adapter.lt"
+import schema_adapter { to_sql, to_table, on } "./schema_adapter.lt"
 import schema_expr { Expr } "./generated/schema_expr.lt"
 import schema_int { eq } "./generated/schema_int.lt"
+import schema_relations { users_organizations } "./generated/schema_relations.lt"
 import schema_tables { all_table_meta, users, users_meta } "./generated/schema_tables.lt"
 import select { Select, create, fields, from_table, set_dialect, where } "./select.lt"
 import sql { Sql } "./sql.lt"
@@ -65,6 +66,10 @@ package use {
 
   export fn table_count() -> Int {
     all_table_meta.len()
+  }
+
+  export fn relation() -> Sql {
+    on(users_organizations)
   }
 
   export fn query() -> Select {
@@ -96,8 +101,11 @@ package use {
         const { users, usersMeta } = await import(
             pathToFileURL(join(root, "src/generated/schema_tables.ts")).href
         );
-        const { toSql, toTable } = await import(
+        const { toSql, toTable, on } = await import(
             pathToFileURL(join(root, "src/schema_adapter.ts")).href
+        );
+        const { usersOrganizations } = await import(
+            pathToFileURL(join(root, "src/generated/schema_relations.ts")).href
         );
         const { sqlToQuery, postgres } = await import(
             pathToFileURL(join(root, "src/dialect.ts")).href
@@ -137,5 +145,9 @@ package use {
             toSql(notInList(users.id, new LList([1n, 2n]))),
         );
         expect(notInSql.sql).toBe('"users"."id" not in ($1, $2)');
+
+        const relationSql = sqlToQuery(postgres(), on(usersOrganizations));
+        expect(relationSql.sql).toBe('"users"."orgId" = "organizations"."id"');
+        expect(relationSql.params.items).toHaveLength(0);
     });
 });

@@ -9,11 +9,13 @@ import {
     enumValueFunctionName,
     ltString,
     tableTypeName,
+    toSnakeCase,
 } from "./naming.ts";
 import {
     type ColumnIR,
     type DefaultIR,
     type EnumIR,
+    type ForeignKeyIR,
     type SchemaIR,
     type SemanticType,
     type TableIR,
@@ -542,6 +544,111 @@ ${body.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
     return { name: "schema_tables.lt", content };
 }
 
+function relationsPackage(schema: SchemaIR): EmittedFile | undefined {
+    if (schema.foreignKeys.length === 0) return undefined;
+
+    const tableByName = new Map(schema.tables.map((table) => [table.name, table]));
+
+    // Two foreign keys between the same pair of tables would produce the same
+    // binding name, so the owning column is appended to disambiguate them.
+    const pairCount = new Map<string, number>();
+    for (const fk of schema.foreignKeys) {
+        const key = `${fk.fromTable}\u0000${fk.toTable}`;
+        pairCount.set(key, (pairCount.get(key) ?? 0) + 1);
+    }
+
+    type Binding = {
+        name: string;
+        fk: ForeignKeyIR;
+        from: TableIR;
+        to: TableIR;
+        fromColumn: ColumnIR;
+        toColumn: ColumnIR;
+    };
+
+    const bindings: Binding[] = [];
+    const used = new Set<string>(["all_relations", "relation_meta"]);
+
+    for (const fk of schema.foreignKeys) {
+        const from = tableByName.get(fk.fromTable);
+        const to = tableByName.get(fk.toTable);
+        if (!from) throw new Error(`foreign key ${fk.name}: unknown table "${fk.fromTable}"`);
+        if (!to) throw new Error(`foreign key ${fk.name}: unknown table "${fk.toTable}"`);
+        if (fk.fromColumns.length !== 1 || fk.toColumns.length !== 1) {
+            throw new Error(`foreign key ${fk.name}: only single-column relations are emitted`);
+        }
+
+        const fromColumn = from.columns.find((column) => column.name === fk.fromColumns[0]);
+        const toColumn = to.columns.find((column) => column.name === fk.toColumns[0]);
+        if (!fromColumn) throw new Error(`foreign key ${fk.name}: unknown column "${fk.fromColumns[0]}"`);
+        if (!toColumn) throw new Error(`foreign key ${fk.name}: unknown column "${fk.toColumns[0]}"`);
+
+        const ambiguous = (pairCount.get(`${fk.fromTable}\u0000${fk.toTable}`) ?? 0) > 1;
+        const suffix = ambiguous ? `_${fromColumn.name}` : "";
+        const names = [
+            toSnakeCase(`${from.name}_${to.name}${suffix}`),
+            toSnakeCase(`${to.name}_${from.name}${suffix}`),
+        ];
+
+        for (const name of names) {
+            if (used.has(name)) {
+                throw new Error(
+                    `relation binding "${name}" collides with another generated binding`,
+                );
+            }
+            used.add(name);
+            bindings.push({ name, fk, from, to, fromColumn, toColumn });
+        }
+    }
+
+    bindings.sort((left, right) => left.name.localeCompare(right.name));
+
+    const body: string[] = [];
+    body.push("export struct RelationMeta {");
+    for (const field of [
+        "name: Str",
+        "from_table: Str",
+        "from_column: Str",
+        "from_schema: Str",
+        "to_table: Str",
+        "to_column: Str",
+        "to_schema: Str",
+        "on_delete: Str",
+        "on_update: Str",
+    ]) {
+        body.push(`  ${field}`);
+    }
+    body.push("}");
+    body.push("");
+
+    for (const binding of bindings) {
+        body.push(`export let ${binding.name}: RelationMeta = RelationMeta(`);
+        body.push(`  name: ${ltString(binding.fk.name)},`);
+        body.push(`  from_table: ${ltString(binding.from.dbName)},`);
+        body.push(`  from_column: ${ltString(binding.fromColumn.dbName)},`);
+        body.push(`  from_schema: ${ltString(binding.from.schema)},`);
+        body.push(`  to_table: ${ltString(binding.to.dbName)},`);
+        body.push(`  to_column: ${ltString(binding.toColumn.dbName)},`);
+        body.push(`  to_schema: ${ltString(binding.to.schema)},`);
+        body.push(`  on_delete: ${ltString(binding.fk.onDelete ?? "NoAction")},`);
+        body.push(`  on_update: ${ltString(binding.fk.onUpdate ?? "NoAction")},`);
+        body.push(")");
+        body.push("");
+    }
+
+    body.push(
+        `export let all_relations: List<RelationMeta> = [${bindings
+            .map((binding) => binding.name)
+            .join(", ")}]`,
+    );
+    body.push("");
+
+    const content = `${header("schema/schema.json")}package schema_relations {
+${body.map((line) => (line.length > 0 ? `  ${line}` : "")).join("\n")}}
+`;
+    return { name: "schema_relations.lt", content };
+}
+
 export function emitLt(schema: SchemaIR): EmittedFile[] {
     const files: EmittedFile[] = [
         exprPackage(),
@@ -553,6 +660,9 @@ export function emitLt(schema: SchemaIR): EmittedFile[] {
 
     const tables = tablesPackage(schema);
     if (tables) files.push(tables);
+
+    const relations = relationsPackage(schema);
+    if (relations) files.push(relations);
 
     return files.sort((a, b) => a.name.localeCompare(b.name));
 }

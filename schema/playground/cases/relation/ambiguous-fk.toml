@@ -1,0 +1,3 @@
+title = "Two foreign keys to one table get column-suffixed bindings"
+feature = "relation/ambiguous-fk"
+why = "The sender and receiver columns both point at users. Pair-level names would collide, so the owning column is appended to both the forward and the inverse binding."

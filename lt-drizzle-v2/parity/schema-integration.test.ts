@@ -14,10 +14,11 @@ import { LList } from "../../generated/lt-drizzle-v2/typescript/_lingua_rt";
 import { eq as eqRole, UserRole } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_enum_user_role";
 import { asc, isNull } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_int";
 import { postsMeta, users, usersMeta } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_tables";
+import { postsUsers } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_relations";
 import { eq as eqStr } from "../../generated/lt-drizzle-v2/typescript/src/generated/schema_str";
-import { toSql, toTable } from "../../generated/lt-drizzle-v2/typescript/src/schema_adapter";
+import { on, toSql, toTable } from "../../generated/lt-drizzle-v2/typescript/src/schema_adapter";
 import { postgres } from "../../generated/lt-drizzle-v2/typescript/src/dialect";
-import { col, field } from "../../generated/lt-drizzle-v2/typescript/src/schema";
+import { field } from "../../generated/lt-drizzle-v2/typescript/src/schema";
 import {
   build,
   create,
@@ -28,7 +29,6 @@ import {
   setDialect,
   where,
 } from "../../generated/lt-drizzle-v2/typescript/src/select";
-import { eq as eqSql } from "../../generated/lt-drizzle-v2/typescript/src/sql";
 
 const enabled = process.env.DB_TESTS === "1";
 const describeDb = enabled ? describe : describe.skip;
@@ -151,15 +151,15 @@ describeDb("generated schema against the application database", () => {
     expect(rows.map((row) => row.name)).toEqual(["bob"]);
   });
 
-  test("join uses the column metadata of both generated tables", async () => {
-    const on = eqSql(col(postsTable, "user_id"), col(usersTable, "id"));
+  test("join uses the generated relation binding", async () => {
+    const onExpr = on(postsUsers);
     const query = render(
       setDialect(
         orderBy(
           innerJoin(
             fields(fromTable(create(), usersTable), list([field(usersTable, "name"), field(postsTable, "title")])),
             postsTable,
-            on,
+            onExpr,
           ),
           list([toSql(asc(users.id))]),
         ),

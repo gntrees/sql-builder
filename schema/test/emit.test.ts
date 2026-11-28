@@ -31,6 +31,7 @@ describe("schema IR -> LT", () => {
             "schema_float.lt",
             "schema_int.lt",
             "schema_meta.lt",
+            "schema_relations.lt",
             "schema_str.lt",
             "schema_tables.lt",
             "schema_temporal.lt",
@@ -66,6 +67,18 @@ describe("schema IR -> LT", () => {
             "export fn eq(c: RoleColumn, v: Role) -> Expr",
         );
     });
+
+    test("emits forward and inverse relation bindings", () => {
+        const relations = byName.get("schema_relations.lt")!;
+        expect(relations).toContain("export struct RelationMeta");
+        expect(relations).toContain("export let users_organizations: RelationMeta");
+        expect(relations).toContain("export let organizations_users: RelationMeta");
+        expect(relations).toContain('from_table: "users"');
+        expect(relations).toContain('from_column: "orgId"');
+        expect(relations).toContain('to_table: "organizations"');
+        expect(relations).toContain('on_delete: "Cascade"');
+        expect(relations).toContain("export let all_relations: List<RelationMeta>");
+    });
 });
 
 describe("generated LT compiles", () => {
@@ -75,11 +88,16 @@ describe("generated LT compiles", () => {
             join(temp, "use.lt"),
             `import schema_expr { Expr } "./schema_expr.lt"
 import schema_enum_role { Role } "./schema_enum_role.lt"
+import schema_relations { users_organizations } "./schema_relations.lt"
 import schema_tables { users } "./schema_tables.lt"
 
 package use {
   export fn by_id() -> Expr {
     users.id.eq(1)
+  }
+
+  export fn relation_name() -> Str {
+    users_organizations.from_table
   }
 
   export fn admins() -> Expr {

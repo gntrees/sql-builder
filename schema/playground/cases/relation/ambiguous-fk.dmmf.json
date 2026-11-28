@@ -1,0 +1,104 @@
+{
+  "datamodel": {
+    "models": [
+      {
+        "name": "User",
+        "dbName": "users",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      },
+      {
+        "name": "Message",
+        "dbName": "messages",
+        "schema": "public",
+        "fields": [
+          {
+            "name": "id",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": true,
+            "hasDefaultValue": true,
+            "default": { "name": "autoincrement", "args": [] },
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "senderId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "receiverId",
+            "kind": "scalar",
+            "type": "Int",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "nativeType": ["Int", []]
+          },
+          {
+            "name": "sender",
+            "kind": "object",
+            "type": "User",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "relationName": "MessageSender",
+            "relationFromFields": ["senderId"],
+            "relationToFields": ["id"],
+            "relationOnDelete": "Cascade",
+            "relationOnUpdate": "Cascade"
+          },
+          {
+            "name": "receiver",
+            "kind": "object",
+            "type": "User",
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "isId": false,
+            "hasDefaultValue": false,
+            "relationName": "MessageReceiver",
+            "relationFromFields": ["receiverId"],
+            "relationToFields": ["id"],
+            "relationOnDelete": "NoAction",
+            "relationOnUpdate": "NoAction"
+          }
+        ],
+        "primaryKey": null,
+        "uniqueFields": [],
+        "uniqueIndexes": []
+      }
+    ],
+    "enums": [],
+    "indexes": []
+  }
+}

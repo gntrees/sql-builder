@@ -167,6 +167,12 @@ Set operator awal:
 
 Operator lain dicatat sebagai backlog.
 
+Relasi:
+
+- `schema_relations` memuat `RelationMeta` dan binding maju/balik untuk setiap FK
+  satu kolom.
+- Adapter menyediakan `on(rel) -> Sql` sebagai kondisi join kanonik.
+
 ## 9. Naming dan Collision
 
 - Nama tabel binding berasal dari `dbName`, disanitize ke `snake_case`.
@@ -176,12 +182,16 @@ Operator lain dicatat sebagai backlog.
 - Collision setelah sanitasi menggagalkan codegen; tidak ada auto-suffix.
 - Enum dan variant disanitize; collision menggagalkan codegen.
 - Nilai DB asli tidak diubah; dipetakan lewat fungsi `*_value()`.
+- Binding relasi memakai nama tabel accessor: `<from>_<to>` dan kebalikannya
+  `<to>_<from>`; bila ada lebih dari satu FK antar pasangan yang sama, nama kolom
+  pemilik ditambahkan (`messages_users_sender_id`). Collision menggagalkan codegen.
 
 ## 10. Nullability dan Relasi
 
 - Nullability hanya metadata `nullable: Bool`; belum type-level.
-- FK hanya metadata di `schema.json`; belum ada accessor relasi.
-- Join tetap eksplisit.
+- FK di-emit sebagai `RelationMeta` di `schema_relations` (maju dan balik); join tetap
+  eksplisit lewat `on(rel)` di adapter. FK komposit dicatat sebagai unsupported.
+- `on(rel)` belum mengenal alias tabel; alias harus memakai referensi kolom eksplisit.
 
 ## 11. Unsupported
 
@@ -220,6 +230,7 @@ Aturan:
 | `schema_decimal`, `schema_uuid`, `schema_temporal` | Tipe kolom berbasis string + operator. |
 | `schema_enum_<name>` | Enum, mapping value, tipe kolom, operator. |
 | `schema_unsupported` | `UnsupportedColumn` tanpa operator. |
+| `schema_relations` | `RelationMeta`, binding relasi maju/balik, dan `all_relations`. |
 | `schema_tables` | Struct tabel, binding `users`, `users_meta`, dan `all_table_meta`. |
 
 ## 13. Adapter
@@ -286,7 +297,9 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 ## 16. Backlog
 
 - Nullability type-level.
-- Accessor relasi (`users.posts()`).
+- `on_alias` untuk relasi pada tabel yang di-alias.
+- FK komposit (saat ini tercatat di `unsupported.json`).
+- Accessor relasi many-to-many lewat tabel perantara.
 - Index, unique constraint komposit, check constraint, view.
 - Multi-schema.
 - `Date`/`Decimal` typed value di builder.
@@ -312,15 +325,16 @@ Schema yang di-commit memakai database aplikasi dari `db/migrations/postgres`.
 | `db pull` + generate terhadap database aplikasi | selesai; 10 tabel, 1 enum, 3 FK, 0 unsupported, deterministik |
 | Generated `.lt` | selesai di `lt-drizzle-v2/src/generated/` |
 | CI job `schema` | selesai (`.github/workflows/schema.yml`); ikut terpicu saat `db/migrations` berubah |
-| Schema playground | selesai (`schema/playground/`, 8 kasus, 8 fitur, IR snapshot + `lt check`) |
+| Schema playground | selesai (`schema/playground/`, 9 kasus, 9 fitur, IR snapshot + `lt check`) |
 | Integrasi schema → v2 DB | selesai (`lt-drizzle-v2/parity/schema-integration.test.ts`, dijalankan `verify-db.sh`) |
+| Relation metadata + join helper | selesai (`schema_relations.lt`, `schema_adapter.on`) |
 
 ## 18. Schema Playground
 
 `schema/playground/` adalah galeri statis yang tidak menyentuh database:
 
-- 8 kasus: table, column types, composite key, foreign key, unsupported jsonb/array,
-  non-public schema, naming, composite unique/index.
+- 9 kasus: table, column types, composite key, foreign key, ambiguous foreign key,
+  unsupported jsonb/array, non-public schema, naming, composite unique/index.
 - Setiap kasus: DMMF input, `schema.json`, `unsupported.json`, generated LT, dan
   status `lt check`.
 - Snapshot IR disimpan di `cases/**/<id>.expected.json`.
@@ -343,7 +357,8 @@ dipakai di `from_table`, dan `to_sql(users.id.eq(1))` menghasilkan
 
 Integrasi ke database aplikasi diuji oleh
 `lt-drizzle-v2/parity/schema-integration.test.ts` (bagian dari `verify-db.sh`): tabel,
-predikat bertipe, enum, nullability, dan join diambil dari `schema_tables` generated lalu
-dijalankan terhadap tabel `users`/`posts` hasil migrasi aplikasi.
+predikat bertipe, enum, nullability, dan join lewat `on(posts_users)` diambil dari
+`schema_relations` generated lalu dijalankan terhadap tabel `users`/`posts` hasil
+migrasi aplikasi.
 `bunx tsc` penuh masih gagal pada artefak `generated/` lama yang tidak terkait; file
 `schema/*.ts` dan `prisma.config.ts` lolos typecheck terpisah.

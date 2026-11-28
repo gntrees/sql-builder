@@ -15,6 +15,10 @@ id = "relation/foreign-key"
 title = "Foreign keys become neutral relation metadata"
 
 [[feature]]
+id = "relation/ambiguous-fk"
+title = "Ambiguous foreign keys get deterministic binding names"
+
+[[feature]]
 id = "unsupported/jsonb"
 title = "Unsupported columns are visible but untyped"
 

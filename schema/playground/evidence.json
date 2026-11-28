@@ -2,8 +2,8 @@
   "version": 1,
   "compiler": "pinned lt",
   "counts": {
-    "cases": 8,
-    "features": 8,
+    "cases": 9,
+    "features": 9,
     "failing": 0
   },
   "cases": {
@@ -19,6 +19,11 @@
     },
     "naming/renames": {
       "feature": "naming/renames",
+      "ir": "pass",
+      "lt": "pass"
+    },
+    "relation/ambiguous-fk": {
+      "feature": "relation/ambiguous-fk",
       "ir": "pass",
       "lt": "pass"
     },
